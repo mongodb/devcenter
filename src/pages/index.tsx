@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import styled from '@emotion/styled';
 
-import { fetchApiRest } from '../lib/strapiApi';
+import { fetchApiRest } from '../requests/strapiApi';
 
 const Container = styled.main`
     display: grid;
