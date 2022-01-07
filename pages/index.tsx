@@ -3,11 +3,13 @@ import Head from 'next/head';
 
 import styled from '@emotion/styled';
 
+import { fetchApiRest } from '../lib/strapiApi';
+
 const Container = styled.main`
     display: grid;
 `;
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ allArticles }) => {
     return (
         <div>
             <Head>
@@ -18,9 +20,19 @@ const Home: NextPage = () => {
 
             <Container>
                 <h1>MongoDB Developer Center</h1>
+                {allArticles.map(a => (
+                    <div key={a._id}>{a.name}</div>
+                ))}
             </Container>
         </div>
     );
 };
 
 export default Home;
+
+export async function getServerSideProps({}) {
+    const allArticles = (await fetchApiRest('articles')) || [];
+    return {
+        props: { allArticles },
+    };
+}
