@@ -1,4 +1,6 @@
-export const fetchApiRest = async url => {
+import { ArticleResponse } from '../interfaces/responses/article-response';
+
+export const fetchApiRest = async (url: string): Promise<ArticleResponse[]> => {
     const fullUrl = `${process.env.STRAPI_URL}/${url}`;
     const res = await fetch(fullUrl);
 
