@@ -14,7 +14,7 @@ Currently the only variable we need to set in this file is `STRAPI_URL`. See [th
 
 ## Running Locally
 
-Run `yarn` to install dependencies. Run `yarn develop` to start the server locally in development mode. It then should be accessible at http://localhost:3000.
+Run `yarn` to install dependencies. Run `yarn dev` to start the server locally in development mode. It then should be accessible at http://localhost:3000.
 
 ## Formatting
 
