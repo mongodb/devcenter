@@ -22,7 +22,7 @@ const Home: NextPage<HomeProps> = () => {
             </Head>
 
             <Container>
-                <h1>MongoDB Developer Center</h1>
+                <h1>MongoDB Developer Center Test Commit</h1>
             </Container>
         </div>
     );
