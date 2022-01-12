@@ -19,3 +19,6 @@ jobs:
                   NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
             - name: Run Prettier
               run: yarn prettier -c .
+              env:
+                  NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
+                  NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
