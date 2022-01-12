@@ -1,0 +1,21 @@
+name: Check Prettier Formatting
+on:
+    pull_request:
+        branches: [main]
+jobs:
+    check-formatting:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout target branch
+              uses: actions/checkout@v2
+            - name: Use Node 16.x
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+              env:
+                  NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
+                  NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
+            - name: Run Prettier
+              run: yarn prettier -c .
