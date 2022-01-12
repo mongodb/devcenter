@@ -3,7 +3,7 @@ on:
     pull_request:
         branches: [main]
 jobs:
-    check-formatting:
+    check-formatting-and-lint:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout target branch
@@ -19,6 +19,11 @@ jobs:
                   NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
             - name: Run Prettier
               run: yarn format --check .
+              env:
+                  NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
+                  NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
+            - name: Lint
+              run: yarn lint
               env:
                   NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
                   NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
