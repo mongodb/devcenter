@@ -1,4 +1,4 @@
-name: PR Checks
+name: Pull Request Checks
 on:
     pull_request:
         branches: [main]
@@ -12,7 +12,16 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: '16.x'
+            - name: Cache node modules
+              uses: actions/cache@v2
+              id: cache
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
             - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
               run: yarn install --frozen-lockfile
               env:
                   NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
