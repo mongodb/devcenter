@@ -8,7 +8,8 @@
     "lint": "next lint",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "test:e2e": "cypress open"
   },
   "husky": {
     "hooks": {

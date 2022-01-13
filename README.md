@@ -20,7 +20,7 @@ Run `yarn` to install dependencies. Run `yarn dev` to start the server locally i
 
 Run `yarn test` to run all unit tests and integration tests.
 
-Run `npx cypress open` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000 before running cypress tests.
+Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000 before running cypress tests.
 
 ## Formatting
 
