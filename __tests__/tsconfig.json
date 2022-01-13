@@ -1,0 +1,4 @@
+{
+    "extends": "../tsconfig.json",
+    "include": ["./**/*.ts", "./**/*.tsx"] // Root-level .tsconfig excludes this directory.
+}

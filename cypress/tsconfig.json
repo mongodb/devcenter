@@ -1,7 +1,7 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "isolatedModules": false
-  },
-  "include": ["./**/*.ts"], // Root-level .tsconfig excludes the cypress directory.
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "isolatedModules": false
+    },
+    "include": ["./**/*.ts"] // Root-level .tsconfig excludes the cypress directory.
 }
