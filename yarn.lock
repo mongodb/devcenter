@@ -384,7 +384,7 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@emotion/babel-plugin@^11.3.0", "@emotion/babel-plugin@^11.7.1", "@emotion/babel-plugin@^11.7.2":
+"@emotion/babel-plugin@11.7.2", "@emotion/babel-plugin@^11.3.0", "@emotion/babel-plugin@^11.7.1":
   version "11.7.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/babel-plugin/-/babel-plugin-11.7.2.tgz#fec75f38a6ab5b304b0601c74e2a5e77c95e5fa0"
   integrity sha1-/sdfOKarWzBLBgHHTiped8leX6A=
@@ -413,7 +413,7 @@
     "@emotion/weak-memoize" "^0.2.5"
     stylis "4.0.13"
 
-"@emotion/css@^11.7.1":
+"@emotion/css@11.7.1":
   version "11.7.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/css/-/css-11.7.1.tgz#516b717340d36b0bbd2304ba7e1a090e866f8acc"
   integrity sha1-UWtxc0DTawu9IwS6fhoJDoZvisw=
@@ -453,10 +453,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.5.tgz#2c40f81449a4e554e9fc6396910ed4843ec2be50"
   integrity sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==
 
-"@emotion/react@^11.1.1", "@emotion/react@^11.7.1":
+"@emotion/react@11.7.1", "@emotion/react@^11.1.1":
   version "11.7.1"
-  resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.7.1.tgz#3f800ce9b20317c13e77b8489ac4a0b922b2fe07"
-  integrity sha512-DV2Xe3yhkF1yT4uAUoJcYL1AmrnO5SVsdfvu+fBuS7IbByDeTVx9+wFmvx9Idzv7/78+9Mgx2Hcmr7Fex3tIyw==
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/react/-/react-11.7.1.tgz#3f800ce9b20317c13e77b8489ac4a0b922b2fe07"
+  integrity sha1-P4AM6bIDF8E+d7hImsSguSKy/gc=
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@emotion/cache" "^11.7.1"
@@ -482,10 +482,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-1.1.0.tgz#56d99c41f0a1cda2726a05aa6a20afd4c63e58d2"
   integrity sha512-u0AX4aSo25sMAygCuQTzS+HsImZFuS8llY8O7b9MDRzbJM0kVJlAz6KNDqcG7pOuQZJmj/8X/rAW+66kMnMW+g==
 
-"@emotion/styled@^11.0.0", "@emotion/styled@^11.6.0":
+"@emotion/styled@11.6.0", "@emotion/styled@^11.0.0":
   version "11.6.0"
-  resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-11.6.0.tgz#9230d1a7bcb2ebf83c6a579f4c80e0664132d81d"
-  integrity sha512-mxVtVyIOTmCAkFbwIp+nCjTXJNgcz4VWkOYQro87jE2QBTydnkiYusMrRGFtzuruiGK4dDaNORk4gH049iiQuw==
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/styled/-/styled-11.6.0.tgz#9230d1a7bcb2ebf83c6a579f4c80e0664132d81d"
+  integrity sha1-kjDRp7yy6/g8alefTIDgZkEy2B0=
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@emotion/babel-plugin" "^11.3.0"
@@ -1013,7 +1013,7 @@
     "@styled-system/core" "^5.1.2"
     "@styled-system/css" "^5.1.5"
 
-"@testing-library/cypress@^8.0.2":
+"@testing-library/cypress@8.0.2":
   version "8.0.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/cypress/-/cypress-8.0.2.tgz#b13f0ff2424dec4368b6670dfbfb7e43af8eefc9"
   integrity sha1-sT8P8kJN7ENotmcN+/t+Q6+O78k=
@@ -1035,7 +1035,7 @@
     lz-string "^1.4.4"
     pretty-format "^27.0.2"
 
-"@testing-library/jest-dom@^5.16.1":
+"@testing-library/jest-dom@5.16.1":
   version "5.16.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/jest-dom/-/jest-dom-5.16.1.tgz#3db7df5ae97596264a7da9696fe14695ba02e51f"
   integrity sha1-PbffWul1liZKfalpb+FGlboC5R8=
@@ -1050,7 +1050,7 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/react@^12.1.2":
+"@testing-library/react@12.1.2":
   version "12.1.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/react/-/react-12.1.2.tgz#f1bc9a45943461fa2a598bb4597df1ae044cfc76"
   integrity sha1-8byaRZQ0YfoqWYu0WX3xrgRM/HY=
@@ -2330,7 +2330,7 @@ csstype@^3.0.2, csstype@^3.0.5:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
   integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
 
-cypress@^9.2.1:
+cypress@9.2.1:
   version "9.2.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/cypress/-/cypress-9.2.1.tgz#47f2457e5ca7ede48be9a4176f20f30ccf3b3902"
   integrity sha1-R/JFflyn7eSL6aQXbyDzDM87OQI=
@@ -4190,7 +4190,7 @@ jest-worker@^27.4.6:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jest@^27.4.7:
+jest@27.4.7:
   version "27.4.7"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/jest/-/jest-27.4.7.tgz#87f74b9026a1592f2da05b4d258e57505f28eca4"
   integrity sha1-h/dLkCahWS8toFtNJY5XUF8o7KQ=
@@ -5671,7 +5671,7 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
 
-styled-components@^5.3.3:
+styled-components@5.3.3:
   version "5.3.3"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/styled-components/-/styled-components-5.3.3.tgz#312a3d9a549f4708f0fb0edc829eb34bde032743"
   integrity sha1-MSo9mlSfRwjw+w7cgp6zS94DJ0M=
@@ -5796,7 +5796,7 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-theme-ui@^0.10.0:
+theme-ui@0.10.0:
   version "0.10.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/theme-ui/-/theme-ui-0.10.0.tgz#4fce8fbe7ad008ec07b383eaf5f468b0317fcfa1"
   integrity sha1-T86PvnrQCOwHs4Pq9fRosDF/z6E=
@@ -5975,7 +5975,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.5.4:
+typescript@4.5.4:
   version "4.5.4"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/typescript/-/typescript-4.5.4.tgz#a17d3a0263bf5c8723b9c52f43c5084edf13c2e8"
   integrity sha1-oX06AmO/XIcjucUvQ8UITt8Twug=
