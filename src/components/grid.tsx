@@ -41,6 +41,9 @@ const Grid = ({
  * @param props.phoneColumns (optional) - Override default columns (4) that this component spans for phone screens.
  * @param props.tabletColumns (optional) - Override default columns (8) that this component spans for tablet screens.
  * @param props.desktopColumns (optional) - Override default columns (12) that this component spans for desktop screens.
+ * @param props.phoneRows (optional) - Set how many rows tall this column is for phone screens (default is 1).
+ * @param props.tabletRows (optional) - Set how many rows tall this column is for tablet screens (default is 1).
+ * @param props.desktopRows (optional) - Set how many rows tall this column is for desktop screens (default is 1).
  */
 const GridColumn = ({
     as,
@@ -48,12 +51,18 @@ const GridColumn = ({
     phoneColumns,
     tabletColumns,
     desktopColumns,
+    phoneRows,
+    tabletRows,
+    desktopRows,
 }: GridColumnProps) => (
     <StyledGridColumn
         as={as}
         phoneColumns={phoneColumns}
         tabletColumns={tabletColumns}
         desktopColumns={desktopColumns}
+        phoneRows={phoneRows}
+        tabletRows={tabletRows}
+        desktopRows={desktopRows}
     >
         {children}
     </StyledGridColumn>

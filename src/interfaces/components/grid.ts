@@ -20,4 +20,7 @@ export interface GridColumnProps {
     phoneColumns?: columnCount;
     tabletColumns?: columnCount;
     desktopColumns?: columnCount;
+    phoneRows?: number; // non-negative integer.
+    tabletRows?: number; // non-negative integer.
+    desktopRows?: number; // non-negative integer.
 }

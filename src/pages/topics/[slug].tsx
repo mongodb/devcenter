@@ -28,17 +28,17 @@ interface HomeProps {
 
 const Topic: NextPage<HomeProps> = ({ slug }) => (
     <Grid>
-        <GridColumn desktopColumns={5}>
-            <Placeholder color="red">{slug}</Placeholder>
+        <GridColumn desktopColumns={12}>
+            <Placeholder color="red" height="200" />
         </GridColumn>
-        <GridColumn desktopColumns={7}>
-            <Placeholder color="blue">{slug}</Placeholder>
+        <GridColumn desktopColumns={3} desktopRows={3}>
+            <Placeholder color="blue" height="1500" />
         </GridColumn>
-        <GridColumn desktopColumns={7}>
-            <Placeholder color="red">{slug}</Placeholder>
+        <GridColumn desktopColumns={9}>
+            <Placeholder color="green" height="300" />
         </GridColumn>
-        <GridColumn desktopColumns={5}>
-            <Placeholder color="blue">{slug}</Placeholder>
+        <GridColumn desktopColumns={9}>
+            <Placeholder color="yellow" height="600" />
         </GridColumn>
     </Grid>
 );
