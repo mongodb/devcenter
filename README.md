@@ -20,8 +20,8 @@ Run `yarn` to install dependencies. Run `yarn dev` to start the server locally i
 
 Run `yarn test` to run all unit tests and integration tests.
 
-Run `npx cypress open` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000 before running cypress tests.
+Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000 before running cypress tests.
 
 ## Formatting
 
-We use [Prettier](https://prettier.io/) in order to keep consistent code styling. Run `yarn format` to format the code in the project with Prettier. Alternatively, if you use VS Code, download the Prettier extension and configure it as your default JS/TS formatter. You can then point it to use the rules set out in `.prettierrc` and format on save/type.
+We use [Prettier](https://prettier.io/) in order to keep consistent code styling. Run `yarn format:write` to format the code in the project with Prettier. Alternatively, if you use VS Code, download the Prettier extension and configure it as your default JS/TS formatter. You can then point it to use the rules set out in `.prettierrc` and format on save/type.

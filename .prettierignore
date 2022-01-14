@@ -3,8 +3,6 @@ package.json
 yarn.lock
 public
 next-env.d.ts
-next.config.js
-tsconfig.json
 README.md
 .babelrc
 .next
