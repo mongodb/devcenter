@@ -3,7 +3,9 @@ import type { NextPage } from 'next';
 // import { fetchApiRest } from '../requests/strapi-api';
 import { ArticleResponse } from '../interfaces/responses/article-response';
 
-type HomeProps = { allArticles: ArticleResponse[] };
+interface HomeProps {
+    allArticles: ArticleResponse[];
+}
 
 const Home: NextPage<HomeProps> = () => (
     <>
