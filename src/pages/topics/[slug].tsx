@@ -1,5 +1,4 @@
-import type { NextPage } from 'next';
-import type { GetStaticProps, GetStaticPaths } from 'next';
+import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import styled from '@emotion/styled'; // TEMPORARY
 
