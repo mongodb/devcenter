@@ -2,12 +2,13 @@ import type { NextPage } from 'next';
 
 // import { fetchApiRest } from '../requests/strapi-api';
 import { ArticleResponse } from '../interfaces/responses/article-response';
+import NavBar from '../components/subnavigation/navbar';
 
 type HomeProps = { allArticles: ArticleResponse[] };
 
 const Home: NextPage<HomeProps> = () => (
     <>
-        <h1>MongoDB Developer Center</h1>
+        <NavBar />
     </>
 );
 
