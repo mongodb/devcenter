@@ -27,18 +27,46 @@ interface HomeProps {
 }
 
 const Topic: NextPage<HomeProps> = ({ slug }) => (
-    <Grid>
+    <Grid rowGutter={12}>
+        {/* TITLE **/}
         <GridColumn desktopColumns={12}>
             <Placeholder color="red" height="200" />
         </GridColumn>
-        <GridColumn desktopColumns={3} desktopRows={3}>
-            <Placeholder color="blue" height="1500" />
+        {/* SIDE NAV **/}
+        <GridColumn desktopColumns={3} desktopRows={7}>
+            <Placeholder color="blue" height="1000" />
         </GridColumn>
+        {/* L2 TOPICS **/}
         <GridColumn desktopColumns={9}>
             <Placeholder color="green" height="300" />
         </GridColumn>
+        {/* FEATURED **/}
         <GridColumn desktopColumns={9}>
-            <Placeholder color="yellow" height="600" />
+            <Placeholder color="yellow" height="500" />
+        </GridColumn>
+        {/* ARTICLES **/}
+        <GridColumn desktopColumns={9}>
+            <Placeholder color="purple" height="300" />
+        </GridColumn>
+        {/* DEMO APPS **/}
+        <GridColumn desktopColumns={9}>
+            <Placeholder color="pink" height="300" />
+        </GridColumn>
+        {/* TUTORIALS **/}
+        <GridColumn desktopColumns={9}>
+            <Placeholder color="white" height="300" />
+        </GridColumn>
+        {/* PODCASTS **/}
+        <GridColumn desktopColumns={3}>
+            <Placeholder color="brown" height="500" />
+        </GridColumn>
+        {/* YOUTUBE **/}
+        <GridColumn desktopColumns={3}>
+            <Placeholder color="brown" height="500" />
+        </GridColumn>
+        {/* TWITCH **/}
+        <GridColumn desktopColumns={3}>
+            <Placeholder color="brown" height="500" />
         </GridColumn>
     </Grid>
 );
@@ -52,10 +80,7 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async () => {
     const paths = [
         {
-            params: { slug: 'topic1' },
-        },
-        {
-            params: { slug: 'topic2' },
+            params: { slug: 'L1' },
         },
     ];
     return { paths, fallback: false };
