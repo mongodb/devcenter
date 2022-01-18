@@ -9,6 +9,7 @@ type HomeProps = { allArticles: ArticleResponse[] };
 const Home: NextPage<HomeProps> = () => (
     <>
         <NavBar />
+        <h1>MongoDB Developer Center</h1>
     </>
 );
 

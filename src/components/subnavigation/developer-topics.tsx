@@ -1,5 +1,8 @@
 import React, { useContext } from 'react';
-import {DeveloperTopicsTab, StyledButton } from '../../styled/developer-topics';
+import {
+    DeveloperTopicsTab,
+    StyledButton,
+} from '../../styled/developer-topics';
 import { Context } from './navbar';
 
 const DeveloperTopics: React.FunctionComponent = () => {
