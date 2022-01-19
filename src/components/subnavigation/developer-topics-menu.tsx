@@ -3,7 +3,7 @@ import { Context } from './navbar';
 import { DeveloperTopicsMenuWrapper } from '../../styled/developer-topics-menu';
 import { useRouter } from 'next/router';
 
-const DeveloperTopicsMenu: React.FunctionComponent = () => {
+const DeveloperTopicsMenu = React.forwardRef<HTMLDivElement>((_, ref) => {
     const { open } = useContext(Context);
     const router = useRouter();
 
@@ -16,7 +16,7 @@ const DeveloperTopicsMenu: React.FunctionComponent = () => {
     return (
         <>
             {open && (
-                <DeveloperTopicsMenuWrapper>
+                <DeveloperTopicsMenuWrapper ref={ref}>
                     <button onClick={handleDeveloperTopicsClick}>
                         All Developer Topics
                     </button>
@@ -24,6 +24,7 @@ const DeveloperTopicsMenu: React.FunctionComponent = () => {
             )}
         </>
     );
-};
+});
 
+DeveloperTopicsMenu.displayName = 'DeveloperTopicsMenu'; // eslint will complain if this is not here because we use forwardRef.
 export default DeveloperTopicsMenu;
