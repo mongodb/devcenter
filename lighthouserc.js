@@ -10,7 +10,7 @@ module.exports = {
             preset: 'lighthouse:no-pwa',
             assertions: {
                 'csp-xss': 'warn',
-                'aria-roles' : 'warn',
+                'aria-roles': 'warn',
                 'errors-in-console': 'warn',
                 'html-has-lang': 'warn',
                 'image-alt': 'warn',

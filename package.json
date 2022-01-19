@@ -6,11 +6,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format:write": "prettier --write ./src",
-    "format:check": "prettier --check ./src",
+    "format:write": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "jest --watch",
-    "test:e2e": "cypress open",
-    "ci:lighthouse": "lhci autorun"
+    "test:e2e": "cypress open"
   },
   "husky": {
     "hooks": {
@@ -31,7 +30,6 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "11.7.2",
-    "@lhci/cli": "0.7.2",
     "@testing-library/cypress": "8.0.2",
     "@testing-library/jest-dom": "5.16.1",
     "@testing-library/react": "12.1.2",
