@@ -1,5 +1,3 @@
-import { css } from '@emotion/react';
-
 /**
  * @type {Object.<string, string>}
  * @property {string} fontsize returns px value
