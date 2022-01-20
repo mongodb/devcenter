@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { colorMap } from './theme';
+import { colorMap, layer } from './theme';
 
 const NavbarWrapper = styled('div')`
     display: flex;
@@ -8,7 +8,7 @@ const NavbarWrapper = styled('div')`
     width: 100%;
     position: relative;
     transform: translateZ(0);
-    z-index: 2;
+    z-index: ${layer.middle};
     background: ${colorMap.greyDarkTwo};
     div {
         & > span {

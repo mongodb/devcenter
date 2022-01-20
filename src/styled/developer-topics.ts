@@ -9,8 +9,8 @@ const StyledButton = styled('button')`
 
 const DeveloperTopicsTab = styled('div')`
     display: flex;
-    justifycontent: center;
-    alignitems: center;
+    justify-content: center;
+    align-items: center;
 `;
 
 export { StyledButton, DeveloperTopicsTab };

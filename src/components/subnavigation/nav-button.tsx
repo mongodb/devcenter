@@ -13,11 +13,8 @@ const NavButton: React.FunctionComponent<IProps> = ({
 }: IProps) => {
     return (
         <StyledNavList>
-            <Link href={path}>
-                {/*<a data-testid={{label}}>{label}</a>*/}
-                <div>
-                    <span data-testid={label}>{label}</span>
-                </div>
+            <Link href={path} passHref>
+                <span data-testid={label}>{label}</span>
             </Link>
         </StyledNavList>
     );

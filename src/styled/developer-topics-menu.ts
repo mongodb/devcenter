@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { colorMap } from './theme';
+import { colorMap, layer } from './theme';
 
 const DeveloperTopicsMenuWrapper = styled('div')`
     display: flex;
@@ -9,7 +9,7 @@ const DeveloperTopicsMenuWrapper = styled('div')`
     left: 25%;
     background: ${colorMap.greyLightOne};
     position: absolute;
-    z-index: 10;
+    z-index: ${layer.superFront};
     height: 200px;
     color: black;
 `;
