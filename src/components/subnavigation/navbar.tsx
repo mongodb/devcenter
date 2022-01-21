@@ -1,9 +1,10 @@
 import NavButton from './nav-button';
 import DeveloperTopics from './developer-topics';
 import navButtons from '../../data/navbuttons';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { NavbarWrapper } from '../../styled/nav-bar';
 import DeveloperTopicsMenu from './developer-topics-menu';
+import useOutsideClick from './hooks/use-outside-click';
 
 interface ContextProps {
     open: boolean;
@@ -19,6 +20,14 @@ export const Context = React.createContext<ContextProps>({
 
 const NavBar: React.FunctionComponent = () => {
     const [open, setIsOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null); // Pass this ref down to the DeveloperTopicsMenu so we can tell when we've clicked outside of it.
+
+    useOutsideClick(ref, () => {
+        if (open) {
+            setIsOpen(false);
+        }
+    });
+
     return (
         <Context.Provider value={{ open, setIsOpen }}>
             <NavbarWrapper>
@@ -36,7 +45,7 @@ const NavBar: React.FunctionComponent = () => {
                     />
                 ))}
             </NavbarWrapper>
-            <DeveloperTopicsMenu />
+            {open && <DeveloperTopicsMenu ref={ref} />}
         </Context.Provider>
     );
 };
