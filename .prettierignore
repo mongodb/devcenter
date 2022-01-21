@@ -1,3 +1,5 @@
 yarn.lock
 next-env.d.ts
-.next
+README.md
+.babelrc
+build
