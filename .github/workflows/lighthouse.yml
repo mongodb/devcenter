@@ -27,12 +27,10 @@ jobs:
               if: steps.cache.outputs.cache-hit != 'true'
               run: yarn install --frozen-lockfile
             - name: yarn build
-              run: |
-                  yarn run build
+              run: yarn run build
+            - name: Install Lighthouse
+              run: yarn global install @lhci/cli@0.8.x
             - name: Run Lighthouse
-              uses: treosh/lighthouse-ci-action@v7
-              with:
-                  configPath: './lighthouserc.js'
-                  runs: 2
+              run: lhci autorun
               env:
                   LHCI_GITHUB_APP_TOKEN: ${{secrets.LIGHTHOUSE_CI_TOKEN}}
