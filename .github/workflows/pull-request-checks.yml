@@ -98,7 +98,6 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: 16.x
-                  ref: ${{ github.event.pull_request.head.sha }}
             - name: Cache node modules
               uses: actions/cache@v2
               id: cache
@@ -119,4 +118,4 @@ jobs:
                   configPath: './lighthouserc.js'
                   runs: 2
               env:
-                  LHCI_GITHUB_APP_TOKEN: ${{secrets.LIGHTHOUSE_CI_TOKEN}}
+                  LHCI_GITHUB_TOKEN: ${{secrets.LIGHTHOUSE_CI_TOKEN}}
