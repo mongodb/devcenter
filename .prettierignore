@@ -1,7 +1,4 @@
-.gitignore
-package.json
 yarn.lock
-public
 next-env.d.ts
 README.md
 .babelrc

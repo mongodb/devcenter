@@ -1,9 +1,11 @@
 # MongoDB Developer Center
 
 This project uses [Next.js](https://nextjs.org) with TypeScript as a basis for the Developer Center site. The main source code (pages, components, data fetching, etc.) is contained in the `src` directory.
+
 ## Setup
 
 ### Artifactory
+
 We use Artifactory (MongoDB's internal package repository) as our primary source of dependencies. You will need to set the following ENV variables: NPM_AUTH and NPM_EMAIL. These are used in the `.npmrc` file at the top level of this project. For now, refer to [this DevHub wiki page](https://wiki.corp.mongodb.com/display/DEVREL/Setup+Artifactory+for+DevHub) to set these variables.
 
 ### Local Enviroment
