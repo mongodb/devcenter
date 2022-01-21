@@ -114,7 +114,7 @@ jobs:
             - name: yarn build
               run: yarn run build
             - name: Run Lighthouse
-              uses: treosh/lighthouse-ci-action@v7
+              uses: treosh/lighthouse-ci-action@v8
               with:
                   configPath: './lighthouserc.js'
               env:
