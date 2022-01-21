@@ -89,3 +89,33 @@ jobs:
               run: yarn install --frozen-lockfile
             - name: Run Jest tests
               run: yarn jest
+    lighthouse:
+        name: Lighthouse
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+            - name: Use Node.js 16.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 16.x
+            - name: Cache node modules
+              uses: actions/cache@v2
+              id: cache
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: yarn install --frozen-lockfile
+            - name: yarn build
+              run: yarn run build
+            - name: Run Lighthouse
+              uses: treosh/lighthouse-ci-action@v7
+              with:
+                  configPath: './lighthouserc.js'
+              env:
+                  LHCI_GITHUB_APP_TOKEN: ${{secrets.LIGHTHOUSE_CI_TOKEN}}
