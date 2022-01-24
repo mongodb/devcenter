@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
-import { colorMap } from './theme';
+import { colorMap, size } from './theme';
 
-const NavbarWrapper = styled('div')`
+const NavbarWrapper = styled('nav')`
     align-items: center;
     background: ${colorMap.greyDarkTwo};
     display: flex;
     flex-direction: row;
-    height: 64px;
     justify-content: space-around;
     > span {
         cursor: pointer;
+        padding: ${size.default};
     }
     width: 100%;
 `;
