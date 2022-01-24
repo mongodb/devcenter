@@ -1,9 +1,9 @@
-const CodeExamples = (props: any) => {
-    return (
-        <>
-            <h2>Code Examples</h2>
-        </>
-    );
-};
+import { NextPage } from 'next';
+
+const CodeExamples: NextPage = () => (
+    <>
+        <h1>Code Examples</h1>
+    </>
+);
 
 export default CodeExamples;

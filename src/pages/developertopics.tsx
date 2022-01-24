@@ -1,9 +1,9 @@
-const DeveloperTopics = (props: any) => {
-    return (
-        <>
-            <h2>Developer Topics</h2>
-        </>
-    );
-};
+import type { NextPage } from 'next';
+
+const DeveloperTopics: NextPage = () => (
+    <>
+        <h1>Developer Topics</h1>
+    </>
+);
 
 export default DeveloperTopics;

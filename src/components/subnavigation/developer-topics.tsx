@@ -1,12 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
     DeveloperTopicsTab,
     StyledButton,
 } from '../../styled/developer-topics';
-import { Context } from './navbar';
 
-const DeveloperTopics: React.FunctionComponent = () => {
-    const { open, setIsOpen } = useContext(Context);
+interface IProps {
+    open: boolean;
+    setIsOpen: any;
+}
+
+const DeveloperTopics: React.FunctionComponent<IProps> = ({
+    open,
+    setIsOpen,
+}: IProps) => {
     const handleOpening = () => {
         setIsOpen(!open);
     };

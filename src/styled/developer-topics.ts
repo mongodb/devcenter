@@ -1,16 +1,17 @@
 import styled from '@emotion/styled';
+import { colorMap } from './theme';
 
 const StyledButton = styled('button')`
-    border: none;
     background: none;
-    color: white;
+    border: none;
+    color: ${colorMap.devWhite};
     cursor: pointer;
 `;
 
 const DeveloperTopicsTab = styled('div')`
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
 `;
 
 export { StyledButton, DeveloperTopicsTab };

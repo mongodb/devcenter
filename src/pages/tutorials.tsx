@@ -1,9 +1,9 @@
-const Tutorials = (props: any) => {
-    return (
-        <>
-            <h2>Tutorials</h2>
-        </>
-    );
-};
+import { NextPage } from 'next';
+
+const Tutorials: NextPage = () => (
+    <>
+        <h1>Tutorials</h1>
+    </>
+);
 
 export default Tutorials;

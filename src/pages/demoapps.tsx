@@ -1,9 +1,9 @@
-const DemoApps = (props: any) => {
-    return (
-        <>
-            <h2>Demo Apps</h2>
-        </>
-    );
-};
+import { NextPage } from 'next';
+
+const DemoApps: NextPage = () => (
+    <>
+        <h1>Demo Apps</h1>
+    </>
+);
 
 export default DemoApps;

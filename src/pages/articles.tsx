@@ -1,11 +1,10 @@
 import React from 'react';
+import { NextPage } from 'next';
 
-const Articles = (props: any) => {
-    return (
-        <>
-            <h2>Articles</h2>
-        </>
-    );
-};
+const Articles: NextPage = () => (
+    <>
+        <h1>Articles</h1>
+    </>
+);
 
 export default Articles;

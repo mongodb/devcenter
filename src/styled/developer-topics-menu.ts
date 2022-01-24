@@ -2,18 +2,16 @@ import styled from '@emotion/styled';
 import { colorMap, size } from './theme';
 
 const DeveloperTopicsMenuWrapper = styled('div')`
-    display: flex;
-    justify-content: center;
     align-items: center;
     background: ${colorMap.greyLightOne};
+    color: ${colorMap.devBlack};
+    display: flex;
     height: 200px;
-    color: black;
-    position: absolute;
-    top: 152px;
+    justify-content: center;
     left: 0;
-    right: 0;
     margin: auto;
-    max-width: ${size.maxContentWidth};
+    max-width: ${size.maxWidth};
+    right: 0;
     width: 100%;
 `;
 
