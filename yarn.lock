@@ -2,6 +2,24 @@
 # yarn lockfile v1
 
 
+"@apollo/client@3.5.7":
+  version "3.5.7"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@apollo/client/-/client-3.5.7.tgz#38051c0a414ebf784319fa5131faa19df24fa9ec"
+  integrity sha1-OAUcCkFOv3hDGfpRMfqhnfJPqew=
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.0.0"
+    "@wry/context" "^0.6.0"
+    "@wry/equality" "^0.5.0"
+    "@wry/trie" "^0.3.0"
+    graphql-tag "^2.12.3"
+    hoist-non-react-statics "^3.3.2"
+    optimism "^0.16.1"
+    prop-types "^15.7.2"
+    symbol-observable "^4.0.0"
+    ts-invariant "^0.9.4"
+    tslib "^2.3.0"
+    zen-observable-ts "^1.2.0"
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
@@ -527,6 +545,11 @@
     js-yaml "^4.1.0"
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
+
+"@graphql-typed-document-node/core@^3.0.0":
+  version "3.1.1"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@graphql-typed-document-node/core/-/core-3.1.1.tgz#076d78ce99822258cf813ecc1e7fa460fa74d052"
+  integrity sha1-B214zpmCIljPgT7MHn+kYPp00FI=
 
 "@hapi/accept@5.0.2":
   version "5.0.2"
@@ -1360,6 +1383,27 @@
   dependencies:
     "@typescript-eslint/types" "5.9.0"
     eslint-visitor-keys "^3.0.0"
+
+"@wry/context@^0.6.0":
+  version "0.6.1"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@wry/context/-/context-0.6.1.tgz#c3c29c0ad622adb00f6a53303c4f965ee06ebeb2"
+  integrity sha1-w8KcCtYirbAPalMwPE+WXuBuvrI=
+  dependencies:
+    tslib "^2.3.0"
+
+"@wry/equality@^0.5.0":
+  version "0.5.2"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@wry/equality/-/equality-0.5.2.tgz#72c8a7a7d884dff30b612f4f8464eba26c080e73"
+  integrity sha1-csinp9iE3/MLYS9PhGTromwIDnM=
+  dependencies:
+    tslib "^2.3.0"
+
+"@wry/trie@^0.3.0":
+  version "0.3.1"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@wry/trie/-/trie-0.3.1.tgz#2279b790f15032f8bcea7fc944d27988e5b3b139"
+  integrity sha1-Inm3kPFQMvi86n/JRNJ5iOWzsTk=
+  dependencies:
+    tslib "^2.3.0"
 
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
@@ -3357,6 +3401,18 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
   integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
 
+graphql-tag@^2.12.3:
+  version "2.12.6"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
+  integrity sha1-1EGlacHSU37xDKPRYztIclMptfE=
+  dependencies:
+    tslib "^2.1.0"
+
+graphql@16.2.0:
+  version "16.2.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/graphql/-/graphql-16.2.0.tgz#de3150e80f1fc009590b92a9d16ab1b46e12b656"
+  integrity sha1-3jFQ6A8fwAlZC5Kp0WqxtG4StlY=
+
 has-bigints@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/has-bigints/-/has-bigints-1.0.1.tgz#64fe6acb020673e3b78db035a5af69aa9d07b113"
@@ -3422,7 +3478,7 @@ hmac-drbg@^1.0.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.3.1:
+hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -4906,6 +4962,14 @@ opencollective-postinstall@^2.0.2:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
   integrity sha1-eg//l49tv6TQBiOPusmO1BmMMlk=
 
+optimism@^0.16.1:
+  version "0.16.1"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/optimism/-/optimism-0.16.1.tgz#7c8efc1f3179f18307b887e18c15c5b7133f6e7d"
+  integrity sha1-fI78HzF58YMHuIfhjBXFtxM/bn0=
+  dependencies:
+    "@wry/context" "^0.6.0"
+    "@wry/trie" "^0.3.0"
+
 optionator@^0.8.1:
   version "0.8.3"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/optionator/-/optionator-0.8.3.tgz#84fa1d036fe9d3c7e21d99884b601167ec8fb495"
@@ -5919,6 +5983,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+symbol-observable@^4.0.0:
+  version "4.0.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/symbol-observable/-/symbol-observable-4.0.0.tgz#5b425f192279e87f2f9b937ac8540d1984b39205"
+  integrity sha1-W0JfGSJ56H8vm5N6yFQNGYSzkgU=
+
 symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
@@ -6040,6 +6109,13 @@ tr46@^2.1.0:
   dependencies:
     punycode "^2.1.1"
 
+ts-invariant@^0.9.4:
+  version "0.9.4"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/ts-invariant/-/ts-invariant-0.9.4.tgz#42ac6c791aade267dd9dc65276549df5c5d71cac"
+  integrity sha1-QqxseRqt4mfdncZSdlSd9cXXHKw=
+  dependencies:
+    tslib "^2.1.0"
+
 tsconfig-paths@^3.12.0, tsconfig-paths@^3.9.0:
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.12.0.tgz#19769aca6ee8f6a1a341e38c8fa45dd9fb18899b"
@@ -6055,7 +6131,7 @@ tslib@^1.8.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.1.0:
+tslib@^2.1.0, tslib@^2.3.0:
   version "2.3.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha1-6KM1rdXOrlGqJh0ypJAVjvBC7wE=
@@ -6444,3 +6520,15 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zen-observable-ts@^1.2.0:
+  version "1.2.3"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/zen-observable-ts/-/zen-observable-ts-1.2.3.tgz#c2f5ccebe812faf0cfcde547e6004f65b1a6d769"
+  integrity sha1-wvXM6+gS+vDPzeVH5gBPZbGm12k=
+  dependencies:
+    zen-observable "0.8.15"
+
+zen-observable@0.8.15:
+  version "0.8.15"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/zen-observable/-/zen-observable-0.8.15.tgz#96415c512d8e3ffd920afd3889604e30b9eaac15"
+  integrity sha1-lkFcUS2OP/2SCv04iWBOMLnqrBU=
