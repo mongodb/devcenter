@@ -1,7 +1,9 @@
-import DemoAppsComponent from '../components/demo-apps';
-
 const DemoApps = (props: any) => {
-    return <DemoAppsComponent />;
+    return (
+        <>
+            <h2>Demo Apps</h2>
+        </>
+    );
 };
 
 export default DemoApps;

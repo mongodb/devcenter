@@ -1,7 +1,9 @@
-import DeveloperTopicsAComponent from '../components/developer-topics';
-
 const DeveloperTopics = (props: any) => {
-    return <DeveloperTopicsAComponent />;
+    return (
+        <>
+            <h2>Developer Topics</h2>
+        </>
+    );
 };
 
 export default DeveloperTopics;

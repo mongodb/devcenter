@@ -1,7 +1,9 @@
-import CodeExamplesComponent from '../components/code-examples';
-
 const CodeExamples = (props: any) => {
-    return <CodeExamplesComponent />;
+    return (
+        <>
+            <h2>Code Examples</h2>
+        </>
+    );
 };
 
 export default CodeExamples;

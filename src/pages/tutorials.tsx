@@ -1,7 +1,9 @@
-import TutorialsComponent from '../components/tutorials';
-
 const Tutorials = (props: any) => {
-    return <TutorialsComponent />;
+    return (
+        <>
+            <h2>Tutorials</h2>
+        </>
+    );
 };
 
 export default Tutorials;
