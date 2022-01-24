@@ -4,7 +4,9 @@ import type { NextPage } from 'next';
 import { ArticleResponse } from '../interfaces/responses/article-response';
 import NavBar from '../components/subnavigation/navbar';
 
-type HomeProps = { allArticles: ArticleResponse[] };
+interface HomeProps {
+    allArticles: ArticleResponse[];
+}
 
 const Home: NextPage<HomeProps> = () => (
     <>

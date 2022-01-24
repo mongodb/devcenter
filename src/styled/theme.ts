@@ -1,5 +1,3 @@
-import { css } from '@emotion/react';
-
 /**
  * @type {Object.<string, string>}
  * @property {string} fontsize returns px value
@@ -185,41 +183,6 @@ const screenSize = {
     xlargeAndUp: `not all and (max-width: ${size.maxWidth})`,
 };
 
-const gridLayout = {
-    desktop: {
-        columnGap: '24px',
-        numCols: 12,
-        sideMargin: size.xxlarge,
-    },
-    mobile: {
-        columnGap: size.default,
-        numCols: 4,
-        sideMargin: size.default,
-    },
-    tablet: {
-        columnGap: size.default,
-        numCols: 8,
-        sideMargin: size.xlarge,
-    },
-};
-
-const grid = css`
-    display: grid;
-    grid-template-columns: repeat(${gridLayout.desktop.numCols}, 1fr);
-    column-gap: ${gridLayout.desktop.columnGap};
-    margin: 0 ${gridLayout.desktop.sideMargin};
-    @media ${screenSize.upToLarge} {
-        grid-template-columns: repeat(${gridLayout.tablet.numCols}, 1fr);
-        column-gap: ${gridLayout.tablet.columnGap};
-        margin: 0 ${gridLayout.tablet.sideMargin};
-    }
-    @media ${screenSize.upToMedium} {
-        grid-template-columns: repeat(${gridLayout.mobile.numCols}, 1fr);
-        column-gap: ${gridLayout.mobile.columnGap};
-        margin: 0 ${gridLayout.mobile.sideMargin};
-    }
-`;
-
 /**
  * z-index values in ranges of 10. This should give enough leeway to incremement in components as needed.
  * @type {Object.<string, number>}
@@ -261,7 +224,6 @@ export {
     fontSize,
     FORM_ELEMENT_BORDER,
     gradientMap,
-    grid,
     HERO_CONTENT_WIDTH,
     layer,
     lineHeight,
