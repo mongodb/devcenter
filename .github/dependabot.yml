@@ -1,0 +1,16 @@
+version: 2
+registries:
+    artifactory:
+        type: npm-registry
+        url: https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/
+        token: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
+updates:
+    - package-ecosystem: npm
+      directory: /
+      schedule:
+          interval: daily
+      registries:
+          - artifactory
+      reviewers:
+          - mcolella14
+          - harikakotipalli
