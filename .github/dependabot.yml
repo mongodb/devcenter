@@ -3,7 +3,8 @@ registries:
     artifactory:
         type: npm-registry
         url: https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/
-        token: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
+        username: ${{ secrets.ARTIFACTORY_NPM_EMAIL}}
+        password: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
 updates:
     - package-ecosystem: npm
       directory: /
