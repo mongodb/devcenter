@@ -5,6 +5,7 @@ on:
 env:
     NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
     NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
+    STRAPI_URL: ${{ secrets.STRAPI_DEV_URL }}
 jobs:
     check-formatting-and-lint:
         runs-on: ubuntu-latest
