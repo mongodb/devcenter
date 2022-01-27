@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 
-import { getArticles } from '../requests/articles';
 import { Article } from '../interfaces/article';
 
 interface HomeProps {
@@ -26,7 +25,8 @@ const Home: NextPage<HomeProps> = ({ articles }) => (
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async ({}) => {
-    const articles = await getArticles();
+    const articlesModule = await import('../requests/articles'); // Dynamic import to allow unit testing without importing this.
+    const articles = await articlesModule.getArticles();
     return {
         props: { articles },
     };
