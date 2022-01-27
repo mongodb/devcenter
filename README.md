@@ -30,4 +30,4 @@ We use [Prettier](https://prettier.io/) in order to keep consistent code styling
 
 ## Bundle Analyzer
 
-This project uses `@next/bundle-analyzer` to analyze our webpack bundles. If you want to analyze while building, prepend `ANALYZE=true` to your build command (`ANALYZE=true yarn build`). This will allow the build to generate html files that show a bundle analysis. See [the `webpack-bundle-analyzer` repo](https://github.com/webpack-contrib/webpack-bundle-analyzer) for more info on the underlying tool.
+This project uses `@next/bundle-analyzer` to analyze our webpack bundles. If you want to analyze while building, build with the `yarn build:analyze` command. This will allow the build to generate html files that show a bundle analysis. See [the `webpack-bundle-analyzer` repo](https://github.com/webpack-contrib/webpack-bundle-analyzer) for more info on the underlying tool.
