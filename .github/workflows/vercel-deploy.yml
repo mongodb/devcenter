@@ -6,7 +6,7 @@ env:
     NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
     NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
 jobs:
-    cypress-tests:
+    deploy:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout target branch
@@ -35,4 +35,5 @@ jobs:
                   vercel-token: ${{secrets.VERCEL_TOKEN}}
                   vercel-org-id: ${{secrets.VERCEL_ORG_ID}}
                   vercel-project-id: ${{secrets.VERCEL_PROJECT_ID}}
+                  vercel-args: '--build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }}'
                   scope: ${{secrets.VERCEL_ORG_ID}}
