@@ -1,32 +1,12 @@
 name: Vercel Deploy
 on:
     push:
-    pull_request:
         branches: [main]
 env:
     NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
     NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
 jobs:
-    deploy-stage:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout target branch
-              uses: actions/checkout@v2
-            - name: Use Node 16.x
-              uses: actions/setup-node@v2
-              with:
-                  node-version: '16.x'
-            - name: Deploy to staging
-              id: deploy-vercel-staging
-              uses: amondnet/vercel-action@v20
-              if: github.event_name == 'pull_request'
-              with:
-                  vercel-token: ${{secrets.VERCEL_TOKEN}}
-                  vercel-org-id: ${{secrets.VERCEL_ORG_ID}}
-                  vercel-project-id: ${{secrets.VERCEL_PROJECT_ID}}
-                  vercel-args: '--build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }}'
-                  scope: ${{secrets.VERCEL_ORG_ID}}
-    deploy-prod:
+    deploy-prod-vercel:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout target branch
@@ -36,9 +16,7 @@ jobs:
               with:
                   node-version: '16.x'
             - name: Deploy to prod
-              id: deploy-vercel-production
               uses: amondnet/vercel-action@v20
-              if: github.event_name == 'push'
               with:
                   vercel-token: ${{secrets.VERCEL_TOKEN}}
                   vercel-org-id: ${{secrets.VERCEL_ORG_ID}}
