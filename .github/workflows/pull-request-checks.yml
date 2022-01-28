@@ -135,5 +135,5 @@ jobs:
                   vercel-token: ${{secrets.VERCEL_TOKEN}}
                   vercel-org-id: ${{secrets.VERCEL_ORG_ID}}
                   vercel-project-id: ${{secrets.VERCEL_PROJECT_ID}}
-                  vercel-args: '--prod --build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }}'
+                  vercel-args: '--build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }}'
                   scope: ${{secrets.VERCEL_ORG_ID}}
