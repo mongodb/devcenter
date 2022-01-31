@@ -1,27 +1,26 @@
-import {
-    ApolloClient,
-    InMemoryCache,
-    NormalizedCacheObject,
-} from '@apollo/client';
-import { RestLink } from 'apollo-link-rest';
+import { ApolloRestClient, ApolloGraphQLClient } from './apollo-client';
 
 type ApolloClientType = 'REST' | 'GraphQL';
+type ClientType = ApolloClientType; // Update this if we have more client types (e.g. Lambda)
 
-const apolloClientFactory = (
-    clientType: ApolloClientType
-): ApolloClient<NormalizedCacheObject> => {
+// Basically maps the param type to the return type so typescript knows what to do.
+type ReturnClientType<T extends ClientType> = T extends 'REST'
+    ? ApolloRestClient
+    : T extends 'GraphQL'
+    ? ApolloGraphQLClient
+    : never;
+
+const clientFactory = <T extends ClientType>(
+    clientType: T
+): ReturnClientType<T> => {
     switch (clientType) {
         case 'REST':
-            return new ApolloClient({
-                cache: new InMemoryCache(),
-                link: new RestLink({ uri: process.env.STRAPI_URL }),
-            });
+            return new ApolloRestClient() as ReturnClientType<T>;
         case 'GraphQL':
-            return new ApolloClient({
-                cache: new InMemoryCache(),
-                uri: `${process.env.STRAPI_URL}/graphql`,
-            });
+            return new ApolloGraphQLClient() as ReturnClientType<T>;
+        default:
+            throw Error('Invalid client type.');
     }
 };
 
-export { apolloClientFactory };
+export { clientFactory };

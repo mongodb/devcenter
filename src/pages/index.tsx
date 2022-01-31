@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
+import { clientFactory } from '../utils/client-factory';
 
 import { Article } from '../interfaces/article';
 
@@ -25,8 +26,8 @@ const Home: NextPage<HomeProps> = ({ articles }) => (
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async ({}) => {
-    const articlesModule = await import('../requests/articles'); // Dynamic import to allow unit testing without importing this.
-    const articles = await articlesModule.getArticles();
+    const client = clientFactory('REST');
+    const articles = client.getArticles();
     return {
         props: { articles },
     };
