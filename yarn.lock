@@ -2993,6 +2993,7 @@ graphql@16.2.0:
   version "16.2.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/graphql/-/graphql-16.2.0.tgz#de3150e80f1fc009590b92a9d16ab1b46e12b656"
   integrity sha1-3jFQ6A8fwAlZC5Kp0WqxtG4StlY=
+
 gzip-size@^6.0.0:
   version "6.0.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/gzip-size/-/gzip-size-6.0.0.tgz#065367fd50c239c0671cbcbad5be3e2eeb10e462"
@@ -4328,6 +4329,11 @@ opencollective-postinstall@^2.0.2:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
   integrity sha1-eg//l49tv6TQBiOPusmO1BmMMlk=
 
+opener@^1.5.2:
+  version "1.5.2"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
+  integrity sha1-XTfh81B3udysQwE3InGv3rKhNZg=
+
 optimism@^0.16.1:
   version "0.16.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/optimism/-/optimism-0.16.1.tgz#7c8efc1f3179f18307b887e18c15c5b7133f6e7d"
@@ -4335,10 +4341,6 @@ optimism@^0.16.1:
   dependencies:
     "@wry/context" "^0.6.0"
     "@wry/trie" "^0.3.0"
-opener@^1.5.2:
-  version "1.5.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
-  integrity sha1-XTfh81B3udysQwE3InGv3rKhNZg=
 
 optionator@^0.8.1:
   version "0.8.3"
