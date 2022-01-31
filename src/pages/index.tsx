@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { clientFactory } from '../utils/client-factory';
 
 import { Article } from '../interfaces/article';
@@ -25,9 +25,9 @@ const Home: NextPage<HomeProps> = ({ articles }) => (
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async ({}) => {
+export const getStaticProps: GetStaticProps = async ({}) => {
     const client = clientFactory('REST');
-    const articles = client.getArticles();
+    const articles = await client.getArticles();
     return {
         props: { articles },
     };
