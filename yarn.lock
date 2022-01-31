@@ -733,10 +733,10 @@
   dependencies:
     webpack-bundle-analyzer "4.3.0"
 
-"@next/env@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/env/-/env-12.0.9-canary.9.tgz#0fcf57ec260274102805ceaa7d0ad8af2c68f7fe"
-  integrity sha1-D89X7CYCdBAoBc6qfQrYryxo9/4=
+"@next/env@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/env/-/env-12.0.9.tgz#4c9e9eef00226145d9629a846b8cc31878e1328c"
+  integrity sha1-TJ6e7wAiYUXZYpqEa4zDGHjhMow=
 
 "@next/eslint-plugin-next@12.0.7":
   version "12.0.7"
@@ -745,60 +745,60 @@
   dependencies:
     glob "7.1.7"
 
-"@next/swc-android-arm64@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-android-arm64/-/swc-android-arm64-12.0.9-canary.9.tgz#7f02bcffac7f553d04222dc78c171df7ef57f23c"
-  integrity sha1-fwK8/6x/VT0EIi3HjBcd9+9X8jw=
+"@next/swc-android-arm64@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-android-arm64/-/swc-android-arm64-12.0.9.tgz#2cdbcc1814471044ea0e057b475090d25654833c"
+  integrity sha1-LNvMGBRHEETqDgV7R1CQ0lZUgzw=
 
-"@next/swc-darwin-arm64@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-darwin-arm64/-/swc-darwin-arm64-12.0.9-canary.9.tgz#a7aba9b036bcef92af3e4b3d3c1d22e9d7b593f7"
-  integrity sha1-p6upsDa875KvPks9PB0i6de1k/c=
+"@next/swc-darwin-arm64@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-darwin-arm64/-/swc-darwin-arm64-12.0.9.tgz#ea200929d7116de12c6f3b13ff75f9522c2153e3"
+  integrity sha1-6iAJKdcRbeEsbzsT/3X5UiwhU+M=
 
-"@next/swc-darwin-x64@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-darwin-x64/-/swc-darwin-x64-12.0.9-canary.9.tgz#eb1c5b95de2acfbdee539a3b870ea29c8bfa68b3"
-  integrity sha1-6xxbld4qz73uU5o7hw6inIv6aLM=
+"@next/swc-darwin-x64@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-darwin-x64/-/swc-darwin-x64-12.0.9.tgz#32800a7a9aff4bfd2038b0bce3657ece8708a87b"
+  integrity sha1-MoAKepr/S/0gOLC842V+zocIqHs=
 
-"@next/swc-linux-arm-gnueabihf@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-arm-gnueabihf/-/swc-linux-arm-gnueabihf-12.0.9-canary.9.tgz#8c2e0a25b683e7a7357bf4c763152bbb1abe520f"
-  integrity sha1-jC4KJbaD56c1e/THYxUruxq+Ug8=
+"@next/swc-linux-arm-gnueabihf@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-arm-gnueabihf/-/swc-linux-arm-gnueabihf-12.0.9.tgz#da012dfb69ad2abc3d4045395581b650048bdd7c"
+  integrity sha1-2gEt+2mtKrw9QEU5VYG2UASL3Xw=
 
-"@next/swc-linux-arm64-gnu@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-12.0.9-canary.9.tgz#cd55c5b93d522a07b35509235bd6cf627a232e7d"
-  integrity sha1-zVXFuT1SKgezVQkjW9bPYnojLn0=
+"@next/swc-linux-arm64-gnu@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-12.0.9.tgz#fe704c0a1cb048ef19d4a24b2c990574c96c933b"
+  integrity sha1-/nBMChywSO8Z1KJLLJkFdMlskzs=
 
-"@next/swc-linux-arm64-musl@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-12.0.9-canary.9.tgz#63643767da86b1a5e240fe5f32f9a1948b2a07a3"
-  integrity sha1-Y2Q3Z9qGsaXiQP5fMvmhlIsqB6M=
+"@next/swc-linux-arm64-musl@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-12.0.9.tgz#b2bb68940903cd64f7875979ed9907e946dc4f3e"
+  integrity sha1-srtolAkDzWT3h1l57ZkH6UbcTz4=
 
-"@next/swc-linux-x64-gnu@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-12.0.9-canary.9.tgz#e66ef798377a385737230b20bb02526967bec53d"
-  integrity sha1-5m73mDd6OFc3IwsguwJSaWe+xT0=
+"@next/swc-linux-x64-gnu@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-12.0.9.tgz#b700ba095551d4f6e830b92d4593a3b6e73bba82"
+  integrity sha1-twC6CVVR1PboMLktRZOjtuc7uoI=
 
-"@next/swc-linux-x64-musl@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-12.0.9-canary.9.tgz#a7d07f535cbfc3d229e25a0ec36bb3133d99631e"
-  integrity sha1-p9B/U1y/w9Ip4loOw2uzEz2ZYx4=
+"@next/swc-linux-x64-musl@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-12.0.9.tgz#678460266f544b52f1190ef0c3494e436608591e"
+  integrity sha1-Z4RgJm9US1LxGQ7ww0lOQ2YIWR4=
 
-"@next/swc-win32-arm64-msvc@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-12.0.9-canary.9.tgz#016f09af742ef288e90c22c14967a61e105b6256"
-  integrity sha1-AW8Jr3Qu8ojpDCLBSWemHhBbYlY=
+"@next/swc-win32-arm64-msvc@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-12.0.9.tgz#f70e5bd0821ca168aeef117e51ab870265ceeeb1"
+  integrity sha1-9w5b0IIcoWiu7xF+UauHAmXO7rE=
 
-"@next/swc-win32-ia32-msvc@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-12.0.9-canary.9.tgz#91e18aeba621751074e69e3cba46d2350daafa00"
-  integrity sha1-keGK66YhdRB05p48ukbSNQ2q+gA=
+"@next/swc-win32-ia32-msvc@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-12.0.9.tgz#0b853793754642cde9f9099087d4a86b6a99a24d"
+  integrity sha1-C4U3k3VGQs3p+QmQh9Soa2qZok0=
 
-"@next/swc-win32-x64-msvc@12.0.9-canary.9":
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.0.9-canary.9.tgz#290b4edb687e9b70656b933b763ed8e985b8fcf9"
-  integrity sha1-KQtO22h+m3Bla5M7dj7Y6YW4/Pk=
+"@next/swc-win32-x64-msvc@12.0.9":
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.0.9.tgz#f7d3b59000082cf65c84fdc61930b708aa5446e5"
+  integrity sha1-99O1kAAILPZchP3GGTC3CKpURuU=
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -1713,15 +1713,10 @@ camelize@^1.0.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/camelize/-/camelize-1.0.0.tgz#164a5483e630fa4321e5af07020e531831b2609b"
   integrity sha1-FkpUg+Yw+kMh5a8HAg5TGDGyYJs=
 
-caniuse-lite@^1.0.30001283:
+caniuse-lite@^1.0.30001283, caniuse-lite@^1.0.30001286:
   version "1.0.30001302"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/caniuse-lite/-/caniuse-lite-1.0.30001302.tgz#da57ce61c51177ef3661eeed7faef392d3790aaa"
   integrity sha1-2lfOYcURd+82Ye7tf67zktN5Cqo=
-
-caniuse-lite@^1.0.30001286:
-  version "1.0.30001299"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/caniuse-lite/-/caniuse-lite-1.0.30001299.tgz#d753bf6444ed401eb503cbbe17aa3e1451b5a68c"
-  integrity sha1-11O/ZETtQB61A8u+F6o+FFG1pow=
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -4118,28 +4113,28 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-next@12.0.9-canary.9:
-  version "12.0.9-canary.9"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/next/-/next-12.0.9-canary.9.tgz#1429fe13b1dbf2100846d56641bf95dc5b10c93a"
-  integrity sha1-FCn+E7Hb8hAIRtVmQb+V3FsQyTo=
+next@12.0.9:
+  version "12.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/next/-/next-12.0.9.tgz#4eb3006b63bb866f5c2918ca0003e98f4259e063"
+  integrity sha1-TrMAa2O7hm9cKRjKAAPpj0JZ4GM=
   dependencies:
-    "@next/env" "12.0.9-canary.9"
+    "@next/env" "12.0.9"
     caniuse-lite "^1.0.30001283"
     postcss "8.4.5"
     styled-jsx "5.0.0"
     use-subscription "1.5.1"
   optionalDependencies:
-    "@next/swc-android-arm64" "12.0.9-canary.9"
-    "@next/swc-darwin-arm64" "12.0.9-canary.9"
-    "@next/swc-darwin-x64" "12.0.9-canary.9"
-    "@next/swc-linux-arm-gnueabihf" "12.0.9-canary.9"
-    "@next/swc-linux-arm64-gnu" "12.0.9-canary.9"
-    "@next/swc-linux-arm64-musl" "12.0.9-canary.9"
-    "@next/swc-linux-x64-gnu" "12.0.9-canary.9"
-    "@next/swc-linux-x64-musl" "12.0.9-canary.9"
-    "@next/swc-win32-arm64-msvc" "12.0.9-canary.9"
-    "@next/swc-win32-ia32-msvc" "12.0.9-canary.9"
-    "@next/swc-win32-x64-msvc" "12.0.9-canary.9"
+    "@next/swc-android-arm64" "12.0.9"
+    "@next/swc-darwin-arm64" "12.0.9"
+    "@next/swc-darwin-x64" "12.0.9"
+    "@next/swc-linux-arm-gnueabihf" "12.0.9"
+    "@next/swc-linux-arm64-gnu" "12.0.9"
+    "@next/swc-linux-arm64-musl" "12.0.9"
+    "@next/swc-linux-x64-gnu" "12.0.9"
+    "@next/swc-linux-x64-musl" "12.0.9"
+    "@next/swc-win32-arm64-msvc" "12.0.9"
+    "@next/swc-win32-ia32-msvc" "12.0.9"
+    "@next/swc-win32-x64-msvc" "12.0.9"
 
 node-int64@^0.4.0:
   version "0.4.0"
