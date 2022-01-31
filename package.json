@@ -4,6 +4,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
+        "build:analyze": "ANALYZE=true next build",
         "start": "next start",
         "lint": "next lint",
         "format:write": "prettier --write .",
@@ -35,6 +36,7 @@
     },
     "devDependencies": {
         "@emotion/babel-plugin": "11.7.2",
+        "@next/bundle-analyzer": "12.0.8",
         "@testing-library/cypress": "8.0.2",
         "@testing-library/jest-dom": "5.16.1",
         "@testing-library/react": "12.1.2",

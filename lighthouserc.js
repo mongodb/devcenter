@@ -1,7 +1,7 @@
 module.exports = {
     ci: {
         collect: {
-            staticDistDir: './build',
+            staticDistDir: './.next',
             numberOfRuns: 2,
         },
         upload: {
