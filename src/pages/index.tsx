@@ -26,7 +26,7 @@ const Home: NextPage<HomeProps> = ({ articles }) => (
 export default Home;
 
 export const getStaticProps: GetStaticProps = async ({}) => {
-    const client = clientFactory('REST');
+    const client = clientFactory('REST', process.env.STRAPI_URL);
     const articles = await client.getArticles();
     return {
         props: { articles },

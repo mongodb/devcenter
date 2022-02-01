@@ -12,20 +12,20 @@ import { Article } from '../interfaces/article';
 class ApolloGraphQLClient {
     _client: ApolloClient<NormalizedCacheObject>;
 
-    constructor() {
+    constructor(uri: string | undefined) {
         this._client = new ApolloClient({
             cache: new InMemoryCache(),
-            uri: `${process.env.STRAPI_URL}/graphql`,
+            uri,
         });
     }
 }
 class ApolloRestClient {
     _client: ApolloClient<NormalizedCacheObject>;
 
-    constructor() {
+    constructor(uri: string | undefined) {
         this._client = new ApolloClient({
             cache: new InMemoryCache(),
-            link: new RestLink({ uri: process.env.STRAPI_URL }),
+            link: new RestLink({ uri }),
         });
     }
 

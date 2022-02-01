@@ -11,13 +11,14 @@ type ReturnClientType<T extends ClientType> = T extends 'REST'
     : never;
 
 const clientFactory = <T extends ClientType>(
-    clientType: T
+    clientType: T,
+    uri: string | undefined
 ): ReturnClientType<T> => {
     switch (clientType) {
         case 'REST':
-            return new ApolloRestClient() as ReturnClientType<T>;
+            return new ApolloRestClient(uri) as ReturnClientType<T>;
         case 'GraphQL':
-            return new ApolloGraphQLClient() as ReturnClientType<T>;
+            return new ApolloGraphQLClient(uri) as ReturnClientType<T>;
         default:
             throw Error('Invalid client type.');
     }
