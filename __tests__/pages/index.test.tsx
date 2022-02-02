@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import Home from '../src/pages/index';
-import { Article } from '../src/interfaces/article';
+import Home from '../../src/pages/index';
+import { Article } from '../../src/interfaces/article';
 
 const mockArticles: Article[] = [
     {
