@@ -1,24 +1,28 @@
-import { ApolloRestClient, ApolloGraphQLClient } from './apollo-client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { RestLink } from 'apollo-link-rest';
 
-type ApolloClientType = 'REST' | 'GraphQL';
-type ClientType = ApolloClientType; // Update this if we have more client types (e.g. Lambda)
+import { ClientType, UnderlyingClient } from '../types/client-factory';
 
-// Basically maps the param type to the return type so typescript knows what to do.
-type ReturnClientType<T extends ClientType> = T extends 'REST'
-    ? ApolloRestClient
-    : T extends 'GraphQL'
-    ? ApolloGraphQLClient
-    : never;
-
+/**
+ * Returns a client instance used to make external requests.
+ * @param client -  The type of client to create.
+ * @param uri - The URI that the client will use to connect to the data source.
+ */
 const clientFactory = <T extends ClientType>(
     clientType: T,
     uri: string | undefined
-): ReturnClientType<T> => {
+): UnderlyingClient<T> => {
     switch (clientType) {
-        case 'REST':
-            return new ApolloRestClient(uri) as ReturnClientType<T>;
-        case 'GraphQL':
-            return new ApolloGraphQLClient(uri) as ReturnClientType<T>;
+        case 'ApolloREST':
+            return new ApolloClient({
+                cache: new InMemoryCache(),
+                link: new RestLink({ uri }),
+            }) as UnderlyingClient<T>;
+        case 'ApolloGraphQL':
+            return new ApolloClient({
+                cache: new InMemoryCache(),
+                uri,
+            }) as UnderlyingClient<T>;
         default:
             throw Error('Invalid client type.');
     }

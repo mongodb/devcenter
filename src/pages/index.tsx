@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
-import { clientFactory } from '../utils/client-factory';
 
+import { clientFactory } from '../utils/client-factory';
+import getArticles from '../requests/get-articles';
 import { Article } from '../interfaces/article';
 
 interface HomeProps {
@@ -26,8 +27,8 @@ const Home: NextPage<HomeProps> = ({ articles }) => (
 export default Home;
 
 export const getStaticProps: GetStaticProps = async ({}) => {
-    const client = clientFactory('REST', process.env.STRAPI_URL);
-    const articles = await client.getArticles();
+    const client = clientFactory('ApolloREST', process.env.STRAPI_URL);
+    const articles = await getArticles(client);
     return {
         props: { articles },
     };
