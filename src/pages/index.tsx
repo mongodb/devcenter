@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
-import fetch from 'node-fetch';
 
 import { Article } from '../interfaces/article';
+import getArticles from '../requests/get-articles';
 
 interface HomeProps {
     articles: Article[];
@@ -26,12 +26,7 @@ const Home: NextPage<HomeProps> = ({ articles }) => (
 export default Home;
 
 export const getStaticProps: GetStaticProps = async ({}) => {
-    const articlesResponse = await fetch(
-        `${process.env.API_GATEWAY_URL}/articles`
-    );
-    const { articles } = (await articlesResponse.json()) as {
-        articles: Article[];
-    };
+    const articles = await getArticles();
     return {
         props: { articles },
     };
