@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
-
 import { clientFactory } from '../utils/client-factory';
 import getArticles from '../requests/get-articles';
 import { Article } from '../interfaces/article';
