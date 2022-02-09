@@ -27,3 +27,7 @@ Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress fold
 ## Formatting
 
 We use [Prettier](https://prettier.io/) in order to keep consistent code styling. Run `yarn format:write` to format the code in the project with Prettier. Alternatively, if you use VS Code, download the Prettier extension and configure it as your default JS/TS formatter. You can then point it to use the rules set out in `.prettierrc` and format on save/type.
+
+## Bundle Analyzer
+
+This project uses `@next/bundle-analyzer` to analyze our webpack bundles. If you want to analyze while building, build with the `yarn build:analyze` command. This will allow the build to generate html files that show a bundle analysis. See [the `webpack-bundle-analyzer` repo](https://github.com/webpack-contrib/webpack-bundle-analyzer) for more info on the underlying tool.
