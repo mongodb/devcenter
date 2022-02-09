@@ -28,7 +28,7 @@ export const getArticlesApollo = async (
 
 const getArticles = async (): Promise<Article[]> => {
     const articlesResponse = await fetch(
-        `${process.env.API_GATEWAY_URL}/articles`
+        `${process.env.API_GATEWAY_URL}/build/articles`
     );
     if (articlesResponse.status != 200) {
         throw Error(`Received ${articlesResponse.status} response from API.`);
