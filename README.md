@@ -10,9 +10,9 @@ We use Artifactory (MongoDB's internal package repository) as our primary source
 
 ### Local Enviroment
 
-The data for this project is fetched from a Strapi CMS. In order to get actual data, we have to configure the Strapi URL we want to use in development. To do this, create a file in the top level of this project called `.env.local` (this will be ignored by git).
+The data for this project is fetched from an AWS Lambda function. In order to get actual data, we have to configure the URL we want to use in development. To do this, create a file in the top level of this project called `.env.local` (this will be ignored by git).
 
-Currently the only variable we need to set in this file is `STRAPI_URL`. See [this DevHub wiki page](https://wiki.corp.mongodb.com/display/DEVREL/DevHub+Front-End+Guide#DevHubFrontEndGuide-InstallationandSetup) and copy the value for `STRAPI_URL` shown there (or ask a teammate).
+Currently the only variable we need to set in this file is `API_GATEWAY_URL`.
 
 ## Running Locally
 
