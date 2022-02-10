@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
-
 import { Article } from '../interfaces/article';
 import getArticles from '../requests/get-articles';
 
