@@ -1,22 +1,28 @@
 const navButtons = [
     {
-        label: 'Documentation',
+        text: 'Documentation',
+        dropdown: true,
+        dropdownItems: [
+            { text: 'Documentation', path: '/docs/' },
+            { text: 'Documentation', path: '/docs/' },
+            { text: 'Documentation', path: '/docs/' },
+        ],
         path: 'https://docs.mongodb.com',
     },
     {
-        label: 'Demo Apps',
+        text: 'Demo Apps',
         path: '/demoapps',
     },
     {
-        label: 'Tutorials',
+        text: 'Tutorials',
         path: '/tutorials',
     },
     {
-        label: 'Code Examples',
+        text: 'Code Examples',
         path: '/codeexamples',
     },
     {
-        label: 'Articles',
+        text: 'Articles',
         path: '/articles',
     },
 ];

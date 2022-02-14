@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { colorMap } from './theme';
 
-const StyledButton = styled('button')`
+const Button = styled('button')`
     background: none;
     border: none;
     color: ${colorMap.devWhite};
@@ -14,4 +14,4 @@ const DeveloperTopicsTab = styled('div')`
     justify-content: center;
 `;
 
-export { StyledButton, DeveloperTopicsTab };
+export { Button, DeveloperTopicsTab };

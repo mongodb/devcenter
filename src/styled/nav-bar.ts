@@ -4,14 +4,9 @@ import { colorMap, size } from './theme';
 const NavbarWrapper = styled('nav')`
     align-items: center;
     background: ${colorMap.greyDarkTwo};
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
     justify-content: space-around;
-    > span {
-        cursor: pointer;
-        padding: ${size.default};
-    }
-    width: 100%;
 `;
 
 export { NavbarWrapper };

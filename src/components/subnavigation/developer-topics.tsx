@@ -1,15 +1,14 @@
 import React from 'react';
-import {
-    DeveloperTopicsTab,
-    StyledButton,
-} from '../../styled/developer-topics';
+import { DeveloperTopicsTab, Button } from '../../styled/developer-topics';
 
 interface IProps {
     open: boolean;
     setIsOpen: any;
+    text: string;
 }
 
-const DeveloperTopics: React.FunctionComponent<IProps> = ({
+const SecondaryNavDropdown: React.FunctionComponent<IProps> = ({
+    text,
     open,
     setIsOpen,
 }: IProps) => {
@@ -18,11 +17,9 @@ const DeveloperTopics: React.FunctionComponent<IProps> = ({
     };
     return (
         <DeveloperTopicsTab>
-            <StyledButton onClick={handleOpening}>
-                Developer Topics
-            </StyledButton>
+            <Button onClick={handleOpening}>{text}</Button>
         </DeveloperTopicsTab>
     );
 };
 
-export default DeveloperTopics;
+export default SecondaryNavDropdown;

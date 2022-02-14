@@ -1,6 +1,7 @@
-import NavButton from './nav-button';
-import DeveloperTopics from './developer-topics';
+import SecondaryNavLink from './nav-button';
+import SecondaryNavDropdown from './developer-topics';
 import navButtons from '../../data/navbuttons';
+import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { NavbarWrapper } from '../../styled/nav-bar';
 import DeveloperTopicsMenu from './developer-topics-menu';
@@ -19,18 +20,19 @@ const NavBar: React.FunctionComponent = () => {
     return (
         <>
             <NavbarWrapper>
-                <NavButton
-                    key="dev-center-home"
-                    path="/"
-                    label="Developer Center Home"
-                />
-                <DeveloperTopics open={open} setIsOpen={setIsOpen} />
-                {navButtons.map((button: any) => (
-                    <NavButton
-                        key={button.path}
-                        path={button.path}
-                        label={button.label}
-                    />
+                <h3>University</h3>
+                {navButtons.map(({ text, path, dropdown }) => (
+                    <SecondaryNavLink key={text}>
+                        {dropdown ? (
+                            <SecondaryNavDropdown
+                                open={open}
+                                setIsOpen={setIsOpen}
+                                text={text}
+                            />
+                        ) : (
+                            <Link href={path}>{text}</Link>
+                        )}
+                    </SecondaryNavLink>
                 ))}
             </NavbarWrapper>
             {open && <DeveloperTopicsMenu ref={ref} />}

@@ -1,20 +1,24 @@
-import Link from 'next/link';
 import React from 'react';
+import styled from '@emotion/styled';
 
 interface IProps {
-    path: string;
-    label: string;
+    children: React.ReactNode;
+    key: string;
 }
 
-const NavButton: React.FunctionComponent<IProps> = ({
-    path,
-    label,
-}: IProps) => {
+const Link = styled.li`
+    padding: 0.5rem 0;
+    list-style: none;
+    color: red;
+    grid-column: span 2;
+`;
+
+const SecondaryNavLink: React.FunctionComponent<IProps> = ({key, children}) => {
     return (
-        <Link href={path} passHref>
-            <span data-testid={label}>{label}</span>
+        <Link data-testid={key}>
+            {children}
         </Link>
     );
 };
 
-export default NavButton;
+export default SecondaryNavLink;

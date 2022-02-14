@@ -6,7 +6,7 @@ const DeveloperTopicsMenu = React.forwardRef<HTMLDivElement>((_, ref) => {
     return (
         <>
             <DeveloperTopicsMenuWrapper ref={ref}>
-                <Link href="/developertopics">
+                <Link href="/developertopics" passHref>
                     <button>All Developer Topics</button>
                 </Link>
             </DeveloperTopicsMenuWrapper>
