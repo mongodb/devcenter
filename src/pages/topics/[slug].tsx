@@ -1,18 +1,17 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import styled from '@emotion/styled'; // TEMPORARY
 
 import Hero from '../../components/hero';
+import { CTA } from '../../interfaces/components/hero';
 
-const HeroSection = styled('div')`
-    background: #f9ebff;
-`;
 interface TopicProps {
     name: string;
     slug: string;
+    description: string;
+    ctas: CTA[];
 }
 
-const Topic: NextPage<TopicProps> = ({ name }) => {
+const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
@@ -20,9 +19,12 @@ const Topic: NextPage<TopicProps> = ({ name }) => {
     ];
     return (
         <>
-            <HeroSection>
-                <Hero crumbs={crumbs} />
-            </HeroSection>
+            <Hero
+                crumbs={crumbs}
+                name={name}
+                description={description}
+                ctas={ctas}
+            />
         </>
     );
 };
@@ -48,6 +50,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         {
             name: 'Atlas',
             slug: 'atlas',
+            description:
+                'Blurb consisting of a description of the title or tag for the page. No more than 2 - 3 lines, and 5 column max',
+            ctas: [
+                { text: 'Primary CTA', url: 'https://www.mongodb.com/atlas' },
+                {
+                    text: 'Secondary CTA',
+                    url: 'https://www.mongodb.com/cloud/atlas/register',
+                },
+            ],
         },
     ];
     const data = products.filter(p => p.slug === slug)[0];

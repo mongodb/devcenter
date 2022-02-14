@@ -1,20 +1,66 @@
 import React from 'react';
-import { GridLayout } from '@mdb/flora';
-import styled from '@emotion/styled';
+
+import { GridLayout, TypographyScale, Button, Link } from '@mdb/flora';
 
 import Breadcrumbs from './breadcrumbs';
 import { HeroProps } from '../interfaces/components/hero';
+import {
+    HeroContainer,
+    LeftContainer,
+    Title,
+    CTAContainer,
+} from '../styled/hero';
 
-const LeftContainer = styled('div')`
-    grid-column: span 6;
-`;
-const Hero: React.FunctionComponent<HeroProps> = ({ crumbs }) => {
+const Hero: React.FunctionComponent<HeroProps> = ({
+    crumbs,
+    name,
+    description,
+    ctas,
+}) => {
     return (
-        <GridLayout>
-            <LeftContainer>
-                <Breadcrumbs crumbs={crumbs} />
-            </LeftContainer>
-        </GridLayout>
+        <HeroContainer>
+            <GridLayout>
+                <LeftContainer>
+                    <Breadcrumbs crumbs={crumbs} />
+                    <Title variant="heading2" color="mark">
+                        {name}
+                    </Title>
+                    <TypographyScale variant="body2">
+                        {description}
+                    </TypographyScale>
+                </LeftContainer>
+                <CTAContainer>
+                    {ctas.map((cta, i) => {
+                        // Max of 2 buttons, so only bother with the first 2.
+                        if (i === 0) {
+                            return (
+                                <Button
+                                    key={cta.text}
+                                    href={cta.url}
+                                    variant="secondary"
+                                    size="large"
+                                    target="_blank"
+                                >
+                                    {cta.text}
+                                </Button>
+                            );
+                        }
+                        if (i === 1) {
+                            return (
+                                <Link
+                                    href={cta.url}
+                                    key={cta.text}
+                                    linkIcon="arrow"
+                                    target="_blank"
+                                >
+                                    {cta.text}
+                                </Link>
+                            );
+                        }
+                    })}
+                </CTAContainer>
+            </GridLayout>
+        </HeroContainer>
     );
 };
 
