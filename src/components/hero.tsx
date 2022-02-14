@@ -37,7 +37,11 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                                 <Button
                                     key={cta.text}
                                     href={cta.url}
-                                    variant="secondary"
+                                    variant={
+                                        ctas.length > 1
+                                            ? 'secondary'
+                                            : 'primary'
+                                    }
                                     size="large"
                                     target="_blank"
                                 >
