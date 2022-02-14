@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
-import { colorMap } from './theme';
 
-const StyledButton = styled('button')`
+const StyledButton = styled('div')`
     background: none;
     border: none;
-    color: ${colorMap.devWhite};
     cursor: pointer;
 `;
 
