@@ -8,7 +8,7 @@ export const LeftContainer = styled('div')`
 
 export const HeroContainer = styled('div')`
     background: ${theme.colors.purple10};
-    padding: ${theme.space.inc70} 0;
+    padding: ${theme.space.inc70};
 `;
 
 export const Title = styled(TypographyScale)`
