@@ -6,52 +6,70 @@ import secondaryNavData from '../../data/secondary-nav';
 import { colorMap, screenSize, size } from '../../styled/theme';
 
 const SecondaryNavWrapper = styled('nav')`
-    align-items: center;
     background: ${colorMap.greyDarkTwo};
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    justify-content: space-around;
 
-    .secondarynav-logo {
+    .secondary-nav-logo {
+        display: inline-block;
+        float: left;
         font-size: ${size.medium};
         font-weight: bold;
-        display: inline-block;
         margin-right: ${size.medium};
         margin-left: ${size.medium};
+        padding: 2rem 20px;
 
         @media ${screenSize.upToLarge} {
-            margin-top: ${size.medium};
+            display: block;
+            float: initial;
+            margin-bottom: 0;
         }
     }
 `;
 
-const DropDownWrapper = styled.ul`
+const SecondaryMenuList = styled.ul`
+    float: left;
+    margin: 0;
+
     @media ${screenSize.upToLarge} {
+        float: initial;
+    }
+`;
+
+const DropDownMenuList = styled.ul`
+    background-color: #ccc;
+    columns: 2;
+    left: 0;
+    min-width: 300px;
+    margin-top: 0;
+    position: absolute;
+    padding: 15px;
+    top: 96px; // Needs to be the height of the navbar
+
+    @media ${screenSize.upToLarge} {
+        columns: initial;
+        float: initial;
         position: initial;
         padding: 0;
     }
-    margin-top: 0;
-    position: absolute;
-    top: 96px; // Needs to be the height of the navbar
-    left: 0;
-    padding: 15px;
-    background-color: #ccc;
-    min-width: 300px;
 `;
 
 const DropdownListItem = styled.li`
-    padding: 1rem 0;
+    display: inline-block;
     list-style: none;
+    padding: 1rem 0;
+
+    @media ${screenSize.upToLarge} {
+        display: block;
+    }
 `;
 
 const DropDownMenu = ({ items }: any) => (
-    <DropDownWrapper>
+    <DropDownMenuList>
         {items.map(({ text, path }: any) => (
             <DropdownListItem key={text}>
                 <Link href={path}>{text}</Link>
             </DropdownListItem>
         ))}
-    </DropDownWrapper>
+    </DropDownMenuList>
 );
 
 const ShowDropDownButton = ({ text, dropdownItems }: any) => {
@@ -74,21 +92,23 @@ const SecondaryNavBar: React.FunctionComponent = () => {
     return (
         <>
             <SecondaryNavWrapper>
-                <span className="secondarynav-logo">University</span>
-                {secondaryNavData.map(
-                    ({ text, path, dropdown, dropdownItems }) => (
-                        <SecondaryNavLink key={text}>
-                            {dropdown ? (
-                                <ShowDropDownButton
-                                    text={text}
-                                    dropdownItems={dropdownItems}
-                                />
-                            ) : (
-                                <Link href={path}>{text}</Link>
-                            )}
-                        </SecondaryNavLink>
-                    )
-                )}
+                <span className="secondary-nav-logo">University</span>
+                <SecondaryMenuList>
+                    {secondaryNavData.map(
+                        ({ text, path, dropdown, dropdownItems }) => (
+                            <SecondaryNavLink key={text}>
+                                {dropdown ? (
+                                    <ShowDropDownButton
+                                        text={text}
+                                        dropdownItems={dropdownItems}
+                                    />
+                                ) : (
+                                    <Link href={path}>{text}</Link>
+                                )}
+                            </SecondaryNavLink>
+                        )
+                    )}
+                </SecondaryMenuList>
             </SecondaryNavWrapper>
         </>
     );

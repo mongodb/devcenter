@@ -9,12 +9,13 @@ interface IProps {
 
 const ListItem = styled.li`
     position: relative;
-    padding: 2rem ${size.medium};
+    padding: 2rem 5rem 2rem 0;
     list-style: none;
+    display: inline-block;
     @media ${screenSize.upToLarge} {
-        grid-column: span 12;
+        padding-left: 0;
+        display: block;
     }
-    grid-column: span 2;
 
     a {
         color: #fff;
