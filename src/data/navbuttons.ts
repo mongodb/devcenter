@@ -3,9 +3,9 @@ const navButtons = [
         text: 'Documentation',
         dropdown: true,
         dropdownItems: [
-            { text: 'Documentation', path: '/docs/' },
-            { text: 'Documentation', path: '/docs/' },
-            { text: 'Documentation', path: '/docs/' },
+            { text: 'Dropdown 1', path: '/docs/' },
+            { text: 'Dropdown 1', path: '/docs/' },
+            { text: 'Dropdown 1', path: '/docs/' },
         ],
         path: 'https://docs.mongodb.com',
     },
@@ -18,9 +18,9 @@ const navButtons = [
         path: '/tutorials',
         dropdown: true,
         dropdownItems: [
-            { text: 'Documentation', path: '/docs/' },
-            { text: 'Documentation', path: '/docs/' },
-            { text: 'Documentation', path: '/docs/' },
+            { text: 'Dropdown 2', path: '/docs/' },
+            { text: 'Dropdown 2', path: '/docs/' },
+            { text: 'Dropdown 2', path: '/docs/' },
         ],
     },
     {

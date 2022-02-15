@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 
 const DropDownWrapper = styled.ul`
     position: absolute;
-    top: 28px;
+    top: 40px; // Needs to be the height of the navbar
     left: 0;
     padding: 15px;
     background-color: #ccc;
