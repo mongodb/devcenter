@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GridLayout, TypographyScale, Button, Link } from '@mdb/flora';
+import { TypographyScale, Button, Link } from '@mdb/flora';
 
 import Breadcrumbs from './breadcrumbs';
 import { HeroProps } from '../interfaces/components/hero';
@@ -9,6 +9,7 @@ import {
     LeftContainer,
     Title,
     CTAContainer,
+    HeroGrid,
 } from '../styled/hero';
 
 const Hero: React.FunctionComponent<HeroProps> = ({
@@ -19,9 +20,9 @@ const Hero: React.FunctionComponent<HeroProps> = ({
 }) => {
     return (
         <HeroContainer>
-            <GridLayout>
+            <HeroGrid>
+                <Breadcrumbs crumbs={crumbs} />
                 <LeftContainer>
-                    <Breadcrumbs crumbs={crumbs} />
                     <Title variant="heading2" color="mark">
                         {name}
                     </Title>
@@ -63,7 +64,7 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                         }
                     })}
                 </CTAContainer>
-            </GridLayout>
+            </HeroGrid>
         </HeroContainer>
     );
 };

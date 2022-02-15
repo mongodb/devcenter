@@ -1,30 +1,79 @@
 import styled from '@emotion/styled';
 import theme from '@mdb/flora/theme';
-import { TypographyScale } from '@mdb/flora';
+import { TypographyScale, GridLayout } from '@mdb/flora';
+
+export const HeroGrid = styled(GridLayout)`
+    row-gap: ${theme.space.inc30};
+`;
 
 export const LeftContainer = styled('div')`
+    // Mobile
     grid-column: span 6;
+
+    // Tablet
+    @media (min-width: ${theme.sizes.breakpoint.medium}) {
+        grid-column: span 4;
+    }
+
+    // Desktop
+    @media (min-width: ${theme.sizes.breakpoint.large}) {
+        grid-column: span 6;
+    }
 `;
 
 export const HeroContainer = styled('div')`
     background: ${theme.colors.purple10};
-    padding: ${theme.space.inc70};
+
+    // Mobile
+    padding: ${theme.space.inc40};
+
+    // Tablet
+    @media (min-width: ${theme.sizes.breakpoint.medium}) {
+        padding: ${theme.space.inc50};
+    }
+
+    // Desktop
+    @media (min-width: ${theme.sizes.breakpoint.large}) {
+        padding: ${theme.space.inc70};
+    }
 `;
 
 export const Title = styled(TypographyScale)`
-    margin-top: ${theme.space.inc30};
-    margin-bottom: ${theme.space.inc40};
+    // Mobile/Tablet
+    margin-bottom: ${theme.space.inc20};
+
+    // Desktop
+    @media (min-width: ${theme.sizes.breakpoint.large}) {
+        margin-bottom: ${theme.space.inc40};
+    }
 `;
 
 export const CTAContainer = styled('div')`
-    width: 100%;
-    grid-column: span 6;
-    justify-self: end;
-    display: flex;
-    align-items: center;
-    margin: auto;
-    justify-content: end;
-    > *:not(:last-child) {
-        margin-right: ${theme.space.inc50};
+    // Mobile
+    display: none;
+    align-self: end;
+
+    // Tablet
+    @media (min-width: ${theme.sizes.breakpoint.medium}) {
+        align-items: end;
+
+        display: flex;
+        flex-direction: column;
+        gap: ${theme.space.inc30};
+        grid-column: span 4;
+        justify-content: end;
+        margin: auto;
+        width: 100%;
+        > a {
+            width: 184px; // aka (theme.space.base * 23). To allow the link arrow to expand.
+        }
+    }
+
+    // Desktop
+    @media (min-width: ${theme.sizes.breakpoint.large}) {
+        align-items: center;
+        gap: ${theme.space.inc50};
+        grid-column: span 6;
+        flex-direction: row;
     }
 `;

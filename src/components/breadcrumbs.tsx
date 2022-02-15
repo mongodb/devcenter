@@ -3,6 +3,7 @@ import { ESystemIconNames } from '@mdb/flora';
 import { BreadcrumbsProps } from '../interfaces/components/breadcrumbs';
 
 import {
+    Breadcrumb,
     BreadcrumbsContainer,
     StyledLink,
     StyledEyebrow,
@@ -14,19 +15,18 @@ const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({ crumbs }) => {
     return (
         <BreadcrumbsContainer>
             {crumbs.map((crumb, i) => (
-                <>
-                    <StyledLink navItem={true} href={crumb.url} key={i}>
+                <Breadcrumb key={i}>
+                    <StyledLink navItem={true} href={crumb.url}>
                         <StyledEyebrow>{crumb.text}</StyledEyebrow>
                     </StyledLink>
                     {i < crumbLength - 1 && (
                         <StyledIcon
-                            key={i}
                             color="success"
                             strokeWeight="medium"
                             name={ESystemIconNames.CHEVRON_RIGHT}
                         ></StyledIcon>
                     )}
-                </>
+                </Breadcrumb>
             ))}
         </BreadcrumbsContainer>
     );

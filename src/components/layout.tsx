@@ -11,7 +11,6 @@ const Layout: React.FunctionComponent = ({ children }) => {
         <>
             <Global styles={globalStyles} />
             <ConsistentNav />
-            <NavBar />
             <Main>{children}</Main>
             <UnifiedFooter hideLocale />
         </>

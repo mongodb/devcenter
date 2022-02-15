@@ -3,11 +3,29 @@ import theme from '@mdb/flora/theme';
 import styled from '@emotion/styled';
 
 export const BreadcrumbsContainer = styled('div')`
-    display: flex;
     align-items: center;
-    > *:not(:last-child) {
-        margin-right: ${theme.space.elementXSmall};
+    display: flex;
+    flex-wrap: wrap;
+    gap: ${theme.space.elementXSmall};
+
+    // Mobile
+    grid-column: span 6;
+
+    // Tablet
+    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
+        grid-column: span 8;
     }
+
+    // Desktop
+    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        grid-column: span 12;
+    }
+`;
+
+export const Breadcrumb = styled('div')`
+    align-items: center;
+    display: flex;
+    gap: ${theme.space.elementXSmall};
 `;
 
 export const StyledIcon = styled(SystemIcon)`

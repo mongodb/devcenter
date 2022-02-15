@@ -15,7 +15,7 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
-        { text: name },
+        { text: 'Products', url: '/topics' },
     ];
     return (
         <>
