@@ -14,7 +14,6 @@ export const HeroContainer = styled('div')`
 export const Title = styled(TypographyScale)`
     margin-top: ${theme.space.inc30};
     margin-bottom: ${theme.space.inc40};
-    font-weight: normal;
 `;
 
 export const CTAContainer = styled('div')`
