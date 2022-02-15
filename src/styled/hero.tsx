@@ -10,14 +10,9 @@ export const LeftContainer = styled('div')`
     // Mobile
     grid-column: span 6;
 
-    // Tablet
+    // Tablet/Desktop
     @media (min-width: ${theme.sizes.breakpoint.medium}) {
-        grid-column: span 4;
-    }
-
-    // Desktop
-    @media (min-width: ${theme.sizes.breakpoint.large}) {
-        grid-column: span 6;
+        grid-column: span 5;
     }
 `;
 
@@ -51,18 +46,15 @@ export const Title = styled(TypographyScale)`
 export const CTAContainer = styled('div')`
     // Mobile
     display: none;
-    align-self: end;
 
     // Tablet
     @media (min-width: ${theme.sizes.breakpoint.medium}) {
         align-items: end;
-
         display: flex;
         flex-direction: column;
         gap: ${theme.space.inc30};
-        grid-column: span 4;
+        grid-column: span 3;
         justify-content: end;
-        margin: auto;
         width: 100%;
         > a {
             width: 184px; // aka (theme.space.base * 23). To allow the link arrow to expand.
@@ -73,7 +65,7 @@ export const CTAContainer = styled('div')`
     @media (min-width: ${theme.sizes.breakpoint.large}) {
         align-items: center;
         gap: ${theme.space.inc50};
-        grid-column: span 6;
+        grid-column: span 7;
         flex-direction: row;
     }
 `;
