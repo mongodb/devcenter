@@ -1,9 +1,18 @@
-import SecondaryNavLink from './nav-button';
+import SecondaryNavLink from './nav-item';
 import navButtons from '../../data/navbuttons';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
-import { SecondaryNav } from '../../styled/nav-bar';
 import styled from '@emotion/styled';
+import { colorMap, size } from '../../styled/theme';
+
+export const SecondaryNav = styled('nav')`
+    padding: ${size.medium};
+    align-items: center;
+    background: ${colorMap.greyDarkTwo};
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    justify-content: space-around;
+`;
 
 const DropDownWrapper = styled.ul`
     position: absolute;
@@ -17,17 +26,12 @@ const DropDownWrapper = styled.ul`
 const ListItem = styled.li`
     padding: 0.5rem 0;
     list-style: none;
-
-    > a {
-        color: #fff;
-        text-decoration: none;
-    }
 `;
 
-const DropDown = ({ items, ...props }: any) =>
+const DropDown = ({ items }: any) =>
     items.map(({ text, path }: any) => (
         <ListItem key={text}>
-            <Link href={path} {...props}>
+            <Link href={path}>
                 {text}
             </Link>
         </ListItem>
@@ -40,7 +44,7 @@ const CallToActionDropDown = ({ text, dropdownItems }: any) => {
     };
     return (
         <>
-            <button onClick={onClickShowMenu}>{text}</button>
+            <button className="button-item" onClick={onClickShowMenu}>{text}</button>
             {isOpen && (
                 <DropDownWrapper>
                     <DropDown items={dropdownItems} />

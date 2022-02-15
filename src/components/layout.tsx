@@ -9,7 +9,7 @@ import {
 } from '../styled/layout';
 
 import ConsistentNav from './consistent-nav';
-import NavBar from './subnavigation/navbar';
+import NavBar from './secondarynav/navbar';
 
 const Layout: React.FunctionComponent = ({ children }) => {
     return (

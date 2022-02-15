@@ -16,6 +16,16 @@ const ListItem = styled.li`
         color: #fff;
         text-decoration: none;
     }
+
+    .button-item {
+        font-size: inherit;
+        color: #fff;
+        border: none;
+        background-color: transparent;
+        &:hover { 
+            cursor: pointer;
+        }
+    }
 `;
 
 const SecondaryNavLink: React.FunctionComponent<IProps> = ({key, children}) => {
