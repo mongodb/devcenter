@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { screenSize, size } from '../../styled/theme';
 
 interface IProps {
     children: React.ReactNode;
@@ -8,13 +9,22 @@ interface IProps {
 
 const ListItem = styled.li`
     position: relative;
-    padding: 0.5rem 0;
+    padding: 2rem ${size.medium};
     list-style: none;
+    @media ${screenSize.upToLarge} {
+        grid-column: span 12;
+    }
     grid-column: span 2;
 
-    > a {
+    a {
         color: #fff;
         text-decoration: none;
+        text-align: center;
+        display: block;
+
+        @media ${screenSize.upToLarge} {
+            text-align: left;
+        }
     }
 
     .button-item {
@@ -22,18 +32,24 @@ const ListItem = styled.li`
         color: #fff;
         border: none;
         background-color: transparent;
-        &:hover { 
+        padding: 0;
+        width: 100%;
+
+        @media ${screenSize.upToLarge} {
+            text-align: left;
+        }
+
+        &:hover {
             cursor: pointer;
         }
     }
 `;
 
-const SecondaryNavLink: React.FunctionComponent<IProps> = ({key, children}) => {
-    return (
-        <ListItem data-testid={key}>
-            {children}
-        </ListItem>
-    );
+const SecondaryNavLink: React.FunctionComponent<IProps> = ({
+    key,
+    children,
+}) => {
+    return <ListItem data-testid={key}>{children}</ListItem>;
 };
 
 export default SecondaryNavLink;

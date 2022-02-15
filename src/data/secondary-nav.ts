@@ -1,4 +1,4 @@
-const navButtons = [
+const secondaryNavData = [
     {
         text: 'Documentation',
         dropdown: true,
@@ -33,4 +33,4 @@ const navButtons = [
     },
 ];
 
-export default navButtons;
+export default secondaryNavData;

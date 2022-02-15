@@ -9,14 +9,14 @@ import {
 } from '../styled/layout';
 
 import ConsistentNav from './consistent-nav';
-import NavBar from './secondarynav/navbar';
+import SecondaryNavBar from './secondarynav';
 
 const Layout: React.FunctionComponent = ({ children }) => {
     return (
         <GlobalWrapper>
             <Global styles={globalStyles} />
             <ConsistentNav />
-            <NavBar />
+            <SecondaryNavBar />
             <Main>{children}</Main>
             <MaxWidthFooterContainer>
                 <UnifiedFooter hideLocale />
