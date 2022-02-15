@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { colorMap, size } from './theme';
 
-const NavbarWrapper = styled('nav')`
+const SecondaryNav = styled('nav')`
     align-items: center;
     background: ${colorMap.greyDarkTwo};
     display: grid;
@@ -9,4 +9,4 @@ const NavbarWrapper = styled('nav')`
     justify-content: space-around;
 `;
 
-export { NavbarWrapper };
+export { SecondaryNav };

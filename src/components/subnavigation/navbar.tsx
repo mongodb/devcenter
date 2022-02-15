@@ -1,41 +1,58 @@
 import SecondaryNavLink from './nav-button';
-import SecondaryNavDropdown from './developer-topics';
 import navButtons from '../../data/navbuttons';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
-import { NavbarWrapper } from '../../styled/nav-bar';
-import DeveloperTopicsMenu from './developer-topics-menu';
-import useOutsideClick from './hooks/use-outside-click';
+import { SecondaryNav } from '../../styled/nav-bar';
+import styled from '@emotion/styled';
 
 const NavBar: React.FunctionComponent = () => {
-    const [open, setIsOpen] = useState(false);
-    const ref = useRef<HTMLDivElement>(null); // Pass this ref down to the DeveloperTopicsMenu so we can tell when we've clicked outside of it.
+    const [isOpen, setIsOpen] = useState(false);
 
-    useOutsideClick(ref, () => {
-        if (open) {
-            setIsOpen(false);
+    const onClickShowMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const DropDownWrapper = styled.ul`
+        position: absolute;
+        top: 28px;
+        left: 0;
+        padding: 15px;
+        background-color: #ccc;
+        min-width: 300px;
+    `;
+
+    const ListItem = styled.li`
+        padding: 0.5rem 0;
+        list-style: none;
+
+        > a {
+            color: #fff;
+            text-decoration: none;
         }
-    });
+    `;
+
+    const DropDown = ({ items, ...props }: any) =>
+        items.map(({ text, path }: any) => <ListItem key={text}><Link href={path} {...props}>{text}</Link></ListItem>);
 
     return (
         <>
-            <NavbarWrapper>
-                <h3>University</h3>
-                {navButtons.map(({ text, path, dropdown }) => (
+            <SecondaryNav>
+                <span>University</span>
+                {navButtons.map(({ text, path, dropdown, dropdownItems }) => (
                     <SecondaryNavLink key={text}>
                         {dropdown ? (
-                            <SecondaryNavDropdown
-                                open={open}
-                                setIsOpen={setIsOpen}
-                                text={text}
-                            />
+                            <>
+                                <button onClick={onClickShowMenu}>
+                                    {text}
+                                </button>
+                                {isOpen && <DropDownWrapper><DropDown items={dropdownItems} /></DropDownWrapper>}
+                            </>
                         ) : (
                             <Link href={path}>{text}</Link>
                         )}
                     </SecondaryNavLink>
                 ))}
-            </NavbarWrapper>
-            {open && <DeveloperTopicsMenu ref={ref} />}
+            </SecondaryNav>
         </>
     );
 };

@@ -6,18 +6,23 @@ interface IProps {
     key: string;
 }
 
-const Link = styled.li`
+const ListItem = styled.li`
+    position: relative;
     padding: 0.5rem 0;
     list-style: none;
-    color: red;
     grid-column: span 2;
+
+    > a {
+        color: #fff;
+        text-decoration: none;
+    }
 `;
 
 const SecondaryNavLink: React.FunctionComponent<IProps> = ({key, children}) => {
     return (
-        <Link data-testid={key}>
+        <ListItem data-testid={key}>
             {children}
-        </Link>
+        </ListItem>
     );
 };
 

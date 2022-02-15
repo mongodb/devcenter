@@ -16,6 +16,12 @@ const navButtons = [
     {
         text: 'Tutorials',
         path: '/tutorials',
+        dropdown: true,
+        dropdownItems: [
+            { text: 'Documentation', path: '/docs/' },
+            { text: 'Documentation', path: '/docs/' },
+            { text: 'Documentation', path: '/docs/' },
+        ],
     },
     {
         text: 'Code Examples',
