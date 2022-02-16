@@ -1,7 +1,6 @@
 const secondaryNavData = [
     {
         text: 'Documentation',
-        dropdown: true,
         dropdownItems: [
             { text: 'Dropdown 1', path: '/docs/' },
             { text: 'Dropdown 1', path: '/docs/' },
@@ -19,7 +18,6 @@ const secondaryNavData = [
     {
         text: 'Tutorials',
         path: '/tutorials',
-        dropdown: true,
         dropdownItems: [
             { text: 'Dropdown 2', path: '/docs/' },
             { text: 'Dropdown 2', path: '/docs/' },

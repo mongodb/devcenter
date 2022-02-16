@@ -5,12 +5,20 @@ import SecondaryNavLink from './nav-item';
 import secondaryNavData from '../../data/secondary-nav';
 import { colorMap, screenSize, size } from '../../styled/theme';
 
+type SecondaryMenuListProps = {
+    isOpen: boolean;
+};
+
 const SecondaryNavWrapper = styled('nav')`
     background: ${colorMap.greyDarkTwo};
 
     .secondary-nav-logo {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
         display: inline-block;
         float: left;
+        color: inherit;
         font-size: ${size.medium};
         font-weight: bold;
         margin-right: ${size.medium};
@@ -27,10 +35,12 @@ const SecondaryNavWrapper = styled('nav')`
 
 const SecondaryMenuList = styled.ul`
     float: left;
+    height: ${(props: SecondaryMenuListProps) => (props.isOpen ? '100%' : '0')};
     margin: 0;
 
     @media ${screenSize.upToLarge} {
         float: initial;
+        overflow: hidden;
     }
 `;
 
@@ -74,13 +84,13 @@ const DropDownMenu = ({ items }: any) => (
 
 const ShowDropDownButton = ({ text, dropdownItems }: any) => {
     const [isOpen, setIsOpen] = useState(false);
-    const onMouseOverShowMenu = () => {
+    const onClickShowMenu = () => {
         setIsOpen(!isOpen);
     };
 
     return (
         <>
-            <button className="button-item" onClick={onMouseOverShowMenu}>
+            <button className="button-item" onClick={onClickShowMenu}>
                 {text}
             </button>
             {isOpen && <DropDownMenu items={dropdownItems} />}
@@ -89,15 +99,22 @@ const ShowDropDownButton = ({ text, dropdownItems }: any) => {
 };
 
 const SecondaryNavBar: React.FunctionComponent = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const openMobileMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <>
             <SecondaryNavWrapper>
-                <span className="secondary-nav-logo">University</span>
-                <SecondaryMenuList>
+                <button onClick={openMobileMenu} className="secondary-nav-logo">
+                    University
+                </button>
+                <SecondaryMenuList isOpen={isOpen}>
                     {secondaryNavData.map(
-                        ({ text, path, dropdown, dropdownItems }) => (
+                        ({ text, path, dropdownItems }) => (
                             <SecondaryNavLink key={text}>
-                                {dropdown ? (
+                                {dropdownItems?.length ? (
                                     <ShowDropDownButton
                                         text={text}
                                         dropdownItems={dropdownItems}
