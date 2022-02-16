@@ -1,7 +1,12 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
+import styled from '@emotion/styled';
+import theme from '@mdb/flora/theme';
+import { GridLayout } from '@mdb/flora';
+
 import Hero from '../../components/hero';
+import Search from '../../components/search';
 import { CTA } from '../../interfaces/components/hero';
 
 interface TopicProps {
@@ -10,6 +15,11 @@ interface TopicProps {
     description: string;
     ctas: CTA[];
 }
+
+const PageGrid = styled(GridLayout)`
+    padding: ${theme.space.inc70};
+    row-gap: 0;
+`;
 
 const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
     const crumbs = [
@@ -25,6 +35,9 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
                 description={description}
                 ctas={ctas}
             />
+            <PageGrid>
+                <Search name={name} sortByVisible={true} />
+            </PageGrid>
         </>
     );
 };
