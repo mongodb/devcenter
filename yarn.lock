@@ -734,7 +734,7 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.7.tgz#0ac71beba9b607825982e23c4a000fbdef83abf2"
   integrity sha1-Cscb66m2B4JZguI8SgAPve+Dq/I=
 
-"@mdb/flora@^0.17.5":
+"@mdb/flora@0.17.5":
   version "0.17.5"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-0.17.5.tgz#a6491dded765547673a8973d51383cc16b0b81bf"
   integrity sha1-pkkd3tdlVHZzqJc9UTg8wWsLgb8=
