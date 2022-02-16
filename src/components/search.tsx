@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import useSWR, { Fetcher } from 'swr';
+
 import {
     TextInput,
     Select,
@@ -29,14 +31,58 @@ const sortBoxStyles = {
     width: '100%',
 };
 
-const sortByOptions = ['Most Recent', 'Most Popular', 'Highest Rated'];
+const resultsStyles = {
+    gridColumn: '4 / span 9',
+    margin: 'auto',
+};
+
+const loadingStyles = {
+    ...resultsStyles,
+};
+
+const errorStyles = {
+    ...resultsStyles,
+};
+
+interface IsortByOptions {
+    [key: string]: string;
+}
+
+const sortByOptions: IsortByOptions = {
+    'Most Recent': 'recent',
+    'Most Popular': 'popular',
+    'Highest Rated': 'rated',
+};
+
+const fetcher: Fetcher<string, string> = search =>
+    fetch('whateverOurLambdaSearchFunctionIs').then(
+        res => 'Results: ' + search
+    );
 
 const Search: React.FunctionComponent<SearchProps> = ({
     name,
     sortByVisible = false,
 }) => {
     const [search, setSearch] = useState('');
-    const [sortBy, setSortBy] = useState('Most Recent');
+    const [sortBy, setSortBy] = useState('rated');
+    const { data, error } = useSWR(
+        `/articles?search=${search}&sort=${sortBy}`,
+        fetcher,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+        }
+    );
+
+    const Results = () =>
+        data ? (
+            <div sx={resultsStyles}>{data}</div>
+        ) : error ? (
+            <div sx={errorStyles}>{error}</div>
+        ) : (
+            <div sx={loadingStyles}>Loading...</div>
+        );
 
     return (
         <>
@@ -57,12 +103,13 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     sx={sortBoxStyles}
                     label="Sort by"
                     name="sort-by-box"
-                    options={sortByOptions}
-                    value={sortBy}
-                    onSelect={val => setSortBy(val)}
+                    options={Object.keys(sortByOptions)}
+                    value={sortByOptions[sortBy]}
+                    onSelect={val => setSortBy(sortByOptions[val])}
                     width="100%"
                 />
             )}
+            <Results />
         </>
     );
 };
