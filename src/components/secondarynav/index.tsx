@@ -35,11 +35,11 @@ const SecondaryNavWrapper = styled('nav')`
 
 const SecondaryMenuList = styled.ul`
     float: left;
-    height: ${(props: SecondaryMenuListProps) => (props.isOpen ? '100%' : '0')};
     margin: 0;
 
     @media ${screenSize.upToLarge} {
         float: initial;
+        height: ${(props: SecondaryMenuListProps) => (props.isOpen ? '100%' : '0')};
         overflow: hidden;
     }
 `;
@@ -55,6 +55,7 @@ const DropDownMenuList = styled.ul`
     top: 96px; // Needs to be the height of the navbar
 
     @media ${screenSize.upToLarge} {
+        background-color: transparent;
         columns: initial;
         float: initial;
         position: initial;
@@ -99,9 +100,9 @@ const ShowDropDownButton = ({ text, dropdownItems }: any) => {
 };
 
 const SecondaryNavBar: React.FunctionComponent = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
     const openMobileMenu = () => {
-        setIsOpen(!isOpen);
+        setMobileMenuIsOpen(!mobileMenuIsOpen);
     };
 
     return (
@@ -110,7 +111,7 @@ const SecondaryNavBar: React.FunctionComponent = () => {
                 <button onClick={openMobileMenu} className="secondary-nav-logo">
                     University
                 </button>
-                <SecondaryMenuList isOpen={isOpen}>
+                <SecondaryMenuList isOpen={mobileMenuIsOpen}>
                     {secondaryNavData.map(
                         ({ text, path, dropdownItems }) => (
                             <SecondaryNavLink key={text}>
