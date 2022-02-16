@@ -16,7 +16,7 @@ const globalStyles = css`
         box-sizing: inherit;
     }
     body {
-        background: ${colorMap.pageBackground};
+        background: ${colorMap.devWhite};
         color: ${colorMap.devWhite};
         font-family: akzidenz, -apple-system, BlinkMacSystemFont, 'Segoe UI',
             Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -38,7 +38,7 @@ const globalStyles = css`
 `;
 
 const GlobalWrapper = styled('div')`
-    background: ${colorMap.pageBackground};
+    background: ${colorMap.devWhite};
     display: flex;
     flex-direction: column;
     justify-content: space-between;
