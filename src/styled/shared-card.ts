@@ -48,6 +48,23 @@ const CardFooter = styled('div')`
     height: 50px;
 `;
 
+const StyledPill = styled(Pill)`
+    // Mobile
+    line-height: 24px;
+    // Tablet
+    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
+        line-height: 24px;
+    }
+    // Desktop small
+    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        line-height: 34px;
+    }
+    // Desktop large
+    @media only screen and (min-width: ${theme.sizes.breakpoint.xlarge}) {
+        line-height: 34px;
+    }
+`;
+
 const ContentWrapper = styled('div')``;
 
 export {
@@ -56,4 +73,5 @@ export {
     CardHeader,
     CardFooter,
     ContentWrapper,
+    StyledPill,
 };

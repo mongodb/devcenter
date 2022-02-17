@@ -1,13 +1,14 @@
 import React from 'react';
 import { Thumbnail } from '../../interfaces/thumnail';
 import { PillCategory } from '../../types/pill-category';
-import { HorizontalRule, Pill, TypographyScale } from '@mdb/flora';
+import { HorizontalRule, TypographyScale } from '@mdb/flora';
 import {
     SharedCardWrapper,
     ThumbnailImage,
     CardHeader,
     CardFooter,
     ContentWrapper,
+    StyledPill,
 } from '../../styled/shared-card';
 
 //It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, header, paragraph, a footer with date
@@ -38,10 +39,9 @@ const SharedCard: React.FunctionComponent<IProps> = ({
                     />
                 )}
                 <ContentWrapper>
-                    <Pill
+                    <StyledPill
                         variant="identifier"
                         text={pillCategory}
-                        size="large"
                         color="secondary"
                     />
                     <TypographyScale variant="heading5">
