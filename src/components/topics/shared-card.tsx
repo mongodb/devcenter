@@ -44,7 +44,7 @@ const SharedCard: React.FunctionComponent<IProps> = ({
                         text={pillCategory}
                         color="secondary"
                     />
-                    <TypographyScale variant="heading5">
+                    <TypographyScale variant="heading6">
                         {header}
                     </TypographyScale>
                     {description && (
