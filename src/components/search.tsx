@@ -8,6 +8,8 @@ import {
     TypographyScale,
 } from '@mdb/flora';
 
+import { ContentPiece } from '../interfaces/content-piece';
+
 interface SearchProps {
     name: string;
     sortByVisible?: boolean;
@@ -44,6 +46,14 @@ const errorStyles = {
     ...resultsStyles,
 };
 
+const dataStyles = {
+    ...resultsStyles,
+    display: 'flex',
+    flexDirection: 'column' as 'column', // theme-ui is weird about this.
+    alignItems: 'start',
+    width: '100%',
+};
+
 interface IsortByOptions {
     [key: string]: string;
 }
@@ -54,10 +64,14 @@ const sortByOptions: IsortByOptions = {
     'Highest Rated': 'rated',
 };
 
-const fetcher: Fetcher<string, string> = search =>
-    fetch('whateverOurLambdaSearchFunctionIs').then(
-        res => 'Results: ' + search
-    );
+const contentPieces: ContentPiece[] = [
+    { name: 'Some Article', description: 'Description of the article.' },
+    { name: 'Some Podcast', description: 'Description of the podcase.' },
+    { name: 'Some How To', description: 'Description of the how to.' },
+];
+
+const fetcher: Fetcher<ContentPiece[], string> = queryString =>
+    fetch('whateverOurLambdaSearchFunctionIs').then(res => contentPieces);
 
 const Search: React.FunctionComponent<SearchProps> = ({
     name,
@@ -65,8 +79,9 @@ const Search: React.FunctionComponent<SearchProps> = ({
 }) => {
     const [search, setSearch] = useState('');
     const [sortBy, setSortBy] = useState('rated');
-    const { data, error } = useSWR(
-        `/articles?search=${search}&sort=${sortBy}`,
+
+    const { data, error, isValidating } = useSWR(
+        `?search=${search}&sort=${sortBy}`,
         fetcher,
         {
             revalidateIfStale: false,
@@ -75,14 +90,25 @@ const Search: React.FunctionComponent<SearchProps> = ({
         }
     );
 
-    const Results = () =>
+    const ResultsSection = () =>
         data ? (
-            <div sx={resultsStyles}>{data}</div>
+            <div sx={dataStyles}>
+                {data.map(piece => (
+                    <div key={piece.name}>
+                        <TypographyScale variant="heading6">
+                            {piece.name}
+                        </TypographyScale>
+                        <TypographyScale variant="body2">
+                            {piece.description}
+                        </TypographyScale>
+                    </div>
+                ))}
+            </div>
         ) : error ? (
-            <div sx={errorStyles}>{error}</div>
-        ) : (
+            <div sx={errorStyles}>Could not load results</div>
+        ) : isValidating ? (
             <div sx={loadingStyles}>Loading...</div>
-        );
+        ) : null;
 
     return (
         <>
@@ -109,7 +135,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     width="100%"
                 />
             )}
-            <Results />
+            <ResultsSection />
         </>
     );
 };
