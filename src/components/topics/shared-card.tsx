@@ -47,7 +47,7 @@ const SharedCard: React.FunctionComponent<IProps> = ({
                     <TypographyScale variant="heading6">
                         {header}
                     </TypographyScale>
-                    {description && (
+                    {description && thumbnail?.size == 'medium' && (
                         <TypographyScale variant="body2">
                             {description}
                         </TypographyScale>
@@ -56,6 +56,9 @@ const SharedCard: React.FunctionComponent<IProps> = ({
             </CardHeader>
             <CardFooter>
                 <HorizontalRule spacing="none" strokeWeight="medium" />
+                <TypographyScale variant="body3">
+                    {contentDate.toDateString()}
+                </TypographyScale>
             </CardFooter>
         </SharedCardWrapper>
     );
