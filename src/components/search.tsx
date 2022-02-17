@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useSWR, { Fetcher } from 'swr';
 
 import {
+    Button,
     TextInput,
     Select,
     ESystemIconNames,
@@ -10,48 +11,39 @@ import {
 
 import { ContentPiece } from '../interfaces/content-piece';
 
-interface SearchProps {
-    name: string;
-    sortByVisible?: boolean;
-}
-
 const titleStyles = {
-    gridColumn: '4 / span 9',
-    marginBottom: 'inc40',
+    gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
+    marginBottom: ['inc30', null, 'inc40'],
 };
 // TextInput doesn't support styled components, so we have to wrap it.
 const searchBoxStyles = {
-    gridColumn: '4 / span 6',
-    marginBottom: 'inc70',
+    gridColumn: ['span 6', null, 'span 5', 'span 8', '4 / span 6'],
     '& > div': {
         width: '100%',
     },
+    marginBottom: ['inc30', null, 'inc70'],
 };
 
 const sortBoxStyles = {
-    gridColumn: '10 / span 3',
+    gridColumn: ['span 6', null, 'span 3', 'span 4', '10 / span 3'],
     width: '100%',
-};
-
-const resultsStyles = {
-    gridColumn: '4 / span 9',
-    margin: 'auto',
-};
-
-const loadingStyles = {
-    ...resultsStyles,
-};
-
-const errorStyles = {
-    ...resultsStyles,
+    marginBottom: ['inc40', null, 'inc70'],
 };
 
 const dataStyles = {
-    ...resultsStyles,
+    gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
+    margin: 'auto',
     display: 'flex',
     flexDirection: 'column' as 'column', // theme-ui is weird about this.
-    alignItems: 'start',
+    alignItems: 'center',
     width: '100%',
+    gap: ['inc40', null, 'inc50'],
+};
+
+const loadMoreStyles = {
+    marginTop: ['inc70', null, 'inc90'],
+    gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
+    mx: 'auto',
 };
 
 interface IsortByOptions {
@@ -73,15 +65,20 @@ const contentPieces: ContentPiece[] = [
 const fetcher: Fetcher<ContentPiece[], string> = queryString =>
     fetch('whateverOurLambdaSearchFunctionIs').then(res => contentPieces);
 
-const Search: React.FunctionComponent<SearchProps> = ({
-    name,
-    sortByVisible = false,
-}) => {
-    const [search, setSearch] = useState('');
-    const [sortBy, setSortBy] = useState('rated');
+type SortByType = 'recent' | 'popular' | 'rated';
+interface ResultsPageProps {
+    pageNumber: number;
+    search: string;
+    sortBy: SortByType;
+}
 
+const ResultsPage: React.FunctionComponent<ResultsPageProps> = ({
+    search,
+    sortBy,
+    pageNumber,
+}) => {
     const { data, error, isValidating } = useSWR(
-        `?search=${search}&sort=${sortBy}`,
+        `?search=${search}&sort=${sortBy}&page=${pageNumber}`,
         fetcher,
         {
             revalidateIfStale: false,
@@ -90,25 +87,46 @@ const Search: React.FunctionComponent<SearchProps> = ({
         }
     );
 
-    const ResultsSection = () =>
-        data ? (
-            <div sx={dataStyles}>
-                {data.map(piece => (
-                    <div key={piece.name}>
-                        <TypographyScale variant="heading6">
-                            {piece.name}
-                        </TypographyScale>
-                        <TypographyScale variant="body2">
-                            {piece.description}
-                        </TypographyScale>
-                    </div>
-                ))}
-            </div>
-        ) : error ? (
-            <div sx={errorStyles}>Could not load results</div>
-        ) : isValidating ? (
-            <div sx={loadingStyles}>Loading...</div>
-        ) : null;
+    return data ? (
+        <>
+            {data.map(piece => (
+                <div sx={{ width: '100%' }} key={piece.name}>
+                    <TypographyScale variant="heading6">
+                        {piece.name + ' ' + pageNumber}
+                    </TypographyScale>
+                    <TypographyScale variant="body2">
+                        {piece.description}
+                    </TypographyScale>
+                </div>
+            ))}
+        </>
+    ) : error ? (
+        <div>Could not load results</div>
+    ) : isValidating ? (
+        <div>Loading...</div>
+    ) : null;
+};
+
+interface SearchProps {
+    name: string;
+    sortByVisible?: boolean;
+}
+
+const Search: React.FunctionComponent<SearchProps> = ({
+    name,
+    sortByVisible = false,
+}) => {
+    const [search, setSearch] = useState('');
+    const [sortBy, setSortBy] = useState<SortByType>('rated');
+
+    const [pagesCount, setPagesCount] = useState(1);
+
+    const resultsPages: JSX.Element[] = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        resultsPages.push(
+            <ResultsPage search={search} sortBy={sortBy} pageNumber={i} />
+        );
+    }
 
     return (
         <>
@@ -121,7 +139,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     label={`Search ${name} Content`}
                     iconName={ESystemIconNames.SEARCH}
                     value={search}
-                    onChange={val => setSearch(val.target.value)}
+                    onChange={val => {
+                        setPagesCount(1);
+                        setSearch(val.target.value);
+                    }}
                 />
             </div>
             {sortByVisible && (
@@ -131,11 +152,23 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     name="sort-by-box"
                     options={Object.keys(sortByOptions)}
                     value={sortByOptions[sortBy]}
-                    onSelect={val => setSortBy(sortByOptions[val])}
+                    onSelect={val => {
+                        setPagesCount(1);
+                        setSortBy(sortByOptions[val] as SortByType);
+                    }}
                     width="100%"
                 />
             )}
-            <ResultsSection />
+            <div sx={dataStyles}>{resultsPages}</div>
+            <div sx={loadMoreStyles}>
+                <Button
+                    onClick={() => setPagesCount(pagesCount + 1)}
+                    variant="secondary"
+                    size="large"
+                >
+                    Load more
+                </Button>
+            </div>
         </>
     );
 };
