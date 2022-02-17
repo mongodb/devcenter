@@ -5,7 +5,13 @@ import SharedCard from '../components/topics/shared-card';
 const Articles: NextPage = () => (
     <>
         <h1>Articles</h1>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+            }}
+        >
             <SharedCard
                 pillCategory={'ARTICLE'}
                 thumbnail={{
