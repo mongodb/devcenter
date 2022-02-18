@@ -13,5 +13,6 @@ export interface IsortByOptions {
 
 export interface SearchProps {
     name: string;
-    sortByVisible?: boolean;
+    hideSortBy?: boolean;
+    filters?: string[];
 }
