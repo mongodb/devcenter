@@ -51,6 +51,7 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
                         pillCategory={pillCategory}
                         variant="identifier"
                         text={pillCategory}
+                        size="small"
                     />
                     <TypographyScale variant="heading5">
                         {title}
