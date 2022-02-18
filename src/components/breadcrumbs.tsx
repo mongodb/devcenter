@@ -14,10 +14,10 @@ const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({ crumbs }) => {
     const crumbLength = crumbs.length;
     return (
         <BreadcrumbsContainer>
-            {crumbs.map((crumb, i) => (
-                <Breadcrumb key={i}>
-                    <StyledLink navItem={true} href={crumb.url}>
-                        <StyledEyebrow>{crumb.text}</StyledEyebrow>
+            {crumbs.map(({ text, url }, i) => (
+                <Breadcrumb key={text}>
+                    <StyledLink navItem={true} href={url}>
+                        <StyledEyebrow>{text}</StyledEyebrow>
                     </StyledLink>
                     {i < crumbLength - 1 && (
                         <StyledIcon

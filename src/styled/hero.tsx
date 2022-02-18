@@ -57,7 +57,7 @@ export const CTAContainer = styled('div')`
         justify-content: end;
         width: 100%;
         > a {
-            width: 184px; // aka (theme.space.base * 23). To allow the link arrow to expand.
+            width: calc(${theme.space.base} * 23);
         }
     }
 
