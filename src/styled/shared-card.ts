@@ -13,16 +13,8 @@ const SharedCardWrapper = styled('div')`
 
     // Mobile
     width: 467px;
-    // Tablet
-    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-        width: 467px;
-    }
     // Desktop small
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        width: 336px;
-    }
-    // Desktop large
-    @media only screen and (min-width: ${theme.sizes.breakpoint.xlarge}) {
         width: 336px;
     }
 `;
@@ -74,14 +66,14 @@ const pillColorMap = {
 };
 
 const StyledPill = styled(Pill)`
-    // Mobile
-    line-height: 24px;
     margin-bottom: ${theme.space.elementXSmall};
+    background-color: ${(props: PillProps) => pillColorMap[props.pillCategory]};
+
     // Desktop small
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        line-height: 34px;
+        padding: 8px 24px;
+        letter-spacing: 3px;
     }
-    background-color: ${(props: PillProps) => pillColorMap[props.pillCategory]};
 `;
 
 const StyledTitle = styled(TypographyScale)`
