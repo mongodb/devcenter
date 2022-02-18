@@ -13,7 +13,7 @@ import {
     StyledDescription,
 } from '../../styled/shared-card';
 
-//It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, header, paragraph, a footer with date
+//It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, title, description, a footer with date
 interface IProps {
     contentDate: Date;
     description?: string;
