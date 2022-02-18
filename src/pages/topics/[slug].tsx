@@ -36,7 +36,7 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
                 ctas={ctas}
             />
             <PageGrid>
-                <Search name={name} sortByVisible={true} />
+                <Search name={name} />
             </PageGrid>
         </>
     );

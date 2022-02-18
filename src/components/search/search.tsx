@@ -23,14 +23,17 @@ import { fetcher, sortByOptions } from './utils';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     name,
-    sortByVisible = false,
+    hideSortBy = false,
+    filters = [],
 }) => {
     const [search, setSearch] = useState('');
     const [sortBy, setSortBy] = useState<SortByType>('recent');
 
     const getKey = (pageIndex: number, previousPageData: ContentPiece[]) => {
         if (previousPageData && !previousPageData.length) return null;
-        return `?search=${search}&sort=${sortBy}&page=${pageIndex}`;
+        return `?search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
+            ','
+        )}`;
     };
     const { data, size, setSize, error, isValidating } = useSWRInfinite(
         getKey,
@@ -60,7 +63,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     }}
                 />
             </div>
-            {sortByVisible && (
+            {!hideSortBy && (
                 <Select
                     sx={sortBoxStyles}
                     label="Sort by"
