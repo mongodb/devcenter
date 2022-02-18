@@ -734,10 +734,10 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.7.tgz#0ac71beba9b607825982e23c4a000fbdef83abf2"
   integrity sha1-Cscb66m2B4JZguI8SgAPve+Dq/I=
 
-"@mdb/flora@0.11.1":
-  version "0.11.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-0.11.1.tgz#400b3ff5cf27e07ac24a91244bf357058cf522cc"
-  integrity sha1-QAs/9c8n4HrCSpEkS/NXBYz1Isw=
+"@mdb/flora@0.17.5":
+  version "0.17.5"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-0.17.5.tgz#a6491dded765547673a8973d51383cc16b0b81bf"
+  integrity sha1-pkkd3tdlVHZzqJc9UTg8wWsLgb8=
   dependencies:
     "@imgix/js-core" "^3.2.1"
     codemirror "^5.62.2"
@@ -3034,6 +3034,11 @@ has@^1.0.3:
   integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
   dependencies:
     function-bind "^1.1.1"
+
+hex-rgb@4.3.0:
+  version "4.3.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/hex-rgb/-/hex-rgb-4.3.0.tgz#af5e974e83bb2fefe44d55182b004ec818c07776"
+  integrity sha1-r16XToO7L+/kTVUYKwBOyBjAd3Y=
 
 hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
