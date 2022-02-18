@@ -1031,6 +1031,13 @@
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^8.0.0"
 
+"@testing-library/user-event@14.0.0-beta.11":
+  version "14.0.0-beta.11"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/user-event/-/user-event-14.0.0-beta.11.tgz#213267cf871170df191d81a7af6c9832a6597c89"
+  integrity sha1-ITJnz4cRcN8ZHYGnr2yYMqZZfIk=
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+
 "@theme-ui/color-modes@0.10.0":
   version "0.10.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@theme-ui/color-modes/-/color-modes-0.10.0.tgz#85071f16d7d4458f3dab5a7af8b9ea459da4dcd0"

@@ -22,5 +22,5 @@ export const fetcher: Fetcher<ContentPiece[], string> = queryString =>
     new Promise(resolve => {
         if (queryString.includes('page=3')) {
             throw Error('ERROR AHHHH');
-        } else return setTimeout(resolve.bind(null, contentPieces), 500);
+        } else return setTimeout(resolve.bind(null, contentPieces), 100);
     }); // Simulate request loading time and error if we load more than 3 pages.
