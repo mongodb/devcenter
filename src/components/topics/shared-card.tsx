@@ -52,6 +52,7 @@ const SharedCard: React.FunctionComponent<IProps> = ({
                 pillCategory={pillCategory}
                 variant="identifier"
                 text={pillCategory}
+                size="small"
             />
             <StyledTitle variant="heading6">{header}</StyledTitle>
             {description && thumbnail?.size == 'medium' && (
