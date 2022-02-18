@@ -13,22 +13,22 @@ const Articles: NextPage = () => (
             }}
         >
             <SharedCard
-                pillCategory={'ARTICLE'}
+                pillCategory={'VIDEO'}
                 thumbnail={{
                     size: 'large',
                     url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
                 }}
-                header="Article1"
+                header="This is a video"
                 description="This is my first article"
                 contentDate={new Date()}
             />
             <SharedCard
-                pillCategory={'ARTICLE'}
+                pillCategory={'DEMO APP'}
                 thumbnail={{
                     size: 'medium',
                     url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
                 }}
-                header="Article1"
+                header="This is a demo App"
                 description="This is my first article"
                 contentDate={new Date()}
             />
@@ -38,13 +38,13 @@ const Articles: NextPage = () => (
                     size: 'small',
                     url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
                 }}
-                header="Article1"
+                header="This is an article"
                 description="This is my first article"
                 contentDate={new Date()}
             />
             <SharedCard
-                pillCategory={'ARTICLE'}
-                header="Article1"
+                pillCategory={'TUTORIAL'}
+                header="This is a tutorial"
                 contentDate={new Date()}
             />
         </div>

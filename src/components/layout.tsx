@@ -13,15 +13,12 @@ import NavBar from './subnavigation/navbar';
 
 const Layout: React.FunctionComponent = ({ children }) => {
     return (
-        <GlobalWrapper>
+        <>
             <Global styles={globalStyles} />
             <ConsistentNav />
-            <NavBar />
             <Main>{children}</Main>
-            <MaxWidthFooterContainer>
-                <UnifiedFooter hideLocale />
-            </MaxWidthFooterContainer>
-        </GlobalWrapper>
+            <UnifiedFooter hideLocale />
+        </>
     );
 };
 

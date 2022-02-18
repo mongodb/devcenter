@@ -1,7 +1,6 @@
 export type PillCategory =
     | 'ARTICLE'
-    | 'COMMUNITY'
-    | 'QUICKSTART'
-    | 'HOW-TO'
+    | 'DEMO APP'
+    | 'TUTORIAL'
     | 'PODCAST'
     | 'VIDEO';

@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { ThumbnailSizes } from '../types/thumbnail-size';
 import theme from '@mdb/flora/theme';
-import { Pill, TypographyScale } from '@mdb/flora';
+import { HorizontalRule, Pill, TypographyScale } from '@mdb/flora';
+import { PillCategory } from '../types/pill-category';
 
 const SharedCardWrapper = styled('div')`
     padding: 32px;
@@ -42,36 +43,69 @@ const ThumbnailImage = styled('img')`
     border-radius: 8px;
 `;
 
-const CardHeader = styled('div')``;
-
-const CardFooter = styled('div')`
-    height: 50px;
+const ThumbnailWrapper = styled('div')`
+    // Mobile
+    margin-bottom: ${theme.space.elementXSmall};
+    // Desktop small
+    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        margin-bottom: ${theme.space.elementSmall};
+    }
 `;
+
+const FooterContent = styled('div')`
+    // Mobile
+    margin-top: ${theme.space.elementXSmall};
+    // Desktop small
+    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        margin-top: ${theme.space.elementSmall};
+    }
+`;
+
+type PillProps = {
+    pillCategory: PillCategory;
+};
+
+const pillColorMap = {
+    VIDEO: '#F9EBFF',
+    ARTICLE: '#E3FCF7',
+    'DEMO APP': '#FFEC9E',
+    TUTORIAL: '#E9FF99',
+    PODCAST: '#FFCDC7',
+};
 
 const StyledPill = styled(Pill)`
     // Mobile
     line-height: 24px;
-    // Tablet
-    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-        line-height: 24px;
-    }
+    margin-bottom: ${theme.space.elementXSmall};
     // Desktop small
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         line-height: 34px;
     }
-    // Desktop large
-    @media only screen and (min-width: ${theme.sizes.breakpoint.xlarge}) {
-        line-height: 34px;
-    }
+    background-color: ${(props: PillProps) => pillColorMap[props.pillCategory]};
 `;
 
-const ContentWrapper = styled('div')``;
+const StyledTitle = styled(TypographyScale)`
+    margin-bottom: ${theme.space.elementXSmall};
+`;
+
+const StyledDescription = styled(TypographyScale)``;
+
+const StyledHorizontalRule = styled(HorizontalRule)`
+    // Mobile
+    margin-top: ${theme.space.elementSmall};
+    // Desktop small
+    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        margin-top: ${theme.space.elementMedium};
+    }
+`;
 
 export {
     SharedCardWrapper,
     ThumbnailImage,
-    CardHeader,
-    CardFooter,
-    ContentWrapper,
+    FooterContent,
     StyledPill,
+    ThumbnailWrapper,
+    StyledHorizontalRule,
+    StyledTitle,
+    StyledDescription,
 };

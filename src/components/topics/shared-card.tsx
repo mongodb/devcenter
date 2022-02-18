@@ -1,14 +1,16 @@
 import React from 'react';
 import { Thumbnail } from '../../interfaces/thumnail';
 import { PillCategory } from '../../types/pill-category';
-import { HorizontalRule, TypographyScale } from '@mdb/flora';
+import { ESingleImageVariant, SingleImage, TypographyScale } from '@mdb/flora';
 import {
     SharedCardWrapper,
     ThumbnailImage,
-    CardHeader,
-    CardFooter,
-    ContentWrapper,
     StyledPill,
+    FooterContent,
+    ThumbnailWrapper,
+    StyledHorizontalRule,
+    StyledTitle,
+    StyledDescription,
 } from '../../styled/shared-card';
 
 //It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, header, paragraph, a footer with date
@@ -30,36 +32,39 @@ const SharedCard: React.FunctionComponent<IProps> = ({
 }: IProps) => {
     return (
         <SharedCardWrapper>
-            <CardHeader>
-                {thumbnail && (
-                    <ThumbnailImage
-                        size={thumbnail?.size ? thumbnail.size : 'medium'}
-                        loading="lazy"
-                        src={thumbnail?.url}
-                    />
-                )}
-                <ContentWrapper>
-                    <StyledPill
-                        variant="identifier"
-                        text={pillCategory}
-                        color="secondary"
-                    />
-                    <TypographyScale variant="heading6">
-                        {header}
-                    </TypographyScale>
-                    {description && thumbnail?.size == 'medium' && (
-                        <TypographyScale variant="body2">
-                            {description}
-                        </TypographyScale>
+            {thumbnail && (
+                <ThumbnailWrapper>
+                    {thumbnail.size === 'large' ? (
+                        <SingleImage
+                            src={thumbnail.url}
+                            variant={ESingleImageVariant.VIDEO}
+                        />
+                    ) : (
+                        <ThumbnailImage
+                            size={thumbnail.size}
+                            loading="lazy"
+                            src={thumbnail?.url}
+                        />
                     )}
-                </ContentWrapper>
-            </CardHeader>
-            <CardFooter>
-                <HorizontalRule spacing="none" strokeWeight="medium" />
+                </ThumbnailWrapper>
+            )}
+            <StyledPill
+                pillCategory={pillCategory}
+                variant="identifier"
+                text={pillCategory}
+            />
+            <StyledTitle variant="heading6">{header}</StyledTitle>
+            {description && thumbnail?.size == 'medium' && (
+                <StyledDescription variant="body2">
+                    {description}
+                </StyledDescription>
+            )}
+            <StyledHorizontalRule spacing="none" strokeWeight="medium" />
+            <FooterContent>
                 <TypographyScale variant="body3">
                     {contentDate.toDateString()}
                 </TypographyScale>
-            </CardFooter>
+            </FooterContent>
         </SharedCardWrapper>
     );
 };
