@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import theme from '@mdb/flora/theme';
 import { PillCategory } from '../types/pill-category';
-import { Pill } from '@mdb/flora';
+import { Pill, Tag, TypographyScale } from '@mdb/flora';
+import Image from 'next/image';
 
 const FeaturedCardWrapper = styled('div')`
     padding: 32px;
@@ -39,38 +40,66 @@ const StyledPill = styled(Pill)`
     }
 `;
 
-const ThumbnailImage = styled('img')`
+const ThumbnailWrapper = styled('div')`
+    height: 96px;
+    width: 96px;
+    // Tablet
+    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
+        height: 180px;
+        width: 180px;
+    }
+`;
+
+const StyledThumbnail = styled(Image)`
     border-radius: 8px;
-    width: 180px;
-    height: 180px;
 `;
 
 const CardHeader = styled('div')`
-    height: 313.5px;
     display: flex;
-    justify-content: space-between;
+    column-gap: ${theme.space.elementXSmall};
+    // Tablet
+    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
+        column-gap: ${theme.space.elementMedium};
+    }
 `;
 
-const CardFooter = styled('div')`
-    height: 99.5px;
-`;
-
-const ContentWrapper = styled('div')`
-    width: 420px;
-`;
+const ContentWrapper = styled('div')``;
 
 const TagWrapper = styled('div')`
     display: flex;
     gap: 10px;
-    flex-wrap: wrap;
+`;
+
+const StyledDescription = styled(TypographyScale)`
+    display: none;
+    // Tablet
+    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
+        display: block;
+    }
+`;
+
+const StyledTag = styled(Tag)`
+    // Mobile
+    display: none;
+    // Tablet
+    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
+        display: block;
+    }
+    //desktop
+    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        padding: 8px 16px;
+        font-size: 16px;
+    }
 `;
 
 export {
     FeaturedCardWrapper,
-    ThumbnailImage,
     CardHeader,
-    CardFooter,
     ContentWrapper,
     TagWrapper,
     StyledPill,
+    StyledDescription,
+    StyledTag,
+    StyledThumbnail,
+    ThumbnailWrapper,
 };

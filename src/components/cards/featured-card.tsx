@@ -1,18 +1,19 @@
 import React from 'react';
 import { Thumbnail } from '../../interfaces/thumbnail';
 import { PillCategory } from '../../types/pill-category';
-import { HorizontalRule, Tag, TypographyScale } from '@mdb/flora';
+import { HorizontalRule, TypographyScale } from '@mdb/flora';
 import {
     FeaturedCardWrapper,
-    ThumbnailImage,
     CardHeader,
-    CardFooter,
     ContentWrapper,
     TagWrapper,
     StyledPill,
+    StyledDescription,
+    StyledTag,
+    StyledThumbnail,
+    ThumbnailWrapper,
 } from '../../styled/feature-card';
 
-//It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, header, paragraph, a footer with date
 interface IProps {
     authors?: string[];
     contentDate: Date;
@@ -20,7 +21,7 @@ interface IProps {
     title: string;
     pillCategory: PillCategory;
     tags?: string[];
-    thumbnail?: Thumbnail;
+    thumbnail: Thumbnail;
 }
 
 /*
@@ -32,6 +33,10 @@ Talked to Michael Waltzer about podcast cards and looks like we would like to ke
 We can provide support to have a variant for podcast cards that only displays the thumbnail, pill, header, and footer with the date
 Authors section is conditional so will render if there are authors
  */
+
+const myLoader = ({ src, width, quality }: any) => {
+    return `${src}?w=${width}&q=${quality || 75}`;
+};
 
 const FeatureCard: React.FunctionComponent<IProps> = ({
     authors,
@@ -45,7 +50,14 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
     return (
         <FeaturedCardWrapper>
             <CardHeader>
-                <ThumbnailImage loading="lazy" src={thumbnail?.url} />
+                <ThumbnailWrapper>
+                    <StyledThumbnail
+                        loader={myLoader}
+                        src={thumbnail?.url}
+                        width={180}
+                        height={180}
+                    />
+                </ThumbnailWrapper>
                 <ContentWrapper>
                     <StyledPill
                         pillCategory={pillCategory}
@@ -53,22 +65,25 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
                         text={pillCategory}
                         size="small"
                     />
-                    <TypographyScale variant="heading5">
+                    <TypographyScale variant="heading6">
                         {title}
                     </TypographyScale>
-                    <TypographyScale variant="body2">
+                    <StyledDescription variant="body2">
                         {description}
-                    </TypographyScale>
+                    </StyledDescription>
                     <TagWrapper>
                         {tags?.map(tag => (
-                            <Tag key={tag}>{tag}</Tag>
+                            <StyledTag key={tag} variant="small">
+                                {tag}
+                            </StyledTag>
                         ))}
                     </TagWrapper>
                 </ContentWrapper>
             </CardHeader>
-            <CardFooter>
-                <HorizontalRule spacing="none" strokeWeight="medium" />
-            </CardFooter>
+            <HorizontalRule spacing="none" strokeWeight="medium" />
+            <TypographyScale variant="body3">
+                {contentDate.toDateString()}
+            </TypographyScale>
         </FeaturedCardWrapper>
     );
 };
