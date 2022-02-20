@@ -1,7 +1,7 @@
 import React from 'react';
 import { Thumbnail } from '../../interfaces/thumbnail';
 import { PillCategory } from '../../types/pill-category';
-import { HorizontalRule, TypographyScale } from '@mdb/flora';
+import { TypographyScale } from '@mdb/flora';
 import {
     FeaturedCardWrapper,
     CardHeader,
@@ -12,6 +12,9 @@ import {
     StyledTag,
     StyledThumbnail,
     ThumbnailWrapper,
+    StyledTitle,
+    StyledHorizontalRule,
+    FooterContent,
 } from '../../styled/feature-card';
 
 interface IProps {
@@ -54,8 +57,8 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
                     <StyledThumbnail
                         loader={myLoader}
                         src={thumbnail?.url}
-                        width={180}
-                        height={180}
+                        width={500}
+                        height={500}
                     />
                 </ThumbnailWrapper>
                 <ContentWrapper>
@@ -65,9 +68,7 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
                         text={pillCategory}
                         size="small"
                     />
-                    <TypographyScale variant="heading6">
-                        {title}
-                    </TypographyScale>
+                    <StyledTitle variant="heading6">{title}</StyledTitle>
                     <StyledDescription variant="body2">
                         {description}
                     </StyledDescription>
@@ -80,10 +81,12 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
                     </TagWrapper>
                 </ContentWrapper>
             </CardHeader>
-            <HorizontalRule spacing="none" strokeWeight="medium" />
-            <TypographyScale variant="body3">
-                {contentDate.toDateString()}
-            </TypographyScale>
+            <StyledHorizontalRule spacing="none" strokeWeight="medium" />
+            <FooterContent>
+                <TypographyScale variant="body3">
+                    {contentDate.toDateString()}
+                </TypographyScale>
+            </FooterContent>
         </FeaturedCardWrapper>
     );
 };
