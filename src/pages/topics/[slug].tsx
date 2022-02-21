@@ -1,8 +1,12 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-
 import Hero from '../../components/hero';
 import { CTA } from '../../interfaces/components/hero';
+import SharedCard from '../../components/cards/shared-card';
+import FeatureCard from '../../components/cards/featured-card';
+import React from 'react';
+import { PillCategory } from '../../types/pill-category';
+import getL1Content from '../../requests/get-l1-content';
 
 interface TopicProps {
     name: string;
@@ -17,6 +21,13 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
         { text: 'Developer Topics', url: '/topics' },
         { text: 'Products', url: '/topics' },
     ];
+    const contentCategories: PillCategory[] = [
+        'ARTICLE',
+        'VIDEO',
+        'DEMO APP',
+        'TUTORIAL',
+    ];
+
     return (
         <>
             <Hero
@@ -25,6 +36,45 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
                 description={description}
                 ctas={ctas}
             />
+            <div
+                style={{
+                    display: 'flex',
+                    gap: '20px',
+                    flexWrap: 'wrap',
+                }}
+            >
+                {contentCategories.map(c =>
+                    getL1Content()
+                        .filter(a => a.pillCategory == c)
+                        .map(d => (
+                            <SharedCard
+                                key={d.title}
+                                pillCategory={d.pillCategory}
+                                thumbnail={d.thumbnail}
+                                title={d.title}
+                                description={d.description}
+                                contentDate={d.contentDate}
+                            />
+                        ))
+                )}
+            </div>
+            <div style={{}}>
+                {contentCategories.map(c =>
+                    getL1Content()
+                        .filter(a => a.pillCategory == c)
+                        .map(d => (
+                            <FeatureCard
+                                key={d.title}
+                                pillCategory={d.pillCategory}
+                                thumbnail={d.thumbnail}
+                                title={d.title}
+                                description={d.description}
+                                tags={d.tags}
+                                contentDate={d.contentDate}
+                            />
+                        ))
+                )}
+            </div>
         </>
     );
 };
