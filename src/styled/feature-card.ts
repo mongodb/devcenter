@@ -3,6 +3,7 @@ import theme from '@mdb/flora/theme';
 import { PillCategory } from '../types/pill-category';
 import { HorizontalRule, Pill, Tag, TypographyScale } from '@mdb/flora';
 import Image from 'next/image';
+import { pillColorMap } from './pill-color';
 
 const FeaturedCardWrapper = styled('div')`
     padding: 32px;
@@ -21,14 +22,6 @@ const FeaturedCardWrapper = styled('div')`
 
 type PillProps = {
     pillCategory: PillCategory;
-};
-
-const pillColorMap = {
-    VIDEO: '#F9EBFF',
-    ARTICLE: '#E3FCF7',
-    'DEMO APP': '#FFEC9E',
-    TUTORIAL: '#E9FF99',
-    PODCAST: '#FFCDC7',
 };
 
 const StyledPill = styled(Pill)`
