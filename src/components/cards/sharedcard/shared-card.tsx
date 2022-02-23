@@ -44,11 +44,17 @@ export const SharedCard: React.FunctionComponent<IProps> = ({
                 <ThumbnailWrapper>
                     {thumbnail.size === 'large' ? (
                         <IntrinsicRatioWrapper>
-                            <ThumbnailImage src={thumbnail.url} layout="fill" />
+                            <ThumbnailImage
+                                loader={thumbnailLoader}
+                                alt={thumbnail.alt || 'alt not provided'}
+                                src={thumbnail.url}
+                                layout="fill"
+                            />
                         </IntrinsicRatioWrapper>
                     ) : (
                         <ThumbnailImage
                             loader={thumbnailLoader}
+                            alt={thumbnail.alt || 'alt not provided'}
                             src={thumbnail.url}
                             height={thumbnailSizeMap[thumbnail.size].height}
                             width={thumbnailSizeMap[thumbnail.size].width}

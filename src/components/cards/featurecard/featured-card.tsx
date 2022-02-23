@@ -53,6 +53,7 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
             <CardHeader>
                 <ThumbnailWrapper>
                     <StyledThumbnail
+                        alt={thumbnail.alt || 'alt not provided'}
                         loader={thumbnailLoader}
                         src={thumbnail?.url}
                         width={180}
