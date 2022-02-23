@@ -1,26 +1,27 @@
 import styled from '@emotion/styled';
 import theme from '@mdb/flora/theme';
 import { HorizontalRule, Pill, TypographyScale } from '@mdb/flora';
-import { PillCategory } from '../types/pill-category';
-import { pillColorMap } from './pill-color';
+import { PillCategory } from '../../../types/pill-category';
+import { pillColorMap } from '../styles';
 import Image from 'next/image';
 
 const SharedCardWrapper = styled('div')`
-    padding: 32px;
-    height: max-content;
-    border: 1px solid #e7eeec;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: ${theme.radii.inc50};
-    // Mobile
-    width: 467px;
-    // Desktop small
+    padding: ${theme.space.cards.paddingXXS};
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        width: 336px;
+        padding: ${theme.space.cards.paddingXS};
+    }
+    height: max-content;
+    border: ${theme.colors.card.default.border};
+    box-shadow: ${theme.shadows.level01};
+    border-radius: ${theme.radii.inc50};
+    :hover {
+        border: ${theme.colors.card.default.borderDarker};
+        box-shadow: ${theme.shadows.level03};
     }
 `;
 
 const ThumbnailImage = styled(Image)`
-    border-radius: 8px;
+    border-radius: ${theme.radii.inc30};
 `;
 
 const ThumbnailWrapper = styled('div')`
@@ -34,7 +35,6 @@ const ThumbnailWrapper = styled('div')`
 
 const IntrinsicRatioWrapper = styled('div')`
     position: relative;
-    width: 100%;
     // 16:9 ratio
     padding-top: 56.25%;
 `;
@@ -57,8 +57,8 @@ const StyledPill = styled(Pill)`
     background-color: ${(props: PillProps) => pillColorMap[props.pillCategory]};
     // Desktop small
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        padding: 8px 24px;
-        letter-spacing: 3px;
+        padding: ${theme.space.base} ${theme.space.elementSmall};
+        letter-spacing: ${theme.letterSpacings.eyebrow};
     }
 `;
 

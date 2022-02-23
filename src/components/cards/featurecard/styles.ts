@@ -1,22 +1,23 @@
 import styled from '@emotion/styled';
 import theme from '@mdb/flora/theme';
-import { PillCategory } from '../types/pill-category';
 import { HorizontalRule, Pill, Tag, TypographyScale } from '@mdb/flora';
+
+import { PillCategory } from '../../../types/pill-category';
 import Image from 'next/image';
-import { pillColorMap } from './pill-color';
+import { pillColorMap } from '../styles';
 
 const FeaturedCardWrapper = styled('div')`
-    padding: 32px;
+    padding: ${theme.space.cards.paddingXXS};
+    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        padding: ${theme.space.cards.paddingXS};
+    }
     height: max-content;
-    border: 1px solid #e7eeec;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border: ${theme.colors.card.default.border};
+    box-shadow: ${theme.shadows.level01};
     border-radius: ${theme.radii.inc50};
-
-    // Mobile
-    width: 375px;
-    // Desktop small
-    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-        width: 696px;
+    :hover {
+        border: ${theme.colors.card.default.borderDarker};
+        box-shadow: ${theme.shadows.level03};
     }
 `;
 
@@ -27,10 +28,10 @@ type PillProps = {
 const StyledPill = styled(Pill)`
     margin-bottom: ${theme.space.elementXSmall};
     background-color: ${(props: PillProps) => pillColorMap[props.pillCategory]};
-    // Desktop small
+    //Desktop small
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        padding: 8px 24px;
-        letter-spacing: 3px;
+        padding: ${theme.space.base} ${theme.space.elementSmall};
+        letter-spacing: ${theme.letterSpacings.eyebrow};
     }
 `;
 
@@ -45,7 +46,7 @@ const ThumbnailWrapper = styled('div')`
 `;
 
 const StyledThumbnail = styled(Image)`
-    border-radius: 8px;
+    border-radius: ${theme.radii.inc30};
 `;
 
 const CardHeader = styled('div')`
@@ -62,7 +63,8 @@ const ContentWrapper = styled('div')``;
 
 const TagWrapper = styled('div')`
     display: flex;
-    gap: 10px;
+    //need confirmation
+    gap: ${theme.space.base};
     flex-wrap: wrap;
 `;
 
@@ -90,8 +92,8 @@ const StyledTag = styled(Tag)`
     }
     //desktop
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        padding: 8px 16px;
-        font-size: 16px;
+        padding: ${theme.space.base} ${theme.space.elementXSmall};
+        font-size: ${theme.fontSizes.inc20};
     }
 `;
 

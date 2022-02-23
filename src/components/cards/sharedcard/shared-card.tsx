@@ -1,7 +1,7 @@
 import React from 'react';
-import { Thumbnail } from '../../interfaces/thumbnail';
-import { PillCategory } from '../../types/pill-category';
 import { TypographyScale } from '@mdb/flora';
+import { Thumbnail } from '../../../interfaces/thumbnail';
+import { PillCategory } from '../../../types/pill-category';
 import {
     SharedCardWrapper,
     ThumbnailImage,
@@ -12,11 +12,12 @@ import {
     StyledTitle,
     StyledDescription,
     IntrinsicRatioWrapper,
-} from '../../styled/shared-card';
+} from './styles';
+import { thumbnailLoader } from '../utils';
 
 //It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, title, description, a footer with date
 interface IProps {
-    contentDate: Date;
+    contentDate: string;
     description?: string;
     title: string;
     pillCategory: PillCategory;
@@ -30,11 +31,7 @@ const thumbnailSizeMap = {
     large: { height: '184px', width: '327px' },
 };
 
-const myLoader = ({ src, width, quality }: any) => {
-    return `${src}?w=${width}&q=${quality || 75}`;
-};
-
-const SharedCard: React.FunctionComponent<IProps> = ({
+export const SharedCard: React.FunctionComponent<IProps> = ({
     contentDate,
     description,
     title,
@@ -51,7 +48,7 @@ const SharedCard: React.FunctionComponent<IProps> = ({
                         </IntrinsicRatioWrapper>
                     ) : (
                         <ThumbnailImage
-                            loader={myLoader}
+                            loader={thumbnailLoader}
                             src={thumbnail.url}
                             height={thumbnailSizeMap[thumbnail.size].height}
                             width={thumbnailSizeMap[thumbnail.size].width}
@@ -73,9 +70,7 @@ const SharedCard: React.FunctionComponent<IProps> = ({
             )}
             <StyledHorizontalRule spacing="none" strokeWeight="medium" />
             <FooterContent>
-                <TypographyScale variant="body3">
-                    {contentDate.toDateString()}
-                </TypographyScale>
+                <TypographyScale variant="body3">{contentDate}</TypographyScale>
             </FooterContent>
         </SharedCardWrapper>
     );

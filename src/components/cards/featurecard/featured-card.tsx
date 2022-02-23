@@ -1,7 +1,8 @@
 import React from 'react';
-import { Thumbnail } from '../../interfaces/thumbnail';
-import { PillCategory } from '../../types/pill-category';
 import { TypographyScale } from '@mdb/flora';
+
+import { Thumbnail } from '../../../interfaces/thumbnail';
+import { PillCategory } from '../../../types/pill-category';
 import {
     FeaturedCardWrapper,
     CardHeader,
@@ -15,11 +16,12 @@ import {
     StyledTitle,
     StyledHorizontalRule,
     FooterContent,
-} from '../../styled/feature-card';
+} from './styles';
+import { thumbnailLoader } from '../utils';
 
 interface IProps {
     authors?: string[];
-    contentDate: Date;
+    contentDate: string;
     description?: string;
     title: string;
     pillCategory: PillCategory;
@@ -37,10 +39,6 @@ We can provide support to have a variant for podcast cards that only displays th
 Authors section is conditional so will render if there are authors
  */
 
-const myLoader = ({ src, width, quality }: any) => {
-    return `${src}?w=${width}&q=${quality || 75}`;
-};
-
 const FeatureCard: React.FunctionComponent<IProps> = ({
     authors,
     contentDate,
@@ -55,10 +53,10 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
             <CardHeader>
                 <ThumbnailWrapper>
                     <StyledThumbnail
-                        loader={myLoader}
+                        loader={thumbnailLoader}
                         src={thumbnail?.url}
-                        width={500}
-                        height={500}
+                        width={180}
+                        height={180}
                     />
                 </ThumbnailWrapper>
                 <ContentWrapper>
@@ -83,9 +81,7 @@ const FeatureCard: React.FunctionComponent<IProps> = ({
             </CardHeader>
             <StyledHorizontalRule spacing="none" strokeWeight="medium" />
             <FooterContent>
-                <TypographyScale variant="body3">
-                    {contentDate.toDateString()}
-                </TypographyScale>
+                <TypographyScale variant="body3">{contentDate}</TypographyScale>
             </FooterContent>
         </FeaturedCardWrapper>
     );
