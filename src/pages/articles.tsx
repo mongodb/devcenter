@@ -9,8 +9,7 @@ import FeatureCard from '../components/cards/featurecard/featured-card';
 
 const Articles: NextPage = () => (
     <>
-        <h1>FEATURED JUMBO CARDS</h1>
-
+        <div>FEATURED JUMBO CARDS</div>
         <div>
             {CONTENT_CATEGORIES.map((category: PillCategory) =>
                 getL1Content()
@@ -33,7 +32,7 @@ const Articles: NextPage = () => (
                     ))
             )}
         </div>
-        <h1>SLIDER CARDS</h1>
+        <div>SLIDER CARDS</div>
         <div
             style={{
                 display: 'flex',
