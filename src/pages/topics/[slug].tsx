@@ -1,27 +1,27 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+
+import styled from '@emotion/styled';
+import theme from '@mdb/flora/theme';
+import { GridLayout } from '@mdb/flora';
+
 import Hero from '../../components/hero';
 import Search from '../../components/search/search';
 import { CTA } from '../../interfaces/components/hero';
-import React from 'react';
-import getL1Content from '../../requests/get-l1-content';
-import { CardContent } from '../../interfaces/card-content';
 
 interface TopicProps {
     name: string;
     slug: string;
     description: string;
     ctas: CTA[];
-    results: CardContent[];
 }
 
-const Topic: NextPage<TopicProps> = ({ name, description, ctas, results }) => {
+const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
         { text: 'Products', url: '/topics' },
     ];
-
     return (
         <>
             <Hero
@@ -65,7 +65,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
                     url: 'https://www.mongodb.com/cloud/atlas/register',
                 },
             ],
-            results: getL1Content(),
         },
     ];
     const data = products.filter(p => p.slug === slug)[0];
