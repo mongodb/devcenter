@@ -52,7 +52,7 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas, content }) => {
                             CONTENT_CATEGORIES.includes(a.pillCategory)
                         )
                         .map((d: CardContent) => (
-                            <div sx={{ width: '100%' }}>
+                            <div sx={{ width: '100%' }} key={d.title}>
                                 <FeatureCard
                                     key={d.title}
                                     pillCategory={d.pillCategory}
