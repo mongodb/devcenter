@@ -7,6 +7,7 @@ import {
     Select,
     ESystemIconNames,
     TypographyScale,
+    GridLayout,
 } from '@mdb/flora';
 
 import { ContentPiece } from '../../interfaces/content-piece';
@@ -46,44 +47,56 @@ const Search: React.FunctionComponent<SearchProps> = ({
         }
     );
 
+    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSize(1);
+        setSearch(event.target.value);
+    };
+    const onSort = (val: string) => {
+        setSize(1);
+        setSortBy(sortByOptions[val] as SortByType);
+    };
+
     return (
-        <>
-            <TypographyScale variant="heading5" sx={titleStyles}>
-                All {name} Content
-            </TypographyScale>
-            <div sx={searchBoxStyles}>
-                <TextInput
-                    name="search-box"
-                    label={`Search ${name} Content`}
-                    iconName={ESystemIconNames.SEARCH}
-                    value={search}
-                    onChange={val => {
-                        setSize(1);
-                        setSearch(val.target.value);
-                    }}
+        <form role="search" sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
+            <GridLayout sx={{ rowGap: 0 }}>
+                <TypographyScale variant="heading5" sx={titleStyles}>
+                    All {name} Content
+                </TypographyScale>
+                <div sx={searchBoxStyles}>
+                    <TextInput
+                        name="search-text-input"
+                        label={`Search ${name} Content`}
+                        iconName={ESystemIconNames.SEARCH}
+                        value={search}
+                        onChange={onSearch}
+                    />
+                </div>
+                {!hideSortBy && (
+                    <Select
+                        sx={sortBoxStyles}
+                        label="Sort by"
+                        name="sort-by-dropdown"
+                        options={Object.keys(sortByOptions)}
+                        value={sortByOptions[sortBy]}
+                        onSelect={onSort}
+                        width="100%"
+                    />
+                )}
+                <Results
+                    data={data}
+                    isLoading={isValidating}
+                    hasError={error}
                 />
-            </div>
-            {!hideSortBy && (
-                <Select
-                    sx={sortBoxStyles}
-                    label="Sort by"
-                    name="sort-by-box"
-                    options={Object.keys(sortByOptions)}
-                    value={sortByOptions[sortBy]}
-                    onSelect={val => {
-                        setSize(1);
-                        setSortBy(sortByOptions[val] as SortByType);
-                    }}
-                    width="100%"
-                />
-            )}
-            <Results data={data} isLoading={isValidating} hasError={error} />
-            <div sx={loadMoreStyles}>
-                <Button onClick={() => setSize(size + 1)} variant="secondary">
-                    Load more
-                </Button>
-            </div>
-        </>
+                <div sx={loadMoreStyles}>
+                    <Button
+                        onClick={() => setSize(size + 1)}
+                        variant="secondary"
+                    >
+                        Load more
+                    </Button>
+                </div>
+            </GridLayout>
+        </form>
     );
 };
 

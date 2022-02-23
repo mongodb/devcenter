@@ -16,11 +16,6 @@ interface TopicProps {
     ctas: CTA[];
 }
 
-const PageGrid = styled(GridLayout)`
-    padding: ${theme.space.inc70};
-    row-gap: 0;
-`;
-
 const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
@@ -35,9 +30,7 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
                 description={description}
                 ctas={ctas}
             />
-            <PageGrid>
-                <Search name={name} />
-            </PageGrid>
+            <Search name={name} />
         </>
     );
 };

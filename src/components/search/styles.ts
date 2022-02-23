@@ -13,7 +13,6 @@ export const searchBoxStyles = {
 
 export const sortBoxStyles = {
     gridColumn: ['span 6', null, 'span 3', 'span 4', '10 / span 3'],
-    width: '100%',
     marginBottom: ['inc40', null, 'inc70'],
 };
 
