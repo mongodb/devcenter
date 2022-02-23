@@ -1,7 +1,12 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
+import styled from '@emotion/styled';
+import theme from '@mdb/flora/theme';
+import { GridLayout } from '@mdb/flora';
+
 import Hero from '../../components/hero';
+import Search from '../../components/search/search';
 import { CTA } from '../../interfaces/components/hero';
 
 interface TopicProps {
@@ -25,6 +30,7 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
                 description={description}
                 ctas={ctas}
             />
+            <Search name={name} />
         </>
     );
 };
