@@ -14,9 +14,15 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
-        "types": ["cypress", "@testing-library/cypress"]
+        "types": ["cypress", "@testing-library/cypress"],
+        "jsxImportSource": "theme-ui"
     },
     "rootDir": "src/",
-    "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
+    "include": [
+        "next-env.d.ts",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "external.d.ts"
+    ],
     "exclude": ["node_modules"]
 }

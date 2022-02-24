@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { screenSize, size } from '../../styled/theme';
+import { screenSize } from '../../styled/theme';
 
 interface IProps {
     children: React.ReactNode;
