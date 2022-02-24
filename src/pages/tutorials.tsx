@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import { CONTENT_CATEGORIES } from '../constants/content-categories';
 import { PillCategory } from '../types/pill-category';
 import getL1Content from '../requests/get-l1-content';
@@ -7,7 +7,11 @@ import SharedCard from '../components/cards/sharedcard/shared-card';
 import React from 'react';
 import FeatureCard from '../components/cards/featurecard/featured-card';
 
-const Tutorials: NextPage = () => (
+interface IProps {
+    results: CardContent[];
+}
+
+const Tutorials: NextPage<IProps> = ({ results }) => (
     <>
         <h1>Tutorials</h1>
         <div>SLIDER CARDS</div>
@@ -19,7 +23,7 @@ const Tutorials: NextPage = () => (
             }}
         >
             {CONTENT_CATEGORIES.map((category: PillCategory) =>
-                getL1Content()
+                results
                     .filter(
                         (result: CardContent) =>
                             result.pillCategory === category
@@ -39,7 +43,7 @@ const Tutorials: NextPage = () => (
         <div>FEATURED JUMBO CARDS</div>
         <div>
             {CONTENT_CATEGORIES.map((category: PillCategory) =>
-                getL1Content()
+                results
                     .filter(
                         (result: CardContent) =>
                             result.pillCategory === category
@@ -63,3 +67,11 @@ const Tutorials: NextPage = () => (
 );
 
 export default Tutorials;
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    let results: CardContent[] = [];
+    await getL1Content().then((result: CardContent[]) => {
+        results = result;
+    });
+    return { props: { results } };
+};

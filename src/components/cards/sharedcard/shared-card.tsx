@@ -49,6 +49,8 @@ export const SharedCard: React.FunctionComponent<IProps> = ({
                                 alt={thumbnail.alt || 'alt not provided'}
                                 src={thumbnail.url}
                                 layout="fill"
+                                placeholder="blur"
+                                blurDataURL="https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png"
                             />
                         </IntrinsicRatioWrapper>
                     ) : (
@@ -58,6 +60,8 @@ export const SharedCard: React.FunctionComponent<IProps> = ({
                             src={thumbnail.url}
                             height={thumbnailSizeMap[thumbnail.size].height}
                             width={thumbnailSizeMap[thumbnail.size].width}
+                            placeholder="blur"
+                            blurDataURL="https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png"
                         />
                     )}
                 </ThumbnailWrapper>

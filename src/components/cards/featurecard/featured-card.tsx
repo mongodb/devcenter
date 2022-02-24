@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TypographyScale } from '@mdb/flora';
 
 import { Thumbnail } from '../../../interfaces/thumbnail';
