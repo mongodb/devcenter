@@ -2,7 +2,7 @@ import theme from '@mdb/flora/theme';
 
 export const topicCardStyles = {
     display: 'flex',
-
+    textAlign: 'center' as 'center',
     width: '100%',
     alignItems: 'center',
     flexDirection: ['column' as 'column', null, 'row' as 'row'],
