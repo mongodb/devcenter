@@ -3,6 +3,7 @@ module.exports = {
         collect: {
             staticDistDir: './.next',
             numberOfRuns: 2,
+            url: ['http://localhost/', 'http://localhost/topics/atlas'],
         },
         upload: {
             target: 'temporary-public-storage',
