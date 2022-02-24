@@ -6,7 +6,7 @@ module.exports = {
             url: [
                 'http://localhost/server/pages/index.html',
                 'http://localhost/server/pages/topics/atlas.html',
-                'http://localhost/server/pages/topics/tutorials.html',
+                'http://localhost/server/pages/tutorials.html',
             ],
         },
         upload: {
