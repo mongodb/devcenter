@@ -21,7 +21,7 @@ module.exports = {
                 'image-alt': 'warn',
                 'unsized-images': 'warn',
                 'categories:performance': ['error', { minScore: 0.9 }],
-                'categories:accessibility': ['error', { minScore: 0.8 }],
+                'categories:accessibility': ['error', { minScore: 0.7 }],
                 'categories:best-practices': ['error', { minScore: 0.9 }],
                 'categories:seo': ['error', { minScore: 0.9 }],
             },
