@@ -1,5 +1,6 @@
 export interface TopicCardProps {
     label: string;
+    icon: string;
 }
 
 export interface TopicCardsContainerProps {
