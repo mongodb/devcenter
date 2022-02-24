@@ -22,6 +22,7 @@ module.exports = {
                 'unsized-images': 'warn',
                 label: 'warn',
                 'external-anchors-use-rel-noopener': 'warn', // Should reset this when we get a solution.
+                'heading-order': 'warn',
                 'categories:performance': ['error', { minScore: 0.9 }],
                 'categories:accessibility': ['error', { minScore: 0.7 }],
                 'categories:best-practices': ['error', { minScore: 0.85 }],
