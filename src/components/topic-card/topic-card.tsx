@@ -10,7 +10,7 @@ const TopicCard: React.FunctionComponent<TopicCardProps> = ({
     href,
 }) => {
     return (
-        <Link href={href}>
+        <Link href={href} passHref={true}>
             <a sx={topicCardStyles}>
                 <BrandedIcon sx={iconStyles} name={icon} />
                 <TypographyScale variant="body3">{label}</TypographyScale>
