@@ -13,6 +13,12 @@ export const topicCardStyles = {
     py: 'inc30',
     boxShadow: 'level01',
     gridColumn: ['span 2', null, null, 'span 1'],
+
+    '&:hover': {
+        border: `1px solid ${theme.colors.blue80}`,
+        boxShadow: 'level03',
+        cursor: 'pointer',
+    },
 };
 
 export const iconStyles = {
