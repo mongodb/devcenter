@@ -45,7 +45,7 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                                                   : 'primary'
                                           }
                                           size="large"
-                                          target="_blank"
+                                          target="_blank" // Flora doesn't add rel="noopener", so maybe we can contribute that.
                                       >
                                           {cta.text}
                                       </Button>
