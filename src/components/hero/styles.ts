@@ -25,7 +25,7 @@ export const linkStyles = {
 };
 
 export const heroContainerStyles = {
-    background: 'purple10',
+    bg: 'purple10',
     padding: ['inc40', null, 'inc50', 'inc70'],
 };
 
