@@ -3,7 +3,7 @@ import { ESystemIconNames } from '@mdb/flora';
 import { Link, SystemIcon, Eyebrow } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 
-import { BreadcrumbsProps } from '../../interfaces/components/breadcrumbs';
+import { BreadcrumbsProps } from './types';
 
 import {
     breadcrumbsContainerStyles,

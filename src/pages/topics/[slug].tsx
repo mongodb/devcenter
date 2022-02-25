@@ -5,7 +5,7 @@ import { GridLayout } from '@mdb/flora';
 import Hero from '../../components/hero/hero';
 import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
-import { CTA } from '../../interfaces/components/hero';
+import { CTA, Crumb } from '../../components/hero/types';
 
 interface TopicProps {
     name: string;
@@ -16,7 +16,7 @@ interface TopicProps {
 }
 
 const Topic: NextPage<TopicProps> = ({ name, description, ctas, topics }) => {
-    const crumbs = [
+    const crumbs: Crumb[] = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
         { text: 'Products', url: '/topics' },

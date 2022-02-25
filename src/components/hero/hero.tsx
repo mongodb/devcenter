@@ -3,7 +3,7 @@ import React from 'react';
 import { TypographyScale, Button, Link, GridLayout } from '@mdb/flora';
 
 import Breadcrumbs from './breadcrumbs';
-import { HeroProps } from '../../interfaces/components/hero';
+import { HeroProps } from './types';
 import { heroContainerStyles, CTAContainerStyles } from './styles';
 
 const Hero: React.FunctionComponent<HeroProps> = ({
