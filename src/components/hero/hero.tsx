@@ -3,14 +3,14 @@ import React from 'react';
 import { TypographyScale, Button, Link } from '@mdb/flora';
 
 import Breadcrumbs from './breadcrumbs';
-import { HeroProps } from '../interfaces/components/hero';
+import { HeroProps } from '../../interfaces/components/hero';
 import {
     HeroContainer,
     LeftContainer,
     Title,
     CTAContainer,
     HeroGrid,
-} from '../styled/hero';
+} from '../../styled/hero';
 
 const Hero: React.FunctionComponent<HeroProps> = ({
     crumbs,
