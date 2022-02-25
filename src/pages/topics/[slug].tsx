@@ -1,12 +1,10 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-
-import styled from '@emotion/styled';
-import theme from '@mdb/flora/theme';
 import { GridLayout } from '@mdb/flora';
 
 import Hero from '../../components/hero';
-import Search from '../../components/search/search';
+import Search from '../../components/search';
+import { TopicCardsContainer } from '../../components/topic-card';
 import { CTA } from '../../interfaces/components/hero';
 
 interface TopicProps {
@@ -14,9 +12,10 @@ interface TopicProps {
     slug: string;
     description: string;
     ctas: CTA[];
+    topics: string[];
 }
 
-const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
+const Topic: NextPage<TopicProps> = ({ name, description, ctas, topics }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
@@ -30,6 +29,11 @@ const Topic: NextPage<TopicProps> = ({ name, description, ctas }) => {
                 description={description}
                 ctas={ctas}
             />
+            <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
+                <GridLayout>
+                    <TopicCardsContainer topics={topics} name={name} />
+                </GridLayout>
+            </div>
             <Search name={name} />
         </>
     );
@@ -64,6 +68,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
                     text: 'Secondary CTA',
                     url: 'https://www.mongodb.com/cloud/atlas/register',
                 },
+            ],
+            topics: [
+                'Aggregation',
+                'Atlas Search',
+                'Charts',
+                'Other Topic Here',
             ],
         },
     ];
