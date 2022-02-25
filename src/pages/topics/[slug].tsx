@@ -2,7 +2,7 @@ import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { GridLayout } from '@mdb/flora';
 
-import Hero from '../../components/hero/hero';
+import Hero from '../../components/hero';
 import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
 import { CTA, Crumb } from '../../components/hero/types';
