@@ -1,8 +1,6 @@
 import React from 'react';
 import { TypographyScale } from '@mdb/flora';
 
-import { Thumbnail } from '../../../interfaces/thumbnail';
-import { PillCategory } from '../../../types/pill-category';
 import {
     FeaturedCardWrapper,
     CardHeader,
@@ -18,16 +16,7 @@ import {
     FooterContent,
 } from './styles';
 import { thumbnailLoader } from '../utils';
-
-interface IProps {
-    authors?: string[];
-    contentDate: string;
-    description?: string;
-    title: string;
-    pillCategory: PillCategory;
-    tags?: string[];
-    thumbnail: Thumbnail;
-}
+import { FeaturedCardProps } from './types';
 
 /*
 featured jumbo card consumes a thumbnail, pill, header, paragraph, tags, and footer with the date and Appleseed section
@@ -39,17 +28,18 @@ We can provide support to have a variant for podcast cards that only displays th
 Authors section is conditional so will render if there are authors
  */
 
-const FeatureCard: React.FunctionComponent<IProps> = ({
+const FeatureCard: React.FunctionComponent<FeaturedCardProps> = ({
     authors,
     contentDate,
+    className,
     description,
     title,
     pillCategory,
     tags,
     thumbnail,
-}: IProps) => {
+}) => {
     return (
-        <FeaturedCardWrapper>
+        <FeaturedCardWrapper className={className}>
             <CardHeader>
                 <ThumbnailWrapper>
                     <StyledThumbnail

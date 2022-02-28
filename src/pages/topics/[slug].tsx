@@ -9,7 +9,9 @@ import { CTA } from '../../interfaces/components/hero';
 
 import getL1Content from '../../requests/get-l1-content';
 import { ContentPiece } from '../../interfaces/content-piece';
-import CardSection from '../../components/card-section';
+import CardSection, {
+    FeaturedCardSection,
+} from '../../components/card-section';
 
 interface TopicProps {
     name: string;
@@ -50,6 +52,7 @@ const Topic: NextPage<TopicProps> = ({
             <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
                 <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
                     <TopicCardsContainer topics={topics} name={name} />
+                    <FeaturedCardSection content={featured} />
                     {tutorials.length > 2 && (
                         <CardSection content={tutorials} title="Tutorials" />
                     )}
