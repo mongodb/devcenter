@@ -1,7 +1,5 @@
 import React from 'react';
 import { TypographyScale } from '@mdb/flora';
-import { Thumbnail } from '../../../interfaces/thumbnail';
-import { PillCategory } from '../../../types/pill-category';
 import {
     SharedCardWrapper,
     ThumbnailImage,
@@ -14,16 +12,7 @@ import {
     IntrinsicRatioWrapper,
 } from './styles';
 import { thumbnailLoader } from '../utils';
-
-//It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, title, description, a footer with date
-interface IProps {
-    contentDate: string;
-    description?: string;
-    title: string;
-    pillCategory: PillCategory;
-    tags?: string[];
-    thumbnail?: Thumbnail;
-}
+import { SharedCardProps } from './types';
 
 const thumbnailSizeMap = {
     small: { height: '64px', width: '64px' },
@@ -31,15 +20,17 @@ const thumbnailSizeMap = {
     large: { height: '184px', width: '327px' },
 };
 
-export const SharedCard: React.FunctionComponent<IProps> = ({
+//It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, title, description, a footer with date
+export const SharedCard: React.FunctionComponent<SharedCardProps> = ({
     contentDate,
+    className,
     description,
     title,
     pillCategory,
     thumbnail,
-}: IProps) => {
+}) => {
     return (
-        <SharedCardWrapper>
+        <SharedCardWrapper className={className}>
             {thumbnail && (
                 <ThumbnailWrapper>
                     {thumbnail.size === 'large' ? (
@@ -69,7 +60,7 @@ export const SharedCard: React.FunctionComponent<IProps> = ({
                 size="small"
             />
             <StyledTitle variant="heading6">{title}</StyledTitle>
-            {description && thumbnail?.size == 'medium' && (
+            {description && (
                 <StyledDescription variant="body2">
                     {description}
                 </StyledDescription>
