@@ -9,12 +9,12 @@ import { getCardProps, getFeaturedCardProps } from './utils';
 
 const bigFeaturedCardStyles = {
     marginBottom: ['inc30', null, '0'],
-    gridColumn: ['span 2', null, 'span 6', 'span 4'],
-    gridRow: ['span 1', null, null, 'span 2'],
+    gridColumn: [null, null, 'span 6', 'span 4'],
+    gridRow: [null, null, null, 'span 2'],
 };
 const smallFeaturedCardStyles = {
     marginBottom: ['inc30', null, '0'],
-    gridColumn: ['span 2', null, 'span 3', 'span 2'],
+    gridColumn: [null, null, 'span 3', 'span 2'],
 };
 
 const FeaturedCardSection: React.FunctionComponent<

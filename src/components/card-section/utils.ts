@@ -37,7 +37,6 @@ const getThumbnail = (category: PillCategory, { url, alt }: Image) => {
         default:
             size = 'small';
     }
-    console.log(category, size);
     return {
         size,
         url,

@@ -36,10 +36,10 @@ const StyledPill = styled(Pill)`
 `;
 
 const ThumbnailWrapper = styled('div')`
-    height: 96px;
-    width: 96px;
+    display: none;
     // Tablet
     @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
+        display: block;
         height: 180px;
         width: 180px;
     }
