@@ -1,38 +1,4 @@
-import styled from '@emotion/styled';
-import theme from '@mdb/flora/theme';
-import { HorizontalRule, Pill, Tag, TypographyScale } from '@mdb/flora';
-
 import { PillCategory } from '../../../types/pill-category';
-import { pillColorMap } from '../styles';
-
-const FeaturedCardWrapper = styled('div')`
-    padding: ${theme.space.cards.paddingXXS};
-    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        padding: ${theme.space.cards.paddingXS};
-    }
-    height: max-content;
-    border: ${theme.colors.card.default.border};
-    box-shadow: ${theme.shadows.level01};
-    border-radius: ${theme.radii.inc50};
-    :hover {
-        border: ${theme.colors.card.default.borderDarker};
-        box-shadow: ${theme.shadows.level03};
-    }
-`;
-
-type PillProps = {
-    pillCategory: PillCategory;
-};
-
-const StyledPill = styled(Pill)`
-    margin-bottom: ${theme.space.elementXSmall};
-    background-color: ${(props: PillProps) => pillColorMap[props.pillCategory]};
-    //Desktop small
-    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        padding: ${theme.space.base} ${theme.space.elementSmall};
-        letter-spacing: ${theme.letterSpacings.eyebrow};
-    }
-`;
 
 export const thumbnailWrapperStyles = (
     category: PillCategory,
@@ -61,7 +27,7 @@ export const thumbnailWrapperStyles = (
                 mobileDimensions = '48px';
                 break;
             // case 'Quickstart':
-            //     mobileDimensions = '96px';
+            //     mobileDimensions = '64px';
             //     break;
             default:
                 mobileDimensions = null;
@@ -92,67 +58,21 @@ export const cardHeaderStyles = (listView: boolean) => {
     };
 };
 
-const TagWrapper = styled('div')`
-    display: flex;
-    //need confirmation
-    gap: ${theme.space.base};
-    flex-wrap: wrap;
-`;
+export const tagWrapperStyles = {
+    display: ['none', null, 'flex'],
+    gap: 'inc20',
+    flexWrap: 'wrap' as 'wrap',
+};
 
-const StyledTitle = styled(TypographyScale)`
-    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-        margin-bottom: ${theme.space.elementXSmall};
-    }
-`;
+export const descriptionStyles = {
+    display: ['none', null, 'block'],
+    marginBottom: [null, null, 'inc50'],
+    marginTop: [null, null, 'inc30'],
+};
 
-const StyledDescription = styled(TypographyScale)`
-    display: none;
-    // Tablet
-    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-        display: block;
-        margin-bottom: ${theme.space.elementMedium};
-    }
-`;
-
-const StyledTag = styled(Tag)`
-    // Mobile
-    display: none;
-    // Tablet
-    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-        display: block;
-    }
-    //desktop
-    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        padding: ${theme.space.base} ${theme.space.elementXSmall};
-        font-size: ${theme.fontSizes.inc20};
-    }
-`;
-
-const StyledHorizontalRule = styled(HorizontalRule)`
-    // Mobile
-    margin-top: ${theme.space.elementSmall};
-    // Desktop small
-    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        margin-top: ${theme.space.elementMedium};
-    }
-`;
-
-const FooterContent = styled('div')`
-    // Mobile
-    margin-top: ${theme.space.elementXSmall};
-    // Desktop small
-    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        margin-top: ${theme.space.elementSmall};
-    }
-`;
-
-export {
-    FeaturedCardWrapper,
-    TagWrapper,
-    StyledPill,
-    StyledDescription,
-    StyledTag,
-    StyledTitle,
-    StyledHorizontalRule,
-    FooterContent,
+export const tagStyles = {
+    display: ['none', null, 'block'],
+    px: [null, null, null, 'inc30'],
+    py: [null, null, null, 'inc20'],
+    fontSize: [null, null, null, 'inc20'],
 };

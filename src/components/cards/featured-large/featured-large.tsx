@@ -1,19 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
-import { TypographyScale } from '@mdb/flora';
+import { TypographyScale, Pill, Tag, HorizontalRule } from '@mdb/flora';
 
 import {
-    FeaturedCardWrapper,
-    TagWrapper,
-    StyledPill,
-    StyledDescription,
-    StyledTag,
-    StyledTitle,
-    StyledHorizontalRule,
-    FooterContent,
     cardHeaderStyles,
     thumbnailWrapperStyles,
+    tagWrapperStyles,
+    descriptionStyles,
+    tagStyles,
 } from './styles';
+import { cardWrapperStyles, pillStyles } from '../styles';
 import { thumbnailLoader } from '../utils';
 import { FeaturedCardProps } from './types';
 
@@ -39,45 +35,53 @@ const FeaturedLarge: React.FunctionComponent<FeaturedCardProps> = ({
     thumbnail,
 }) => {
     return (
-        <FeaturedCardWrapper className={className}>
+        <div sx={cardWrapperStyles} className={className}>
             <div sx={cardHeaderStyles(listView)}>
-                <div sx={thumbnailWrapperStyles(pillCategory, listView)}>
-                    <Image
-                        alt={thumbnail.alt || 'alt not provided'}
-                        loader={thumbnailLoader}
-                        src={thumbnail?.url}
-                        sx={{
-                            borderRadius: 'inc30',
-                            objectFit: 'cover',
-                        }}
-                        layout="fill"
-                    />
-                </div>
+                {thumbnail && (
+                    <div sx={thumbnailWrapperStyles(pillCategory, listView)}>
+                        <Image
+                            alt={thumbnail.alt || 'alt not provided'}
+                            loader={thumbnailLoader}
+                            src={thumbnail.url}
+                            sx={{
+                                borderRadius: 'inc30',
+                                objectFit: 'cover',
+                            }}
+                            layout="fill"
+                        />
+                    </div>
+                )}
                 <div>
-                    <StyledPill
-                        pillCategory={pillCategory}
+                    <Pill
+                        sx={pillStyles(pillCategory)}
                         variant="identifier"
                         text={pillCategory}
                         size="small"
                     />
-                    <StyledTitle variant="heading6">{title}</StyledTitle>
-                    <StyledDescription variant="body2">
+                    <TypographyScale variant="heading6">
+                        {title}
+                    </TypographyScale>
+                    <TypographyScale variant="body2" sx={descriptionStyles}>
                         {description}
-                    </StyledDescription>
-                    <TagWrapper>
+                    </TypographyScale>
+                    <div sx={tagWrapperStyles}>
                         {tags?.map(tag => (
-                            <StyledTag key={tag} variant="small">
+                            <Tag key={tag} variant="small" sx={tagStyles}>
                                 {tag}
-                            </StyledTag>
+                            </Tag>
                         ))}
-                    </TagWrapper>
+                    </div>
                 </div>
             </div>
-            <StyledHorizontalRule spacing="none" strokeWeight="medium" />
-            <FooterContent>
-                <TypographyScale variant="body3">{contentDate}</TypographyScale>
-            </FooterContent>
-        </FeaturedCardWrapper>
+            <div>
+                <HorizontalRule spacing="none" strokeWeight="medium" />
+                <div sx={{ marginTop: ['inc30', null, null, 'inc40'] }}>
+                    <TypographyScale variant="body3">
+                        {contentDate}
+                    </TypographyScale>
+                </div>
+            </div>
+        </div>
     );
 };
 
