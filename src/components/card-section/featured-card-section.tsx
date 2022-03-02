@@ -1,8 +1,7 @@
 import { TypographyScale } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
-import SharedCard from '../cards/sharedcard/shared-card';
-import FeatureCard from '../cards/featurecard/featured-card';
+import { FeaturedLarge, FeaturedMedium } from '../cards';
 import { FeaturedCardSectionProps } from './types';
 import {
     featuredCardSectionListStyles,
@@ -25,17 +24,17 @@ const FeaturedCardSection: React.FunctionComponent<
                 <TypographyScale variant="heading5">Featured</TypographyScale>
             </div>
             <Grid columns={6} sx={featuredCardSectionListStyles}>
-                <FeatureCard
+                <FeaturedLarge
                     sx={bigFeaturedCardStyles}
                     key={content[0].slug}
                     {...getFeaturedCardProps(content[1])}
                 />
-                <SharedCard
+                <FeaturedMedium
                     sx={smallFeaturedCardStyles}
                     key={content[1].slug}
                     {...getCardProps(content[0], true)}
                 />
-                <SharedCard
+                <FeaturedMedium
                     sx={smallFeaturedCardStyles}
                     key={content[2].slug}
                     {...getCardProps(content[2], true)}

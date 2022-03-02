@@ -1,7 +1,7 @@
 import { TypographyScale, Link } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
-import SharedCard from '../cards/sharedcard/shared-card';
+import { FeaturedMedium } from '../cards';
 import { CardSectionProps } from './types';
 import {
     cardSectionListStyles,
@@ -35,7 +35,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                 {content.slice(0, 3).map(piece => {
                     const cardProps = getCardProps(piece);
                     return (
-                        <SharedCard
+                        <FeaturedMedium
                             key={piece.slug}
                             {...cardProps}
                             sx={cardListStyles}

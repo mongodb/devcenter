@@ -27,7 +27,7 @@ We can provide support to have a variant for podcast cards that only displays th
 Authors section is conditional so will render if there are authors
  */
 
-const FeatureCard: React.FunctionComponent<FeaturedCardProps> = ({
+const FeaturedLarge: React.FunctionComponent<FeaturedCardProps> = ({
     authors,
     contentDate,
     className,
@@ -81,4 +81,4 @@ const FeatureCard: React.FunctionComponent<FeaturedCardProps> = ({
     );
 };
 
-export default FeatureCard;
+export default FeaturedLarge;

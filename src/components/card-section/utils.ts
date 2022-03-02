@@ -1,15 +1,15 @@
 import { PillCategory } from '../../types/pill-category';
 import { Image, ContentPiece } from '../../interfaces/content-piece';
 import { Thumbnail } from '../../interfaces/thumbnail';
-import { SharedCardProps } from '../cards/sharedcard/types';
-import { FeaturedCardProps } from '../cards/featurecard/types';
+import { FeaturedMediumCardProps } from '../cards/featured-medium/types';
+import { FeaturedCardProps } from '../cards/featured-large/types';
 
 export const getCardProps = (
     { category, contentDate, description, title, image }: ContentPiece,
     omitThumbnail: boolean = false
-): SharedCardProps => {
+): FeaturedMediumCardProps => {
     const thumbnail = omitThumbnail ? undefined : getThumbnail(category, image);
-    const cardProps: SharedCardProps = {
+    const cardProps: FeaturedMediumCardProps = {
         contentDate,
         title,
         thumbnail,

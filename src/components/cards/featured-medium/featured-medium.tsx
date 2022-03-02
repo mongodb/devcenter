@@ -12,7 +12,7 @@ import {
     IntrinsicRatioWrapper,
 } from './styles';
 import { thumbnailLoader } from '../utils';
-import { SharedCardProps } from './types';
+import { FeaturedMediumCardProps } from './types';
 
 const thumbnailSizeMap = {
     small: { height: '64px', width: '64px' },
@@ -21,7 +21,9 @@ const thumbnailSizeMap = {
 };
 
 //It will consume prop support for no thumbnail, large-medium-small thumbnail, pill, title, description, a footer with date
-export const SharedCard: React.FunctionComponent<SharedCardProps> = ({
+export const FeaturedMedium: React.FunctionComponent<
+    FeaturedMediumCardProps
+> = ({
     contentDate,
     className,
     description,
@@ -74,4 +76,4 @@ export const SharedCard: React.FunctionComponent<SharedCardProps> = ({
     );
 };
 
-export default SharedCard;
+export default FeaturedMedium;

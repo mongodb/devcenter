@@ -3,9 +3,8 @@ import { CONTENT_CATEGORIES } from '../constants/content-categories';
 import { PillCategory } from '../types/pill-category';
 import getL1Content from '../requests/get-l1-content';
 import { CardContent } from '../interfaces/card-content';
-import SharedCard from '../components/cards/sharedcard/shared-card';
 import React from 'react';
-import FeatureCard from '../components/cards/featurecard/featured-card';
+import { FeaturedLarge, FeaturedMedium } from '../components/cards';
 
 const Tutorials: NextPage = () => (
     <>
@@ -25,7 +24,7 @@ const Tutorials: NextPage = () => (
                             result.pillCategory === category
                     )
                     .map((result: CardContent) => (
-                        <SharedCard
+                        <FeaturedMedium
                             key={result.title}
                             pillCategory={result.pillCategory}
                             thumbnail={result.thumbnail}
@@ -46,7 +45,7 @@ const Tutorials: NextPage = () => (
                     )
                     .map((result: CardContent) => (
                         <div key={result.title}>
-                            <FeatureCard
+                            <FeaturedLarge
                                 key={result.title}
                                 pillCategory={result.pillCategory}
                                 thumbnail={result.thumbnail}
