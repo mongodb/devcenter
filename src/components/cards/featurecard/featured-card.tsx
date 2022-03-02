@@ -1,19 +1,18 @@
 import React from 'react';
+import Image from 'next/image';
 import { TypographyScale } from '@mdb/flora';
 
 import {
     FeaturedCardWrapper,
-    CardHeader,
-    ContentWrapper,
     TagWrapper,
     StyledPill,
     StyledDescription,
     StyledTag,
-    StyledThumbnail,
-    ThumbnailWrapper,
     StyledTitle,
     StyledHorizontalRule,
     FooterContent,
+    cardHeaderStyles,
+    thumbnailWrapperStyles,
 } from './styles';
 import { thumbnailLoader } from '../utils';
 import { FeaturedCardProps } from './types';
@@ -33,6 +32,7 @@ const FeatureCard: React.FunctionComponent<FeaturedCardProps> = ({
     contentDate,
     className,
     description,
+    listView = false,
     title,
     pillCategory,
     tags,
@@ -40,17 +40,20 @@ const FeatureCard: React.FunctionComponent<FeaturedCardProps> = ({
 }) => {
     return (
         <FeaturedCardWrapper className={className}>
-            <CardHeader>
-                <ThumbnailWrapper>
-                    <StyledThumbnail
+            <div sx={cardHeaderStyles(listView)}>
+                <div sx={thumbnailWrapperStyles(pillCategory, listView)}>
+                    <Image
                         alt={thumbnail.alt || 'alt not provided'}
                         loader={thumbnailLoader}
                         src={thumbnail?.url}
-                        width={180}
-                        height={180}
+                        sx={{
+                            borderRadius: 'inc30',
+                            objectFit: 'cover',
+                        }}
+                        layout="fill"
                     />
-                </ThumbnailWrapper>
-                <ContentWrapper>
+                </div>
+                <div>
                     <StyledPill
                         pillCategory={pillCategory}
                         variant="identifier"
@@ -68,8 +71,8 @@ const FeatureCard: React.FunctionComponent<FeaturedCardProps> = ({
                             </StyledTag>
                         ))}
                     </TagWrapper>
-                </ContentWrapper>
-            </CardHeader>
+                </div>
+            </div>
             <StyledHorizontalRule spacing="none" strokeWeight="medium" />
             <FooterContent>
                 <TypographyScale variant="body3">{contentDate}</TypographyScale>

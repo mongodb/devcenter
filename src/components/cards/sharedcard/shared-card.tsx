@@ -39,6 +39,7 @@ export const SharedCard: React.FunctionComponent<SharedCardProps> = ({
                                 loader={thumbnailLoader}
                                 alt={thumbnail.alt || 'alt not provided'}
                                 src={thumbnail.url}
+                                sx={{ objectFit: 'cover' }}
                                 layout="fill"
                             />
                         </IntrinsicRatioWrapper>

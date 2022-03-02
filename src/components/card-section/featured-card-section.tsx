@@ -4,18 +4,13 @@ import { Grid } from 'theme-ui';
 import SharedCard from '../cards/sharedcard/shared-card';
 import FeatureCard from '../cards/featurecard/featured-card';
 import { FeaturedCardSectionProps } from './types';
-import { cardSectionListStyles, sectionHeadingTopStyles } from './styles';
+import {
+    featuredCardSectionListStyles,
+    sectionHeadingTopStyles,
+    bigFeaturedCardStyles,
+    smallFeaturedCardStyles,
+} from './styles';
 import { getCardProps, getFeaturedCardProps } from './utils';
-
-const bigFeaturedCardStyles = {
-    marginBottom: ['inc30', null, '0'],
-    gridColumn: [null, null, 'span 6', 'span 4'],
-    gridRow: [null, null, null, 'span 2'],
-};
-const smallFeaturedCardStyles = {
-    marginBottom: ['inc30', null, '0'],
-    gridColumn: [null, null, 'span 3', 'span 2'],
-};
 
 const FeaturedCardSection: React.FunctionComponent<
     FeaturedCardSectionProps
@@ -29,16 +24,16 @@ const FeaturedCardSection: React.FunctionComponent<
             <div sx={sectionHeadingTopStyles}>
                 <TypographyScale variant="heading5">Featured</TypographyScale>
             </div>
-            <Grid columns={6} sx={cardSectionListStyles}>
+            <Grid columns={6} sx={featuredCardSectionListStyles}>
                 <FeatureCard
                     sx={bigFeaturedCardStyles}
                     key={content[0].slug}
-                    {...getFeaturedCardProps(content[0])}
+                    {...getFeaturedCardProps(content[1])}
                 />
                 <SharedCard
                     sx={smallFeaturedCardStyles}
                     key={content[1].slug}
-                    {...getCardProps(content[1], true)}
+                    {...getCardProps(content[0], true)}
                 />
                 <SharedCard
                     sx={smallFeaturedCardStyles}

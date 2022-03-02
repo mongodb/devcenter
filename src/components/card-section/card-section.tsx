@@ -7,6 +7,7 @@ import {
     cardSectionListStyles,
     sectionHeadingTopStyles,
     sectionHeadingBottomStyles,
+    cardListStyles,
 } from './styles';
 import { getCardProps } from './utils';
 
@@ -35,9 +36,9 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                     const cardProps = getCardProps(piece);
                     return (
                         <SharedCard
-                            sx={{ marginBottom: ['inc30', null, '0'] }}
                             key={piece.slug}
                             {...cardProps}
+                            sx={cardListStyles}
                         />
                     );
                 })}

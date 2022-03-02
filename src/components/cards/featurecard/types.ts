@@ -6,6 +6,7 @@ export interface FeaturedCardProps {
     contentDate: string;
     className?: string;
     description?: string;
+    listView?: boolean;
     title: string;
     pillCategory: PillCategory;
     tags?: string[];

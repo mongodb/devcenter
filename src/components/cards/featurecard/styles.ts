@@ -3,7 +3,6 @@ import theme from '@mdb/flora/theme';
 import { HorizontalRule, Pill, Tag, TypographyScale } from '@mdb/flora';
 
 import { PillCategory } from '../../../types/pill-category';
-import Image from 'next/image';
 import { pillColorMap } from '../styles';
 
 const FeaturedCardWrapper = styled('div')`
@@ -35,31 +34,63 @@ const StyledPill = styled(Pill)`
     }
 `;
 
-const ThumbnailWrapper = styled('div')`
-    display: none;
-    // Tablet
-    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-        display: block;
-        height: 180px;
-        width: 180px;
+export const thumbnailWrapperStyles = (
+    category: PillCategory,
+    listView: boolean
+) => {
+    // Tutorials don't have thumbnails in mobile.
+    const mobileDisplay =
+        listView || category !== 'Tutorial' ? 'block' : 'none';
+    // Video thumbnail have a 16:9 aspect ration instead of fixed dimensions in mobile.
+    const mobileAspectRatio =
+        category === 'Video' ? { aspectRatio: '16 / 9' } : {};
+
+    // Mobile thumbnail dimensions vary by content type.
+    let mobileDimensions;
+    if (listView) {
+        mobileDimensions = '96px';
+    } else {
+        switch (category) {
+            case 'Article':
+                mobileDimensions = '64px';
+                break;
+            case 'Demo App':
+                mobileDimensions = '96px';
+                break;
+            case 'Podcast':
+                mobileDimensions = '48px';
+                break;
+            // case 'Quickstart':
+            //     mobileDimensions = '96px';
+            //     break;
+            default:
+                mobileDimensions = null;
+        }
     }
-`;
+    return {
+        display: [mobileDisplay, null, 'block'],
+        flexShrink: 0,
+        position: 'relative' as 'relative',
+        ...mobileAspectRatio,
+        width: [mobileDimensions, null, '180px'],
+        height: [mobileDimensions, null, '180px'],
+    };
+};
 
-const StyledThumbnail = styled(Image)`
-    border-radius: ${theme.radii.inc30};
-`;
-
-const CardHeader = styled('div')`
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    grid-gap: ${theme.space.elementXSmall};
-    // Tablet
-    @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-        grid-gap: ${theme.space.elementMedium};
-    }
-`;
-
-const ContentWrapper = styled('div')``;
+export const cardHeaderStyles = (listView: boolean) => {
+    const mobileFlexDirection = listView
+        ? ('row' as 'row')
+        : ('column' as 'column');
+    return {
+        display: 'flex',
+        gap: ['inc30', null, 'inc50'],
+        flexDirection: [
+            mobileFlexDirection,
+            mobileFlexDirection,
+            'row' as 'row',
+        ],
+    };
+};
 
 const TagWrapper = styled('div')`
     display: flex;
@@ -117,14 +148,10 @@ const FooterContent = styled('div')`
 
 export {
     FeaturedCardWrapper,
-    CardHeader,
-    ContentWrapper,
     TagWrapper,
     StyledPill,
     StyledDescription,
     StyledTag,
-    StyledThumbnail,
-    ThumbnailWrapper,
     StyledTitle,
     StyledHorizontalRule,
     FooterContent,
