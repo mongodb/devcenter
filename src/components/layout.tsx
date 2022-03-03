@@ -5,13 +5,14 @@ import { globalStyles, Main } from '../styled/layout';
 
 import ConsistentNav from './consistent-nav';
 import SecondaryNavBar from './secondarynav';
+import SecondaryNavBarDup from './scondarynavdup';
 
 const Layout: React.FunctionComponent = ({ children }) => {
     return (
         <>
             <Global styles={globalStyles} />
             <ConsistentNav />
-            <SecondaryNavBar />
+            <SecondaryNavBarDup />
             <Main>{children}</Main>
             <UnifiedFooter hideLocale />
         </>

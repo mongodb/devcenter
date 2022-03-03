@@ -39,7 +39,8 @@ const SecondaryMenuList = styled.ul`
 
     @media ${screenSize.upToLarge} {
         float: initial;
-        height: ${(props: SecondaryMenuListProps) => (props.isOpen ? '100%' : '0')};
+        height: ${(props: SecondaryMenuListProps) =>
+            props.isOpen ? '100%' : '0'};
         overflow: hidden;
     }
 `;
@@ -112,20 +113,18 @@ const SecondaryNavBar: React.FunctionComponent = () => {
                     University
                 </button>
                 <SecondaryMenuList isOpen={mobileMenuIsOpen}>
-                    {secondaryNavData.map(
-                        ({ text, path, dropdownItems }) => (
-                            <SecondaryNavLink key={text}>
-                                {dropdownItems?.length ? (
-                                    <ShowDropDownButton
-                                        text={text}
-                                        dropdownItems={dropdownItems}
-                                    />
-                                ) : (
-                                    <Link href={path}>{text}</Link>
-                                )}
-                            </SecondaryNavLink>
-                        )
-                    )}
+                    {secondaryNavData.map(({ text, path, dropdownItems }) => (
+                        <SecondaryNavLink key={text}>
+                            {dropdownItems?.length ? (
+                                <ShowDropDownButton
+                                    text={text}
+                                    dropdownItems={dropdownItems}
+                                />
+                            ) : (
+                                <Link href={path}>{text}</Link>
+                            )}
+                        </SecondaryNavLink>
+                    ))}
                 </SecondaryMenuList>
             </SecondaryNavWrapper>
         </>

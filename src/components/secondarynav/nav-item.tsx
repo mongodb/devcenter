@@ -12,7 +12,7 @@ const ListItem = styled.li`
     padding: 2rem 5rem 2rem 0;
     list-style: none;
     display: inline-block;
-    
+
     @media ${screenSize.upToLarge} {
         padding-left: 0;
         display: block;
