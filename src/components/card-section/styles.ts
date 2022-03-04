@@ -18,8 +18,7 @@ export const cardSectionListStyles = {
 };
 
 export const cardListStyles = {
-    width: ['max-content', null, 'auto'],
-    maxWidth: ['75vw', null, '100%'],
+    width: ['75vw', null, 'auto'],
     height: '100%',
 };
 

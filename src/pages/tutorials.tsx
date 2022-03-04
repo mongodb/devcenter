@@ -4,7 +4,7 @@ import { PillCategory } from '../types/pill-category';
 import getL1Content from '../requests/get-l1-content';
 import { CardContent } from '../interfaces/card-content';
 import React from 'react';
-import { FeaturedLarge, FeaturedMedium } from '../components/cards';
+import { FeaturedLarge, FeaturedMedium } from '../components/card';
 
 const Tutorials: NextPage = () => (
     <>

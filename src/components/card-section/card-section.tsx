@@ -1,7 +1,7 @@
 import { TypographyScale, Link } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
-import { FeaturedMedium } from '../cards';
+import Card from '../card';
 import { CardSectionProps } from './types';
 import {
     cardSectionListStyles,
@@ -33,9 +33,9 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
             </div>
             <Grid columns={3} sx={cardSectionListStyles}>
                 {content.slice(0, 3).map(piece => {
-                    const cardProps = getCardProps(piece);
+                    const cardProps = getCardProps(piece, 'medium');
                     return (
-                        <FeaturedMedium
+                        <Card
                             key={piece.slug}
                             {...cardProps}
                             sx={cardListStyles}

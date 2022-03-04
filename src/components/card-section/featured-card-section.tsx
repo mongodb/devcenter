@@ -1,7 +1,7 @@
 import { TypographyScale } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
-import { FeaturedLarge, FeaturedMedium } from '../cards';
+import Card from '../card';
 import { FeaturedCardSectionProps } from './types';
 import {
     featuredCardSectionListStyles,
@@ -9,7 +9,7 @@ import {
     bigFeaturedCardStyles,
     smallFeaturedCardStyles,
 } from './styles';
-import { getCardProps, getFeaturedCardProps } from './utils';
+import { getCardProps } from './utils';
 
 const FeaturedCardSection: React.FunctionComponent<
     FeaturedCardSectionProps
@@ -24,20 +24,20 @@ const FeaturedCardSection: React.FunctionComponent<
                 <TypographyScale variant="heading5">Featured</TypographyScale>
             </div>
             <Grid columns={6} sx={featuredCardSectionListStyles}>
-                <FeaturedLarge
+                <Card
                     sx={bigFeaturedCardStyles}
                     key={content[0].slug}
-                    {...getFeaturedCardProps(content[1])}
+                    {...getCardProps(content[0], 'large')}
                 />
-                <FeaturedMedium
+                <Card
                     sx={smallFeaturedCardStyles}
                     key={content[1].slug}
-                    {...getCardProps(content[0], true)}
+                    {...getCardProps(content[1], 'small')}
                 />
-                <FeaturedMedium
+                <Card
                     sx={smallFeaturedCardStyles}
                     key={content[2].slug}
-                    {...getCardProps(content[2], true)}
+                    {...getCardProps(content[2], 'small')}
                 />
             </Grid>
         </div>

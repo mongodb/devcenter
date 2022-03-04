@@ -3,42 +3,34 @@ import Image from 'next/image';
 import { TypographyScale, Pill, Tag, HorizontalRule } from '@mdb/flora';
 
 import {
-    cardHeaderStyles,
-    thumbnailWrapperStyles,
+    cardWrapperStyles,
+    pillStyles,
     tagWrapperStyles,
     descriptionStyles,
     tagStyles,
+    cardHeaderStyles,
+    thumbnailWrapperStyles,
 } from './styles';
-import { cardWrapperStyles, pillStyles } from '../styles';
-import { thumbnailLoader } from '../utils';
-import { FeaturedCardProps } from './types';
+import { thumbnailLoader, hasThumbnail, hasTags } from './utils';
+import { CardProps } from './types';
 
-/*
-featured jumbo card consumes a thumbnail, pill, header, paragraph, tags, and footer with the date and Appleseed section
-We will need to follow up with Michael Waltzer about the Appleseed section
-Tags would need to be supported via a prop that can map over the number of tags with its text
-The cards for Search filtered content we can reuse the code from the jumbo featured card built here. The only difference here is that this card extends 100 percent of the available space.
-Talked to Michael Waltzer about podcast cards and looks like we would like to keep them as is in the design.
-We can provide support to have a variant for podcast cards that only displays the thumbnail, pill, header, and footer with the date
-Authors section is conditional so will render if there are authors
- */
-
-const FeaturedLarge: React.FunctionComponent<FeaturedCardProps> = ({
+// Still need to add authors section.
+const Card: React.FunctionComponent<CardProps> = ({
     authors,
     contentDate,
     className,
     description,
-    listView = false,
     title,
     pillCategory,
     tags,
     thumbnail,
+    variant,
 }) => {
     return (
         <div sx={cardWrapperStyles} className={className}>
-            <div sx={cardHeaderStyles(listView)}>
-                {thumbnail && (
-                    <div sx={thumbnailWrapperStyles(pillCategory, listView)}>
+            <div sx={cardHeaderStyles(variant, pillCategory)}>
+                {thumbnail && hasThumbnail(variant, pillCategory) && (
+                    <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
                         <Image
                             alt={thumbnail.alt || 'alt not provided'}
                             loader={thumbnailLoader}
@@ -61,16 +53,21 @@ const FeaturedLarge: React.FunctionComponent<FeaturedCardProps> = ({
                     <TypographyScale variant="heading6">
                         {title}
                     </TypographyScale>
-                    <TypographyScale variant="body2" sx={descriptionStyles}>
+                    <TypographyScale
+                        variant="body2"
+                        sx={descriptionStyles(variant, pillCategory)}
+                    >
                         {description}
                     </TypographyScale>
-                    <div sx={tagWrapperStyles}>
-                        {tags?.map(tag => (
-                            <Tag key={tag} variant="small" sx={tagStyles}>
-                                {tag}
-                            </Tag>
-                        ))}
-                    </div>
+                    {hasTags(variant) && (
+                        <div sx={tagWrapperStyles}>
+                            {tags?.map(tag => (
+                                <Tag key={tag} variant="small" sx={tagStyles}>
+                                    {tag}
+                                </Tag>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
             <div>
@@ -85,4 +82,4 @@ const FeaturedLarge: React.FunctionComponent<FeaturedCardProps> = ({
     );
 };
 
-export default FeaturedLarge;
+export default Card;
