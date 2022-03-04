@@ -233,6 +233,45 @@ const getL1Content = (): L1Content => {
             featured: false,
             slug: 't3',
         },
+        {
+            category: 'Podcast',
+            image: {
+                alt: 'thumbnail',
+                url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+            },
+            title: 'MongoDB Podcast: Episode 23',
+            description: 'Some podcast details',
+            contentDate: new Date().toDateString(),
+            tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+            featured: false,
+            slug: 'p1',
+        },
+        {
+            category: 'Podcast',
+            image: {
+                alt: 'thumbnail',
+                url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+            },
+            title: 'MongoDB Podcast: Episode 96',
+            description: 'Some podcast details',
+            contentDate: new Date().toDateString(),
+            tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+            featured: false,
+            slug: 'p2',
+        },
+        {
+            category: 'Podcast',
+            image: {
+                alt: 'thumbnail',
+                url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+            },
+            title: 'MongoDB Podcast: Episode 2',
+            description: 'Some podcast details',
+            contentDate: new Date().toDateString(),
+            tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+            featured: false,
+            slug: 'p3',
+        },
     ];
     return { content, featured };
 };

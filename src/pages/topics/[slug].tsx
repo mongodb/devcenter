@@ -66,7 +66,11 @@ const Topic: NextPage<TopicProps> = ({
                         <CardSection content={videos} title="Videos" />
                     )}
                     {podcasts.length > 2 && (
-                        <CardSection content={podcasts} title="Podcasts" />
+                        <CardSection
+                            content={podcasts}
+                            title="Podcasts"
+                            direction="column"
+                        />
                     )}
                 </GridLayout>
             </div>

@@ -5,7 +5,7 @@ export interface Image {
 }
 
 export interface ContentPiece {
-    authors: string[];
+    authors?: string[];
     category: PillCategory;
     contentDate: string;
     description: string;

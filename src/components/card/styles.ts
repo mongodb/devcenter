@@ -56,7 +56,8 @@ export const thumbnailWrapperStyles = (
     }
     // Thumbnail dimensions vary by content type.
     let mobileDimensions;
-    let tabletDesktopDimensions;
+    let tabletDimensions;
+    let desktopDimensions;
 
     switch (variant) {
         case 'large':
@@ -76,19 +77,25 @@ export const thumbnailWrapperStyles = (
                 default:
                     mobileDimensions = null;
             }
-            tabletDesktopDimensions = '180px';
+            tabletDimensions = desktopDimensions = '180px';
             break;
         case 'medium':
             switch (category) {
                 case 'Article':
-                    mobileDimensions = tabletDesktopDimensions = '64px';
+                    mobileDimensions =
+                        tabletDimensions =
+                        desktopDimensions =
+                            '64px';
                     break;
                 case 'Demo App':
-                    mobileDimensions = tabletDesktopDimensions = '96px';
+                    mobileDimensions =
+                        tabletDimensions =
+                        desktopDimensions =
+                            '96px';
                     break;
                 case 'Podcast':
-                    mobileDimensions = '48px';
-                    tabletDesktopDimensions = '64px';
+                    mobileDimensions = tabletDimensions = '48px';
+                    desktopDimensions = '64px';
                     break;
                 // case 'Quickstart':
                 //     mobileDimensions = tabletDesktopDimensions = '64px';
@@ -114,14 +121,14 @@ export const thumbnailWrapperStyles = (
                 default:
                     mobileDimensions = null;
             }
-            tabletDesktopDimensions = null;
+            tabletDimensions = desktopDimensions = null;
             break;
         case 'list':
             mobileDimensions = '96px';
-            tabletDesktopDimensions = '180px';
+            tabletDimensions = desktopDimensions = '180px';
             break;
         case 'related':
-            mobileDimensions = tabletDesktopDimensions = null;
+            mobileDimensions = tabletDimensions = desktopDimensions = null;
             break;
     }
 
@@ -130,8 +137,8 @@ export const thumbnailWrapperStyles = (
         flexShrink: 0,
         position: 'relative' as 'relative',
         ...videoAspectRatio,
-        width: [mobileDimensions, null, tabletDesktopDimensions],
-        height: [mobileDimensions, null, tabletDesktopDimensions],
+        width: [mobileDimensions, null, tabletDimensions, desktopDimensions],
+        height: [mobileDimensions, null, tabletDimensions, desktopDimensions],
     };
 };
 

@@ -14,6 +14,7 @@ import { getCardProps } from '../card';
 const CardSection: React.FunctionComponent<CardSectionProps> = ({
     content,
     title,
+    direction = 'row',
 }) => {
     return (
         <div
@@ -31,14 +32,14 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                     All {title}
                 </Link>
             </div>
-            <Grid columns={3} sx={cardSectionListStyles}>
+            <Grid columns={3} sx={cardSectionListStyles(direction)}>
                 {content.slice(0, 3).map(piece => {
                     const cardProps = getCardProps(piece, 'medium');
                     return (
                         <Card
                             key={piece.slug}
                             {...cardProps}
-                            sx={cardListStyles}
+                            sx={cardListStyles(direction)}
                         />
                     );
                 })}

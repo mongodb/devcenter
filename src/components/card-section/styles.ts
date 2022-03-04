@@ -10,29 +10,37 @@ export const sectionHeadingBottomStyles = {
     alignItems: 'center',
 };
 
-export const cardSectionListStyles = {
-    marginTop: ['inc30', null, null, 'inc40'],
-    paddingBottom: ['inc30', null, '0'],
-    gap: 'inc40',
-    overflow: ['auto', null, 'visible'],
+export const cardSectionListStyles = (direction: 'row' | 'column') => {
+    return {
+        marginTop: ['inc30', null, null, 'inc40'],
+        paddingBottom: ['inc30', null, '0'],
+        gap: [direction === 'column' ? 'inc30' : 'inc40', null, null, 'inc40'],
+        overflow: ['auto', null, 'visible'],
+    };
 };
 
-export const cardListStyles = {
-    width: ['75vw', null, 'auto'],
-    height: '100%',
+export const cardListStyles = (direction: 'row' | 'column') => {
+    const height =
+        direction === 'row'
+            ? { height: '100%' }
+            : { gridColumn: [null, null, 'span 3'] };
+    return {
+        width: ['75vw', null, direction === 'row' ? 'auto' : '100%'],
+        ...height,
+    };
 };
 
 export const featuredCardSectionListStyles = {
-    ...cardSectionListStyles,
+    ...cardSectionListStyles('row'),
     gridTemplateColumns: ['repeat(3, 1fr)', null, 'repeat(6, 1fr)'],
 };
 
 export const bigFeaturedCardStyles = {
-    ...cardListStyles,
+    ...cardListStyles('row'),
     gridColumn: ['span 1', null, 'span 6', 'span 4'],
     gridRow: [null, null, null, 'span 2'],
 };
 export const smallFeaturedCardStyles = {
-    ...cardListStyles,
+    ...cardListStyles('row'),
     gridColumn: ['span 1', null, 'span 3', 'span 2'],
 };
