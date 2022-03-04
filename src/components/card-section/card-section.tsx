@@ -9,7 +9,7 @@ import {
     sectionHeadingBottomStyles,
     cardListStyles,
 } from './styles';
-import { getCardProps } from './utils';
+import { getCardProps } from '../card';
 
 const CardSection: React.FunctionComponent<CardSectionProps> = ({
     content,

@@ -9,7 +9,7 @@ import {
     bigFeaturedCardStyles,
     smallFeaturedCardStyles,
 } from './styles';
-import { getCardProps } from './utils';
+import { getCardProps } from '../card';
 
 const FeaturedCardSection: React.FunctionComponent<
     FeaturedCardSectionProps
