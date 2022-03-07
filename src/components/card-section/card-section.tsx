@@ -8,6 +8,7 @@ import {
     sectionHeadingTopStyles,
     sectionHeadingBottomStyles,
     cardListStyles,
+    linkStyles,
 } from './styles';
 import { getCardProps } from '../card';
 
@@ -27,7 +28,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                 <Link
                     href="#"
                     linkIcon="arrow"
-                    sx={{ display: ['none', null, 'inline'] }}
+                    sx={{ ...linkStyles, display: ['none', null, 'inline'] }}
                 >
                     All {title}
                 </Link>
@@ -45,7 +46,11 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                 })}
             </Grid>
             <div sx={sectionHeadingBottomStyles}>
-                <Link href="#" linkIcon="arrow">
+                <Link
+                    href="#"
+                    linkIcon="arrow"
+                    sx={{ ...linkStyles, display: ['inline', null, 'none'] }}
+                >
                     All {title}
                 </Link>
             </div>

@@ -4,7 +4,11 @@ import { TypographyScale, Button, Link, GridLayout } from '@mdb/flora';
 
 import Breadcrumbs from './breadcrumbs';
 import { HeroProps } from './types';
-import { heroContainerStyles, CTAContainerStyles } from './styles';
+import {
+    heroContainerStyles,
+    CTAContainerStyles,
+    CTALinkStyles,
+} from './styles';
 
 const Hero: React.FunctionComponent<HeroProps> = ({
     crumbs,
@@ -56,6 +60,7 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                                           key={cta.text}
                                           linkIcon="arrow"
                                           target="_blank"
+                                          sx={CTALinkStyles}
                                       >
                                           {cta.text}
                                       </Link>

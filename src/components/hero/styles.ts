@@ -37,7 +37,16 @@ export const CTAContainerStyles = {
     gridColumn: [null, null, 'span 3', 'span 7'],
     justifyContent: [null, null, 'end'],
     width: [null, null, '100%'],
-    '> a': {
-        width: [null, null, `calc(${theme.space.base} * 23)`],
+};
+
+// This is all to complement Flora's animation on the link arrow and force it not to push itself left.
+export const CTALinkStyles = {
+    position: 'relative' as 'relative',
+    transitionDuration: theme.motion.linkAnimation,
+    transitionProperty: 'right margin-left',
+    right: '0',
+    '&:hover': {
+        right: `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
+        marginLeft: `-${theme.space.inc30}`,
     },
 };
