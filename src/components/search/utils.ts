@@ -2,12 +2,7 @@ import { Fetcher } from 'swr';
 
 import { IsortByOptions } from './types';
 import { ContentPiece } from '../../interfaces/content-piece';
-
-const contentPieces: ContentPiece[] = [
-    { name: 'Some Article', description: 'Description of the article.' },
-    { name: 'Some Podcast', description: 'Description of the podcase.' },
-    { name: 'Some How To', description: 'Description of the how to.' },
-];
+import getL1Content from '../../requests/get-l1-content';
 
 export const sortByOptions: IsortByOptions = {
     'Most Recent': 'recent',
@@ -22,5 +17,7 @@ export const fetcher: Fetcher<ContentPiece[], string> = queryString =>
     new Promise(resolve => {
         if (queryString.includes('page=3')) {
             throw Error('ERROR AHHHH');
-        } else return setTimeout(resolve.bind(null, contentPieces), 100);
+        }
+        const { content } = getL1Content();
+        return setTimeout(resolve.bind(null, content.slice(0, 10)), 100);
     }); // Simulate request loading time and error if we load more than 3 pages.

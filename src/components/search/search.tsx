@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import useSWRInfinite from 'swr/infinite';
 
 import {
@@ -12,7 +13,6 @@ import {
 
 import { ContentPiece } from '../../interfaces/content-piece';
 
-import Results from './results';
 import {
     titleStyles,
     searchBoxStyles,
@@ -21,6 +21,7 @@ import {
 } from './styles';
 import { SearchProps, SortByType } from './types';
 import { fetcher, sortByOptions } from './utils';
+import Results from './results';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     name,
@@ -82,18 +83,21 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         width="100%"
                     />
                 )}
+
                 <Results
                     data={data}
                     isLoading={isValidating}
                     hasError={error}
                 />
                 <div sx={loadMoreStyles}>
-                    <Button
-                        onClick={() => setSize(size + 1)}
-                        variant="secondary"
-                    >
-                        Load more
-                    </Button>
+                    {!isValidating && data && (
+                        <Button
+                            onClick={() => setSize(size + 1)}
+                            variant="secondary"
+                        >
+                            Load more
+                        </Button>
+                    )}
                 </div>
             </GridLayout>
         </form>
