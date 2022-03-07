@@ -47,19 +47,14 @@ export const smallFeaturedCardStyles = {
     gridColumn: ['span 1', null, 'span 3', 'span 2'],
 };
 
+export const linkWrapperStyles = {
+    marginRight: `calc(${theme.sizes.inc70} - ${theme.sizes.inc50})`,
+};
+
 // This is all to complement Flora's animation on the link arrow and force it not to push itself left.
 export const linkStyles = {
     position: 'relative' as 'relative',
     transitionDuration: theme.motion.linkAnimation,
     transitionProperty: 'right',
     right: '0',
-    marginRight: `calc(${theme.sizes.inc70} - ${theme.sizes.inc50})`,
-    '&:hover': {
-        right: [
-            null,
-            null,
-            null,
-            `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
-        ],
-    },
 };
