@@ -17,7 +17,7 @@ export const breadcrumbStyles = {
 export const linkStyles = {
     'div > span.textlink-default-text-class': {
         borderBottom: `${theme.borders.inc10} solid ${theme.colors.green60}`,
-        marginBottom: 'inc10',
+        marginBottom: theme.borders.inc10,
         '&:hover': {
             marginBottom: 0,
         },
