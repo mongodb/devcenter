@@ -45,14 +45,4 @@ export const CTALinkStyles = {
     transitionDuration: theme.motion.linkAnimation,
     transitionProperty: 'right margin-left',
     right: '0',
-    marginRight: `calc(${theme.sizes.inc70} - ${theme.sizes.inc50})`,
-    '&:hover': {
-        right: [
-            null,
-            null,
-            null,
-            `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
-        ],
-        marginLeft: [null, null, null, `-${theme.space.inc30}`],
-    },
 };

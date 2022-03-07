@@ -51,7 +51,6 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
         ),
         [content]
     );
-    console.log('Rendering SECTION');
     return (
         <div
             sx={{

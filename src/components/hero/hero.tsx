@@ -1,14 +1,11 @@
 import React from 'react';
 
-import { TypographyScale, Button, Link, GridLayout } from '@mdb/flora';
+import { TypographyScale, Button, GridLayout } from '@mdb/flora';
 
+import CTALink from './CTALink';
 import Breadcrumbs from './breadcrumbs';
 import { HeroProps } from './types';
-import {
-    heroContainerStyles,
-    CTAContainerStyles,
-    CTALinkStyles,
-} from './styles';
+import { heroContainerStyles, CTAContainerStyles } from './styles';
 
 const Hero: React.FunctionComponent<HeroProps> = ({
     crumbs,
@@ -54,17 +51,7 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                                   );
                               }
                               if (i === 1) {
-                                  return (
-                                      <Link
-                                          href={cta.url}
-                                          key={cta.text}
-                                          linkIcon="arrow"
-                                          target="_blank"
-                                          sx={CTALinkStyles}
-                                      >
-                                          {cta.text}
-                                      </Link>
-                                  );
+                                  return <CTALink {...cta} key={cta.url} />;
                               }
                           })
                         : null}
