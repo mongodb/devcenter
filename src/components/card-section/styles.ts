@@ -58,6 +58,7 @@ export const linkStyles = {
         right: [
             null,
             null,
+            null,
             `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
         ],
     },
