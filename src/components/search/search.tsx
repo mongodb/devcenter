@@ -21,10 +21,7 @@ import {
 } from './styles';
 import { SearchProps, SortByType } from './types';
 import { fetcher, sortByOptions } from './utils';
-
-const DynamicResults = dynamic(() => import('./results'), {
-    loading: () => <p>...</p>,
-});
+import Results from './results';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     name,
@@ -33,7 +30,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
 }) => {
     const [search, setSearch] = useState('');
     const [sortBy, setSortBy] = useState<SortByType>('recent');
-    const [showResults, setShowResults] = useState(false);
 
     const getKey = (pageIndex: number, previousPageData: ContentPiece[]) => {
         if (previousPageData && !previousPageData.length) return null;
@@ -55,12 +51,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSize(1);
         setSearch(event.target.value);
-        setShowResults(true);
     };
     const onSort = (val: string) => {
         setSize(1);
         setSortBy(sortByOptions[val] as SortByType);
-        setShowResults(true);
     };
 
     return (
@@ -89,25 +83,22 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         width="100%"
                     />
                 )}
-                {showResults && (
-                    <>
-                        <DynamicResults
-                            data={data}
-                            isLoading={isValidating}
-                            hasError={error}
-                        />
-                        <div sx={loadMoreStyles}>
-                            {!isValidating && data && (
-                                <Button
-                                    onClick={() => setSize(size + 1)}
-                                    variant="secondary"
-                                >
-                                    Load more
-                                </Button>
-                            )}
-                        </div>
-                    </>
-                )}
+
+                <Results
+                    data={data}
+                    isLoading={isValidating}
+                    hasError={error}
+                />
+                <div sx={loadMoreStyles}>
+                    {!isValidating && data && (
+                        <Button
+                            onClick={() => setSize(size + 1)}
+                            variant="secondary"
+                        >
+                            Load more
+                        </Button>
+                    )}
+                </div>
             </GridLayout>
         </form>
     );
