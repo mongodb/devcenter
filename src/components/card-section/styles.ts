@@ -3,7 +3,7 @@ import theme from '@mdb/flora/theme';
 export const sectionHeadingTopStyles = {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'end',
 };
 
 export const sectionHeadingBottomStyles = {
@@ -53,9 +53,10 @@ export const linkStyles = {
     transitionDuration: theme.motion.linkAnimation,
     transitionProperty: 'right',
     right: '0',
+    marginRight: `calc(${theme.sizes.inc70} - ${theme.sizes.inc50})`,
     '&:hover': {
         right: [
-            `calc(${theme.sizes.inc60} - ${theme.sizes.inc70})`,
+            null,
             null,
             `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
         ],
