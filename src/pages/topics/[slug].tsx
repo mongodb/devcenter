@@ -27,6 +27,7 @@ const tertiaryNavStyles = (rowCount: number) => ({
         position: 'static' as 'static',
     },
     'a>span:hover': {
+        // No good identifiers to use here /:
         borderBottom: `${theme.borders.inc20} solid  ${theme.colors.black80}`,
     },
 });
