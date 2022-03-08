@@ -1,6 +1,7 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { GridLayout } from '@mdb/flora';
+import { GridLayout, SideNav } from '@mdb/flora';
+import theme from '@mdb/flora/theme';
 
 import Hero from '../../components/hero';
 import Search from '../../components/search';
@@ -13,6 +14,23 @@ import CardSection, {
     FeaturedCardSection,
 } from '../../components/card-section';
 
+interface TertiaryNavItem {
+    title: string;
+    url: string;
+}
+const tertiaryNavStyles = (rowCount: number) => ({
+    gridColumn: 'span 3',
+    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
+    // before render and update this accordingly.
+    gridRow: `span ${rowCount}`,
+    nav: {
+        position: 'static' as 'static',
+    },
+    'a>span:hover': {
+        borderBottom: `${theme.borders.inc20} solid  ${theme.colors.black80}`,
+    },
+});
+
 interface TopicProps {
     name: string;
     slug: string;
@@ -21,6 +39,7 @@ interface TopicProps {
     topics: string[];
     featured: ContentPiece[];
     content: ContentPiece[];
+    tertiaryNavItems: TertiaryNavItem[];
 }
 
 const Topic: NextPage<TopicProps> = ({
@@ -30,17 +49,29 @@ const Topic: NextPage<TopicProps> = ({
     topics,
     featured,
     content,
+    slug,
+    tertiaryNavItems,
 }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
         { text: 'Products', url: '/topics' },
     ];
-    const articles = content.filter(piece => piece.category === 'Article');
-    const tutorials = content.filter(piece => piece.category === 'Tutorial');
-    const demoApps = content.filter(piece => piece.category === 'Demo App');
-    const videos = content.filter(piece => piece.category === 'Video');
-    const podcasts = content.filter(piece => piece.category === 'Podcast');
+
+    const contentTypes = [
+        'Article',
+        'Tutorial',
+        'Demo App',
+        'Video',
+        'Podcast',
+    ];
+    const contentRows = contentTypes
+        .map(contentType =>
+            content.filter(piece => piece.category === contentType)
+        )
+        .filter(contentRow => contentRow.length > 2);
+
+    const mainGridRowsCount = contentRows.length + 2; // Content rows + topics + featured
     return (
         <>
             <Hero
@@ -51,27 +82,27 @@ const Topic: NextPage<TopicProps> = ({
             />
             <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
                 <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
+                    <div sx={tertiaryNavStyles(mainGridRowsCount)}>
+                        <SideNav
+                            currentUrl={`/developer/topics/${slug}`}
+                            items={tertiaryNavItems}
+                        />
+                    </div>
                     <TopicCardsContainer topics={topics} name={name} />
                     <FeaturedCardSection content={featured} />
-                    {tutorials.length > 2 && (
-                        <CardSection content={tutorials} title="Tutorials" />
-                    )}
-                    {demoApps.length > 2 && (
-                        <CardSection content={demoApps} title="Demo Apps" />
-                    )}
-                    {articles.length > 2 && (
-                        <CardSection content={articles} title="Articles" />
-                    )}
-                    {videos.length > 2 && (
-                        <CardSection content={videos} title="Videos" />
-                    )}
-                    {podcasts.length > 2 && (
-                        <CardSection
-                            content={podcasts}
-                            title="Podcasts"
-                            direction="column"
-                        />
-                    )}
+                    {contentRows.map(contentRow => {
+                        const contentType = contentRow[0].category;
+                        const direction =
+                            contentType === 'Podcast' ? 'column' : 'row';
+                        return (
+                            <CardSection
+                                key={contentType}
+                                content={contentRow}
+                                title={`${contentRow[0].category}s`}
+                                direction={direction}
+                            />
+                        );
+                    })}
                 </GridLayout>
             </div>
             <Search name={name} />
@@ -120,6 +151,53 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const product = products.filter(p => p.slug === slug)[0];
     const { content, featured } = getL1Content();
 
-    const data = { ...product, featured, content };
+    const tertiaryNavItems: TertiaryNavItem[] = [
+        {
+            title: 'Quickstarts',
+            url: '#',
+        },
+        {
+            title: 'Articles',
+            url: '#',
+        },
+        {
+            title: 'Courses',
+            url: '#',
+        },
+        {
+            title: 'Community Discussion',
+            url: 'https://www.mongodb.com/community/forums/',
+        },
+        {
+            title: 'Documentation',
+            url: 'https://docs.mongodb.com/',
+        },
+        {
+            title: 'News & Announcements',
+            url: 'https://www.mongodb.com/news',
+        },
+        {
+            title: 'Demo Apps',
+            url: '#',
+        },
+        {
+            title: 'Stack Overflow',
+            url: 'https://stackoverflow.com/',
+        },
+        {
+            title: 'Podcasts',
+            url: '#',
+        },
+        {
+            title: 'Tutorials',
+            url: '#',
+        },
+        {
+            title: 'Videos',
+            url: '#',
+        },
+    ];
+
+    const data = { ...product, featured, content, tertiaryNavItems, slug };
     return { props: data };
 };
