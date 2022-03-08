@@ -15,7 +15,8 @@ export const breadcrumbStyles = {
 };
 
 export const linkStyles = {
-    'div > span.textlink-default-text-class': {
+    '*.textlink-default-text-class': {
+        // Need the tag+class for specificity over default class styles.
         borderBottom: `${theme.borders.inc10} solid ${theme.colors.green60}`,
         marginBottom: theme.borders.inc10,
         '&:hover': {
