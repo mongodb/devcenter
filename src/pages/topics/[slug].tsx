@@ -19,16 +19,19 @@ interface TertiaryNavItem {
     url: string;
 }
 const tertiaryNavStyles = (rowCount: number) => ({
-    gridColumn: 'span 3',
-    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
-    // before render and update this accordingly.
-    gridRow: `span ${rowCount}`,
+    display: ['none', null, null, 'block'],
+    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
     nav: {
         position: 'static' as 'static',
     },
-    'a>span:hover': {
+    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
+    // before render and update this accordingly.
+    gridRow: [null, null, null, null, `span ${rowCount}`],
+    'a:hover': {
         // No good identifiers to use here /:
-        borderBottom: `${theme.borders.inc20} solid  ${theme.colors.black80}`,
+        span: {
+            borderBottom: `${theme.borders.inc20} solid  ${theme.colors.black80}`,
+        },
     },
 });
 
@@ -73,6 +76,7 @@ const Topic: NextPage<TopicProps> = ({
         .filter(contentRow => contentRow.length > 2);
 
     const mainGridRowsCount = contentRows.length + 2; // Content rows + topics + featured
+
     return (
         <>
             <Hero
@@ -85,9 +89,10 @@ const Topic: NextPage<TopicProps> = ({
                 <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
                     <div sx={tertiaryNavStyles(mainGridRowsCount)}>
                         <SideNav
-                            currentUrl={`/developer/topics/${slug}`}
+                            currentUrl="#"
                             items={tertiaryNavItems}
-                        />
+                            // isMobile={true}
+                        ></SideNav>
                     </div>
                     <TopicCardsContainer topics={topics} name={name} />
                     <FeaturedCardSection content={featured} />
@@ -155,47 +160,47 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const tertiaryNavItems: TertiaryNavItem[] = [
         {
             title: 'Quickstarts',
-            url: '#',
+            url: `/products/${slug}/quickstarts`,
         },
         {
-            title: 'Articles',
-            url: '#',
+            title: `Articles`,
+            url: `/products/${slug}/articles`,
         },
         {
-            title: 'Courses',
-            url: '#',
+            title: `Courses`,
+            url: `/products/${slug}/courses`,
         },
         {
-            title: 'Community Discussion',
-            url: 'https://www.mongodb.com/community/forums/',
+            title: `Community Discussion`,
+            url: `https://www.mongodb.com/community/forums/`,
         },
         {
-            title: 'Documentation',
-            url: 'https://docs.mongodb.com/',
+            title: `Documentation`,
+            url: `https://docs.mongodb.com/`,
         },
         {
-            title: 'News & Announcements',
-            url: 'https://www.mongodb.com/news',
+            title: `News & Announcements`,
+            url: `https://www.mongodb.com/news`,
         },
         {
-            title: 'Demo Apps',
-            url: '#',
+            title: `Demo Apps`,
+            url: `/products/${slug}/demoapps`,
         },
         {
-            title: 'Stack Overflow',
-            url: 'https://stackoverflow.com/',
+            title: `Stack Overflow`,
+            url: `https://stackoverflow.com/`,
         },
         {
-            title: 'Podcasts',
-            url: '#',
+            title: `Podcasts`,
+            url: `/products/${slug}/podcasts`,
         },
         {
-            title: 'Tutorials',
-            url: '#',
+            title: `Tutorials`,
+            url: `/products/${slug}/tutorials`,
         },
         {
-            title: 'Videos',
-            url: '#',
+            title: `Videos`,
+            url: `/products/${slug}/videos`,
         },
     ];
 

@@ -25,6 +25,7 @@ export const cardListStyles = (direction: 'row' | 'column') => {
             ? { height: '100%' }
             : { gridColumn: [null, null, 'span 3'] };
     return {
+        boxSizing: 'border-box' as 'border-box',
         width: ['75vw', null, direction === 'row' ? 'auto' : '100%'],
         ...height,
     };
