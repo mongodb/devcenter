@@ -1,7 +1,9 @@
+import theme from '@mdb/flora/theme';
+
 export const sectionHeadingTopStyles = {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'end',
 };
 
 export const sectionHeadingBottomStyles = {
@@ -44,4 +46,16 @@ export const bigFeaturedCardStyles = {
 export const smallFeaturedCardStyles = {
     ...cardListStyles('row'),
     gridColumn: ['span 1', null, 'span 3', 'span 2'],
+};
+
+export const linkWrapperStyles = {
+    marginRight: `calc(${theme.sizes.inc70} - ${theme.sizes.inc50})`,
+};
+
+// This is all to complement Flora's animation on the link arrow and force it not to push itself left.
+export const linkStyles = {
+    position: 'relative' as 'relative',
+    transitionDuration: theme.motion.linkAnimation,
+    transitionProperty: 'right',
+    right: '0',
 };

@@ -6,7 +6,7 @@ import theme from '@mdb/flora/theme';
 import Hero from '../../components/hero';
 import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
-import { CTA } from '../../interfaces/components/hero';
+import { CTA, Crumb } from '../../components/hero/types';
 
 import getL1Content from '../../requests/get-l1-content';
 import { ContentPiece } from '../../interfaces/content-piece';
