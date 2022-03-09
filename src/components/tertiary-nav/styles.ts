@@ -37,7 +37,7 @@ export const smallDesktopNavFadeRightStyles = {
     right: theme.space.inc160,
     marginRight: `-${theme.space.inc160}`,
     width: theme.space.inc160,
-    height: 'inc10',
+    height: 'inc20',
     flexShrink: '0',
     background:
         'linear-gradient(270deg, #FFFFFF 29.17%, rgba(255, 255, 255, 0) 100%)',
@@ -49,7 +49,7 @@ export const smallDesktopNavFadeLeftStyles = {
     left: theme.space.inc160,
     marginLeft: `-${theme.space.inc160}`,
     width: theme.space.inc160,
-    height: 'inc10',
+    height: 'inc20',
     flexShrink: '0',
     background:
         'linear-gradient(90deg, #FFFFFF 29.17%, rgba(255, 255, 255, 0) 100% )',
