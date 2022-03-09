@@ -23,9 +23,9 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
         const navScroll = document.getElementById('navScroll');
         navScroll?.removeEventListener('scroll', scrollListener);
         navScroll?.addEventListener('scroll', scrollListener);
-    });
+    }, []);
     return (
-        <div>
+        <>
             <div sx={smallDesktopNavStyles}>
                 <span
                     sx={smallDesktopNavFadeLeftStyles}
@@ -54,7 +54,7 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
                     isMobile={true}
                 ></SideNav>
             </div>
-        </div>
+        </>
     );
 };
 
