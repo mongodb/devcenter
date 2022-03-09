@@ -1,39 +1,19 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { GridLayout, SideNav } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
 
 import Hero from '../../components/hero';
 import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
-import { CTA, Crumb } from '../../components/hero/types';
+import { CTA } from '../../components/hero/types';
 
 import getL1Content from '../../requests/get-l1-content';
 import { ContentPiece } from '../../interfaces/content-piece';
 import CardSection, {
     FeaturedCardSection,
 } from '../../components/card-section';
-
-interface TertiaryNavItem {
-    title: string;
-    url: string;
-}
-const tertiaryNavStyles = (rowCount: number) => ({
-    display: ['none', null, null, 'block'],
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
-    nav: {
-        position: 'static' as 'static',
-    },
-    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
-    // before render and update this accordingly.
-    gridRow: [null, null, null, null, `span ${rowCount}`],
-    'a:hover': {
-        // No good identifiers to use here /:
-        span: {
-            borderBottom: `${theme.borders.inc20} solid  ${theme.colors.black80}`,
-        },
-    },
-});
+import { TertiaryNavItem } from '../../components/tertiary-nav/types';
+import TertiaryNav from '../../components/tertiary-nav';
 
 interface TopicProps {
     name: string;
@@ -45,6 +25,17 @@ interface TopicProps {
     content: ContentPiece[];
     tertiaryNavItems: TertiaryNavItem[];
 }
+
+const sideNavStyles = (rowCount: number) => ({
+    display: ['none', null, null, null, 'block'],
+    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
+    nav: {
+        position: 'static' as 'static',
+    },
+    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
+    // before render and update this accordingly.
+    gridRow: [null, null, null, null, `span ${rowCount}`],
+});
 
 const Topic: NextPage<TopicProps> = ({
     name,
@@ -75,7 +66,7 @@ const Topic: NextPage<TopicProps> = ({
         )
         .filter(contentRow => contentRow.length > 2);
 
-    const mainGridRowsCount = contentRows.length + 2; // Content rows + topics + featured
+    const mainGridDesktopRowsCount = contentRows.length + 2; // Content rows + topics + featured
 
     return (
         <>
@@ -85,14 +76,11 @@ const Topic: NextPage<TopicProps> = ({
                 description={description}
                 ctas={ctas}
             />
+            <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
                 <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
-                    <div sx={tertiaryNavStyles(mainGridRowsCount)}>
-                        <SideNav
-                            currentUrl="#"
-                            items={tertiaryNavItems}
-                            // isMobile={true}
-                        ></SideNav>
+                    <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
+                        <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
                     <TopicCardsContainer topics={topics} name={name} />
                     <FeaturedCardSection content={featured} />
