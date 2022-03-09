@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import Hero from '../../src/components/hero';
+import Hero from '.';
 
 const crumbs = [
     { text: 'MongoDB Developer Center', url: '/' },

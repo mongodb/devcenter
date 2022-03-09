@@ -1,16 +1,11 @@
 import React from 'react';
 
-import { TypographyScale, Button, Link } from '@mdb/flora';
+import { TypographyScale, Button, GridLayout } from '@mdb/flora';
 
+import CTALink from './CTALink';
 import Breadcrumbs from './breadcrumbs';
-import { HeroProps } from '../interfaces/components/hero';
-import {
-    HeroContainer,
-    LeftContainer,
-    Title,
-    CTAContainer,
-    HeroGrid,
-} from '../styled/hero';
+import { HeroProps } from './types';
+import { heroContainerStyles, CTAContainerStyles } from './styles';
 
 const Hero: React.FunctionComponent<HeroProps> = ({
     crumbs,
@@ -19,18 +14,22 @@ const Hero: React.FunctionComponent<HeroProps> = ({
     ctas,
 }) => {
     return (
-        <HeroContainer>
-            <HeroGrid>
+        <div sx={heroContainerStyles}>
+            <GridLayout sx={{ rowGap: 'inc30' }}>
                 <Breadcrumbs crumbs={crumbs} />
-                <LeftContainer>
-                    <Title variant="heading2" color="mark">
+                <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
+                    <TypographyScale
+                        variant="heading2"
+                        color="mark"
+                        sx={{ marginBottom: ['inc20', null, null, 'inc40'] }}
+                    >
                         {name}
-                    </Title>
+                    </TypographyScale>
                     <TypographyScale variant="body2">
                         {description}
                     </TypographyScale>
-                </LeftContainer>
-                <CTAContainer>
+                </div>
+                <div sx={CTAContainerStyles}>
                     {ctas.length < 3
                         ? ctas.map((cta, i) => {
                               // Max of 2 buttons, so only bother with the first 2.
@@ -52,22 +51,13 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                                   );
                               }
                               if (i === 1) {
-                                  return (
-                                      <Link
-                                          href={cta.url}
-                                          key={cta.text}
-                                          linkIcon="arrow"
-                                          target="_blank"
-                                      >
-                                          {cta.text}
-                                      </Link>
-                                  );
+                                  return <CTALink {...cta} key={cta.url} />;
                               }
                           })
                         : null}
-                </CTAContainer>
-            </HeroGrid>
-        </HeroContainer>
+                </div>
+            </GridLayout>
+        </div>
     );
 };
 

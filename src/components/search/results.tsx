@@ -7,7 +7,6 @@ import Card, { getCardProps } from '../card';
 // This isn't working as desired. The child components are still rendering depspite this being memoized.
 const Results: React.FunctionComponent<ResultsProps> = React.memo(
     ({ data, isLoading, hasError }) => {
-        console.log('Results Rendering');
         return (
             <div sx={dataStyles}>
                 {data &&
