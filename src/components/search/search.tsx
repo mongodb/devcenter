@@ -59,7 +59,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
     };
 
     return (
-        <form role="search" sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
+        <form role="search">
             <GridLayout sx={{ rowGap: 0 }}>
                 <TypographyScale variant="heading5" sx={titleStyles}>
                     All {name} Content
