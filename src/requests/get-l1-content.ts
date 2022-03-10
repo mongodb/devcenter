@@ -292,6 +292,8 @@ const getL1Content = (slug: string): L1Content => {
             ? content
             : slug === 'data-lake'
             ? content.slice(0, 10)
+            : slug === 'vs-code'
+            ? content.slice(0, 5)
             : [];
     return { content: returnContent, featured };
 };

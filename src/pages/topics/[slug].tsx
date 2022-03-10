@@ -56,46 +56,53 @@ const Topic: NextPage<TopicProps> = ({
                 description={description}
                 ctas={ctas}
             />
-            <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
-                <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
-                    {topics.length > 0 && (
-                        <TopicCardsContainer topics={topics} name={name} />
-                    )}
-                    <FeaturedCardSection content={featured} />
-                    {variant === 'heavy' && (
-                        <>
-                            {tutorials.length > 2 && (
-                                <CardSection
-                                    content={tutorials}
-                                    title="Tutorials"
-                                />
-                            )}
-                            {demoApps.length > 2 && (
-                                <CardSection
-                                    content={demoApps}
-                                    title="Demo Apps"
-                                />
-                            )}
-                            {articles.length > 2 && (
-                                <CardSection
-                                    content={articles}
-                                    title="Articles"
-                                />
-                            )}
-                            {videos.length > 2 && (
-                                <CardSection content={videos} title="Videos" />
-                            )}
-                            {podcasts.length > 2 && (
-                                <CardSection
-                                    content={podcasts}
-                                    title="Podcasts"
-                                    direction="column"
-                                />
-                            )}
-                        </>
-                    )}
-                </GridLayout>
-            </div>
+            {(variant !== 'light' || topics.length > 0) && (
+                <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
+                    <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
+                        {topics.length > 0 && (
+                            <TopicCardsContainer topics={topics} name={name} />
+                        )}
+                        {variant !== 'light' && (
+                            <FeaturedCardSection content={featured} />
+                        )}
+                        {variant === 'heavy' && (
+                            <>
+                                {tutorials.length > 2 && (
+                                    <CardSection
+                                        content={tutorials}
+                                        title="Tutorials"
+                                    />
+                                )}
+                                {demoApps.length > 2 && (
+                                    <CardSection
+                                        content={demoApps}
+                                        title="Demo Apps"
+                                    />
+                                )}
+                                {articles.length > 2 && (
+                                    <CardSection
+                                        content={articles}
+                                        title="Articles"
+                                    />
+                                )}
+                                {videos.length > 2 && (
+                                    <CardSection
+                                        content={videos}
+                                        title="Videos"
+                                    />
+                                )}
+                                {podcasts.length > 2 && (
+                                    <CardSection
+                                        content={podcasts}
+                                        title="Podcasts"
+                                        direction="column"
+                                    />
+                                )}
+                            </>
+                        )}
+                    </GridLayout>
+                </div>
+            )}
             <Search name={name} slug={slug} />
         </>
     );
