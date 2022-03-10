@@ -5,6 +5,7 @@ import { GridLayout } from '@mdb/flora';
 import Hero from '../../components/hero';
 import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
+import { ITopicCard } from '../../components/topic-card/types';
 import { CTA } from '../../components/hero/types';
 
 import { products } from '../../data/products';
@@ -19,7 +20,8 @@ interface TopicProps {
     slug: string;
     description: string;
     ctas: CTA[];
-    topics: string[];
+    topics: ITopicCard[];
+    relatedTopics: ITopicCard[];
     featured: ContentPiece[];
     content: ContentPiece[];
 }
@@ -29,6 +31,7 @@ const Topic: NextPage<TopicProps> = ({
     description,
     ctas,
     topics,
+    relatedTopics,
     featured,
     content,
     slug,
@@ -60,7 +63,10 @@ const Topic: NextPage<TopicProps> = ({
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    padding: ['inc40', null, 'inc50', 'inc70'],
+                    paddingBottom: 'inc160',
+                    px: ['inc40', null, 'inc50', 'inc70'],
+                    paddingTop: ['inc40', null, 'inc50', 'inc70'],
+
                     rowGap: ['inc90', null, null, 'inc130'],
                 }}
             >
@@ -72,7 +78,7 @@ const Topic: NextPage<TopicProps> = ({
                             {topics.length > 0 && (
                                 <TopicCardsContainer
                                     topics={topics}
-                                    name={name}
+                                    title={`${name} Topics`}
                                 />
                             )}
                             {variant !== 'light' && (
@@ -116,9 +122,18 @@ const Topic: NextPage<TopicProps> = ({
                         </GridLayout>
                     </div>
                 )}
-                <div>
-                    <Search name={name} slug={slug} />
-                </div>
+                <Search name={name} slug={slug} />
+
+                {variant === 'light' && relatedTopics.length > 0 && (
+                    <div>
+                        <GridLayout>
+                            <TopicCardsContainer
+                                topics={relatedTopics}
+                                title="Related Topics"
+                            />
+                        </GridLayout>
+                    </div>
+                )}
             </div>
         </>
     );

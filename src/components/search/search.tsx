@@ -58,6 +58,9 @@ const Search: React.FunctionComponent<SearchProps> = ({
         setSortBy(sortByOptions[val] as SortByType);
     };
 
+    const fullyLoaded =
+        data && data.length > 0 && data[data.length - 1].length < 10;
+
     return (
         <form role="search">
             <GridLayout sx={{ rowGap: 0 }}>
@@ -90,16 +93,18 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     isLoading={isValidating}
                     hasError={error}
                 />
-                <div sx={loadMoreStyles}>
-                    {!isValidating && data && (
-                        <Button
-                            onClick={() => setSize(size + 1)}
-                            variant="secondary"
-                        >
-                            Load more
-                        </Button>
-                    )}
-                </div>
+                {!fullyLoaded && (
+                    <div sx={loadMoreStyles}>
+                        {!isValidating && data && (
+                            <Button
+                                onClick={() => setSize(size + 1)}
+                                variant="secondary"
+                            >
+                                Load more
+                            </Button>
+                        )}
+                    </div>
+                )}
             </GridLayout>
         </form>
     );

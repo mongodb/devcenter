@@ -1,10 +1,10 @@
-export interface TopicCardProps {
-    label: string;
+export interface ITopicCard {
+    title: string;
     icon: string;
     href: string;
 }
 
 export interface TopicCardsContainerProps {
-    topics: string[];
-    name: string;
+    topics: ITopicCard[];
+    title: string;
 }

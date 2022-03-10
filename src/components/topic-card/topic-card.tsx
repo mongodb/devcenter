@@ -2,10 +2,10 @@ import Link from 'next/link';
 import { BrandedIcon, TypographyScale } from '@mdb/flora';
 
 import { topicCardStyles, iconStyles } from './styles';
-import { TopicCardProps } from './types';
+import { ITopicCard } from './types';
 
-const TopicCard: React.FunctionComponent<TopicCardProps> = ({
-    label,
+const TopicCard: React.FunctionComponent<ITopicCard> = ({
+    title,
     icon,
     href,
 }) => {
@@ -14,7 +14,7 @@ const TopicCard: React.FunctionComponent<TopicCardProps> = ({
             <a sx={topicCardStyles} tabIndex={0}>
                 <BrandedIcon sx={iconStyles} name={icon} />
                 <TypographyScale variant="body3" sx={{ my: 'auto' }}>
-                    {label}
+                    {title}
                 </TypographyScale>
             </a>
         </Link>

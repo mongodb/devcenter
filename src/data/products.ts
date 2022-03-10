@@ -11,7 +11,51 @@ export const products = [
                 url: 'https://www.mongodb.com/cloud/atlas/register',
             },
         ],
-        topics: ['Aggregation', 'Atlas Search', 'Charts', 'Other Topic Here'],
+
+        topics: [
+            {
+                title: 'Aggregation',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Atlas Search',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Charts',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Other Topic Here',
+                href: '#',
+                icon: 'atlas_search',
+            },
+        ],
+        relatedTopics: [
+            {
+                title: 'Aggregation',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Atlas Search',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Charts',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Other Topic Here',
+                href: '#',
+                icon: 'atlas_search',
+            },
+        ],
     },
     {
         name: 'Data Lake',
@@ -26,6 +70,7 @@ export const products = [
             },
         ],
         topics: [],
+        relatedTopics: [],
     },
     {
         name: 'VS Code',
@@ -34,5 +79,27 @@ export const products = [
             'Blurb consisting of a description of the title or tag for the page. No more than 2 - 3 lines, and 5 column max',
         ctas: [],
         topics: [],
+        relatedTopics: [
+            {
+                title: 'Aggregation',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Atlas Search',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Charts',
+                href: '#',
+                icon: 'atlas_search',
+            },
+            {
+                title: 'Other Topic Here',
+                href: '#',
+                icon: 'atlas_search',
+            },
+        ],
     },
 ];
