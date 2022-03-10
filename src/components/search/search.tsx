@@ -24,6 +24,7 @@ import { fetcher, sortByOptions } from './utils';
 import Results from './results';
 
 const Search: React.FunctionComponent<SearchProps> = ({
+    slug = '',
     name,
     hideSortBy = false,
     filters = [],
@@ -33,7 +34,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
 
     const getKey = (pageIndex: number, previousPageData: ContentPiece[]) => {
         if (previousPageData && !previousPageData.length) return null;
-        return `?search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
+        return `topic=${slug}&search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
             ','
         )}`;
     };

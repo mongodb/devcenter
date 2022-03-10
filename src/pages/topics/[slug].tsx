@@ -5,8 +5,9 @@ import { GridLayout } from '@mdb/flora';
 import Hero from '../../components/hero';
 import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
-import { CTA, Crumb } from '../../components/hero/types';
+import { CTA } from '../../components/hero/types';
 
+import { products } from '../../data/products';
 import getL1Content from '../../requests/get-l1-content';
 import { ContentPiece } from '../../interfaces/content-piece';
 import CardSection, {
@@ -30,6 +31,7 @@ const Topic: NextPage<TopicProps> = ({
     topics,
     featured,
     content,
+    slug,
 }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
@@ -41,6 +43,11 @@ const Topic: NextPage<TopicProps> = ({
     const demoApps = content.filter(piece => piece.category === 'Demo App');
     const videos = content.filter(piece => piece.category === 'Video');
     const podcasts = content.filter(piece => piece.category === 'Podcast');
+
+    const variant: 'light' | 'medium' | 'heavy' =
+        content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
+    console.log(variant);
+
     return (
         <>
             <Hero
@@ -51,30 +58,45 @@ const Topic: NextPage<TopicProps> = ({
             />
             <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
                 <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
-                    <TopicCardsContainer topics={topics} name={name} />
+                    {topics.length > 0 && (
+                        <TopicCardsContainer topics={topics} name={name} />
+                    )}
                     <FeaturedCardSection content={featured} />
-                    {tutorials.length > 2 && (
-                        <CardSection content={tutorials} title="Tutorials" />
-                    )}
-                    {demoApps.length > 2 && (
-                        <CardSection content={demoApps} title="Demo Apps" />
-                    )}
-                    {articles.length > 2 && (
-                        <CardSection content={articles} title="Articles" />
-                    )}
-                    {videos.length > 2 && (
-                        <CardSection content={videos} title="Videos" />
-                    )}
-                    {podcasts.length > 2 && (
-                        <CardSection
-                            content={podcasts}
-                            title="Podcasts"
-                            direction="column"
-                        />
+                    {variant === 'heavy' && (
+                        <>
+                            {tutorials.length > 2 && (
+                                <CardSection
+                                    content={tutorials}
+                                    title="Tutorials"
+                                />
+                            )}
+                            {demoApps.length > 2 && (
+                                <CardSection
+                                    content={demoApps}
+                                    title="Demo Apps"
+                                />
+                            )}
+                            {articles.length > 2 && (
+                                <CardSection
+                                    content={articles}
+                                    title="Articles"
+                                />
+                            )}
+                            {videos.length > 2 && (
+                                <CardSection content={videos} title="Videos" />
+                            )}
+                            {podcasts.length > 2 && (
+                                <CardSection
+                                    content={podcasts}
+                                    title="Podcasts"
+                                    direction="column"
+                                />
+                            )}
+                        </>
                     )}
                 </GridLayout>
             </div>
-            <Search name={name} />
+            <Search name={name} slug={slug} />
         </>
     );
 };
@@ -86,39 +108,15 @@ interface IParams extends ParsedUrlQuery {
 } // Need this to avoid TS errors.
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const paths = [
-        {
-            params: { slug: 'atlas' },
-        },
-    ];
+    const paths = products.map(({ slug }) => ({ params: { slug } }));
     return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
-    const products = [
-        {
-            name: 'Atlas',
-            slug: 'atlas',
-            description:
-                'Blurb consisting of a description of the title or tag for the page. No more than 2 - 3 lines, and 5 column max',
-            ctas: [
-                { text: 'Primary CTA', url: 'https://www.mongodb.com/atlas' },
-                {
-                    text: 'Secondary CTA',
-                    url: 'https://www.mongodb.com/cloud/atlas/register',
-                },
-            ],
-            topics: [
-                'Aggregation',
-                'Atlas Search',
-                'Charts',
-                'Other Topic Here',
-            ],
-        },
-    ];
+
     const product = products.filter(p => p.slug === slug)[0];
-    const { content, featured } = getL1Content();
+    const { content, featured } = getL1Content(slug);
 
     const data = { ...product, featured, content };
     return { props: data };

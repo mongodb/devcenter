@@ -12,6 +12,7 @@ export interface IsortByOptions {
 }
 
 export interface SearchProps {
+    slug?: string;
     name: string;
     hideSortBy?: boolean;
     filters?: string[];
