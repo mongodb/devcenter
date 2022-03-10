@@ -1,4 +1,4 @@
-import { SideNav } from '@mdb/flora';
+import { SideNav, Link } from '@mdb/flora';
 
 import { TertiaryNavProps, TertiaryNavItem } from './types';
 import {
@@ -6,7 +6,6 @@ import {
     smallDesktopNavStyles,
     smallDesktopNavFadeRightStyles,
     navTagStyles,
-    smallDesktopNavItemStyles,
 } from './styles';
 import { scrollListener } from './utils';
 import { useEffect } from 'react';
@@ -33,13 +32,9 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
                 />
                 <nav sx={navTagStyles} id="navScroll">
                     {items.map(({ title, url }) => (
-                        <a
-                            sx={smallDesktopNavItemStyles}
-                            href={url}
-                            key={title}
-                        >
-                            <span>{title}</span>
-                        </a>
+                        <Link href={url} key={title} navItem={true}>
+                            {title}
+                        </Link>
                     ))}
                 </nav>
                 <span
