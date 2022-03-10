@@ -24,6 +24,7 @@ interface TopicProps {
     relatedTopics: ITopicCard[];
     featured: ContentPiece[];
     content: ContentPiece[];
+    variant: 'light' | 'medium' | 'heavy';
 }
 
 const Topic: NextPage<TopicProps> = ({
@@ -35,6 +36,7 @@ const Topic: NextPage<TopicProps> = ({
     featured,
     content,
     slug,
+    variant,
 }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
@@ -46,10 +48,6 @@ const Topic: NextPage<TopicProps> = ({
     const demoApps = content.filter(piece => piece.category === 'Demo App');
     const videos = content.filter(piece => piece.category === 'Video');
     const podcasts = content.filter(piece => piece.category === 'Podcast');
-
-    const variant: 'light' | 'medium' | 'heavy' =
-        content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
-    console.log(variant);
 
     return (
         <>
@@ -156,6 +154,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const product = products.filter(p => p.slug === slug)[0];
     const { content, featured } = getL1Content(slug);
 
-    const data = { ...product, featured, content };
+    const variant: 'light' | 'medium' | 'heavy' =
+        content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
+    const data = { ...product, featured, content, variant };
     return { props: data };
 };
