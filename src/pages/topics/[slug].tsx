@@ -9,7 +9,11 @@ import { ITopicCard } from '../../components/topic-card/types';
 import { CTA } from '../../components/hero/types';
 
 import { products } from '../../data/products';
+
 import getL1Content from '../../requests/get-l1-content';
+import getTertiaryNavItems from '../../requests/get-tertiary-nav-items';
+import getProduct from '../../requests/get-product';
+
 import { ContentPiece } from '../../interfaces/content-piece';
 import CardSection, {
     FeaturedCardSection,
@@ -180,57 +184,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
 
-    const product = products.filter(p => p.slug === slug)[0];
+    const product = getProduct(slug);
+    const tertiaryNavItems = getTertiaryNavItems(slug);
     const { content, featured } = getL1Content(slug);
 
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
-    const tertiaryNavItems: TertiaryNavItem[] = [
-        {
-            title: 'Quickstarts',
-            url: `/products/${slug}/quickstarts`,
-        },
-        {
-            title: `Articles`,
-            url: `/products/${slug}/articles`,
-        },
-        {
-            title: `Courses`,
-            url: `/products/${slug}/courses`,
-        },
-        {
-            title: `Community Discussion`,
-            url: `https://www.mongodb.com/community/forums/`,
-        },
-        {
-            title: `Documentation`,
-            url: `https://docs.mongodb.com/`,
-        },
-        {
-            title: `News & Announcements`,
-            url: `https://www.mongodb.com/news`,
-        },
-        {
-            title: `Demo Apps`,
-            url: `/products/${slug}/demoapps`,
-        },
-        {
-            title: `Stack Overflow`,
-            url: `https://stackoverflow.com/`,
-        },
-        {
-            title: `Podcasts`,
-            url: `/products/${slug}/podcasts`,
-        },
-        {
-            title: `Tutorials`,
-            url: `/products/${slug}/tutorials`,
-        },
-        {
-            title: `Videos`,
-            url: `/products/${slug}/videos`,
-        },
-    ];
 
     const data = {
         ...product,
