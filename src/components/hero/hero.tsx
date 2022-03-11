@@ -3,7 +3,7 @@ import React from 'react';
 import { TypographyScale, Button, GridLayout } from '@mdb/flora';
 
 import CTALink from './CTALink';
-import Breadcrumbs from './breadcrumbs';
+import Breadcrumbs from '../breadcrumbs';
 import { HeroProps } from './types';
 import { heroContainerStyles, CTAContainerStyles } from './styles';
 

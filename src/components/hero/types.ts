@@ -1,12 +1,4 @@
-export interface Crumb {
-    text: string;
-    url?: string;
-}
-
-export interface BreadcrumbsProps {
-    crumbs: Crumb[];
-}
-
+import { Crumb } from '../breadcrumbs/types';
 export interface CTA {
     text: string;
     url: string;
