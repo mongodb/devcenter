@@ -12,6 +12,8 @@ export interface IsortByOptions {
 }
 
 export interface SearchProps {
+    className?: string;
+    slug?: string;
     name: string;
     hideSortBy?: boolean;
     filters?: string[];

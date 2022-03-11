@@ -1,30 +1,5 @@
 import theme from '@mdb/flora/theme';
 
-export const breadcrumbsContainerStyles = {
-    alignItems: 'center',
-    display: 'flex',
-    flexWrap: 'wrap' as 'wrap',
-    gap: 'elementXSmall',
-    gridColumn: ['span 6', null, 'span 8', 'span 12'],
-};
-
-export const breadcrumbStyles = {
-    alignItems: 'center',
-    display: 'flex',
-    gap: 'elementXSmall',
-};
-
-export const linkStyles = {
-    '*.textlink-default-text-class': {
-        // Need the tag+class for specificity over default class styles.
-        borderBottom: `${theme.borders.inc10} solid ${theme.colors.green60}`,
-        marginBottom: theme.borders.inc10,
-        '&:hover': {
-            marginBottom: 0,
-        },
-    },
-};
-
 export const heroContainerStyles = {
     bg: 'purple10',
     padding: ['inc40', null, 'inc50', 'inc70'],

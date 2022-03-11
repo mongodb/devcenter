@@ -143,6 +143,7 @@ export const thumbnailWrapperStyles = (
 };
 
 export const cardWrapperStyles = {
+    boxSizing: 'border-box' as 'border-box',
     display: 'flex',
     flexDirection: 'column' as 'column',
     justifyContent: 'space-between',

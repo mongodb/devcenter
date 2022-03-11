@@ -4,7 +4,7 @@ interface L1Content {
     content: ContentPiece[];
     featured: ContentPiece[];
 }
-const getL1Content = (): L1Content => {
+const getL1Content = (slug: string): L1Content => {
     const featured: ContentPiece[] = [
         {
             authors: ['Farah Appleseed'],
@@ -193,6 +193,20 @@ const getL1Content = (): L1Content => {
         },
         {
             authors: ['Farah Appleseed'],
+            category: 'Article',
+            image: {
+                alt: 'thumbnail',
+                url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+            },
+            title: 'This is 104 article',
+            description: 'This is my fourth article',
+            contentDate: new Date().toDateString(),
+            tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+            featured: false,
+            slug: 'a4',
+        },
+        {
+            authors: ['Farah Appleseed'],
             category: 'Tutorial',
             image: {
                 alt: 'thumbnail',
@@ -273,7 +287,15 @@ const getL1Content = (): L1Content => {
             slug: 'p3',
         },
     ];
-    return { content, featured };
+    const returnContent =
+        slug === 'atlas'
+            ? content
+            : slug === 'data-lake'
+            ? content.slice(0, 10)
+            : slug === 'vs-code'
+            ? content.slice(0, 5)
+            : [];
+    return { content: returnContent, featured };
 };
 
 export default getL1Content;

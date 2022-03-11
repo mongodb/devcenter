@@ -18,6 +18,8 @@ export const cardSectionListStyles = (direction: 'row' | 'column') => {
         paddingBottom: ['inc30', null, '0'],
         gap: [direction === 'column' ? 'inc30' : 'inc40', null, null, 'inc40'],
         overflow: ['auto', null, 'visible'],
+        mx: [`-${theme.space.inc40}`, null, 'unset'],
+        px: ['inc40', null, 'unset'],
     };
 };
 

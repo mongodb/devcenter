@@ -15,8 +15,8 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
     topic,
 }) => {
     const mobileItems: TertiaryNavItem[] = [
-        ...items,
         { title: `All ${topic} Content`, url: '#' },
+        ...items,
     ];
     useEffect(() => {
         const navScroll = document.getElementById('navScroll');

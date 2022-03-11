@@ -6,6 +6,7 @@ export const smallDesktopNavStyles = {
 };
 
 export const navTagStyles = {
+    boxSizing: 'border-box' as 'border-box',
     display: 'flex',
     whiteSpace: 'nowrap' as 'nowrap',
     overflowX: 'auto' as 'auto',
@@ -16,11 +17,13 @@ export const navTagStyles = {
     gap: 'inc50',
 
     // Hide scrollbar on all browsers.
-    '-ms-overflow-style': 'none',
+    msOverflowStyle: 'none' as 'none',
     scrollbarWidth: 'none' as 'none',
     '::-webkit-scrollbar': {
         display: 'none',
     },
+
+    minWidth: '100%',
 };
 
 export const smallDesktopNavFadeRightStyles = {

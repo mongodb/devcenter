@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
 import useSWRInfinite from 'swr/infinite';
+import { Grid } from 'theme-ui';
 
 import {
     Button,
@@ -8,7 +8,6 @@ import {
     Select,
     ESystemIconNames,
     TypographyScale,
-    GridLayout,
 } from '@mdb/flora';
 
 import { ContentPiece } from '../../interfaces/content-piece';
@@ -24,6 +23,8 @@ import { fetcher, sortByOptions } from './utils';
 import Results from './results';
 
 const Search: React.FunctionComponent<SearchProps> = ({
+    className,
+    slug = '',
     name,
     hideSortBy = false,
     filters = [],
@@ -33,7 +34,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
 
     const getKey = (pageIndex: number, previousPageData: ContentPiece[]) => {
         if (previousPageData && !previousPageData.length) return null;
-        return `?search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
+        return `topic=${slug}&search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
             ','
         )}`;
     };
@@ -57,9 +58,12 @@ const Search: React.FunctionComponent<SearchProps> = ({
         setSortBy(sortByOptions[val] as SortByType);
     };
 
+    const fullyLoaded =
+        data && data.length > 0 && data[data.length - 1].length < 10;
+
     return (
-        <form role="search" sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
-            <GridLayout sx={{ rowGap: 0 }}>
+        <form role="search" className={className}>
+            <Grid columns={[6, 6, 8, 12, 9]} sx={{ rowGap: 0 }}>
                 <TypographyScale variant="heading5" sx={titleStyles}>
                     All {name} Content
                 </TypographyScale>
@@ -81,6 +85,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         value={sortByOptions[sortBy]}
                         onSelect={onSort}
                         width="100%"
+                        height="84px" // Select and TextInput borders function differently...
                     />
                 )}
 
@@ -89,17 +94,19 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     isLoading={isValidating}
                     hasError={error}
                 />
-                <div sx={loadMoreStyles}>
-                    {!isValidating && data && (
-                        <Button
-                            onClick={() => setSize(size + 1)}
-                            variant="secondary"
-                        >
-                            Load more
-                        </Button>
-                    )}
-                </div>
-            </GridLayout>
+                {!fullyLoaded && (
+                    <div sx={loadMoreStyles}>
+                        {!isValidating && data && (
+                            <Button
+                                onClick={() => setSize(size + 1)}
+                                variant="secondary"
+                            >
+                                Load more
+                            </Button>
+                        )}
+                    </div>
+                )}
+            </Grid>
         </form>
     );
 };

@@ -3,7 +3,7 @@ import React from 'react';
 import { TypographyScale, Button, GridLayout } from '@mdb/flora';
 
 import CTALink from './CTALink';
-import Breadcrumbs from './breadcrumbs';
+import Breadcrumbs from '../breadcrumbs';
 import { HeroProps } from './types';
 import { heroContainerStyles, CTAContainerStyles } from './styles';
 
@@ -29,33 +29,35 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                         {description}
                     </TypographyScale>
                 </div>
-                <div sx={CTAContainerStyles}>
-                    {ctas.length < 3
-                        ? ctas.map((cta, i) => {
-                              // Max of 2 buttons, so only bother with the first 2.
-                              if (i === 0) {
-                                  return (
-                                      <Button
-                                          key={cta.text}
-                                          href={cta.url}
-                                          variant={
-                                              ctas.length > 1
-                                                  ? 'secondary'
-                                                  : 'primary'
-                                          }
-                                          size="large"
-                                          target="_blank" // Flora doesn't add rel="noopener", so maybe we can contribute that.
-                                      >
-                                          {cta.text}
-                                      </Button>
-                                  );
-                              }
-                              if (i === 1) {
-                                  return <CTALink {...cta} key={cta.url} />;
-                              }
-                          })
-                        : null}
-                </div>
+                {ctas.length > 0 && (
+                    <div sx={CTAContainerStyles}>
+                        {ctas.length < 3
+                            ? ctas.map((cta, i) => {
+                                  // Max of 2 buttons, so only bother with the first 2.
+                                  if (i === 0) {
+                                      return (
+                                          <Button
+                                              key={cta.text}
+                                              href={cta.url}
+                                              variant={
+                                                  ctas.length > 1
+                                                      ? 'secondary'
+                                                      : 'primary'
+                                              }
+                                              size="large"
+                                              target="_blank" // Flora doesn't add rel="noopener", so maybe we can contribute that.
+                                          >
+                                              {cta.text}
+                                          </Button>
+                                      );
+                                  }
+                                  if (i === 1) {
+                                      return <CTALink {...cta} key={cta.url} />;
+                                  }
+                              })
+                            : null}
+                    </div>
+                )}
             </GridLayout>
         </div>
     );
