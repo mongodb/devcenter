@@ -17,7 +17,7 @@ export const navTagStyles = {
     gap: 'inc50',
 
     // Hide scrollbar on all browsers.
-    msOverflowStyle: 'none',
+    msOverflowStyle: 'none' as 'none',
     scrollbarWidth: 'none' as 'none',
     '::-webkit-scrollbar': {
         display: 'none',
