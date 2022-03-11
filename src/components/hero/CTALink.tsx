@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 
-import { TypographyScale, Button, Link, GridLayout } from '@mdb/flora';
+import { Link } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 
-import Breadcrumbs from './breadcrumbs';
-import { HeroProps, CTA } from './types';
-import {
-    heroContainerStyles,
-    CTAContainerStyles,
-    CTALinkStyles,
-} from './styles';
+import { CTA } from './types';
+import { CTALinkStyles } from './styles';
 import { ThemeUIStyleObject } from 'theme-ui';
 
 const CTALink: React.FunctionComponent<CTA> = ({ text, url }) => {
