@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { GridLayout } from '@mdb/flora';
+import { GridLayout, SideNav } from '@mdb/flora';
 
 import Hero from '../../components/hero';
 import Search from '../../components/search';
@@ -14,6 +14,8 @@ import { ContentPiece } from '../../interfaces/content-piece';
 import CardSection, {
     FeaturedCardSection,
 } from '../../components/card-section';
+import { TertiaryNavItem } from '../../components/tertiary-nav/types';
+import TertiaryNav from '../../components/tertiary-nav';
 
 interface TopicProps {
     name: string;
@@ -25,7 +27,19 @@ interface TopicProps {
     featured: ContentPiece[];
     content: ContentPiece[];
     variant: 'light' | 'medium' | 'heavy';
+    tertiaryNavItems: TertiaryNavItem[];
 }
+
+const sideNavStyles = (rowCount: number) => ({
+    display: ['none', null, null, null, 'block'],
+    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
+    nav: {
+        position: 'static' as 'static',
+    },
+    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
+    // before render and update this accordingly.
+    gridRow: [null, null, null, null, `span ${rowCount}`],
+});
 
 const Topic: NextPage<TopicProps> = ({
     name,
@@ -37,17 +51,28 @@ const Topic: NextPage<TopicProps> = ({
     content,
     slug,
     variant,
+    tertiaryNavItems,
 }) => {
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
         { text: 'Products', url: '/topics' },
     ];
-    const articles = content.filter(piece => piece.category === 'Article');
-    const tutorials = content.filter(piece => piece.category === 'Tutorial');
-    const demoApps = content.filter(piece => piece.category === 'Demo App');
-    const videos = content.filter(piece => piece.category === 'Video');
-    const podcasts = content.filter(piece => piece.category === 'Podcast');
+
+    const contentTypes = [
+        'Article',
+        'Tutorial',
+        'Demo App',
+        'Video',
+        'Podcast',
+    ];
+    const contentRows = contentTypes
+        .map(contentType =>
+            content.filter(piece => piece.category === contentType)
+        )
+        .filter(contentRow => contentRow.length > 2);
+
+    const mainGridDesktopRowsCount = contentRows.length + 2; // Content rows + topics + featured
 
     return (
         <>
@@ -57,6 +82,7 @@ const Topic: NextPage<TopicProps> = ({
                 description={description}
                 ctas={ctas}
             />
+            <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div
                 sx={{
                     display: 'flex',
@@ -69,10 +95,14 @@ const Topic: NextPage<TopicProps> = ({
                 }}
             >
                 {(variant !== 'light' || topics.length > 0) && (
-                    <div>
-                        <GridLayout
-                            sx={{ rowGap: ['inc90', null, null, 'inc130'] }}
-                        >
+                    <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
+                        <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
+                            <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
+                                <SideNav
+                                    currentUrl="#"
+                                    items={tertiaryNavItems}
+                                />
+                            </div>
                             {topics.length > 0 && (
                                 <TopicCardsContainer
                                     topics={topics}
@@ -82,41 +112,22 @@ const Topic: NextPage<TopicProps> = ({
                             {variant !== 'light' && (
                                 <FeaturedCardSection content={featured} />
                             )}
-                            {variant === 'heavy' && (
-                                <>
-                                    {tutorials.length > 2 && (
+                            {variant === 'heavy' &&
+                                contentRows.map(contentRow => {
+                                    const contentType = contentRow[0].category;
+                                    const direction =
+                                        contentType === 'Podcast'
+                                            ? 'column'
+                                            : 'row';
+                                    return (
                                         <CardSection
-                                            content={tutorials}
-                                            title="Tutorials"
+                                            key={contentType}
+                                            content={contentRow}
+                                            title={`${contentRow[0].category}s`}
+                                            direction={direction}
                                         />
-                                    )}
-                                    {demoApps.length > 2 && (
-                                        <CardSection
-                                            content={demoApps}
-                                            title="Demo Apps"
-                                        />
-                                    )}
-                                    {articles.length > 2 && (
-                                        <CardSection
-                                            content={articles}
-                                            title="Articles"
-                                        />
-                                    )}
-                                    {videos.length > 2 && (
-                                        <CardSection
-                                            content={videos}
-                                            title="Videos"
-                                        />
-                                    )}
-                                    {podcasts.length > 2 && (
-                                        <CardSection
-                                            content={podcasts}
-                                            title="Podcasts"
-                                            direction="column"
-                                        />
-                                    )}
-                                </>
-                            )}
+                                    );
+                                })}
                         </GridLayout>
                     </div>
                 )}
@@ -156,6 +167,60 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
-    const data = { ...product, featured, content, variant };
+    const tertiaryNavItems: TertiaryNavItem[] = [
+        {
+            title: 'Quickstarts',
+            url: `/products/${slug}/quickstarts`,
+        },
+        {
+            title: `Articles`,
+            url: `/products/${slug}/articles`,
+        },
+        {
+            title: `Courses`,
+            url: `/products/${slug}/courses`,
+        },
+        {
+            title: `Community Discussion`,
+            url: `https://www.mongodb.com/community/forums/`,
+        },
+        {
+            title: `Documentation`,
+            url: `https://docs.mongodb.com/`,
+        },
+        {
+            title: `News & Announcements`,
+            url: `https://www.mongodb.com/news`,
+        },
+        {
+            title: `Demo Apps`,
+            url: `/products/${slug}/demoapps`,
+        },
+        {
+            title: `Stack Overflow`,
+            url: `https://stackoverflow.com/`,
+        },
+        {
+            title: `Podcasts`,
+            url: `/products/${slug}/podcasts`,
+        },
+        {
+            title: `Tutorials`,
+            url: `/products/${slug}/tutorials`,
+        },
+        {
+            title: `Videos`,
+            url: `/products/${slug}/videos`,
+        },
+    ];
+
+    const data = {
+        ...product,
+        featured,
+        content,
+        tertiaryNavItems,
+        slug,
+        variant,
+    };
     return { props: data };
 };

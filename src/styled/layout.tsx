@@ -6,6 +6,7 @@ import theme from '@mdb/flora/theme';
 const globalStyles = css`
     body {
         font-family: ${theme.fonts['euclid-circular-a']};
+        margin: 0;
     }
     a {
         text-decoration: none;
