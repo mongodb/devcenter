@@ -15,12 +15,13 @@ export const breadcrumbStyles = {
 };
 
 export const linkStyles = {
-    '*.textlink-default-text-class': {
-        // Need the tag+class for specificity over default class styles.
+    '.textlink-default-text-class.textlink-default-text-class': {
+        // double class for specificity
         borderBottom: `${theme.borders.inc10} solid ${theme.colors.green60}`,
         marginBottom: theme.borders.inc10,
-        '&:hover': {
+        ':hover': {
             marginBottom: 0,
+            borderBottom: `${theme.borders.inc20} solid ${theme.colors.black80}`,
         },
     },
 };

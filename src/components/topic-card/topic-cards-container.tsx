@@ -12,7 +12,7 @@ const TopicCardsContainer: React.FunctionComponent<
         <TypographyScale variant="heading5">{title}</TypographyScale>
         <Grid columns={4} sx={topicsGridStyles}>
             {topics.map(topic => (
-                <TopicCard key={topic.title} {...topic} /> // Icon hard coded for now.
+                <TopicCard key={topic.title} {...topic} />
             ))}
         </Grid>
     </div>

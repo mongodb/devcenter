@@ -66,13 +66,26 @@ const Topic: NextPage<TopicProps> = ({
         'Video',
         'Podcast',
     ];
-    const contentRows = contentTypes
-        .map(contentType =>
-            content.filter(piece => piece.category === contentType)
-        )
-        .filter(contentRow => contentRow.length > 2);
+    const contentRows =
+        variant === 'heavy'
+            ? contentTypes
+                  .map(contentType =>
+                      content.filter(piece => piece.category === contentType)
+                  )
+                  .filter(contentRow => contentRow.length > 2)
+            : [];
 
-    const mainGridDesktopRowsCount = contentRows.length + 2; // Content rows + topics + featured
+    const topicsRow = topics.length > 0 ? 1 : 0;
+    const featuredRow = variant === 'light' ? 0 : 1;
+    const relatedTopicsRow = variant === 'light' ? 1 : 0;
+    const searchRow = 1; // Search is always there.
+
+    const mainGridDesktopRowsCount =
+        topicsRow +
+        featuredRow +
+        contentRows.length +
+        searchRow +
+        relatedTopicsRow;
 
     return (
         <>
@@ -85,24 +98,21 @@ const Topic: NextPage<TopicProps> = ({
             <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
                     paddingBottom: 'inc160',
                     px: ['inc40', null, 'inc50', 'inc70'],
                     paddingTop: ['inc40', null, 'inc50', 'inc70'],
-
-                    rowGap: ['inc90', null, null, 'inc130'],
                 }}
             >
-                {(variant !== 'light' || topics.length > 0) && (
-                    <div sx={{ padding: ['inc40', null, 'inc50', 'inc70'] }}>
-                        <GridLayout sx={{ rowGap: ['inc90', null, 'inc130'] }}>
-                            <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
-                                <SideNav
-                                    currentUrl="#"
-                                    items={tertiaryNavItems}
-                                />
-                            </div>
+                <GridLayout
+                    sx={{
+                        rowGap: ['inc90', null, null, 'inc130'],
+                    }}
+                >
+                    <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
+                        <SideNav currentUrl="#" items={tertiaryNavItems} />
+                    </div>
+                    {(variant !== 'light' || topics.length > 0) && (
+                        <>
                             {topics.length > 0 && (
                                 <TopicCardsContainer
                                     topics={topics}
@@ -128,21 +138,29 @@ const Topic: NextPage<TopicProps> = ({
                                         />
                                     );
                                 })}
-                        </GridLayout>
-                    </div>
-                )}
-                <Search name={name} slug={slug} />
+                        </>
+                    )}
+                    <Search
+                        name={name}
+                        slug={slug}
+                        sx={{
+                            gridColumn: [
+                                'span 6',
+                                null,
+                                'span 8',
+                                'span 12',
+                                '4 / span 9',
+                            ],
+                        }}
+                    />
 
-                {variant === 'light' && relatedTopics.length > 0 && (
-                    <div>
-                        <GridLayout>
-                            <TopicCardsContainer
-                                topics={relatedTopics}
-                                title="Related Topics"
-                            />
-                        </GridLayout>
-                    </div>
-                )}
+                    {variant === 'light' && relatedTopics.length > 0 && (
+                        <TopicCardsContainer
+                            topics={relatedTopics}
+                            title="Related Topics"
+                        />
+                    )}
+                </GridLayout>
             </div>
         </>
     );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
 import useSWRInfinite from 'swr/infinite';
+import { Grid } from 'theme-ui';
 
 import {
     Button,
@@ -8,7 +8,6 @@ import {
     Select,
     ESystemIconNames,
     TypographyScale,
-    GridLayout,
 } from '@mdb/flora';
 
 import { ContentPiece } from '../../interfaces/content-piece';
@@ -24,6 +23,7 @@ import { fetcher, sortByOptions } from './utils';
 import Results from './results';
 
 const Search: React.FunctionComponent<SearchProps> = ({
+    className,
     slug = '',
     name,
     hideSortBy = false,
@@ -62,8 +62,8 @@ const Search: React.FunctionComponent<SearchProps> = ({
         data && data.length > 0 && data[data.length - 1].length < 10;
 
     return (
-        <form role="search">
-            <GridLayout sx={{ rowGap: 0 }}>
+        <form role="search" className={className}>
+            <Grid columns={[6, 6, 8, 12, 9]} sx={{ rowGap: 0 }}>
                 <TypographyScale variant="heading5" sx={titleStyles}>
                     All {name} Content
                 </TypographyScale>
@@ -85,6 +85,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         value={sortByOptions[sortBy]}
                         onSelect={onSort}
                         width="100%"
+                        height="84px" // Select and TextInput borders function differently...
                     />
                 )}
 
@@ -105,7 +106,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         )}
                     </div>
                 )}
-            </GridLayout>
+            </Grid>
         </form>
     );
 };
