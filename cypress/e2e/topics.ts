@@ -1,71 +1,114 @@
-const crumbs = [
-    { text: 'MongoDB Developer Center', url: '/' },
-    { text: 'Developer Topics', url: '/topics' },
-    { text: 'Products', url: '/topics' },
-];
-
-const ctas = [
-    { text: 'Primary CTA', url: 'https://www.mongodb.com/atlas' },
-    {
-        text: 'Secondary CTA',
-        url: 'https://www.mongodb.com/cloud/atlas/register',
-    },
-];
-
-describe('topic page (desktop/tablet)', () => {
-    beforeEach(() => {
+describe('L1', () => {
+    it('should have all content heavy components', () => {
         cy.visit('/topics/atlas');
-    });
-    it('should have header.', () => {
+        cy.viewport(1440, 900);
+        // Hero
         cy.get('h2').should('have.text', 'Atlas');
-    });
-    it('should have description', () => {
-        cy.get('span').contains('consisting of a description of the title');
-    });
-    it('should have 3 breadcrumbs with correct links', () => {
-        const crumb1 = cy.get('a').find('h1').eq(0);
-        crumb1.should('have.text', crumbs[0].text);
-        crumb1
-            .parents('a')
-            .should('have.attr', 'href')
-            .should('not.be.empty')
-            .and('equal', crumbs[0].url);
+        cy.get('span')
+            .contains('consisting of a description of the title')
+            .should('exist');
 
-        const crumb2 = cy.get('a').find('h1').eq(1);
-        crumb2.should('have.text', crumbs[1].text);
-        crumb2
-            .parents('a')
-            .should('have.attr', 'href')
-            .should('not.be.empty')
-            .and('equal', crumbs[1].url);
+        // Side Nav
+        cy.get('nav:visible')
+            .find('a:contains(Articles)')
+            .should('have.length', 1);
 
-        const crumb3 = cy.get('a').find('h1').eq(2);
-        crumb3.should('have.text', crumbs[2].text);
-        crumb3
-            .parents('a')
-            .should('have.attr', 'href')
-            .should('not.be.empty')
-            .and('equal', crumbs[2].url);
-    });
+        // Topics
+        cy.get('h5').contains('Atlas Topics').should('exist');
 
-    it('should have 2 CTA buttons with correct links', () => {
-        const primaryCTA = cy.get('a').contains('Primary CTA');
-        primaryCTA
-            .should('have.attr', 'href')
-            .should('not.be.empty')
-            .and('equal', 'https://www.mongodb.com/atlas');
+        // Featured
 
-        const secondaryCTA = cy.get('span').contains('Secondary CTA');
-        secondaryCTA
-            .parents('a')
-            .should('have.attr', 'href')
-            .should('not.be.empty')
-            .and('equal', 'https://www.mongodb.com/cloud/atlas/register');
-    });
+        const featuredSection = cy.get('[data-testid="featured-card-section"]');
+        featuredSection.within(() => {
+            cy.get('[data-testid="card-large"]').should('have.length', 1);
+            cy.get('[data-testid="card-small"]').should('have.length', 2);
+        });
 
-    it('should not have CTA buttons with mobile dimensions', () => {
-        cy.viewport(375, 667); // iPhone SE
-        cy.get('a').contains('Primary CTA').should('be.hidden');
-        cy.get('span').contains('Secondary CTA').should('be.hidden');
-    });
+        // Articles Section
+        const articlesSection = cy.get('[data-testid="articles-card-section"]');
+        articlesSection
+            .find('[data-testid="card-medium"]')
+            .should('have.length', 3);
+
+        // The rest of the sections should be present.
+        cy.get('[data-testid="tutorials-card-section"]').should('exist');
+        cy.get('[data-testid="demo-apps-card-section"]').should('exist');
+        cy.get('[data-testid="videos-card-section"]').should('exist');
+        cy.get('[data-testid="podcasts-card-section"]').should('exist');
+
+        // Search
+        cy.get('h5').contains('All Atlas Content').should('exist');
+        cy.get('input[name="search-text-input"]').type('abc');
+        cy.get('[data-testid="card-list"]').should('have.length', 10);
+        cy.get('button').contains('Load more').click();
+        cy.get('[data-testid="card-list"]').should('have.length', 20);
+    }),
+        it('should have all content medium components', () => {
+            cy.visit('/topics/data-lake');
+            cy.viewport(1440, 900);
+            // Hero
+            cy.get('h2').should('have.text', 'Data Lake').should('exist');
+            cy.get('span')
+                .contains('consisting of a description of the title')
+                .should('exist');
+
+            // Side Nav
+            cy.get('nav:visible')
+                .find('a:contains(Articles)')
+                .should('have.length', 1);
+
+            // Topics
+            cy.get('h5').contains('Topics').should('not.exist');
+
+            // Featured
+            cy.get('[data-testid="featured-card-section"]').should('exist');
+
+            // The rest of the sections should be present.
+            cy.get('[data-testid="articles-card-section"]').should('not.exist');
+            cy.get('[data-testid="tutorials-card-section"]').should(
+                'not.exist'
+            );
+            cy.get('[data-testid="demo-apps-card-section"]').should(
+                'not.exist'
+            );
+            cy.get('[data-testid="videos-card-section"]').should('not.exist');
+            cy.get('[data-testid="podcasts-card-section"]').should('not.exist');
+
+            // Search
+            cy.get('h5').contains('All Data Lake Content').should('exist');
+        }),
+        it('should have all content light components', () => {
+            cy.visit('/topics/vs-code');
+            cy.viewport(1440, 900);
+            // Hero
+            cy.get('h2').should('have.text', 'VS Code');
+            cy.get('span')
+                .contains('consisting of a description of the title')
+                .should('exist');
+
+            // Side Nav
+            cy.get('nav:visible')
+                .find('a:contains(Articles)')
+                .should('have.length', 1);
+
+            // Featured
+            cy.get('[data-testid="featured-card-section"]').should('not.exist');
+
+            // The rest of the sections should be present.
+            cy.get('[data-testid="articles-card-section"]').should('not.exist');
+            cy.get('[data-testid="tutorials-card-section"]').should(
+                'not.exist'
+            );
+            cy.get('[data-testid="demo-apps-card-section"]').should(
+                'not.exist'
+            );
+            cy.get('[data-testid="videos-card-section"]').should('not.exist');
+            cy.get('[data-testid="podcasts-card-section"]').should('not.exist');
+
+            // Search
+            cy.get('h5').contains('All VS Code Content').should('exist');
+
+            // Related Topics
+            cy.get('h5').contains('Related Topics').should('exist');
+        });
 });

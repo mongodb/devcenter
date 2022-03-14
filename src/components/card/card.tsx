@@ -34,7 +34,12 @@ const Card: React.FunctionComponent<CardProps> = ({
 }) => {
     return (
         <Link href="#" passHref={true}>
-            <a sx={cardWrapperStyles} className={className} tabIndex={0}>
+            <a
+                sx={cardWrapperStyles}
+                className={className}
+                tabIndex={0}
+                data-testid={`card-${variant}`}
+            >
                 <div sx={cardHeaderStyles(variant, pillCategory)}>
                     {thumbnail && hasThumbnail(variant, pillCategory) && (
                         <div sx={thumbnailWrapperStyles(variant, pillCategory)}>

@@ -59,6 +59,9 @@ test('renders card section', () => {
         const cardTitle = screen.getByText(piece.title);
         expect(cardTitle).toBeInTheDocument();
     });
+
+    const allLink = screen.getAllByText('All Test Articles');
+    expect(allLink).toHaveLength(2); // 1 for desktop 1 for mobile.
 });
 
 test('renders featured card section', () => {

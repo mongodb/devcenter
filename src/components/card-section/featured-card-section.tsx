@@ -16,6 +16,7 @@ const FeaturedCardSection: React.FunctionComponent<
 > = ({ content }) => {
     return (
         <div
+            data-testid="featured-card-section"
             sx={{
                 gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
             }}
