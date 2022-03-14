@@ -12,7 +12,12 @@ import {
     cardHeaderStyles,
     thumbnailWrapperStyles,
 } from './styles';
-import { thumbnailLoader, hasThumbnail, hasTags } from './utils';
+import {
+    thumbnailLoader,
+    hasThumbnail,
+    hasTags,
+    hasDescription,
+} from './utils';
 import { CardProps } from './types';
 
 // Still need to add authors section.
@@ -55,12 +60,14 @@ const Card: React.FunctionComponent<CardProps> = ({
                         <TypographyScale variant="heading6">
                             {title}
                         </TypographyScale>
-                        <TypographyScale
-                            variant="body2"
-                            sx={descriptionStyles(variant, pillCategory)}
-                        >
-                            {description}
-                        </TypographyScale>
+                        {hasDescription(variant, pillCategory) && (
+                            <TypographyScale
+                                variant="body2"
+                                sx={descriptionStyles(variant, pillCategory)}
+                            >
+                                {description}
+                            </TypographyScale>
+                        )}
                         {hasTags(variant) && (
                             <div sx={tagWrapperStyles}>
                                 {tags?.map(tag => (
