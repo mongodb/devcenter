@@ -35,7 +35,7 @@ export const getCardProps = (
         title,
         pillCategory: category,
         tags,
-        thumbnail: { alt, size: 'large', url }, // Size is irrelevant here.
+        thumbnail: { alt, url }, // Size is irrelevant here.
         variant,
     };
 
