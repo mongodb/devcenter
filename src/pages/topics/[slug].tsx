@@ -34,7 +34,7 @@ interface TopicProps {
     tertiaryNavItems: TertiaryNavItem[];
 }
 
-const sideNavStyles = (rowCount: number) => ({
+export const sideNavStyles = (rowCount: number) => ({
     display: ['none', null, null, null, 'block'],
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
     nav: {
