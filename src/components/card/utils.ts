@@ -15,6 +15,10 @@ export const hasThumbnail = (variant: CardVariant, category: PillCategory) =>
 export const hasTags = (variant: CardVariant) =>
     variant === 'large' || variant === 'list';
 
+export const hasDescription = (variant: CardVariant, category: PillCategory) =>
+    ['large', 'list'].includes(variant) ||
+    (category === 'Demo App' && ['small', 'medium'].includes(variant));
+
 export const getCardProps = (
     {
         authors,
@@ -27,7 +31,6 @@ export const getCardProps = (
     }: ContentPiece,
     variant: CardVariant
 ): CardProps => {
-    const { alt, url } = image;
     const cardProps: CardProps = {
         authors,
         contentDate,
@@ -35,7 +38,7 @@ export const getCardProps = (
         title,
         pillCategory: category,
         tags,
-        thumbnail: { alt, size: 'large', url }, // Size is irrelevant here.
+        thumbnail: image,
         variant,
     };
 

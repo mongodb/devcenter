@@ -1,5 +1,9 @@
 import { PillCategory } from '../../types/pill-category';
-import { Thumbnail } from '../../interfaces/thumbnail';
+
+export interface Thumbnail {
+    url: string;
+    alt?: string;
+}
 
 export type CardVariant = 'small' | 'medium' | 'large' | 'list' | 'related';
 
