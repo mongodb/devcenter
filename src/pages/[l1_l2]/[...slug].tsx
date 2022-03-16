@@ -8,11 +8,8 @@ import { TopicCardsContainer } from '../../components/topic-card';
 import { ITopicCard } from '../../components/topic-card/types';
 import { CTA } from '../../components/hero/types';
 
-import { l1Products } from '../../data/l1-products';
-
 import getL1Content from '../../requests/get-l1-content';
 import getTertiaryNavItems from '../../requests/get-tertiary-nav-items';
-import getProduct from '../../requests/get-product';
 
 import { ContentPiece } from '../../interfaces/content-piece';
 import CardSection, {
@@ -20,6 +17,10 @@ import CardSection, {
 } from '../../components/card-section';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import TertiaryNav from '../../components/tertiary-nav';
+import { taxonomyData } from '../../data/taxonomy-data';
+import { Taxonomy } from '../../interfaces/taxonomy';
+import { taxonomyToCategoryMapping } from '../../data/taxonomy-collection-types';
+import getTaxonomyData from '../../requests/get-taxonomy-data';
 
 interface TopicProps {
     name: string;
@@ -173,20 +174,29 @@ const Topic: NextPage<TopicProps> = ({
 export default Topic;
 
 interface IParams extends ParsedUrlQuery {
-    slug: string;
+    l1_l2: string;
+    slug: string[];
 } // Need this to avoid TS errors.
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const paths = l1Products.map(({ slug }) => ({ params: { slug } }));
+    let paths: any[] = [];
+    taxonomyData.forEach((value: Taxonomy[], key: string) => {
+        const category = taxonomyToCategoryMapping[key];
+        paths = paths.concat(
+            value.map(({ slug }) => ({
+                params: { l1_l2: category, slug: slug.split('/') },
+            }))
+        );
+    });
     return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
-
-    const product = getProduct(slug);
-    const tertiaryNavItems = getTertiaryNavItems(slug);
-    const { content, featured } = getL1Content(slug);
+    const slugString = slug.join('/');
+    const product = getTaxonomyData(slugString);
+    const tertiaryNavItems = getTertiaryNavItems(slugString);
+    const { content, featured } = getL1Content(slugString);
 
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
@@ -196,7 +206,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         featured,
         content,
         tertiaryNavItems,
-        slug,
+        slug: slugString,
         variant,
     };
     return { props: data };
