@@ -61,7 +61,7 @@ const Topic: NextPage<TopicProps> = ({
     const crumbs = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
-        { text: 'Products', url: '/topics' },
+        { text: 'Products', url: '/' },
     ];
 
     const contentTypes = [
