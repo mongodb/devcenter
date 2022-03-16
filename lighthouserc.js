@@ -5,7 +5,7 @@ module.exports = {
             numberOfRuns: 2,
             url: [
                 'http://localhost/server/pages/index.html',
-                'http://localhost/server/pages/topics/atlas.html',
+                'http://localhost/server/pages/product/atlas.html',
             ],
         },
         upload: {
