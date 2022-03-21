@@ -33,6 +33,7 @@ const SecondaryNavBarDup: React.FunctionComponent = () => {
             <StyledSecondaryNavContainer>
                 <SecondaryNavMainLink onClick={openMobileMenu}>
                     University
+                    <span className="chevron-icon"></span>
                 </SecondaryNavMainLink>
                 <SecondaryMenuList isOpen={mobileMenuIsOpen}>
                     {secondaryNavData.map(({ text, path, dropdownItems }) => (
@@ -46,6 +47,7 @@ const SecondaryNavBarDup: React.FunctionComponent = () => {
                             ) : (
                                 <StyledFloraLink href={path}>
                                     {text}
+                                    <span>++++</span>
                                 </StyledFloraLink>
                             )}
                         </SecondaryNavLink>

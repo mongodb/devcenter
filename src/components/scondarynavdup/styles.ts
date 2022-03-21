@@ -17,16 +17,24 @@ export const StyledFloraLink = styled(Link)`
     font-size: ${theme.fontSizes.inc30};
     font-family: ${theme.fonts.body};
     font-weight: 300;
+    span {
+        color: ${theme.colors.text.default}!important;
+    }
     span:hover {
         border-bottom: 2px solid ${theme.colors.green40}!important;
     }
 `;
 
 export const SecondaryNavMainLink = styled(StyledFloraLink)`
+    position: relative;
     display: block;
     float: initial;
     margin-bottom: 0;
     font-weight: 500;
+    .chevron-icon {
+        position: absolute;
+        right: 0;
+    }
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: inline-block;
         float: left;
@@ -45,7 +53,7 @@ export const SecondaryMenuList = styled.ul`
     margin: 0;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         float: left;
-        overflow: visible;     
+        overflow: visible;
     }
 `;
 
@@ -62,10 +70,11 @@ export const DropDownMenuList = styled.ul`
         margin-top: 0;
         position: absolute;
         padding: 15px;
-       
+        box-shadow: ${theme.shadows.level01};
+        border-bottom-right-radius: ${theme.radii.inc50};
+        border-bottom-left-radius: ${theme.radii.inc50};
     }
 `;
-
 
 export const ListItem = styled('li')`
     padding-left: 0;
