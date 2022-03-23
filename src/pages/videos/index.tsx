@@ -8,10 +8,12 @@ import {
     Button,
 } from '@mdb/flora';
 import Breadcrumbs from '../../components/breadcrumbs';
+import Card from '../../components/card';
 import CardSection from '../../components/card-section';
 import { tagStyles, tagWrapperStyles } from '../../components/card/styles';
 import CTALink from '../../components/hero/CTALink';
 import TertiaryNav from '../../components/tertiary-nav';
+import getL1Content from '../../requests/get-l1-content';
 import getTertiaryNavItems from '../../requests/get-tertiary-nav-items';
 
 export interface HeroProps {
@@ -19,9 +21,9 @@ export interface HeroProps {
     description: string;
 }
 
-const nameDummy =
+const nameContent =
     'Continuously Building and Hosting our Swift DocC Documentation using Github Actions and Netlify';
-const descriptionDummy =
+const descriptionContent =
     'Published February 16, 2022  •  Updated February 16, 2022';
 const tags = ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'];
 
@@ -37,11 +39,53 @@ const listItems = [
     'Continuously Building and Hosting our Swift DocC Documentation using Github Actions and Netlify',
 ];
 
+const RelatedContent = [
+    {
+        category: 'Podcast',
+        image: {
+            alt: 'thumbnail',
+            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+        },
+        title: 'MongoDB Podcast: Episode 23',
+        description: 'Some podcast details',
+        contentDate: new Date().toDateString(),
+        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        featured: false,
+        slug: 'p1',
+    },
+    {
+        category: 'Podcast',
+        image: {
+            alt: 'thumbnail',
+            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+        },
+        title: 'MongoDB Podcast: Episode 96',
+        description: 'Some podcast details',
+        contentDate: new Date().toDateString(),
+        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        featured: false,
+        slug: 'p2',
+    },
+    {
+        category: 'Podcast',
+        image: {
+            alt: 'thumbnail',
+            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+        },
+        title: 'MongoDB Podcast: Episode 2',
+        description: 'Some podcast details',
+        contentDate: new Date().toDateString(),
+        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        featured: false,
+        slug: 'p3',
+    },
+];
+
 const tertiaryNavItems = getTertiaryNavItems('atlas');
 
 const VideoPage: React.FunctionComponent<HeroProps> = ({
-    name = nameDummy,
-    description = descriptionDummy,
+    name = nameContent,
+    description = descriptionContent,
 }) => {
     return (
         <>
@@ -150,7 +194,13 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                             url="#"
                         />
                         <hr />
-                        <Panel sx={{ marginTop: '96px', padding: '48px' }}>
+                        <Panel
+                            sx={{
+                                marginTop: '96px',
+                                marginBottom: '96px',
+                                padding: '48px',
+                            }}
+                        >
                             <TypographyScale
                                 color="selected"
                                 variant="heading6"
@@ -166,8 +216,7 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                                 THIS IS PART OF A SERIES
                             </TypographyScale>
                             <TypographyScale
-                                customElement="h2"
-                                variant="body4"
+                                variant="heading5"
                                 sx={{
                                     marginBottom: ['inc20', null, null, '16px'],
                                     marginTop: ['inc20', null, null, '16px'],
@@ -176,8 +225,7 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                                 {`DocC: Apple's Documentation Compiler`}
                             </TypographyScale>
                             <TypographyScale
-                                customElement="h2"
-                                variant="body4"
+                                variant="heading6"
                                 sx={{
                                     marginBottom: ['inc20', null, null, '16px'],
                                     marginTop: ['inc20', null, null, '16px'],
@@ -204,8 +252,7 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                             </Button>
                             <hr />
                             <TypographyScale
-                                customElement="h2"
-                                variant="body4"
+                                variant="heading6"
                                 sx={{
                                     marginBottom: ['inc20', null, null, '16px'],
                                     marginTop: ['inc20', null, null, '40px'],
@@ -225,22 +272,19 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                         <TypographyScale variant="heading5">
                             Related
                         </TypographyScale>
-                        {/* {
-                                contentRows.map(contentRow => {
-                                    const contentType = contentRow[0].category;
-                                    const direction =
-                                        contentType === 'Podcast'
-                                            ? 'column'
-                                            : 'row';
-                                    return (
-                                        <CardSection
-                                            key={contentType}
-                                            content={contentRow}
-                                            title={`${contentRow[0].category}s`}
-                                            direction={direction}
-                                        />
-                                    );
-                                })} */}
+                        {RelatedContent.map(content => {
+                            return (
+                                <Card
+                                    sx={{ marginBottom: '26px' }}
+                                    key={content.title}
+                                    title={content.title}
+                                    description={content.description}
+                                    contentDate={content.contentDate}
+                                    pillCategory="Podcast"
+                                    variant="small"
+                                />
+                            );
+                        })}
                         <Button
                             sx={{ marginBottom: '40px' }}
                             variant="secondary"
