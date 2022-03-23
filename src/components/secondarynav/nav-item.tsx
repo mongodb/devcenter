@@ -4,7 +4,7 @@ import { screenSize } from '../../styled/theme';
 
 interface IProps {
     children: React.ReactNode;
-    key: string;
+    testid: string;
 }
 
 const ListItem = styled.li`
@@ -48,10 +48,10 @@ const ListItem = styled.li`
 `;
 
 const SecondaryNavLink: React.FunctionComponent<IProps> = ({
-    key,
+    testid,
     children,
 }) => {
-    return <ListItem data-testid={key}>{children}</ListItem>;
+    return <ListItem data-testid={testid}>{children}</ListItem>;
 };
 
 export default SecondaryNavLink;

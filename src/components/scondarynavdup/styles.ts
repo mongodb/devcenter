@@ -3,10 +3,11 @@ import theme from '@mdb/flora/theme';
 import { Link } from '@mdb/flora';
 
 export const StyledSecondaryNavContainer = styled('nav')`
+    display: block;
     padding-left: ${theme.space.elementMedium};
     padding-right: ${theme.space.elementMedium};
-    display: block;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        display: flex;
         padding-top: ${theme.space.elementSmall};
         padding-bottom: ${theme.space.elementXSmall};
         padding-left: ${theme.space.elementXLarge};
@@ -45,7 +46,7 @@ export const SecondaryMenuList = styled.ul`
     margin: 0;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         float: left;
-        overflow: visible;     
+        overflow: visible;
     }
 `;
 
@@ -62,10 +63,8 @@ export const DropDownMenuList = styled.ul`
         margin-top: 0;
         position: absolute;
         padding: 15px;
-       
     }
 `;
-
 
 export const ListItem = styled('li')`
     padding-left: 0;

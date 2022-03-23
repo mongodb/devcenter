@@ -114,7 +114,7 @@ const SecondaryNavBar: React.FunctionComponent = () => {
                 </button>
                 <SecondaryMenuList isOpen={mobileMenuIsOpen}>
                     {secondaryNavData.map(({ text, path, dropdownItems }) => (
-                        <SecondaryNavLink key={text}>
+                        <SecondaryNavLink testid={text} key={text}>
                             {dropdownItems?.length ? (
                                 <ShowDropDownButton
                                     text={text}
