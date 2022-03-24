@@ -13,7 +13,7 @@ import {
 
 import CTALink from '../components/hero/CTALink';
 import Card from '../components/card';
-import { tagStyles, tagWrapperStyles } from '../components/card/styles';
+import TagSection from '../components/tag-section';
 
 import getL1Content from '../requests/get-l1-content';
 import getRelatedContent from '../requests/get-related-content';
@@ -111,19 +111,7 @@ const Topic: NextPage<ContentPiece> = ({
                         >
                             {description}
                         </TypographyScale>
-                        {tags && (
-                            <div sx={tagWrapperStyles}>
-                                {tags?.map(tag => (
-                                    <Tag
-                                        key={tag}
-                                        variant="small"
-                                        sx={tagStyles}
-                                    >
-                                        {tag}
-                                    </Tag>
-                                ))}
-                            </div>
-                        )}
+                        {tags && <TagSection tags={tags} />}
                         <div sx={{ marginTop: '24px', marginBottom: '48px' }}>
                             <img
                                 width="696"

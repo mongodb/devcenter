@@ -6,9 +6,7 @@ import { TypographyScale, Pill, Tag, HorizontalRule } from '@mdb/flora';
 import {
     cardWrapperStyles,
     pillStyles,
-    tagWrapperStyles,
     descriptionStyles,
-    tagStyles,
     cardHeaderStyles,
     thumbnailWrapperStyles,
 } from './styles';
@@ -18,6 +16,7 @@ import {
     hasTags,
     hasDescription,
 } from './utils';
+import TagSection from '../tag-section';
 import { CardProps } from './types';
 
 // Still need to add authors section.
@@ -74,19 +73,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                                 {description}
                             </TypographyScale>
                         )}
-                        {hasTags(variant) && (
-                            <div sx={tagWrapperStyles}>
-                                {tags?.map(tag => (
-                                    <Tag
-                                        key={tag}
-                                        variant="small"
-                                        sx={tagStyles}
-                                    >
-                                        {tag}
-                                    </Tag>
-                                ))}
-                            </div>
-                        )}
+                        {hasTags(variant) && tags && <TagSection tags={tags} />}
                     </div>
                 </div>
                 <div>
