@@ -31,9 +31,10 @@ const Card: React.FunctionComponent<CardProps> = ({
     tags,
     thumbnail,
     variant,
+    href = '#',
 }) => {
     return (
-        <Link href="#" passHref={true}>
+        <Link href={href} passHref={true}>
             <a
                 sx={cardWrapperStyles}
                 className={className}

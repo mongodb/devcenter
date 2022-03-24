@@ -1,95 +1,56 @@
+import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { ParsedUrlQuery } from 'querystring';
+
 import {
     GridLayout,
     SideNav,
     Tag,
     TypographyScale,
     Panel,
-    List,
     Button,
+    List,
 } from '@mdb/flora';
-import Breadcrumbs from '../../components/breadcrumbs';
-import Card from '../../components/card';
-import CardSection from '../../components/card-section';
-import { tagStyles, tagWrapperStyles } from '../../components/card/styles';
-import CTALink from '../../components/hero/CTALink';
-import TertiaryNav from '../../components/tertiary-nav';
-import getL1Content from '../../requests/get-l1-content';
-import getTertiaryNavItems from '../../requests/get-tertiary-nav-items';
 
-export interface HeroProps {
-    name: string;
-    description: string;
-}
+import CTALink from '../components/hero/CTALink';
+import Card from '../components/card';
+import { tagStyles, tagWrapperStyles } from '../components/card/styles';
 
-const nameContent =
-    'Continuously Building and Hosting our Swift DocC Documentation using Github Actions and Netlify';
-const descriptionContent =
-    'Published February 16, 2022  •  Updated February 16, 2022';
-const tags = ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'];
+import getL1Content from '../requests/get-l1-content';
+import getRelatedContent from '../requests/get-related-content';
+import getSeries from '../requests/get-series';
+import getTertiaryNavItems from '../requests/get-tertiary-nav-items';
 
-const crumbs = [
-    { text: 'MongoDB Developer Center', url: '/' },
-    { text: 'Developer Topics', url: '/topics' },
-    { text: 'Products', url: '/topics' },
-];
+import { ContentPiece } from '../interfaces/content-piece';
 
-const listItems = [
-    'Adding Realm as a dependency to an iOS Framework',
-    'Document our Realm-Powered Swift Frameworks using DocC',
-    'Continuously Building and Hosting our Swift DocC Documentation using Github Actions and Netlify',
-];
+import getContent from '../requests/get-content';
 
-const RelatedContent = [
-    {
-        category: 'Podcast',
-        image: {
-            alt: 'thumbnail',
-            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
-        },
-        title: 'MongoDB Podcast: Episode 23',
-        description: 'Some podcast details',
-        contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
-        featured: false,
-        slug: 'p1',
+const sideNavStyles = (rowCount: number) => ({
+    display: ['none', null, null, null, 'block'],
+    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
+    nav: {
+        position: 'static' as 'static',
     },
-    {
-        category: 'Podcast',
-        image: {
-            alt: 'thumbnail',
-            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
-        },
-        title: 'MongoDB Podcast: Episode 96',
-        description: 'Some podcast details',
-        contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
-        featured: false,
-        slug: 'p2',
-    },
-    {
-        category: 'Podcast',
-        image: {
-            alt: 'thumbnail',
-            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
-        },
-        title: 'MongoDB Podcast: Episode 2',
-        description: 'Some podcast details',
-        contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
-        featured: false,
-        slug: 'p3',
-    },
-];
+    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
+    // before render and update this accordingly.
+    gridRow: [null, null, null, null, `span ${rowCount}`],
+});
 
-const tertiaryNavItems = getTertiaryNavItems('atlas');
-
-const VideoPage: React.FunctionComponent<HeroProps> = ({
-    name = nameContent,
-    description = descriptionContent,
+const Topic: NextPage<ContentPiece> = ({
+    authors,
+    category,
+    image,
+    title,
+    description,
+    contentDate,
+    tags,
+    slug,
 }) => {
+    const relatedContent = getRelatedContent(slug);
+    const series = getSeries(slug);
+    const slugList = slug.split('/');
+    const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
     return (
         <>
-            <TertiaryNav items={tertiaryNavItems} topic="atlas" />
             <div
                 sx={{
                     paddingBottom: 'inc160',
@@ -130,14 +91,14 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                             ],
                         }}
                     >
-                        <Breadcrumbs crumbs={crumbs} />
+                        {/* <Breadcrumbs crumbs={crumbs} /> */}
                         <TypographyScale
                             variant="heading2"
                             sx={{
                                 marginBottom: ['inc20', null, null, 'inc40'],
                             }}
                         >
-                            {name}
+                            {/* {name} */}
                         </TypographyScale>
                         <TypographyScale
                             customElement="h3"
@@ -262,7 +223,7 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                             </TypographyScale>
                             <List
                                 glyph="circle"
-                                items={listItems}
+                                items={series}
                                 sx={{
                                     marginBottom: ['inc20', null, null, '16px'],
                                     marginTop: ['inc20', null, null, '16px'],
@@ -272,7 +233,7 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                         <TypographyScale variant="heading5">
                             Related
                         </TypographyScale>
-                        {RelatedContent.map(content => {
+                        {relatedContent.map(content => {
                             return (
                                 <Card
                                     sx={{ marginBottom: '26px' }}
@@ -280,8 +241,9 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
                                     title={content.title}
                                     description={content.description}
                                     contentDate={content.contentDate}
-                                    pillCategory="Podcast"
+                                    pillCategory={content.category}
                                     variant="small"
+                                    href={'/' + content.slug}
                                 />
                             );
                         })}
@@ -298,4 +260,24 @@ const VideoPage: React.FunctionComponent<HeroProps> = ({
     );
 };
 
-export default VideoPage;
+export default Topic;
+
+interface IParams extends ParsedUrlQuery {
+    slug: string;
+} // Need this to avoid TS errors.
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const { content } = getL1Content('');
+    const paths = content.map(({ slug }) => ({
+        params: { slug: slug.split('/') },
+    }));
+    return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const { slug } = params as IParams;
+
+    const contentPiece = getContent(slug);
+
+    return { props: contentPiece };
+};

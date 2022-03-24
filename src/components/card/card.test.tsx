@@ -21,7 +21,7 @@ const cardContent: ContentPiece = {
     contentDate: 'Mon Mar 14 2022',
     tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
     featured: true,
-    slug: 'v1',
+    slug: 'product/atlas/v1',
 };
 
 const expectedProps: CardProps = {

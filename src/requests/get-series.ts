@@ -1,10 +1,18 @@
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
-import { ContentPiece } from '../../interfaces/content-piece';
-import CardSection, { FeaturedCardSection } from '.';
-
-const content: ContentPiece[] = [
+const getSeries = (slug: string) => [
+    {
+        authors: ['Farah Appleseed'],
+        category: 'Article',
+        image: {
+            alt: 'thumbnail',
+            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+        },
+        title: 'This is 101 article',
+        description: 'This is my first article',
+        contentDate: new Date().toDateString(),
+        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        featured: true,
+        slug: 'product/atlas/a1',
+    },
     {
         authors: ['Farah Appleseed'],
         category: 'Article',
@@ -48,30 +56,4 @@ const content: ContentPiece[] = [
         slug: 'product/atlas/a4',
     },
 ];
-
-test('renders card section', () => {
-    render(<CardSection content={content} title="Test Articles" />);
-
-    const title = screen.getByText('Test Articles');
-    expect(title).toBeInTheDocument();
-
-    content.forEach(piece => {
-        const cardTitle = screen.getByText(piece.title);
-        expect(cardTitle).toBeInTheDocument();
-    });
-
-    const allLink = screen.getAllByText('All Test Articles');
-    expect(allLink).toHaveLength(2); // 1 for desktop 1 for mobile.
-});
-
-test('renders featured card section', () => {
-    render(<FeaturedCardSection content={content} />);
-
-    const title = screen.getByText('Featured');
-    expect(title).toBeInTheDocument();
-
-    content.forEach(piece => {
-        const cardTitle = screen.getByText(piece.title);
-        expect(cardTitle).toBeInTheDocument();
-    });
-});
+export default getSeries;
