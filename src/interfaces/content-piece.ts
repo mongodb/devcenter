@@ -10,7 +10,7 @@ export interface ContentPiece {
     contentDate: string;
     description: string;
     featured: boolean;
-    image: Image;
+    image?: Image;
     slug: string;
     tags: string[];
     title: string;

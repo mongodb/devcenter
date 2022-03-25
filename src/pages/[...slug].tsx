@@ -1,19 +1,22 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+import Image from 'next/image';
 
 import {
     GridLayout,
     SideNav,
-    Tag,
     TypographyScale,
     Panel,
     Button,
     List,
+    Eyebrow,
+    SpeakerLockup,
 } from '@mdb/flora';
 
 import CTALink from '../components/hero/CTALink';
 import Card from '../components/card';
 import TagSection from '../components/tag-section';
+import ContentRating from '../components/content-rating';
 
 import getL1Content from '../requests/get-l1-content';
 import getRelatedContent from '../requests/get-related-content';
@@ -24,18 +27,22 @@ import { ContentPiece } from '../interfaces/content-piece';
 
 import getContent from '../requests/get-content';
 
-const sideNavStyles = (rowCount: number) => ({
+const sideNavStyles = {
     display: ['none', null, null, null, 'block'],
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
     nav: {
         position: 'static' as 'static',
     },
-    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
-    // before render and update this accordingly.
-    gridRow: [null, null, null, null, `span ${rowCount}`],
-});
+};
 
-const Topic: NextPage<ContentPiece> = ({
+const imageStyles = {
+    marginTop: 'inc40',
+    marginBottom: ['inc20', null, null, 'inc30'],
+    aspectRatio: '16/9',
+    position: 'relative' as 'relative',
+};
+
+const ContentPage: NextPage<ContentPiece> = ({
     authors,
     category,
     image,
@@ -49,6 +56,9 @@ const Topic: NextPage<ContentPiece> = ({
     const series = getSeries(slug);
     const slugList = slug.split('/');
     const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
+
+    const vidOrPod = category === 'Video' || category === 'Podcast';
+
     return (
         <>
             <div
@@ -63,21 +73,7 @@ const Topic: NextPage<ContentPiece> = ({
                         rowGap: ['inc90', null, null, 'inc130'],
                     }}
                 >
-                    <div
-                        sx={{
-                            display: ['none', null, null, null, 'block'],
-                            gridColumn: [
-                                'span 6',
-                                null,
-                                'span 8',
-                                'span 12',
-                                'span 3',
-                            ],
-                            nav: {
-                                position: 'static' as 'static',
-                            },
-                        }}
-                    >
+                    <div sx={sideNavStyles}>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
                     <div
@@ -91,37 +87,88 @@ const Topic: NextPage<ContentPiece> = ({
                             ],
                         }}
                     >
-                        {/* <Breadcrumbs crumbs={crumbs} /> */}
+                        <Eyebrow sx={{ marginBottom: 'inc30' }}>
+                            {category}
+                        </Eyebrow>
                         <TypographyScale
                             variant="heading2"
                             sx={{
-                                marginBottom: ['inc20', null, null, 'inc40'],
+                                marginBottom: ['inc20', null, null, 'inc30'],
                             }}
                         >
-                            {/* {name} */}
+                            {title}
                         </TypographyScale>
-                        <TypographyScale
-                            customElement="h3"
-                            variant="body4"
-                            color="secondary"
-                            sx={{
-                                marginBottom: ['inc20', null, null, '16px'],
-                                marginTop: ['inc20', null, null, '16px'],
-                            }}
-                        >
-                            {description}
-                        </TypographyScale>
-                        {tags && <TagSection tags={tags} />}
-                        <div sx={{ marginTop: '24px', marginBottom: '48px' }}>
-                            <img
-                                width="696"
-                                height="391"
-                                src="http://placehold.jp/696x391.png"
-                                alt="test"
+                        {!vidOrPod ? (
+                            <SpeakerLockup
+                                sx={{
+                                    marginBottom: [
+                                        'inc30',
+                                        null,
+                                        null,
+                                        'inc40',
+                                    ],
+                                }}
+                                name={authors?.join(',')}
+                                title={`${contentDate}`}
                             />
-                        </div>
+                        ) : (
+                            <TypographyScale
+                                variant="body3"
+                                color="secondary"
+                                customStyles={{
+                                    display: 'block',
+                                    marginBottom: 'inc30',
+                                }}
+                            >
+                                {contentDate}
+                            </TypographyScale>
+                        )}
+                        {tags && (
+                            <TagSection
+                                tags={tags}
+                                sx={{
+                                    marginBottom: [
+                                        'inc30',
+                                        null,
+                                        null,
+                                        'inc40',
+                                    ],
+                                }}
+                            />
+                        )}
+                        {image && (
+                            <div sx={imageStyles}>
+                                <Image
+                                    alt={image.alt}
+                                    src={image.url}
+                                    sx={{
+                                        borderRadius: 'inc30',
+                                        objectFit: 'cover',
+                                    }}
+                                    layout="fill"
+                                />
+                            </div>
+                        )}
+                        {!vidOrPod && (
+                            <div
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'end',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <span>Rate this {category.toLowerCase()}</span>
+                                <ContentRating
+                                    onRate={i =>
+                                        alert(
+                                            `You gave this ${category.toLowerCase()} ${i} stars.`
+                                        )
+                                    }
+                                />
+                            </div>
+                        )}
 
-                        <TypographyScale
+                        {/* <TypographyScale
                             variant="body1"
                             sx={{
                                 marginBottom: ['inc20', null, null, 'inc40'],
@@ -240,7 +287,7 @@ const Topic: NextPage<ContentPiece> = ({
                             variant="secondary"
                         >
                             Request a _____
-                        </Button>
+                        </Button> */}
                     </div>
                 </GridLayout>
             </div>
@@ -248,14 +295,14 @@ const Topic: NextPage<ContentPiece> = ({
     );
 };
 
-export default Topic;
+export default ContentPage;
 
 interface IParams extends ParsedUrlQuery {
-    slug: string;
+    slug: string[];
 } // Need this to avoid TS errors.
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const { content } = getL1Content('');
+    const { content } = getL1Content();
     const paths = content.map(({ slug }) => ({
         params: { slug: slug.split('/') },
     }));
@@ -265,7 +312,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
 
-    const contentPiece = getContent(slug);
+    const contentPiece = getContent(slug.join('/'));
 
     return { props: contentPiece };
 };
