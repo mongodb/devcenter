@@ -15,10 +15,10 @@ const iconHeight = 28;
 const iconPadding = 2;
 
 const ContentRating: React.FunctionComponent<ContentRatingProps> = ({
+    stars,
     onRate,
 }) => {
-    const [activeStarsCount, setActiveStarsCount] = useState(0);
-    const [selectedStars, setSelectedStars] = useState(0);
+    const [activeStarsCount, setActiveStarsCount] = useState(stars);
 
     return (
         <div
@@ -42,21 +42,20 @@ const ContentRating: React.FunctionComponent<ContentRatingProps> = ({
                         }}
                         onMouseEnter={() => setActiveStarsCount(i + 1)}
                         onFocus={() => setActiveStarsCount(i + 1)}
-                        onMouseLeave={() => setActiveStarsCount(selectedStars)}
-                        onBlur={() => setActiveStarsCount(selectedStars)}
+                        onMouseLeave={() => setActiveStarsCount(stars)}
+                        onBlur={() => setActiveStarsCount(stars)}
                         onClick={() => {
-                            setSelectedStars(i + 1);
                             onRate(i + 1);
                         }}
                         onKeyPress={e => {
                             if (e.key === 'Enter') {
-                                setSelectedStars(i + 1);
                                 onRate(i + 1);
                             }
                         }}
                     >
                         {i < activeStarsCount ? (
                             <BrandedIcon
+                                alt={`star-${i + 1}`}
                                 name="general_action_star"
                                 size="small"
                                 customStyles={{
@@ -68,6 +67,7 @@ const ContentRating: React.FunctionComponent<ContentRatingProps> = ({
                         ) : (
                             <div sx={{ padding: iconPadding }}>
                                 <Image
+                                    alt={`star-${i + 1}`}
                                     src="/rating-star.svg"
                                     width={iconHeight}
                                     height={iconHeight}

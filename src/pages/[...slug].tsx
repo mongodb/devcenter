@@ -1,14 +1,15 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
+import { useMemo, useState } from 'react';
 
 import {
     GridLayout,
     SideNav,
     TypographyScale,
-    Panel,
     Button,
-    List,
+    Lightbox,
+    HorizontalRule,
     Eyebrow,
     SpeakerLockup,
 } from '@mdb/flora';
@@ -17,6 +18,9 @@ import CTALink from '../components/hero/CTALink';
 import Card from '../components/card';
 import TagSection from '../components/tag-section';
 import ContentRating from '../components/content-rating';
+import FeedbackModal from '../components/feedback-modal';
+
+import { modalStages } from '../components/feedback-modal/types';
 
 import getL1Content from '../requests/get-l1-content';
 import getRelatedContent from '../requests/get-related-content';
@@ -52,6 +56,9 @@ const ContentPage: NextPage<ContentPiece> = ({
     tags,
     slug,
 }) => {
+    const [ratingStars, setRatingStars] = useState(0);
+    const [modalStage, setModalStage] = useState<modalStages>('closed');
+
     const relatedContent = getRelatedContent(slug);
     const series = getSeries(slug);
     const slugList = slug.split('/');
@@ -59,116 +66,94 @@ const ContentPage: NextPage<ContentPiece> = ({
 
     const vidOrPod = category === 'Video' || category === 'Podcast';
 
-    return (
+    const ratingSection = (
+        <div
+            sx={{
+                display: 'flex',
+                justifyContent: 'end',
+                alignItems: 'center',
+            }}
+        >
+            <span>Rate this {category.toLowerCase()}</span>
+            <ContentRating
+                stars={ratingStars}
+                onRate={i => {
+                    setRatingStars(i); // This should update both rating sections but it doesn't.
+                    setModalStage(i === 3 ? 'text' : 'checkbox');
+                }}
+            />
+        </div>
+    );
+    const contentHeader = (
         <>
-            <div
+            <Eyebrow sx={{ marginBottom: 'inc30' }}>{category}</Eyebrow>
+            <TypographyScale
+                variant="heading2"
                 sx={{
-                    paddingBottom: 'inc160',
-                    px: ['inc40', null, 'inc50', 'inc70'],
-                    paddingTop: ['inc40', null, 'inc50', 'inc70'],
+                    marginBottom: ['inc20', null, null, 'inc30'],
                 }}
             >
-                <GridLayout
+                {title}
+            </TypographyScale>
+            {!vidOrPod ? (
+                <SpeakerLockup
                     sx={{
-                        rowGap: ['inc90', null, null, 'inc130'],
+                        marginBottom: ['inc30', null, null, 'inc40'],
+                    }}
+                    name={authors?.join(',')}
+                    title={`${contentDate}`}
+                />
+            ) : (
+                <TypographyScale
+                    variant="body3"
+                    color="secondary"
+                    customStyles={{
+                        display: 'block',
+                        marginBottom: 'inc30',
                     }}
                 >
-                    <div sx={sideNavStyles}>
-                        <SideNav currentUrl="#" items={tertiaryNavItems} />
-                    </div>
-                    <div
+                    {contentDate}
+                </TypographyScale>
+            )}
+            {tags && (
+                <TagSection
+                    tags={tags}
+                    sx={{
+                        marginBottom: ['inc30', null, null, 'inc40'],
+                    }}
+                />
+            )}
+            {image && (
+                <div sx={imageStyles}>
+                    <Image
+                        alt={image.alt}
+                        src={image.url}
                         sx={{
-                            gridColumn: [
-                                'span 6',
-                                null,
-                                'span 8',
-                                'span 12',
-                                '4 /span 6',
-                            ],
+                            borderRadius: 'inc30',
+                            objectFit: 'cover',
                         }}
-                    >
-                        <Eyebrow sx={{ marginBottom: 'inc30' }}>
-                            {category}
-                        </Eyebrow>
-                        <TypographyScale
-                            variant="heading2"
-                            sx={{
-                                marginBottom: ['inc20', null, null, 'inc30'],
-                            }}
-                        >
-                            {title}
-                        </TypographyScale>
-                        {!vidOrPod ? (
-                            <SpeakerLockup
-                                sx={{
-                                    marginBottom: [
-                                        'inc30',
-                                        null,
-                                        null,
-                                        'inc40',
-                                    ],
-                                }}
-                                name={authors?.join(',')}
-                                title={`${contentDate}`}
-                            />
-                        ) : (
-                            <TypographyScale
-                                variant="body3"
-                                color="secondary"
-                                customStyles={{
-                                    display: 'block',
-                                    marginBottom: 'inc30',
-                                }}
-                            >
-                                {contentDate}
-                            </TypographyScale>
-                        )}
-                        {tags && (
-                            <TagSection
-                                tags={tags}
-                                sx={{
-                                    marginBottom: [
-                                        'inc30',
-                                        null,
-                                        null,
-                                        'inc40',
-                                    ],
-                                }}
-                            />
-                        )}
-                        {image && (
-                            <div sx={imageStyles}>
-                                <Image
-                                    alt={image.alt}
-                                    src={image.url}
-                                    sx={{
-                                        borderRadius: 'inc30',
-                                        objectFit: 'cover',
-                                    }}
-                                    layout="fill"
-                                />
-                            </div>
-                        )}
-                        {!vidOrPod && (
-                            <div
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'end',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <span>Rate this {category.toLowerCase()}</span>
-                                <ContentRating
-                                    onRate={i =>
-                                        alert(
-                                            `You gave this ${category.toLowerCase()} ${i} stars.`
-                                        )
-                                    }
-                                />
-                            </div>
-                        )}
+                        layout="fill"
+                    />
+                </div>
+            )}
+            {!vidOrPod && ratingSection}
+        </>
+    );
 
-                        {/* <TypographyScale
+    const contentFooter = (
+        <>
+            <HorizontalRule />
+            <div
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}
+            >
+                <div>Social</div>
+                {!vidOrPod && ratingSection}
+            </div>
+            {/* <TypographyScale
                             variant="body1"
                             sx={{
                                 marginBottom: ['inc20', null, null, 'inc40'],
@@ -288,9 +273,50 @@ const ContentPage: NextPage<ContentPiece> = ({
                         >
                             Request a _____
                         </Button> */}
+        </>
+    );
+
+    return (
+        <>
+            <div
+                sx={{
+                    paddingBottom: 'inc160',
+                    px: ['inc40', null, 'inc50', 'inc70'],
+                    paddingTop: ['inc40', null, 'inc50', 'inc70'],
+                }}
+            >
+                <GridLayout
+                    sx={{
+                        rowGap: ['inc90', null, null, 'inc130'],
+                    }}
+                >
+                    <div sx={sideNavStyles}>
+                        <SideNav currentUrl="#" items={tertiaryNavItems} />
+                    </div>
+                    <div
+                        sx={{
+                            gridColumn: [
+                                'span 6',
+                                null,
+                                'span 8',
+                                'span 12',
+                                '4 /span 6',
+                            ],
+                        }}
+                    >
+                        {contentHeader}
+                        {/* CONTENT HERE */}
+                        {contentFooter}
                     </div>
                 </GridLayout>
             </div>
+            <FeedbackModal
+                setModalStage={setModalStage}
+                modalStage={modalStage}
+                stars={ratingStars}
+                contentCategory={category}
+                slug={slug}
+            />
         </>
     );
 };
