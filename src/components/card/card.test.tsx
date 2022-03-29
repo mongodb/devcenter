@@ -25,6 +25,7 @@ const cardContent: ContentPiece = {
 };
 
 const expectedProps: CardProps = {
+    href: '/product/atlas/v1',
     authors: ['Farah Appleseed'],
     pillCategory: 'Article',
     thumbnail: {
@@ -66,8 +67,11 @@ test('renders large', () => {
     const date = screen.queryByText(cardContent.contentDate);
     expect(date).toBeInTheDocument();
 
-    const image = screen.queryByAltText(cardContent.image.alt);
-    expect(image).toBeInTheDocument();
+    expect(cardContent.image).toBeDefined();
+    if (cardContent.image) {
+        const image = screen.queryByAltText(cardContent.image.alt);
+        expect(image).toBeInTheDocument();
+    }
 });
 
 test('renders medium', () => {
@@ -90,8 +94,11 @@ test('renders medium', () => {
     const date = screen.queryByText(cardContent.contentDate);
     expect(date).toBeInTheDocument();
 
-    const image = screen.queryByAltText(cardContent.image.alt);
-    expect(image).toBeInTheDocument();
+    expect(cardContent.image).toBeDefined();
+    if (cardContent.image) {
+        const image = screen.queryByAltText(cardContent.image.alt);
+        expect(image).toBeInTheDocument();
+    }
 });
 
 test('renders small', () => {
@@ -114,8 +121,11 @@ test('renders small', () => {
     const date = screen.queryByText(cardContent.contentDate);
     expect(date).toBeInTheDocument();
 
-    const image = screen.queryByAltText(cardContent.image.alt);
-    expect(image).toBeInTheDocument();
+    expect(cardContent.image).toBeDefined();
+    if (cardContent.image) {
+        const image = screen.queryByAltText(cardContent.image.alt);
+        expect(image).toBeInTheDocument();
+    }
 });
 
 test('renders list', () => {
@@ -138,8 +148,11 @@ test('renders list', () => {
     const date = screen.queryByText(cardContent.contentDate);
     expect(date).toBeInTheDocument();
 
-    const image = screen.queryByAltText(cardContent.image.alt);
-    expect(image).toBeInTheDocument();
+    expect(cardContent.image).toBeDefined();
+    if (cardContent.image) {
+        const image = screen.queryByAltText(cardContent.image.alt);
+        expect(image).toBeInTheDocument();
+    }
 });
 
 test('renders related', () => {
@@ -162,6 +175,9 @@ test('renders related', () => {
     const date = screen.queryByText(cardContent.contentDate);
     expect(date).toBeInTheDocument();
 
-    const image = screen.queryByAltText(cardContent.image.alt);
-    expect(image).toBeNull();
+    expect(cardContent.image).toBeDefined();
+    if (cardContent.image) {
+        const image = screen.queryByAltText(cardContent.image.alt);
+        expect(image).toBeNull();
+    }
 });
