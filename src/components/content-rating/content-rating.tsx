@@ -55,7 +55,7 @@ const ContentRating: React.FunctionComponent<ContentRatingProps> = ({
                     >
                         {i < activeStarsCount ? (
                             <BrandedIcon
-                                alt={`star-${i + 1}`}
+                                alt="star-filled"
                                 name="general_action_star"
                                 size="small"
                                 customStyles={{
@@ -67,7 +67,7 @@ const ContentRating: React.FunctionComponent<ContentRatingProps> = ({
                         ) : (
                             <div sx={{ padding: iconPadding }}>
                                 <Image
-                                    alt={`star-${i + 1}`}
+                                    alt="star-empty"
                                     src="/rating-star.svg"
                                     width={iconHeight}
                                     height={iconHeight}
