@@ -31,6 +31,8 @@ import { ContentPiece } from '../interfaces/content-piece';
 
 import getContent from '../requests/get-content';
 
+const SocialButtons = <div>Social</div>;
+
 const sideNavStyles = {
     display: ['none', null, null, null, 'block'],
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
@@ -44,6 +46,13 @@ const imageStyles = {
     marginBottom: ['inc20', null, null, 'inc30'],
     aspectRatio: '16/9',
     position: 'relative' as 'relative',
+};
+
+const socialFlexContainerStyles = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'end',
+    marginBottom: ['inc30', null, null, 'inc40'],
 };
 
 const ContentPage: NextPage<ContentPiece> = ({
@@ -84,6 +93,7 @@ const ContentPage: NextPage<ContentPiece> = ({
             />
         </div>
     );
+
     const contentHeader = (
         <>
             <Eyebrow sx={{ marginBottom: 'inc30' }}>{category}</Eyebrow>
@@ -96,13 +106,13 @@ const ContentPage: NextPage<ContentPiece> = ({
                 {title}
             </TypographyScale>
             {!vidOrPod ? (
-                <SpeakerLockup
-                    sx={{
-                        marginBottom: ['inc30', null, null, 'inc40'],
-                    }}
-                    name={authors?.join(',')}
-                    title={`${contentDate}`}
-                />
+                <div sx={socialFlexContainerStyles}>
+                    <SpeakerLockup
+                        name={authors?.join(',')}
+                        title={`${contentDate}`}
+                    />
+                    {SocialButtons}
+                </div>
             ) : (
                 <TypographyScale
                     variant="body3"
@@ -116,12 +126,10 @@ const ContentPage: NextPage<ContentPiece> = ({
                 </TypographyScale>
             )}
             {tags && (
-                <TagSection
-                    tags={tags}
-                    sx={{
-                        marginBottom: ['inc30', null, null, 'inc40'],
-                    }}
-                />
+                <div sx={socialFlexContainerStyles}>
+                    <TagSection tags={tags} />
+                    {vidOrPod && SocialButtons}
+                </div>
             )}
             {image && (
                 <div sx={imageStyles}>
@@ -142,7 +150,7 @@ const ContentPage: NextPage<ContentPiece> = ({
 
     const contentFooter = (
         <>
-            <HorizontalRule />
+            {/* <HorizontalRule />
             <div
                 sx={{
                     display: 'flex',
@@ -150,9 +158,9 @@ const ContentPage: NextPage<ContentPiece> = ({
                     alignItems: 'center',
                 }}
             >
-                <div>Social</div>
+                {SocialButtons}
                 {!vidOrPod && ratingSection}
-            </div>
+            </div> */}
             {/* <TypographyScale
                             variant="body1"
                             sx={{
