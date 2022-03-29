@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { Lightbox } from '@mdb/flora';
 
-import CheckboxFeedback from './checkbox-feedback';
-import TextFeedback from './text-feedback';
-import ThankYou from './thank-you';
+import CheckboxFeedback from './dialogs/checkbox-feedback';
+import TextFeedback from './dialogs/text-feedback';
+import ThankYou from './dialogs/thank-you';
 import { FeedbackModalProps, Feedback } from './types';
 
 const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({

@@ -6,8 +6,8 @@ import {
     BrandedIcon,
 } from '@mdb/flora';
 
-import { TextFeedbackProps } from './types';
-import { modalWrapperStyles } from './styles';
+import { TextFeedbackProps } from '../types';
+import { modalWrapperStyles } from '../styles';
 import { useState } from 'react';
 
 const TextFeedback: React.FunctionComponent<TextFeedbackProps> = ({

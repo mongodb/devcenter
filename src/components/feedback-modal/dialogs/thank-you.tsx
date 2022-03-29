@@ -1,6 +1,6 @@
 import { TypographyScale, Button } from '@mdb/flora';
 
-import { modalWrapperStyles } from './styles';
+import { modalWrapperStyles } from '../styles';
 
 const ThankYou: React.FunctionComponent<{ onContinue: () => void }> = ({
     onContinue,
