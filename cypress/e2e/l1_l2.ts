@@ -1,6 +1,6 @@
 describe('L1', () => {
     it('should have all content heavy components', () => {
-        cy.visit('/topics/atlas');
+        cy.visit('/product/atlas');
         cy.viewport(1440, 900);
         // Hero
         cy.get('h2').should('have.text', 'Atlas');
@@ -44,7 +44,7 @@ describe('L1', () => {
         cy.get('[data-testid="card-list"]').should('have.length', 20);
     }),
         it('should have all content medium components', () => {
-            cy.visit('/topics/data-lake');
+            cy.visit('/product/data-lake');
             cy.viewport(1440, 900);
             // Hero
             cy.get('h2').should('have.text', 'Data Lake').should('exist');
@@ -78,7 +78,7 @@ describe('L1', () => {
             cy.get('h5').contains('All Data Lake Content').should('exist');
         }),
         it('should have all content light components', () => {
-            cy.visit('/topics/vs-code');
+            cy.visit('/product/vs-code');
             cy.viewport(1440, 900);
             // Hero
             cy.get('h2').should('have.text', 'VS Code');
