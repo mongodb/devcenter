@@ -30,10 +30,16 @@ const Card: React.FunctionComponent<CardProps> = ({
     tags,
     thumbnail,
     variant,
-    href = '#',
+    slug,
 }) => {
     return (
-        <Link href={href} passHref={true}>
+        <Link
+            href={{
+                pathname: '/[...slug]',
+                query: { slug: slug.split('/') },
+            }}
+            passHref={true}
+        >
             <a
                 sx={cardWrapperStyles}
                 className={className}
