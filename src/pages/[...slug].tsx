@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { Grid } from 'theme-ui';
 
@@ -9,16 +9,12 @@ import {
     GridLayout,
     SideNav,
     TypographyScale,
-    Button,
-    Lightbox,
     HorizontalRule,
     Eyebrow,
     SpeakerLockup,
     Link,
 } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
 
-import CTALink from '../components/hero/CTALink';
 import Card, { getCardProps } from '../components/card';
 import TagSection from '../components/tag-section';
 import ContentRating from '../components/content-rating';
