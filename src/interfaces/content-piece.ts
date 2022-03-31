@@ -15,3 +15,8 @@ export interface ContentPiece {
     tags: string[];
     title: string;
 }
+
+export interface ContentSeries {
+    title: string;
+    content: ContentPiece[];
+}
