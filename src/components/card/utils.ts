@@ -28,6 +28,7 @@ export const getCardProps = (
         tags,
         title,
         image,
+        slug,
     }: ContentPiece,
     variant: CardVariant
 ): CardProps => {
@@ -40,6 +41,7 @@ export const getCardProps = (
         tags,
         thumbnail: image,
         variant,
+        href: '/' + slug,
     };
 
     return cardProps;

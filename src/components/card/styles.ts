@@ -165,12 +165,6 @@ export const cardWrapperStyles = {
     gap: ['inc40', null, null, 'inc50'],
 };
 
-export const tagWrapperStyles = {
-    display: ['none', null, 'flex'],
-    gap: 'inc20',
-    flexWrap: 'wrap' as 'wrap',
-};
-
 export const descriptionStyles = (
     variant: CardVariant,
     category: PillCategory
@@ -203,13 +197,6 @@ export const descriptionStyles = (
         marginBottom: [null, null, 'inc50'],
         marginTop: [null, null, 'inc30'],
     };
-};
-
-export const tagStyles = {
-    display: ['none', null, 'block'],
-    px: [null, null, null, 'inc30'],
-    py: [null, null, null, 'inc20'],
-    fontSize: [null, null, null, 'inc20'],
 };
 
 export const cardHeaderStyles = (
