@@ -3,13 +3,14 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { buildQueryString } from '../../../utils/build-query-string';
 import theme from '@mdb/flora/theme';
+import { options } from 'sanitize-html';
 
 const DEFAULT_CHART_AUTOREFRESH = 3600;
 const DEFAULT_CHART_HEIGHT = '570';
 const DEFAULT_CHART_WIDTH = '760';
 const DEFAULT_CHART_THEME = 'dark';
 
-const getAlignment = align => {
+const getAlignment = (align: string) => {
     switch (align) {
         case 'left':
             return css`
@@ -30,7 +31,7 @@ const getAlignment = align => {
     }
 };
 
-const buildChartUrl = options => {
+const buildChartUrl = (options: any) => {
     const params = {
         autorefresh: options.autorefresh || DEFAULT_CHART_AUTOREFRESH,
         id: options.id,
@@ -53,7 +54,7 @@ export const Chart = ({ options }) => {
     return (
         <StyledChart
             customAlign={options.align}
-            pageTheme={options.theme}
+            pageTheme={options.theme || DEFAULT_CHART_THEME}
             height={options.height || DEFAULT_CHART_HEIGHT}
             title={options.title}
             src={chartSrc}
