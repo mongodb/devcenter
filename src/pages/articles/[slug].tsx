@@ -17,7 +17,6 @@ import TertiaryNav from '../../components/tertiary-nav';
 import getTertiaryNavItems from '../../requests/get-tertiary-nav-items';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { tagStyles, tagWrapperStyles } from '../../components/card/styles';
-import CTALink from '../../components/hero/CTALink';
 import Card from '../../components/card';
 
 const nameContent =
@@ -287,16 +286,16 @@ interface IParams extends ParsedUrlQuery {
 } // Need this to avoid TS errors.
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const paths = [{ params: { slug: 'article101' } }];
+    const paths = articleContent.map(({ slug }) => ({ params: { slug } }));
     return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
-
+    const article = articleContent.filter(a => a.slug === slug)[0];
     const data = {
         slug,
-        content: articleContent['body'],
+        content: article.body,
     };
     return { props: data };
 };
