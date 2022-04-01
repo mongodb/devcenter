@@ -25,7 +25,7 @@ const cardContent: ContentPiece = {
 };
 
 const expectedProps: CardProps = {
-    href: '/product/atlas/v1',
+    slug: 'product/atlas/v1',
     authors: ['Farah Appleseed'],
     pillCategory: 'Article',
     thumbnail: {
