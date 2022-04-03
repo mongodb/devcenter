@@ -1,12 +1,12 @@
 import React from 'react';
-import { ListItem } from './styles';
+import { StyledList } from './styles';
 
 interface IProps {
     children: React.ReactNode;
 }
 
-const SecondaryNavLink: React.FunctionComponent<IProps> = ({ children }) => {
-    return <ListItem>{children}</ListItem>;
+const SecondaryLinksList: React.FunctionComponent<IProps> = ({ children }) => {
+    return <StyledList>{children}</StyledList>;
 };
 
-export default SecondaryNavLink;
+export default SecondaryLinksList;

@@ -1,39 +1,19 @@
 const secondaryNavData = [
     {
-        text: 'Documentation',
-        dropdownItems: [
-            { text: 'text 1', path: '/docs/' },
-            { text: 'text 2', path: '/docs/' },
-            { text: 'text 3', path: '/docs/' },
-            { text: 'text 4', path: '/docs/' },
-            { text: 'text 5', path: '/docs/' },
-            { text: 'text 6', path: '/docs/' },
-        ],
-        path: 'https://docs.mongodb.com',
+        text: 'All Courses',
+        path: '/articles',
     },
     {
-        text: 'Demo Apps',
-        path: '/demoapps',
-    },
-    {
-        text: 'Tutorials',
+        text: 'Certification',
         path: '/tutorials',
         dropdownItems: [
-            { text: 'text 1', path: '/tutorials/' },
-            { text: 'text 2', path: '/tutorials/' },
-            { text: 'text 3', path: '/tutorials/' },
-            { text: 'text 4', path: '/tutorials/' },
-            { text: 'text 5', path: '/tutorials/' },
-            { text: 'text 6', path: '/tutorials/' },
+            { text: 'About Certification', path: '/tutorials/' },
+            { text: 'Developer Exam', path: '/tutorials/' },
+            { text: 'DBA Exam', path: '/tutorials/' },
+            { text: 'Exam Prep', path: '/tutorials/' },
+            { text: 'Find a Certified Professional', path: '/tutorials/' },
+            { text: 'Verify a Certified Professional', path: '/tutorials/' },
         ],
-    },
-    {
-        text: 'Code Examples',
-        path: '/codeexamples',
-    },
-    {
-        text: 'Articles',
-        path: '/articles',
     },
 ];
 

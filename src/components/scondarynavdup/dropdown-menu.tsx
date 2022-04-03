@@ -1,14 +1,28 @@
 import React from 'react';
-import { DropDownMenuList, StyledFloraLink } from './styles';
+import { DropDownMenuList, DropDownWrapper } from './styles';
+
+const aLinkStyles = () => {
+    return {
+        display: 'block',
+        fontSize: 'inc20',
+        fontFamily: 'euclid-circular-a',
+        fontWeight: '300',
+        '&:hover': {
+            color: 'text.selected',
+        },
+    };
+};
 
 const DropDownMenu = ({ items }: any) => (
-    <DropDownMenuList>
-        {items.map(({ text, path }: any) => (
-            <StyledFloraLink key={text} href={path}>
-                {text}
-            </StyledFloraLink>
-        ))}
-    </DropDownMenuList>
+    <DropDownWrapper>
+        <DropDownMenuList>
+            {items.map(({ text, path }: any) => (
+                <a sx={aLinkStyles()} key={text} href={path}>
+                    {text}
+                </a>
+            ))}
+        </DropDownMenuList>
+    </DropDownWrapper>
 );
 
 export default DropDownMenu;
