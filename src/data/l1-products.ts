@@ -1,4 +1,6 @@
-export const products = [
+import { Taxonomy } from '../interfaces/taxonomy';
+
+export const l1Products: Taxonomy[] = [
     {
         name: 'Atlas',
         slug: 'atlas',
@@ -11,7 +13,6 @@ export const products = [
                 url: 'https://www.mongodb.com/cloud/atlas/register',
             },
         ],
-
         topics: [
             {
                 title: 'Aggregation',

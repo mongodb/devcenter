@@ -4,7 +4,7 @@ interface L1Content {
     content: ContentPiece[];
     featured: ContentPiece[];
 }
-const getL1Content = (slug: string): L1Content => {
+const getL1Content = (slug: string = 'all'): L1Content => {
     const featured: ContentPiece[] = [
         {
             authors: ['Farah Appleseed'],
@@ -21,7 +21,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: true,
-            slug: 'v1',
+            slug: 'product/atlas/v1',
         },
         {
             authors: ['Farah Appleseed'],
@@ -35,7 +35,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: true,
-            slug: 'a1',
+            slug: 'product/atlas/a1',
         },
         {
             authors: ['Farah Appleseed'],
@@ -49,7 +49,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: true,
-            slug: 't1',
+            slug: 'product/atlas/t1',
         },
     ];
     const content: ContentPiece[] = [
@@ -66,7 +66,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'd1',
+            slug: 'product/atlas/d1',
         },
         {
             authors: ['Farah Appleseed'],
@@ -81,7 +81,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'd2',
+            slug: 'product/atlas/d2',
         },
         {
             authors: ['Farah Appleseed'],
@@ -96,7 +96,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'd3',
+            slug: 'product/atlas/d3',
         },
         {
             authors: ['Farah Appleseed'],
@@ -113,7 +113,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: true,
-            slug: 'v1',
+            slug: 'product/atlas/v1',
         },
         {
             authors: ['Farah Appleseed'],
@@ -130,7 +130,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'v2',
+            slug: 'product/atlas/v2',
         },
         {
             authors: ['Farah Appleseed'],
@@ -147,21 +147,17 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'v3',
+            slug: 'product/atlas/v3',
         },
         {
             authors: ['Farah Appleseed'],
             category: 'Article',
-            image: {
-                alt: 'thumbnail',
-                url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
-            },
             title: 'This is 101 article',
             description: 'This is my first article',
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: true,
-            slug: 'a1',
+            slug: 'product/atlas/a1',
         },
         {
             authors: ['Farah Appleseed'],
@@ -175,7 +171,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'a2',
+            slug: 'product/atlas/a2',
         },
         {
             authors: ['Farah Appleseed'],
@@ -189,7 +185,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'a3',
+            slug: 'product/atlas/a3',
         },
         {
             authors: ['Farah Appleseed'],
@@ -203,7 +199,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'a4',
+            slug: 'product/atlas/a4',
         },
         {
             authors: ['Farah Appleseed'],
@@ -217,7 +213,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: true,
-            slug: 't1',
+            slug: 'product/atlas/t1',
         },
         {
             authors: ['Farah Appleseed'],
@@ -231,7 +227,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 't2',
+            slug: 'product/atlas/t2',
         },
         {
             authors: ['Farah Appleseed'],
@@ -245,7 +241,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 't3',
+            slug: 'product/atlas/t3',
         },
         {
             category: 'Podcast',
@@ -258,7 +254,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'p1',
+            slug: 'product/atlas/p1',
         },
         {
             category: 'Podcast',
@@ -271,7 +267,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'p2',
+            slug: 'product/atlas/p2',
         },
         {
             category: 'Podcast',
@@ -284,7 +280,7 @@ const getL1Content = (slug: string): L1Content => {
             contentDate: new Date().toDateString(),
             tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
             featured: false,
-            slug: 'p3',
+            slug: 'product/atlas/p3',
         },
     ];
     const returnContent =
@@ -294,6 +290,8 @@ const getL1Content = (slug: string): L1Content => {
             ? content.slice(0, 10)
             : slug === 'vs-code'
             ? content.slice(0, 5)
+            : slug === 'all'
+            ? content
             : [];
     return { content: returnContent, featured };
 };

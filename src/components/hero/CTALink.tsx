@@ -7,7 +7,7 @@ import { CTA } from './types';
 import { CTALinkStyles } from './styles';
 import { ThemeUIStyleObject } from 'theme-ui';
 
-const CTALink: React.FunctionComponent<CTA> = ({ text, url }) => {
+const CTALink: React.FunctionComponent<CTA> = ({ text, url, customCSS }) => {
     const [hoverStyles, setHoverStyles] = useState<ThemeUIStyleObject>({});
 
     const onLinkEnter = () =>
@@ -37,7 +37,7 @@ const CTALink: React.FunctionComponent<CTA> = ({ text, url }) => {
                 key={text}
                 linkIcon="arrow"
                 target="_blank"
-                sx={{ ...CTALinkStyles, ...hoverStyles }}
+                sx={{ ...CTALinkStyles, ...hoverStyles, ...customCSS }}
             >
                 {text}
             </Link>
