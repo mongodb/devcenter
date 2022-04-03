@@ -3,13 +3,9 @@ import { ListItem } from './styles';
 
 interface IProps {
     children: React.ReactNode;
-    key: string;
 }
 
-const SecondaryNavLink: React.FunctionComponent<IProps> = ({
-    key,
-    children,
-}) => {
+const SecondaryNavLink: React.FunctionComponent<IProps> = ({ children }) => {
     return <ListItem>{children}</ListItem>;
 };
 
