@@ -1,9 +1,6 @@
 import React, { useMemo } from 'react';
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { buildQueryString } from '../../../utils/build-query-string';
-import theme from '@mdb/flora/theme';
-import { options } from 'sanitize-html';
 
 const DEFAULT_CHART_AUTOREFRESH = 3600;
 const DEFAULT_CHART_HEIGHT = '570';
@@ -31,7 +28,17 @@ const getAlignment = (align: string) => {
     }
 };
 
-const buildChartUrl = (options: any) => {
+interface ChartObject {
+    autorefresh?: string;
+    id?: string;
+    theme?: string;
+    url?: string;
+    title?: string;
+    height?: string;
+    width?: string;
+}
+
+const buildChartUrl = (options: ChartObject) => {
     const params = {
         autorefresh: options.autorefresh || DEFAULT_CHART_AUTOREFRESH,
         id: options.id,
@@ -41,20 +48,22 @@ const buildChartUrl = (options: any) => {
     return `${options.url}/embed/charts${queryString}`;
 };
 
-const StyledChart = styled('iframe')`
-    background: ${({ pageTheme }) =>
-        pageTheme === 'light' ? 'transparent' : theme.colors.black80};
-    border: 1px solid ${theme.colors.border.default};
-    ${({ customAlign }) => getAlignment(customAlign)};
-    max-width: 100%;
-`;
+const chartStyles = (pageTheme: any, customAlign: any) => {
+    // TODO how to pass alignment css as sx property
+    const alignment = getAlignment(customAlign);
+    const background = pageTheme === 'light' ? 'transparent' : 'black80';
+    return {
+        backgroundColor: background,
+        border: '1px solid colors.border.default',
+        maxWidth: '100%',
+    };
+};
 
-export const Chart = ({ options }) => {
+export const Chart = ({ options }: any) => {
     const chartSrc = useMemo(() => buildChartUrl(options), [options]);
     return (
-        <StyledChart
-            customAlign={options.align}
-            pageTheme={options.theme || DEFAULT_CHART_THEME}
+        <iframe
+            sx={chartStyles(options.theme, options.align)}
             height={options.height || DEFAULT_CHART_HEIGHT}
             title={options.title}
             src={chartSrc}

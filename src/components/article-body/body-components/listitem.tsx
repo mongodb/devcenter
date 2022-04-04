@@ -1,17 +1,12 @@
 import { ComponentFactory } from '../component-factory';
+import { ArticleNode } from '../../../interfaces/article-body-node';
 
-export const ListItem = ({ children, ...rest }) => (
+export const ListItem = ({ children, ...rest }: { children: any }) => (
     <li>
         {/* div provides flex alignment with preceding bullet */}
         <div>
-            {children.map((child, index) => (
-                <ComponentFactory
-                    {...rest}
-                    nodeData={child}
-                    key={index}
-                    // Include <p> tags in <li> if there is more than one paragraph
-                    parentNode={children.length === 1 ? 'listItem' : undefined}
-                />
+            {children.map((child: ArticleNode, index: number) => (
+                <ComponentFactory {...rest} nodeData={child} key={index} />
             ))}
         </div>
     </li>

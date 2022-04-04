@@ -3,7 +3,7 @@
  * @param {Array} child an ast children array
  * @returns {String} description text
  */
-export const getNestedText = child => {
+export const getNestedText = (child: any): string => {
     if (!child) {
         return '';
     }

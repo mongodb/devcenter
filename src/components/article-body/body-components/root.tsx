@@ -1,9 +1,10 @@
 import React from 'react';
 import { ComponentFactory } from '../component-factory';
 import { VerticalSectionSpacing } from '@mdb/flora';
+import { ArticleNode } from '../../../interfaces/article-body-node';
 
-export const Root = ({ children, ...rest }) => {
-    return children.map((child, i) => (
+export const Root = ({ children, ...rest }: { children: any }) => {
+    return children.map((child: ArticleNode, i: number) => (
         <VerticalSectionSpacing key={i} top="xxsmall" bottom="xxsmall">
             <ComponentFactory {...rest} key={i} nodeData={child} />
         </VerticalSectionSpacing>

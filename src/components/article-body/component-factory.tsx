@@ -17,7 +17,7 @@ import { VideoEmbed } from './body-components/video-embed';
 import { TableRow } from './body-components/table-row';
 import { TableCell } from './body-components/table-cell';
 
-const componentMap = {
+const componentMap: { [key: string]: any } = {
     paragraph: Paragraph,
     root: Root,
     text: Text,
@@ -37,7 +37,14 @@ const componentMap = {
     tableRow: TableRow,
     tableCell: TableCell,
 };
-export const ComponentFactory = ({ nodeData, ...rest }) => {
+export const ComponentFactory = ({
+    nodeData,
+    parentNode,
+    ...rest
+}: {
+    nodeData: any;
+    parentNode?: any;
+}) => {
     const selectComponent = () => {
         const { name, type } = nodeData;
         const lookup = type === 'directive' ? name : type;
@@ -46,7 +53,7 @@ export const ComponentFactory = ({ nodeData, ...rest }) => {
             console.warn(`${name} (${type}) not yet implemented)`);
             return null;
         }
-        return <ComponentType {...nodeData} {...rest} />;
+        return <ComponentType {...nodeData} {...parentNode} {...rest} />;
     };
     return selectComponent();
 };

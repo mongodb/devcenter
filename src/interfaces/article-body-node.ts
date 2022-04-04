@@ -1,6 +1,5 @@
 export interface ArticleNode {
-    children?: Object[];
+    children?: ArticleNode;
     type: string;
     name?: string;
-    parentNode?: Object;
 }

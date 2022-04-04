@@ -12,6 +12,8 @@ import {
     HorizontalRule,
     Eyebrow,
     SpeakerLockup,
+    Panel,
+    List,
 } from '@mdb/flora';
 
 import CTALink from '../components/hero/CTALink';
@@ -30,6 +32,8 @@ import getTertiaryNavItems from '../requests/get-tertiary-nav-items';
 import { ContentPiece } from '../interfaces/content-piece';
 
 import getContent from '../requests/get-content';
+import { DocumentBody } from '../components/article-body/document-body';
+import { parseMarkdownToAST } from '../utils/markdown-parser/parse-markdown-to-ast';
 
 const SocialButtons = <div>Social</div>;
 
@@ -150,137 +154,116 @@ const ContentPage: NextPage<ContentPiece> = ({
 
     const contentFooter = (
         <>
-            {/* <HorizontalRule />
-            <div
+            <HorizontalRule />
+            {vidOrPod && (
+                <TypographyScale
+                    variant="body1"
+                    sx={{
+                        marginBottom: ['inc20', null, null, 'inc40'],
+                    }}
+                >
+                    {description}
+                </TypographyScale>
+            )}
+            {vidOrPod && (
+                <CTALink
+                    customCSS={{
+                        marginTop: '24px',
+                        marginBottom: '48px',
+                    }}
+                    text="All MongoDB Videos"
+                    url="#"
+                />
+            )}
+            {!vidOrPod && (
+                <DocumentBody content={parseMarkdownToAST(description)} />
+            )}
+            <hr />
+            <Panel
                 sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
+                    marginTop: '96px',
+                    marginBottom: '96px',
+                    padding: '48px',
                 }}
             >
-                {SocialButtons}
-                {!vidOrPod && ratingSection}
-            </div> */}
-            {/* <TypographyScale
-                            variant="body1"
-                            sx={{
-                                marginBottom: ['inc20', null, null, 'inc40'],
-                            }}
-                        >
-                            In a past post of this series, we showed how easy it
-                            was to generate documentation for our frameworks and
-                            libraries using DocC and the benefits of doing it.
-                            We also saw the different content we can add, like
-                            articles, how-tos, and references for our functions,
-                            classes, and structs.
-                        </TypographyScale>
-                        <CTALink
-                            customCSS={{
-                                marginTop: '24px',
-                                marginBottom: '48px',
-                            }}
-                            text="All MongoDB Videos"
-                            url="#"
-                        />
-                        <hr />
-                        <Panel
-                            sx={{
-                                marginTop: '96px',
-                                marginBottom: '96px',
-                                padding: '48px',
-                            }}
-                        >
-                            <TypographyScale
-                                color="selected"
-                                variant="heading6"
-                                sx={{
-                                    marginBottom: [
-                                        'inc20',
-                                        null,
-                                        null,
-                                        'inc40',
-                                    ],
-                                }}
-                            >
-                                THIS IS PART OF A SERIES
-                            </TypographyScale>
-                            <TypographyScale
-                                variant="heading5"
-                                sx={{
-                                    marginBottom: ['inc20', null, null, '16px'],
-                                    marginTop: ['inc20', null, null, '16px'],
-                                }}
-                            >
-                                {`DocC: Apple's Documentation Compiler`}
-                            </TypographyScale>
-                            <TypographyScale
-                                variant="heading6"
-                                sx={{
-                                    marginBottom: ['inc20', null, null, '16px'],
-                                    marginTop: ['inc20', null, null, '16px'],
-                                }}
-                            >
-                                Up Next
-                            </TypographyScale>
-                            <TypographyScale
-                                customElement="h2"
-                                variant="body4"
-                                sx={{
-                                    marginBottom: ['inc20', null, null, '16px'],
-                                    marginTop: ['inc20', null, null, '16px'],
-                                }}
-                            >
-                                Continuously Building and Hosting our Swift DocC
-                                Documentation using Github Actions and Netlify
-                            </TypographyScale>
-                            <Button
-                                sx={{ marginBottom: '40px' }}
-                                variant="secondary"
-                            >
-                                Continue
-                            </Button>
-                            <hr />
-                            <TypographyScale
-                                variant="heading6"
-                                sx={{
-                                    marginBottom: ['inc20', null, null, '16px'],
-                                    marginTop: ['inc20', null, null, '40px'],
-                                }}
-                            >
-                                More in this series
-                            </TypographyScale>
-                            <List
-                                glyph="circle"
-                                items={series}
-                                sx={{
-                                    marginBottom: ['inc20', null, null, '16px'],
-                                    marginTop: ['inc20', null, null, '16px'],
-                                }}
-                            />
-                        </Panel>
-                        <TypographyScale variant="heading5">
-                            Related
-                        </TypographyScale>
-                        {relatedContent.map(content => {
-                            return (
-                                <Card
-                                    sx={{ marginBottom: '26px' }}
-                                    key={content.title}
-                                    title={content.title}
-                                    description={content.description}
-                                    contentDate={content.contentDate}
-                                    pillCategory={content.category}
-                                    variant="small"
-                                    href={'/' + content.slug}
-                                />
-                            );
-                        })}
-                        <Button
-                            sx={{ marginBottom: '40px' }}
-                            variant="secondary"
-                        >
-                            Request a _____
-                        </Button> */}
+                <TypographyScale
+                    color="selected"
+                    variant="heading6"
+                    sx={{
+                        marginBottom: ['inc20', null, null, 'inc40'],
+                    }}
+                >
+                    THIS IS PART OF A SERIES
+                </TypographyScale>
+                <TypographyScale
+                    variant="heading5"
+                    sx={{
+                        marginBottom: ['inc20', null, null, '16px'],
+                        marginTop: ['inc20', null, null, '16px'],
+                    }}
+                >
+                    {`DocC: Apple's Documentation Compiler`}
+                </TypographyScale>
+                <TypographyScale
+                    variant="heading6"
+                    sx={{
+                        marginBottom: ['inc20', null, null, '16px'],
+                        marginTop: ['inc20', null, null, '16px'],
+                    }}
+                >
+                    Up Next
+                </TypographyScale>
+                <TypographyScale
+                    customElement="h2"
+                    variant="body4"
+                    sx={{
+                        marginBottom: ['inc20', null, null, '16px'],
+                        marginTop: ['inc20', null, null, '16px'],
+                    }}
+                >
+                    Continuously Building and Hosting our Swift DocC
+                    Documentation using Github Actions and Netlify
+                </TypographyScale>
+                <Button sx={{ marginBottom: '40px' }} variant="secondary">
+                    Continue
+                </Button>
+                <hr />
+                <TypographyScale
+                    variant="heading6"
+                    sx={{
+                        marginBottom: ['inc20', null, null, '16px'],
+                        marginTop: ['inc20', null, null, '40px'],
+                    }}
+                >
+                    More in this series
+                </TypographyScale>
+                <List
+                    glyph="circle"
+                    items={series}
+                    sx={{
+                        marginBottom: ['inc20', null, null, '16px'],
+                        marginTop: ['inc20', null, null, '16px'],
+                    }}
+                />
+            </Panel>
+            <TypographyScale variant="heading5">Related</TypographyScale>
+            {relatedContent.map(content => {
+                return (
+                    <Card
+                        sx={{ marginBottom: '26px' }}
+                        key={content.title}
+                        title={content.title}
+                        description={content.description}
+                        contentDate={content.contentDate}
+                        pillCategory={content.category}
+                        variant="small"
+                        href={'/' + content.slug}
+                    />
+                );
+            })}
+            <Button sx={{ marginBottom: '40px' }} variant="secondary">
+                Request a _____
+            </Button>
         </>
     );
 

@@ -1,7 +1,11 @@
 import { CodeSnippet } from '@mdb/flora';
 import { useMemo } from 'react';
+import { LanguageModeType } from '@mdb/flora/dist/types/src/CodeSnippet/types';
 
-const SUPPORTED_LANGUAGES = {
+type languageOptions = {
+    [key: string]: LanguageModeType;
+};
+const SUPPORTED_LANGUAGES: languageOptions = {
     c: 'C',
     css: 'CSS',
     cs: 'C#',
@@ -29,20 +33,19 @@ const SUPPORTED_LANGUAGES = {
     typescript: 'TypeScript',
     ts: 'TypeScript',
 };
-const determineFloraLanguage = (inputLang: string) => {
+const determineFloraLanguage = (inputLang: string): LanguageModeType => {
     let language = !!inputLang ? inputLang.toLowerCase() : 'none';
     if (Object.keys(SUPPORTED_LANGUAGES).includes(language)) {
-        language = SUPPORTED_LANGUAGES[language];
+        return SUPPORTED_LANGUAGES[language];
     } else {
         // Language is not supported formally by Flora, set to none to avoid errors
-        const warningMessage = `Warning: Language ${language} is not supported. Defaulting to "none"`;
+        const warningMessage = `Warning: Language ${language} is not supported. Defaulting to "node"`;
         console.warn(warningMessage);
-        language = 'none';
+        return SUPPORTED_LANGUAGES['node'];
     }
-    return language;
 };
 
-export const CodeBlock = ({ lang, value }) => {
+export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
     const numLines = useMemo(() => value.split(/\r|\n/).length, [value]);
     const height =
         numLines <= 8
@@ -51,9 +54,5 @@ export const CodeBlock = ({ lang, value }) => {
             ? 'medium'
             : 'large';
     const language = determineFloraLanguage(lang);
-    return language === 'none' ? (
-        <CodeSnippet code={value} height={height} />
-    ) : (
-        <CodeSnippet height={height} language={language} code={value} />
-    );
+    return <CodeSnippet height={height} language={language} code={value} />;
 };

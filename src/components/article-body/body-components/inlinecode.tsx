@@ -2,6 +2,7 @@ import { screenSize, size } from '../../../styled/theme';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { ComponentFactory } from '../component-factory';
+import { ArticleNode } from '../../../interfaces/article-body-node';
 
 const desktopPadding = css`
     padding: 2px ${size.xsmall} 4px;
@@ -20,14 +21,20 @@ const StyledLiteral = styled('code')`
     }
 `;
 
-export const InlineCode = ({ children, value }) => {
+export const InlineCode = ({
+    children,
+    value,
+}: {
+    children: any;
+    value: string;
+}) => {
     // Value is the DevHub CMS representation
     if (value) {
         return <StyledLiteral>{value}</StyledLiteral>;
     }
     return (
         <StyledLiteral>
-            {children.map((node, i) => (
+            {children.map((node: ArticleNode, i: number) => (
                 <ComponentFactory nodeData={node} key={i} />
             ))}
         </StyledLiteral>

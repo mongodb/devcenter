@@ -12,24 +12,27 @@ const StyledReactPlayer = styled(ReactPlayer)`
     }
 `;
 
-const getVideoUrl = (provider, videoId) => {
-    if (!videoId) return null;
+const getVideoUrl = (provider: string, videoId: string) => {
+    if (!videoId) return undefined;
     switch (provider) {
         case 'twitch':
             return `https://www.twitch.tv/videos/${videoId}`;
         case 'youtube':
             return `https://www.youtube.com/watch?v=${videoId}`;
         default:
-            return null;
+            return undefined;
     }
 };
 
 export const VideoEmbed = ({
-    autoplay,
     argument,
     name: provider,
     thumbnail,
     ...props
+}: {
+    argument: any;
+    name: string;
+    thumbnail: string;
 }) => {
     const videoId = argument[0].value;
     const value = getVideoUrl(provider, videoId);
@@ -46,7 +49,6 @@ export const VideoEmbed = ({
                     },
                     twitch: {
                         options: {
-                            autoplay,
                             video: videoId,
                         },
                     },

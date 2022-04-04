@@ -1,8 +1,9 @@
 import React from 'react';
 import { ComponentFactory } from '../component-factory';
 import theme from '@mdb/flora/theme';
+import { ArticleNode } from '../../../interfaces/article-body-node';
 
-const headerCellStyles = (align, index) => {
+const headerCellStyles = (align: any, index: number) => {
     const alignment = align[index];
     return {
         paddingTop: ['inc20', 'inc40', 'inc40', 'inc40'],
@@ -10,7 +11,7 @@ const headerCellStyles = (align, index) => {
         paddingLeft: ['inc20', 'inc30', 'inc30', 'inc30'],
         paddingRight: ['inc20', 'inc30', 'inc30', 'inc30'],
         textAlign: alignment,
-        whiteSpace: 'nowrap',
+        whiteSpace: 'nowrap' as 'nowrap',
     };
 };
 
@@ -21,15 +22,21 @@ const headerRowStyles = () => {
     };
 };
 
-const getNestedValue = (p, o) => {
+const getNestedValue = (p: any, o: any) => {
     if (!o) return null;
-    return p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o);
+    return p.reduce((xs: any, x: any) => (xs && xs[x] ? xs[x] : null), o);
 };
 
-const TableHeading = ({ align, headingRow }) => (
-    <thead valign="bottom">
+const TableHeading = ({
+    align,
+    headingRow,
+}: {
+    align: any;
+    headingRow: any;
+}) => (
+    <thead>
         <tr sx={{ headerRowStyles }}>
-            {headingRow.map((column, colIndex) => (
+            {headingRow.map((column: ArticleNode, colIndex: number) => (
                 <th sx={headerCellStyles(align, colIndex)} key={colIndex}>
                     <ComponentFactory
                         nodeData={getNestedValue(['children', 0], column)}
@@ -40,7 +47,7 @@ const TableHeading = ({ align, headingRow }) => (
     </thead>
 );
 
-export const Table = ({ align, children }) => {
+export const Table = ({ align, children }: { align: any; children: any }) => {
     if (children?.length) {
         const headingRow = children[0]?.children || [];
         const otherRows = children.slice(1);
@@ -48,7 +55,7 @@ export const Table = ({ align, children }) => {
             <div sx={{ overflowX: 'auto' }}>
                 <table sx={{ borderCollapse: 'collapse', border: 'none' }}>
                     <TableHeading align={align} headingRow={headingRow} />
-                    {otherRows.map((data, i) => (
+                    {otherRows.map((data: ArticleNode, i: number) => (
                         // Pass the align array so we can apply alignment in TableCell
                         <ComponentFactory
                             nodeData={{ align, ...data }}

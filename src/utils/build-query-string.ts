@@ -1,4 +1,4 @@
-export const buildQueryString = (params: Object) => {
+export const buildQueryString = (params: any) => {
     const entries = Object.keys(params)
         .sort()
         .map(
@@ -30,7 +30,7 @@ const parseQueryString = (querystring: string) => {
     }
     const entries = querystring.split('&');
 
-    const result = {};
+    const result: { [key: string]: string } = {};
     entries.forEach(entry => {
         const [key, value] = entry.split('=').map(decodeURIComponentWithPlus);
         result[key] = value;

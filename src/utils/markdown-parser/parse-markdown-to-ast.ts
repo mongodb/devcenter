@@ -5,9 +5,9 @@ import visit from 'unist-util-visit';
 import { getTagPageUriComponent } from '../get-tag-page-uri-component';
 import { getNestedText } from './get-nested-text';
 
-export const parseMarkdownToAST = markdown => {
+export const parseMarkdownToAST = (markdown: string) => {
     const result = remark().use(gfm).use(directive).parse(markdown);
-    const parseNodeAttributes = node => {
+    const parseNodeAttributes = (node: any) => {
         const start = node.attributes.start
             ? `?start=${node.attributes.start}`
             : '';
@@ -15,7 +15,7 @@ export const parseMarkdownToAST = markdown => {
         return node.attributes.vid + start + end;
     };
 
-    function transform(tree) {
+    function transform(tree: any) {
         visit(
             tree,
             [
@@ -29,7 +29,7 @@ export const parseMarkdownToAST = markdown => {
         );
     }
 
-    function ondirective(node) {
+    function ondirective(node: any) {
         const data = node.data || (node.data = {});
         switch (node.type) {
             case 'heading':
