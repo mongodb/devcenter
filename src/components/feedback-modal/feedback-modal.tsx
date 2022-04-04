@@ -31,8 +31,9 @@ const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
         <Lightbox
             isOpen={modalStage !== 'closed'}
             onClose={() => setModalStage('closed')}
+            sx={{ '>div': { height: 'unset' } }}
         >
-            <form>
+            <form sx={{ width: '100%' }}>
                 {modalStage === 'checkbox' ? (
                     <CheckboxFeedback
                         stars={stars}

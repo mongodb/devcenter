@@ -13,15 +13,21 @@ import {
     Eyebrow,
     SpeakerLockup,
     Link,
+    Button,
 } from '@mdb/flora';
 
 import Card, { getCardProps } from '../components/card';
 import TagSection from '../components/tag-section';
 import ContentRating from '../components/content-rating';
-import FeedbackModal from '../components/feedback-modal';
-import SeriesCard from '../components/series-card';
 
-import { modalStages } from '../components/feedback-modal/types';
+import FeedbackModal, {
+    feedbackModalStages,
+} from '../components/feedback-modal';
+import RequestContentModal, {
+    requestContentModalStages,
+} from '../components/request-content-modal';
+
+import SeriesCard from '../components/series-card';
 
 import getL1Content from '../requests/get-l1-content';
 import getRelatedContent from '../requests/get-related-content';
@@ -67,7 +73,11 @@ const ContentPage: NextPage<ContentPiece> = ({
     slug,
 }) => {
     const [ratingStars, setRatingStars] = useState(0);
-    const [modalStage, setModalStage] = useState<modalStages>('closed');
+
+    const [feedbackModalStage, setFeedbackModalStage] =
+        useState<feedbackModalStages>('closed');
+    const [requestContentModalStage, setRequestContentModalStage] =
+        useState<requestContentModalStages>('closed');
 
     const relatedContent = getRelatedContent(slug);
     const series = getSeries(slug);
@@ -89,7 +99,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                 stars={ratingStars}
                 onRate={i => {
                     setRatingStars(i); // This should update both rating sections but it doesn't.
-                    setModalStage(i === 3 ? 'text' : 'checkbox');
+                    setFeedbackModalStage(i === 3 ? 'text' : 'checkbox');
                 }}
             />
         </div>
@@ -187,6 +197,15 @@ const ContentPage: NextPage<ContentPiece> = ({
                     ))}
                 </Grid>
             </div>
+            <div sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button
+                    onClick={() => setRequestContentModalStage('text')}
+                    variant="secondary"
+                >
+                    Request {/^[aeiouh]/gi.test(category) ? 'an' : 'a'}{' '}
+                    {category}
+                </Button>
+            </div>
         </div>
     );
 
@@ -225,11 +244,16 @@ const ContentPage: NextPage<ContentPiece> = ({
                 </GridLayout>
             </div>
             <FeedbackModal
-                setModalStage={setModalStage}
-                modalStage={modalStage}
+                setModalStage={setFeedbackModalStage}
+                modalStage={feedbackModalStage}
                 stars={ratingStars}
                 contentCategory={category}
                 slug={slug}
+            />
+            <RequestContentModal
+                setModalStage={setRequestContentModalStage}
+                modalStage={requestContentModalStage}
+                contentCategory={category}
             />
         </>
     );
