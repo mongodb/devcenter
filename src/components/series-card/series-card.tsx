@@ -61,6 +61,7 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
                         href={content[currentPieceIndex + 1].slug}
                         variant="secondary"
                         size="small"
+                        customStyles={{ width: 'unset' }}
                     >
                         Continue
                     </Button>
