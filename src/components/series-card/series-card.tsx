@@ -15,21 +15,20 @@ import { seriesCardStyles } from './styles';
 const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
     series,
     currentSlug,
-    className = '',
+    className,
 }) => {
     const { content, title } = series;
-    let currentPieceIndex;
-    for (let i = 0; i < content.length; i++) {
-        if (content[i].slug === currentSlug) {
-            currentPieceIndex = i;
-            break;
-        }
-    }
-    if (currentPieceIndex === undefined) {
-        return <></>; // The slug should be in the series.
+    const currentPieceIndex = content
+        .map(({ slug }) => slug)
+        .indexOf(currentSlug);
+
+    if (currentPieceIndex === -1) {
+        throw Error("Failed to find this piece's place in the series.");
     }
 
-    const listItems = content.map(({ title }) => ({ title }));
+    const listItems = content
+        .filter(({ slug }) => slug !== currentSlug)
+        .map(({ title }) => ({ title }));
 
     return (
         <div sx={seriesCardStyles} className={className}>

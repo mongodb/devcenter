@@ -33,9 +33,7 @@ const RequestContentModal: React.FunctionComponent<
                     />
                 ) : modalStage === 'thanks' ? (
                     <ThankYou onContinue={() => setModalStage('closed')} />
-                ) : (
-                    <></>
-                )}
+                ) : null}
             </form>
         </Lightbox>
     );
