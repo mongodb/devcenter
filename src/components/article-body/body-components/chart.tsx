@@ -3,7 +3,6 @@ import { buildQueryString } from '../../../utils/build-query-string';
 
 const DEFAULT_CHART_AUTOREFRESH = 3600;
 const DEFAULT_CHART_HEIGHT = '570';
-const DEFAULT_CHART_WIDTH = '760';
 const DEFAULT_CHART_THEME = 'dark';
 
 interface ChartObject {
@@ -45,7 +44,7 @@ export const Chart = ({ options }: any) => {
             height={options.height || DEFAULT_CHART_HEIGHT}
             title={options.title}
             src={chartSrc}
-            width={options.width || DEFAULT_CHART_WIDTH}
+            width="100%"
         />
     );
 };

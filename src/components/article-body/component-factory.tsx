@@ -18,6 +18,7 @@ import { TableRow } from './body-components/table-row';
 import { TableCell } from './body-components/table-cell';
 import { ArticleImage } from './body-components/image';
 import { Figure } from './body-components/figure';
+import { CodeTabs } from './body-components/codepanel';
 
 const componentMap: { [key: string]: any } = {
     paragraph: Paragraph,
@@ -40,6 +41,7 @@ const componentMap: { [key: string]: any } = {
     tableCell: TableCell,
     image: ArticleImage,
     figure: Figure,
+    tabs: CodeTabs,
 };
 export const ComponentFactory = ({
     nodeData,

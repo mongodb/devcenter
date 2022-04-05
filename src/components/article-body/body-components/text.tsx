@@ -14,13 +14,13 @@ const headingToTypographyMap: {
 const getTypographyVariantForHeading = (
     depth: string
 ): TypographyVariantType => {
-    if (depth in Object.keys(headingToTypographyMap)) {
+    if (depth in headingToTypographyMap) {
         return headingToTypographyMap[depth];
     }
     return 'body1';
 };
 
-const getTypographyStyles = type => {
+const getTypographyStyles = (type: string | undefined) => {
     return {
         color: 'inherit',
         display: type === 'heading' ? 'inline-block' : 'inline',
