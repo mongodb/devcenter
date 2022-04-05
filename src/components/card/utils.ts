@@ -41,7 +41,7 @@ export const getCardProps = (
         tags,
         thumbnail: image,
         variant,
-        href: '/' + slug,
+        slug,
     };
 
     return cardProps;

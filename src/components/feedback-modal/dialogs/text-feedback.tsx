@@ -49,12 +49,13 @@ const TextFeedback: React.FunctionComponent<TextFeedbackProps> = ({
                     {subtitle}
                 </TypographyScale>
             )}
-            <div sx={{ paddingBottom: 'inc30' }}>
+            <div sx={{ marginBottom: 'inc30' }}>
                 <TextArea
                     name="description"
                     label="Describe your experience"
                     value={comment}
                     onChange={e => setComment(e.target.value)}
+                    textAreaStyles={{ resize: 'vertical' }}
                 />
             </div>
             <div
@@ -62,7 +63,7 @@ const TextFeedback: React.FunctionComponent<TextFeedbackProps> = ({
                     '& > div': {
                         width: '100%',
                     },
-                    paddingBottom: 'inc30',
+                    marginBottom: 'inc30',
                 }}
             >
                 <TextInput

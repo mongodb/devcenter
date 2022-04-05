@@ -17,5 +17,5 @@ export interface CardProps {
     tags?: string[];
     thumbnail?: Thumbnail;
     variant: CardVariant;
-    href?: string;
+    slug: string;
 }
