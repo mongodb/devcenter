@@ -84,6 +84,10 @@ const ContentPage: NextPage<ContentPiece> = ({
     const slugList = slug.split('/');
     const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
 
+    const requestButtonText = `Request ${
+        /^[aeiou]/gi.test(category) ? 'an' : 'a'
+    } ${category}`; // Regex to tell if it starts with a vowel.
+
     const vidOrPod = category === 'Video' || category === 'Podcast';
 
     const ratingSection = (
@@ -202,8 +206,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                     onClick={() => setRequestContentModalStage('text')}
                     variant="secondary"
                 >
-                    Request {/^[aeiouh]/gi.test(category) ? 'an' : 'a'}{' '}
-                    {category}
+                    {requestButtonText}
                 </Button>
             </div>
         </div>

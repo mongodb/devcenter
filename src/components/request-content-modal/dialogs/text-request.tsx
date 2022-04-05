@@ -4,12 +4,16 @@ import { TextRequestProps } from '../types';
 import { modalWrapperStyles } from '../styles';
 import { useState } from 'react';
 
+const helperText =
+    "Please include which products, languages, and technologies you're interested in seeing as part of this content request";
+
 const TextRequest: React.FunctionComponent<TextRequestProps> = ({
     onContinue,
     contentCategory,
 }) => {
-    const helperText =
-        "Please include which products, languages, and technologies you're interested in seeing as part of this content request";
+    const title = `Request ${
+        /^[aeiou]/gi.test(contentCategory) ? 'an' : 'a'
+    } ${contentCategory}`; // Regex to tell if it starts with a vowel.
 
     const [topic, setTopic] = useState('');
     const [description, setDescription] = useState('');
@@ -24,8 +28,7 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
                     marginBottom: ['inc40', null, null, 'inc50'],
                 }}
             >
-                Request {/^[aeiouh]/gi.test(contentCategory) ? 'an' : 'a'}{' '}
-                {contentCategory}
+                {title}
             </TypographyScale>
 
             <div
