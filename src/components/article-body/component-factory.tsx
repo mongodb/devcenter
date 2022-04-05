@@ -16,6 +16,8 @@ import { Table } from './body-components/table';
 import { VideoEmbed } from './body-components/video-embed';
 import { TableRow } from './body-components/table-row';
 import { TableCell } from './body-components/table-cell';
+import { ArticleImage } from './body-components/image';
+import { Figure } from './body-components/figure';
 
 const componentMap: { [key: string]: any } = {
     paragraph: Paragraph,
@@ -36,6 +38,8 @@ const componentMap: { [key: string]: any } = {
     youtube: VideoEmbed,
     tableRow: TableRow,
     tableCell: TableCell,
+    image: ArticleImage,
+    figure: Figure,
 };
 export const ComponentFactory = ({
     nodeData,

@@ -20,6 +20,13 @@ const getTypographyVariantForHeading = (
     return 'body1';
 };
 
+const getTypographyStyles = type => {
+    return {
+        color: 'inherit',
+        display: type === 'heading' ? 'inline-block' : 'inline',
+    };
+};
+
 export const Text = ({
     value,
     type,
@@ -36,12 +43,7 @@ export const Text = ({
     }
 
     return (
-        <TypographyScale
-            variant={variant}
-            sx={{
-                color: ['inherit'],
-            }}
-        >
+        <TypographyScale variant={variant} sx={getTypographyStyles(type)}>
             {value}
         </TypographyScale>
     );

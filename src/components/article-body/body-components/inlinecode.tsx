@@ -1,23 +1,22 @@
-import { screenSize, size } from '../../../styled/theme';
-import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { ComponentFactory } from '../component-factory';
 import { ArticleNode } from '../../../interfaces/article-body-node';
-
-const desktopPadding = css`
-    padding: 2px ${size.xsmall} 4px;
-`;
-
-const tabletPadding = css`
-    padding: 0px 4px 2px;
-`;
+import theme from '@mdb/flora/theme';
+import { screenSize } from '../../../styled/theme';
 
 const StyledLiteral = styled('code')`
-    background: #f4c8f4;
-    border-radius: 4px;
-    ${tabletPadding};
-    @media ${screenSize.mediumAndUp} {
-        ${desktopPadding};
+    background: ${theme.colors.purple10};
+    color: ${theme.colors.purple80};
+    border-radius: ${theme.radii.inc20};
+    padding: ${theme.space.inc10} ${theme.space.inc20};
+    font-family: ${theme.fonts.mono};
+    font-size: ${theme.fontSizes.inc40};
+    :hover {
+        border: 1px solid ${theme.colors.purple40};
+    }
+    @media ${screenSize.upToLarge} {
+        font-size: ${theme.fontSizes.inc30};
+        line-height: ${theme.lineHeights.inc10};
     }
 `;
 
