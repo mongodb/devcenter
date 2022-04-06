@@ -5,9 +5,9 @@ export type PillCategory =
     | 'Podcast'
     | 'Video';
 
-export type PillCategorySlugs =
-    | 'article'
-    | 'demo-app'
-    | 'tutorial'
-    | 'podcast'
-    | 'video';
+export type PillCategorySlug =
+    | 'articles'
+    | 'demo-apps'
+    | 'tutorials'
+    | 'podcasts'
+    | 'videos';

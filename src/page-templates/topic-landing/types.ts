@@ -8,7 +8,7 @@ export interface TopicLandingPageProps {
     slug: string;
     description: string;
     ctas: CTA[];
-    topics: ITopicCard[];
+    subTopics: ITopicCard[];
     relatedTopics: ITopicCard[];
     featured: ContentPiece[];
     content: ContentPiece[];

@@ -3,8 +3,9 @@ import { ParsedUrlQuery } from 'querystring';
 
 import getL1Content from '../../requests/get-l1-content';
 import getTertiaryNavItems from '../../requests/get-tertiary-nav-items';
-import { getContentTypesForTopic } from '../../utils/helpers';
-import { pillCategoryToSlug } from '../../utils/maps';
+import { getContentTypesFromContent } from '../../utils/helpers';
+import { pillCategoryToSlug, slugToPillCategory } from '../../utils/maps';
+import { PillCategorySlug } from '../../types/pill-category';
 
 import { taxonomyData } from '../../data/taxonomy-data';
 import { Taxonomy } from '../../interfaces/taxonomy';
@@ -67,7 +68,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
             paths.push(landingPage);
             // We want to have routes for all content types (Articles, Videos, etc.) that are represented in this topic.
             // For example, the landing page for the Atlas topic would be /product/atlas, and the content type page for articles would be /product/atlas/articles.
-            const contentTypes = getContentTypesForTopic(slug);
+            const { content } = getL1Content(slug);
+            const contentTypes = getContentTypesFromContent(content);
             contentTypes.forEach(contentType => {
                 const contentTypeSlug = pillCategoryToSlug.get(contentType);
                 if (contentTypeSlug === undefined) {
@@ -78,7 +80,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
                 paths.push({
                     params: {
                         l1_l2: category,
-                        slug: slugList.concat(`${contentTypeSlug}s`),
+                        slug: slugList.concat(contentTypeSlug),
                     },
                 });
             });
@@ -89,23 +91,38 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
-    const categorySlugs = Array.from(pillCategoryToSlug.values()).map(
-        categorySlug => categorySlug + 's'
-    );
+    console.log(slug);
+    const contentTypeSlugs = Array.from(
+        pillCategoryToSlug.values()
+    ) as string[];
 
-    if (categorySlugs.includes(slug[slug.length - 1])) {
-        const topicSlug = slug.slice(1, slug.length - 1).join('/');
-        const contentTypeSlug = slug[slug.length - 1];
+    // Topic Content Type Pages (eg. /product/atlas/tutorials)
+    const lastSlugPiece = slug[slug.length - 1];
+    if (contentTypeSlugs.includes(lastSlugPiece)) {
+        const topicSlug = slug.slice(0, slug.length - 1).join('/');
+        const contentType = slugToPillCategory.get(
+            lastSlugPiece as PillCategorySlug
+        );
+        const { content } = getL1Content(topicSlug);
+        console.log(topicSlug);
+        const { name, subTopics } = getTaxonomyData(topicSlug);
+        const tertiaryNavItems = getTertiaryNavItems(content);
+
         const contentTypePageProps = {
-            topicSlug,
-            contentTypeSlug,
+            contentType,
+            tertiaryNavItems,
+            topicName: name,
+            subTopics: subTopics,
         };
         return { props: { pageType: 'content-type', contentTypePageProps } };
     }
+
+    // Topic Landing Pages (eg. /product/atlas)
     const slugString = slug.join('/');
     const product = getTaxonomyData(slugString);
-    const tertiaryNavItems = getTertiaryNavItems(slugString);
+
     const { content, featured } = getL1Content(slugString);
+    const tertiaryNavItems = getTertiaryNavItems(content);
 
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';

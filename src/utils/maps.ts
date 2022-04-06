@@ -1,9 +1,17 @@
-import { PillCategory, PillCategorySlugs } from '../types/pill-category';
+import { PillCategory, PillCategorySlug } from '../types/pill-category';
 
-export const pillCategoryToSlug = new Map<PillCategory, PillCategorySlugs>([
-    ['Article', 'article'],
-    ['Demo App', 'demo-app'],
-    ['Tutorial', 'tutorial'],
-    ['Podcast', 'podcast'],
-    ['Video', 'video'],
+export const pillCategoryToSlug = new Map<PillCategory, PillCategorySlug>([
+    ['Article', 'articles'],
+    ['Demo App', 'demo-apps'],
+    ['Tutorial', 'tutorials'],
+    ['Podcast', 'podcasts'],
+    ['Video', 'videos'],
+]);
+
+export const slugToPillCategory = new Map<PillCategorySlug, PillCategory>([
+    ['articles', 'Article'],
+    ['demo-apps', 'Demo App'],
+    ['tutorials', 'Tutorial'],
+    ['podcasts', 'Podcast'],
+    ['videos', 'Video'],
 ]);

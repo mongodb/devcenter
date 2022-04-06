@@ -14,6 +14,6 @@ export interface Taxonomy {
     slug: string;
     description: string;
     ctas: CTA[];
-    topics?: Topic[];
+    subTopics?: Topic[];
     relatedTopics?: Topic[];
 }

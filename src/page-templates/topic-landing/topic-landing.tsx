@@ -27,7 +27,7 @@ const TopicLandingPage: NextPage<TopicLandingPageProps> = ({
     name,
     description,
     ctas,
-    topics,
+    subTopics,
     relatedTopics,
     featured,
     content,
@@ -57,7 +57,7 @@ const TopicLandingPage: NextPage<TopicLandingPageProps> = ({
                   .filter(contentRow => contentRow.length > 2)
             : [];
 
-    const topicsRow = topics.length > 0 ? 1 : 0;
+    const topicsRow = subTopics.length > 0 ? 1 : 0;
     const featuredRow = variant === 'light' ? 0 : 1;
     const relatedTopicsRow = variant === 'light' ? 1 : 0;
     const searchRow = 1; // Search is always there.
@@ -93,11 +93,11 @@ const TopicLandingPage: NextPage<TopicLandingPageProps> = ({
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
-                    {(variant !== 'light' || topics.length > 0) && (
+                    {(variant !== 'light' || subTopics.length > 0) && (
                         <>
-                            {topics.length > 0 && (
+                            {subTopics.length > 0 && (
                                 <TopicCardsContainer
-                                    topics={topics}
+                                    topics={subTopics}
                                     title={`${name} Topics`}
                                 />
                             )}

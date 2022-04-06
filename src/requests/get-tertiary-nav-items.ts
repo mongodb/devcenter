@@ -1,19 +1,28 @@
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
+import { ContentPiece } from '../interfaces/content-piece';
 
-const getTertiaryNavItems = (slug: string): TertiaryNavItem[] => {
-    const items = [
-        {
-            title: 'Quickstarts',
-            url: `/products/${slug}/quickstarts`,
-        },
-        {
-            title: `Articles`,
-            url: `/products/${slug}/articles`,
-        },
-        {
-            title: `Courses`,
-            url: `/products/${slug}/courses`,
-        },
+import { getContentTypesFromContent } from '../utils/helpers';
+import { pillCategoryToSlug } from '../utils/maps';
+
+const getTertiaryNavItemsFromContent = (
+    content: ContentPiece[]
+): TertiaryNavItem[] => {
+    const slugList = content[0].slug.split('/');
+    slugList.pop();
+    const topicSlug = slugList.join('/');
+    const contentTypes = getContentTypesFromContent(content);
+
+    const items = contentTypes.map(contentType => {
+        const contentTypeSlug = pillCategoryToSlug.get(contentType);
+        if (contentTypeSlug === undefined) {
+            throw Error(`Error mapping content type ${contentType} to slug`);
+        }
+        return {
+            title: `${contentType}s`,
+            url: `/${topicSlug}/${contentTypeSlug}`,
+        };
+    });
+    const externalItems = [
         {
             title: `Community Discussion`,
             url: `https://www.mongodb.com/community/forums/`,
@@ -27,36 +36,12 @@ const getTertiaryNavItems = (slug: string): TertiaryNavItem[] => {
             url: `https://www.mongodb.com/news`,
         },
         {
-            title: `Demo Apps`,
-            url: `/products/${slug}/demoapps`,
-        },
-        {
             title: `Stack Overflow`,
             url: `https://stackoverflow.com/`,
         },
-        {
-            title: `Podcasts`,
-            url: `/products/${slug}/podcasts`,
-        },
-        {
-            title: `Tutorials`,
-            url: `/products/${slug}/tutorials`,
-        },
-        {
-            title: `Videos`,
-            url: `/products/${slug}/videos`,
-        },
     ];
 
-    const returnItmes =
-        slug === 'atlas'
-            ? items
-            : slug === 'data-lake'
-            ? items.slice(0, 5)
-            : slug === 'vs-code'
-            ? items.slice(0, 2)
-            : [];
-    return returnItmes;
+    return items.concat(externalItems);
 };
 
-export default getTertiaryNavItems;
+export default getTertiaryNavItemsFromContent;
