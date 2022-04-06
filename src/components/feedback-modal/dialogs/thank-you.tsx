@@ -1,4 +1,4 @@
-import { TypographyScale, Button } from '@mdb/flora';
+import { TypographyScale, Button, Link } from '@mdb/flora';
 
 import { modalWrapperStyles } from '../styles';
 
@@ -10,7 +10,7 @@ const ThankYou: React.FunctionComponent<{ onContinue: () => void }> = ({
         <>
             We&apos;d love to chat with you and answer your questions in our
             online{' '}
-            <a
+            <a // The Flora Link component is not designed for inline use (it has an underline that increases the box size when inline).
                 href="https://www.mongodb.com/community"
                 target="_blank"
                 rel="noreferrer"
