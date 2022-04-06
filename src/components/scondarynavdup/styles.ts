@@ -18,7 +18,10 @@ export const StyledFloraLink = styled(Link)`
         color: ${theme.colors.text.default}!important;
         font-size: ${theme.fontSizes.inc20};
         font-family: ${theme.fonts.body};
-        font-weight: 300;
+        font-weight: 500;
+        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+            font-weight: 300;
+        }
     }
     span:hover {
         border-bottom: none !important;

@@ -6,7 +6,10 @@ const aLinkStyles = () => {
         display: 'block',
         fontSize: 'inc20',
         fontFamily: 'euclid-circular-a',
-        fontWeight: '300',
+        fontWeight: 300,
+        paddingTop: ['inc40', 'inc40', 'inc40', 0],
+        paddingBottom: ['inc40', 'inc40', 'inc40', 0],
+        paddingLeft: ['inc70', 'inc70', 'inc70', 0],
         '&:hover': {
             color: 'text.selected',
         },
