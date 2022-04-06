@@ -4,3 +4,10 @@ export type PillCategory =
     | 'Tutorial'
     | 'Podcast'
     | 'Video';
+
+export type PillCategorySlugs =
+    | 'article'
+    | 'demo-app'
+    | 'tutorial'
+    | 'podcast'
+    | 'video';
