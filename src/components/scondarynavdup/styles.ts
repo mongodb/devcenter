@@ -87,7 +87,8 @@ export const DropDownWrapper = styled.div`
     position: initial;
     padding: 0;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        margin-top: 0;
+        //margin top is same as padding bottom of secondary nav
+        margin-top: ${theme.space.elementXSmall};
         position: absolute;
         box-shadow: ${theme.shadows.level01};
         border-bottom-right-radius: ${theme.radii.inc50};
