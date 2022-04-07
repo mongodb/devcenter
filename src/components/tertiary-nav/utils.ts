@@ -6,11 +6,11 @@ export const scrollListener = (e: Event) => {
 
     if (fadeRight === null || fadeLeft === null) return;
 
-    if (offsetWidth + scrollLeft === scrollWidth) {
+    if (offsetWidth + scrollLeft >= scrollWidth) {
         fadeRight.style.display = 'none';
         return;
     }
-    if (scrollLeft === 0) {
+    if (scrollLeft <= 0) {
         fadeLeft.style.display = 'none';
         return;
     }

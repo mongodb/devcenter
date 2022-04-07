@@ -37,6 +37,7 @@ import getTertiaryNavItems from '../requests/get-tertiary-nav-items';
 import { ContentPiece } from '../interfaces/content-piece';
 
 import getContent from '../requests/get-content';
+import { TertiaryNavItem } from '../components/tertiary-nav/types';
 
 const SocialButtons = <div>SOCIAL BUTTONS</div>;
 
@@ -62,7 +63,11 @@ const socialFlexContainerStyles = {
     marginBottom: ['inc30', null, null, 'inc40'],
 };
 
-const ContentPage: NextPage<ContentPiece> = ({
+interface ContentPageProps extends ContentPiece {
+    tertiaryNavItems: TertiaryNavItem[];
+}
+
+const ContentPage: NextPage<ContentPageProps> = ({
     authors,
     category,
     image,
@@ -71,6 +76,7 @@ const ContentPage: NextPage<ContentPiece> = ({
     contentDate,
     tags,
     slug,
+    tertiaryNavItems,
 }) => {
     const [ratingStars, setRatingStars] = useState(0);
 
@@ -82,7 +88,6 @@ const ContentPage: NextPage<ContentPiece> = ({
     const relatedContent = getRelatedContent(slug);
     const series = getSeries(slug);
     const slugList = slug.split('/');
-    const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
@@ -279,7 +284,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
 
-    const contentPiece = getContent(slug.join('/'));
+    const topicSlugString = slug.slice(1, slug.length - 1).join('/');
+    const { content } = getL1Content(topicSlugString);
+    console.log(topicSlugString, content);
+    const tertiaryNavItems = getTertiaryNavItems(content);
 
-    return { props: contentPiece };
+    const contentPiece = content.filter(
+        piece => (piece.slug = slug.join('/'))
+    )[0];
+
+    return { props: { ...contentPiece, tertiaryNavItems } };
 };

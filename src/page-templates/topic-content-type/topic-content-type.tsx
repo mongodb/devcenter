@@ -15,6 +15,14 @@ const sideNavStyles = (rowCount: number) => ({
     gridRow: [null, null, null, null, `span ${rowCount}`],
 });
 
+const sideNavTitleStyles = {
+    borderLeft: 'solid',
+    borderWidth: '2px',
+    borderColor: 'black20',
+    paddingBottom: 'inc30',
+    px: 'inc60',
+};
+
 const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
     contentType,
     tertiaryNavItems,
@@ -38,6 +46,13 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
+                        <TypographyScale
+                            variant="heading6"
+                            sx={sideNavTitleStyles}
+                        >
+                            {topicName}
+                        </TypographyScale>
+
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
                     <div>
