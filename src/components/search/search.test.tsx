@@ -1,19 +1,61 @@
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
-
 import Search from './search';
 
-jest.setTimeout(10000);
+const titleLink = {
+    text: 'Link to All',
+    href: '/slug1/slug2',
+};
+describe('Search', () => {
+    test('renders default search', () => {
+        render(<Search title="All Atlas Content" />);
 
-test('renders search', async () => {
-    const user = userEvent.setup();
-    render(<Search name="Atlas" />);
+        const title = screen.getByText('All Atlas Content');
+        expect(title).toBeInTheDocument();
+        const search = screen.getByText('Search Content');
+        expect(search).toBeInTheDocument();
+        const sort = screen.queryByText('Sort by');
+        expect(sort).toBeInTheDocument();
+        const results = screen.getByTestId('search-results');
+        expect(results).toHaveStyle({ display: 'flex' });
+    });
+    test('renders search without sort', () => {
+        render(<Search title="All Atlas Content" hideSortBy={true} />);
 
-    const title = screen.getByText('All Atlas Content');
-    expect(title).toBeInTheDocument();
-    const search = screen.getByText('Search Atlas Content');
-    expect(search).toBeInTheDocument();
-    const sort = screen.getByText('Sort by');
-    expect(sort).toBeInTheDocument();
+        const title = screen.getByText('All Atlas Content');
+        expect(title).toBeInTheDocument();
+        const search = screen.getByText('Search Content');
+        expect(search).toBeInTheDocument();
+        const sort = screen.queryByText('Sort by');
+        expect(sort).toBeNull();
+        const results = screen.getByTestId('search-results');
+        expect(results).toHaveStyle({ display: 'flex' });
+    });
+    test('renders search with grid results', () => {
+        render(<Search title="All Atlas Content" resultsLayout="grid" />);
+
+        const title = screen.getByText('All Atlas Content');
+        expect(title).toBeInTheDocument();
+        const search = screen.getByText('Search Content');
+        expect(search).toBeInTheDocument();
+        const sort = screen.queryByText('Sort by');
+        expect(sort).toBeInTheDocument();
+        const results = screen.getByTestId('search-results');
+        expect(results).toHaveStyle({ display: 'grid' });
+    });
+    test('renders search with title link', () => {
+        render(<Search title="All Atlas Content" titleLink={titleLink} />);
+
+        const title = screen.getByText('All Atlas Content');
+        expect(title).toBeInTheDocument();
+        const search = screen.getByText('Search Content');
+        expect(search).toBeInTheDocument();
+        const sort = screen.queryByText('Sort by');
+        expect(sort).toBeInTheDocument();
+        const results = screen.getByTestId('search-results');
+        expect(results).toHaveStyle({ display: 'flex' });
+
+        const link = screen.getByText(titleLink.text);
+        expect(link.closest('a')).toHaveAttribute('href', titleLink.href);
+    });
 });

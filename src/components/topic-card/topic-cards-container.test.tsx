@@ -6,22 +6,22 @@ import { ITopicCard } from './types';
 const PRODUCT_NAME = 'Atlas';
 const TOPICS: ITopicCard[] = [
     {
-        title: 'Aggregation',
+        name: 'Aggregation',
         href: '#',
         icon: 'atlas_search',
     },
     {
-        title: 'Atlas Search',
+        name: 'Atlas Search',
         href: '#',
         icon: 'atlas_search',
     },
     {
-        title: 'Charts',
+        name: 'Charts',
         href: '#',
         icon: 'atlas_search',
     },
     {
-        title: 'Other Topic Here',
+        name: 'Other Topic Here',
         href: '#',
         icon: 'atlas_search',
     },
@@ -29,7 +29,7 @@ const TOPICS: ITopicCard[] = [
 
 test('renders topic cards with title', async () => {
     render(<TopicCardsContainer topics={TOPICS} title={PRODUCT_NAME} />);
-    TOPICS.forEach(({ title }) => {
-        expect(screen.getByText(title)).toBeInTheDocument();
+    TOPICS.forEach(({ name }) => {
+        expect(screen.getByText(name)).toBeInTheDocument();
     });
 });

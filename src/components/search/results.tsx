@@ -10,7 +10,7 @@ const Results: React.FunctionComponent<ResultsProps> = React.memo(
         const extraCardStyles =
             layout === 'list' ? { width: '100%' } : { height: '100%' };
         return (
-            <div sx={dataStyles(layout)}>
+            <div data-testid="search-results" sx={dataStyles(layout)}>
                 {data &&
                     data.map(page =>
                         page.map(piece => (
