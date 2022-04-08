@@ -1,9 +1,11 @@
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
-import { ITopicCard } from '../../components/topic-card/types';
-import { PillCategory } from '../../types/pill-category';
+import { Topic } from '../../interfaces/taxonomy';
+import { PillCategory, PillCategorySlug } from '../../types/pill-category';
 export interface TopicContentTypePageProps {
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
     topicName: string;
-    subTopics: ITopicCard[];
+    topicSlug: string;
+    contentTypeSlug: PillCategorySlug;
+    subTopics: Topic[];
 }

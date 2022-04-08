@@ -1,8 +1,29 @@
+import { useState } from 'react';
 import type { NextPage } from 'next';
-import { SideNav, GridLayout, Eyebrow, TypographyScale } from '@mdb/flora';
+import {
+    SideNav,
+    GridLayout,
+    Eyebrow,
+    TypographyScale,
+    Button,
+    HorizontalRule,
+} from '@mdb/flora';
 
 import { TopicContentTypePageProps } from './types';
 import TertiaryNav from '../../components/tertiary-nav';
+import { CTAContainerStyles } from '../../components/hero/styles';
+
+import RequestContentModal, {
+    requestContentModalStages,
+} from '../../components/request-content-modal';
+
+import { TopicCardsContainer } from '../../components/topic-card';
+
+import Search from '../../components/search';
+
+const spanAllColumns = {
+    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
+};
 
 const sideNavStyles = (rowCount: number) => ({
     display: ['none', null, null, null, 'block'],
@@ -27,9 +48,60 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
     contentType,
     tertiaryNavItems,
     topicName,
+    topicSlug,
+    contentTypeSlug,
     subTopics,
 }) => {
-    const mainGridDesktopRowsCount = subTopics.length > 0 ? 3 : 2;
+    const requestButtonText = `Request ${
+        /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
+    } ${contentType}`; // Regex to tell if it starts with a vowel.
+
+    const [requestContentModalStage, setRequestContentModalStage] =
+        useState<requestContentModalStages>('closed');
+
+    const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
+
+    const subTopicsWithHrefs = subTopics.map(
+        ({ name, icon, slug, category }) => ({
+            name,
+            icon,
+            href: `/${category}/${slug}/${contentTypeSlug}`,
+        })
+    );
+
+    const header = (
+        <GridLayout
+            sx={{
+                rowGap: 'inc30',
+                ...spanAllColumns,
+            }}
+        >
+            <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
+                <Eyebrow sx={{ marginBottom: 'inc30' }}>{topicName}</Eyebrow>
+                <TypographyScale
+                    variant="heading2"
+                    sx={{
+                        marginBottom: ['inc20', null, null, 'inc40'],
+                    }}
+                >
+                    {contentType}s
+                </TypographyScale>
+                <TypographyScale variant="body2">
+                    Blurb consisting of a description of the title or tag for
+                    the page. No more than 2 - 3 lines, and 4 column max
+                </TypographyScale>
+            </div>
+            <div sx={CTAContainerStyles}>
+                <Button
+                    onClick={() => setRequestContentModalStage('text')}
+                    variant="secondary"
+                >
+                    {requestButtonText}
+                </Button>
+            </div>
+        </GridLayout>
+    );
+
     return (
         <>
             <TertiaryNav items={tertiaryNavItems} topic={topicName} />
@@ -42,7 +114,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
             >
                 <GridLayout
                     sx={{
-                        rowGap: ['inc90', null, null, 'inc130'],
+                        rowGap: 0,
                     }}
                 >
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
@@ -55,19 +127,40 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
-                    <div>
-                        <Eyebrow>{topicName}</Eyebrow>
-                        <TypographyScale
-                            variant="heading2"
+                    {header}
+                    <HorizontalRule sx={spanAllColumns} spacing="xlarge" />
+                    {subTopics.length > 0 && (
+                        <TopicCardsContainer
+                            topics={subTopicsWithHrefs}
+                            title="By Category"
                             sx={{
-                                marginBottom: ['inc20', null, null, 'inc40'],
+                                marginBottom: [
+                                    'section30',
+                                    null,
+                                    null,
+                                    'section50',
+                                ],
                             }}
-                        >
-                            {contentType}s
-                        </TypographyScale>
-                    </div>
+                        />
+                    )}
+                    <Search
+                        title={`All ${topicName} ${contentType}s`}
+                        slug={topicSlug}
+                        contentType={contentType}
+                        resultsLayout="grid"
+                        titleLink={{
+                            text: `All ${contentType}s`,
+                            href: `/${contentTypeSlug}`,
+                        }}
+                        sx={spanAllColumns}
+                    />
                 </GridLayout>
             </div>
+            <RequestContentModal
+                setModalStage={setRequestContentModalStage}
+                modalStage={requestContentModalStage}
+                contentCategory={contentType}
+            />
         </>
     );
 };

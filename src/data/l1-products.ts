@@ -15,46 +15,36 @@ export const l1Products: Taxonomy[] = [
         ],
         subTopics: [
             {
-                title: 'Aggregation',
-                href: '#',
+                name: 'Change Streams',
+                slug: 'atlas/change-streams',
                 icon: 'atlas_search',
+                category: 'product',
             },
             {
-                title: 'Atlas Search',
-                href: '#',
+                name: 'Document Model',
+                slug: 'atlas/document-model',
                 icon: 'atlas_search',
-            },
-            {
-                title: 'Charts',
-                href: '#',
-                icon: 'atlas_search',
-            },
-            {
-                title: 'Other Topic Here',
-                href: '#',
-                icon: 'atlas_search',
+                category: 'product',
             },
         ],
         relatedTopics: [
             {
-                title: 'Aggregation',
-                href: '#',
+                name: 'Data Lake',
+                slug: 'data-lake',
                 icon: 'atlas_search',
+                category: 'product',
             },
             {
-                title: 'Atlas Search',
-                href: '#',
+                name: 'VS Code',
+                slug: 'vs-code',
                 icon: 'atlas_search',
+                category: 'product',
             },
             {
-                title: 'Charts',
-                href: '#',
+                name: 'Android',
+                slug: 'android',
                 icon: 'atlas_search',
-            },
-            {
-                title: 'Other Topic Here',
-                href: '#',
-                icon: 'atlas_search',
+                category: 'technology',
             },
         ],
     },
@@ -80,27 +70,6 @@ export const l1Products: Taxonomy[] = [
             'Blurb consisting of a description of the title or tag for the page. No more than 2 - 3 lines, and 5 column max',
         ctas: [],
         subTopics: [],
-        relatedTopics: [
-            {
-                title: 'Aggregation',
-                href: '#',
-                icon: 'atlas_search',
-            },
-            {
-                title: 'Atlas Search',
-                href: '#',
-                icon: 'atlas_search',
-            },
-            {
-                title: 'Charts',
-                href: '#',
-                icon: 'atlas_search',
-            },
-            {
-                title: 'Other Topic Here',
-                href: '#',
-                icon: 'atlas_search',
-            },
-        ],
+        relatedTopics: [],
     },
 ];

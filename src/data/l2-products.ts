@@ -13,7 +13,7 @@ export const l2Products: Taxonomy[] = [
                 url: 'https://www.mongodb.com/cloud/atlas/register',
             },
         ],
-        topics: [],
+        subTopics: [],
         relatedTopics: [],
     },
     {
@@ -28,7 +28,7 @@ export const l2Products: Taxonomy[] = [
                 url: 'https://www.mongodb.com/cloud/atlas/register',
             },
         ],
-        topics: [],
+        subTopics: [],
         relatedTopics: [],
     },
 ];

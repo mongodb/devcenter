@@ -3,9 +3,10 @@ interface CTA {
     url: string;
 }
 
-interface Topic {
-    title: string;
-    href: string;
+export interface Topic {
+    name: string;
+    category: string;
+    slug: string;
     icon: string;
 }
 

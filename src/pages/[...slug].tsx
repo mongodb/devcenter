@@ -87,7 +87,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
 
     const relatedContent = getRelatedContent(slug);
     const series = getSeries(slug);
-    const slugList = slug.split('/');
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
@@ -286,7 +285,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const topicSlugString = slug.slice(1, slug.length - 1).join('/');
     const { content } = getL1Content(topicSlugString);
-    console.log(topicSlugString, content);
     const tertiaryNavItems = getTertiaryNavItems(content);
 
     const contentPiece = content.filter(

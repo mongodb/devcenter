@@ -5,7 +5,7 @@ import { topicCardStyles, iconStyles } from './styles';
 import { ITopicCard } from './types';
 
 const TopicCard: React.FunctionComponent<ITopicCard> = ({
-    title,
+    name,
     icon,
     href,
 }) => {
@@ -14,7 +14,7 @@ const TopicCard: React.FunctionComponent<ITopicCard> = ({
             <a sx={topicCardStyles} tabIndex={0}>
                 <BrandedIcon sx={iconStyles} name={icon} />
                 <TypographyScale variant="body3" sx={{ my: 'auto' }}>
-                    {title}
+                    {name}
                 </TypographyScale>
             </a>
         </Link>

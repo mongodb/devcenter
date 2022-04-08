@@ -13,7 +13,7 @@ export const languages: Taxonomy[] = [
                 url: 'https://www.mongodb.com/cloud/atlas/register',
             },
         ],
-        topics: [],
+        subTopics: [],
         relatedTopics: [],
     },
     {
@@ -28,7 +28,7 @@ export const languages: Taxonomy[] = [
                 url: 'https://www.mongodb.com/cloud/atlas/register',
             },
         ],
-        topics: [],
+        subTopics: [],
         relatedTopics: [],
     },
     {
@@ -37,7 +37,26 @@ export const languages: Taxonomy[] = [
         description:
             'Blurb consisting of a description of the title or tag for the page. No more than 2 - 3 lines, and 5 column max',
         ctas: [],
-        topics: [],
-        relatedTopics: [],
+        subTopics: [],
+        relatedTopics: [
+            {
+                name: 'Data Lake',
+                slug: 'data-lake',
+                icon: 'atlas_search',
+                category: 'product',
+            },
+            {
+                name: 'Atlas',
+                slug: 'atlas',
+                icon: 'atlas_search',
+                category: 'product',
+            },
+            {
+                name: 'AWS',
+                slug: 'aws',
+                icon: 'atlas_search',
+                category: 'technology',
+            },
+        ],
     },
 ];

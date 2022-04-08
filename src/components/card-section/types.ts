@@ -4,6 +4,7 @@ export interface CardSectionProps {
     content: ContentPiece[];
     title: string;
     direction?: 'row' | 'column';
+    allHref: string;
 }
 
 export interface FeaturedCardSectionProps {

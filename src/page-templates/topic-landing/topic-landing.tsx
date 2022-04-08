@@ -11,6 +11,7 @@ import CardSection, {
 import TertiaryNav from '../../components/tertiary-nav';
 
 import { TopicLandingPageProps } from './types';
+import { pillCategoryToSlug } from '../../utils/maps';
 
 const sideNavStyles = (rowCount: number) => ({
     display: ['none', null, null, null, 'block'],
@@ -69,6 +70,22 @@ const TopicLandingPage: NextPage<TopicLandingPageProps> = ({
         searchRow +
         relatedTopicsRow;
 
+    const subTopicsWithHrefs = subTopics.map(
+        ({ name, icon, slug, category }) => ({
+            name,
+            icon,
+            href: `/${category}/${slug}`,
+        })
+    );
+
+    const relatedTopicsWithHrefs = relatedTopics.map(
+        ({ name, icon, slug, category }) => ({
+            name,
+            icon,
+            href: `/${category}/${slug}`,
+        })
+    );
+
     return (
         <>
             <Hero
@@ -97,7 +114,7 @@ const TopicLandingPage: NextPage<TopicLandingPageProps> = ({
                         <>
                             {subTopics.length > 0 && (
                                 <TopicCardsContainer
-                                    topics={subTopics}
+                                    topics={subTopicsWithHrefs}
                                     title={`${name} Topics`}
                                 />
                             )}
@@ -111,19 +128,22 @@ const TopicLandingPage: NextPage<TopicLandingPageProps> = ({
                                         contentType === 'Podcast'
                                             ? 'column'
                                             : 'row';
+                                    const contentTypeSlug =
+                                        pillCategoryToSlug.get(contentType);
                                     return (
                                         <CardSection
                                             key={contentType}
                                             content={contentRow}
                                             title={`${contentRow[0].category}s`}
                                             direction={direction}
+                                            allHref={`${slug}/${contentTypeSlug}`}
                                         />
                                     );
                                 })}
                         </>
                     )}
                     <Search
-                        name={name}
+                        title={`All ${name} Content`}
                         slug={slug}
                         sx={{
                             gridColumn: [
@@ -138,7 +158,7 @@ const TopicLandingPage: NextPage<TopicLandingPageProps> = ({
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer
-                            topics={relatedTopics}
+                            topics={relatedTopicsWithHrefs}
                             title="Related Topics"
                         />
                     )}

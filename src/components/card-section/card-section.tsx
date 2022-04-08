@@ -1,7 +1,5 @@
-import { useMemo, useState } from 'react';
-import { TypographyScale, Link } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
-import { Grid, ThemeUIStyleObject } from 'theme-ui';
+import { TypographyScale } from '@mdb/flora';
+import { Grid } from 'theme-ui';
 
 import Card from '../card';
 import { CardSectionProps } from './types';
@@ -10,32 +8,29 @@ import {
     sectionHeadingTopStyles,
     sectionHeadingBottomStyles,
     cardListStyles,
-    linkStyles,
-    linkWrapperStyles,
 } from './styles';
 import { getCardProps } from '../card';
+import ExpandingLink from '../expanding-link';
 
 const CardSection: React.FunctionComponent<CardSectionProps> = ({
     content,
     title,
     direction = 'row',
+    allHref,
 }) => {
-    const [hoverStyles, setHoverStyles] = useState<ThemeUIStyleObject>({});
-
-    const onLinkEnter = () =>
-        setHoverStyles({
-            right: [
-                `calc(${theme.sizes.inc60} - ${theme.sizes.inc70})`,
-                null,
-                `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
-            ],
-        });
-
-    const onLinkLeave = () => setHoverStyles({});
-
-    // Memoize so we don't re-render the cards when this hover stuff happens.
-    const contentSection = useMemo(
-        () => (
+    return (
+        <div
+            data-testid={`${title
+                .toLowerCase()
+                .replace(' ', '-')}-card-section`}
+            sx={{
+                gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
+            }}
+        >
+            <div sx={sectionHeadingTopStyles}>
+                <TypographyScale variant="heading5">{title}</TypographyScale>
+                <ExpandingLink text={`All ${title}`} href={allHref} />
+            </div>
             <Grid columns={3} sx={cardSectionListStyles(direction)}>
                 {content.slice(0, 3).map(piece => {
                     const cardProps = getCardProps(piece, 'medium');
@@ -48,57 +43,8 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                     );
                 })}
             </Grid>
-        ),
-        [content]
-    );
-    return (
-        <div
-            data-testid={`${title
-                .toLowerCase()
-                .replace(' ', '-')}-card-section`}
-            sx={{
-                gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
-            }}
-        >
-            <div sx={sectionHeadingTopStyles}>
-                <TypographyScale variant="heading5">{title}</TypographyScale>
-                <div
-                    sx={linkWrapperStyles}
-                    onMouseEnter={onLinkEnter}
-                    onMouseLeave={onLinkLeave}
-                >
-                    <Link
-                        href="#"
-                        linkIcon="arrow"
-                        sx={{
-                            ...linkStyles,
-                            ...hoverStyles,
-                            display: ['none', null, 'inline'],
-                        }}
-                    >
-                        All {title}
-                    </Link>
-                </div>
-            </div>
-            {contentSection}
             <div sx={sectionHeadingBottomStyles}>
-                <div
-                    sx={linkWrapperStyles}
-                    onMouseEnter={onLinkEnter}
-                    onMouseLeave={onLinkLeave}
-                >
-                    <Link
-                        href="#"
-                        linkIcon="arrow"
-                        sx={{
-                            ...linkStyles,
-                            ...hoverStyles,
-                            display: ['inline', null, 'none'],
-                        }}
-                    >
-                        All {title}
-                    </Link>
-                </div>
+                <ExpandingLink text={`All ${title}`} href={allHref} />
             </div>
         </div>
     );

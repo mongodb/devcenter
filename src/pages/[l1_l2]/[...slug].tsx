@@ -91,7 +91,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
-    console.log(slug);
     const contentTypeSlugs = Array.from(
         pillCategoryToSlug.values()
     ) as string[];
@@ -104,7 +103,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             lastSlugPiece as PillCategorySlug
         );
         const { content } = getL1Content(topicSlug);
-        console.log(topicSlug);
         const { name, subTopics } = getTaxonomyData(topicSlug);
         const tertiaryNavItems = getTertiaryNavItems(content);
 
@@ -112,7 +110,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             contentType,
             tertiaryNavItems,
             topicName: name,
-            subTopics: subTopics,
+            topicSlug,
+            contentTypeSlug: lastSlugPiece as PillCategorySlug,
+            subTopics: subTopics?.filter(
+                topic => topic.category === contentType
+            ),
         };
         return { props: { pageType: 'content-type', contentTypePageProps } };
     }
