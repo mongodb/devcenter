@@ -1,5 +1,9 @@
+type Image = {
+    url: string;
+};
+
 export interface Author {
     name: string;
     bio: string;
-    thumbnailUrl: string;
+    image: Image;
 }

@@ -1,9 +1,7 @@
-import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
 import { useState } from 'react';
-
-import { Grid } from 'theme-ui';
 
 import {
     GridLayout,
@@ -26,19 +24,13 @@ import RequestContentModal, {
     requestContentModalStages,
 } from '../components/request-content-modal';
 
-import SeriesCard from '../components/series-card';
-
-import getL1Content from '../requests/get-l1-content';
-import getRelatedContent from '../requests/get-related-content';
-import getSeries from '../requests/get-series';
-import getTertiaryNavItems from '../requests/get-tertiary-nav-items';
-
-import { ContentPiece } from '../interfaces/content-piece';
-
-import getContent from '../requests/get-content';
 import { DocumentBody } from '../components/article-body/document-body';
 import { parseMarkdownToAST } from '../utils/markdown-parser/parse-markdown-to-ast';
 import CTALink from '../components/hero/CTALink';
+import { getAllContentItems } from '../service/get-all-content';
+import { ContentItem } from '../interfaces/content-item';
+import { thumbnailLoader } from '../components/card/utils';
+import { formatDateToDisplayDateFormat } from '../utils/format-date';
 
 const SocialButtons = <div>SOCIAL BUTTONS</div>;
 
@@ -64,15 +56,37 @@ const socialFlexContainerStyles = {
     marginBottom: ['inc30', null, null, 'inc40'],
 };
 
-const ContentPage: NextPage<ContentPiece> = ({
+const constructDateDisplay = (
+    vidOrPod: boolean,
+    contentDate: string,
+    updateDate: string | undefined
+) => {
+    const date = `Published ${formatDateToDisplayDateFormat(
+        new Date(contentDate)
+    )}`;
+    if (vidOrPod) {
+        return date;
+    }
+    if (updateDate) {
+        return date.concat(
+            ` . Updated ${formatDateToDisplayDateFormat(new Date(updateDate))}`
+        );
+    }
+};
+
+const ContentPage: NextPage<ContentItem> = ({
     authors,
     category,
-    image,
-    title,
-    description,
     contentDate,
-    tags,
+    updateDate,
+    description,
+    content,
+    image,
     slug,
+    tags,
+    title,
+    podcastFileUrl,
+    videoId,
 }) => {
     const [ratingStars, setRatingStars] = useState(0);
 
@@ -81,16 +95,18 @@ const ContentPage: NextPage<ContentPiece> = ({
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
-    const relatedContent = getRelatedContent(slug);
-    const series = getSeries(slug);
-    const slugList = slug.split('/');
-    const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
+    // const relatedContent = getRelatedContent(slug);
+    // const series = getSeries(slug);
+    // const slugList = slug.split('/');
+    // const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
     } ${category}`; // Regex to tell if it starts with a vowel.
 
     const vidOrPod = category === 'Video' || category === 'Podcast';
+
+    const displayDate = constructDateDisplay(vidOrPod, contentDate, updateDate);
 
     const ratingSection = (
         <div
@@ -125,8 +141,9 @@ const ContentPage: NextPage<ContentPiece> = ({
             {!vidOrPod ? (
                 <div sx={socialFlexContainerStyles}>
                     <SpeakerLockup
+                        sx={{ whiteSpace: 'nowrap' }}
                         name={authors?.join(',')}
-                        title={`${contentDate}`}
+                        title={displayDate}
                     />
                     {SocialButtons}
                 </div>
@@ -139,7 +156,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                         marginBottom: 'inc30',
                     }}
                 >
-                    {contentDate}
+                    {displayDate}
                 </TypographyScale>
             )}
             {tags && (
@@ -153,6 +170,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                     <Image
                         alt={image.alt}
                         src={image.url}
+                        loader={thumbnailLoader}
                         sx={{
                             borderRadius: 'inc30',
                             objectFit: 'cover',
@@ -161,6 +179,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                     />
                 </div>
             )}
+
             {!vidOrPod && ratingSection}
         </>
     );
@@ -188,7 +207,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                 />
             )}
             {!vidOrPod && (
-                <DocumentBody content={parseMarkdownToAST(description)} />
+                <DocumentBody content={parseMarkdownToAST(content || '')} />
             )}
         </>
     );
@@ -214,7 +233,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                     {!vidOrPod && ratingSection}
                 </div>
             </div>
-            {series && <SeriesCard series={series} currentSlug={slug} />}
+            {/*{series && <SeriesCard series={series} currentSlug={slug} />}*/}
             <div>
                 <TypographyScale
                     variant="heading5"
@@ -222,14 +241,14 @@ const ContentPage: NextPage<ContentPiece> = ({
                 >
                     Related
                 </TypographyScale>
-                <Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>
-                    {relatedContent.map(piece => (
-                        <Card
-                            key={piece.slug}
-                            {...getCardProps(piece, 'related')}
-                        />
-                    ))}
-                </Grid>
+                {/*<Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>*/}
+                {/*    {relatedContent.map(piece => (*/}
+                {/*        <Card*/}
+                {/*            key={piece.slug}*/}
+                {/*            {...getCardProps(piece, 'related')}*/}
+                {/*        />*/}
+                {/*    ))}*/}
+                {/*</Grid>*/}
             </div>
             <div sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
@@ -256,9 +275,9 @@ const ContentPage: NextPage<ContentPiece> = ({
                         rowGap: ['inc90', null, null, 'inc130'],
                     }}
                 >
-                    <div sx={sideNavStyles}>
-                        <SideNav currentUrl="#" items={tertiaryNavItems} />
-                    </div>
+                    {/*<div sx={sideNavStyles}>*/}
+                    {/*    <SideNav currentUrl="#" items={tertiaryNavItems} />*/}
+                    {/*</div>*/}
                     <div
                         sx={{
                             gridColumn: [
@@ -298,18 +317,32 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const { content } = getL1Content();
-    const paths = content.map(({ slug }) => ({
-        params: { slug: slug.split('/') },
+const removesErroringArticles = (contents: ContentItem[]) => {
+    const removeSlugs = [
+        'article/mongodb-charts-embedding-sdk-react/',
+        'article/new-time-series-collections',
+        'article/pymongoarrow-and-data-analysis',
+        'article/build-movie-search-application',
+    ];
+
+    return contents.filter(content => !removeSlugs.includes(content.slug));
+};
+
+export const getStaticPaths = async () => {
+    const contents: ContentItem[] = await getAllContentItems();
+    const filteredContents = removesErroringArticles(contents);
+
+    const paths = filteredContents.map((content: ContentItem) => ({
+        params: { slug: content.slug.split('/') },
     }));
     return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
-
-    const contentPiece = getContent(slug.join('/'));
-
-    return { props: contentPiece };
+    const contents: ContentItem[] = await getAllContentItems();
+    const contentItem = contents.filter(
+        content => content.slug === slug.join('/')
+    )[0];
+    return { props: contentItem };
 };

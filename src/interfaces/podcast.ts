@@ -1,8 +1,5 @@
-export interface Podcast {
-    description: string;
-    publishDate: string;
-    title: string;
-    slug: string;
-    podcastUrl: string;
-    thumbnailUrl: string;
+import { Media } from './media';
+
+export interface Podcast extends Media {
+    podcastFileUrl: string;
 }

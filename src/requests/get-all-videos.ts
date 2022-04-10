@@ -1,31 +1,32 @@
 import { ApolloQueryResult, gql } from '@apollo/client';
 
 import { UnderlyingClient } from '../types/client-factory';
-import { Podcast } from '../interfaces/podcast';
+import { Video } from '../interfaces/video';
 
 /**
  * Returns a list of all articles.
  * @param client -  The Apollo REST client that will be used to make the request.
  */
-const getAllPodcastsFromAPI = async (
+const getAllVideosFromAPI = async (
     client: UnderlyingClient<'ApolloREST'>
-): Promise<Podcast[]> => {
+): Promise<Video[]> => {
     const query = gql`
-        query Podcasts {
-            podcasts @rest(type: "Podcast", path: "/podcasts") {
+        query Videos {
+            videos @rest(type: "Video", path: "/videos") {
                 description
                 publishDate: originalPublishDate
                 title
                 slug
-                podcastFileUrl
+                videoId
                 thumbnailUrl
             }
         }
     `;
-    const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
-        await client.query({ query });
+    const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
+        { query }
+    );
 
-    return data.podcasts;
+    return data.videos;
 };
 
-export default getAllPodcastsFromAPI;
+export default getAllVideosFromAPI;

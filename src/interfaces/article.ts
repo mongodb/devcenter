@@ -1,14 +1,18 @@
 import { Author } from './author';
-import { SEO } from './seo';
+
+type Image = {
+    url: string;
+};
 
 export interface Article {
     __typename: 'Article';
-    description: string;
-    content: string;
-    name: string;
-    slug: string;
-    publishDate: string;
-    updatedDate: string;
     authors: Author[];
-    seo: SEO;
+    content: string;
+    description: string;
+    slug: string;
+    image?: Image;
+    title: string;
+    publishDate: string;
+    originalPublishDate: string;
+    updateDate: string;
 }
