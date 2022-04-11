@@ -1,5 +1,9 @@
 import { ArticleImage } from './image';
 
+type FigureCaptionChild = {
+    [k: string]: string;
+};
+
 export const Figure = ({
     url,
     alt,
@@ -7,7 +11,7 @@ export const Figure = ({
 }: {
     url?: string;
     alt?: string;
-    children?: any;
+    children?: FigureCaptionChild[];
 }) => {
     if (!url) {
         return null;

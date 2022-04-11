@@ -7,7 +7,7 @@ export const List = ({
     ordered,
     ...rest
 }: {
-    children: any;
+    children: ArticleNode[];
     ordered: boolean;
 }) => {
     return !ordered ? (

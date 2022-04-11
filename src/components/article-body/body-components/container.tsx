@@ -8,7 +8,7 @@ export const Container = ({
     ...rest
 }: {
     argument: any;
-    children: any;
+    children: ArticleNode[];
 }) => {
     return (
         <div>

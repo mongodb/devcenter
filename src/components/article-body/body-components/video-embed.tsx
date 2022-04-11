@@ -24,13 +24,17 @@ const getVideoUrl = (provider: string, videoId: string) => {
     }
 };
 
+type Argument = {
+    [k: string]: string;
+};
+
 export const VideoEmbed = ({
     argument,
     name: provider,
     thumbnail,
     ...props
 }: {
-    argument: any;
+    argument: Argument[];
     name: string;
     thumbnail: string;
 }) => {

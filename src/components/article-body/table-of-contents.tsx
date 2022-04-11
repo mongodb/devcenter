@@ -26,12 +26,14 @@ const unorderedListStyles = () => {
     };
 };
 
-const formatText = (text: string | unknown[]) => {
+const formatText = (text: string | any) => {
     if (!text) return '';
     return typeof text === 'string' ? (
         <TypographyScale variant="body3">{text}</TypographyScale>
     ) : (
-        text.map((e, index) => <ComponentFactory key={index} nodeData={e} />)
+        text.map((e: any, index: number) => (
+            <ComponentFactory key={index} nodeData={e} />
+        ))
     );
 };
 

@@ -9,7 +9,7 @@ export const Heading = ({
     ...rest
 }: {
     depth: string;
-    children: any;
+    children: ArticleNode[];
     id: string;
 }) => {
     const parentNode = {
