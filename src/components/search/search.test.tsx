@@ -6,6 +6,12 @@ const titleLink = {
     text: 'Link to All',
     href: '/slug1/slug2',
 };
+jest.mock('../../../public/loading-animation.gif', () => {
+    return {
+        default: { src: '/loading-animation.gif', height: 112, width: 112 },
+    };
+});
+
 describe('Search', () => {
     test('renders default search', () => {
         render(<Search title="All Atlas Content" />);
