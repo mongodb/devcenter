@@ -1,13 +1,13 @@
 export const getTableOfContents = (
-    nodes,
-    key,
-    value,
-    maxDepth,
-    minDepth = 1,
-    minHeadingSize = 2
+    nodes: any,
+    key: string,
+    value: string,
+    maxDepth: number,
+    minDepth: number = 1,
+    minHeadingSize: number = 2
 ) => {
-    const results = [];
-    const searchNode = (node, sectionDepth) => {
+    const results: any = [];
+    const searchNode = (node: any, sectionDepth: number) => {
         if (
             node[key] === value &&
             sectionDepth - 1 <= maxDepth &&
@@ -37,13 +37,13 @@ export const getTableOfContents = (
             if (node.type === 'section') {
                 sectionDepth += 1; // eslint-disable-line no-param-reassign
             }
-            return node.children.forEach(child =>
+            return node.children.forEach((child: any) =>
                 searchNode(child, sectionDepth)
             );
         }
         return null;
     };
 
-    nodes.forEach(node => searchNode(node, 0));
+    nodes.forEach((node: any) => searchNode(node, 0));
     return results;
 };

@@ -26,7 +26,7 @@ const unorderedListStyles = () => {
     };
 };
 
-const formatText = text => {
+const formatText = (text: string | unknown[]) => {
     if (!text) return '';
     return typeof text === 'string' ? (
         <TypographyScale variant="body3">{text}</TypographyScale>
@@ -35,34 +35,51 @@ const formatText = text => {
     );
 };
 
-export const TableOfContents = ({ headingNodes, ...props }) => {
+export const TableOfContents = ({
+    headingNodes,
+    ...props
+}: {
+    headingNodes: any;
+}) => {
     return (
         <div sx={{ paddingLeft: 'inc70' }}>
             <TypographyScale variant="heading6">
                 Table of Contents
             </TypographyScale>
             <ul sx={unorderedListStyles()}>
-                {headingNodes.map(({ id, title }) => {
-                    return (
-                        <li key={id}>
-                            <div
-                                sx={{
-                                    borderLeftWidth: 'inc30',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftColor: 'transparent',
-                                    height: '100%',
-                                    '&:hover': {
-                                        borderLeftColor: 'blue80',
-                                    },
-                                }}
-                            >
-                                <a key={id} href={`#${id}`} sx={aLinkStyles()}>
-                                    {formatText(title)}
-                                </a>
-                            </div>
-                        </li>
-                    );
-                })}
+                {headingNodes.map(
+                    ({
+                        id,
+                        title,
+                    }: {
+                        id: string;
+                        title: string | unknown[];
+                    }) => {
+                        return (
+                            <li key={id}>
+                                <div
+                                    sx={{
+                                        borderLeftWidth: 'inc30',
+                                        borderLeftStyle: 'solid',
+                                        borderLeftColor: 'transparent',
+                                        height: '100%',
+                                        '&:hover': {
+                                            borderLeftColor: 'blue80',
+                                        },
+                                    }}
+                                >
+                                    <a
+                                        key={id}
+                                        href={`#${id}`}
+                                        sx={aLinkStyles()}
+                                    >
+                                        {formatText(title)}
+                                    </a>
+                                </div>
+                            </li>
+                        );
+                    }
+                )}
             </ul>
         </div>
     );

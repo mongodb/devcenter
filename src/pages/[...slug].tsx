@@ -94,7 +94,7 @@ const ContentPage: NextPage<ContentPiece> = ({
 
     const vidOrPod = category === 'Video' || category === 'Podcast';
 
-    const contentAst: Object = vidOrPod ? {} : parseMarkdownToAST(description);
+    const contentAst: any = vidOrPod ? {} : parseMarkdownToAST(description);
 
     const headingNodes = getTableOfContents(
         'children' in contentAst ? contentAst['children'] : [],
