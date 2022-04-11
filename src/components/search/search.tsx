@@ -17,6 +17,7 @@ import {
     searchBoxStyles,
     sortBoxStyles,
     loadMoreStyles,
+    linkStyleOverride,
 } from './styles';
 import { SearchProps, SortByType } from './types';
 import { fetcher, sortByOptions } from './utils';
@@ -72,7 +73,12 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     <TypographyScale variant="heading5">
                         {title}
                     </TypographyScale>
-                    {titleLink && <ExpandingLink {...titleLink} />}
+                    {titleLink && (
+                        <ExpandingLink
+                            {...titleLink}
+                            hoverStyleOverrides={linkStyleOverride}
+                        />
+                    )}
                 </div>
                 <div sx={searchBoxStyles}>
                     <TextInput

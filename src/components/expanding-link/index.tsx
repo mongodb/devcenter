@@ -13,22 +13,26 @@ const linkStyles = {
 interface ExpandingLinkProps {
     text: string;
     href: string;
+    hoverStyleOverrides?: ThemeUIStyleObject;
 }
 
 const ExpandingLink: React.FunctionComponent<ExpandingLinkProps> = ({
     text,
     href,
+    hoverStyleOverrides,
 }) => {
     const [hoverStyles, setHoverStyles] = useState<ThemeUIStyleObject>({});
 
     const onLinkEnter = () =>
-        setHoverStyles({
-            right: [
-                `calc(${theme.sizes.inc60} - ${theme.sizes.inc70})`,
-                null,
-                `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
-            ],
-        });
+        setHoverStyles(
+            hoverStyleOverrides || {
+                right: [
+                    `calc(${theme.sizes.inc60} - ${theme.sizes.inc70})`,
+                    null,
+                    `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
+                ],
+            }
+        );
 
     const onLinkLeave = () => setHoverStyles({});
     return (
@@ -45,7 +49,6 @@ const ExpandingLink: React.FunctionComponent<ExpandingLinkProps> = ({
                 sx={{
                     ...linkStyles,
                     ...hoverStyles,
-                    display: ['none', null, 'inline'],
                 }}
             >
                 {text}
