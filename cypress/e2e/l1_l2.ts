@@ -1,4 +1,4 @@
-describe('L1', () => {
+describe('Topic Landing Page', () => {
     it('should have all content heavy components', () => {
         cy.visit('/product/atlas');
         cy.viewport(1440, 900);
@@ -88,7 +88,7 @@ describe('L1', () => {
 
             // Side Nav
             cy.get('nav:visible')
-                .find('a:contains(Articles)')
+                .find('a:contains(Demo Apps)')
                 .should('have.length', 1);
 
             // Featured

@@ -27,26 +27,7 @@ export const l1Products: Taxonomy[] = [
                 category: 'product',
             },
         ],
-        relatedTopics: [
-            {
-                name: 'Data Lake',
-                slug: 'data-lake',
-                icon: 'atlas_search',
-                category: 'product',
-            },
-            {
-                name: 'VS Code',
-                slug: 'vs-code',
-                icon: 'atlas_search',
-                category: 'product',
-            },
-            {
-                name: 'Android',
-                slug: 'android',
-                icon: 'atlas_search',
-                category: 'technology',
-            },
-        ],
+        relatedTopics: [],
     },
     {
         name: 'Data Lake',
@@ -70,6 +51,25 @@ export const l1Products: Taxonomy[] = [
             'Blurb consisting of a description of the title or tag for the page. No more than 2 - 3 lines, and 5 column max',
         ctas: [],
         subTopics: [],
-        relatedTopics: [],
+        relatedTopics: [
+            {
+                name: 'Data Lake',
+                slug: 'data-lake',
+                icon: 'atlas_search',
+                category: 'product',
+            },
+            {
+                name: 'VS Code',
+                slug: 'vs-code',
+                icon: 'atlas_search',
+                category: 'product',
+            },
+            {
+                name: 'Android',
+                slug: 'android',
+                icon: 'atlas_search',
+                category: 'technology',
+            },
+        ],
     },
 ];
