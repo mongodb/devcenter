@@ -1,0 +1,69 @@
+import { TypographyScale } from '@mdb/flora';
+import { ComponentFactory } from './component-factory';
+
+const aLinkStyles = () => {
+    return {
+        display: 'inline-block',
+        marginLeft: 'inc20',
+        span: {
+            fontSize: 'inc20',
+            lineHeight: 'inc20',
+        },
+        color: 'black40',
+        '&:hover': {
+            color: 'text.default',
+        },
+    };
+};
+
+const unorderedListStyles = () => {
+    return {
+        listStyleType: 'none',
+        paddingLeft: 0,
+        'li:not(:last-child)': {
+            marginBottom: 'inc30',
+        },
+    };
+};
+
+const formatText = text => {
+    if (!text) return '';
+    return typeof text === 'string' ? (
+        <TypographyScale variant="body3">{text}</TypographyScale>
+    ) : (
+        text.map((e, index) => <ComponentFactory key={index} nodeData={e} />)
+    );
+};
+
+export const TableOfContents = ({ headingNodes, ...props }) => {
+    return (
+        <div sx={{ paddingLeft: 'inc70' }}>
+            <TypographyScale variant="heading6">
+                Table of Contents
+            </TypographyScale>
+            <ul sx={unorderedListStyles()}>
+                {headingNodes.map(({ id, title }) => {
+                    return (
+                        <li key={id}>
+                            <div
+                                sx={{
+                                    borderLeftWidth: 'inc30',
+                                    borderLeftStyle: 'solid',
+                                    borderLeftColor: 'transparent',
+                                    height: '100%',
+                                    '&:hover': {
+                                        borderLeftColor: 'blue80',
+                                    },
+                                }}
+                            >
+                                <a key={id} href={`#${id}`} sx={aLinkStyles()}>
+                                    {formatText(title)}
+                                </a>
+                            </div>
+                        </li>
+                    );
+                })}
+            </ul>
+        </div>
+    );
+};
