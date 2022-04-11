@@ -5,7 +5,7 @@ import { technologies } from '../data/technologies';
 
 const getTaxonomyData = (slug: string) => {
     const taxonomyData = l1Products.concat(l2Products, languages, technologies);
-    return taxonomyData.filter(p => p.slug === slug)[0];
+    return taxonomyData.filter(topic => topic.slug === slug)[0];
 };
 
 export default getTaxonomyData;

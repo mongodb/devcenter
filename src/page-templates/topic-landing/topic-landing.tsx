@@ -156,7 +156,7 @@ const TopicLandingPage: NextPage<TopicLandingPageProps> = ({
                         }}
                     />
 
-                    {variant === 'light' && relatedTopics.length > 0 && (
+                    {variant === 'light' && !!relatedTopics.length && (
                         <TopicCardsContainer
                             topics={relatedTopicsWithHrefs}
                             title="Related Topics"
