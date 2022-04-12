@@ -77,7 +77,6 @@ export const Callout: React.FunctionComponent<CalloutProps> = ({
     children,
     ...rest
 }) => {
-    console.log(children);
     const { colorDark, colorMedium, colorLight } = variantCardColor(variant);
     return (
         <div
