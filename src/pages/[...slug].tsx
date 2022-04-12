@@ -54,7 +54,6 @@ const sideNavStyles = {
 };
 
 const imageStyles = {
-    marginTop: 'inc40',
     marginBottom: ['inc20', null, null, 'inc30'],
     aspectRatio: '16/9',
     position: 'relative' as 'relative',
@@ -131,7 +130,9 @@ const ContentPage: NextPage<ContentPiece> = ({
     const contentHeader = (
         <>
             <div sx={middleSectionStyles}>
-                <Eyebrow sx={{ marginBottom: 'inc30' }}>{category}</Eyebrow>
+                <Eyebrow sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}>
+                    {category}
+                </Eyebrow>
                 <TypographyScale
                     variant="heading2"
                     sx={{
@@ -140,26 +141,28 @@ const ContentPage: NextPage<ContentPiece> = ({
                 >
                     {title}
                 </TypographyScale>
-                {!vidOrPod ? (
-                    <div sx={socialFlexContainerStyles}>
-                        <SpeakerLockup
-                            name={authors?.join(',')}
-                            title={`${contentDate}`}
-                        />
-                        {SocialButtons}
-                    </div>
-                ) : (
-                    <TypographyScale
-                        variant="body3"
-                        color="secondary"
-                        customStyles={{
-                            display: 'block',
-                            marginBottom: 'inc30',
-                        }}
-                    >
-                        {contentDate}
-                    </TypographyScale>
-                )}
+                <div sx={{ marginBottom: ['inc30', null, null, 'inc40'] }}>
+                    {!vidOrPod ? (
+                        <div sx={socialFlexContainerStyles}>
+                            <SpeakerLockup
+                                name={authors?.join(',')}
+                                title={`${contentDate}`}
+                            />
+                            {SocialButtons}
+                        </div>
+                    ) : (
+                        <TypographyScale
+                            variant="body3"
+                            color="secondary"
+                            customStyles={{
+                                display: 'block',
+                                marginBottom: 'inc30',
+                            }}
+                        >
+                            {contentDate}
+                        </TypographyScale>
+                    )}
+                </div>
                 {tags && (
                     <div sx={socialFlexContainerStyles}>
                         <TagSection tags={tags} />
