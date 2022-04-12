@@ -39,12 +39,13 @@ const formatText = (text: string | any) => {
 
 export const TableOfContents = ({
     headingNodes,
-    ...props
+    className,
 }: {
     headingNodes: any;
+    className?: string;
 }) => {
     return (
-        <div sx={{ paddingLeft: 'inc70' }}>
+        <div sx={{ paddingLeft: 'inc70' }} className={className}>
             <TypographyScale variant="heading6">
                 Table of Contents
             </TypographyScale>
