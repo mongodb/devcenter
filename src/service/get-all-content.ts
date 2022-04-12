@@ -7,7 +7,7 @@ import { Article } from '../interfaces/article';
 import { getAllArticlesFromAPI } from '../requests/get-articles';
 import { ContentItem } from '../interfaces/content-item';
 
-const client = clientFactory('ApolloREST', 'http://54.219.137.111:1337');
+const client = clientFactory('ApolloREST', 'http://54.219.161.14:1337');
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcastsFromAPI(client);

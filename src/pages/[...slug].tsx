@@ -100,6 +100,8 @@ const ContentPage: NextPage<ContentItem> = ({
     // const slugList = slug.split('/');
     // const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
 
+    console.log(slug);
+
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
     } ${category}`; // Regex to tell if it starts with a vowel.
@@ -331,7 +333,6 @@ const removesErroringArticles = (contents: ContentItem[]) => {
 export const getStaticPaths = async () => {
     const contents: ContentItem[] = await getAllContentItems();
     const filteredContents = removesErroringArticles(contents);
-
     const paths = filteredContents.map((content: ContentItem) => ({
         params: { slug: content.slug.split('/') },
     }));
