@@ -50,10 +50,10 @@ const sideNavStyles = {
     nav: {
         position: 'static' as 'static',
     },
+    gridRow: 'span 4',
 };
 
 const imageStyles = {
-    marginTop: 'inc40',
     marginBottom: ['inc20', null, null, 'inc30'],
     aspectRatio: '16/9',
     position: 'relative' as 'relative',
@@ -64,6 +64,10 @@ const socialFlexContainerStyles = {
     justifyContent: 'space-between',
     alignItems: 'end',
     marginBottom: ['inc30', null, null, 'inc40'],
+};
+
+const middleSectionStyles = {
+    gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
 };
 
 const ContentPage: NextPage<ContentPiece> = ({
@@ -125,8 +129,10 @@ const ContentPage: NextPage<ContentPiece> = ({
 
     const contentHeader = (
         <>
-            <div>
-                <Eyebrow sx={{ marginBottom: 'inc30' }}>{category}</Eyebrow>
+            <div sx={middleSectionStyles}>
+                <Eyebrow sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}>
+                    {category}
+                </Eyebrow>
                 <TypographyScale
                     variant="heading2"
                     sx={{
@@ -135,26 +141,28 @@ const ContentPage: NextPage<ContentPiece> = ({
                 >
                     {title}
                 </TypographyScale>
-                {!vidOrPod ? (
-                    <div sx={socialFlexContainerStyles}>
-                        <SpeakerLockup
-                            name={authors?.join(',')}
-                            title={`${contentDate}`}
-                        />
-                        {SocialButtons}
-                    </div>
-                ) : (
-                    <TypographyScale
-                        variant="body3"
-                        color="secondary"
-                        customStyles={{
-                            display: 'block',
-                            marginBottom: 'inc30',
-                        }}
-                    >
-                        {contentDate}
-                    </TypographyScale>
-                )}
+                <div sx={{ marginBottom: ['inc30', null, null, 'inc40'] }}>
+                    {!vidOrPod ? (
+                        <div sx={socialFlexContainerStyles}>
+                            <SpeakerLockup
+                                name={authors?.join(',')}
+                                title={`${contentDate}`}
+                            />
+                            {SocialButtons}
+                        </div>
+                    ) : (
+                        <TypographyScale
+                            variant="body3"
+                            color="secondary"
+                            customStyles={{
+                                display: 'block',
+                                marginBottom: 'inc30',
+                            }}
+                        >
+                            {contentDate}
+                        </TypographyScale>
+                    )}
+                </div>
                 {tags && (
                     <div sx={socialFlexContainerStyles}>
                         <TagSection tags={tags} />
@@ -163,7 +171,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                 )}
             </div>
 
-            <div>
+            <div sx={middleSectionStyles}>
                 <div sx={imageStyles}>
                     <Image
                         alt="alt"
@@ -182,7 +190,12 @@ const ContentPage: NextPage<ContentPiece> = ({
     );
 
     const contentBody = (
-        <>
+        <div
+            sx={{
+                ...middleSectionStyles,
+                my: ['section20', null, 'section30', 'section40'],
+            }}
+        >
             {vidOrPod && (
                 <TypographyScale
                     variant="body1"
@@ -196,15 +209,14 @@ const ContentPage: NextPage<ContentPiece> = ({
             {vidOrPod && (
                 <CTALink
                     customCSS={{
-                        marginTop: '24px',
-                        marginBottom: '48px',
+                        marginTop: 'inc40',
                     }}
                     text="All MongoDB Videos"
                     url="#"
                 />
             )}
             {!vidOrPod && <DocumentBody content={contentAst} />}
-        </>
+        </div>
     );
 
     const contentFooter = (
@@ -213,6 +225,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                 display: 'flex',
                 flexDirection: 'column',
                 gap: ['section30', null, 'section40', 'section50'],
+                ...middleSectionStyles,
             }}
         >
             <div>
@@ -267,37 +280,29 @@ const ContentPage: NextPage<ContentPiece> = ({
             >
                 <GridLayout
                     sx={{
-                        rowGap: ['inc90', null, null, 'inc130'],
+                        rowGap: 0,
                     }}
                 >
                     <div sx={sideNavStyles}>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
 
-                    <div
-                        sx={{
-                            gridColumn: [
-                                'span 6',
-                                null,
-                                'span 8',
-                                'span 12',
-                                '4 /span 6',
-                            ],
-                        }}
-                    >
-                        {contentHeader}
-                        {contentBody}
-                        {contentFooter}
-                    </div>
+                    {contentHeader}
+                    {contentBody}
+                    {contentFooter}
                     {!vidOrPod && (
                         <div
                             sx={{
                                 display: ['none', null, null, null, 'block'],
                                 gridColumn: '10 /span 3',
+                                gridRow: '2 /4',
                             }}
                         >
                             {headingNodes.length > 0 && (
-                                <TableOfContents headingNodes={headingNodes} />
+                                <TableOfContents
+                                    headingNodes={headingNodes}
+                                    sx={{ position: 'sticky', top: 'inc150' }}
+                                />
                             )}
                         </div>
                     )}
