@@ -93,13 +93,13 @@ export const Callout: React.FunctionComponent<CalloutProps> = ({
             <div sx={iconStyles(colorMedium)}>
                 <SystemIcon
                     sx={{ display: ['none', null, null, 'block'] }}
-                    name={ESystemIconNames.CIRCLE_ALERT}
+                    name={ESystemIconNames.CIRCLE_INFO}
                     size="medium"
                     inheritColor
                 />
                 <SystemIcon
                     sx={{ display: ['block', null, null, 'none'] }}
-                    name={ESystemIconNames.CIRCLE_ALERT}
+                    name={ESystemIconNames.CIRCLE_INFO}
                     size="small"
                     inheritColor
                 />
