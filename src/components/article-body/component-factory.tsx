@@ -19,6 +19,7 @@ import { TableCell } from './body-components/table-cell';
 import { ArticleImage } from './body-components/image';
 import { Figure } from './body-components/figure';
 import { CodeTabs } from './body-components/codepanel';
+import { Callout } from './body-components/callout';
 
 const componentMap: { [key: string]: any } = {
     paragraph: Paragraph,
@@ -42,6 +43,7 @@ const componentMap: { [key: string]: any } = {
     image: ArticleImage,
     figure: Figure,
     tabs: CodeTabs,
+    blockquote: Callout,
 };
 export const ComponentFactory = ({
     nodeData,
