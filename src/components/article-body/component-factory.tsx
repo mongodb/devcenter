@@ -20,6 +20,7 @@ import { ArticleImage } from './body-components/image';
 import { Figure } from './body-components/figure';
 import { CodeTabs } from './body-components/codepanel';
 import { Callout } from './body-components/callout';
+import { ArticleNode } from '../../interfaces/article-body-node';
 
 const componentMap: { [key: string]: any } = {
     paragraph: Paragraph,
@@ -50,13 +51,13 @@ export const ComponentFactory = ({
     parentNode,
     ...rest
 }: {
-    nodeData: any;
+    nodeData: ArticleNode;
     parentNode?: any;
 }) => {
     const selectComponent = () => {
         const { name, type } = nodeData;
         const lookup = type === 'directive' ? name : type;
-        let ComponentType = componentMap[lookup];
+        let ComponentType = lookup && componentMap[lookup];
         if (!ComponentType) {
             console.warn(`${name} (${type}) not yet implemented)`);
             return null;

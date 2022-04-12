@@ -7,7 +7,7 @@ export const Reference = ({
     children,
     url,
 }: {
-    children: any;
+    children: ArticleNode[];
     url: string;
 }) => {
     const isAnchor = url.startsWith('#');

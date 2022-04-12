@@ -24,7 +24,7 @@ export const InlineCode = ({
     children,
     value,
 }: {
-    children: any;
+    children: ArticleNode[];
     value: string;
 }) => {
     // Value is the DevHub CMS representation
