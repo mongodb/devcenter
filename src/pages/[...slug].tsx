@@ -12,7 +12,6 @@ import {
     HorizontalRule,
     Eyebrow,
     SpeakerLockup,
-    Link,
     Button,
 } from '@mdb/flora';
 
@@ -37,6 +36,11 @@ import getTertiaryNavItems from '../requests/get-tertiary-nav-items';
 import { ContentPiece } from '../interfaces/content-piece';
 
 import getContent from '../requests/get-content';
+import { DocumentBody } from '../components/article-body/document-body';
+import { parseMarkdownToAST } from '../utils/markdown-parser/parse-markdown-to-ast';
+import CTALink from '../components/hero/CTALink';
+import { getTableOfContents } from '../utils/markdown-parser/get-table-of-contents';
+import { TableOfContents } from '../components/article-body/table-of-contents';
 
 const SocialButtons = <div>SOCIAL BUTTONS</div>;
 
@@ -90,6 +94,16 @@ const ContentPage: NextPage<ContentPiece> = ({
 
     const vidOrPod = category === 'Video' || category === 'Podcast';
 
+    const contentAst: any = vidOrPod ? {} : parseMarkdownToAST(description);
+
+    const headingNodes = getTableOfContents(
+        'children' in contentAst ? contentAst['children'] : [],
+        'type',
+        'heading',
+        2,
+        -1
+    );
+
     const ratingSection = (
         <div
             sx={{
@@ -111,46 +125,49 @@ const ContentPage: NextPage<ContentPiece> = ({
 
     const contentHeader = (
         <>
-            <Eyebrow sx={{ marginBottom: 'inc30' }}>{category}</Eyebrow>
-            <TypographyScale
-                variant="heading2"
-                sx={{
-                    marginBottom: ['inc20', null, null, 'inc30'],
-                }}
-            >
-                {title}
-            </TypographyScale>
-            {!vidOrPod ? (
-                <div sx={socialFlexContainerStyles}>
-                    <SpeakerLockup
-                        name={authors?.join(',')}
-                        title={`${contentDate}`}
-                    />
-                    {SocialButtons}
-                </div>
-            ) : (
+            <div>
+                <Eyebrow sx={{ marginBottom: 'inc30' }}>{category}</Eyebrow>
                 <TypographyScale
-                    variant="body3"
-                    color="secondary"
-                    customStyles={{
-                        display: 'block',
-                        marginBottom: 'inc30',
+                    variant="heading2"
+                    sx={{
+                        marginBottom: ['inc20', null, null, 'inc30'],
                     }}
                 >
-                    {contentDate}
+                    {title}
                 </TypographyScale>
-            )}
-            {tags && (
-                <div sx={socialFlexContainerStyles}>
-                    <TagSection tags={tags} />
-                    {vidOrPod && SocialButtons}
-                </div>
-            )}
-            {image && (
+                {!vidOrPod ? (
+                    <div sx={socialFlexContainerStyles}>
+                        <SpeakerLockup
+                            name={authors?.join(',')}
+                            title={`${contentDate}`}
+                        />
+                        {SocialButtons}
+                    </div>
+                ) : (
+                    <TypographyScale
+                        variant="body3"
+                        color="secondary"
+                        customStyles={{
+                            display: 'block',
+                            marginBottom: 'inc30',
+                        }}
+                    >
+                        {contentDate}
+                    </TypographyScale>
+                )}
+                {tags && (
+                    <div sx={socialFlexContainerStyles}>
+                        <TagSection tags={tags} />
+                        {vidOrPod && SocialButtons}
+                    </div>
+                )}
+            </div>
+
+            <div>
                 <div sx={imageStyles}>
                     <Image
-                        alt={image.alt}
-                        src={image.url}
+                        alt="alt"
+                        src="https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png"
                         sx={{
                             borderRadius: 'inc30',
                             objectFit: 'cover',
@@ -158,8 +175,35 @@ const ContentPage: NextPage<ContentPiece> = ({
                         layout="fill"
                     />
                 </div>
+
+                {!vidOrPod && ratingSection}
+            </div>
+        </>
+    );
+
+    const contentBody = (
+        <>
+            {vidOrPod && (
+                <TypographyScale
+                    variant="body1"
+                    sx={{
+                        marginBottom: ['inc20', null, null, 'inc40'],
+                    }}
+                >
+                    {description}
+                </TypographyScale>
             )}
-            {!vidOrPod && ratingSection}
+            {vidOrPod && (
+                <CTALink
+                    customCSS={{
+                        marginTop: '24px',
+                        marginBottom: '48px',
+                    }}
+                    text="All MongoDB Videos"
+                    url="#"
+                />
+            )}
+            {!vidOrPod && <DocumentBody content={contentAst} />}
         </>
     );
 
@@ -229,6 +273,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                     <div sx={sideNavStyles}>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
+
                     <div
                         sx={{
                             gridColumn: [
@@ -241,9 +286,21 @@ const ContentPage: NextPage<ContentPiece> = ({
                         }}
                     >
                         {contentHeader}
-                        <div sx={{ height: '200px' }}>CONTENT</div>
+                        {contentBody}
                         {contentFooter}
                     </div>
+                    {!vidOrPod && (
+                        <div
+                            sx={{
+                                display: ['none', null, null, null, 'block'],
+                                gridColumn: '10 /span 3',
+                            }}
+                        >
+                            {headingNodes.length > 0 && (
+                                <TableOfContents headingNodes={headingNodes} />
+                            )}
+                        </div>
+                    )}
                 </GridLayout>
             </div>
             <FeedbackModal
