@@ -51,6 +51,8 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
             <a
                 sx={circleStyles}
                 href={`https://www.facebook.com/sharer.php?u=${url}`}
+                target="_blank"
+                rel="noreferrer"
                 title="Share on Facebook"
             >
                 <img
@@ -61,6 +63,8 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
             </a>
             <a
                 sx={circleStyles}
+                target="_blank"
+                rel="noreferrer"
                 href={`https://twitter.com/intent/tweet?url=${url}&text=${heading}`}
                 title="Share on Twitter"
             >
@@ -72,6 +76,8 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
             </a>
             <a
                 sx={circleStyles}
+                target="_blank"
+                rel="noreferrer"
                 // The summary param should be description, we can do that once we figure the description field out.
                 href={`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${heading}&summary=${heading}&source=MongoDB`}
                 title="Share on LinkedIn"
