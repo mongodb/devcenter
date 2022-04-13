@@ -21,10 +21,8 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
 }) => {
     const [url, setUrl] = useState('');
     useEffect(() => {
-        if (url === '') {
-            setUrl(window.location.href);
-        }
-    });
+        setUrl(window.location.href);
+    }, []);
 
     return (
         <div
