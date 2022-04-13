@@ -9,7 +9,7 @@ export const Heading = ({
     ...rest
 }: {
     depth: string;
-    children: any;
+    children: ArticleNode[];
     id: string;
 }) => {
     const parentNode = {
@@ -17,7 +17,7 @@ export const Heading = ({
         depth: depth,
     };
     return (
-        <div id={id}>
+        <div sx={{ scrollMargin: '15em' }} id={id}>
             <a href={`#${id}`} />
             {children.map((child: ArticleNode, index: number) => (
                 <ComponentFactory

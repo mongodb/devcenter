@@ -6,6 +6,12 @@ import Search from './search';
 
 jest.setTimeout(10000);
 
+jest.mock('../../../public/loading-animation.gif', () => {
+    return {
+        default: { src: '/loading-animation.gif', height: 112, width: 112 },
+    };
+});
+
 test('renders search', async () => {
     const user = userEvent.setup();
     render(<Search name="Atlas" />);
