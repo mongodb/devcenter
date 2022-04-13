@@ -1,14 +1,11 @@
 import React from 'react';
-import {
-    SystemIcon,
-    ESystemIconNames,
-    TypographyScale,
-    VerticalSectionSpacing,
-} from '@mdb/flora';
+import { TypographyScale, VerticalSectionSpacing } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { ComponentFactory } from '../component-factory';
 import { ThemeUIStyleObject } from 'theme-ui';
 import { ArticleNode } from '../../../interfaces/article-body-node';
+
+import { Pin, MenuBoxed, Alert } from '../../icons';
 
 type TVariant = 'generic' | 'note' | 'important';
 
@@ -22,6 +19,7 @@ const baseCardStyles = {
     border: `1px solid ${theme.colors.card.default.border}`,
     borderBottomRightRadius: 'inc40',
     borderTopRightRadius: 'inc40',
+    borderBottomLeftRadius: 'inc10',
     borderLeftWidth: '3px',
 };
 
@@ -34,10 +32,10 @@ const iconStyles = (cardColor: string): ThemeUIStyleObject => ({
         `calc(${theme.sizes.inc40} / 2)`,
     ],
     right: [
-        `calc(${theme.sizes.inc20} / 2)`,
+        `calc((${theme.sizes.inc20} - 3px) / 2)`, // -3px to align with the center(ish) of the left border.
         null,
         null,
-        `calc(${theme.sizes.inc40} / 2)`,
+        `calc((${theme.sizes.inc40} - 3px) / 2)`,
     ],
     height: ['inc20', null, null, 'inc40'],
     width: ['inc20', null, null, 'inc40'],
@@ -50,26 +48,30 @@ const iconStyles = (cardColor: string): ThemeUIStyleObject => ({
     borderRadius: 'circle',
 });
 
-const variantCardColor = (variant: TVariant) => {
+const variantCardItems = (variant: TVariant) => {
     let colorMedium;
     let colorLight;
     let colorDark;
+    let icon;
     switch (variant) {
         case 'generic':
             colorMedium = 'purple60';
+            icon = Pin;
             break;
         case 'note':
             colorDark = 'blue70';
             colorMedium = 'blue60';
             colorLight = 'blue10';
+            icon = MenuBoxed;
             break;
         case 'important':
             colorDark = 'yellow70';
             colorMedium = 'yellow40';
             colorLight = 'yellow10';
+            icon = Alert;
             break;
     }
-    return { colorDark, colorMedium, colorLight };
+    return { colorDark, colorMedium, colorLight, icon };
 };
 
 export const Callout: React.FunctionComponent<CalloutProps> = ({
@@ -77,7 +79,12 @@ export const Callout: React.FunctionComponent<CalloutProps> = ({
     children,
     ...rest
 }) => {
-    const { colorDark, colorMedium, colorLight } = variantCardColor(variant);
+    const {
+        colorDark,
+        colorMedium,
+        colorLight,
+        icon: CalloutIcon,
+    } = variantCardItems(variant);
     return (
         <div
             sx={{
@@ -90,17 +97,12 @@ export const Callout: React.FunctionComponent<CalloutProps> = ({
             }}
         >
             <div sx={iconStyles(colorMedium)}>
-                <SystemIcon
-                    sx={{ display: ['none', null, null, 'block'] }}
-                    name={ESystemIconNames.CIRCLE_INFO}
-                    size="medium"
-                    inheritColor
-                />
-                <SystemIcon
-                    sx={{ display: ['block', null, null, 'none'] }}
-                    name={ESystemIconNames.CIRCLE_INFO}
-                    size="small"
-                    inheritColor
+                <CalloutIcon
+                    sx={{
+                        stroke: colorMedium,
+                        width: ['inc10', null, null, 'inc20'],
+                        height: ['inc10', null, null, 'inc20'],
+                    }}
                 />
             </div>
             <div
