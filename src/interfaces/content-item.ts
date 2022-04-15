@@ -1,5 +1,6 @@
 import { PillCategory } from '../types/pill-category';
 import { Image } from './content-piece';
+import { Series } from './series';
 
 export interface ContentItem {
     authors?: string[];
@@ -14,4 +15,5 @@ export interface ContentItem {
     title: string;
     podcastFileUrl?: string;
     videoId?: string;
+    series?: Series;
 }

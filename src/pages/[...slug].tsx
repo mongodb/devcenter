@@ -29,10 +29,12 @@ import { parseMarkdownToAST } from '../utils/markdown-parser/parse-markdown-to-a
 import CTALink from '../components/hero/CTALink';
 import { getTableOfContents } from '../utils/markdown-parser/get-table-of-contents';
 import { TableOfContents } from '../components/article-body/table-of-contents';
-import {formatDateToDisplayDateFormat} from "../utils/format-date";
-import {ContentItem} from "../interfaces/content-item";
-import {thumbnailLoader} from "../components/card/utils";
-import {getAllContentItems} from "../service/get-all-content";
+import { formatDateToDisplayDateFormat } from '../utils/format-date';
+import { ContentItem } from '../interfaces/content-item';
+import { thumbnailLoader } from '../components/card/utils';
+import { getAllContentItems } from '../service/get-all-content';
+import getSeries from '../api-requests/get-series';
+import SeriesCard from '../components/series-card';
 
 const SocialButtons = <div>SOCIAL BUTTONS</div>;
 
@@ -77,19 +79,20 @@ const constructDateDisplay = (
 };
 
 const ContentPage: NextPage<ContentItem> = ({
-                                                authors,
-                                                category,
-                                                contentDate,
-                                                updateDate,
-                                                description,
-                                                content,
-                                                image,
-                                                slug,
-                                                tags,
-                                                title,
-                                                podcastFileUrl,
-                                                videoId,
-                                            }) => {
+    authors,
+    category,
+    contentDate,
+    updateDate,
+    description,
+    content,
+    image,
+    slug,
+    tags,
+    title,
+    podcastFileUrl,
+    videoId,
+    series,
+}) => {
     const [ratingStars, setRatingStars] = useState(0);
 
     const [feedbackModalStage, setFeedbackModalStage] =
@@ -98,7 +101,6 @@ const ContentPage: NextPage<ContentItem> = ({
         useState<requestContentModalStages>('closed');
 
     // const relatedContent = getRelatedContent(slug);
-    // const series = getSeries(slug);
     // const slugList = slug.split('/');
     // const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
 
@@ -218,9 +220,7 @@ const ContentPage: NextPage<ContentItem> = ({
                     url="#"
                 />
             )}
-            {!vidOrPod && (
-                <DocumentBody content={contentAst} />
-            )}
+            {!vidOrPod && <DocumentBody content={contentAst} />}
         </>
     );
 
@@ -245,7 +245,13 @@ const ContentPage: NextPage<ContentItem> = ({
                     {!vidOrPod && ratingSection}
                 </div>
             </div>
-            {/*{series && <SeriesCard series={series} currentSlug={slug} />}*/}
+            {series && (
+                <SeriesCard
+                    series={series}
+                    currentSlug={slug}
+                    currentTitle={title}
+                />
+            )}
             <div>
                 <TypographyScale
                     variant="heading5"

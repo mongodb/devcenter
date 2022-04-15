@@ -29,7 +29,11 @@ export const getAllArticlesFromAPI = async (
 ): Promise<Article[]> => {
     const query = gql`
         query Articles {
-            articles @rest(type: "Article", path: "/new-articles?_publicationState=preview&_limit=-1") {
+            articles
+                @rest(
+                    type: "Article"
+                    path: "/new-articles?_publicationState=preview&_limit=-1"
+                ) {
                 authors {
                     name
                     bio

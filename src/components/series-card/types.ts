@@ -1,7 +1,8 @@
-import { ContentSeries } from '../../interfaces/content-piece';
+import { Series } from '../../interfaces/series';
 
 export interface SeriesCardProps {
-    series: ContentSeries;
+    series: Series;
     currentSlug: string;
+    currentTitle: string;
     className?: string;
 }

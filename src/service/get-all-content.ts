@@ -1,25 +1,44 @@
-import { clientFactory } from '../utils/client-factory';
-import getAllPodcastsFromAPI from '../requests/get-all-podcasts';
-import getAllVideosFromAPI from '../requests/get-all-videos';
+import getAllPodcastsFromAPI from '../api-requests/get-all-podcasts';
+import getAllVideosFromAPI from '../api-requests/get-all-videos';
 import { Podcast } from '../interfaces/podcast';
 import { Video } from '../interfaces/video';
 import { Article } from '../interfaces/article';
-import { getAllArticlesFromAPI } from '../requests/get-articles';
+import { getAllArticlesFromAPI } from '../api-requests/get-articles';
 import { ContentItem } from '../interfaces/content-item';
-
-const client = clientFactory('ApolloREST', 'http://54.219.161.14:1337');
+import { Series } from '../interfaces/series';
+import { addSeriesToItem } from './add-series-to-item';
+import { STRAPI_CLIENT } from '../config/api-client';
+import { getAllArticleSeries } from './get-all-article-series';
+import { getAllVideoSeries } from './get-all-video-series';
+import { getAllPodcastSeries } from './get-all-podcast-series';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
-    const allPodcasts = await getAllPodcastsFromAPI(client);
-    const allVideos = await getAllVideosFromAPI(client);
-    const allArticles = await getAllArticlesFromAPI(client);
-    const mappedPodcasts = mapPodcastsToContentItems(allPodcasts);
-    const mappedVideos = mapVideosToContentItems(allVideos);
-    const mappedArticles = mapArticlesToContentItems(allArticles);
+    const allPodcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
+    const allVideos = await getAllVideosFromAPI(STRAPI_CLIENT);
+    const allArticles = await getAllArticlesFromAPI(STRAPI_CLIENT);
+
+    /*
+    series
+     */
+    const podcastSeries = await getAllPodcastSeries();
+    const videoSeries = await getAllVideoSeries();
+    const articleSeries = await getAllArticleSeries();
+    const mappedPodcasts = mapPodcastsToContentItems(
+        allPodcasts,
+        podcastSeries
+    );
+    const mappedVideos = mapVideosToContentItems(allVideos, videoSeries);
+    const mappedArticles = mapArticlesToContentItems(
+        allArticles,
+        articleSeries
+    );
     return mappedPodcasts.concat(mappedVideos).concat(mappedArticles).flat();
 };
 
-export const mapPodcastsToContentItems = (allPodcasts: Podcast[]) => {
+export const mapPodcastsToContentItems = (
+    allPodcasts: Podcast[],
+    podcastSeries: Series[]
+) => {
     const items: ContentItem[] = [];
     allPodcasts.forEach((p: Podcast) => {
         const item: ContentItem = {
@@ -38,12 +57,16 @@ export const mapPodcastsToContentItems = (allPodcasts: Podcast[]) => {
             item.image = { url: p.thumbnailUrl, alt: 'randomAlt' };
         }
         item.podcastFileUrl = p.podcastFileUrl;
+        addSeriesToItem(item, 'podcast', podcastSeries);
         items.push(item);
     });
     return items;
 };
 
-export const mapVideosToContentItems = (allVideos: Video[]) => {
+export const mapVideosToContentItems = (
+    allVideos: Video[],
+    videoSeries: Series[]
+) => {
     const items: ContentItem[] = [];
     allVideos.forEach((v: Video) => {
         const item: ContentItem = {
@@ -62,12 +85,16 @@ export const mapVideosToContentItems = (allVideos: Video[]) => {
             item.image = { url: v.thumbnailUrl, alt: 'randomAlt' };
         }
         item.videoId = v.videoId;
+        addSeriesToItem(item, 'video', videoSeries);
         items.push(item);
     });
     return items;
 };
 
-export const mapArticlesToContentItems = (allArticles: Article[]) => {
+export const mapArticlesToContentItems = (
+    allArticles: Article[],
+    articleSeries: Series[]
+) => {
     const items: ContentItem[] = [];
     allArticles.forEach((a: Article) => {
         const item: ContentItem = {
@@ -87,6 +114,7 @@ export const mapArticlesToContentItems = (allArticles: Article[]) => {
         if (a.image) {
             item.image = { url: a.image.url, alt: 'randomAlt' };
         }
+        addSeriesToItem(item, 'article', articleSeries);
         items.push(item);
     });
     return items;
