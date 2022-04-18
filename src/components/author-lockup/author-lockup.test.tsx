@@ -22,8 +22,10 @@ test('renders author with image', () => {
     render(<AuthorLockup authors={[authorWithImage]} />);
 
     const image = screen.getByAltText(authorWithImage.image.alt);
-    expect(image).toHaveAttribute('src', authorWithImage.image.src);
-    expect(image).toHaveStyle({ height: '40px', width: '40px' });
+    expect(image.parentElement?.parentElement).toHaveStyle({
+        height: '40px',
+        width: '40px',
+    });
 
     const name = screen.getByText(authorWithImage.name);
     expect(name.parentElement).toHaveStyle({ 'font-size': '14px' });
@@ -68,7 +70,10 @@ test('renders large version', () => {
     );
 
     const image = screen.getByAltText(authorWithImage.image.alt);
-    expect(image).toHaveStyle({ height: '40px', width: '40px' });
+    expect(image.parentElement?.parentElement).toHaveStyle({
+        height: '40px',
+        width: '40px',
+    });
 
     const name = screen.getByText(authorWithImage.name);
     expect(name.parentElement).toHaveStyle({ 'font-size': '18px' });
