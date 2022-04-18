@@ -26,5 +26,10 @@ export const avatarPlaceholder = (size: 'small' | 'large') => ({
 export const typographyContainer = {
     display: 'flex',
     flexDirection: 'column' as 'column',
-    // maxWidth: '256px',
 };
+
+export const stackedImageStyles = (size: 'small' | 'large') => ({
+    right: size === 'small' ? '15px' : ['15px', null, null, '24px'],
+    marginRight: size === 'small' ? '-15px' : ['-15px', null, null, '-24px'],
+    border: '2px solid white',
+});
