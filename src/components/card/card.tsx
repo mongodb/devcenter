@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { TypographyScale, Pill, Tag, HorizontalRule } from '@mdb/flora';
 
+import AuthorLockup from '../author-lockup';
+
 import {
     cardWrapperStyles,
     pillStyles,
@@ -15,6 +17,7 @@ import {
     hasThumbnail,
     hasTags,
     hasDescription,
+    hasAuthorLockup,
 } from './utils';
 import TagSection from '../tag-section';
 import { CardProps } from './types';
@@ -86,7 +89,29 @@ const Card: React.FunctionComponent<CardProps> = ({
                 </div>
                 <div>
                     <HorizontalRule spacing="none" strokeWeight="medium" />
-                    <div sx={{ marginTop: ['inc30', null, null, 'inc40'] }}>
+
+                    <div
+                        sx={{
+                            marginTop: ['inc30', null, null, 'inc40'],
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {authors && hasAuthorLockup(variant, pillCategory) && (
+                            <AuthorLockup
+                                authors={[
+                                    { name: 'Some Person', url: '#' },
+                                    {
+                                        name: 'Other Person',
+                                        image: {
+                                            src: 'https://i.pravatar.cc/200',
+                                        },
+                                        url: '#',
+                                    },
+                                ]}
+                            />
+                        )}
                         <TypographyScale variant="body3">
                             {contentDate}
                         </TypographyScale>
