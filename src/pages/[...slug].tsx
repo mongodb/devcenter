@@ -155,8 +155,8 @@ const ContentPage: NextPage<ContentPiece> = ({
                             <AuthorLockup
                                 authors={authorsToDisplay}
                                 title={contentDate}
-                                expandedNames={true}
-                                clickableLinks={true}
+                                expandedNames
+                                clickableLinks
                                 size="large"
                             />
                             {SocialButtons}

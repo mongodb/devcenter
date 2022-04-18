@@ -26,7 +26,9 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
                 <NameTag
                     key={name}
                     sx={nameStyles}
-                    href={clickableLinks ? url : undefined}
+                    {...(clickableLinks
+                        ? { href: url, target: '_blank', rel: 'noreferrer' }
+                        : {})}
                 >
                     {`${name}${
                         authors.length > 1 && index < authors.length - 1
@@ -40,7 +42,13 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
         <>
             <NameTag
                 sx={nameStyles}
-                href={clickableLinks ? authors[0].url : undefined}
+                {...(clickableLinks
+                    ? {
+                          href: authors[0].url,
+                          target: '_blank',
+                          rel: 'noreferrer',
+                      }
+                    : {})}
             >
                 {authors[0].name}
             </NameTag>
