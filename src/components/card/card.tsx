@@ -100,6 +100,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                     >
                         {authors && hasAuthorLockup(variant, pillCategory) && (
                             <AuthorLockup
+                                sx={{ display: ['none', null, 'flex'] }}
                                 authors={[
                                     { name: 'Some Person', url: '#' },
                                     {
