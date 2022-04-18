@@ -106,7 +106,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                                     {
                                         name: 'Other Person',
                                         image: {
-                                            src: 'https://i.pravatar.cc/200',
+                                            src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
                                         },
                                         url: '#',
                                     },

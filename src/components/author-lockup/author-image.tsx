@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { TypographyScale } from '@mdb/flora';
 
 import { avatarPlaceholder, profileImage } from './styles';
@@ -12,7 +13,7 @@ const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
     const { image, name } = author;
     if (!image || !image.src) {
         return (
-            <div sx={avatarPlaceholder(size)} className={className}>
+            <div className={className} sx={avatarPlaceholder(size)}>
                 <TypographyScale
                     inverse
                     customStyles={{
@@ -31,12 +32,14 @@ const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
     }
     const { src, alt } = image;
     return (
-        <img
-            sx={profileImage(size)}
-            className={className}
-            src={src}
-            alt={alt || ''}
-        />
+        <div sx={profileImage(size)} className={className}>
+            <Image
+                sx={profileImage(size)}
+                layout="fill"
+                src={src}
+                alt={alt || ''}
+            />
+        </div>
     );
 };
 

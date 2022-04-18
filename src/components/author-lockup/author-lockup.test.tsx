@@ -7,7 +7,10 @@ import { initial } from 'cypress/types/lodash';
 const authorWithImage = {
     name: 'Image Author',
     url: 'https://www.google.com/',
-    image: { src: 'https://i.pravatar.cc/200', alt: 'Image Author' },
+    image: {
+        src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+        alt: 'Image Author',
+    },
 };
 
 const authorWithoutImage = {
