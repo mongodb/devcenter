@@ -52,12 +52,12 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
                         Up Next
                     </TypographyScale>
                     <div sx={{ marginBottom: ['inc30', null, null, 'inc40'] }}>
-                        <Link href={content[currentPieceIndex + 1].slug}>
+                        <Link href={`/${content[currentPieceIndex + 1].slug}`}>
                             {content[currentPieceIndex + 1].title}
                         </Link>
                     </div>
                     <Button
-                        href={content[currentPieceIndex + 1].slug}
+                        href={`/${content[currentPieceIndex + 1].slug}`}
                         variant="secondary"
                         size="small"
                         customStyles={{ width: 'unset' }}
