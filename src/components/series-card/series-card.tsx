@@ -6,11 +6,11 @@ import {
     Link,
     Button,
     HorizontalRule,
-    List,
 } from '@mdb/flora';
 
 import { SeriesCardProps } from './types';
 import { seriesCardStyles } from './styles';
+import SeriesList from './series-list';
 
 const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
     series,
@@ -28,7 +28,7 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
 
     const listItems = content
         .filter(({ slug }) => slug !== currentSlug)
-        .map(({ title }) => ({ title }));
+        .map(({ title, slug }) => ({ text: title, url: slug }));
 
     return (
         <div sx={seriesCardStyles} className={className}>
@@ -70,7 +70,7 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
             <TypographyScale variant="heading6" sx={{ marginBottom: 'inc40' }}>
                 More in this series
             </TypographyScale>
-            <List items={listItems} glyph="circle" />
+            <SeriesList items={listItems} />
         </div>
     );
 };
