@@ -23,17 +23,25 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
     const authorNames = expandedNames ? (
         <>
             {authors.map(({ name, url }, index) => (
-                <>
-                    <NameTag sx={nameStyles} href={url}>
-                        {name}
-                    </NameTag>
-                    {authors.length > 1 && index < authors.length - 1 && ', '}
-                </>
+                <NameTag
+                    key={name}
+                    sx={nameStyles}
+                    href={clickableLinks ? url : undefined}
+                >
+                    {`${name}${
+                        authors.length > 1 && index < authors.length - 1
+                            ? ', '
+                            : ''
+                    }`}
+                </NameTag>
             ))}
         </>
     ) : (
         <>
-            <NameTag sx={nameStyles} href={authors[0].url}>
+            <NameTag
+                sx={nameStyles}
+                href={clickableLinks ? authors[0].url : undefined}
+            >
                 {authors[0].name}
             </NameTag>
             {authors.length > 1 && ` (+${authors.length - 1})`}
