@@ -76,8 +76,8 @@ test("renders series with with piece that isn't last in series", () => {
     expect(screen.getByText(series.title)).toBeInTheDocument();
     expect(screen.getByText('Up Next')).toBeInTheDocument();
     expect(
-        screen.getByRole('link', { name: 'This is 103 article' })
-    ).toBeInTheDocument();
+        screen.getAllByRole('link', { name: 'This is 103 article' })
+    ).toHaveLength(2);
     expect(screen.getByRole('link', { name: 'Continue' })).toBeInTheDocument();
     series.content.forEach(piece => {
         if (piece.slug !== notLastSlug) {
@@ -97,7 +97,7 @@ test('renders series with with piece that is last in series', () => {
     expect(screen.getByText(series.title)).toBeInTheDocument();
     expect(screen.queryByText('Up Next')).toBeNull();
     expect(
-        screen.queryByRole('link', { name: 'This is 103 article' })
-    ).toBeNull();
+        screen.getAllByRole('link', { name: 'This is 103 article' })
+    ).toHaveLength(1);
     expect(screen.queryByRole('link', { name: 'Continue' })).toBeNull();
 });
