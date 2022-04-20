@@ -1,10 +1,8 @@
-import React from 'react';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
+import ContentTypePage from '../page-templates/content-type';
 
-const Articles: NextPage = () => (
-    <>
-        <h1>Articles</h1>
-    </>
-);
+const ArticlesPage: NextPage = () => {
+    return <ContentTypePage contentType="Article" />;
+};
 
-export default Articles;
+export default ArticlesPage;

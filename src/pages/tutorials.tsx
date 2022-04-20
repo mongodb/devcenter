@@ -1,9 +1,8 @@
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
+import ContentTypePage from '../page-templates/content-type';
 
-const Tutorials: NextPage = () => (
-    <>
-        <h1>Tutorials</h1>
-    </>
-);
+const TutorialsPage: NextPage = () => {
+    return <ContentTypePage contentType="Tutorial" />;
+};
 
-export default Tutorials;
+export default TutorialsPage;
