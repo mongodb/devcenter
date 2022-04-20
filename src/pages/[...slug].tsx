@@ -58,7 +58,7 @@ const imageStyles = {
     position: 'relative' as 'relative',
 };
 
-const headerGridStyles = {
+const headerGridStyles = (vidOrPod: boolean) => ({
     display: 'grid',
     gridTemplateAreas: [
         `
@@ -67,7 +67,12 @@ const headerGridStyles = {
         "social"
     `,
         null,
+        vidOrPod
+            ? `
+        "authordate authordate"
+        "tags social"
         `
+            : `
         "authordate social"
         "tags tags"
     `,
@@ -75,7 +80,7 @@ const headerGridStyles = {
     alignItems: 'center',
     rowGap: ['inc30', null, null, 'inc40'],
     marginBottom: ['inc30', null, null, 'inc40'],
-};
+});
 
 const footerRatingStyles = {
     display: 'flex',
@@ -171,7 +176,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                 >
                     {title}
                 </TypographyScale>
-                <div sx={headerGridStyles}>
+                <div sx={headerGridStyles(vidOrPod)}>
                     <div
                         sx={{
                             gridArea: 'authordate',
@@ -193,7 +198,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                                 color="secondary"
                                 customStyles={{
                                     display: 'block',
-                                    marginBottom: 'inc30',
+                                    marginBottom: vidOrPod ? 0 : 'inc30',
                                 }}
                             >
                                 {contentDate}
