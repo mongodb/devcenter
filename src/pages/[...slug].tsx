@@ -11,7 +11,6 @@ import {
     TypographyScale,
     HorizontalRule,
     Eyebrow,
-    SpeakerLockup,
     Button,
 } from '@mdb/flora';
 
@@ -41,6 +40,7 @@ import { parseMarkdownToAST } from '../utils/markdown-parser/parse-markdown-to-a
 import CTALink from '../components/hero/CTALink';
 import { getTableOfContents } from '../utils/markdown-parser/get-table-of-contents';
 import { TableOfContents } from '../components/article-body/table-of-contents';
+import AuthorLockup from '../components/author-lockup';
 
 const SocialButtons = <div>SOCIAL BUTTONS</div>;
 
@@ -126,6 +126,16 @@ const ContentPage: NextPage<ContentPiece> = ({
             />
         </div>
     );
+    const authorsToDisplay = [
+        { name: 'Some Person', url: '#' },
+        {
+            name: 'Other Person',
+            image: {
+                src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+            },
+            url: '#',
+        },
+    ];
 
     const contentHeader = (
         <>
@@ -144,9 +154,12 @@ const ContentPage: NextPage<ContentPiece> = ({
                 <div sx={{ marginBottom: ['inc30', null, null, 'inc40'] }}>
                     {!vidOrPod ? (
                         <div sx={socialFlexContainerStyles}>
-                            <SpeakerLockup
-                                name={authors?.join(',')}
-                                title={`${contentDate}`}
+                            <AuthorLockup
+                                authors={authorsToDisplay}
+                                title={contentDate}
+                                expandedNames
+                                clickableLinks
+                                size="large"
                             />
                             {SocialButtons}
                         </div>
