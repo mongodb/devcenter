@@ -40,9 +40,8 @@ import { parseMarkdownToAST } from '../utils/markdown-parser/parse-markdown-to-a
 import CTALink from '../components/hero/CTALink';
 import { getTableOfContents } from '../utils/markdown-parser/get-table-of-contents';
 import { TableOfContents } from '../components/article-body/table-of-contents';
+import SocialButtons from '../components/social-buttons';
 import AuthorLockup from '../components/author-lockup';
-
-const SocialButtons = <div>SOCIAL BUTTONS</div>;
 
 const sideNavStyles = {
     display: ['none', null, null, null, 'block'],
@@ -59,11 +58,37 @@ const imageStyles = {
     position: 'relative' as 'relative',
 };
 
-const socialFlexContainerStyles = {
+const headerGridStyles = (vidOrPod: boolean) => ({
+    display: 'grid',
+    gridTemplateAreas: [
+        `
+        "authordate"
+        "tags"
+        "social"
+    `,
+        null,
+        vidOrPod
+            ? `
+        "authordate authordate"
+        "tags social"
+        `
+            : `
+        "authordate social"
+        "tags tags"
+    `,
+    ],
+    alignItems: 'center',
+    rowGap: ['inc30', null, null, 'inc40'],
+    marginBottom: ['inc30', null, null, 'inc40'],
+});
+
+const footerRatingStyles = {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'end',
-    marginBottom: ['inc30', null, null, 'inc40'],
+    alignItems: ['start', null, 'center'],
+    flexDirection: ['column' as 'column', null, 'row' as 'row'],
+    gap: 'inc30',
+    marginTop: ['inc30', null, null, 'inc40'],
 };
 
 const middleSectionStyles = {
@@ -151,37 +176,47 @@ const ContentPage: NextPage<ContentPiece> = ({
                 >
                     {title}
                 </TypographyScale>
-                <div sx={{ marginBottom: ['inc30', null, null, 'inc40'] }}>
-                    {!vidOrPod ? (
-                        <div sx={socialFlexContainerStyles}>
-                            <AuthorLockup
-                                authors={authorsToDisplay}
-                                title={contentDate}
-                                expandedNames
-                                clickableLinks
-                                size="large"
-                            />
-                            {SocialButtons}
-                        </div>
-                    ) : (
-                        <TypographyScale
-                            variant="body3"
-                            color="secondary"
-                            customStyles={{
-                                display: 'block',
-                                marginBottom: 'inc30',
-                            }}
-                        >
-                            {contentDate}
-                        </TypographyScale>
-                    )}
-                </div>
-                {tags && (
-                    <div sx={socialFlexContainerStyles}>
-                        <TagSection tags={tags} />
-                        {vidOrPod && SocialButtons}
+                <div sx={headerGridStyles(vidOrPod)}>
+                    <div
+                        sx={{
+                            gridArea: 'authordate',
+                        }}
+                    >
+                        {!vidOrPod ? (
+                            <div>
+                                <AuthorLockup
+                                    authors={authorsToDisplay}
+                                    title={contentDate}
+                                    expandedNames
+                                    clickableLinks
+                                    size="large"
+                                />
+                            </div>
+                        ) : (
+                            <TypographyScale
+                                variant="body3"
+                                color="secondary"
+                                customStyles={{
+                                    display: 'block',
+                                    marginBottom: vidOrPod ? 0 : 'inc30',
+                                }}
+                            >
+                                {contentDate}
+                            </TypographyScale>
+                        )}
                     </div>
-                )}
+                    <div sx={{ gridArea: 'tags' }}>
+                        {tags && <TagSection tags={tags} />}
+                    </div>
+                    <SocialButtons
+                        description={description}
+                        heading={title}
+                        sx={{
+                            gridArea: 'social',
+                            justifySelf: ['start', null, 'end'],
+                        }}
+                    />
+                </div>
             </div>
 
             <div sx={middleSectionStyles}>
@@ -243,14 +278,8 @@ const ContentPage: NextPage<ContentPiece> = ({
         >
             <div>
                 <HorizontalRule />
-                <div
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}
-                >
-                    {SocialButtons}
+                <div sx={footerRatingStyles}>
+                    <SocialButtons description={description} heading={title} />
                     {!vidOrPod && ratingSection}
                 </div>
             </div>
