@@ -6,7 +6,6 @@ import {
     Link,
 } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
-import { filter } from 'cypress/types/lodash';
 import { useState } from 'react';
 
 interface FilterItem {
@@ -92,12 +91,14 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                                 );
                             })}
                     </div>
-                    <Link
-                        onClick={() => setShowAll(!showAll)}
-                        sx={{ marginTop: 'inc30' }}
-                    >
-                        Show {showAll ? 'less' : 'more'}
-                    </Link>
+                    {items.length > 5 && (
+                        <Link
+                            onClick={() => setShowAll(!showAll)}
+                            sx={{ marginTop: 'inc30' }}
+                        >
+                            Show {showAll ? 'less' : 'more'}
+                        </Link>
+                    )}
                 </div>
             )}
         </div>
