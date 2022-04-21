@@ -3,4 +3,6 @@ export type PillCategory =
     | 'Demo App'
     | 'Tutorial'
     | 'Podcast'
-    | 'Video';
+    | 'Video'
+    | 'Quickstart'
+    | 'Code Example';

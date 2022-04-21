@@ -11,12 +11,13 @@ import { STRAPI_CLIENT } from '../config/api-client';
 import { getAllArticleSeries } from './get-all-article-series';
 import { getAllVideoSeries } from './get-all-video-series';
 import { getAllPodcastSeries } from './get-all-podcast-series';
+import { flattenTags } from '../utils/flatten-tags';
+import { MOCK_TAGS } from '../mockdata/mock-tags';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
     const allVideos = await getAllVideosFromAPI(STRAPI_CLIENT);
     const allArticles = await getAllArticlesFromAPI(STRAPI_CLIENT);
-
     /*
     series
      */
@@ -32,6 +33,7 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
         allArticles,
         articleSeries
     );
+
     return mappedPodcasts.concat(mappedVideos).concat(mappedArticles).flat();
 };
 
@@ -44,10 +46,9 @@ export const mapPodcastsToContentItems = (
         const item: ContentItem = {
             category: 'Podcast',
             contentDate: p.publishDate,
-            //TODO Implement logic to construct slug - preferably in Graphql Query
             slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
             //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: ['tag1', 'tag2', 'tag3'],
+            tags: MOCK_TAGS,
             title: p.title,
         };
         if (p.description) {
@@ -72,10 +73,9 @@ export const mapVideosToContentItems = (
         const item: ContentItem = {
             category: 'Video',
             contentDate: v.publishDate,
-            //TODO Implement logic to construct slug - preferably in Graphql Query
             slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
             //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: ['tag1', 'tag2', 'tag3'],
+            tags: MOCK_TAGS,
             title: v.title,
         };
         if (v.description) {
@@ -96,23 +96,34 @@ export const mapArticlesToContentItems = (
     articleSeries: Series[]
 ) => {
     const items: ContentItem[] = [];
-    allArticles.forEach((a: Article) => {
+    /*
+    very important - filter out articles that have no calculated slug
+     */
+    const filteredArticles = allArticles;
+
+    filteredArticles.forEach((a: Article) => {
         const item: ContentItem = {
             authors: a.authors.map(author => author.name),
-            //TODO Implement logic to map content type from other tags to category
-            category: 'Article',
+            /*
+            very important - some times we see content type as video and podcast in article type of data - set their category to 'Article'
+             */
+            category:
+                a.otherTags[0].contentType.contentType === 'Video' ||
+                a.otherTags[0].contentType.contentType === 'Podcast'
+                    ? 'Article'
+                    : a.otherTags[0].contentType.contentType,
             contentDate: a.originalPublishDate || a.publishDate,
             updateDate: a.updateDate,
             description: a.description,
             content: a.content,
-            //TODO Implement logic to construct slug - preferably in Graphql Query
-            slug: 'article' + a.slug,
-            //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: ['tag1', 'tag2', 'tag3'],
+            slug: a.calculatedSlug.startsWith('/')
+                ? a.calculatedSlug.substring(1)
+                : a.calculatedSlug,
+            tags: flattenTags(a.otherTags),
             title: a.title,
         };
         if (a.image) {
-            item.image = { url: a.image.url, alt: 'randomAlt' };
+            item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };
         }
         addSeriesToItem(item, 'article', articleSeries);
         items.push(item);

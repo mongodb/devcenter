@@ -1,9 +1,9 @@
 import { Author } from './author';
-import { PrimaryTags } from './primary-tags';
 import { OtherTags } from './other-tags';
 
 type Image = {
     url: string;
+    alt?: string;
 };
 
 export interface Article {
@@ -12,11 +12,11 @@ export interface Article {
     content: string;
     description: string;
     slug: string;
+    calculatedSlug: string;
     image?: Image;
     title: string;
     publishDate: string;
     originalPublishDate: string;
     updateDate: string;
-    otherTags: OtherTags;
-    primaryTags: PrimaryTags;
+    otherTags: OtherTags[];
 }

@@ -29,11 +29,7 @@ export const getAllArticlesFromAPI = async (
 ): Promise<Article[]> => {
     const query = gql`
         query Articles {
-            articles
-                @rest(
-                    type: "Article"
-                    path: "/new-articles?_publicationState=preview&_limit=-1"
-                ) {
+            articles @rest(type: "Article", path: "/new-articles") {
                 authors {
                     name
                     bio
@@ -51,6 +47,41 @@ export const getAllArticlesFromAPI = async (
                 publishDate: published_at
                 originalPublishDate
                 updateDate: updatedAt
+                otherTags: other_tags {
+                    l1Product: l_1_product {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                    l2Product: l_2_product {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                    programmingLanguage: programming_language {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                    technology: technology {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                    contentType: content_type {
+                        contentType: content_type
+                        calculatedSlug: calculated_slug
+                    }
+                    spokenLanguage: spoken_language {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                    expertiseLevel: expertise_level {
+                        name: level
+                        calculatedSlug: calculated_slug
+                    }
+                    authorType: author_type {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                }
+                calculatedSlug: calculated_slug
             }
         }
     `;

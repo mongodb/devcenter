@@ -12,6 +12,8 @@ const pillColorMap: IPillColorMap = {
     'Demo App': theme.colors.yellow20,
     Tutorial: theme.colors.green20,
     Podcast: theme.colors.red20,
+    'Code Example': theme.colors.yellow20,
+    Quickstart: theme.colors.yellow20,
 };
 
 export const pillStyles = (pillCategory: PillCategory) => ({

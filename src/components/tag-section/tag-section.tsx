@@ -10,8 +10,8 @@ const TagSection: React.FunctionComponent<TagSectionProps> = ({
 }) => (
     <div sx={tagWrapperStyles(disappearOnMobile)} className={className}>
         {tags.map(tag => (
-            <Tag key={tag} variant="small" sx={tagStyles}>
-                {tag}
+            <Tag key={tag.name} href={tag.slug} variant="small" sx={tagStyles}>
+                {tag.name}
             </Tag>
         ))}
     </div>

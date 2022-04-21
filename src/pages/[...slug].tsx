@@ -33,8 +33,9 @@ import { formatDateToDisplayDateFormat } from '../utils/format-date';
 import { ContentItem } from '../interfaces/content-item';
 import { thumbnailLoader } from '../components/card/utils';
 import { getAllContentItems } from '../service/get-all-content';
-import getSeries from '../api-requests/get-series';
 import SeriesCard from '../components/series-card';
+import { getAllArticlesFromAPI } from '../api-requests/get-articles';
+import { STRAPI_CLIENT } from '../config/api-client';
 
 const SocialButtons = <div>SOCIAL BUTTONS</div>;
 
@@ -371,8 +372,24 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
     const contents: ContentItem[] = await getAllContentItems();
+
+    //const sideNav = constructSideNav(primaryTag)
     const contentItem = contents.filter(
         content => content.slug === slug.join('/')
     )[0];
+    if (
+        !(
+            contentItem.category === 'Video' ||
+            contentItem.category === 'Podcast'
+        )
+    ) {
+        //console.log("tags",contentItem.tags);
+
+        console.log('*****');
+        console.log('slug', contentItem.slug);
+        console.log('tags', JSON.stringify(contentItem.tags));
+        console.log('*****');
+    }
+
     return { props: contentItem };
 };

@@ -1,4 +1,5 @@
 import { ContentPiece } from '../interfaces/content-piece';
+import { MOCK_TAGS } from '../mockdata/mock-tags';
 
 const getRelatedContent = (slug: string): ContentPiece[] => [
     {
@@ -10,7 +11,7 @@ const getRelatedContent = (slug: string): ContentPiece[] => [
         title: 'MongoDB Podcast: Episode 23',
         description: 'Some podcast details',
         contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        tags: MOCK_TAGS,
         featured: false,
         slug: 'product/atlas/p1',
     },
@@ -23,7 +24,7 @@ const getRelatedContent = (slug: string): ContentPiece[] => [
         title: 'MongoDB Podcast: Episode 96',
         description: 'Some podcast details',
         contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        tags: MOCK_TAGS,
         featured: false,
         slug: 'product/atlas/p2',
     },
@@ -36,7 +37,7 @@ const getRelatedContent = (slug: string): ContentPiece[] => [
         title: 'MongoDB Podcast: Episode 2',
         description: 'Some podcast details',
         contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        tags: MOCK_TAGS,
         featured: false,
         slug: 'product/atlas/p3',
     },

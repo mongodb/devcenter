@@ -8,7 +8,7 @@ import { TopicCardsContainer } from '../../components/topic-card';
 import { ITopicCard } from '../../components/topic-card/types';
 import { CTA } from '../../components/hero/types';
 
-import getL1Content from '../../api-requests/get-l1-content';
+import getL1Content from '../../mockdata/get-l1-content';
 import getTertiaryNavItems from '../../api-requests/get-tertiary-nav-items';
 
 import { ContentPiece } from '../../interfaces/content-piece';
