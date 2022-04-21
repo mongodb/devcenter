@@ -26,7 +26,6 @@ export const hasAuthorLockup = (variant: CardVariant, category: PillCategory) =>
 export const getCardProps = (
     {
         authors,
-        category,
         contentDate,
         description,
         tags,
@@ -41,7 +40,7 @@ export const getCardProps = (
         contentDate,
         description,
         title,
-        pillCategory: category,
+        pillCategory: tags.contentType,
         tags,
         thumbnail: image,
         variant,

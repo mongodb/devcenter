@@ -1,4 +1,5 @@
 import { PillCategory } from '../../types/pill-category';
+import { Tags } from '../../interfaces/content-piece';
 
 export interface Thumbnail {
     url: string;
@@ -14,7 +15,7 @@ export interface CardProps {
     description?: string;
     title: string;
     pillCategory: PillCategory;
-    tags?: string[];
+    tags?: Tags;
     thumbnail?: Thumbnail;
     variant: CardVariant;
     slug: string;

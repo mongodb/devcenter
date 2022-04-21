@@ -97,7 +97,6 @@ const middleSectionStyles = {
 
 const ContentPage: NextPage<ContentPiece> = ({
     authors,
-    category,
     image,
     title,
     description,
@@ -105,6 +104,7 @@ const ContentPage: NextPage<ContentPiece> = ({
     tags,
     slug,
 }) => {
+    const { contentType } = tags;
     const [ratingStars, setRatingStars] = useState(0);
 
     const [feedbackModalStage, setFeedbackModalStage] =
@@ -118,10 +118,10 @@ const ContentPage: NextPage<ContentPiece> = ({
     const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
 
     const requestButtonText = `Request ${
-        /^[aeiou]/gi.test(category) ? 'an' : 'a'
-    } ${category}`; // Regex to tell if it starts with a vowel.
+        /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
+    } ${contentType}`; // Regex to tell if it starts with a vowel.
 
-    const vidOrPod = category === 'Video' || category === 'Podcast';
+    const vidOrPod = contentType === 'Video' || contentType === 'Podcast';
 
     const contentAst: any = vidOrPod ? {} : parseMarkdownToAST(description);
 
@@ -141,7 +141,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                 alignItems: 'center',
             }}
         >
-            <span>Rate this {category.toLowerCase()}</span>
+            <span>Rate this {contentType.toLowerCase()}</span>
             <ContentRating
                 stars={ratingStars}
                 onRate={i => {
@@ -166,7 +166,7 @@ const ContentPage: NextPage<ContentPiece> = ({
         <>
             <div sx={middleSectionStyles}>
                 <Eyebrow sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}>
-                    {category}
+                    {contentType}
                 </Eyebrow>
                 <TypographyScale
                     variant="heading2"
@@ -354,13 +354,13 @@ const ContentPage: NextPage<ContentPiece> = ({
                 setModalStage={setFeedbackModalStage}
                 modalStage={feedbackModalStage}
                 stars={ratingStars}
-                contentCategory={category}
+                contentCategory={contentType}
                 slug={slug}
             />
             <RequestContentModal
                 setModalStage={setRequestContentModalStage}
                 modalStage={requestContentModalStage}
-                contentCategory={category}
+                contentCategory={contentType}
             />
         </>
     );

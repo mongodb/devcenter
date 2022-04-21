@@ -24,3 +24,10 @@ export const fetcher: Fetcher<ContentPiece[], string> = queryString =>
         const { content } = getL1Content(topic as string);
         return setTimeout(resolve.bind(null, content.slice(0, 10)), 100);
     }); // Simulate request loading time and error if we load more than 3 pages.
+
+export const fetcherv2: Fetcher<ContentPiece[], string> = searchString => {
+    return new Promise(resolve => {
+        const { content } = getL1Content();
+        return setTimeout(resolve.bind(null, content), 100);
+    });
+}; // Simulate request loading time
