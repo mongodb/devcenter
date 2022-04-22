@@ -443,20 +443,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         content => content.slug === slug.join('/')
     )[0];
 
-    console.log(contentItem.slug);
-    // if (
-    //     !(
-    //         contentItem.category === 'Video' ||
-    //         contentItem.category === 'Podcast'
-    //     )
-    // ) {
-    //     //console.log("tags",contentItem.tags);
-    //
-    //     console.log('*****');
-    //     console.log('slug', contentItem.slug);
-    //     console.log('tags', JSON.stringify(contentItem.tags));
-    //     console.log('*****');
-    // }
-
     return { props: contentItem };
 };
