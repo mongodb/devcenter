@@ -37,8 +37,7 @@ import SeriesCard from '../components/series-card';
 import SocialButtons from '../components/social-buttons';
 import AuthorLockup from '../components/author-lockup';
 import parse from 'html-react-parser';
-import getTertiaryNavItems from "../api-requests/get-tertiary-nav-items";
-
+import getTertiaryNavItems from '../api-requests/get-tertiary-nav-items';
 
 const sideNavStyles = {
     display: ['none', null, null, null, 'block'],
@@ -110,14 +109,15 @@ const constructDateDisplay = (
     }
 };
 
-const parseUndefinedValue = (description: string | undefined) : string => {
-    return description? description: "";
-}
-
+const parseUndefinedValue = (description: string | undefined): string => {
+    return description ? description : '';
+};
 
 const getPlaceHolderImage = (url: string | undefined) => {
-    return url ? url : "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png"
-}
+    return url
+        ? url
+        : 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png';
+};
 
 const ContentPage: NextPage<ContentItem> = ({
     authors,
@@ -311,7 +311,10 @@ const ContentPage: NextPage<ContentItem> = ({
             <div>
                 <HorizontalRule />
                 <div sx={footerRatingStyles}>
-                    <SocialButtons description={parseUndefinedValue(description)} heading={title} />
+                    <SocialButtons
+                        description={parseUndefinedValue(description)}
+                        heading={title}
+                    />
                     {!vidOrPod && ratingSection}
                 </div>
             </div>
@@ -363,7 +366,6 @@ const ContentPage: NextPage<ContentItem> = ({
                         rowGap: 0,
                     }}
                 >
-
                     <div sx={sideNavStyles}>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>

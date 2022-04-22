@@ -13,7 +13,6 @@ import { seriesCardStyles } from './styles';
 import { SeriesEntry } from '../../interfaces/series-entry';
 import SeriesList from './series-list';
 
-
 const findNextInSeries = (
     seriesEntries: SeriesEntry[],
     currentTitle: string
@@ -26,19 +25,18 @@ const findNextInSeries = (
     return nextItem;
 };
 
-
-
 const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
     series,
     currentSlug,
     currentTitle,
     className,
 }) => {
-
     const nextInSeries = findNextInSeries(series.seriesEntry, currentTitle);
 
-    const listItems = series.seriesEntry
-        .map(({ title, slug }) => ({ text: title, url: slug }));
+    const listItems = series.seriesEntry.map(({ title, slug }) => ({
+        text: title,
+        url: slug,
+    }));
 
     return (
         <div sx={seriesCardStyles} className={className}>
@@ -83,7 +81,6 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
             </TypographyScale>
 
             <SeriesList items={listItems} />
-
         </div>
     );
 };
