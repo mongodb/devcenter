@@ -8,7 +8,7 @@ import Card, { getCardProps } from '../card';
 
 import loadingAnimation from '../../../public/loading-animation.gif';
 
-// This isn't working as desired. The child components are still rendering depspite this being memoized.
+// TODO: This isn't being memoized correctly.
 const Results: React.FunctionComponent<ResultsProps> = React.memo(
     ({ data, isLoading, hasError }) => {
         return (

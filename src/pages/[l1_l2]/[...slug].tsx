@@ -21,6 +21,7 @@ import { taxonomyData } from '../../data/taxonomy-data';
 import { Taxonomy } from '../../interfaces/taxonomy';
 import { taxonomyToCategoryMapping } from '../../data/taxonomy-collection-types';
 import getTaxonomyData from '../../requests/get-taxonomy-data';
+import { createTopicPageCTAS } from '../../components/hero/utils';
 
 interface TopicProps {
     name: string;
@@ -75,7 +76,9 @@ const Topic: NextPage<TopicProps> = ({
         variant === 'heavy'
             ? contentTypes
                   .map(contentType =>
-                      content.filter(piece => piece.category === contentType)
+                      content.filter(
+                          piece => piece.tags.contentType === contentType
+                      )
                   )
                   .filter(contentRow => contentRow.length > 2)
             : [];
@@ -92,13 +95,15 @@ const Topic: NextPage<TopicProps> = ({
         searchRow +
         relatedTopicsRow;
 
+    const CTAComponents = createTopicPageCTAS(ctas);
+
     return (
         <>
             <Hero
                 crumbs={crumbs}
                 name={name}
                 description={description}
-                ctas={ctas}
+                ctas={CTAComponents}
             />
             <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div
@@ -129,7 +134,8 @@ const Topic: NextPage<TopicProps> = ({
                             )}
                             {variant === 'heavy' &&
                                 contentRows.map(contentRow => {
-                                    const contentType = contentRow[0].category;
+                                    const contentType =
+                                        contentRow[0].tags.contentType;
                                     const direction =
                                         contentType === 'Podcast'
                                             ? 'column'
@@ -138,7 +144,7 @@ const Topic: NextPage<TopicProps> = ({
                                         <CardSection
                                             key={contentType}
                                             content={contentRow}
-                                            title={`${contentRow[0].category}s`}
+                                            title={`${contentRow[0].tags.contentType}s`}
                                             direction={direction}
                                         />
                                     );
