@@ -38,6 +38,7 @@ import SocialButtons from '../components/social-buttons';
 import AuthorLockup from '../components/author-lockup';
 import parse from 'html-react-parser';
 import getTertiaryNavItems from '../api-requests/get-tertiary-nav-items';
+import { PillCategory } from '../types/pill-category';
 
 const sideNavStyles = {
     display: ['none', null, null, null, 'block'],
@@ -117,6 +118,20 @@ const getPlaceHolderImage = (url: string | undefined) => {
     return url
         ? url
         : 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png';
+};
+
+const getCtaTextForVideosOrPodcasts = (category: PillCategory) => {
+    return category === 'Video' ? 'All MongoDB Videos' : 'All MongoDB Podcasts';
+};
+
+const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
+    return category === 'Video'
+        ? '/video'
+        : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
+};
+
+const parseDescription = (description: string, category: PillCategory) => {
+    return category === 'Podcast' ? parse(description) : description;
 };
 
 const ContentPage: NextPage<ContentItem> = ({
@@ -280,10 +295,13 @@ const ContentPage: NextPage<ContentItem> = ({
                     variant="body1"
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc40'],
+                        whiteSpace: 'pre-wrap',
                     }}
                 >
-                    {description}
-                    {/*{parse(parseUndefinedValue(description))}*/}
+                    {parseDescription(
+                        parseUndefinedValue(description),
+                        category
+                    )}
                 </TypographyScale>
             )}
             {vidOrPod && (
@@ -291,8 +309,8 @@ const ContentPage: NextPage<ContentItem> = ({
                     customCSS={{
                         marginTop: 'inc40',
                     }}
-                    text="All MongoDB Videos"
-                    url="#"
+                    text={getCtaTextForVideosOrPodcasts(category)}
+                    url={getCtaLinkForVideosOrPodcasts(category)}
                 />
             )}
             {!vidOrPod && <DocumentBody content={contentAst} />}
