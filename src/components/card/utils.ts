@@ -19,6 +19,10 @@ export const hasDescription = (variant: CardVariant, category: PillCategory) =>
     ['large', 'list'].includes(variant) ||
     (category === 'Demo App' && ['small', 'medium'].includes(variant));
 
+export const hasAuthorLockup = (variant: CardVariant, category: PillCategory) =>
+    variant === 'large' &&
+    ['Article', 'Tutorial', 'Demo App'].includes(category);
+
 export const getCardProps = (
     {
         authors,

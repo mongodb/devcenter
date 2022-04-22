@@ -9,7 +9,6 @@ import {
     TypographyScale,
     HorizontalRule,
     Eyebrow,
-    SpeakerLockup,
     Button,
 } from '@mdb/flora';
 
@@ -29,15 +28,17 @@ import { parseMarkdownToAST } from '../utils/markdown-parser/parse-markdown-to-a
 import CTALink from '../components/hero/CTALink';
 import { getTableOfContents } from '../utils/markdown-parser/get-table-of-contents';
 import { TableOfContents } from '../components/article-body/table-of-contents';
+
 import { formatDateToDisplayDateFormat } from '../utils/format-date';
 import { ContentItem } from '../interfaces/content-item';
 import { thumbnailLoader } from '../components/card/utils';
 import { getAllContentItems } from '../service/get-all-content';
 import SeriesCard from '../components/series-card';
-import { getAllArticlesFromAPI } from '../api-requests/get-articles';
-import { STRAPI_CLIENT } from '../config/api-client';
+import SocialButtons from '../components/social-buttons';
+import AuthorLockup from '../components/author-lockup';
+import parse from 'html-react-parser';
+import getTertiaryNavItems from "../api-requests/get-tertiary-nav-items";
 
-const SocialButtons = <div>SOCIAL BUTTONS</div>;
 
 const sideNavStyles = {
     display: ['none', null, null, null, 'block'],
@@ -45,20 +46,50 @@ const sideNavStyles = {
     nav: {
         position: 'static' as 'static',
     },
+    gridRow: 'span 4',
 };
 
 const imageStyles = {
-    marginTop: 'inc40',
     marginBottom: ['inc20', null, null, 'inc30'],
     aspectRatio: '16/9',
     position: 'relative' as 'relative',
 };
 
-const socialFlexContainerStyles = {
+const headerGridStyles = (vidOrPod: boolean) => ({
+    display: 'grid',
+    gridTemplateAreas: [
+        `
+        "authordate"
+        "tags"
+        "social"
+    `,
+        null,
+        vidOrPod
+            ? `
+        "authordate authordate"
+        "tags social"
+        `
+            : `
+        "authordate social"
+        "tags tags"
+    `,
+    ],
+    alignItems: 'center',
+    rowGap: ['inc30', null, null, 'inc40'],
+    marginBottom: ['inc30', null, null, 'inc40'],
+});
+
+const footerRatingStyles = {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'end',
-    marginBottom: ['inc30', null, null, 'inc40'],
+    alignItems: ['start', null, 'center'],
+    flexDirection: ['column' as 'column', null, 'row' as 'row'],
+    gap: 'inc30',
+    marginTop: ['inc30', null, null, 'inc40'],
+};
+
+const middleSectionStyles = {
+    gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
 };
 
 const constructDateDisplay = (
@@ -78,6 +109,15 @@ const constructDateDisplay = (
         );
     }
 };
+
+const parseUndefinedValue = (description: string | undefined) : string => {
+    return description? description: "";
+}
+
+
+const getPlaceHolderImage = (url: string | undefined) => {
+    return url ? url : "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png"
+}
 
 const ContentPage: NextPage<ContentItem> = ({
     authors,
@@ -103,7 +143,7 @@ const ContentPage: NextPage<ContentItem> = ({
 
     // const relatedContent = getRelatedContent(slug);
     // const slugList = slug.split('/');
-    // const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
+    const tertiaryNavItems = getTertiaryNavItems('atlas');
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
@@ -141,50 +181,79 @@ const ContentPage: NextPage<ContentItem> = ({
             />
         </div>
     );
+    const authorsToDisplay = [
+        { name: 'Some Person', url: '#' },
+        {
+            name: 'Other Person',
+            image: {
+                src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+            },
+            url: '#',
+        },
+    ];
 
     const contentHeader = (
         <>
-            <Eyebrow sx={{ marginBottom: 'inc30' }}>{category}</Eyebrow>
-            <TypographyScale
-                variant="heading2"
-                sx={{
-                    marginBottom: ['inc20', null, null, 'inc30'],
-                }}
-            >
-                {title}
-            </TypographyScale>
-            {!vidOrPod ? (
-                <div sx={socialFlexContainerStyles}>
-                    <SpeakerLockup
-                        sx={{ whiteSpace: 'nowrap' }}
-                        name={authors?.join(',')}
-                        title={displayDate}
-                    />
-                    {SocialButtons}
-                </div>
-            ) : (
+            <div sx={middleSectionStyles}>
+                <Eyebrow sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}>
+                    {category}
+                </Eyebrow>
                 <TypographyScale
-                    variant="body3"
-                    color="secondary"
-                    customStyles={{
-                        display: 'block',
-                        marginBottom: 'inc30',
+                    variant="heading2"
+                    sx={{
+                        marginBottom: ['inc20', null, null, 'inc30'],
                     }}
                 >
-                    {displayDate}
+                    {title}
                 </TypographyScale>
-            )}
-            {tags && (
-                <div sx={socialFlexContainerStyles}>
-                    <TagSection tags={tags} />
-                    {vidOrPod && SocialButtons}
+                <div sx={headerGridStyles(vidOrPod)}>
+                    <div
+                        sx={{
+                            gridArea: 'authordate',
+                        }}
+                    >
+                        {!vidOrPod ? (
+                            <div>
+                                <AuthorLockup
+                                    authors={authorsToDisplay}
+                                    title={contentDate}
+                                    expandedNames
+                                    clickableLinks
+                                    size="large"
+                                />
+                            </div>
+                        ) : (
+                            <TypographyScale
+                                variant="body3"
+                                color="secondary"
+                                customStyles={{
+                                    display: 'block',
+                                    marginBottom: vidOrPod ? 0 : 'inc30',
+                                }}
+                            >
+                                {contentDate}
+                            </TypographyScale>
+                        )}
+                    </div>
+                    <div sx={{ gridArea: 'tags' }}>
+                        {tags && <TagSection tags={tags} />}
+                    </div>
+                    <SocialButtons
+                        description={parseUndefinedValue(description)}
+                        heading={title}
+                        sx={{
+                            gridArea: 'social',
+                            justifySelf: ['start', null, 'end'],
+                        }}
+                    />
                 </div>
-            )}
-            {image && (
+            </div>
+
+            <div sx={middleSectionStyles}>
                 <div sx={imageStyles}>
                     <Image
-                        alt={image.alt}
-                        src={image.url}
+                        alt={parseUndefinedValue(image?.alt)}
+                        src={getPlaceHolderImage(image?.url)}
                         loader={thumbnailLoader}
                         sx={{
                             borderRadius: 'inc30',
@@ -193,14 +262,19 @@ const ContentPage: NextPage<ContentItem> = ({
                         layout="fill"
                     />
                 </div>
-            )}
 
-            {!vidOrPod && ratingSection}
+                {!vidOrPod && ratingSection}
+            </div>
         </>
     );
 
     const contentBody = (
-        <>
+        <div
+            sx={{
+                ...middleSectionStyles,
+                my: ['section20', null, 'section30', 'section40'],
+            }}
+        >
             {vidOrPod && (
                 <TypographyScale
                     variant="body1"
@@ -209,20 +283,20 @@ const ContentPage: NextPage<ContentItem> = ({
                     }}
                 >
                     {description}
+                    {/*{parse(parseUndefinedValue(description))}*/}
                 </TypographyScale>
             )}
             {vidOrPod && (
                 <CTALink
                     customCSS={{
-                        marginTop: '24px',
-                        marginBottom: '48px',
+                        marginTop: 'inc40',
                     }}
                     text="All MongoDB Videos"
                     url="#"
                 />
             )}
             {!vidOrPod && <DocumentBody content={contentAst} />}
-        </>
+        </div>
     );
 
     const contentFooter = (
@@ -231,18 +305,13 @@ const ContentPage: NextPage<ContentItem> = ({
                 display: 'flex',
                 flexDirection: 'column',
                 gap: ['section30', null, 'section40', 'section50'],
+                ...middleSectionStyles,
             }}
         >
             <div>
                 <HorizontalRule />
-                <div
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}
-                >
-                    {SocialButtons}
+                <div sx={footerRatingStyles}>
+                    <SocialButtons description={parseUndefinedValue(description)} heading={title} />
                     {!vidOrPod && ratingSection}
                 </div>
             </div>
@@ -291,36 +360,30 @@ const ContentPage: NextPage<ContentItem> = ({
             >
                 <GridLayout
                     sx={{
-                        rowGap: ['inc90', null, null, 'inc130'],
+                        rowGap: 0,
                     }}
                 >
-                    {/*<div sx={sideNavStyles}>*/}
-                    {/*    <SideNav currentUrl="#" items={tertiaryNavItems} />*/}
-                    {/*</div>*/}
-                    <div
-                        sx={{
-                            gridColumn: [
-                                'span 6',
-                                null,
-                                'span 8',
-                                'span 12',
-                                '4 /span 6',
-                            ],
-                        }}
-                    >
-                        {contentHeader}
-                        {contentBody}
-                        {contentFooter}
+
+                    <div sx={sideNavStyles}>
+                        <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
+
+                    {contentHeader}
+                    {contentBody}
+                    {contentFooter}
                     {!vidOrPod && (
                         <div
                             sx={{
                                 display: ['none', null, null, null, 'block'],
                                 gridColumn: '10 /span 3',
+                                gridRow: '2 /4',
                             }}
                         >
                             {headingNodes.length > 0 && (
-                                <TableOfContents headingNodes={headingNodes} />
+                                <TableOfContents
+                                    headingNodes={headingNodes}
+                                    sx={{ position: 'sticky', top: 'inc150' }}
+                                />
                             )}
                         </div>
                     )}
@@ -377,19 +440,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const contentItem = contents.filter(
         content => content.slug === slug.join('/')
     )[0];
-    if (
-        !(
-            contentItem.category === 'Video' ||
-            contentItem.category === 'Podcast'
-        )
-    ) {
-        //console.log("tags",contentItem.tags);
 
-        console.log('*****');
-        console.log('slug', contentItem.slug);
-        console.log('tags', JSON.stringify(contentItem.tags));
-        console.log('*****');
-    }
+    console.log(contentItem.slug);
+    // if (
+    //     !(
+    //         contentItem.category === 'Video' ||
+    //         contentItem.category === 'Podcast'
+    //     )
+    // ) {
+    //     //console.log("tags",contentItem.tags);
+    //
+    //     console.log('*****');
+    //     console.log('slug', contentItem.slug);
+    //     console.log('tags', JSON.stringify(contentItem.tags));
+    //     console.log('*****');
+    // }
 
     return { props: contentItem };
 };
