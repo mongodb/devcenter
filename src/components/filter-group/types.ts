@@ -6,8 +6,8 @@ export interface FilterItem {
 
 export interface FilterGroupProps {
     className?: string;
-    title: string;
+    title?: string;
     items: FilterItem[];
-    filters: string[];
-    setFilters: (filters: string[]) => void;
+    filters: FilterItem[];
+    setFilters: (filters: FilterItem[]) => void;
 }

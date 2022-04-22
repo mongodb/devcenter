@@ -138,7 +138,7 @@ const atlasItems = [
     },
 ];
 
-const productItems = [
+const l1Items = [
     {
         name: 'Atlas',
         subItems: atlasItems,
@@ -179,16 +179,19 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
     // HOOKS
     ///////////////////////////////////////
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
-
-    const [productFilters, setProductFilters] = useState<string[]>([]);
-    const [languageFilters, setLanguageFilters] = useState<string[]>([]);
-    const [technologyFilters, setTechnologyFilters] = useState<string[]>([]);
-    // const [expertiseLevelFilters, setExpertiseLevelFilters] = useState<
-    //     string[]
-    // >([]);
-    const [contributedByFilters, setContributedByFilters] = useState<string[]>(
-        []
+    const languageFilters = allFilters.filter(
+        filter => filter.category === 'language'
     );
+    const l1Filters = allFilters.filter(filter => filter.category === 'l1');
+
+    const l2Filters = allFilters.filter(filter => filter.category === 'l2');
+    const technologyFilters = allFilters.filter(
+        filter => filter.category === 'technology'
+    );
+    const contributedFilters = allFilters.filter(
+        filter => filter.category === 'contributed'
+    );
+
     const [searchString, setSearchString] = useState<string>('');
 
     const [resultstoShow, setResultsToShow] = useState<number>(10);
@@ -210,11 +213,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
     ///////////////////////////////////////
     // HANDLERS
     ///////////////////////////////////////
+
     const clearFilters = () => {
-        setLanguageFilters([]);
-        setTechnologyFilters([]);
-        // setExpertiseLevelFilters([])
-        setContributedByFilters([]);
+        setAllFilters([]);
     };
 
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,37 +223,19 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
         setSearchString(event.target.value);
     };
 
-    const onFilter = (
-        setFilter: (filters: string[]) => void,
-        filters: string[]
-    ) => {
+    const onFilter = (filters: FilterItem[]) => {
         setResultsToShow(10);
-        setFilter(filters);
+        setAllFilters(filters);
     };
 
-    const onLangFilterClose = (lang: string) => {
-        setLanguageFilters(languageFilters.filter(filter => filter !== lang));
-    };
-    const onTechFilterClose = (lang: string) => {
-        setTechnologyFilters(
-            technologyFilters.filter(filter => filter !== lang)
-        );
-    };
-
-    const onContribFilterClose = (lang: string) => {
-        setContributedByFilters(
-            contributedByFilters.filter(filter => filter !== lang)
-        );
+    const onFilterTabClose = (filterTag: FilterItem) => {
+        setAllFilters(allFilters.filter(filter => filter !== filterTag));
     };
 
     ///////////////////////////////////////
     // COMPUTED VALUES
     ///////////////////////////////////////
-    const hasFiltersSet =
-        !!languageFilters.length ||
-        !!technologyFilters.length ||
-        // expertiseLevelFilters.length ||
-        !!contributedByFilters.length;
+    const hasFiltersSet = !!allFilters.length;
 
     const filteredData = (() => {
         if (!data) {
@@ -260,17 +243,28 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
         } else if (!hasFiltersSet) {
             return data.filter(({ tags }) => tags.contentType === contentType);
         } else {
-            return data.filter(
-                ({ tags }) =>
+            return data.filter(({ tags }) => {
+                return (
                     tags.contentType === contentType &&
-                    (languageFilters.some(
-                        filter => tags.programmingLanguage.indexOf(filter) >= 0
+                    (!!l1Filters.find(
+                        filter => filter.name === tags.l1Product
                     ) ||
-                        technologyFilters.some(
-                            filter => tags.technology.indexOf(filter) >= 0
+                        !!contributedFilters.find(
+                            filter => filter.name === tags.authorType
                         ) ||
-                        contributedByFilters.includes(tags.authorType))
-            );
+                        l2Filters.some(
+                            filter => tags.l2Product.indexOf(filter.name) >= 0
+                        ) ||
+                        languageFilters.some(
+                            filter =>
+                                tags.programmingLanguage.indexOf(filter.name) >=
+                                0
+                        ) ||
+                        technologyFilters.some(
+                            filter => tags.technology.indexOf(filter.name) >= 0
+                        ))
+                );
+            });
         }
     })();
 
@@ -304,17 +298,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                 gap: 'inc30',
             }}
         >
-            {languageFilters.map(lang => (
-                <FilterTag key={lang} text={lang} onClose={onLangFilterClose} />
-            ))}
-            {technologyFilters.map(tech => (
-                <FilterTag key={tech} text={tech} onClose={onTechFilterClose} />
-            ))}
-            {contributedByFilters.map(contrib => (
+            {allFilters.map(filter => (
                 <FilterTag
-                    key={contrib}
-                    text={contrib}
-                    onClose={onContribFilterClose}
+                    key={filter.name}
+                    filter={filter}
+                    onClose={onFilterTabClose}
                 />
             ))}
         </div>
@@ -337,27 +325,21 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                     <div sx={filterGroupContainer}>
                         <FilterGroup
                             title="Products"
-                            items={productItems}
-                            filters={productFilters}
-                            setFilters={filters =>
-                                onFilter(setProductFilters, filters)
-                            }
+                            items={l1Items}
+                            filters={allFilters}
+                            setFilters={onFilter}
                         />
                         <FilterGroup
                             title="Language"
                             items={languageItems}
-                            filters={languageFilters}
-                            setFilters={filters =>
-                                onFilter(setLanguageFilters, filters)
-                            }
+                            filters={allFilters}
+                            setFilters={onFilter}
                         />
                         <FilterGroup
                             title="Technology"
                             items={technologyItems}
-                            filters={technologyFilters}
-                            setFilters={filters =>
-                                onFilter(setTechnologyFilters, filters)
-                            }
+                            filters={allFilters}
+                            setFilters={onFilter}
                         />
                         {/* <FilterGroup
                         title="Expertise Level"
@@ -368,10 +350,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                         <FilterGroup
                             title="Contributed By"
                             items={contributedByItems}
-                            filters={contributedByFilters}
-                            setFilters={filters =>
-                                onFilter(setContributedByFilters, filters)
-                            }
+                            filters={allFilters}
+                            setFilters={onFilter}
                         />
                     </div>
                     <div

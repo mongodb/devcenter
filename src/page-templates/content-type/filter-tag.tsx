@@ -24,23 +24,24 @@ const tagWrapper = {
     },
     cursor: 'pointer',
 };
+import { FilterItem } from '../../components/filter-group';
 
 interface FilterTagProps {
-    text: string;
-    onClose: (filter: string) => void;
+    filter: FilterItem;
+    onClose: (filter: FilterItem) => void;
 }
 
 const FilterTag: React.FunctionComponent<FilterTagProps> = ({
-    text,
+    filter,
     onClose,
 }) => {
     return (
-        <div sx={tagWrapper} onClick={() => onClose(text)}>
+        <div sx={tagWrapper} onClick={() => onClose(filter)}>
             <TypographyScale
                 customStyles={{ lineHeight: 'inc00' }}
                 variant="body3"
             >
-                {text}
+                {filter.name}
             </TypographyScale>
             <div
                 sx={{

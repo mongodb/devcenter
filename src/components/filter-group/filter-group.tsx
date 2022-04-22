@@ -7,7 +7,7 @@ import {
 } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { useState } from 'react';
-import { FilterGroupProps } from './types';
+import { FilterGroupProps, FilterItem } from './types';
 
 const titleStyles = {
     display: 'flex',
@@ -30,7 +30,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
     filters,
     setFilters,
 }) => {
-    const [expanded, setExpanded] = useState<boolean>(false);
+    const [expanded, setExpanded] = useState<boolean>(title ? false : true);
     const [showAll, setShowAll] = useState<boolean>(false);
 
     const onExpand = () => {
@@ -38,43 +38,99 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
         setExpanded(!expanded);
     };
 
-    const onCheckToggle = (checked: boolean, name: string) => {
+    const onCheckToggle = (checked: boolean, filter: FilterItem) => {
         if (checked) {
-            setFilters(filters.concat(name));
+            if (filter.subItems && filter.subItems.length) {
+                const subItemsToAdd = filter.subItems.filter(
+                    subItem =>
+                        !filters.find(
+                            ({ name, category }) =>
+                                name === subItem.name &&
+                                category === subItem.category
+                        )
+                );
+                setFilters(filters.concat(filter).concat(subItemsToAdd));
+            } else {
+                setFilters(filters.concat(filter));
+            }
         } else {
-            setFilters(filters.filter(item => item !== name));
+            setFilters(
+                filters.filter(
+                    ({ name, category }) =>
+                        !(name === filter.name && category === filter.category)
+                )
+            );
         }
     };
 
     return (
         <div className={className}>
-            <div sx={titleStyles} onClick={onExpand}>
-                <TypographyScale variant="body1">{title}</TypographyScale>
-                <SystemIcon
-                    size="small"
-                    strokeWeight="medium"
-                    name={ESystemIconNames.CHEVRON_DOWN}
-                    sx={{
-                        transform: expanded ? 'rotate(180deg)' : null,
-                        transitionDuration: theme.motion.linkAnimation,
-                    }}
-                />
-            </div>
+            {!!title && (
+                <div sx={titleStyles} onClick={onExpand}>
+                    <TypographyScale variant="body1">{title}</TypographyScale>
+                    <SystemIcon
+                        size="small"
+                        strokeWeight="medium"
+                        name={ESystemIconNames.CHEVRON_DOWN}
+                        sx={{
+                            transform: expanded ? 'rotate(180deg)' : null,
+                            transitionDuration: theme.motion.linkAnimation,
+                        }}
+                    />
+                </div>
+            )}
             {expanded && (
                 <div>
                     <div sx={itemsStyles}>
                         {items
                             .slice(0, showAll ? undefined : 5) // Show 5 to start, then all if they click "Show more"
-                            .map(({ name, subItems }) => {
+                            .map(filter => {
+                                if (filter.subItems && filter.subItems.length) {
+                                    return (
+                                        <div key={filter.name}>
+                                            <Checkbox
+                                                name={filter.name}
+                                                label={filter.name}
+                                                onToggle={checked =>
+                                                    onCheckToggle(
+                                                        checked,
+                                                        filter
+                                                    )
+                                                }
+                                                checked={
+                                                    !!filters.find(
+                                                        ({ category, name }) =>
+                                                            filter.category ===
+                                                                category &&
+                                                            filter.name === name
+                                                    )
+                                                }
+                                            />
+                                            <FilterGroup
+                                                sx={{ marginLeft: 'inc40' }}
+                                                items={filter.subItems}
+                                                filters={filters}
+                                                setFilters={setFilters}
+                                            />
+                                        </div>
+                                    );
+                                }
                                 return (
                                     <Checkbox
-                                        key={name}
-                                        name={name}
-                                        label={name}
+                                        key={filter.name}
+                                        name={filter.name}
+                                        label={filter.name}
                                         onToggle={checked =>
-                                            onCheckToggle(checked, name)
+                                            onCheckToggle(checked, filter)
                                         }
-                                        checked={filters.includes(name)}
+                                        checked={
+                                            !!filters.find(
+                                                ({ category, name }) =>
+                                                    filter.category ===
+                                                        category &&
+                                                    filter.name === name
+                                            )
+                                        }
                                     />
                                 );
                             })}
