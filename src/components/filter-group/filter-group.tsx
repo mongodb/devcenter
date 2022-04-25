@@ -14,14 +14,15 @@ const titleStyles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     cursor: 'pointer',
+    fontWeight: 500,
 };
 
-const itemsStyles = {
+const itemsStyles = (title: string | undefined) => ({
     display: 'flex',
     flexDirection: 'column' as 'column',
-    gap: 'inc30',
+    gap: title === 'Products' ? 'inc50' : 'inc30', // Bigger space between L1s.
     marginTop: 'inc30',
-};
+});
 
 const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
     className,
@@ -81,7 +82,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
             )}
             {expanded && (
                 <div>
-                    <div sx={itemsStyles}>
+                    <div sx={itemsStyles(title)}>
                         {items
                             .slice(0, showAll ? undefined : 5) // Show 5 to start, then all if they click "Show more"
                             .map(filter => {

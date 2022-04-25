@@ -210,6 +210,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
         }
     );
 
+    const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
+
     ///////////////////////////////////////
     // HANDLERS
     ///////////////////////////////////////
@@ -291,20 +293,94 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
         </div>
     );
 
+    if (allFilters.length <= 5 && filterTagsExpanded) {
+        setFilterTagsExpanded(false);
+    }
+
     const filterTags = (
         <div
             sx={{
                 display: 'flex',
                 gap: 'inc30',
+                flexWrap: 'wrap',
             }}
         >
-            {allFilters.map(filter => (
-                <FilterTag
-                    key={filter.name}
-                    filter={filter}
-                    onClose={onFilterTabClose}
-                />
-            ))}
+            {allFilters.length > 5 ? (
+                filterTagsExpanded ? (
+                    <>
+                        {allFilters.map(filter => (
+                            <FilterTag
+                                key={filter.name}
+                                filter={filter}
+                                closeIcon={true}
+                                onClick={onFilterTabClose}
+                            />
+                        ))}
+                        <FilterTag
+                            filter={{
+                                name: 'Show less',
+                                category: '',
+                            }}
+                            onClick={() => setFilterTagsExpanded(false)}
+                        />
+                    </>
+                ) : (
+                    <>
+                        {allFilters.slice(0, 5).map(filter => (
+                            <FilterTag
+                                key={filter.name}
+                                filter={filter}
+                                closeIcon={true}
+                                onClick={onFilterTabClose}
+                            />
+                        ))}
+                        <FilterTag
+                            filter={{
+                                name: `+${allFilters.length - 5}`,
+                                category: '',
+                            }}
+                            onClick={() => setFilterTagsExpanded(true)}
+                        />
+                    </>
+                )
+            ) : (
+                allFilters.map(filter => (
+                    <FilterTag
+                        key={filter.name}
+                        filter={filter}
+                        closeIcon={true}
+                        onClick={onFilterTabClose}
+                    />
+                ))
+            )}
+            <Link onClick={clearFilters}>Clear all filters</Link>
+        </div>
+    );
+
+    const resultsStringAndTags = (
+        <div
+            sx={{
+                marginBottom: 'inc50',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'inc30',
+            }}
+        >
+            {(data || isValidating) && (
+                <TypographyScale variant="heading6">
+                    {isValidating
+                        ? 'Loading...'
+                        : numberOfResults === 0
+                        ? 'No Results'
+                        : numberOfResults === 1
+                        ? '1 Result'
+                        : `${numberOfResults} Results`}
+                    {!isValidating && !!searchString && !allFilters.length
+                        ? ` for "${searchString}"`
+                        : ''}
+                </TypographyScale>
+            )}
+            {hasFiltersSet && filterTags}
         </div>
     );
 
@@ -370,32 +446,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                         </div>
                         {filteredData && (
                             <>
-                                {data && (
-                                    <TypographyScale
-                                        variant="heading6"
-                                        sx={{ marginBottom: 'inc30' }}
-                                    >
-                                        {numberOfResults === 0
-                                            ? 'No Results'
-                                            : numberOfResults === 1
-                                            ? '1 Result'
-                                            : `${numberOfResults} Results`}
-                                    </TypographyScale>
-                                )}
-                                {hasFiltersSet && (
-                                    <div
-                                        sx={{
-                                            display: 'flex',
-                                            gap: 'inc30',
-                                            marginBottom: 'inc50',
-                                        }}
-                                    >
-                                        {filterTags}
-                                        <Link onClick={clearFilters}>
-                                            Clear Filters
-                                        </Link>
-                                    </div>
-                                )}
+                                {resultsStringAndTags}
                                 <Results
                                     data={[shownData]}
                                     isLoading={isValidating}
