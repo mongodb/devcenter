@@ -11,7 +11,6 @@ import {
 } from '@mdb/flora';
 
 import { PillCategory } from '../../types/pill-category';
-import FilterGroup from '../../components/filter-group';
 import { fetcherv2 } from '../../components/search/utils';
 import Results from '../../components/search/results';
 import Hero from '../../components/hero';
@@ -21,7 +20,7 @@ import RequestContentModal, {
 import { CTAContainerStyles } from '../../components/hero/styles';
 
 import FilterTag from './filter-tag';
-import { FilterItem } from '../../components/filter-group';
+import { FilterItem, DesktopFilters } from '../../components/search-filters';
 
 const languageItems = [
     {
@@ -370,8 +369,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                 <TypographyScale variant="heading6">
                     {isValidating
                         ? 'Loading...'
-                        : numberOfResults === 0
-                        ? 'No Results'
                         : numberOfResults === 1
                         ? '1 Result'
                         : `${numberOfResults} Results`}
@@ -398,38 +395,15 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                         rowGap: 0,
                     }}
                 >
-                    <div sx={filterGroupContainer}>
-                        <FilterGroup
-                            title="Products"
-                            items={l1Items}
-                            filters={allFilters}
-                            setFilters={onFilter}
-                        />
-                        <FilterGroup
-                            title="Language"
-                            items={languageItems}
-                            filters={allFilters}
-                            setFilters={onFilter}
-                        />
-                        <FilterGroup
-                            title="Technology"
-                            items={technologyItems}
-                            filters={allFilters}
-                            setFilters={onFilter}
-                        />
-                        {/* <FilterGroup
-                        title="Expertise Level"
-                        items={expertiseLevelItems}
-                        filters={expertiseLevelFilters}
-                        setFilters={setExpertiseLevelFilters}
-                    /> */}
-                        <FilterGroup
-                            title="Contributed By"
-                            items={contributedByItems}
-                            filters={allFilters}
-                            setFilters={onFilter}
-                        />
-                    </div>
+                    <DesktopFilters
+                        sx={filterGroupContainer}
+                        onFilter={onFilter}
+                        allFilters={allFilters}
+                        l1Items={l1Items}
+                        languageItems={languageItems}
+                        technologyItems={technologyItems}
+                        contributedByItems={contributedByItems}
+                    />
                     <div
                         sx={{
                             gridColumn: ['span 6', null, 'span 8', 'span 9'],

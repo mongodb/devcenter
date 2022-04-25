@@ -7,7 +7,7 @@ import {
 } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { useState } from 'react';
-import { FilterGroupProps, FilterItem } from './types';
+import { FilterGroupProps, FilterItem } from '../types';
 
 const titleStyles = {
     display: 'flex',

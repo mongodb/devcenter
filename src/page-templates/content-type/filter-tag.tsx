@@ -27,7 +27,7 @@ const tagWrapper = {
     cursor: 'pointer',
     height: '16px',
 };
-import { FilterItem } from '../../components/filter-group';
+import { FilterItem } from '../../components/search-filters';
 
 interface FilterTagProps {
     filter: FilterItem;
