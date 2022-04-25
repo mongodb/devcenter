@@ -1,9 +1,7 @@
-import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
 import { useState } from 'react';
-
-import { Grid } from 'theme-ui';
 
 import {
     GridLayout,
@@ -25,23 +23,22 @@ import RequestContentModal, {
     requestContentModalStages,
 } from '../components/request-content-modal';
 
-import SeriesCard from '../components/series-card';
-
-import getL1Content from '../requests/get-l1-content';
-import getRelatedContent from '../requests/get-related-content';
-import getSeries from '../requests/get-series';
-import getTertiaryNavItems from '../requests/get-tertiary-nav-items';
-
-import { ContentPiece } from '../interfaces/content-piece';
-
-import getContent from '../requests/get-content';
 import { DocumentBody } from '../components/article-body/document-body';
 import { parseMarkdownToAST } from '../utils/markdown-parser/parse-markdown-to-ast';
 import CTALink from '../components/hero/CTALink';
 import { getTableOfContents } from '../utils/markdown-parser/get-table-of-contents';
 import { TableOfContents } from '../components/article-body/table-of-contents';
+
+import { formatDateToDisplayDateFormat } from '../utils/format-date';
+import { ContentItem } from '../interfaces/content-item';
+import { thumbnailLoader } from '../components/card/utils';
+import { getAllContentItems } from '../service/get-all-content';
+import SeriesCard from '../components/series-card';
 import SocialButtons from '../components/social-buttons';
 import AuthorLockup from '../components/author-lockup';
+import parse from 'html-react-parser';
+import getTertiaryNavItems from '../api-requests/get-tertiary-nav-items';
+import { PillCategory } from '../types/pill-category';
 
 const sideNavStyles = {
     display: ['none', null, null, null, 'block'],
@@ -95,15 +92,62 @@ const middleSectionStyles = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
 };
 
-const ContentPage: NextPage<ContentPiece> = ({
+const constructDateDisplay = (
+    vidOrPod: boolean,
+    contentDate: string,
+    updateDate: string | undefined
+) => {
+    const date = `Published ${formatDateToDisplayDateFormat(
+        new Date(contentDate)
+    )}`;
+    if (vidOrPod) {
+        return date;
+    }
+    if (updateDate) {
+        return date.concat(
+            ` . Updated ${formatDateToDisplayDateFormat(new Date(updateDate))}`
+        );
+    }
+};
+
+const parseUndefinedValue = (description: string | undefined): string => {
+    return description ? description : '';
+};
+
+const getPlaceHolderImage = (url: string | undefined) => {
+    return url
+        ? url
+        : 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png';
+};
+
+const getCtaTextForVideosOrPodcasts = (category: PillCategory) => {
+    return category === 'Video' ? 'All MongoDB Videos' : 'All MongoDB Podcasts';
+};
+
+const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
+    return category === 'Video'
+        ? '/video'
+        : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
+};
+
+const parseDescription = (description: string, category: PillCategory) => {
+    return category === 'Podcast' ? parse(description) : description;
+};
+
+const ContentPage: NextPage<ContentItem> = ({
     authors,
     category,
-    image,
-    title,
-    description,
     contentDate,
-    tags,
+    updateDate,
+    description,
+    content,
+    image,
     slug,
+    tags,
+    title,
+    podcastFileUrl,
+    videoId,
+    series,
 }) => {
     const [ratingStars, setRatingStars] = useState(0);
 
@@ -112,10 +156,9 @@ const ContentPage: NextPage<ContentPiece> = ({
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
-    const relatedContent = getRelatedContent(slug);
-    const series = getSeries(slug);
-    const slugList = slug.split('/');
-    const tertiaryNavItems = getTertiaryNavItems(slugList[slugList.length - 2]);
+    // const relatedContent = getRelatedContent(slug);
+    // const slugList = slug.split('/');
+    const tertiaryNavItems = getTertiaryNavItems('atlas');
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
@@ -123,7 +166,9 @@ const ContentPage: NextPage<ContentPiece> = ({
 
     const vidOrPod = category === 'Video' || category === 'Podcast';
 
-    const contentAst: any = vidOrPod ? {} : parseMarkdownToAST(description);
+    const displayDate = constructDateDisplay(vidOrPod, contentDate, updateDate);
+
+    const contentAst: any = vidOrPod ? {} : parseMarkdownToAST(content || '');
 
     const headingNodes = getTableOfContents(
         'children' in contentAst ? contentAst['children'] : [],
@@ -132,6 +177,18 @@ const ContentPage: NextPage<ContentPiece> = ({
         2,
         -1
     );
+
+    //TODO replace with authors
+    const authorsToDisplay = [
+        { name: 'Some Person', url: '#' },
+        {
+            name: 'Other Person',
+            image: {
+                src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+            },
+            url: '#',
+        },
+    ];
 
     const ratingSection = (
         <div
@@ -151,16 +208,6 @@ const ContentPage: NextPage<ContentPiece> = ({
             />
         </div>
     );
-    const authorsToDisplay = [
-        { name: 'Some Person', url: '#' },
-        {
-            name: 'Other Person',
-            image: {
-                src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
-            },
-            url: '#',
-        },
-    ];
 
     const contentHeader = (
         <>
@@ -209,7 +256,7 @@ const ContentPage: NextPage<ContentPiece> = ({
                         {tags && <TagSection tags={tags} />}
                     </div>
                     <SocialButtons
-                        description={description}
+                        description={parseUndefinedValue(description)}
                         heading={title}
                         sx={{
                             gridArea: 'social',
@@ -222,8 +269,9 @@ const ContentPage: NextPage<ContentPiece> = ({
             <div sx={middleSectionStyles}>
                 <div sx={imageStyles}>
                     <Image
-                        alt="alt"
-                        src="https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png"
+                        alt={parseUndefinedValue(image?.alt)}
+                        src={getPlaceHolderImage(image?.url)}
+                        loader={thumbnailLoader}
                         sx={{
                             borderRadius: 'inc30',
                             objectFit: 'cover',
@@ -249,9 +297,13 @@ const ContentPage: NextPage<ContentPiece> = ({
                     variant="body1"
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc40'],
+                        whiteSpace: 'pre-wrap',
                     }}
                 >
-                    {description}
+                    {parseDescription(
+                        parseUndefinedValue(description),
+                        category
+                    )}
                 </TypographyScale>
             )}
             {vidOrPod && (
@@ -259,8 +311,8 @@ const ContentPage: NextPage<ContentPiece> = ({
                     customCSS={{
                         marginTop: 'inc40',
                     }}
-                    text="All MongoDB Videos"
-                    url="#"
+                    text={getCtaTextForVideosOrPodcasts(category)}
+                    url={getCtaLinkForVideosOrPodcasts(category)}
                 />
             )}
             {!vidOrPod && <DocumentBody content={contentAst} />}
@@ -279,11 +331,20 @@ const ContentPage: NextPage<ContentPiece> = ({
             <div>
                 <HorizontalRule />
                 <div sx={footerRatingStyles}>
-                    <SocialButtons description={description} heading={title} />
+                    <SocialButtons
+                        description={parseUndefinedValue(description)}
+                        heading={title}
+                    />
                     {!vidOrPod && ratingSection}
                 </div>
             </div>
-            {series && <SeriesCard series={series} currentSlug={slug} />}
+            {series && (
+                <SeriesCard
+                    series={series}
+                    currentSlug={slug}
+                    currentTitle={title}
+                />
+            )}
             <div>
                 <TypographyScale
                     variant="heading5"
@@ -291,14 +352,14 @@ const ContentPage: NextPage<ContentPiece> = ({
                 >
                     Related
                 </TypographyScale>
-                <Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>
-                    {relatedContent.map(piece => (
-                        <Card
-                            key={piece.slug}
-                            {...getCardProps(piece, 'related')}
-                        />
-                    ))}
-                </Grid>
+                {/*<Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>*/}
+                {/*    {relatedContent.map(piece => (*/}
+                {/*        <Card*/}
+                {/*            key={piece.slug}*/}
+                {/*            {...getCardProps(piece, 'related')}*/}
+                {/*        />*/}
+                {/*    ))}*/}
+                {/*</Grid>*/}
             </div>
             <div sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
@@ -372,18 +433,35 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const { content } = getL1Content();
-    const paths = content.map(({ slug }) => ({
-        params: { slug: slug.split('/') },
+const removesErroringArticles = (contents: ContentItem[]) => {
+    const removeSlugs = [
+        'article/mongodb-charts-embedding-sdk-react/',
+        'article/new-time-series-collections',
+        'article/pymongoarrow-and-data-analysis',
+        'article/build-movie-search-application',
+    ];
+
+    return contents.filter(content => !removeSlugs.includes(content.slug));
+};
+
+export const getStaticPaths = async () => {
+    const contents: ContentItem[] = await getAllContentItems();
+    const filteredContents = removesErroringArticles(contents);
+
+    const paths = filteredContents.map((content: ContentItem) => ({
+        params: { slug: content.slug.split('/') },
     }));
     return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
+    const contents: ContentItem[] = await getAllContentItems();
 
-    const contentPiece = getContent(slug.join('/'));
+    //const sideNav = constructSideNav(primaryTag)
+    const contentItem = contents.filter(
+        content => content.slug === slug.join('/')
+    )[0];
 
-    return { props: contentPiece };
+    return { props: contentItem };
 };

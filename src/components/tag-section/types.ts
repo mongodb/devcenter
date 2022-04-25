@@ -1,5 +1,7 @@
+import { Tag } from '../../interfaces/tag';
+
 export interface TagSectionProps {
-    tags: string[];
+    tags: Tag[];
     disappearOnMobile?: boolean;
     className?: string;
 }

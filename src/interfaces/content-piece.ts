@@ -1,4 +1,5 @@
 import { PillCategory } from '../types/pill-category';
+import { Tag } from './tag';
 export interface Image {
     alt: string;
     url: string;
@@ -12,7 +13,7 @@ export interface ContentPiece {
     featured: boolean;
     image?: Image;
     slug: string;
-    tags: string[];
+    tags: Tag[];
     title: string;
 }
 
