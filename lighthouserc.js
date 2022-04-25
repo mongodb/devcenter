@@ -14,8 +14,8 @@ module.exports = {
         assert: {
             preset: 'lighthouse:no-pwa',
             assertions: {
-                "link-text": "warn",
-                "link-name": "warn",
+                'link-text': 'warn',
+                'link-name': 'warn',
                 'csp-xss': 'warn',
                 'aria-roles': 'warn',
                 'errors-in-console': 'warn',
