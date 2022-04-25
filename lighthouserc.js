@@ -14,7 +14,8 @@ module.exports = {
         assert: {
             preset: 'lighthouse:no-pwa',
             assertions: {
-                "link-text": "off",
+                "link-text": "warn",
+                "link-name": "warn",
                 'csp-xss': 'warn',
                 'aria-roles': 'warn',
                 'errors-in-console': 'warn',
@@ -27,7 +28,7 @@ module.exports = {
                 'categories:performance': ['error', { minScore: 0.9 }],
                 'categories:accessibility': ['error', { minScore: 0.7 }],
                 'categories:best-practices': ['error', { minScore: 0.85 }],
-                'categories:seo': ['error', { minScore: 0.9 }],
+                'categories:seo': ['error', { minScore: 0.8 }],
             },
         },
     },
