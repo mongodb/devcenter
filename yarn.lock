@@ -398,7 +398,7 @@
     source-map "^0.5.7"
     stylis "4.0.13"
 
-"@emotion/babel-plugin@^11.3.0", "@emotion/babel-plugin@^11.7.1":
+"@emotion/babel-plugin@^11.7.1":
   version "11.9.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/babel-plugin/-/babel-plugin-11.9.2.tgz#723b6d394c89fb2ef782229d92ba95a740576e95"
   integrity sha1-cjttOUyJ+y73giKdkrqVp0BXbpU=
@@ -427,10 +427,10 @@
     "@emotion/weak-memoize" "^0.2.5"
     stylis "4.0.13"
 
-"@emotion/css@11.7.1":
-  version "11.7.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/css/-/css-11.7.1.tgz#516b717340d36b0bbd2304ba7e1a090e866f8acc"
-  integrity sha1-UWtxc0DTawu9IwS6fhoJDoZvisw=
+"@emotion/css@11.9.0":
+  version "11.9.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/css/-/css-11.9.0.tgz#d5aeaca5ed19fc61cbdc9e032ad0b32fa6e366be"
+  integrity sha1-1a6spe0Z/GHL3J4DKtCzL6bjZr4=
   dependencies:
     "@emotion/babel-plugin" "^11.7.1"
     "@emotion/cache" "^11.7.1"
