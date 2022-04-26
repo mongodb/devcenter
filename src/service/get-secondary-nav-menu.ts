@@ -70,18 +70,19 @@ export const getSecondaryNavMenu = async () => {
         name: 'Videos',
         slug: '/videos',
     };
+
     return [
-        ...productLevelMenu,
-        ...languageMenu,
-        ...technologyMenu,
-        ...expertiseLevelMenu,
-        ...documentationMenu,
-        ...articlesMenu,
-        ...tutorialsMenu,
-        ...quickstartMenu,
-        ...codeExamplesMenu,
-        ...podcastsMenu,
-        ...videosMenu,
+        productLevelMenu,
+        languageMenu,
+        technologyMenu,
+        expertiseLevelMenu,
+        documentationMenu,
+        articlesMenu,
+        tutorialsMenu,
+        quickstartMenu,
+        codeExamplesMenu,
+        podcastsMenu,
+        videosMenu,
     ];
 };
 
