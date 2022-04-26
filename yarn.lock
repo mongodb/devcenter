@@ -398,7 +398,7 @@
     source-map "^0.5.7"
     stylis "4.0.13"
 
-"@emotion/babel-plugin@^11.3.0", "@emotion/babel-plugin@^11.7.1":
+"@emotion/babel-plugin@^11.7.1":
   version "11.9.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/babel-plugin/-/babel-plugin-11.9.2.tgz#723b6d394c89fb2ef782229d92ba95a740576e95"
   integrity sha1-cjttOUyJ+y73giKdkrqVp0BXbpU=
@@ -427,14 +427,14 @@
     "@emotion/weak-memoize" "^0.2.5"
     stylis "4.0.13"
 
-"@emotion/css@11.7.1":
-  version "11.7.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/css/-/css-11.7.1.tgz#516b717340d36b0bbd2304ba7e1a090e866f8acc"
-  integrity sha1-UWtxc0DTawu9IwS6fhoJDoZvisw=
+"@emotion/css@11.9.0":
+  version "11.9.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/css/-/css-11.9.0.tgz#d5aeaca5ed19fc61cbdc9e032ad0b32fa6e366be"
+  integrity sha1-1a6spe0Z/GHL3J4DKtCzL6bjZr4=
   dependencies:
     "@emotion/babel-plugin" "^11.7.1"
     "@emotion/cache" "^11.7.1"
-    "@emotion/serialize" "^1.0.0"
+    "@emotion/serialize" "^1.0.3"
     "@emotion/sheet" "^1.0.3"
     "@emotion/utils" "^1.0.0"
 
@@ -450,7 +450,7 @@
   dependencies:
     "@emotion/memoize" "0.7.4"
 
-"@emotion/is-prop-valid@^1.1.1", "@emotion/is-prop-valid@^1.1.2":
+"@emotion/is-prop-valid@^1.1.2":
   version "1.1.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/is-prop-valid/-/is-prop-valid-1.1.2.tgz#34ad6e98e871aa6f7a20469b602911b8b11b3a95"
   integrity sha1-NK1umOhxqm96IEabYCkRuLEbOpU=
@@ -467,20 +467,7 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/memoize/-/memoize-0.7.5.tgz#2c40f81449a4e554e9fc6396910ed4843ec2be50"
   integrity sha1-LED4FEmk5VTp/GOWkQ7UhD7CvlA=
 
-"@emotion/react@11.7.1":
-  version "11.7.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/react/-/react-11.7.1.tgz#3f800ce9b20317c13e77b8489ac4a0b922b2fe07"
-  integrity sha1-P4AM6bIDF8E+d7hImsSguSKy/gc=
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@emotion/cache" "^11.7.1"
-    "@emotion/serialize" "^1.0.2"
-    "@emotion/sheet" "^1.1.0"
-    "@emotion/utils" "^1.0.0"
-    "@emotion/weak-memoize" "^0.2.5"
-    hoist-non-react-statics "^3.3.1"
-
-"@emotion/react@^11.1.1":
+"@emotion/react@11.9.0", "@emotion/react@^11.1.1":
   version "11.9.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/react/-/react-11.9.0.tgz#b6d42b1db3bd7511e7a7c4151dc8bc82e14593b8"
   integrity sha1-ttQrHbO9dRHnp8QVHci8guFFk7g=
@@ -493,7 +480,7 @@
     "@emotion/weak-memoize" "^0.2.5"
     hoist-non-react-statics "^3.3.1"
 
-"@emotion/serialize@^1.0.0", "@emotion/serialize@^1.0.2", "@emotion/serialize@^1.0.3":
+"@emotion/serialize@^1.0.2", "@emotion/serialize@^1.0.3":
   version "1.0.3"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/serialize/-/serialize-1.0.3.tgz#99e2060c26c6292469fb30db41f4690e1c8fea63"
   integrity sha1-meIGDCbGKSRp+zDbQfRpDhyP6mM=
@@ -509,18 +496,7 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/sheet/-/sheet-1.1.0.tgz#56d99c41f0a1cda2726a05aa6a20afd4c63e58d2"
   integrity sha1-VtmcQfChzaJyagWqaiCv1MY+WNI=
 
-"@emotion/styled@11.6.0":
-  version "11.6.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/styled/-/styled-11.6.0.tgz#9230d1a7bcb2ebf83c6a579f4c80e0664132d81d"
-  integrity sha1-kjDRp7yy6/g8alefTIDgZkEy2B0=
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@emotion/babel-plugin" "^11.3.0"
-    "@emotion/is-prop-valid" "^1.1.1"
-    "@emotion/serialize" "^1.0.2"
-    "@emotion/utils" "^1.0.0"
-
-"@emotion/styled@^11.0.0":
+"@emotion/styled@11.8.1", "@emotion/styled@^11.0.0":
   version "11.8.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/styled/-/styled-11.8.1.tgz#856f6f63aceef0eb783985fa2322e2bf66d04e17"
   integrity sha1-hW9vY6zu8Ot4OYX6IyLiv2bQThc=
