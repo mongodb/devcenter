@@ -1,7 +1,7 @@
-import { ContentPiece } from '../interfaces/content-piece';
 import { MOCK_TAGS } from '../mockdata/mock-tags';
+import { ContentItem } from '../interfaces/content-item';
 
-const getRelatedContent = (slug: string): ContentPiece[] => [
+const getRelatedContent = (slug: string): ContentItem[] => [
     {
         category: 'Podcast',
         image: {

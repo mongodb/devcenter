@@ -1,8 +1,11 @@
-export type PillCategory =
-    | 'Article'
-    | 'Demo App'
-    | 'Tutorial'
-    | 'Podcast'
-    | 'Video'
-    | 'Quickstart'
-    | 'Code Example';
+export const PillCategoryValues = [
+    'Article',
+    'Demo App',
+    'Quickstart',
+    'Code Example',
+    'Tutorial',
+    'Podcast',
+    'Video',
+] as const;
+
+export type PillCategory = typeof PillCategoryValues[number];

@@ -1,12 +1,12 @@
-import { ContentPiece } from '../interfaces/content-piece';
 import { MOCK_TAGS } from './mock-tags';
+import { ContentItem } from '../interfaces/content-item';
 
 interface L1Content {
-    content: ContentPiece[];
-    featured: ContentPiece[];
+    content: ContentItem[];
+    featured: ContentItem[];
 }
 const getL1Content = (slug: string = 'all'): L1Content => {
-    const featured: ContentPiece[] = [
+    const featured: ContentItem[] = [
         {
             authors: ['Farah Appleseed'],
             category: 'Article',
@@ -56,7 +56,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/t1',
         },
     ];
-    const content: ContentPiece[] = [
+    const content: ContentItem[] = [
         {
             authors: ['Farah Appleseed'],
             category: 'Demo App',

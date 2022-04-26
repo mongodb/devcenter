@@ -1,9 +1,9 @@
-import { ContentPiece } from '../../interfaces/content-piece';
+import { ContentItem } from '../../interfaces/content-item';
 
 export type SortByType = 'recent' | 'popular' | 'rated';
 
 export interface ResultsProps {
-    data: ContentPiece[][] | undefined;
+    data: ContentItem[][] | undefined;
     isLoading: boolean;
     hasError: boolean;
 }

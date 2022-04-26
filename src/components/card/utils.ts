@@ -1,8 +1,8 @@
 import { ImageLoaderProps } from 'next/dist/client/image';
 
 import { CardProps, CardVariant } from './types';
-import { ContentPiece } from '../../interfaces/content-piece';
 import { PillCategory } from '../../types/pill-category';
+import { ContentItem } from '../../interfaces/content-item';
 
 export const thumbnailLoader = ({ src, width, quality }: ImageLoaderProps) => {
     return `${src}?w=${width}&q=${quality || 75}`;
@@ -33,7 +33,7 @@ export const getCardProps = (
         title,
         image,
         slug,
-    }: ContentPiece,
+    }: ContentItem,
     variant: CardVariant
 ): CardProps => {
     const cardProps: CardProps = {

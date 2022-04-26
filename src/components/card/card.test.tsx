@@ -2,11 +2,12 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import Card from '.';
-import { ContentPiece } from '../../interfaces/content-piece';
 import { CardProps } from './types';
 import { getCardProps } from './utils';
+import { ContentItem } from '../../interfaces/content-item';
+import { MOCK_TAGS } from '../../mockdata/mock-tags';
 
-const cardContent: ContentPiece = {
+const cardContent: ContentItem = {
     authors: ['Farah Appleseed'],
     category: 'Article',
     image: {
@@ -19,7 +20,7 @@ const cardContent: ContentPiece = {
         ' for our Swift libraries and how to publish this ' +
         'documentation so that can be accessed online, using Netlify.',
     contentDate: 'Mon Mar 14 2022',
-    tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+    tags: MOCK_TAGS,
     featured: true,
     slug: 'product/atlas/v1',
 };
@@ -38,7 +39,7 @@ const expectedProps: CardProps = {
         ' for our Swift libraries and how to publish this ' +
         'documentation so that can be accessed online, using Netlify.',
     contentDate: 'Mon Mar 14 2022',
-    tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+    tags: MOCK_TAGS,
     variant: 'large',
 };
 

@@ -1,9 +1,9 @@
 import { Tag } from '../interfaces/tag';
 
 const tag1: Tag = {
-    name: 'MongoDB',
-    type: 'AuthorType',
-    slug: '/author-type/mongodb',
+    name: 'AWS',
+    type: 'Technology',
+    slug: '/technology/aws',
 };
 
 const tag2: Tag = {
@@ -13,8 +13,9 @@ const tag2: Tag = {
 };
 
 const tag3: Tag = {
-    name: 'Go',
+    name: 'Java',
     type: 'ProgrammingLanguage',
-    slug: '/language/go',
+    slug: '/language/java',
 };
+
 export const MOCK_TAGS: Tag[] = [tag1, tag2, tag3];

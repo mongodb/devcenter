@@ -7,20 +7,17 @@ import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
 import { ITopicCard } from '../../components/topic-card/types';
 import { CTA } from '../../components/hero/types';
-
-import getL1Content from '../../mockdata/get-l1-content';
-import getTertiaryNavItems from '../../api-requests/get-tertiary-nav-items';
-
-import { ContentPiece } from '../../interfaces/content-piece';
 import CardSection, {
     FeaturedCardSection,
 } from '../../components/card-section';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
-import TertiaryNav from '../../components/tertiary-nav';
-import { taxonomyData } from '../../data/taxonomy-data';
-import { Taxonomy } from '../../interfaces/taxonomy';
-import { taxonomyToCategoryMapping } from '../../data/taxonomy-collection-types';
-import getTaxonomyData from '../../api-requests/get-taxonomy-data';
+import { ContentItem } from '../../interfaces/content-item';
+import { Tag } from '../../interfaces/tag';
+import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
+import { getL1L2Content } from '../../service/get-l1-l2-content';
+import { PillCategoryValues } from '../../types/pill-category';
+import { capitalizeFirstLetter } from '../../utils/format-string';
+import { getAllContentItems } from '../../service/get-all-content';
 
 interface TopicProps {
     name: string;
@@ -29,8 +26,8 @@ interface TopicProps {
     ctas: CTA[];
     topics: ITopicCard[];
     relatedTopics: ITopicCard[];
-    featured: ContentPiece[];
-    content: ContentPiece[];
+    featured: ContentItem[];
+    content: ContentItem[];
     variant: 'light' | 'medium' | 'heavy';
     tertiaryNavItems: TertiaryNavItem[];
 }
@@ -48,13 +45,13 @@ const sideNavStyles = (rowCount: number) => ({
 
 const Topic: NextPage<TopicProps> = ({
     name,
+    slug,
     description,
     ctas,
     topics,
     relatedTopics,
     featured,
     content,
-    slug,
     variant,
     tertiaryNavItems,
 }) => {
@@ -64,20 +61,11 @@ const Topic: NextPage<TopicProps> = ({
         { text: 'Products', url: '/' },
     ];
 
-    const contentTypes = [
-        'Article',
-        'Tutorial',
-        'Demo App',
-        'Video',
-        'Podcast',
-    ];
     const contentRows =
         variant === 'heavy'
-            ? contentTypes
-                  .map(contentType =>
-                      content.filter(piece => piece.category === contentType)
-                  )
-                  .filter(contentRow => contentRow.length > 2)
+            ? PillCategoryValues.map(contentType =>
+                  content.filter(piece => piece.category === contentType)
+              ).filter(contentRow => contentRow.length > 2)
             : [];
 
     const topicsRow = topics.length > 0 ? 1 : 0;
@@ -100,7 +88,7 @@ const Topic: NextPage<TopicProps> = ({
                 description={description}
                 ctas={ctas}
             />
-            <TertiaryNav items={tertiaryNavItems} topic={name} />
+            {/*<TertiaryNav items={tertiaryNavItems} topic={name}/>*/}
             <div
                 sx={{
                     paddingBottom: 'inc160',
@@ -124,7 +112,7 @@ const Topic: NextPage<TopicProps> = ({
                                     title={`${name} Topics`}
                                 />
                             )}
-                            {variant !== 'light' && (
+                            {variant !== 'light' && featured.length > 0 && (
                                 <FeaturedCardSection content={featured} />
                             )}
                             {variant === 'heavy' &&
@@ -180,34 +168,62 @@ interface IParams extends ParsedUrlQuery {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     let paths: any[] = [];
-    taxonomyData.forEach((value: Taxonomy[], key: string) => {
-        const category = taxonomyToCategoryMapping[key];
-        paths = paths.concat(
-            value.map(({ slug }) => ({
-                params: { l1_l2: category, slug: slug.split('/') },
-            }))
-        );
+
+    const contents: ContentItem[] = await getAllContentItems();
+
+    const l1l2Tags: Tag[][] = contents.map(c => c.tags);
+
+    const flattenedL1L2Tags: Tag[] = [];
+
+    l1l2Tags.forEach(tags => {
+        tags.forEach(tag => flattenedL1L2Tags.push(tag));
     });
+
+    const slugs: string[] = flattenedL1L2Tags
+        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
+        .map(tag => tag.slug);
+
+    const distinctSlugs = Array.from(new Set(slugs));
+
+    distinctSlugs.forEach(distinctSlug => {
+        const parsedSlug = distinctSlug.startsWith('/')
+            ? distinctSlug.substring(1)
+            : distinctSlug;
+        const category = parsedSlug.split('/')[0];
+        const slug = parsedSlug.split('/').slice(1);
+        paths = paths.concat({
+            params: { l1_l2: category, slug: slug },
+        });
+    });
+
     return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { slug } = params as IParams;
-    const slugString = slug.join('/');
-    const product = getTaxonomyData(slugString);
-    const tertiaryNavItems = getTertiaryNavItems(slugString);
-    const { content, featured } = getL1Content(slugString);
+    const { l1_l2, slug } = params as IParams;
+
+    const name = capitalizeFirstLetter(slug[slug.length - 1]);
+
+    const slugString = '/' + l1_l2 + '/' + slug.join('/');
+
+    const content = await getL1L2Content(slugString);
 
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
 
     const data = {
-        ...product,
-        featured,
-        content,
-        tertiaryNavItems,
+        name,
         slug: slugString,
+        content,
         variant,
+        //TODO
+        description: 'Description',
+        ctas: [],
+        topics: [],
+        relatedTopics: [],
+        featured: [],
+        tertiaryNavItems: [],
     };
+
     return { props: data };
 };

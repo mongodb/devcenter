@@ -50,6 +50,7 @@ export const mapPodcastsToContentItems = (
             //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
             tags: MOCK_TAGS,
             title: p.title,
+            featured: false,
         };
         if (p.description) {
             item.description = p.description;
@@ -77,6 +78,7 @@ export const mapVideosToContentItems = (
             //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
             tags: MOCK_TAGS,
             title: v.title,
+            featured: false,
         };
         if (v.description) {
             item.description = v.description;
@@ -121,6 +123,7 @@ export const mapArticlesToContentItems = (
                 : a.calculatedSlug,
             tags: flattenTags(a.otherTags),
             title: a.title,
+            featured: false,
         };
         if (a.image) {
             item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };

@@ -10,8 +10,6 @@ import {
     TypographyScale,
 } from '@mdb/flora';
 
-import { ContentPiece } from '../../interfaces/content-piece';
-
 import {
     titleStyles,
     searchBoxStyles,
@@ -21,6 +19,7 @@ import {
 import { SearchProps, SortByType } from './types';
 import { fetcher, sortByOptions } from './utils';
 import Results from './results';
+import { ContentItem } from '../../interfaces/content-item';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     className,
@@ -32,7 +31,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
     const [search, setSearch] = useState('');
     const [sortBy, setSortBy] = useState<SortByType>('recent');
 
-    const getKey = (pageIndex: number, previousPageData: ContentPiece[]) => {
+    const getKey = (pageIndex: number, previousPageData: ContentItem[]) => {
         if (previousPageData && !previousPageData.length) return null;
         return `topic=${slug}&search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
             ','

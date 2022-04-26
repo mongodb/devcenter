@@ -2,8 +2,8 @@ import { Fetcher } from 'swr';
 import { decode } from 'querystring';
 
 import { IsortByOptions } from './types';
-import { ContentPiece } from '../../interfaces/content-piece';
 import getL1Content from '../../mockdata/get-l1-content';
+import { ContentItem } from '../../interfaces/content-item';
 
 export const sortByOptions: IsortByOptions = {
     'Most Recent': 'recent',
@@ -11,7 +11,7 @@ export const sortByOptions: IsortByOptions = {
     'Highest Rated': 'rated',
 };
 
-export const fetcher: Fetcher<ContentPiece[], string> = queryString =>
+export const fetcher: Fetcher<ContentItem[], string> = queryString =>
     // fetch(`whateverOurLambdaSearchFunctionURLIs?${queryString}`).then(res =>
     //     res.json()
     // );
