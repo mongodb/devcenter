@@ -1,17 +1,5 @@
-import { SystemIcon, TypographyScale, ESystemIconNames } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
-import { FilterItem } from '../types';
-import FilterGroup from './filter-group';
-
-interface FiltersProps {
-    className?: string;
-    onFilter: (filters: FilterItem[]) => void;
-    allFilters: FilterItem[];
-    l1Items: FilterItem[];
-    languageItems: FilterItem[];
-    technologyItems: FilterItem[];
-    contributedByItems: FilterItem[];
-}
+import { FiltersProps } from '../types';
+import FilterGroup from '../filter-group';
 
 const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
     className,

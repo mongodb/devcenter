@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     TypographyScale,
     SystemIcon,
@@ -6,23 +7,9 @@ import {
     Link,
 } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
-import { useState } from 'react';
-import { FilterGroupProps, FilterItem } from '../types';
 
-const titleStyles = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    cursor: 'pointer',
-    fontWeight: 500,
-};
-
-const itemsStyles = (title: string | undefined) => ({
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    gap: title === 'Products' ? 'inc50' : 'inc30', // Bigger space between L1s.
-    marginTop: 'inc30',
-});
+import { FilterGroupProps, FilterItem } from './types';
+import { titleStyles, itemsStyles } from './styles';
 
 const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
     className,
@@ -30,6 +17,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
     items,
     filters,
     setFilters,
+    isMobile = false,
 }) => {
     const [expanded, setExpanded] = useState<boolean>(title ? false : true);
     const [showAll, setShowAll] = useState<boolean>(false);
@@ -64,20 +52,57 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
         }
     };
 
+    const mobileFilterList = (() => {
+        if (!title) return null;
+        const getFilterNames = (items: FilterItem[]): string[] => {
+            let filterList: string[] = [];
+
+            items.forEach(item => {
+                if (filters.includes(item)) {
+                    filterList.push(item.name);
+                }
+                if (item.subItems) {
+                    filterList = filterList.concat(
+                        getFilterNames(item.subItems)
+                    );
+                }
+            });
+            return filterList;
+        };
+        const filterNames = getFilterNames(items);
+
+        const filterString =
+            filterNames.length < 5
+                ? filterNames.join(', ')
+                : `${filterNames.slice(0, 5).join(', ')} +${
+                      filterNames.length - 5
+                  }`;
+        return (
+            <TypographyScale variant="body1" color="mark">
+                {filterString}
+            </TypographyScale>
+        );
+    })();
+
     return (
         <div className={className}>
             {!!title && (
-                <div sx={titleStyles} onClick={onExpand}>
-                    <TypographyScale variant="body1">{title}</TypographyScale>
-                    <SystemIcon
-                        size="small"
-                        strokeWeight="medium"
-                        name={ESystemIconNames.CHEVRON_DOWN}
-                        sx={{
-                            transform: expanded ? 'rotate(180deg)' : null,
-                            transitionDuration: theme.motion.linkAnimation,
-                        }}
-                    />
+                <div onClick={onExpand}>
+                    <div sx={titleStyles}>
+                        <TypographyScale variant="body1">
+                            {title}
+                        </TypographyScale>
+                        <SystemIcon
+                            size="small"
+                            strokeWeight="medium"
+                            name={ESystemIconNames.CHEVRON_DOWN}
+                            sx={{
+                                transform: expanded ? 'rotate(180deg)' : null,
+                                transitionDuration: theme.motion.linkAnimation,
+                            }}
+                        />
+                    </div>
+                    {isMobile && !expanded && mobileFilterList}
                 </div>
             )}
             {expanded && (

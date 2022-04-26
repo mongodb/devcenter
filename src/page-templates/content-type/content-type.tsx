@@ -20,7 +20,11 @@ import RequestContentModal, {
 import { CTAContainerStyles } from '../../components/hero/styles';
 
 import FilterTag from './filter-tag';
-import { FilterItem, DesktopFilters } from '../../components/search-filters';
+import {
+    FilterItem,
+    DesktopFilters,
+    MobileFilters,
+} from '../../components/search-filters';
 
 const languageItems = [
     {
@@ -153,7 +157,7 @@ interface ContentTypePageProps {
     contentType: PillCategory;
 }
 
-const filterGroupContainer = {
+const desktopFiltersStyles = {
     gridColumn: ['span 6', null, 'span 8', 'span 3'],
     display: ['none', null, null, 'flex'],
     flexDirection: 'column' as 'column',
@@ -178,26 +182,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
     // HOOKS
     ///////////////////////////////////////
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
-    const languageFilters = allFilters.filter(
-        filter => filter.category === 'language'
-    );
-    const l1Filters = allFilters.filter(filter => filter.category === 'l1');
-
-    const l2Filters = allFilters.filter(filter => filter.category === 'l2');
-    const technologyFilters = allFilters.filter(
-        filter => filter.category === 'technology'
-    );
-    const contributedFilters = allFilters.filter(
-        filter => filter.category === 'contributed'
-    );
-
     const [searchString, setSearchString] = useState<string>('');
-
     const [resultstoShow, setResultsToShow] = useState<number>(10);
-
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
-
     const { data, error, isValidating } = useSWR(
         () => searchString || ' ',
         fetcherv2,
@@ -208,8 +196,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
             shouldRetryOnError: false,
         }
     );
-
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
+    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     ///////////////////////////////////////
     // HANDLERS
@@ -236,6 +224,18 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
     ///////////////////////////////////////
     // COMPUTED VALUES
     ///////////////////////////////////////
+    const languageFilters = allFilters.filter(
+        filter => filter.category === 'language'
+    );
+    const l1Filters = allFilters.filter(filter => filter.category === 'l1');
+
+    const l2Filters = allFilters.filter(filter => filter.category === 'l2');
+    const technologyFilters = allFilters.filter(
+        filter => filter.category === 'technology'
+    );
+    const contributedFilters = allFilters.filter(
+        filter => filter.category === 'contributed'
+    );
     const hasFiltersSet = !!allFilters.length;
 
     const filteredData = (() => {
@@ -299,9 +299,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
     const filterTags = (
         <div
             sx={{
-                display: 'flex',
                 gap: 'inc30',
                 flexWrap: 'wrap',
+                display: ['none', null, null, 'flex'],
             }}
         >
             {allFilters.length > 5 ? (
@@ -361,13 +361,17 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
             sx={{
                 marginBottom: 'inc50',
                 display: 'flex',
-                flexDirection: 'column',
+                flexDirection: ['column', null, 'row', 'column'],
+                justifyContent: ['start', null, 'space-between', 'start'],
+                alignItems: ['start', null, 'center', 'start'],
                 gap: 'inc30',
             }}
         >
             {(data || isValidating) && (
                 <TypographyScale variant="heading6">
-                    {isValidating
+                    {!allFilters.length && !searchString
+                        ? `All ${contentType}s`
+                        : isValidating
                         ? 'Loading...'
                         : numberOfResults === 1
                         ? '1 Result'
@@ -378,6 +382,25 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                 </TypographyScale>
             )}
             {hasFiltersSet && filterTags}
+            <div
+                sx={{
+                    display: ['block', null, null, 'none'],
+                    width: ['100%', null, 'unset'],
+                    '&>div': { width: '100%' },
+                }}
+            >
+                <Button
+                    sx={{
+                        justifyContent: 'center',
+                    }}
+                    iconName={ESystemIconNames.HAMBURGER}
+                    hasIcon={true}
+                    iconPosition="right"
+                    onClick={() => setMobileFiltersOpen(true)}
+                >
+                    Filter{!!allFilters.length && ` (${allFilters.length})`}
+                </Button>
+            </div>
         </div>
     );
 
@@ -396,7 +419,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                     }}
                 >
                     <DesktopFilters
-                        sx={filterGroupContainer}
+                        sx={desktopFiltersStyles}
                         onFilter={onFilter}
                         allFilters={allFilters}
                         l1Items={l1Items}
@@ -458,6 +481,17 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                 modalStage={requestContentModalStage}
                 contentCategory={contentType}
             />
+            {mobileFiltersOpen && (
+                <MobileFilters
+                    onFilter={onFilter}
+                    allFilters={allFilters}
+                    l1Items={l1Items}
+                    languageItems={languageItems}
+                    technologyItems={technologyItems}
+                    contributedByItems={contributedByItems}
+                    closeModal={() => setMobileFiltersOpen(false)}
+                />
+            )}
         </>
     );
 };
