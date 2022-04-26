@@ -86,9 +86,9 @@ export const getSecondaryNavMenu = async () => {
     ];
 };
 
-const getL2ForL1 = (l2Items: Tag[], l1Name: string) => {
+const getL2ForL1 = (l2Items: Tag[], l1Slug: string) => {
     return l2Items.filter(l2Item =>
-        l2Item.slug.toLowerCase().split('/').includes(l1Name.toLowerCase())
+        l2Item.slug.toLowerCase().startsWith(l1Slug.toLowerCase())
     );
 };
 
@@ -125,7 +125,7 @@ const constructMenuForProductsTagType = (
             name: tag.name,
             slug: tag.slug,
             dropDownItems: constructDropDownItems(
-                getL2ForL1(l2Items, tag.name)
+                getL2ForL1(l2Items, tag.slug)
             ),
         });
     });
