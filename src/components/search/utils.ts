@@ -3,7 +3,7 @@ import { decode } from 'querystring';
 
 import { IsortByOptions } from './types';
 import { ContentPiece } from '../../interfaces/content-piece';
-import getL1Content from '../../requests/get-l1-content';
+import getL1Content from '../../mockdata/get-l1-content';
 
 export const sortByOptions: IsortByOptions = {
     'Most Recent': 'recent',

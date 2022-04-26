@@ -1,7 +1,7 @@
-import { Tags } from '../../interfaces/content-piece';
+import { Tag } from '../../interfaces/tag';
 
 export interface TagSectionProps {
-    tags: Tags;
+    tags: Tag[];
     disappearOnMobile?: boolean;
     className?: string;
 }

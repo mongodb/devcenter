@@ -4,9 +4,12 @@ type languageOptions = {
     [key: string]: LanguageModeType;
 };
 const SUPPORTED_LANGUAGES: languageOptions = {
+    bash: 'Node',
     c: 'C',
     css: 'CSS',
     cs: 'C#',
+    csp: 'C#',
+    csharp: 'C#',
     'c++': 'C++',
     golang: 'Go',
     go: 'Go',
@@ -27,9 +30,12 @@ const SUPPORTED_LANGUAGES: languageOptions = {
     ruby: 'Ruby',
     rust: 'Rust',
     sh: 'Shell',
+    shell: 'Shell',
     swift: 'Swift',
     typescript: 'TypeScript',
     ts: 'TypeScript',
+    xml: 'Node',
+    none: 'Node',
 };
 
 export const getFloraLanguage = (inputLang: string): LanguageModeType => {

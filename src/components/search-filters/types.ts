@@ -1,6 +1,8 @@
+import { TagType } from '../../types/tag-type';
+
 export interface FilterItem {
     name: string;
-    category: string;
+    type?: TagType;
     subItems?: FilterItem[];
 }
 

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-import getArticles from '../../src/requests/get-articles';
+import getArticles from '../../src/api-requests/get-articles';
 import * as clientFactoryModule from '../../src/utils/client-factory';
 
 const expectedQuery = gql`

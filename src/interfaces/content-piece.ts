@@ -1,25 +1,19 @@
 import { PillCategory } from '../types/pill-category';
+import { Tag } from './tag';
 export interface Image {
     alt: string;
     url: string;
 }
 
-export interface Tags {
-    l1Product: string;
-    l2Product: string[];
-    technology: string[];
-    programmingLanguage: string[];
-    authorType: string;
-    contentType: PillCategory;
-}
-
 export interface ContentPiece {
     authors?: string[];
+    category: PillCategory;
     contentDate: string;
     description: string;
+    featured: boolean;
     image?: Image;
     slug: string;
-    tags: Tags;
+    tags: Tag[];
     title: string;
 }
 

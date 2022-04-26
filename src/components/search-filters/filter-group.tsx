@@ -33,9 +33,8 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                 const subItemsToAdd = filter.subItems.filter(
                     subItem =>
                         !filters.find(
-                            ({ name, category }) =>
-                                name === subItem.name &&
-                                category === subItem.category
+                            ({ name, type }) =>
+                                name === subItem.name && type === subItem.type
                         )
                 );
                 setFilters(filters.concat(filter).concat(subItemsToAdd));
@@ -45,8 +44,8 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
         } else {
             setFilters(
                 filters.filter(
-                    ({ name, category }) =>
-                        !(name === filter.name && category === filter.category)
+                    ({ name, type }) =>
+                        !(name === filter.name && type === filter.type)
                 )
             );
         }
@@ -125,9 +124,9 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                                                 }
                                                 checked={
                                                     !!filters.find(
-                                                        ({ category, name }) =>
-                                                            filter.category ===
-                                                                category &&
+                                                        ({ type, name }) =>
+                                                            filter.type ===
+                                                                type &&
                                                             filter.name === name
                                                     )
                                                 }
@@ -151,9 +150,8 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                                         }
                                         checked={
                                             !!filters.find(
-                                                ({ category, name }) =>
-                                                    filter.category ===
-                                                        category &&
+                                                ({ type, name }) =>
+                                                    filter.type === type &&
                                                     filter.name === name
                                             )
                                         }

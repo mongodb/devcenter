@@ -8,8 +8,8 @@ import { TopicCardsContainer } from '../../components/topic-card';
 import { ITopicCard } from '../../components/topic-card/types';
 import { CTA } from '../../components/hero/types';
 
-import getL1Content from '../../requests/get-l1-content';
-import getTertiaryNavItems from '../../requests/get-tertiary-nav-items';
+import getL1Content from '../../mockdata/get-l1-content';
+import getTertiaryNavItems from '../../api-requests/get-tertiary-nav-items';
 
 import { ContentPiece } from '../../interfaces/content-piece';
 import CardSection, {
@@ -20,8 +20,8 @@ import TertiaryNav from '../../components/tertiary-nav';
 import { taxonomyData } from '../../data/taxonomy-data';
 import { Taxonomy } from '../../interfaces/taxonomy';
 import { taxonomyToCategoryMapping } from '../../data/taxonomy-collection-types';
-import getTaxonomyData from '../../requests/get-taxonomy-data';
 import { createTopicPageCTAS } from '../../components/hero/utils';
+import getTaxonomyData from '../../api-requests/get-taxonomy-data';
 
 interface TopicProps {
     name: string;
@@ -76,9 +76,7 @@ const Topic: NextPage<TopicProps> = ({
         variant === 'heavy'
             ? contentTypes
                   .map(contentType =>
-                      content.filter(
-                          piece => piece.tags.contentType === contentType
-                      )
+                      content.filter(piece => piece.category === contentType)
                   )
                   .filter(contentRow => contentRow.length > 2)
             : [];
@@ -134,8 +132,7 @@ const Topic: NextPage<TopicProps> = ({
                             )}
                             {variant === 'heavy' &&
                                 contentRows.map(contentRow => {
-                                    const contentType =
-                                        contentRow[0].tags.contentType;
+                                    const contentType = contentRow[0].category;
                                     const direction =
                                         contentType === 'Podcast'
                                             ? 'column'
@@ -144,7 +141,7 @@ const Topic: NextPage<TopicProps> = ({
                                         <CardSection
                                             key={contentType}
                                             content={contentRow}
-                                            title={`${contentRow[0].tags.contentType}s`}
+                                            title={`${contentRow[0].category}s`}
                                             direction={direction}
                                         />
                                     );

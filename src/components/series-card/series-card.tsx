@@ -6,29 +6,37 @@ import {
     Link,
     Button,
     HorizontalRule,
-    List,
 } from '@mdb/flora';
 
 import { SeriesCardProps } from './types';
 import { seriesCardStyles } from './styles';
+import { SeriesEntry } from '../../interfaces/series-entry';
+import SeriesList from './series-list';
+
+const findNextInSeries = (
+    seriesEntries: SeriesEntry[],
+    currentTitle: string
+): SeriesEntry | undefined => {
+    const titles = seriesEntries.map(se => se.title);
+    const index = titles.indexOf(currentTitle);
+    let nextItem;
+    if (index >= 0 && index < titles.length - 1)
+        nextItem = seriesEntries[index + 1];
+    return nextItem;
+};
 
 const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
     series,
     currentSlug,
+    currentTitle,
     className,
 }) => {
-    const { content, title } = series;
-    const currentPieceIndex = content
-        .map(({ slug }) => slug)
-        .indexOf(currentSlug);
+    const nextInSeries = findNextInSeries(series.seriesEntry, currentTitle);
 
-    if (currentPieceIndex === -1) {
-        throw Error("Failed to find this piece's place in the series.");
-    }
-
-    const listItems = content
-        .filter(({ slug }) => slug !== currentSlug)
-        .map(({ title }) => ({ title }));
+    const listItems = series.seriesEntry.map(({ title, slug }) => ({
+        text: title,
+        url: slug,
+    }));
 
     return (
         <div sx={seriesCardStyles} className={className}>
@@ -39,9 +47,10 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
                 sx={{ marginBottom: ['inc40', null, null, 'inc50'] }}
                 variant="heading5"
             >
-                {title}
+                {series.title}
             </TypographyScale>
-            {currentPieceIndex < content.length - 1 && (
+
+            {nextInSeries && (
                 <>
                     <TypographyScale
                         variant="heading6"
@@ -52,12 +61,12 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
                         Up Next
                     </TypographyScale>
                     <div sx={{ marginBottom: ['inc30', null, null, 'inc40'] }}>
-                        <Link href={content[currentPieceIndex + 1].slug}>
-                            {content[currentPieceIndex + 1].title}
+                        <Link href={nextInSeries.slug}>
+                            {nextInSeries.title}
                         </Link>
                     </div>
                     <Button
-                        href={content[currentPieceIndex + 1].slug}
+                        href={nextInSeries.slug}
                         variant="secondary"
                         size="small"
                         customStyles={{ width: 'unset' }}
@@ -70,7 +79,8 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
             <TypographyScale variant="heading6" sx={{ marginBottom: 'inc40' }}>
                 More in this series
             </TypographyScale>
-            <List items={listItems} glyph="circle" />
+
+            <SeriesList items={listItems} />
         </div>
     );
 };

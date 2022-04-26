@@ -32,6 +32,7 @@ export const getCardProps = (
         title,
         image,
         slug,
+        category,
     }: ContentPiece,
     variant: CardVariant
 ): CardProps => {
@@ -40,7 +41,7 @@ export const getCardProps = (
         contentDate,
         description,
         title,
-        pillCategory: tags.contentType,
+        pillCategory: category,
         tags,
         thumbnail: image,
         variant,

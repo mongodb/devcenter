@@ -25,131 +25,132 @@ import {
     DesktopFilters,
     MobileFilters,
 } from '../../components/search-filters';
+import { Tag } from '../../interfaces/tag';
 
-const languageItems = [
+const languageItems: FilterItem[] = [
     {
         name: 'C',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
     {
         name: 'CSharp',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
     {
         name: 'C++',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
     {
         name: 'Go',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
     {
         name: 'Java',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
     {
         name: 'Javascript',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
     {
         name: 'Kotlin',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
     {
         name: 'PHP',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
     {
         name: 'Python',
-        category: 'language',
+        type: 'ProgrammingLanguage',
     },
 ];
 
-const technologyItems = [
+const technologyItems: FilterItem[] = [
     {
         name: 'Docker',
-        category: 'technology',
+        type: 'Technology',
     },
     {
         name: 'Azure',
-        category: 'technology',
+        type: 'Technology',
     },
     {
         name: 'AWS',
-        category: 'technology',
+        type: 'Technology',
     },
     {
         name: 'GCP',
-        category: 'technology',
+        type: 'Technology',
     },
     {
         name: 'FastAPI',
-        category: 'technology',
+        type: 'Technology',
     },
     {
         name: 'Android',
-        category: 'technology',
+        type: 'Technology',
     },
     {
         name: 'iOS',
-        category: 'technology',
+        type: 'Technology',
     },
 ];
 
-const expertiseLevelItems = [
+const expertiseLevelItems: FilterItem[] = [
     {
         name: 'Introductory',
-        category: 'expertise',
+        type: 'ExpertiseLevel',
     },
     {
         name: 'Expert',
-        category: 'expertise',
+        type: 'ExpertiseLevel',
     },
 ];
 
-const contributedByItems = [
+const contributedByItems: FilterItem[] = [
     {
         name: 'MongoDB',
-        category: 'contributed',
+        type: 'AuthorType',
     },
     {
         name: 'Community',
-        category: 'contributed',
+        type: 'AuthorType',
     },
     {
         name: 'Students',
-        category: 'contributed',
+        type: 'AuthorType',
     },
     {
         name: 'Champions',
-        category: 'contributed',
+        type: 'AuthorType',
     },
     {
         name: 'Partners',
-        category: 'contributed',
+        type: 'AuthorType',
     },
 ];
 
-const atlasItems = [
+const atlasItems: FilterItem[] = [
     {
         name: 'DataAPI',
-        category: 'l2',
+        type: 'L2Product',
     },
     {
         name: 'Monitoring',
-        category: 'l2',
+        type: 'L2Product',
     },
 ];
 
-const l1Items = [
+const l1Items: FilterItem[] = [
     {
         name: 'Atlas',
         subItems: atlasItems,
-        category: 'l1',
+        type: 'L1Product',
     },
     {
         name: 'Realm',
-        category: 'l1',
+        type: 'L1Product',
     },
 ];
 
@@ -196,6 +197,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
             shouldRetryOnError: false,
         }
     );
+    console.log(data);
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
@@ -224,46 +226,73 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
     ///////////////////////////////////////
     // COMPUTED VALUES
     ///////////////////////////////////////
-    const languageFilters = allFilters.filter(
-        filter => filter.category === 'language'
-    );
-    const l1Filters = allFilters.filter(filter => filter.category === 'l1');
+    // const languageFilters = allFilters.filter(
+    //     filter => filter.type === 'language'
+    // );
+    // const l1Filters = allFilters.filter(filter => filter.type === 'l1');
 
-    const l2Filters = allFilters.filter(filter => filter.category === 'l2');
-    const technologyFilters = allFilters.filter(
-        filter => filter.category === 'technology'
-    );
-    const contributedFilters = allFilters.filter(
-        filter => filter.category === 'contributed'
-    );
+    // const l2Filters = allFilters.filter(filter => filter.type === 'l2');
+    // const technologyFilters = allFilters.filter(
+    //     filter => filter.type === 'technology'
+    // );
+    // const contributedFilters = allFilters.filter(
+    //     filter => filter.type === 'contributed'
+    // );
     const hasFiltersSet = !!allFilters.length;
+
+    const tagInFilters = (tag: Tag) => {
+        return allFilters.some(
+            filter => filter.name === tag.name && filter.type === tag.type
+        );
+    };
 
     const filteredData = (() => {
         if (!data) {
             return [];
         } else if (!hasFiltersSet) {
-            return data.filter(({ tags }) => tags.contentType === contentType);
+            return data.filter(({ category }) => category === contentType);
         } else {
-            return data.filter(({ tags }) => {
+            return data.filter(({ tags, category }) => {
                 return (
-                    tags.contentType === contentType &&
-                    (!!l1Filters.find(
-                        filter => filter.name === tags.l1Product
-                    ) ||
-                        !!contributedFilters.find(
-                            filter => filter.name === tags.authorType
-                        ) ||
-                        l2Filters.some(
-                            filter => tags.l2Product.indexOf(filter.name) >= 0
-                        ) ||
-                        languageFilters.some(
-                            filter =>
-                                tags.programmingLanguage.indexOf(filter.name) >=
-                                0
-                        ) ||
-                        technologyFilters.some(
-                            filter => tags.technology.indexOf(filter.name) >= 0
-                        ))
+                    category === contentType &&
+                    tags.some(
+                        tag => tag.type !== 'ContentType' && tagInFilters(tag)
+                    )
+                    // (!!l1Filters.find(
+                    //     filter =>
+                    //         filter.name ===
+                    //         tags.find(tag => tag.type === 'L1Product')?.name
+                    // ) ||
+                    //     !!contributedFilters.find(
+                    //         filter =>
+                    //             filter.name ===
+                    //             tags.find(tag => tag.type === 'AuthorType')
+                    //                 ?.name
+                    //     ) ||
+                    //     l2Filters.some(
+                    //         filter =>
+                    //             tags
+                    //                 .filter(({ type }) => type === 'L2Product')
+                    //                 .map(({ name }) => name)
+                    //                 .indexOf(filter.name) >= 0
+                    //     ) ||
+                    //     languageFilters.some(
+                    //         filter =>
+                    //             tags
+                    //                 .filter(
+                    //                     ({ type }) =>
+                    //                         type === 'ProgrammingLanguage'
+                    //                 )
+                    //                 .map(({ name }) => name)
+                    //                 .indexOf(filter.name) >= 0
+                    //     ) ||
+                    //     technologyFilters.some(
+                    //         filter =>
+                    //             tags
+                    //                 .filter(({ type }) => type === 'Technology')
+                    //                 .map(({ name }) => name)
+                    //                 .indexOf(filter.name) >= 0
+                    //     ))
                 );
             });
         }
@@ -318,7 +347,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                         <FilterTag
                             filter={{
                                 name: 'Show less',
-                                category: '',
                             }}
                             onClick={() => setFilterTagsExpanded(false)}
                         />
@@ -336,7 +364,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({ contentType }) => {
                         <FilterTag
                             filter={{
                                 name: `+${allFilters.length - 5}`,
-                                category: '',
                             }}
                             onClick={() => setFilterTagsExpanded(true)}
                         />
