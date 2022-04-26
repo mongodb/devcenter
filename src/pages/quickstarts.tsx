@@ -5,12 +5,12 @@ import { PillCategory } from '../types/pill-category';
 import { ContentTypePageProps } from '../page-templates/content-type/types';
 import { getFilters } from '../page-templates/content-type/utils';
 
-const TutorialsPage: NextPage<ContentTypePageProps> = props => {
+const QuickstartsPage: NextPage<ContentTypePageProps> = props => {
     return <ContentTypePage {...props} />;
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    const contentType: PillCategory = 'Tutorial';
+    const contentType: PillCategory = 'Quickstart';
     const filters = await getFilters(contentType);
 
     return {
@@ -18,4 +18,4 @@ export const getStaticProps: GetStaticProps = async () => {
     };
 };
 
-export default TutorialsPage;
+export default QuickstartsPage;

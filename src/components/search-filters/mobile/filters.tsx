@@ -41,30 +41,42 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     />
                 </div>
                 <HorizontalRule spacing="small" />
-                <FilterGroup
-                    title="Products"
-                    items={l1Items}
-                    filters={tempFilters}
-                    setFilters={onTempFilter}
-                    isMobile={true}
-                />
-                <HorizontalRule spacing="small" />
-                <FilterGroup
-                    title="Language"
-                    items={languageItems}
-                    filters={tempFilters}
-                    setFilters={onTempFilter}
-                    isMobile={true}
-                />
-                <HorizontalRule spacing="small" />
-                <FilterGroup
-                    title="Technology"
-                    items={technologyItems}
-                    filters={tempFilters}
-                    setFilters={onTempFilter}
-                    isMobile={true}
-                />
-                <HorizontalRule spacing="small" />
+                {!!l1Items.length && (
+                    <>
+                        <FilterGroup
+                            title="Products"
+                            items={l1Items}
+                            filters={tempFilters}
+                            setFilters={onTempFilter}
+                            isMobile={true}
+                        />
+                        <HorizontalRule spacing="small" />
+                    </>
+                )}
+                {!!languageItems.length && (
+                    <>
+                        <FilterGroup
+                            title="Language"
+                            items={languageItems}
+                            filters={tempFilters}
+                            setFilters={onTempFilter}
+                            isMobile={true}
+                        />
+                        <HorizontalRule spacing="small" />
+                    </>
+                )}
+                {!!technologyItems.length && (
+                    <>
+                        <FilterGroup
+                            title="Technology"
+                            items={technologyItems}
+                            filters={tempFilters}
+                            setFilters={onTempFilter}
+                            isMobile={true}
+                        />
+                        <HorizontalRule spacing="small" />
+                    </>
+                )}
                 {/* <FilterGroup
         title="Expertise Level"
         items={expertiseLevelItems}
@@ -72,13 +84,15 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
         setFilters={setExpertiseLevelFilters}
         isMobile={true}
     /> */}
-                <FilterGroup
-                    title="Contributed By"
-                    items={contributedByItems}
-                    filters={tempFilters}
-                    setFilters={onTempFilter}
-                    isMobile={true}
-                />
+                {!!contributedByItems.length && (
+                    <FilterGroup
+                        title="Contributed By"
+                        items={contributedByItems}
+                        filters={tempFilters}
+                        setFilters={onTempFilter}
+                        isMobile={true}
+                    />
+                )}
             </div>
             <div sx={buttonSection}>
                 <Button

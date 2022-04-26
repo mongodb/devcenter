@@ -112,9 +112,11 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                             .map(filter => {
                                 if (filter.subItems && filter.subItems.length) {
                                     return (
-                                        <div key={filter.name}>
+                                        <div
+                                            key={`${filter.name} ${filter.type}`}
+                                        >
                                             <Checkbox
-                                                name={filter.name}
+                                                name={`${filter.name} ${filter.type}`}
                                                 label={filter.name}
                                                 onToggle={checked =>
                                                     onCheckToggle(
@@ -142,8 +144,8 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                                 }
                                 return (
                                     <Checkbox
-                                        key={filter.name}
-                                        name={filter.name}
+                                        key={`${filter.name} ${filter.type}`}
+                                        name={`${filter.name} ${filter.type}`}
                                         label={filter.name}
                                         onToggle={checked =>
                                             onCheckToggle(checked, filter)
