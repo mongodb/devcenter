@@ -11,7 +11,8 @@ const TutorialsPage: NextPage<ContentTypePageProps> = props => {
 
 export const getStaticProps: GetStaticProps = async () => {
     const contentType: PillCategory = 'Tutorial';
-    const filters = await getFilters(contentType);
+    // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
+    const { contentTypeItems, ...filters } = await getFilters(contentType);
 
     return {
         props: { contentType, ...filters },

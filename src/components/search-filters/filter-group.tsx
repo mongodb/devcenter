@@ -117,7 +117,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                                         >
                                             <Checkbox
                                                 name={`${filter.name} ${filter.type}`}
-                                                label={filter.name}
+                                                label={`${filter.name} (${filter.count})`}
                                                 onToggle={checked =>
                                                     onCheckToggle(
                                                         checked,
@@ -146,7 +146,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                                     <Checkbox
                                         key={`${filter.name} ${filter.type}`}
                                         name={`${filter.name} ${filter.type}`}
-                                        label={filter.name}
+                                        label={`${filter.name} (${filter.count})`}
                                         onToggle={checked =>
                                             onCheckToggle(checked, filter)
                                         }

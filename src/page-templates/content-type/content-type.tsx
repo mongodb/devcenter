@@ -187,6 +187,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         <FilterTag
                             filter={{
                                 name: 'Show less',
+                                count: 0,
+                                subItems: [],
                             }}
                             onClick={() => setFilterTagsExpanded(false)}
                         />
@@ -204,6 +206,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         <FilterTag
                             filter={{
                                 name: `+${allFilters.length - 5}`,
+                                count: 0,
+                                subItems: [],
                             }}
                             onClick={() => setFilterTagsExpanded(true)}
                         />

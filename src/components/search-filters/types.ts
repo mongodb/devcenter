@@ -3,7 +3,8 @@ import { TagType } from '../../types/tag-type';
 export interface FilterItem {
     name: string;
     type?: TagType;
-    subItems?: FilterItem[];
+    subItems: FilterItem[];
+    count: number;
 }
 
 export interface FilterGroupProps {
