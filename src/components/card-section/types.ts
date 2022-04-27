@@ -8,4 +8,6 @@ export interface CardSectionProps {
 
 export interface FeaturedCardSectionProps {
     content: ContentPiece[];
+    className?: string;
+    title?: string;
 }

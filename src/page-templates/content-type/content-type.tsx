@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
+import Image from 'next/image';
 import useSWR from 'swr';
 import {
     GridLayout,
@@ -35,7 +36,8 @@ import {
 } from './styles';
 
 import noResults from '../../../public/no-results.png';
-import Image from 'next/image';
+
+import { FeaturedCardSection } from '../../components/card-section';
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     contentType,
@@ -43,6 +45,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     languageItems,
     technologyItems,
     contributedByItems,
+    featured,
 }) => {
     ///////////////////////////////////////
     // HOOKS
@@ -303,6 +306,19 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                 onChange={onSearch}
                             />
                         </div>
+                        {!searchString && !hasFiltersSet && (
+                            <FeaturedCardSection
+                                content={featured}
+                                sx={{
+                                    marginBottom: [
+                                        'section20',
+                                        null,
+                                        'section50',
+                                    ],
+                                }}
+                                title={`Featured ${contentType}s`}
+                            />
+                        )}
                         {resultsStringAndTags}
                         {!!filteredData.length || isValidating || error ? (
                             <>

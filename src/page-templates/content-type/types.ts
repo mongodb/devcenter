@@ -1,4 +1,5 @@
 import { FilterItem } from '../../components/search-filters';
+import { ContentPiece } from '../../interfaces/content-piece';
 import { PillCategory } from '../../types/pill-category';
 
 export interface ContentTypePageProps {
@@ -7,4 +8,5 @@ export interface ContentTypePageProps {
     languageItems: FilterItem[];
     technologyItems: FilterItem[];
     contributedByItems: FilterItem[];
+    featured: ContentPiece[];
 }

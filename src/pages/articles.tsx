@@ -4,6 +4,7 @@ import { PillCategory } from '../types/pill-category';
 
 import { ContentTypePageProps } from '../page-templates/content-type/types';
 import { getFilters } from '../page-templates/content-type/utils';
+import getL1Content from '../mockdata/get-l1-content';
 
 const ArticlesPage: NextPage<ContentTypePageProps> = props => {
     return <ContentTypePage {...props} />;
@@ -14,8 +15,10 @@ export const getStaticProps: GetStaticProps = async () => {
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
     const { contentTypeItems, ...filters } = await getFilters(contentType);
 
+    const { featured } = getL1Content();
+
     return {
-        props: { contentType, ...filters },
+        props: { contentType, ...filters, featured },
     };
 };
 
