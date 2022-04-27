@@ -27,26 +27,15 @@ import {
 import { Tag } from '../../interfaces/tag';
 
 import { ContentTypePageProps } from './types';
+import {
+    searchBoxStyles,
+    pageWrapper,
+    desktopFiltersStyles,
+    resultsStringAndTagsStyles,
+} from './styles';
 
-const desktopFiltersStyles = {
-    gridColumn: ['span 6', null, 'span 8', 'span 3'],
-    display: ['none', null, null, 'flex'],
-    flexDirection: 'column' as 'column',
-    gap: 'inc50',
-};
-
-const pageWrapper = {
-    paddingBottom: 'inc160',
-    px: ['inc40', null, 'inc50', 'inc70'],
-    paddingTop: ['inc40', null, 'inc50', 'inc70'],
-};
-
-const searchBoxStyles = {
-    '& > div': {
-        width: '100%',
-    },
-    marginBottom: ['inc30', null, 'inc70'],
-};
+import noResults from '../../../public/no-results.png';
+import Image from 'next/image';
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     contentType,
@@ -134,6 +123,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     ///////////////////////////////////////
     // COMPUTED ELEMENTS
     ///////////////////////////////////////
+    if (allFilters.length <= 5 && filterTagsExpanded) {
+        setFilterTagsExpanded(false);
+    }
+
     const CTAElement = (
         <div sx={CTAContainerStyles}>
             <Button
@@ -146,9 +139,31 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         </div>
     );
 
-    if (allFilters.length <= 5 && filterTagsExpanded) {
-        setFilterTagsExpanded(false);
-    }
+    const emptyState = (
+        <div
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <div>
+                <Image src={noResults}></Image>
+            </div>
+            <Button
+                hasIcon={true}
+                iconName={ESystemIconNames.ARROW_LEFT}
+                iconPosition="left"
+                onClick={() => {
+                    setAllFilters([]);
+                    setSearchString('');
+                }}
+            >
+                Back to all {contentType.toLowerCase()}s
+            </Button>
+        </div>
+    );
 
     const filterTags = (
         <div
@@ -209,22 +224,13 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     );
 
     const resultsStringAndTags = (
-        <div
-            sx={{
-                marginBottom: 'inc50',
-                display: 'flex',
-                flexDirection: ['column', null, 'row', 'column'],
-                justifyContent: ['start', null, 'space-between', 'start'],
-                alignItems: ['start', null, 'center', 'start'],
-                gap: 'inc30',
-            }}
-        >
+        <div sx={resultsStringAndTagsStyles}>
             {(data || isValidating) && (
                 <TypographyScale variant="heading6">
                     {!allFilters.length && !searchString
                         ? `All ${contentType}s`
                         : isValidating
-                        ? 'Loading...'
+                        ? ''
                         : numberOfResults === 1
                         ? '1 Result'
                         : `${numberOfResults} Results`}
@@ -293,9 +299,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                 onChange={onSearch}
                             />
                         </div>
-                        {filteredData && (
+                        {resultsStringAndTags}
+                        {!!filteredData.length || isValidating || error ? (
                             <>
-                                {resultsStringAndTags}
                                 <Results
                                     data={[shownData]}
                                     isLoading={isValidating}
@@ -324,6 +330,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                     </div>
                                 )}
                             </>
+                        ) : (
+                            emptyState
                         )}
                     </div>
                 </GridLayout>

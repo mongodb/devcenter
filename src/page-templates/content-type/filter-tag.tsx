@@ -1,33 +1,6 @@
 import { SystemIcon, TypographyScale, ESystemIconNames } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
-
-const tagWrapper = {
-    bg: 'black10',
-    fontWeight: 'medium',
-    fontSize: 'inc20',
-    display: 'flex',
-    gap: 'inc20',
-    alignItems: 'center',
-    borderStyle: 'solid',
-    borderRadius: 'circle',
-    borderColor: 'black30',
-    borderWidth: 'inc10',
-    px: 'inc30',
-    py: 'inc20',
-    position: 'relative' as 'relative',
-    '&:hover': {
-        bg: 'black20',
-        borderColor: 'black80',
-        borderWidth: 'inc20',
-        paddingBottom: `calc(${theme.space.inc20} - 2px)`,
-        paddingRight: `calc(${theme.space.inc30} - 2px)`,
-        right: '1px',
-        bottom: '1px',
-    },
-    cursor: 'pointer',
-    height: '16px',
-};
 import { FilterItem } from '../../components/search-filters';
+import { tagWrapper } from './styles';
 
 interface FilterTagProps {
     filter: FilterItem;

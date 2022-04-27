@@ -28,6 +28,14 @@ export const getFilters = async (contentType: PillCategory) => {
                 if (l1FilterItem) {
                     if (!l1FilterItem.subItems) {
                         l1FilterItem.subItems = [];
+                    } else if (
+                        l1FilterItem.subItems.find(
+                            subItem =>
+                                l2FilterItem.name === subItem.name &&
+                                l2FilterItem.type === subItem.type
+                        )
+                    ) {
+                        return;
                     }
                     return l1FilterItem.subItems.push(l2FilterItem);
                 } else {
