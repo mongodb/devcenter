@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 
 const Articles: NextPage = () => (
     <>
-        <h1>Articles</h1>
+        <h1>This is Articles page</h1>
     </>
 );
 
