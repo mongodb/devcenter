@@ -12,7 +12,7 @@ import { getAllArticleSeries } from './get-all-article-series';
 import { getAllVideoSeries } from './get-all-video-series';
 import { getAllPodcastSeries } from './get-all-podcast-series';
 import { flattenTags } from '../utils/flatten-tags';
-import { MOCK_TAGS } from '../mockdata/mock-tags';
+import { MOCK_PODCAST_TAGS, MOCK_VIDEO_TAGS } from '../mockdata/mock-tags';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
@@ -48,7 +48,7 @@ export const mapPodcastsToContentItems = (
             contentDate: p.publishDate,
             slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
             //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: MOCK_TAGS,
+            tags: MOCK_PODCAST_TAGS,
             title: p.title,
             featured: false,
         };
@@ -76,7 +76,7 @@ export const mapVideosToContentItems = (
             contentDate: v.publishDate,
             slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
             //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: MOCK_TAGS,
+            tags: MOCK_VIDEO_TAGS,
             title: v.title,
             featured: false,
         };

@@ -15,15 +15,6 @@ export const getL1L2Content = async (
         return slugsInTags.includes(inputSlug);
     });
 
-    filteredContents.map(c => {
-        if (c.category !== 'Video' && c.category !== 'Podcast') {
-            console.log('****');
-            console.log(c.title);
-            console.log(JSON.stringify(c.tags));
-            console.log(inputSlug);
-            console.log('****');
-        }
-    });
-
+    //identifyFeaturedContent
     return filteredContents;
 };

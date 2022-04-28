@@ -18,6 +18,8 @@ import { getL1L2Content } from '../../service/get-l1-l2-content';
 import { PillCategoryValues } from '../../types/pill-category';
 import { capitalizeFirstLetter } from '../../utils/format-string';
 import { getAllContentItems } from '../../service/get-all-content';
+import { getSideNav } from '../../service/get-side-nav';
+import TertiaryNav from '../../components/tertiary-nav';
 
 interface TopicProps {
     name: string;
@@ -88,7 +90,7 @@ const Topic: NextPage<TopicProps> = ({
                 description={description}
                 ctas={ctas}
             />
-            {/*<TertiaryNav items={tertiaryNavItems} topic={name}/>*/}
+            <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div
                 sx={{
                     paddingBottom: 'inc160',
@@ -206,6 +208,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
 
+    const tertiaryNavItems = await getSideNav(slugString);
+
     const content = await getL1L2Content(slugString);
 
     const variant: 'light' | 'medium' | 'heavy' =
@@ -216,13 +220,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         slug: slugString,
         content,
         variant,
+        tertiaryNavItems: tertiaryNavItems,
         //TODO
         description: 'Description',
         ctas: [],
         topics: [],
         relatedTopics: [],
         featured: [],
-        tertiaryNavItems: [],
     };
 
     return { props: data };

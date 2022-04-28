@@ -18,4 +18,20 @@ const tag3: Tag = {
     slug: '/language/java',
 };
 
-export const MOCK_TAGS: Tag[] = [tag1, tag2, tag3];
+const tag4: Tag = {
+    name: 'Podcast',
+    type: 'ContentType',
+    slug: '/podcast',
+};
+
+const tag5: Tag = {
+    name: 'Video',
+    type: 'ContentType',
+    slug: '/video',
+};
+
+export const MOCK_PODCAST_TAGS: Tag[] = [tag1, tag2, tag3, tag4];
+
+export const MOCK_VIDEO_TAGS: Tag[] = [tag1, tag2, tag3, tag5];
+
+export const MOCK_ARTICLE_TAGS: Tag[] = [tag1, tag2, tag3];
