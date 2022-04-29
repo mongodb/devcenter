@@ -277,14 +277,14 @@ const ContentPage: NextPage<ContentPageProps> = ({
 
             <div sx={middleSectionStyles}>
                 <div sx={imageStyles}>
-                    {/*<div>*/}
-                    {/*    <iframe width="100%" height="215px" id="casted-embed-1d88b5c0" scrolling="no"*/}
-                    {/*            style={{border: "none"}}*/}
-                    {/*            src="https://podcasts.mongodb.com/embed/v2/regularPlayer/1d88b5c0">*/}
-                    {/*    </iframe>*/}
-                    {/*    <script type="text/javascript">*/}
-                    {/*    </script>*/}
-                    {/*</div>*/}
+                    {/*                  <div><iframe width="100%" height="215px" id="casted-embed-22bc2ce0" scrolling="no" style={{border: "none"}} src="https://podcasts.mongodb.com/embed/v2/regularPlayer/22bc2ce0/takeaways/guests/transcript/resources/subscribe"></iframe>*/}
+                    {/*                  <Script id="castedscr"  strategy="afterInteractive"*/}
+                    {/*                           dangerouslySetInnerHTML={{*/}
+                    {/*                               __html: `*/}
+                    {/*  window.addEventListener("message", function(message){if(message.origin === "https://podcasts.mongodb.com" ) { if( message.data.event) { if(message.data.event === "castedSizeUpdate") { var casted_episode_player = document.getElementById('casted-embed-' + message.data.payload.slug); if(casted_episode_player) { casted_episode_player.height = message.data.payload.height;if(casted_episode_player.contentWindow) {casted_episode_player.contentWindow.postMessage({ event: "castedStopUpdate" }, "https://podcasts.mongodb.com");}}}}}}, false)*/}
+                    {/*`,*/}
+                    {/*                           }}></Script>*/}
+                    {/*                  </div>*/}
                     <Image
                         alt={parseUndefinedValue(image?.alt)}
                         src={getPlaceHolderImage(image?.url)}

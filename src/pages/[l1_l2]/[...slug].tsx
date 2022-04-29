@@ -215,18 +215,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
 
+    //TODO Filter for the ones which
+    const featured = content.slice(0, 3);
+
     const data = {
         name,
         slug: slugString,
         content,
         variant,
         tertiaryNavItems: tertiaryNavItems,
+        featured: featured,
         //TODO
         description: 'Description',
         ctas: [],
         topics: [],
         relatedTopics: [],
-        featured: [],
     };
 
     return { props: data };

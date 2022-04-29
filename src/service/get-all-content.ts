@@ -59,7 +59,7 @@ export const mapPodcastsToContentItems = (
             item.image = { url: p.thumbnailUrl, alt: 'randomAlt' };
         }
         item.podcastFileUrl = p.podcastFileUrl;
-        addSeriesToItem(item, 'podcast', podcastSeries);
+        //addSeriesToItem(item, 'podcast', podcastSeries);
         items.push(item);
     });
     return items;
@@ -87,7 +87,7 @@ export const mapVideosToContentItems = (
             item.image = { url: v.thumbnailUrl, alt: 'randomAlt' };
         }
         item.videoId = v.videoId;
-        addSeriesToItem(item, 'video', videoSeries);
+        //addSeriesToItem(item, 'video', videoSeries);
         items.push(item);
     });
     return items;
@@ -128,7 +128,7 @@ export const mapArticlesToContentItems = (
         if (a.image) {
             item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };
         }
-        addSeriesToItem(item, 'article', articleSeries);
+        //addSeriesToItem(item, 'article', articleSeries);
         items.push(item);
     });
     return items;

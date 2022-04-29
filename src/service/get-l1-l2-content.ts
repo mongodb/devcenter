@@ -16,5 +16,11 @@ export const getL1L2Content = async (
     });
 
     //identifyFeaturedContent
+    //TODO MAKE CALL TO FEATURED ARTICLES
+
+    filteredContents.sort((a, b) => {
+        return b.contentDate.localeCompare(a.contentDate);
+    });
+
     return filteredContents;
 };
