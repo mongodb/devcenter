@@ -20,6 +20,7 @@ import { capitalizeFirstLetter } from '../../utils/format-string';
 import { getAllContentItems } from '../../service/get-all-content';
 import { getSideNav } from '../../service/get-side-nav';
 import TertiaryNav from '../../components/tertiary-nav';
+import { getDistinctL1L2Slugs } from '../../service/get-distinct-l1-l2-slugs';
 
 interface TopicProps {
     name: string;
@@ -171,21 +172,7 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async () => {
     let paths: any[] = [];
 
-    const contents: ContentItem[] = await getAllContentItems();
-
-    const l1l2Tags: Tag[][] = contents.map(c => c.tags);
-
-    const flattenedL1L2Tags: Tag[] = [];
-
-    l1l2Tags.forEach(tags => {
-        tags.forEach(tag => flattenedL1L2Tags.push(tag));
-    });
-
-    const slugs: string[] = flattenedL1L2Tags
-        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
-        .map(tag => tag.slug);
-
-    const distinctSlugs = Array.from(new Set(slugs));
+    const distinctSlugs = await getDistinctL1L2Slugs();
 
     distinctSlugs.forEach(distinctSlug => {
         const parsedSlug = distinctSlug.startsWith('/')
