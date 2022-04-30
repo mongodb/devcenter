@@ -113,17 +113,6 @@ const SecondaryNavBarDup: React.FunctionComponent = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);
     };
 
-    // const fetchData = async () => {
-    //     console.log('mounted');
-    //     const secNav = await getSecondaryNavMenu();
-    //     console.log('Get my data', JSON.stringify(secNav));
-    // };
-
-    // useEffect(() => {
-    //     console.log('useEffect');
-    //     fetchData();
-    // }, []);
-
     return (
         <>
             <StyledSecondaryNavContainer>
