@@ -19,64 +19,79 @@ const secondaryNavData = [
 
 export const myData = [
     {
-        name: 'Products',
-        slug: '',
+        name: 'Topics',
+        slug: '/',
         dropDownItems: [
             {
-                name: 'MongoDB',
-                slug: '/product/mongodb',
+                name: 'Products',
+                slug: '',
                 dropDownItems: [
                     {
-                        name: 'Full Text Search',
-                        slug: '/product/mongodb/full-text-search',
+                        name: 'MongoDB',
+                        slug: '/product/mongodb',
+                        dropDownItems: [
+                            {
+                                name: 'Full Text Search',
+                                slug: '/product/mongodb/full-text-search',
+                            },
+                            {
+                                name: 'Sharding',
+                                slug: '/product/mongodb/sharding',
+                            },
+                        ],
                     },
-                    { name: 'Sharding', slug: '/product/mongodb/sharding' },
+                    {
+                        name: 'Realm (Mobile)',
+                        slug: '/product/realm-(mobile)',
+                        dropDownItems: [
+                            {
+                                name: 'Sync',
+                                slug: '/product/realm-(mobile)/sync',
+                            },
+                        ],
+                    },
+                    {
+                        name: 'Atlas',
+                        slug: '/product/atlas',
+                        dropDownItems: [
+                            {
+                                name: 'Aggregations',
+                                slug: '/product/atlas/aggregations',
+                            },
+                        ],
+                    },
                 ],
             },
             {
-                name: 'Realm (Mobile)',
-                slug: '/product/realm-(mobile)',
+                name: 'Languages',
+                slug: '',
                 dropDownItems: [
-                    { name: 'Sync', slug: '/product/realm-(mobile)/sync' },
+                    { name: 'Go', slug: '/language/go' },
+                    { name: 'Java', slug: '/language/java' },
+                    { name: 'CSharp', slug: '/language/csharp' },
+                    { name: 'C', slug: '/language/c' },
                 ],
             },
             {
-                name: 'Atlas',
-                slug: '/product/atlas',
+                name: 'Technologies',
+                slug: '',
+                dropDownItems: [
+                    { name: 'GCP', slug: '/technology/gcp' },
+                    { name: 'BI', slug: '/technology/bi' },
+                    { name: 'AWS', slug: '/technology/aws' },
+                ],
+            },
+            {
+                name: 'Expertise Levels',
+                slug: '',
                 dropDownItems: [
                     {
-                        name: 'Aggregations',
-                        slug: '/product/atlas/aggregations',
+                        name: 'Introductory',
+                        slug: '/expertise-level/introductory',
                     },
+                    { name: 'Expert', slug: '/expertise-level/expert' },
                 ],
             },
-        ],
-    },
-    {
-        name: 'Languages',
-        slug: '',
-        dropDownItems: [
-            { name: 'Go', slug: '/language/go' },
-            { name: 'Java', slug: '/language/java' },
-            { name: 'CSharp', slug: '/language/csharp' },
-            { name: 'C', slug: '/language/c' },
-        ],
-    },
-    {
-        name: 'Technologies',
-        slug: '',
-        dropDownItems: [
-            { name: 'GCP', slug: '/technology/gcp' },
-            { name: 'BI', slug: '/technology/bi' },
-            { name: 'AWS', slug: '/technology/aws' },
-        ],
-    },
-    {
-        name: 'Expertise Levels',
-        slug: '',
-        dropDownItems: [
-            { name: 'Introductory', slug: '/expertise-level/introductory' },
-            { name: 'Expert', slug: '/expertise-level/expert' },
         ],
     },
     { name: 'Documentation', slug: 'https://www.mongodb.com/docs/' },
@@ -92,12 +107,3 @@ export const myData = [
 ];
 
 export default secondaryNavData;
-
-
-
-
-
-
-
-
-

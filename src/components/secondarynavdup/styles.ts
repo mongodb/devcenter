@@ -36,7 +36,8 @@ export const MainLink = styled(Link)`
         color: ${theme.colors.text.default}!important;
         :hover {
             border-bottom: none !important;
-            @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+            @media only screen and (min-width: ${theme.sizes.breakpoint
+                    .large}) {
                 border-bottom: 2px solid ${theme.colors.green40}!important;
             }
         }
@@ -44,11 +45,16 @@ export const MainLink = styled(Link)`
 `;
 
 export const MainLinkStyles = {
-        float: ['initial', 'initial', 'initial', 'left'] as ['initial', 'initial', 'initial', 'left'],
-        marginRight: [null, null, null, 'inc90'],
-        fontSize: 'inc30',
-        fontWeight: 500,
-    };
+    float: ['initial', 'initial', 'initial', 'left'] as [
+        'initial',
+        'initial',
+        'initial',
+        'left'
+    ],
+    marginRight: [null, null, null, 'inc90'],
+    fontSize: 'inc30',
+    fontWeight: 500,
+};
 
 export const SecondaryLinks = styled.ul`
     float: initial;
@@ -104,12 +110,12 @@ export const DropDownWrapper = styled.div`
 `;
 
 export const DropDownMenuList = styled.ul`
-    list-style-type: none ;
+    list-style-type: none;
     padding: 0;
     white-space: nowrap;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         left: 0;
         a:not(:last-child) {
             margin-bottom: ${theme.space.inc40};

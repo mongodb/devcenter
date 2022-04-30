@@ -18,15 +18,35 @@ const aLinkStyles = () => {
 
 const DropDownMenu = ({ items }: any) => (
     <DropDownWrapper>
-        <span className="dropdown-titles">Programming Languages</span>
         <DropDownMenuList>
-            {items.map(({ name, slug }: any) => (
+            {items.map(({ name, slug, dropDownItems }: any) => (
                 <li key={name}>
-                    <Link href={slug} passHref>
-                        <a sx={aLinkStyles()} key={name}>
-                            {name}
-                        </a>
-                    </Link>
+                    {slug ? (
+                        <Link href={slug} passHref>
+                            <a
+                                className="dropdown-titles"
+                                sx={aLinkStyles()}
+                                key={name}
+                            >
+                                {name}
+                            </a>
+                        </Link>
+                    ) : (
+                        <p>{name}</p>
+                    )}
+                    {dropDownItems && (
+                        <ul>
+                            {dropDownItems.map(({ name, slug }: any) => (
+                                <li key={name}>
+                                    <Link href={slug} passHref>
+                                        <a sx={aLinkStyles()} key={name}>
+                                            {name}
+                                        </a>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </li>
             ))}
         </DropDownMenuList>
