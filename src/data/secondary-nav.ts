@@ -90,6 +90,7 @@ export const myData = [
             {
                 name: 'Expertise Levels',
                 slug: '',
+                all: 'All Topics',
                 path: '/all-topics',
                 dropDownItems: [
                     {

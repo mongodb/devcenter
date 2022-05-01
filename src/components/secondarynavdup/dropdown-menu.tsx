@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { DropDownMenuList, DropDownWrapper } from './styles';
+import { DropDownMenuList, DropDownWrapper, StyledFloraLink } from './styles';
 import theme from '@mdb/flora/theme';
+import { ESystemIconNames, SystemIcon } from '@mdb/flora';
+import { useState } from 'react';
 
 const aLinkStyles = {
-    display: 'block',
+    display: 'flex',
+    alignItems: 'center',
     fontSize: 'inc20',
     fontFamily: 'euclid-circular-a',
     fontWeight: 300,
@@ -16,6 +19,12 @@ const aLinkStyles = {
     },
 };
 
+const plusOrMinusStylesForDropDowns = {
+    display: ['inline', 'inline', 'inline', 'none'],
+    position: 'absolute' as 'absolute',
+    right: ['inc40', 'inc50', 'inc50', 0],
+};
+
 const SubLinks = styled.ul`
     list-style-type: none;
     padding: 0;
@@ -25,26 +34,89 @@ const SubLinks = styled.ul`
     }
 `;
 
-const DropDownMenu = ({ items }: any) => (
-    <DropDownWrapper>
-        <DropDownMenuList>
-            {items.map(({ name, slug, all, path, dropDownItems }: any) => (
+const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const onClickShowMenu = () => {
+        setIsOpen(!isOpen);
+    };
+    return (
+        <li key={name}>
+            {slug ? (
+                <Link href={slug} passHref>
+                    <a className="dropdown-titles" sx={aLinkStyles} key={name}>
+                        {name}
+                    </a>
+                </Link>
+            ) : (
                 <>
-                    <li key={name}>
-                        {slug ? (
-                            <Link href={slug} passHref>
-                                <a
-                                    className="dropdown-titles"
-                                    sx={aLinkStyles}
-                                    key={name}
-                                >
-                                    {name}
-                                </a>
-                            </Link>
-                        ) : (
-                            <p>{name}</p>
-                        )}
-                        {dropDownItems && (
+                    <span
+                        sx={{
+                            display: ['inline', 'inline', 'inline', 'none'],
+                        }}
+                    >
+                        <StyledFloraLink onClick={onClickShowMenu}>
+                            {name}
+                            {!isOpen && (
+                                <SystemIcon
+                                    sx={{
+                                        paddingLeft: 'inc10',
+                                        display: [
+                                            'none',
+                                            'none',
+                                            'none',
+                                            'inline',
+                                        ],
+                                    }}
+                                    name={ESystemIconNames.CHEVRON_DOWN}
+                                    size="small"
+                                />
+                            )}
+                            {!isOpen && (
+                                <SystemIcon
+                                    sx={plusOrMinusStylesForDropDowns}
+                                    name={ESystemIconNames.PLUS}
+                                    size="medium"
+                                    color="success"
+                                />
+                            )}
+                            {isOpen && (
+                                <SystemIcon
+                                    sx={{
+                                        paddingLeft: 'inc10',
+                                        display: [
+                                            'none',
+                                            'none',
+                                            'none',
+                                            'inline',
+                                        ],
+                                    }}
+                                    name={ESystemIconNames.CHEVRON_UP}
+                                    size="small"
+                                />
+                            )}
+                            {isOpen && (
+                                <SystemIcon
+                                    sx={plusOrMinusStylesForDropDowns}
+                                    name={ESystemIconNames.MINUS}
+                                    size="medium"
+                                    color="success"
+                                />
+                            )}
+                        </StyledFloraLink>
+                    </span>
+                    <p
+                        sx={{
+                            display: ['none', 'none', 'none', 'block'],
+                        }}
+                    >
+                        {name}
+                    </p>
+                </>
+            )}
+            {dropDownItems && (
+                <>
+                    <div sx={{ display: ['block', 'block', 'block', 'none'] }}>
+                        {isOpen && (
                             <>
                                 <SubLinks>
                                     {dropDownItems.map(
@@ -56,6 +128,22 @@ const DropDownMenu = ({ items }: any) => (
                                                         key={name}
                                                     >
                                                         {name}
+                                                        <SystemIcon
+                                                            sx={{
+                                                                paddingLeft:
+                                                                    'inc10',
+                                                                display: [
+                                                                    'inline',
+                                                                    'inline',
+                                                                    'inline',
+                                                                    'none',
+                                                                ],
+                                                            }}
+                                                            name={
+                                                                ESystemIconNames.CHEVRON_RIGHT
+                                                            }
+                                                            size="small"
+                                                        />
                                                     </a>
                                                 </Link>
                                             </li>
@@ -63,15 +151,82 @@ const DropDownMenu = ({ items }: any) => (
                                     )}
                                 </SubLinks>
                                 <Link href={path} passHref>
-                                    <a sx={aLinkStyles}>{all}</a>
+                                    {all}
                                 </Link>
                             </>
                         )}
-                    </li>
+                    </div>
+                    <div sx={{ display: ['none', 'none', 'none', 'block'] }}>
+                        <>
+                            <SubLinks>
+                                {dropDownItems.map(({ name, slug }: any) => (
+                                    <li key={name}>
+                                        <Link href={slug} passHref>
+                                            <a sx={aLinkStyles} key={name}>
+                                                {name}
+                                                <SystemIcon
+                                                    sx={{
+                                                        paddingLeft: 'inc10',
+                                                        display: [
+                                                            'inline',
+                                                            'inline',
+                                                            'inline',
+                                                            'none',
+                                                        ],
+                                                    }}
+                                                    name={
+                                                        ESystemIconNames.CHEVRON_RIGHT
+                                                    }
+                                                    size="small"
+                                                />
+                                            </a>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </SubLinks>
+                            <Link href={path} passHref>
+                                <a sx={aLinkStyles}>
+                                    {all}
+                                    <SystemIcon
+                                        sx={{
+                                            paddingLeft: 'inc10',
+                                            display: [
+                                                'none',
+                                                'none',
+                                                'none',
+                                                'inline',
+                                            ],
+                                        }}
+                                        name={ESystemIconNames.CHEVRON_RIGHT}
+                                        size="small"
+                                    />
+                                </a>
+                            </Link>
+                        </>
+                    </div>
                 </>
-            ))}
-        </DropDownMenuList>
-    </DropDownWrapper>
-);
+            )}
+        </li>
+    );
+};
+
+const DropDownMenu = ({ items }: any) => {
+    return (
+        <DropDownWrapper>
+            <DropDownMenuList>
+                {items.map(({ name, slug, all, path, dropDownItems }: any) => (
+                    <SubNavLink
+                        key={name}
+                        name={name}
+                        slug={slug}
+                        all={all}
+                        path={path}
+                        dropDownItems={dropDownItems}
+                    />
+                ))}
+            </DropDownMenuList>
+        </DropDownWrapper>
+    );
+};
 
 export default DropDownMenu;
