@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { DropDownMenuList, DropDownWrapper, StyledFloraLink } from './styles';
 import theme from '@mdb/flora/theme';
-import { Link as FloraLink, TypographyScale } from '@mdb/flora';
-import { ESystemIconNames, SystemIcon } from '@mdb/flora';
-import { useState } from 'react';
+import {
+    Link as FloraLink,
+    TypographyScale,
+    ESystemIconNames,
+    SystemIcon,
+} from '@mdb/flora';
+import { DropDownMenuList, DropDownWrapper, StyledFloraLink } from './styles';
 
 const aLinkStyles = {
     display: 'flex',

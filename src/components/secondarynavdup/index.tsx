@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { GetStaticProps } from 'next';
-import { ESystemIconNames } from '@mdb/flora';
+import { ESystemIconNames, HorizontalRule, SystemIcon } from '@mdb/flora';
 import secondaryNavData, { myData } from '../../data/secondary-nav';
 import {
     SecondaryLinks,
@@ -12,7 +12,6 @@ import {
 
 import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
-import { HorizontalRule, SystemIcon } from '@mdb/flora';
 import { getSecondaryNavMenu } from '../../service/get-secondary-nav-menu';
 
 const chevronStylesForMainLink = {
