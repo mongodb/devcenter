@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { DropDownMenuList, DropDownWrapper, StyledFloraLink } from './styles';
 import theme from '@mdb/flora/theme';
+import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import { useState } from 'react';
 
@@ -75,7 +76,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                 <SystemIcon
                                     sx={plusOrMinusStylesForDropDowns}
                                     name={ESystemIconNames.PLUS}
-                                    size="medium"
+                                    size="small"
                                     color="success"
                                 />
                             )}
@@ -104,13 +105,15 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                             )}
                         </StyledFloraLink>
                     </span>
-                    <p
+                    <TypographyScale
                         sx={{
                             display: ['none', 'none', 'none', 'block'],
                         }}
+                        inverse
+                        variant="body1"
                     >
                         {name}
-                    </p>
+                    </TypographyScale>
                 </>
             )}
             {dropDownItems && (
@@ -185,22 +188,13 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                 ))}
                             </SubLinks>
                             <Link href={path} passHref>
-                                <a sx={aLinkStyles}>
+                                <FloraLink
+                                    inverse
+                                    linkIcon="chevron"
+                                    linkIconDisableExpand={true}
+                                >
                                     {all}
-                                    <SystemIcon
-                                        sx={{
-                                            paddingLeft: 'inc10',
-                                            display: [
-                                                'none',
-                                                'none',
-                                                'none',
-                                                'inline',
-                                            ],
-                                        }}
-                                        name={ESystemIconNames.CHEVRON_RIGHT}
-                                        size="small"
-                                    />
-                                </a>
+                                </FloraLink>
                             </Link>
                         </>
                     </div>

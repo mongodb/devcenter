@@ -73,7 +73,7 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
                         <SystemIcon
                             sx={plusOrMinusStylesForDropDowns}
                             name={ESystemIconNames.PLUS}
-                            size="medium"
+                            size="small"
                             color="success"
                         />
                     )}
