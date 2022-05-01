@@ -116,7 +116,6 @@ export const DropDownMenuList = styled.ul`
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        left: 0;
         a:not(:last-child) {
             margin-bottom: ${theme.space.inc40};
         }

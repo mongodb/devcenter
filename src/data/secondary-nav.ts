@@ -25,6 +25,8 @@ export const myData = [
             {
                 name: 'Products',
                 slug: '',
+                all: 'All Topics',
+                path: '/all-topics',
                 dropDownItems: [
                     {
                         name: 'MongoDB',
@@ -65,6 +67,8 @@ export const myData = [
             {
                 name: 'Languages',
                 slug: '',
+                all: 'All Topics',
+                path: '/all-topics',
                 dropDownItems: [
                     { name: 'Go', slug: '/language/go' },
                     { name: 'Java', slug: '/language/java' },
@@ -75,6 +79,8 @@ export const myData = [
             {
                 name: 'Technologies',
                 slug: '',
+                all: 'All Topics',
+                path: '/all-topics',
                 dropDownItems: [
                     { name: 'GCP', slug: '/technology/gcp' },
                     { name: 'BI', slug: '/technology/bi' },
@@ -84,6 +90,7 @@ export const myData = [
             {
                 name: 'Expertise Levels',
                 slug: '',
+                path: '/all-topics',
                 dropDownItems: [
                     {
                         name: 'Introductory',
