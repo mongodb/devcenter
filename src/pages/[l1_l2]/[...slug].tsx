@@ -137,7 +137,7 @@ const Topic: NextPage<TopicProps> = ({
                         </>
                     )}
                     <Search
-                        name={name}
+                        title={`All ${name} Content`}
                         slug={slug}
                         sx={{
                             gridColumn: [

@@ -15,25 +15,30 @@ import {
     searchBoxStyles,
     sortBoxStyles,
     loadMoreStyles,
+    linkStyleOverride,
 } from './styles';
 import { SearchProps, SortByType } from './types';
 import { fetcher, sortByOptions } from './utils';
 import Results from './results';
+import ExpandingLink from '../expanding-link';
 import { ContentItem } from '../../interfaces/content-item';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     className,
     slug = '',
-    name,
+    contentType = '',
+    title,
     hideSortBy = false,
     filters = [],
+    resultsLayout = 'list',
+    titleLink,
 }) => {
     const [search, setSearch] = useState('');
     const [sortBy, setSortBy] = useState<SortByType>('recent');
 
     const getKey = (pageIndex: number, previousPageData: ContentItem[]) => {
         if (previousPageData && !previousPageData.length) return null;
-        return `topic=${slug}&search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
+        return `topic=${slug}&contentType=${contentType}&search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
             ','
         )}`;
     };
@@ -63,13 +68,21 @@ const Search: React.FunctionComponent<SearchProps> = ({
     return (
         <form role="search" className={className}>
             <Grid columns={[6, 6, 8, 12, 9]} sx={{ rowGap: 0 }}>
-                <TypographyScale variant="heading5" sx={titleStyles}>
-                    All {name} Content
-                </TypographyScale>
+                <div sx={titleStyles}>
+                    <TypographyScale variant="heading5">
+                        {title}
+                    </TypographyScale>
+                    {titleLink && (
+                        <ExpandingLink
+                            {...titleLink}
+                            hoverStyleOverrides={linkStyleOverride}
+                        />
+                    )}
+                </div>
                 <div sx={searchBoxStyles}>
                     <TextInput
                         name="search-text-input"
-                        label={`Search ${name} Content`}
+                        label="Search Content"
                         iconName={ESystemIconNames.SEARCH}
                         value={search}
                         onChange={onSearch}
@@ -92,6 +105,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     data={data}
                     isLoading={isValidating}
                     hasError={error}
+                    layout={resultsLayout}
                 />
                 {!fullyLoaded && (
                     <div sx={loadMoreStyles}>
