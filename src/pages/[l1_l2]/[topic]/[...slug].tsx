@@ -183,14 +183,6 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
 export default TopicContentTypePage;
 
-// const TopicContentTypePage: NextPage = () => (
-//     <>
-//         <h1>Topic content type page</h1>
-//     </>
-// );
-//
-// export default TopicContentTypePage;
-
 interface IParams extends ParsedUrlQuery {
     l1_l2: string;
     topic: string;
