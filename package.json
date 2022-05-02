@@ -12,11 +12,6 @@
         "test": "jest --watch",
         "test:e2e": "cypress open"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "dependencies": {
         "@apollo/client": "3.5.7",
         "@emotion/css": "11.9.0",
