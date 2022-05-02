@@ -18,6 +18,7 @@ steps:
     image: node:14.17.0
     commands:
        - touch .env.local
+       - echo STRAPI_URL=${STRAPI_URL} >> .env.local
        - echo NPM_AUTH=${NPM_AUTH} >> .env.local
        - echo NPM_EMAIL=${NPM_EMAIL} >> .env.local
        - yarn install
