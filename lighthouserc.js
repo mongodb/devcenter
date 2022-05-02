@@ -3,10 +3,7 @@ module.exports = {
         collect: {
             staticDistDir: './.next',
             numberOfRuns: 2,
-            url: [
-                'http://localhost/server/pages/index.html',
-                'http://localhost/server/pages/product/mongodb.html',
-            ],
+            url: ['http://localhost/server/pages/index.html'],
         },
         upload: {
             target: 'temporary-public-storage',
