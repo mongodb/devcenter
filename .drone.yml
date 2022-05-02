@@ -39,9 +39,9 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: AWS_S3_IAM_SECRET_ACCESS_KEY
       AWS_BUCKET_NAME:
-        from_secret: AWS_S3_BUCKET_NAME
+        from_secret: AWS_S3_URI
     commands:
-      - aws s3 sync .next ${AWS_S3_URI} --region us-east-1
+      - aws s3 sync .next $AWS_BUCKET_NAME --region us-east-1
         # Example cache args for cache control, exclusion etc, --cache-control public,max-age=31536000,immutable --exclude "*.js.map"
     when:
       event:
