@@ -17,7 +17,9 @@ steps:
   - name: build
     image: node:14.17.0
     commands:
-       - echo $NPM_EMAIL
+       - touch .env.local
+       - echo NPM_AUTH=${NPM_AUTH} >> .env.local
+       - echo NPM_EMAIL=${NPM_EMAIL} >> .env.local
        - yarn install
        - yarn run build
     environment:
@@ -27,9 +29,6 @@ steps:
         from_secret: NPM_EMAIL
       STRAPI_URL:
         from_secret: STRAPI_URL
-    build_args_from_env:
-      - NPM_AUTH
-      - NPM_EMAIL
 
   - name: s3-sync
     pull: if-not-exists
