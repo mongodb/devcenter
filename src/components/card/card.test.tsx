@@ -61,9 +61,9 @@ test('renders large', () => {
     const description = screen.queryByText(cardContent.description);
     expect(description).toBeInTheDocument();
 
-    cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeInTheDocument();
-    });
+    // cardContent.tags.forEach(tag => {
+    //     expect(screen.queryByText(tag)).toBeInTheDocument();
+    // });
 
     const pill = screen.queryByText(cardContent.category);
     expect(pill).toBeInTheDocument();
@@ -142,9 +142,9 @@ test('renders list', () => {
     const description = screen.queryByText(cardContent.description);
     expect(description).toBeInTheDocument();
 
-    cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeInTheDocument();
-    });
+    // cardContent.tags.forEach(tag => {
+    //     expect(screen.queryByText(tag)).toBeInTheDocument();
+    // });
 
     const pill = screen.queryByText(cardContent.category);
     expect(pill).toBeInTheDocument();
