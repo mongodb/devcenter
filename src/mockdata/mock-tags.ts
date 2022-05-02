@@ -30,8 +30,16 @@ const tag5: Tag = {
     slug: '/video',
 };
 
+const tag6: Tag = {
+    name: 'Atlas',
+    type: 'L1Product',
+    slug: '/product/atlas',
+};
+
 export const MOCK_PODCAST_TAGS: Tag[] = [tag1, tag2, tag3, tag4];
 
 export const MOCK_VIDEO_TAGS: Tag[] = [tag1, tag2, tag3, tag5];
 
 export const MOCK_ARTICLE_TAGS: Tag[] = [tag1, tag2, tag3];
+
+export const MOCK_ARTICLE_TAGS_ATLAS: Tag[] = [tag1, tag6, tag3];

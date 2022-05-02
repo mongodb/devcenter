@@ -5,7 +5,10 @@ import Card from '.';
 import { CardProps } from './types';
 import { getCardProps } from './utils';
 import { ContentItem } from '../../interfaces/content-item';
-import { MOCK_TAGS } from '../../mockdata/mock-tags';
+import {
+    MOCK_ARTICLE_TAGS,
+    MOCK_ARTICLE_TAGS_ATLAS,
+} from '../../mockdata/mock-tags';
 
 const cardContent: ContentItem = {
     authors: ['Farah Appleseed'],
@@ -20,7 +23,7 @@ const cardContent: ContentItem = {
         ' for our Swift libraries and how to publish this ' +
         'documentation so that can be accessed online, using Netlify.',
     contentDate: 'Mon Mar 14 2022',
-    tags: MOCK_TAGS,
+    tags: MOCK_ARTICLE_TAGS,
     featured: true,
     slug: 'product/atlas/v1',
 };
@@ -39,7 +42,7 @@ const expectedProps: CardProps = {
         ' for our Swift libraries and how to publish this ' +
         'documentation so that can be accessed online, using Netlify.',
     contentDate: 'Mon Mar 14 2022',
-    tags: MOCK_TAGS,
+    tags: MOCK_ARTICLE_TAGS,
     variant: 'large',
 };
 
