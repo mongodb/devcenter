@@ -32,7 +32,6 @@ steps:
         from_secret: STRAPI_URL
 
   - name: s3-sync
-    pull: if-not-exists
     image: amazon/aws-cli
     environment:
       AWS_ACCESS_KEY_ID:
