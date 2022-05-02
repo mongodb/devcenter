@@ -434,6 +434,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                 stars={ratingStars}
                 contentCategory={category}
                 slug={slug}
+                title={title}
             />
             <RequestContentModal
                 setModalStage={setRequestContentModalStage}
