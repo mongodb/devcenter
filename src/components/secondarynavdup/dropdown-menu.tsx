@@ -32,6 +32,10 @@ const plusOrMinusStylesForDropDowns = {
 
 const SubLinks = styled.ul`
     list-style-type: none;
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
     padding: 0;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: grid;
@@ -44,6 +48,12 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
     const onClickShowMenu = () => {
         setIsOpen(!isOpen);
     };
+
+    const [isOpenL1, setIsOpenL1] = useState(false);
+    const onClickShowL1Menu = () => {
+        setIsOpenL1(!isOpenL1);
+    };
+
     return (
         <li key={name}>
             {slug ? (
@@ -59,6 +69,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                             display: ['inline', 'inline', 'inline', 'none'],
                         }}
                     >
+                        {/* Titles mobile view */}
                         <StyledFloraLink onClick={onClickShowMenu}>
                             {name}
                             {!isOpen && (
@@ -109,6 +120,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                             )}
                         </StyledFloraLink>
                     </span>
+                    {/* Titles desktop view */}
                     <TypographyScale
                         sx={{
                             display: ['none', 'none', 'none', 'block'],
@@ -125,34 +137,109 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                     <div sx={{ display: ['block', 'block', 'block', 'none'] }}>
                         {isOpen && (
                             <>
+                                {/* Dropdown link mobile view */}
                                 <SubLinks>
-                                    {dropDownItems.map(
-                                        ({ name, slug }: any) => (
+                                    {dropDownItems?.map(
+                                        ({ name, slug, l1Product, dropDownItems }: any) => (
                                             <li key={name}>
                                                 <Link href={slug} passHref>
                                                     <a
                                                         sx={aLinkStyles}
                                                         key={name}
                                                     >
-                                                        {name}
-                                                        <SystemIcon
-                                                            sx={{
-                                                                paddingLeft:
-                                                                    'inc10',
-                                                                display: [
-                                                                    'inline',
-                                                                    'inline',
-                                                                    'inline',
-                                                                    'none',
-                                                                ],
-                                                            }}
-                                                            name={
-                                                                ESystemIconNames.CHEVRON_RIGHT
-                                                            }
-                                                            size="small"
-                                                        />
+                                                        {l1Product ? (
+                                                            <StyledFloraLink
+                                                                onClick={
+                                                                    onClickShowL1Menu
+                                                                }
+                                                            >
+                                                                {name}
+                                                                {!isOpen && (
+                                                                    <SystemIcon
+                                                                        sx={{
+                                                                            paddingLeft:
+                                                                                'inc10',
+                                                                            display:
+                                                                                [
+                                                                                    'none',
+                                                                                    'none',
+                                                                                    'none',
+                                                                                    'inline',
+                                                                                ],
+                                                                        }}
+                                                                        name={
+                                                                            ESystemIconNames.CHEVRON_DOWN
+                                                                        }
+                                                                        size="small"
+                                                                    />
+                                                                )}
+                                                                {!isOpenL1 && (
+                                                                    <SystemIcon
+                                                                        sx={
+                                                                            plusOrMinusStylesForDropDowns
+                                                                        }
+                                                                        name={
+                                                                            ESystemIconNames.PLUS
+                                                                        }
+                                                                        size="small"
+                                                                        color="success"
+                                                                    />
+                                                                )}
+                                                                {isOpenL1 && (
+                                                                    <SystemIcon
+                                                                        sx={{
+                                                                            paddingLeft:
+                                                                                'inc10',
+                                                                            display:
+                                                                                [
+                                                                                    'none',
+                                                                                    'none',
+                                                                                    'none',
+                                                                                    'inline',
+                                                                                ],
+                                                                        }}
+                                                                        name={
+                                                                            ESystemIconNames.CHEVRON_UP
+                                                                        }
+                                                                        size="small"
+                                                                    />
+                                                                )}
+                                                                {isOpenL1 && (
+                                                                    <SystemIcon
+                                                                        sx={
+                                                                            plusOrMinusStylesForDropDowns
+                                                                        }
+                                                                        name={
+                                                                            ESystemIconNames.MINUS
+                                                                        }
+                                                                        size="medium"
+                                                                        color="success"
+                                                                    />
+                                                                )}
+                                                            </StyledFloraLink>
+                                                        ) : (
+                                                            <SystemIcon
+                                                                sx={{
+                                                                    paddingLeft:
+                                                                        'inc10',
+                                                                    display: [
+                                                                        'inline',
+                                                                        'inline',
+                                                                        'inline',
+                                                                        'none',
+                                                                    ],
+                                                                }}
+                                                                name={
+                                                                    ESystemIconNames.CHEVRON_RIGHT
+                                                                }
+                                                                size="small"
+                                                            />
+                                                        )}
                                                     </a>
                                                 </Link>
+                                                {dropDownItems && <ul>
+                                                    {dropDownItems.map(({name}:any) => (<li key={name}>{name}</li>))}
+                                                </ul>}
                                             </li>
                                         )
                                     )}
@@ -165,31 +252,56 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                     </div>
                     <div sx={{ display: ['none', 'none', 'none', 'block'] }}>
                         <>
+                            {/* Dropdown link desktop view */}
                             <SubLinks>
-                                {dropDownItems.map(({ name, slug }: any) => (
-                                    <li key={name}>
-                                        <Link href={slug} passHref>
-                                            <a sx={aLinkStyles} key={name}>
-                                                {name}
-                                                <SystemIcon
-                                                    sx={{
-                                                        paddingLeft: 'inc10',
-                                                        display: [
-                                                            'inline',
-                                                            'inline',
-                                                            'inline',
-                                                            'none',
-                                                        ],
-                                                    }}
-                                                    name={
-                                                        ESystemIconNames.CHEVRON_RIGHT
-                                                    }
-                                                    size="small"
-                                                />
-                                            </a>
-                                        </Link>
-                                    </li>
-                                ))}
+                                {dropDownItems?.map(
+                                    ({
+                                        name,
+                                        slug,
+                                        dropDownItems,
+                                        l1Product,
+                                    }: any) => (
+                                        <li key={name}>
+                                            <Link href={slug} passHref>
+                                                <a sx={aLinkStyles} key={name}>
+                                                    {l1Product ? (
+                                                        <strong>{name}</strong>
+                                                    ) : (
+                                                        name
+                                                    )}
+                                                </a>
+                                            </Link>
+                                            {dropDownItems && (
+                                                <ul>
+                                                    {dropDownItems?.map(
+                                                        ({
+                                                            name,
+                                                            slug,
+                                                        }: any) => (
+                                                            <li key={name}>
+                                                                <Link
+                                                                    href={slug}
+                                                                    passHref
+                                                                >
+                                                                    <a
+                                                                        sx={
+                                                                            aLinkStyles
+                                                                        }
+                                                                        key={
+                                                                            name
+                                                                        }
+                                                                    >
+                                                                        {name}dgd
+                                                                    </a>
+                                                                </Link>
+                                                            </li>
+                                                        )
+                                                    )}
+                                                </ul>
+                                            )}
+                                        </li>
+                                    )
+                                )}
                             </SubLinks>
                             <Link href={path} passHref>
                                 <FloraLink

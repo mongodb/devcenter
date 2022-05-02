@@ -56,6 +56,7 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
     return (
         <>
             <div sx={linkWrapperStyles}>
+                {/* Topics */}
                 <StyledFloraLink onClick={onClickShowMenu}>
                     {text}
                     {!isOpen && (
@@ -116,7 +117,6 @@ const SecondaryNavBarDup: React.FunctionComponent = () => {
         <>
             <StyledSecondaryNavContainer>
                 {/*Main Link*/}
-
                 <div sx={linkWrapperStyles}>
                     <MainLink sx={MainLinkStyles} onClick={openMobileMenu}>
                         Developer Center
@@ -146,7 +146,7 @@ const SecondaryNavBarDup: React.FunctionComponent = () => {
 
                 {/*Secondary Links*/}
                 <SecondaryLinks isOpen={mobileMenuIsOpen}>
-                    {myData.map(({ name, slug, dropDownItems }) => (
+                    {myData?.map(({ name, slug, dropDownItems }) => (
                         <SecondaryLinksList key={name}>
                             {dropDownItems?.length ? (
                                 <DropDownButton
@@ -155,7 +155,8 @@ const SecondaryNavBarDup: React.FunctionComponent = () => {
                                     dropdownItems={dropDownItems}
                                 />
                             ) : (
-                                <>
+                                <>  
+                                    {/* Outter links Documentation, Articles, Tutorials, Quick starts, etc  */}
                                     <div sx={linkWrapperStyles}>
                                         <StyledFloraLink href={slug}>
                                             {name}
