@@ -114,7 +114,7 @@ const SecondaryNavBarDup: React.FunctionComponent = () => {
     };
 
     return (
-        <>
+        <>  
             <StyledSecondaryNavContainer>
                 {/*Main Link*/}
                 <div sx={linkWrapperStyles}>
