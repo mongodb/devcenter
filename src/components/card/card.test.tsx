@@ -5,6 +5,7 @@ import Card from '.';
 import { ContentPiece } from '../../interfaces/content-piece';
 import { CardProps } from './types';
 import { getCardProps } from './utils';
+import { MOCK_TAGS } from '../../mockdata/mock-tags';
 
 const cardContent: ContentPiece = {
     authors: ['Farah Appleseed'],
@@ -19,7 +20,7 @@ const cardContent: ContentPiece = {
         ' for our Swift libraries and how to publish this ' +
         'documentation so that can be accessed online, using Netlify.',
     contentDate: 'Mon Mar 14 2022',
-    tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+    tags: MOCK_TAGS,
     featured: true,
     slug: 'product/atlas/v1',
 };
@@ -38,7 +39,7 @@ const expectedProps: CardProps = {
         ' for our Swift libraries and how to publish this ' +
         'documentation so that can be accessed online, using Netlify.',
     contentDate: 'Mon Mar 14 2022',
-    tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+    tags: MOCK_TAGS,
     variant: 'large',
 };
 
@@ -58,7 +59,9 @@ test('renders large', () => {
     expect(description).toBeInTheDocument();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeInTheDocument();
+        if (tag.type !== 'AuthorType') {
+            expect(screen.queryByText(tag.name)).toBeInTheDocument();
+        }
     });
 
     const pill = screen.queryByText(cardContent.category);
@@ -85,7 +88,7 @@ test('renders medium', () => {
     expect(description).toBeNull();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeNull();
+        expect(screen.queryByText(tag.name)).toBeNull();
     });
 
     const pill = screen.queryByText(cardContent.category);
@@ -112,7 +115,7 @@ test('renders small', () => {
     expect(description).toBeNull();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeNull();
+        expect(screen.queryByText(tag.name)).toBeNull();
     });
 
     const pill = screen.queryByText(cardContent.category);
@@ -139,7 +142,9 @@ test('renders list', () => {
     expect(description).toBeInTheDocument();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeInTheDocument();
+        if (tag.type !== 'AuthorType') {
+            expect(screen.queryByText(tag.name)).toBeInTheDocument();
+        }
     });
 
     const pill = screen.queryByText(cardContent.category);
@@ -166,7 +171,7 @@ test('renders related', () => {
     expect(description).toBeNull();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeNull();
+        expect(screen.queryByText(tag.name)).toBeNull();
     });
 
     const pill = screen.queryByText(cardContent.category);
