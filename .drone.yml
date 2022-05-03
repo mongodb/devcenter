@@ -1,7 +1,12 @@
 ---
+depends_on: null
 kind: pipeline
 type: kubernetes
-name: devcenter-frontend
+name: devcenter-staging
+resources:
+  requests:
+    cpu: 8
+    memory: 16GiB
 
 steps:
 - name: publish
@@ -55,11 +60,17 @@ trigger:
     - main
   event:
     - push
+    - pull-request
 
 ---
+depends_on: null
 kind: pipeline
 type: kubernetes
-name: deploy
+name: devcenter-prod
+resources:
+  requests:
+    cpu: 8
+    memory: 16GiB
 
 steps:
 - name: deploy-prod
