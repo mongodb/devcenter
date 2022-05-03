@@ -19,7 +19,7 @@ steps:
     create_repository: true
     registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
     repo: devrel/${DRONE_REPO_NAME}
-    build_args_from_env:
+    build_args:
       - NPM_AUTH
       - NPM_EMAIL
     tags:
