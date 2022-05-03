@@ -56,8 +56,6 @@ steps:
     - push
 
 trigger:
-  branch:
-    - main
   event:
     - push
     - pull-request
