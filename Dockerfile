@@ -3,9 +3,9 @@ FROM node:16-alpine AS builder
 # Install deps
 ARG NPM_AUTH=$NPM_AUTH
 ARG NPM_EMAIL=$NPM_EMAIL
+ARG STRAPI_URL=$STRAPI_URL
 WORKDIR /devcenter
 COPY package.json yarn.lock .npmrc ./
-RUN echo ${NPM_EMAIL}
 RUN yarn install --frozen-lockfile
 
 # Build
