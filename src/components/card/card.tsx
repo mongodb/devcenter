@@ -21,6 +21,7 @@ import {
 } from './utils';
 import TagSection from '../tag-section';
 import { CardProps } from './types';
+import parse from 'html-react-parser';
 
 // Still need to add authors section.
 const Card: React.FunctionComponent<CardProps> = ({
@@ -79,7 +80,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                                 variant="body2"
                                 sx={descriptionStyles(variant, pillCategory)}
                             >
-                                {description}
+                                {parse(description ? description : '')}
                             </TypographyScale>
                         )}
                         {hasTags(variant) && tags && (
