@@ -9,6 +9,8 @@ export const StyledSecondaryNavContainer = styled('nav')`
         padding-top: ${theme.space.elementSmall};
         padding-bottom: ${theme.space.elementXSmall};
         padding-left: ${theme.space.elementXLarge};
+        position: relative ;
+        max-width: 1002px;
     }
 `;
 
@@ -66,16 +68,17 @@ export const SecondaryLinks = styled.ul`
         float: left;
         overflow: visible;
         li:not(:last-child) {
-            margin-right: ${theme.space.inc90};
+            margin-right: ${theme.space.inc40};
         }
     }
 `;
 
 export const StyledList = styled('li')`
+    position: relative ;
     padding-left: 0;
     display: block;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        position: relative;
+        position: initial;
         list-style: none;
         display: inline-block;
     }
@@ -93,15 +96,14 @@ export const DropDownWrapper = styled.div`
     }
     background-color: #fff;
     color: #000;
-    float: initial;
-    position: initial;
-    padding: 0;
+    padding-left: 32px;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         background-color: ${theme.colors.blue80};
         color: ${theme.colors.text.inverse};
         //margin top is same as padding bottom of secondary nav
         margin-top: ${theme.space.elementXSmall};
         position: absolute;
+        left: 40px;
         box-shadow: ${theme.shadows.level01};
         border-bottom-right-radius: ${theme.radii.inc50};
         border-bottom-left-radius: ${theme.radii.inc50};
@@ -116,7 +118,6 @@ export const DropDownMenuList = styled.ul`
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        /* grid-auto-rows: 1fr; */
         a:not(:last-child) {
             margin-bottom: ${theme.space.inc40};
         }

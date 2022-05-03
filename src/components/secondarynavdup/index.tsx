@@ -96,8 +96,9 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
                         />
                     )}
                 </StyledFloraLink>
-                {isOpen && <DropDownMenu items={dropdownItems} />}
+                
             </div>
+            {isOpen && <DropDownMenu items={dropdownItems} />}
             <HorizontalRule
                 sx={secondaryLinkDividerStyle}
                 spacing="none"
