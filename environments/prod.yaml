@@ -2,6 +2,6 @@ service:
   type: ClusterIP
   targetPort: 3000
 envSecrets:
-  STRAPI_URL: devcenter-secrets
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
+  STRAPI_URL: devcenter-secrets
