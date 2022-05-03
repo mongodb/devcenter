@@ -3,10 +3,6 @@ kind: pipeline
 type: kubernetes
 name: devcenter-frontend
 
-trigger:
-  branch:
-  - main
-
 steps:
 - name: publish
   image: plugins/kaniko-ecr
