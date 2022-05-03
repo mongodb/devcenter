@@ -1,3 +1,4 @@
+environments/
 yarn.lock
 next-env.d.ts
 README.md
@@ -5,3 +6,6 @@ README.md
 build
 .vscode
 .next
+.dockerignore
+Dockerfile
+.drone.yml

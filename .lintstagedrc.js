@@ -7,5 +7,5 @@ const buildEslintCommand = filenames =>
 
 module.exports = {
     '*.{js,jsx,ts,tsx}': [buildEslintCommand],
-    // '*': ['yarn format:check'], // .prettierrc takes care of filtering files.
+    '*': ['yarn format:check'], // .prettierrc takes care of filtering files.
 };
