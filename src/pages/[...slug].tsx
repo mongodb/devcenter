@@ -1,6 +1,5 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import Image from 'next/image';
 import { useState } from 'react';
 
 import {
@@ -268,15 +267,13 @@ const ContentPage: NextPage<ContentItem> = ({
 
             <div sx={middleSectionStyles}>
                 <div sx={imageStyles}>
-                    <Image
+                    <img
                         alt={parseUndefinedValue(image?.alt)}
                         src={getPlaceHolderImage(image?.url)}
-                        loader={thumbnailLoader}
                         sx={{
                             borderRadius: 'inc30',
                             objectFit: 'cover',
                         }}
-                        layout="fill"
                     />
                 </div>
 

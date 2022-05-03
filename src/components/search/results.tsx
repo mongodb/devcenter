@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { ResultsProps } from './types';
 import { dataStyles } from './styles';
@@ -24,7 +23,7 @@ const Results: React.FunctionComponent<ResultsProps> = React.memo(
                         ))
                     )}
                 {isLoading ? (
-                    <Image alt="Loading..." src={loadingAnimation}></Image>
+                    <img alt="Loading..."></img>
                 ) : hasError ? (
                     <div>Something went wrong, please try again</div>
                 ) : null}

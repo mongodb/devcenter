@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import { BrandedIcon } from '@mdb/flora';
 import { ContentRatingProps } from './types';
 
@@ -66,12 +65,12 @@ const ContentRating: React.FunctionComponent<ContentRatingProps> = ({
                             />
                         ) : (
                             <div sx={{ padding: iconPadding }}>
-                                <Image
+                                <img
                                     alt="star-empty"
                                     src="/rating-star.svg"
                                     width={iconHeight}
                                     height={iconHeight}
-                                ></Image>
+                                ></img>
                             </div>
                         )}
                     </div>

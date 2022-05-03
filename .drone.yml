@@ -22,7 +22,7 @@ steps:
        - echo NPM_AUTH=${NPM_AUTH} >> .env.local
        - echo NPM_EMAIL=${NPM_EMAIL} >> .env.local
        - yarn install
-       - yarn run build
+       - yarn run build:export
     environment:
       NPM_AUTH:
         from_secret: NPM_AUTH
@@ -41,7 +41,7 @@ steps:
       AWS_BUCKET_NAME:
         from_secret: AWS_S3_URI
     commands:
-      - aws s3 sync .next $AWS_BUCKET_NAME --region us-east-1
+      - aws s3 sync out $AWS_BUCKET_NAME --region us-east-1
         # Example cache args for cache control, exclusion etc, --cache-control public,max-age=31536000,immutable --exclude "*.js.map"
     when:
       event:

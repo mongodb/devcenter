@@ -5,6 +5,7 @@
         "dev": "next dev",
         "build": "next build",
         "build:analyze": "ANALYZE=true next build",
+        "build:export": "next build && next export",
         "start": "next start",
         "lint": "next lint",
         "format:write": "prettier --write .",

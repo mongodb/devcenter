@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { TypographyScale, Pill, Tag, HorizontalRule } from '@mdb/flora';
 
@@ -52,15 +51,13 @@ const Card: React.FunctionComponent<CardProps> = ({
                 <div sx={cardHeaderStyles(variant, pillCategory)}>
                     {thumbnail && hasThumbnail(variant, pillCategory) && (
                         <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
-                            <Image
+                            <img
                                 alt={thumbnail.alt || 'alt not provided'}
-                                loader={thumbnailLoader}
                                 src={thumbnail.url}
                                 sx={{
                                     borderRadius: 'inc30',
                                     objectFit: 'cover',
                                 }}
-                                layout="fill"
                             />
                         </div>
                     )}

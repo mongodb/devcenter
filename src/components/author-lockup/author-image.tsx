@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { TypographyScale } from '@mdb/flora';
 
 import { avatarPlaceholder, profileImage } from './styles';
@@ -33,9 +32,8 @@ const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
     const { src, alt } = image;
     return (
         <div sx={profileImage(size)} className={className}>
-            <Image
+            <img
                 sx={profileImage(size)}
-                layout="fill"
                 src={src}
                 alt={alt || ''}
             />
