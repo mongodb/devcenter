@@ -77,11 +77,10 @@ steps:
     event:
     - push
 
-# trigger:
-#   event:
-#     - promote
-#   target:
-#     - production
 trigger:
+  event:
+    - promote
+  target:
+    - production
   branch:
-    - ah/migrate-to-kanopy-and-drone-prod
+    - ah/migrate-to-kanopy-and-drone
