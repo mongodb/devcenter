@@ -7,4 +7,5 @@ export interface ITopicCard {
 export interface TopicCardsContainerProps {
     topics: ITopicCard[];
     title: string;
+    className?: string;
 }

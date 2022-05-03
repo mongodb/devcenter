@@ -1,7 +1,7 @@
 import { PillCategory } from '../types/pill-category';
-import { Image } from './content-piece';
 import { Series } from './series';
 import { Tag } from './tag';
+import { Image } from './image';
 
 export interface ContentItem {
     authors?: string[];
@@ -17,4 +17,5 @@ export interface ContentItem {
     podcastFileUrl?: string;
     videoId?: string;
     series?: Series;
+    featured: boolean;
 }

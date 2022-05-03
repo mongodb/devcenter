@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { ContentPiece } from '../../interfaces/content-piece';
 import CardSection, { FeaturedCardSection } from '.';
+import { ContentItem } from '../../interfaces/content-item';
+import { MOCK_TAGS } from '../../mockdata/mock-tags';
 
-const content: ContentPiece[] = [
+const content: ContentItem[] = [
     {
         authors: ['Farah Appleseed'],
         category: 'Article',
@@ -15,7 +16,7 @@ const content: ContentPiece[] = [
         title: 'This is 102 article',
         description: 'This is my second article',
         contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        tags: MOCK_TAGS,
         featured: false,
         slug: 'product/atlas/a2',
     },
@@ -29,7 +30,7 @@ const content: ContentPiece[] = [
         title: 'This is 103 article',
         description: 'This is my third article',
         contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        tags: MOCK_TAGS,
         featured: false,
         slug: 'product/atlas/a3',
     },
@@ -43,7 +44,7 @@ const content: ContentPiece[] = [
         title: 'This is 104 article',
         description: 'This is my fourth article',
         contentDate: new Date().toDateString(),
-        tags: ['Atlas Data Lake', 'Realm Studio', 'Netlify', 'GITHUB'],
+        tags: MOCK_TAGS,
         featured: false,
         slug: 'product/atlas/a4',
     },

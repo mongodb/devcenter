@@ -37,8 +37,14 @@ import SeriesCard from '../components/series-card';
 import SocialButtons from '../components/social-buttons';
 import AuthorLockup from '../components/author-lockup';
 import parse from 'html-react-parser';
-import getTertiaryNavItems from '../api-requests/get-tertiary-nav-items';
 import { PillCategory } from '../types/pill-category';
+import { getSideNav } from '../service/get-side-nav';
+import { TertiaryNavItem } from '../components/tertiary-nav/types';
+
+interface ContentPageProps {
+    contentItem: ContentItem;
+    tertiaryNavItems: TertiaryNavItem[];
+}
 
 const sideNavStyles = {
     display: ['none', null, null, null, 'block'],
@@ -134,21 +140,25 @@ const parseDescription = (description: string, category: PillCategory) => {
     return category === 'Podcast' ? parse(description) : description;
 };
 
-const ContentPage: NextPage<ContentItem> = ({
-    authors,
-    category,
-    contentDate,
-    updateDate,
-    description,
-    content,
-    image,
-    slug,
-    tags,
-    title,
-    podcastFileUrl,
-    videoId,
-    series,
+const ContentPage: NextPage<ContentPageProps> = ({
+    contentItem,
+    tertiaryNavItems,
 }) => {
+    const {
+        authors,
+        category,
+        contentDate,
+        updateDate,
+        description,
+        content,
+        image,
+        slug,
+        tags,
+        title,
+        podcastFileUrl,
+        videoId,
+        series,
+    } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
 
     const [feedbackModalStage, setFeedbackModalStage] =
@@ -158,7 +168,6 @@ const ContentPage: NextPage<ContentItem> = ({
 
     // const relatedContent = getRelatedContent(slug);
     // const slugList = slug.split('/');
-    const tertiaryNavItems = getTertiaryNavItems('atlas');
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
@@ -268,6 +277,14 @@ const ContentPage: NextPage<ContentItem> = ({
 
             <div sx={middleSectionStyles}>
                 <div sx={imageStyles}>
+                    {/*                  <div><iframe width="100%" height="215px" id="casted-embed-22bc2ce0" scrolling="no" style={{border: "none"}} src="https://podcasts.mongodb.com/embed/v2/regularPlayer/22bc2ce0/takeaways/guests/transcript/resources/subscribe"></iframe>*/}
+                    {/*                  <Script id="castedscr"  strategy="afterInteractive"*/}
+                    {/*                           dangerouslySetInnerHTML={{*/}
+                    {/*                               __html: `*/}
+                    {/*  window.addEventListener("message", function(message){if(message.origin === "https://podcasts.mongodb.com" ) { if( message.data.event) { if(message.data.event === "castedSizeUpdate") { var casted_episode_player = document.getElementById('casted-embed-' + message.data.payload.slug); if(casted_episode_player) { casted_episode_player.height = message.data.payload.height;if(casted_episode_player.contentWindow) {casted_episode_player.contentWindow.postMessage({ event: "castedStopUpdate" }, "https://podcasts.mongodb.com");}}}}}}, false)*/}
+                    {/*`,*/}
+                    {/*                           }}></Script>*/}
+                    {/*                  </div>*/}
                     <Image
                         alt={parseUndefinedValue(image?.alt)}
                         src={getPlaceHolderImage(image?.url)}
@@ -417,6 +434,7 @@ const ContentPage: NextPage<ContentItem> = ({
                 stars={ratingStars}
                 contentCategory={category}
                 slug={slug}
+                title={title}
             />
             <RequestContentModal
                 setModalStage={setRequestContentModalStage}
@@ -458,10 +476,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
     const contents: ContentItem[] = await getAllContentItems();
 
-    //const sideNav = constructSideNav(primaryTag)
+    //TODO - not sure how to construct side nav for podcasts and videos since they don't have primary tags
+    const sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
+    const tertiaryNavItems = await getSideNav(sideNavFilterSlug);
+
     const contentItem = contents.filter(
         content => content.slug === slug.join('/')
     )[0];
 
-    return { props: contentItem };
+    const data = {
+        contentItem,
+        tertiaryNavItems,
+    };
+
+    return { props: data };
 };
