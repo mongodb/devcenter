@@ -25,6 +25,7 @@ steps:
       from_secret: ecr_access_key
     secret_key:
       from_secret: ecr_secret_key
+    values_files: [ "environments/staging.yaml" ]
   when:
     event:
     - push
@@ -41,6 +42,7 @@ steps:
     api_server: https://api.staging.corp.mongodb.com
     kubernetes_token:
       from_secret: staging_kubernetes_token
+    values_files: [ "environments/staging.yaml" ]
   when:
     event:
     - push
