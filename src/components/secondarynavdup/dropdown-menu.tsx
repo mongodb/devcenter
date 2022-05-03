@@ -153,7 +153,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                             display: ['inline', 'inline', 'inline', 'none'],
                         }}
                     >
-                        {/* Section mobile view */}
+                        {/* Topics titles mobile view */}
                         <StyledFloraLink onClick={onClickShowMenu}>
                             {name}
                             {!isOpen && (
@@ -204,7 +204,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                             )}
                         </StyledFloraLink>
                     </span>
-                    {/* Section titles desktop view */}
+                    {/* Topics titles desktop view */}
                     <TypographyScale
                         sx={{
                             display: ['none', 'none', 'none', 'block'],
@@ -234,7 +234,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                                 <>
                                                     {l1Product ? (
                                                         <li key={name}>
-                                                            {/* L1 Products links */}
+                                                            {/* L1 Products Dropdown links */}
                                                             <MobileViewL1ProductLinks
                                                                 name={name}
                                                                 slug={slug}
@@ -248,7 +248,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                                         </li>
                                                     ) : (
                                                         <li>
-                                                            {/* Non L1 Products links */}
+                                                            {/* Non L1 Dropdown links */}
                                                             <Link
                                                                 href={slug}
                                                                 passHref
@@ -296,7 +296,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                     </div>
                     <div sx={{ display: ['none', 'none', 'none', 'block'] }}>
                         <>
-                            {/* Dropdown link desktop view */}
+                            {/* Dropdown links desktop view */}
                             <SubLinks>
                                 {dropDownItems?.map(
                                     ({
@@ -305,6 +305,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                         dropDownItems,
                                         l1Product,
                                     }: any) => (
+                                        // L1 titles links desktop view
                                         <li key={name}>
                                             <Link href={slug} passHref>
                                                 <a sx={aLinkStyles} key={name}>
@@ -316,7 +317,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                                 </a>
                                             </Link>
                                             {dropDownItems && (
-                                                // Dropdown links for L1 Products
+                                                // L1 dropdown links desktop view
                                                 <ul>
                                                     {dropDownItems?.map(
                                                         ({
@@ -348,6 +349,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                     )
                                 )}
                             </SubLinks>
+                            {/* All Link */}
                             {all && (
                                 <Link href={path} passHref>
                                     <FloraLink
@@ -363,6 +365,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                     </div>
                 </>
             )}
+            {/* Add all topics buttons to last column */}
             {name.includes('Expertise Levels') && (
                 <>
                     <Button
@@ -379,7 +382,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                             display: ['block', 'block', 'block', 'none'],
                             marginTop: '25px',
                         }}>
-                    <Link href={slug} passHref>
+                    <Link href="example.com" passHref>
                         <a>
                             All Topics
                         </a>
