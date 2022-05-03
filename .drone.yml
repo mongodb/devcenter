@@ -24,6 +24,7 @@ steps:
     build_args:
       - NPM_AUTH
       - NPM_EMAIL
+      - STRAPI_URL
     tags:
     - git-${DRONE_COMMIT_SHA:0:7}
     - latest
