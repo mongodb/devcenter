@@ -50,9 +50,9 @@ steps:
     event:
     - push
 
-trigger:
-  branch:
-    - ah/migrate-to-kanopy-and-drone
+# trigger:
+#   branch:
+#     - ah/migrate-to-kanopy-and-drone
 
 ---
 kind: pipeline
