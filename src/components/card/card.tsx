@@ -83,12 +83,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                             </TypographyScale>
                         )}
                         {hasTags(variant) && tags && (
-                            <TagSection
-                                tags={tags.filter(
-                                    tag => tag.type !== 'AuthorType'
-                                )}
-                                disappearOnMobile={true}
-                            />
+                            <TagSection tags={tags} disappearOnMobile={true} />
                         )}
                     </div>
                 </div>
