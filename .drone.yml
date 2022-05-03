@@ -70,7 +70,7 @@ steps:
     NPM_EMAIL:
       from_secret: NPM_EMAIL
     STRAPI_URL:
-      from_secret: STRAPI_URL
+      from_secret: STRAPI_URL_PROD
   settings:
     create_repository: true
     registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
