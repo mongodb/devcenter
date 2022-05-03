@@ -73,14 +73,9 @@ steps:
     kubernetes_token:
       from_secret: prod_kubernetes_token
     values_files: [ "environments/prod.yaml" ]
-  when:
-    event:
-    - push
 
 trigger:
   event:
     - promote
   target:
     - production
-  branch:
-    - ah/migrate-to-kanopy-and-drone
