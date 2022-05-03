@@ -4,6 +4,7 @@ ARG NPM_AUTH=$NPM_AUTH
 ARG NPM_EMAIL=$NPM_EMAIL
 WORKDIR /devcenter
 COPY package.json yarn.lock .npmrc ./
+RUN echo ${NPM_EMAIL}
 RUN yarn install --frozen-lockfile
 
 COPY . .

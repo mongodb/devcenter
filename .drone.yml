@@ -3,6 +3,10 @@ kind: pipeline
 type: kubernetes
 name: devcenter-frontend
 
+trigger:
+  branch:
+    - ah/migrate-to-kanopy-and-drone
+
 steps:
 - name: publish
   image: plugins/kaniko-ecr
