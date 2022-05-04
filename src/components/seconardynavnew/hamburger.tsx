@@ -13,19 +13,46 @@ type SecondaryMenuListProps = {
 };
 
 const MainLinkStyles = {
+    color: 'red',
     fontSize: 'inc30',
     fontWeight: 500,
-    paddingLeft: '32px',
+    padding: '16px 32px 16px',
+    '.textlink-default-text-class' : {
+        color: '#000!important',
+        fontSize: '18px!important',
+        '&:hover': {
+            borderBottom: 'none!important',
+        }
+    }
 };
 
 const StyledFloraLink = styled(FloraLink)`
     display: 'inline-block';
     padding-left: 32px;
+    line-height: normal;
     span {
         color: ${theme.colors.text.default}!important;
         font-size: ${theme.fontSizes.inc20};
         font-family: ${theme.fonts.body};
         font-weight: 300;
+        &:hover {
+            border-bottom: none!important;
+        }
+    }
+`;
+
+const StyledFloraLinkChevronRight = styled(FloraLink)`
+    display: 'flex';
+    padding-left: 32px;
+    line-height: normal;
+    span {
+        color: ${theme.colors.text.default}!important;
+        font-size: ${theme.fontSizes.inc20};
+        font-family: ${theme.fonts.body};
+        font-weight: 300;
+        &:hover {
+            border-bottom: none!important;
+        }
     }
 `;
 
@@ -52,6 +79,7 @@ const aLinkStyles = {
     paddingBottom: 'inc40',
     '&:hover': {
         color: 'text.selected',
+        textDecoration: 'none',
     },
 };
 
@@ -64,8 +92,10 @@ const chevronStylesForMainLink = {
 
 const DropDownStyles = {
     position: 'relative' as 'relative',
-    paddingTop: 'inc30',
     paddingBottom: 'inc30',
+    '.topics-title' : {
+        paddingBottom: '10px',
+    }
 };
 
 const secondaryLinkDividerStyle = {
@@ -118,13 +148,13 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
         <>
             <div sx={DropDownStyles}>
                 {/* Topics */}
-                <div onClick={onClickShowMenu}>
+                <div className="topics-title" onClick={onClickShowMenu}>
                     {text}
                     {!isOpen && (
                         <SystemIcon
                             sx={plusOrMinusStylesForDropDowns}
                             name={ESystemIconNames.PLUS}
-                            size="medium"
+                            size="small"
                             color="success"
                         />
                     )}
@@ -132,7 +162,7 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
                         <SystemIcon
                             sx={plusOrMinusStylesForDropDowns}
                             name={ESystemIconNames.MINUS}
-                            size="medium"
+                            size="small"
                             color="success"
                         />
                     )}
@@ -142,7 +172,7 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
             <HorizontalRule
                 sx={secondaryLinkDividerStyle}
                 spacing="none"
-                strokeWeight="medium"
+                strokeWeight="small"
             />
         </>
     );
@@ -169,7 +199,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                             <SystemIcon
                                 sx={plusOrMinusStylesForDropDowns}
                                 name={ESystemIconNames.PLUS}
-                                size="medium"
+                                size="small"
                                 color="success"
                             />
                         )}
@@ -177,7 +207,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                             <SystemIcon
                                 sx={plusOrMinusStylesForDropDowns}
                                 name={ESystemIconNames.MINUS}
-                                size="medium"
+                                size="small"
                                 color="success"
                             />
                         )}
@@ -311,14 +341,14 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
         <>
             <Link href={slug} passHref>
                 <a sx={aLinkStyles} key={name}>
-                    <StyledFloraLink>{name}</StyledFloraLink>
+                    <StyledFloraLinkChevronRight>{name}</StyledFloraLinkChevronRight>
                     <SystemIcon
                         sx={{
                             paddingLeft: 'inc10',
                             display: 'inline',
                         }}
                         name={ESystemIconNames.CHEVRON_RIGHT}
-                        size="medium"
+                        size="small"
                     />
                 </a>
             </Link>
@@ -327,7 +357,7 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
                     <SystemIcon
                         sx={plusOrMinusStylesForDropDowns}
                         name={ESystemIconNames.PLUS}
-                        size="medium"
+                        size="small"
                         color="success"
                     />
                 )}
@@ -335,7 +365,7 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
                     <SystemIcon
                         sx={plusOrMinusStylesForDropDowns}
                         name={ESystemIconNames.MINUS}
-                        size="medium"
+                        size="small"
                         color="success"
                     />
                 )}
@@ -365,13 +395,13 @@ export const Hamburger = () => {
     return (
         <>
             <FloraLink sx={MainLinkStyles} onClick={openMobileMenu}>
-                Developer Center
+                MongoDB Developer
                 {!mobileMenuIsOpen && (
                     <SystemIcon
                         sx={chevronStylesForMainLink}
                         className="chevron-icon"
                         name={ESystemIconNames.CHEVRON_DOWN}
-                        size="medium"
+                        size="small"
                     />
                 )}
                 {mobileMenuIsOpen && (
@@ -379,7 +409,7 @@ export const Hamburger = () => {
                         sx={chevronStylesForMainLink}
                         className="chevron-icon"
                         name={ESystemIconNames.CHEVRON_UP}
-                        size="medium"
+                        size="small"
                     />
                 )}
             </FloraLink>
