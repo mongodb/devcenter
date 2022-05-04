@@ -15,3 +15,15 @@ autoscaling:
       resource:
         name: cpu
         targetAverageUtilization: 80
+
+probes:
+  enabled: true
+  path: /healthz
+  headers: {}
+  liveness:
+    httpGet: true
+    initialDelaySeconds: 10
+    periodSeconds: 60
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
