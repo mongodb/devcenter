@@ -1,7 +1,7 @@
-import { ContentPiece } from '../interfaces/content-piece';
-import { MOCK_TAGS } from '../mockdata/mock-tags';
+import { MOCK_PODCAST_TAGS } from '../mockdata/mock-tags';
+import { ContentItem } from '../interfaces/content-item';
 
-const getRelatedContent = (slug: string): ContentPiece[] => [
+const getRelatedContent = (slug: string): ContentItem[] => [
     {
         category: 'Podcast',
         image: {
@@ -11,7 +11,7 @@ const getRelatedContent = (slug: string): ContentPiece[] => [
         title: 'MongoDB Podcast: Episode 23',
         description: 'Some podcast details',
         contentDate: new Date().toDateString(),
-        tags: MOCK_TAGS,
+        tags: MOCK_PODCAST_TAGS,
         featured: false,
         slug: 'product/atlas/p1',
     },
@@ -24,7 +24,7 @@ const getRelatedContent = (slug: string): ContentPiece[] => [
         title: 'MongoDB Podcast: Episode 96',
         description: 'Some podcast details',
         contentDate: new Date().toDateString(),
-        tags: MOCK_TAGS,
+        tags: MOCK_PODCAST_TAGS,
         featured: false,
         slug: 'product/atlas/p2',
     },
@@ -37,7 +37,7 @@ const getRelatedContent = (slug: string): ContentPiece[] => [
         title: 'MongoDB Podcast: Episode 2',
         description: 'Some podcast details',
         contentDate: new Date().toDateString(),
-        tags: MOCK_TAGS,
+        tags: MOCK_PODCAST_TAGS,
         featured: false,
         slug: 'product/atlas/p3',
     },

@@ -1,13 +1,11 @@
-import { ContentPiece } from '../../interfaces/content-piece';
+import { ContentItem } from '../../interfaces/content-item';
 
 export interface CardSectionProps {
-    content: ContentPiece[];
+    content: ContentItem[];
     title: string;
     direction?: 'row' | 'column';
 }
 
 export interface FeaturedCardSectionProps {
-    content: ContentPiece[];
-    className?: string;
-    title?: string;
+    content: ContentItem[];
 }

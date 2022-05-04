@@ -10,16 +10,21 @@ import loadingAnimation from '../../../public/loading-animation.gif';
 
 // TODO: This isn't being memoized correctly.
 const Results: React.FunctionComponent<ResultsProps> = React.memo(
-    ({ data, isLoading, hasError }) => {
+    ({ data, isLoading, hasError, layout = 'list' }) => {
+        const extraCardStyles =
+            layout === 'list' ? { width: '100%' } : { height: '100%' };
         return (
-            <div sx={dataStyles}>
+            <div data-testid="search-results" sx={dataStyles(layout)}>
                 {data &&
                     data.map(page =>
                         page.map(piece => (
                             <Card
                                 key={piece.slug}
-                                sx={{ width: '100%' }}
-                                {...getCardProps(piece, 'list')}
+                                sx={extraCardStyles}
+                                {...getCardProps(
+                                    piece,
+                                    layout === 'list' ? 'list' : 'medium'
+                                )}
                             />
                         ))
                     )}
