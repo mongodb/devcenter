@@ -1,7 +1,17 @@
 service:
   type: ClusterIP
   targetPort: 3000
+
 envSecrets:
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
   STRAPI_URL: devcenter-secrets
+
+autoscaling:
+  minReplicas: 2
+  maxReplicas: 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
