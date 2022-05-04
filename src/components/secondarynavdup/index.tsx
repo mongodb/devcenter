@@ -147,7 +147,7 @@ const SecondaryNavBarDup: React.FunctionComponent = () => {
 
                 {/*Secondary Links*/}
                 <SecondaryLinks isOpen={mobileMenuIsOpen}>
-                    {myData?.map(({ name, slug, dropDownItems }) => (
+                    {myData.map(({ name, slug, dropDownItems }) => (
                         <SecondaryLinksList key={name}>
                             {dropDownItems?.length ? (
                                 <DropDownButton
