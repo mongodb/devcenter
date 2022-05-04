@@ -17,13 +17,13 @@ const MainLinkStyles = {
     fontSize: 'inc30',
     fontWeight: 500,
     padding: '16px 32px 16px',
-    '.textlink-default-text-class' : {
+    '.textlink-default-text-class': {
         color: '#000!important',
         fontSize: '18px!important',
         '&:hover': {
             borderBottom: '2px solid transparent!important',
-        }
-    }
+        },
+    },
 };
 
 const StyledFloraLink = styled(FloraLink)`
@@ -36,7 +36,7 @@ const StyledFloraLink = styled(FloraLink)`
         font-family: ${theme.fonts.body};
         font-weight: 300;
         &:hover {
-            border-bottom: 2px solid transparent!important;
+            border-bottom: 2px solid transparent !important;
         }
     }
 `;
@@ -51,7 +51,7 @@ const StyledFloraLinkChevronRight = styled(FloraLink)`
         font-family: ${theme.fonts.body};
         font-weight: 300;
         &:hover {
-            border-bottom: none!important;
+            border-bottom: none !important;
         }
     }
 `;
@@ -70,13 +70,12 @@ const plusOrMinusStylesForDropDowns = {
 };
 
 const aLinkStyles = {
-    display: 'inline',
+    display: 'inline-block',
     alignItems: 'center',
     fontSize: 'inc20',
     fontFamily: 'euclid-circular-a',
     fontWeight: 300,
-    paddingTop: 'inc40',
-    paddingBottom: 'inc40',
+
     '&:hover': {
         color: 'text.selected',
         textDecoration: 'none',
@@ -93,9 +92,9 @@ const chevronStylesForMainLink = {
 const DropDownStyles = {
     position: 'relative' as 'relative',
     paddingBottom: 'inc30',
-    '.topics-title' : {
+    '.topics-title': {
         paddingBottom: '10px',
-    }
+    },
 };
 
 const secondaryLinkDividerStyle = {
@@ -118,7 +117,6 @@ const DropDownWrapper = styled.div`
 
 const DropDownMenuList = styled.ul`
     list-style-type: none;
-    padding: 0;
     white-space: nowrap;
 
     li {
@@ -131,6 +129,7 @@ const SubLinks = styled.ul`
     background-color: #f5f7fa;
     list-style-type: none;
     padding-left: 32px;
+    margin-left: -32px;
 
     ul {
         list-style-type: none;
@@ -278,33 +277,9 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                         )
                                     )}
                                 </SubLinks>
-                                <Link href={path} passHref>
-                                    <a sx={aLinkStyles} key={name}>
-                                        {/* L1 Links */}
-                                        <StyledFloraLink>{all}</StyledFloraLink>
-                                    </a>
-                                </Link>
                             </>
                         </>
                     )}
-                </>
-            )}
-            {/* Add all topics buttons to last column */}
-            {name.includes('Expertise Levels') && (
-                <>
-                    <span
-                        sx={{
-                            display: 'block',
-                            marginTop: '25px',
-                        }}
-                    >
-                        <Link href="example.com" passHref>
-                            <a sx={aLinkStyles} key={name}>
-                                {/* L1 Links */}
-                                <StyledFloraLink>All Topics</StyledFloraLink>
-                            </a>
-                        </Link>
-                    </span>
                 </>
             )}
         </li>
@@ -327,6 +302,14 @@ const DropDownMenu = ({ items }: any) => {
                         />
                     </>
                 ))}
+                <li>
+                    <Link href="all-topics" passHref>
+                        <a sx={aLinkStyles} key="All Topics">
+                            {/* L1 Links */}
+                            <StyledFloraLink>All Topics</StyledFloraLink>
+                        </a>
+                    </Link>
+                </li>
             </DropDownMenuList>
         </DropDownWrapper>
     );
@@ -341,7 +324,9 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
         <>
             <Link href={slug} passHref>
                 <a sx={aLinkStyles} key={name}>
-                    <StyledFloraLinkChevronRight>{name}</StyledFloraLinkChevronRight>
+                    <StyledFloraLinkChevronRight>
+                        {name}
+                    </StyledFloraLinkChevronRight>
                     <SystemIcon
                         sx={{
                             paddingLeft: 'inc10',
@@ -424,7 +409,6 @@ export const Hamburger = () => {
                             />
                         ) : (
                             <>
-                                {/* Outter links Documentation, Articles, Tutorials, Quick starts, etc  */}
                                 <div sx={DropDownStyles}>
                                     <StyledFloraLink href={slug}>
                                         {name}
