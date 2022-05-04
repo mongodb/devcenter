@@ -1,6 +1,6 @@
 import { FilterItem } from '../../components/search-filters';
-import { ContentPiece } from '../../interfaces/content-piece';
 import { PillCategory } from '../../types/pill-category';
+import { ContentItem } from '../../interfaces/content-item';
 
 export interface ContentTypePageProps {
     contentType: PillCategory;
@@ -8,5 +8,5 @@ export interface ContentTypePageProps {
     languageItems: FilterItem[];
     technologyItems: FilterItem[];
     contributedByItems: FilterItem[];
-    featured: ContentPiece[];
+    featured: ContentItem[];
 }
