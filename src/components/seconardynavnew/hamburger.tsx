@@ -21,7 +21,7 @@ const MainLinkStyles = {
         color: '#000!important',
         fontSize: '18px!important',
         '&:hover': {
-            borderBottom: 'none!important',
+            borderBottom: '2px solid transparent!important',
         }
     }
 };
@@ -36,7 +36,7 @@ const StyledFloraLink = styled(FloraLink)`
         font-family: ${theme.fonts.body};
         font-weight: 300;
         &:hover {
-            border-bottom: none!important;
+            border-bottom: 2px solid transparent!important;
         }
     }
 `;
