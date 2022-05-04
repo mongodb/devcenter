@@ -19,10 +19,6 @@ const getAllPodcastsFromAPI = async (
                 slug
                 podcastFileUrl
                 thumbnailUrl
-                technology: technology {
-                    name
-                    calculatedSlug: calculated_slug
-                }
                 casted_slug
             }
         }

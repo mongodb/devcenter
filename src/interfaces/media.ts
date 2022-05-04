@@ -12,9 +12,4 @@ export interface Media {
     title: string;
     slug: string;
     thumbnailUrl?: string;
-    technology?: TechnologyTag[];
-    l1Product?: L1ProductTag;
-    programmingLanguage?: ProgrammingLanguageTag[];
-    otherTags?: OtherTags[];
-    primaryTag?: PrimaryTags;
 }
