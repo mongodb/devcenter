@@ -13,6 +13,7 @@ import { getAllVideoSeries } from './get-all-video-series';
 import { getAllPodcastSeries } from './get-all-podcast-series';
 import { flattenTags } from '../utils/flatten-tags';
 import { MOCK_PODCAST_TAGS, MOCK_VIDEO_TAGS } from '../mockdata/mock-tags';
+import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
@@ -58,7 +59,7 @@ export const mapPodcastsToContentItems = (
         if (p.thumbnailUrl) {
             item.image = { url: p.thumbnailUrl, alt: 'randomAlt' };
         }
-        item.podcastFileUrl = p.podcastFileUrl;
+        item.podcastFileUrl = p.casted_slug;
         //addSeriesToItem(item, 'podcast', podcastSeries);
         items.push(item);
     });
@@ -83,9 +84,12 @@ export const mapVideosToContentItems = (
         if (v.description) {
             item.description = v.description;
         }
-        if (v.thumbnailUrl) {
-            item.image = { url: v.thumbnailUrl, alt: 'randomAlt' };
-        }
+
+        item.image = {
+            url: getPlaceHolderImage(v.thumbnailUrl),
+            alt: 'randomAlt',
+        };
+
         item.videoId = v.videoId;
         //addSeriesToItem(item, 'video', videoSeries);
         items.push(item);

@@ -22,6 +22,7 @@ import {
 import TagSection from '../tag-section';
 import { CardProps } from './types';
 import parse from 'html-react-parser';
+import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 
 // Still need to add authors section.
 const Card: React.FunctionComponent<CardProps> = ({
@@ -115,7 +116,9 @@ const Card: React.FunctionComponent<CardProps> = ({
                             />
                         )}
                         <TypographyScale variant="body3">
-                            {contentDate}
+                            {formatDateToDisplayDateFormat(
+                                new Date(contentDate)
+                            )}
                         </TypographyScale>
                     </div>
                 </div>

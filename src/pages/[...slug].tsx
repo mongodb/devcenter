@@ -40,6 +40,10 @@ import parse from 'html-react-parser';
 import { PillCategory } from '../types/pill-category';
 import { getSideNav } from '../service/get-side-nav';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
+import Script from 'next/script';
+import { VideoEmbed } from '../components/article-body/body-components/video-embed';
+import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
+import PodcastPlayer from '../components/podcast-player/podcast-player';
 
 interface ContentPageProps {
     contentItem: ContentItem;
@@ -118,12 +122,6 @@ const constructDateDisplay = (
 
 const parseUndefinedValue = (description: string | undefined): string => {
     return description ? description : '';
-};
-
-const getPlaceHolderImage = (url: string | undefined) => {
-    return url
-        ? url
-        : 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png';
 };
 
 const getCtaTextForVideosOrPodcasts = (category: PillCategory) => {
@@ -242,7 +240,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                             <div>
                                 <AuthorLockup
                                     authors={authorsToDisplay}
-                                    title={contentDate}
+                                    title={displayDate}
                                     expandedNames
                                     clickableLinks
                                     size="large"
@@ -257,7 +255,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                                     marginBottom: vidOrPod ? 0 : 'inc30',
                                 }}
                             >
-                                {contentDate}
+                                {displayDate}
                             </TypographyScale>
                         )}
                     </div>
@@ -277,26 +275,31 @@ const ContentPage: NextPage<ContentPageProps> = ({
 
             <div sx={middleSectionStyles}>
                 <div sx={imageStyles}>
-                    {/*                  <div><iframe width="100%" height="215px" id="casted-embed-22bc2ce0" scrolling="no" style={{border: "none"}} src="https://podcasts.mongodb.com/embed/v2/regularPlayer/22bc2ce0/takeaways/guests/transcript/resources/subscribe"></iframe>*/}
-                    {/*                  <Script id="castedscr"  strategy="afterInteractive"*/}
-                    {/*                           dangerouslySetInnerHTML={{*/}
-                    {/*                               __html: `*/}
-                    {/*  window.addEventListener("message", function(message){if(message.origin === "https://podcasts.mongodb.com" ) { if( message.data.event) { if(message.data.event === "castedSizeUpdate") { var casted_episode_player = document.getElementById('casted-embed-' + message.data.payload.slug); if(casted_episode_player) { casted_episode_player.height = message.data.payload.height;if(casted_episode_player.contentWindow) {casted_episode_player.contentWindow.postMessage({ event: "castedStopUpdate" }, "https://podcasts.mongodb.com");}}}}}}, false)*/}
-                    {/*`,*/}
-                    {/*                           }}></Script>*/}
-                    {/*                  </div>*/}
-                    <Image
-                        alt={parseUndefinedValue(image?.alt)}
-                        src={getPlaceHolderImage(image?.url)}
-                        loader={thumbnailLoader}
-                        sx={{
-                            borderRadius: 'inc30',
-                            objectFit: 'cover',
-                        }}
-                        layout="fill"
-                    />
+                    {category === 'Podcast' && (
+                        <PodcastPlayer
+                            podcastFileUrl={parseUndefinedValue(podcastFileUrl)}
+                        />
+                    )}
+                    {category === 'Video' && (
+                        <VideoEmbed
+                            argument={[{ value: parseUndefinedValue(videoId) }]}
+                            name="youtube"
+                            thumbnail={getPlaceHolderImage(image?.url)}
+                        />
+                    )}
+                    {!vidOrPod && (
+                        <Image
+                            alt={parseUndefinedValue(image?.alt)}
+                            src={getPlaceHolderImage(image?.url)}
+                            loader={thumbnailLoader}
+                            sx={{
+                                borderRadius: 'inc30',
+                                objectFit: 'cover',
+                            }}
+                            layout="fill"
+                        />
+                    )}
                 </div>
-
                 {!vidOrPod && ratingSection}
             </div>
         </>
