@@ -5,7 +5,7 @@ import { globalStyles, Main } from '../styled/layout';
 
 import ConsistentNav from './consistent-nav';
 // import SecondaryNavBarDup from './secondarynavdup';
-import { Hamburger } from './seconardynavnew/hamburger';
+import SecondaryNav from './seconardynavnew/';
 
 const Layout: React.FunctionComponent = ({ children }) => {
     return (
@@ -13,9 +13,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
             <Global styles={globalStyles} />
             <ConsistentNav />
             {/* <SecondaryNavBarDup /> */}
-            <div sx={{ display: ['block', 'block', 'block', 'none'] }}>
-                <Hamburger />
-            </div>
+            <SecondaryNav />
             <Main>{children}</Main>
             <UnifiedFooter hideLocale />
         </>

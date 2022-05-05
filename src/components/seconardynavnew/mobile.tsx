@@ -4,7 +4,7 @@ import { myData } from '../../data/secondary-nav';
 import theme from '@mdb/flora/theme';
 import { Link as FloraLink } from '@mdb/flora';
 
-import { ESystemIconNames, SystemIcon, HorizontalRule } from '@mdb/flora';
+import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from '../secondarynavdup/nav-item';
 import styled from '@emotion/styled';
 
@@ -396,7 +396,7 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
     );
 };
 
-export const Hamburger = () => {
+const MobileView = () => {
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
     const openMobileMenu = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);
@@ -446,3 +446,5 @@ export const Hamburger = () => {
         </>
     );
 };
+
+export default MobileView;

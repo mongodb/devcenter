@@ -6,11 +6,12 @@ export const StyledSecondaryNavContainer = styled('nav')`
     display: block;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: flex;
+        justify-content: center;
+        max-width: 1200px;
         padding-top: ${theme.space.elementSmall};
         padding-bottom: ${theme.space.elementXSmall};
         padding-left: ${theme.space.elementXLarge};
         position: relative ;
-        max-width: 1002px;
     }
 `;
 
@@ -59,17 +60,11 @@ export const MainLinkStyles = {
 };
 
 export const SecondaryLinks = styled.ul`
-    float: initial;
-    overflow: hidden;
-    height: ${(props: SecondaryMenuListProps) => (props.isOpen ? '100%' : '0')};
     padding: 0;
     margin: 0;
-    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        float: left;
-        overflow: visible;
-        li:not(:last-child) {
-            margin-right: ${theme.space.inc40};
-        }
+    overflow: visible;
+    li:not(:last-child) {
+        margin-right: ${theme.space.inc40};
     }
 `;
 
@@ -84,30 +79,28 @@ export const StyledList = styled('li')`
     }
 `;
 
-type SecondaryMenuListProps = {
-    isOpen: boolean;
-};
-
 export const DropDownWrapper = styled.div`
     .dropdown-titles {
         display: inline-block;
         font-size: 20px;
         margin-bottom: 25px;
     }
+
     background-color: #fff;
     color: #000;
     padding-left: 32px;
+    
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        background-color: ${theme.colors.blue80};
-        color: ${theme.colors.text.inverse};
-        //margin top is same as padding bottom of secondary nav
-        margin-top: ${theme.space.elementXSmall};
-        position: absolute;
-        left: 40px;
         box-shadow: ${theme.shadows.level01};
         border-bottom-right-radius: ${theme.radii.inc50};
         border-bottom-left-radius: ${theme.radii.inc50};
+        background-color: ${theme.colors.blue80};
+        color: ${theme.colors.text.inverse};
+        left: 40px;
+        margin-top: ${theme.space.elementXSmall};
+        position: absolute;
         padding: ${theme.space.inc70} ${theme.space.inc90};
+        z-index: 1000;
     }
 `;
 
