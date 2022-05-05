@@ -105,7 +105,7 @@ export const mapArticlesToContentItems = (
 
     filteredArticles.forEach((a: Article) => {
         const item: ContentItem = {
-            authors: a.authors.map(author => author.name),
+            authors: a.authors,
             /*
             very important - some times we see content type as video and podcast in article type of data - set their category to 'Article'
              */
