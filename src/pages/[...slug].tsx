@@ -40,10 +40,10 @@ import parse from 'html-react-parser';
 import { PillCategory } from '../types/pill-category';
 import { getSideNav } from '../service/get-side-nav';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
-import Script from 'next/script';
 import { VideoEmbed } from '../components/article-body/body-components/video-embed';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import PodcastPlayer from '../components/podcast-player/podcast-player';
+import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
 
 interface ContentPageProps {
     contentItem: ContentItem;
@@ -185,17 +185,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         -1
     );
 
-    //TODO replace with authors
-    const authorsToDisplay = [
-        { name: 'Some Person', url: '#' },
-        {
-            name: 'Other Person',
-            image: {
-                src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
-            },
-            url: '#',
-        },
-    ];
+    const authorsToDisplay = parseAuthorsToAuthorLockup(authors);
 
     const ratingSection = (
         <div

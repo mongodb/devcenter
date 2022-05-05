@@ -1,4 +1,4 @@
-export interface Author {
+export interface AuthorLockUp {
     name: string;
     image?: {
         src?: string;
@@ -8,7 +8,7 @@ export interface Author {
 }
 export interface AuthorLockupProps {
     className?: string;
-    authors: Author[];
+    authors: AuthorLockUp[];
     title?: string;
     expandedNames?: boolean;
     clickableLinks?: boolean;
@@ -16,7 +16,7 @@ export interface AuthorLockupProps {
 }
 
 export interface AuthorImageProps {
-    author: Author;
+    author: AuthorLockUp;
     className?: string;
     size: 'small' | 'large';
 }
