@@ -2,7 +2,6 @@ import { Tag } from '@mdb/flora';
 
 import { tagStyles, tagWrapperStyles } from './styles';
 import { TagSectionProps } from './types';
-import { flattenTags } from '../../utils/flatten-tags';
 
 const TagSection: React.FunctionComponent<TagSectionProps> = ({
     tags,
@@ -11,7 +10,12 @@ const TagSection: React.FunctionComponent<TagSectionProps> = ({
 }) => (
     <div sx={tagWrapperStyles(disappearOnMobile)} className={className}>
         {tags
-            .filter(tag => tag.type !== 'AuthorType')
+            .filter(
+                tag =>
+                    !['AuthorType', 'ExpertiseLevel', 'ContentType'].includes(
+                        tag.type
+                    )
+            )
             .map(tag => (
                 <Tag
                     key={`${tag.name} ${tag.type}`}

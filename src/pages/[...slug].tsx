@@ -193,7 +193,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         {
             name: 'Other Person',
             image: {
-                src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
+                url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
             },
             url: '#',
         },

@@ -1,22 +1,19 @@
 import { PillCategory } from '../../types/pill-category';
 import { Tag } from '../../interfaces/tag';
-
-export interface Thumbnail {
-    url: string;
-    alt?: string;
-}
+import { Author } from '../../interfaces/author';
+import { Image } from '../../interfaces/image';
 
 export type CardVariant = 'small' | 'medium' | 'large' | 'list' | 'related';
 
 export interface CardProps {
-    authors?: string[];
+    authors?: Author[];
     contentDate: string;
     className?: string;
     description?: string;
     title: string;
     pillCategory: PillCategory;
     tags?: Tag[];
-    thumbnail?: Thumbnail;
+    thumbnail?: Image;
     variant: CardVariant;
     slug: string;
 }

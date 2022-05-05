@@ -4,6 +4,10 @@ import { decode } from 'querystring';
 import { IsortByOptions } from './types';
 import { ContentItem } from '../../interfaces/content-item';
 import getL1Content from '../../mockdata/get-l1-content';
+import { PillCategory } from '../../types/pill-category';
+import { Tag } from '../../interfaces/tag';
+import { Image } from '../../interfaces/image';
+import { Author } from '../../interfaces/author';
 
 export const sortByOptions: IsortByOptions = {
     'Most Recent': 'recent',
@@ -35,9 +39,63 @@ export const fetcher: Fetcher<ContentItem[], string> = queryString =>
         );
     }); // Simulate request loading time and error if we load more than 3 pages.
 
-export const fetcherv2: Fetcher<ContentItem[], string> = searchString => {
-    return fetch(`${searchEndpoint}?s=${searchString}`).then(async response => {
-        const r_json = await response.json();
-        return r_json;
+interface SearchImage {
+    url: string;
+    alternativeText: string;
+}
+
+interface SearchAuthor {
+    name: string;
+    image: SearchImage;
+}
+interface SearchItem {
+    type: PillCategory;
+    authors: SearchAuthor[];
+    name: string;
+    image: SearchImage;
+    description: string;
+    calculated_slug: string;
+    date: string;
+    tags: Tag[];
+}
+
+const searchItemToContentItem = ({
+    type,
+    authors,
+    name,
+    image,
+    description,
+    calculated_slug,
+    date,
+    tags,
+}: SearchItem): ContentItem => {
+    const itemImage: Image = {
+        url: image.url,
+        alt: image.alternativeText,
+    };
+    const itemAuthors: Author[] = authors.map(auth => ({
+        name: auth.name,
+        image: {
+            url: auth.image.url,
+            alt: auth.image.alternativeText,
+        },
+    }));
+    return {
+        authors: itemAuthors,
+        category: type,
+        contentDate: date,
+        description,
+        image: itemImage,
+        slug: calculated_slug,
+        tags,
+        title: name,
+        featured: false,
+    };
+};
+
+export const fetcherv2: Fetcher<ContentItem[], string> = queryString => {
+    return fetch(`${searchEndpoint}?${queryString}`).then(async response => {
+        const r_json: SearchItem[] = await response.json();
+        return r_json.map(searchItemToContentItem);
     });
 }; // Simulate request loading time

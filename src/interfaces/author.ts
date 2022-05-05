@@ -1,9 +1,8 @@
-type Image = {
-    url: string;
-};
+import { Image } from './image';
 
 export interface Author {
     name: string;
-    bio: string;
-    image: Image;
+    image?: Image;
+    url?: string;
+    bio?: string;
 }

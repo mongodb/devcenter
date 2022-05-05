@@ -56,7 +56,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
     const { data, error, isValidating } = useSWR(
-        () => searchString || ' ',
+        () => `s=${searchString}&contentType=${contentType}`,
         fetcherv2,
         {
             revalidateIfStale: false,

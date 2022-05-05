@@ -1,11 +1,4 @@
-export interface Author {
-    name: string;
-    image?: {
-        src?: string;
-        alt?: string;
-    };
-    url: string;
-}
+import { Author } from '../../interfaces/author';
 export interface AuthorLockupProps {
     className?: string;
     authors: Author[];
