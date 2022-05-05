@@ -80,7 +80,7 @@ export const myData = [
             {
                 name: 'Products',
                 slug: '',
-                all: 'All Topics',
+                all: 'All Products',
                 path: '/all-topics',
                 dropDownItems: [
                     {
@@ -96,6 +96,10 @@ export const myData = [
                                 name: 'Sharding',
                                 slug: '/product/mongodb/sharding',
                             },
+                            {
+                                name: 'All MongoDB Products',
+                                slug: '/product/mongodb/sharding',
+                            },
                         ],
                     },
                     {
@@ -106,6 +110,10 @@ export const myData = [
                             {
                                 name: 'Sync',
                                 slug: '/product/realm-(mobile)/sync',
+                            },
+                            {
+                                name: 'All Realm Products',
+                                slug: '/product/mongodb/sharding',
                             },
                         ],
                     },
@@ -118,6 +126,10 @@ export const myData = [
                                 name: 'Aggregations',
                                 slug: '/product/atlas/aggregations',
                             },
+                            {
+                                name: 'All Atlas Products',
+                                slug: '/product/mongodb/sharding',
+                            },
                         ],
                     },
                 ],
@@ -125,7 +137,7 @@ export const myData = [
             {
                 name: 'Languages',
                 slug: '',
-                all: 'All Topics',
+                all: 'All Languages',
                 path: '/all-topics',
                 dropDownItems: [
                     { name: 'Go', slug: '/language/go' },
@@ -137,7 +149,7 @@ export const myData = [
             {
                 name: 'Technologies',
                 slug: '',
-                all: 'All Topics',
+                all: 'All Technologies',
                 path: '/all-topics',
                 dropDownItems: [
                     { name: 'GCP', slug: '/technology/gcp' },

@@ -146,6 +146,9 @@ const SubLinks = styled.ul`
         > li:not(:last-child) {
             padding-bottom: 40px;
         }
+        > li:last-child {
+            color: #006CFA;
+        }
     }
 `;
 
@@ -255,7 +258,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                                             passHref
                                                         >
                                                             <a
-                                                                sx={aLinkStyles}
+                                                                sx={{...aLinkStyles, display: 'flex', alignItems: 'center'}}
                                                                 key={name}
                                                             >
                                                                 <StyledFloraLink>
@@ -280,6 +283,15 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                             </>
                                         )
                                     )}
+                                    <li>
+                                        <Link href={slug} passHref>
+                                            <a sx={aLinkStyles} key={name}>
+                                                <StyledFloraLink>
+                                                    {all} L3 
+                                                </StyledFloraLink>
+                                            </a>
+                                        </Link>
+                                    </li>
                                 </SubLinks>
                             </>
                         </>
