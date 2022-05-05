@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import theme from '@mdb/flora/theme';
 import { Link as FloraLink, TypographyScale, Button } from '@mdb/flora';
-import { DropDownMenuList, DropDownWrapper, StyledFloraLink } from './styles';
+import { DropDownWrapper } from './styles';
 
 const aLinkStyles = {
     display: 'inline',
@@ -18,6 +17,27 @@ const aLinkStyles = {
         color: 'text.selected',
     },
 };
+
+const DropDownMenuList = styled.ul`
+    list-style-type: none;
+    padding: 0;
+    white-space: nowrap;
+    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        a:not(:last-child) {
+            margin-bottom: ${theme.space.inc40};
+        }
+    }
+
+    li {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        a:hover {
+            color: ${theme.colors.green40};
+        }
+    }
+`;
 
 const SubLinks = styled.ul`
     list-style-type: none;
@@ -37,6 +57,8 @@ const SubLinks = styled.ul`
 
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: grid;
+        grid-column-gap: 30px;
+
         grid-template-columns: repeat(3, 1fr);
     }
 `;
