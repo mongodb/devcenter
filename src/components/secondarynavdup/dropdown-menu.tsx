@@ -135,6 +135,9 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                     href="example.com"
                     sx={{
                         marginTop: '25px',
+                        "&:hover": {
+                            color: 'initial!important',
+                        }
                     }}
                     variant="primary"
                 >
