@@ -4,11 +4,6 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter
 
-resources:
-  requests:
-    cpu: 4
-    memory: 2GiB
-
 steps:
 - name: publish-staging
   image: plugins/kaniko-ecr
