@@ -15,7 +15,7 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
 }) => {
     const nameStyles = clickableLinks
         ? {
-              '&:hover': { color: 'black60' },
+              '&:hover': { textDecoration: 'underline' },
           }
         : {};
 
