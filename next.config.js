@@ -3,14 +3,12 @@ const configVals = {
     images: {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
-    rewrites: async () => {
-        return [
-            {
-                source: '/healthz',
-                destination: '/api/health',
-            },
-        ];
-    },
+    rewrites: [
+        {
+            source: '/healthz',
+            destination: '/api/health',
+        },
+    ],
 };
 if (process.env.ANALYZE === 'true') {
     const withBundleAnalyzer = require('@next/bundle-analyzer')({
