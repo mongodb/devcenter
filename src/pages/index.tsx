@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next';
 import { clientFactory } from '../utils/client-factory';
 import { getArticles } from '../api-requests/get-articles';
 import { Article } from '../interfaces/article';
+import { getAllAuthors } from '../service/get-all-authors';
 
 interface HomeProps {
     articles: Article[];
@@ -28,6 +29,7 @@ export default Home;
 export const getStaticProps: GetStaticProps = async ({}) => {
     const client = clientFactory('ApolloREST', process.env.STRAPI_URL);
     const articles = await getArticles(client);
+    const authors = await getAllAuthors();
     return {
         props: { articles },
     };
