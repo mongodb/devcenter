@@ -148,7 +148,7 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
             <div sx={DropDownStyles}>
                 {/* Topics */}
                 <div className="topics-title" onClick={onClickShowMenu}>
-                    {text}
+                    {text} L1 
                     {!isOpen && (
                         <SystemIcon
                             sx={plusOrMinusStylesForDropDowns}
@@ -193,7 +193,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                 >
                     {/* Topics titles mobile view */}
                     <StyledFloraLink onClick={onClickShowMenu}>
-                        {name}
+                        {name} L2
                         {!isOpen && (
                             <SystemIcon
                                 sx={plusOrMinusStylesForDropDowns}
@@ -230,7 +230,6 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                             <>
                                                 {l1Product ? (
                                                     <li key={name}>
-                                                        {/* L1 Products Dropdown links */}
                                                         <MobileViewL1ProductLinks
                                                             name={name}
                                                             slug={slug}
@@ -244,7 +243,6 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                                     </li>
                                                 ) : (
                                                     <li>
-                                                        {/* Non L1 Dropdown links */}
                                                         <Link
                                                             href={slug}
                                                             passHref
@@ -253,9 +251,8 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                                                 sx={aLinkStyles}
                                                                 key={name}
                                                             >
-                                                                {/* L1 Links */}
                                                                 <StyledFloraLink>
-                                                                    {name}
+                                                                    {name} L3
                                                                 </StyledFloraLink>
                                                                 <SystemIcon
                                                                     sx={{
@@ -305,7 +302,6 @@ const DropDownMenu = ({ items }: any) => {
                 <li>
                     <Link href="all-topics" passHref>
                         <a sx={aLinkStyles} key="All Topics">
-                            {/* L1 Links */}
                             <StyledFloraLink>All Topics</StyledFloraLink>
                         </a>
                     </Link>
@@ -325,7 +321,7 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
             <Link href={slug} passHref>
                 <a sx={aLinkStyles} key={name}>
                     <StyledFloraLinkChevronRight>
-                        {name}
+                        {name} | Products -> L3
                     </StyledFloraLinkChevronRight>
                     <SystemIcon
                         sx={{
@@ -361,7 +357,7 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
                         <li sx={{ marginLeft: 'inc40' }} key={name}>
                             <Link href={slug} passHref>
                                 <a sx={aLinkStyles} key={name}>
-                                    {name}
+                                    {name} | Products L4
                                 </a>
                             </Link>
                         </li>
@@ -411,7 +407,7 @@ export const Hamburger = () => {
                             <>
                                 <div sx={DropDownStyles}>
                                     <StyledFloraLink href={slug}>
-                                        {name}
+                                        {name} L1
                                     </StyledFloraLink>
                                 </div>
                                 <HorizontalRule
