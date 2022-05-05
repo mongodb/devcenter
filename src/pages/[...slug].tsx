@@ -185,19 +185,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         -1
     );
 
-    //TODO replace with authors
     const authorsToDisplay = parseAuthorsToAuthorLockup(authors);
-
-    //     [
-    //     { name: 'Some Person', url: '#' },
-    //     {
-    //         name: 'Other Person',
-    //         image: {
-    //             src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
-    //         },
-    //         url: '#',
-    //     },
-    // ];
 
     const ratingSection = (
         <div
