@@ -51,7 +51,7 @@ const StyledFloraLinkChevronRight = styled(FloraLink)`
         font-family: ${theme.fonts.body};
         font-weight: 300;
         &:hover {
-            border-bottom: none !important;
+            border-bottom: solid 2px transparent !important;
         }
     }
 `;
@@ -61,6 +61,16 @@ const SecondaryLinks = styled.ul`
     height: ${(props: SecondaryMenuListProps) => (props.isOpen ? '100%' : '0')};
     padding-left: 32px;
     margin: 0;
+    /* L1 */
+    > li {
+        padding-bottom: 16px;
+        &:first-child {
+            min-height: 30px;
+        }
+        &:not(:last-child) {
+            border-bottom: solid #e7eeec 1px;
+        }
+    }
 `;
 
 const plusOrMinusStylesForDropDowns = {
@@ -91,16 +101,6 @@ const chevronStylesForMainLink = {
 
 const DropDownStyles = {
     position: 'relative' as 'relative',
-    paddingBottom: 'inc30',
-    '.topics-title': {
-        paddingBottom: '10px',
-    },
-};
-
-const secondaryLinkDividerStyle = {
-    display: 'block',
-    borderTopWidth: 'inc10',
-    borderColor: 'black20',
 };
 
 const DropDownWrapper = styled.div`
@@ -118,22 +118,34 @@ const DropDownWrapper = styled.div`
 const DropDownMenuList = styled.ul`
     list-style-type: none;
     white-space: nowrap;
-
-    li {
-        padding-top: 15px;
+    padding-top: 16px;
+    /* L2 */
+    li:not(:last-child) {
         padding-bottom: 15px;
     }
 `;
 
+// L2
 const SubLinks = styled.ul`
     background-color: #f5f7fa;
     list-style-type: none;
     padding-left: 32px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     margin-left: -32px;
+    /* L3 */
+    > li:not(:last-child) {
+        padding-bottom: 30px;
+    }
 
     ul {
         list-style-type: none;
         padding-left: 32px;
+        padding-top: 20px;
+        /* L4 */
+        > li:not(:last-child) {
+            padding-bottom: 40px;
+        }
     }
 `;
 
@@ -147,8 +159,8 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
         <>
             <div sx={DropDownStyles}>
                 {/* Topics */}
-                <div className="topics-title" onClick={onClickShowMenu}>
-                    {text} L1 
+                <div onClick={onClickShowMenu}>
+                    {text} L1
                     {!isOpen && (
                         <SystemIcon
                             sx={plusOrMinusStylesForDropDowns}
@@ -168,11 +180,6 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
                 </div>
             </div>
             {isOpen && <DropDownMenu items={dropdownItems} />}
-            <HorizontalRule
-                sx={secondaryLinkDividerStyle}
-                spacing="none"
-                strokeWeight="small"
-            />
         </>
     );
 };
@@ -318,39 +325,48 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
     };
     return (
         <>
-            <Link href={slug} passHref>
-                <a sx={aLinkStyles} key={name}>
-                    <StyledFloraLinkChevronRight>
-                        {name} | Products -> L3
-                    </StyledFloraLinkChevronRight>
-                    <SystemIcon
+            <div sx={{ display: 'flex', alignItems: 'center' }}>
+                <Link href={slug} passHref>
+                    <a
                         sx={{
-                            paddingLeft: 'inc10',
-                            display: 'inline',
+                            ...aLinkStyles,
+                            display: 'flex',
+                            alignItems: 'center',
                         }}
-                        name={ESystemIconNames.CHEVRON_RIGHT}
-                        size="small"
-                    />
-                </a>
-            </Link>
-            <span onClick={onClickShowL1Menu}>
-                {!isOpenL1 && (
-                    <SystemIcon
-                        sx={plusOrMinusStylesForDropDowns}
-                        name={ESystemIconNames.PLUS}
-                        size="small"
-                        color="success"
-                    />
-                )}
-                {isOpenL1 && (
-                    <SystemIcon
-                        sx={plusOrMinusStylesForDropDowns}
-                        name={ESystemIconNames.MINUS}
-                        size="small"
-                        color="success"
-                    />
-                )}
-            </span>
+                        key={name}
+                    >
+                        <StyledFloraLinkChevronRight>
+                            {name} | Products{` ->`} L3
+                        </StyledFloraLinkChevronRight>
+                        <SystemIcon
+                            sx={{
+                                paddingLeft: 'inc10',
+                                display: 'inline',
+                            }}
+                            name={ESystemIconNames.CHEVRON_RIGHT}
+                            size="small"
+                        />
+                    </a>
+                </Link>
+                <span onClick={onClickShowL1Menu}>
+                    {!isOpenL1 && (
+                        <SystemIcon
+                            sx={plusOrMinusStylesForDropDowns}
+                            name={ESystemIconNames.PLUS}
+                            size="small"
+                            color="success"
+                        />
+                    )}
+                    {isOpenL1 && (
+                        <SystemIcon
+                            sx={plusOrMinusStylesForDropDowns}
+                            name={ESystemIconNames.MINUS}
+                            size="small"
+                            color="success"
+                        />
+                    )}
+                </span>
+            </div>
             {dropDownItems && isOpenL1 && (
                 <ul>
                     {dropDownItems.map(({ name }: any) => (
@@ -410,11 +426,6 @@ export const Hamburger = () => {
                                         {name} L1
                                     </StyledFloraLink>
                                 </div>
-                                <HorizontalRule
-                                    sx={secondaryLinkDividerStyle}
-                                    spacing="none"
-                                    strokeWeight="medium"
-                                />
                             </>
                         )}
                     </SecondaryLinksList>
