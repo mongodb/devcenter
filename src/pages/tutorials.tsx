@@ -1,5 +1,4 @@
 import type { NextPage, GetStaticProps } from 'next';
-import { ThirdPartyLogo } from '@mdb/flora';
 
 import ContentTypePage from '../page-templates/content-type';
 import { PillCategory } from '../types/pill-category';

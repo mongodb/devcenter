@@ -9,7 +9,7 @@ export const languageToLogo: { [key: string]: EThirdPartyLogoVariant } = {
     Java: EThirdPartyLogoVariant.JAVA_LOGOMARK,
     JavaScript: EThirdPartyLogoVariant.JAVASCRIPT,
     PHP: EThirdPartyLogoVariant.PHP,
-    Python: EThirdPartyLogoVariant.PYTHON,
+    Python: EThirdPartyLogoVariant.PYTHON_LOGOMARK,
     Ruby: EThirdPartyLogoVariant.RUBY,
     Scala: EThirdPartyLogoVariant.SCALA,
 };
