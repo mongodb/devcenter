@@ -4,11 +4,6 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter-staging
 
-resources:
-  requests:
-    cpu: 8
-    memory: 4GiB
-
 steps:
 - name: publish-staging
   image: plugins/kaniko-ecr
@@ -21,7 +16,6 @@ steps:
       from_secret: STRAPI_URL_STAGING
   settings:
     create_repository: true
-    enable_cache: true
     registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
     repo: devrel/${DRONE_REPO_NAME}
     build_args:
