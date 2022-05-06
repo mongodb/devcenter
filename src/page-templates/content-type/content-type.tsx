@@ -41,6 +41,7 @@ import { FeaturedCardSection } from '../../components/card-section';
 
 import LanguagesSection from './languages-section';
 import TechnologiesSection from './technologies-section';
+import ProductsSection from './products-section';
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     contentType,
@@ -51,6 +52,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     featured,
     featuredLanguages,
     featuredTechnologies,
+    featuredProducts,
 }) => {
     ///////////////////////////////////////
     // HOOKS
@@ -123,7 +125,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const numberOfResults = filteredData.length;
     const shownData = filteredData.slice(0, resultstoShow);
     const fullyLoaded = resultstoShow >= numberOfResults;
-    const hasExtraSections = !!featuredLanguages && !!featuredTechnologies;
+    const hasExtraSections =
+        !!featuredLanguages && !!featuredTechnologies && !!featuredProducts;
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
@@ -334,6 +337,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                         <TechnologiesSection
                                             title={`${contentType}s by Technology`}
                                             items={featuredTechnologies}
+                                        />
+                                        <ProductsSection
+                                            title={`${contentType}s by Product`}
+                                            items={featuredProducts}
                                         />
                                     </>
                                 )}

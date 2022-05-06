@@ -13,4 +13,5 @@ export interface ContentTypePageProps {
     featured: ContentItem[];
     featuredLanguages?: ShowcaseCardItem[];
     featuredTechnologies?: ITopicCard[];
+    featuredProducts?: ShowcaseCardItem[];
 }

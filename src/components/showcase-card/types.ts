@@ -4,6 +4,16 @@ export interface ShowcaseCardItem {
         url: string;
     };
     imageString: string;
+    description?: string;
+    image?: JSX.Element;
+    cta?: {
+        text: string;
+        url: string;
+    };
+    links?: {
+        text: string;
+        url: string;
+    }[];
 }
 
 export interface ShowcaseCardProps {
@@ -19,4 +29,8 @@ export interface ShowcaseCardProps {
         url: string;
     };
     className?: string;
+    links?: {
+        text: string;
+        url: string;
+    }[];
 }

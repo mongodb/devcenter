@@ -12,6 +12,7 @@ import { languageToLogo } from '../utils/language-to-logo';
 import { ShowcaseCardItem } from '../components/showcase-card/types';
 import { ITopicCard } from '../components/topic-card/types';
 import { technologyToLogo } from '../utils/technology-to-logo';
+import { productToLogo } from '../utils/product-to-logo';
 
 const TutorialsPage: NextPage<ContentTypePageProps> = props => {
     return <ContentTypePage {...props} />;
@@ -19,6 +20,10 @@ const TutorialsPage: NextPage<ContentTypePageProps> = props => {
 
 interface TagWithCount extends Tag {
     count: number;
+}
+
+interface L1TagWithCount extends TagWithCount {
+    l2s: Tag[];
 }
 
 const mockFeaturedTech: ITopicCard[] = [
@@ -52,6 +57,7 @@ export const getStaticProps: GetStaticProps = async () => {
         .slice(0, 3);
     let languages: TagWithCount[] = [];
     let technologies: TagWithCount[] = [];
+    let products: L1TagWithCount[] = [];
     tutorials.forEach(item => {
         const languageTags = item.tags.filter(
             tag => tag.type === 'ProgrammingLanguage'
@@ -77,31 +83,69 @@ export const getStaticProps: GetStaticProps = async () => {
                 technologies.push({ ...techTag, count: 1 });
             }
         });
+        const productTags = item.tags.filter(tag => tag.type === 'L1Product');
+        productTags.forEach(productTag => {
+            const l2 = item.tags.find(tag => tag.type === 'L2Product');
+
+            const existingTag = products.find(
+                tag => tag.name === productTag.name
+            );
+            if (existingTag) {
+                existingTag.count += 1;
+                if (l2) {
+                    if (!existingTag.l2s.find(tag => tag.name === l2.name)) {
+                        existingTag.l2s.push(l2);
+                    }
+                }
+            } else {
+                products.push({ ...productTag, count: 1, l2s: l2 ? [l2] : [] });
+            }
+        });
     });
     languages.sort((a, b) => b.count - a.count);
     technologies.sort((a, b) => b.count - a.count);
+    products.sort((a, b) => b.count - a.count);
     const featuredLanguages: ShowcaseCardItem[] = languages.map(
         langWithCount => {
             const { count, ...tag } = langWithCount;
             return {
                 titleLink: {
                     text: tag.name,
-                    url: tag.slug + '/tutorial',
+                    url: tag.slug + '/tutorials',
                 },
                 imageString: languageToLogo[tag.name],
             };
         }
     );
     const featuredTechnologies: ITopicCard[] = technologies.map(
-        langWithCount => {
-            const { count, ...tag } = langWithCount;
+        techWithCount => {
+            const { count, ...tag } = techWithCount;
             return {
                 title: tag.name,
-                href: tag.slug + '/tutorial',
+                href: tag.slug + '/tutorials',
                 icon: technologyToLogo[tag.name],
             };
         }
     );
+    const featuredProducts: ShowcaseCardItem[] = products.map(prodWithCount => {
+        const { count, ...tag } = prodWithCount;
+        return {
+            titleLink: {
+                text: tag.name,
+                url: tag.slug + '/tutorials',
+            },
+            href: tag.slug + '/tutorials',
+            imageString: productToLogo[tag.name],
+            cta: {
+                text: 'More',
+                url: tag.slug + '/tutorials',
+            },
+            links: tag.l2s.map(l2 => ({
+                text: l2.name,
+                url: l2.slug + '/tutorials',
+            })),
+        };
+    });
 
     return {
         props: {
@@ -110,6 +154,7 @@ export const getStaticProps: GetStaticProps = async () => {
             featured,
             featuredLanguages,
             featuredTechnologies: mockFeaturedTech,
+            featuredProducts,
         },
     };
 };
