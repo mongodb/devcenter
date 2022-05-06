@@ -58,7 +58,7 @@ const StyledFloraLinkChevronRight = styled(FloraLink)`
 
 const SecondaryLinks = styled.ul`
     overflow: hidden;
-    height: ${(props: SecondaryMenuListProps) => (props.isOpen ? '100%' : '0')};
+    height: ${(props: SecondaryMenuListProps) => (props.isOpen ? '100vh' : '0')};
     padding-left: 32px;
     margin: 0;
     /* L1 */
