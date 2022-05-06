@@ -1,0 +1,37 @@
+service:
+  type: ClusterIP
+  targetPort: 3000
+
+envSecrets:
+  NPM_EMAIL: devcenter-secrets
+  NPM_AUTH: devcenter-secrets
+  STRAPI_URL: devcenter-secrets
+
+autoscaling:
+  minReplicas: 2
+  maxReplicas: 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
+
+probes:
+  enabled: true
+  path: /api/health
+  headers: {}
+  liveness:
+    httpGet: true
+    initialDelaySeconds: 10
+    periodSeconds: 60
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

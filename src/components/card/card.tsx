@@ -23,6 +23,7 @@ import TagSection from '../tag-section';
 import { CardProps } from './types';
 import parse from 'html-react-parser';
 import { formatDateToDisplayDateFormat } from '../../utils/format-date';
+import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 
 // Still need to add authors section.
 const Card: React.FunctionComponent<CardProps> = ({
@@ -39,8 +40,6 @@ const Card: React.FunctionComponent<CardProps> = ({
 }) => {
     const displayDate = formatDateToDisplayDateFormat(new Date(contentDate));
     return (
-        // Next Link breaks behavior on dev because of our wonky routing.
-        // <Link href={slug} passHref={true}>
         <div
             sx={cardWrapperStyles}
             className={className}
@@ -114,17 +113,16 @@ const Card: React.FunctionComponent<CardProps> = ({
                         authors.length &&
                         hasAuthorLockup(variant, pillCategory) && (
                             <AuthorLockup
-                                sx={{
-                                    display: ['none', null, 'flex'],
-                                    flexGrow: 0,
-                                }}
-                                authors={authors}
+                                sx={{ display: ['none', null, 'flex'] }}
+                                authors={parseAuthorsToAuthorLockup(authors)}
                             />
                         )}
+                    <TypographyScale variant="body3">
+                        {formatDateToDisplayDateFormat(new Date(contentDate))}
+                    </TypographyScale>
                 </div>
             </div>
         </div>
-        // </Link>
     );
 };
 

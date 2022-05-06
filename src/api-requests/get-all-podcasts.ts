@@ -19,6 +19,7 @@ const getAllPodcastsFromAPI = async (
                 slug
                 podcastFileUrl
                 thumbnailUrl
+                casted_slug
             }
         }
     `;

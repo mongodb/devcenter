@@ -9,6 +9,7 @@ import {
     MOCK_ARTICLE_TAGS,
     MOCK_ARTICLE_TAGS_ATLAS,
 } from '../../mockdata/mock-tags';
+import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 
 const cardContent: ContentItem = {
     authors: ['Farah Appleseed'],
@@ -22,7 +23,7 @@ const cardContent: ContentItem = {
         "In this post we'll see how to use Github Actions to continuously generate the DocC documentation" +
         ' for our Swift libraries and how to publish this ' +
         'documentation so that can be accessed online, using Netlify.',
-    contentDate: 'Mon Mar 14 2022',
+    contentDate: '2021-04-15T15:50:25.122Z',
     tags: MOCK_ARTICLE_TAGS,
     featured: true,
     slug: 'product/atlas/v1',
@@ -41,7 +42,7 @@ const expectedProps: CardProps = {
         "In this post we'll see how to use Github Actions to continuously generate the DocC documentation" +
         ' for our Swift libraries and how to publish this ' +
         'documentation so that can be accessed online, using Netlify.',
-    contentDate: 'Mon Mar 14 2022',
+    contentDate: '2021-04-15T15:50:25.122Z',
     tags: MOCK_ARTICLE_TAGS,
     variant: 'large',
 };
@@ -68,7 +69,9 @@ test('renders large', () => {
     const pill = screen.queryByText(cardContent.category);
     expect(pill).toBeInTheDocument();
 
-    const date = screen.queryByText(cardContent.contentDate);
+    const date = screen.queryByText(
+        formatDateToDisplayDateFormat(new Date(cardContent.contentDate))
+    );
     expect(date).toBeInTheDocument();
 
     expect(cardContent.image).toBeDefined();
@@ -95,7 +98,9 @@ test('renders medium', () => {
     const pill = screen.queryByText(cardContent.category);
     expect(pill).toBeInTheDocument();
 
-    const date = screen.queryByText(cardContent.contentDate);
+    const date = screen.queryByText(
+        formatDateToDisplayDateFormat(new Date(cardContent.contentDate))
+    );
     expect(date).toBeInTheDocument();
 
     expect(cardContent.image).toBeDefined();
@@ -122,7 +127,9 @@ test('renders small', () => {
     const pill = screen.queryByText(cardContent.category);
     expect(pill).toBeInTheDocument();
 
-    const date = screen.queryByText(cardContent.contentDate);
+    const date = screen.queryByText(
+        formatDateToDisplayDateFormat(new Date(cardContent.contentDate))
+    );
     expect(date).toBeInTheDocument();
 
     expect(cardContent.image).toBeDefined();
@@ -149,7 +156,9 @@ test('renders list', () => {
     const pill = screen.queryByText(cardContent.category);
     expect(pill).toBeInTheDocument();
 
-    const date = screen.queryByText(cardContent.contentDate);
+    const date = screen.queryByText(
+        formatDateToDisplayDateFormat(new Date(cardContent.contentDate))
+    );
     expect(date).toBeInTheDocument();
 
     expect(cardContent.image).toBeDefined();
@@ -176,7 +185,9 @@ test('renders related', () => {
     const pill = screen.queryByText(cardContent.category);
     expect(pill).toBeInTheDocument();
 
-    const date = screen.queryByText(cardContent.contentDate);
+    const date = screen.queryByText(
+        formatDateToDisplayDateFormat(new Date(cardContent.contentDate))
+    );
     expect(date).toBeInTheDocument();
 
     expect(cardContent.image).toBeDefined();

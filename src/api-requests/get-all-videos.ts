@@ -12,7 +12,7 @@ const getAllVideosFromAPI = async (
 ): Promise<Video[]> => {
     const query = gql`
         query Videos {
-            videos @rest(type: "Video", path: "/videos") {
+            videos @rest(type: "Video", path: "/new-videos") {
                 description
                 publishDate: originalPublishDate
                 title

@@ -1,7 +1,14 @@
-import { Author } from '../../interfaces/author';
+export interface AuthorLockUp {
+    name: string;
+    image?: {
+        src?: string;
+        alt?: string;
+    };
+    url: string;
+}
 export interface AuthorLockupProps {
     className?: string;
-    authors: Author[];
+    authors: AuthorLockUp[];
     title?: string;
     expandedNames?: boolean;
     clickableLinks?: boolean;
@@ -9,7 +16,7 @@ export interface AuthorLockupProps {
 }
 
 export interface AuthorImageProps {
-    author: Author;
+    author: AuthorLockUp;
     className?: string;
     size: 'small' | 'large';
 }
