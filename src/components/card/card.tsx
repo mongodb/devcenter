@@ -41,13 +41,23 @@ const Card: React.FunctionComponent<CardProps> = ({
     return (
         // Next Link breaks behavior on dev because of our wonky routing.
         // <Link href={slug} passHref={true}>
-        <a
+        <div
             sx={cardWrapperStyles}
-            href={slug}
             className={className}
             tabIndex={0}
             data-testid={`card-${variant}`}
         >
+            {/* This absolute anchor is to avoid nesting anchor tags */}
+            <a
+                href={slug}
+                sx={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    left: 0,
+                    top: 0,
+                }}
+            />
             <div sx={cardHeaderStyles(variant, pillCategory)}>
                 {thumbnail && hasThumbnail(variant, pillCategory) && (
                     <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
@@ -113,7 +123,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                         )}
                 </div>
             </div>
-        </a>
+        </div>
         // </Link>
     );
 };

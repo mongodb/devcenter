@@ -8,7 +8,7 @@ interface L1Content {
 const getL1Content = (slug: string = 'all'): L1Content => {
     const featured: ContentItem[] = [
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Article',
             image: {
                 alt: 'thumbnail',
@@ -23,7 +23,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/a1',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Video',
             image: {
                 alt: 'thumbnail',
@@ -41,7 +41,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
         },
 
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Tutorial',
             image: {
                 alt: 'thumbnail',
@@ -58,7 +58,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
     ];
     const content: ContentItem[] = [
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Demo App',
             image: {
                 alt: 'thumbnail',
@@ -73,7 +73,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/d1',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Demo App',
             image: {
                 alt: 'thumbnail',
@@ -88,7 +88,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/d2',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Demo App',
             image: {
                 alt: 'thumbnail',
@@ -103,7 +103,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/d3',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Video',
             image: {
                 alt: 'thumbnail',
@@ -120,7 +120,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/v1',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Video',
             image: {
                 alt: 'thumbnail',
@@ -137,7 +137,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/v2',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Video',
             image: {
                 alt: 'thumbnail',
@@ -154,7 +154,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/v3',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Article',
             title: 'This is 101 article',
             description:
@@ -165,7 +165,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/a1',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Article',
             image: {
                 alt: 'thumbnail',
@@ -179,7 +179,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/a2',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Article',
             image: {
                 alt: 'thumbnail',
@@ -193,7 +193,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/a3',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Article',
             image: {
                 alt: 'thumbnail',
@@ -207,7 +207,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/a4',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Tutorial',
             image: {
                 alt: 'thumbnail',
@@ -222,7 +222,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/t1',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Tutorial',
             image: {
                 alt: 'thumbnail',
@@ -237,7 +237,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
             slug: 'product/atlas/t2',
         },
         {
-            authors: ['Farah Appleseed'],
+            authors: [],
             category: 'Tutorial',
             image: {
                 alt: 'thumbnail',

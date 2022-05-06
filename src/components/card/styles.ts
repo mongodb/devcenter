@@ -145,6 +145,7 @@ export const thumbnailWrapperStyles = (
 };
 
 export const cardWrapperStyles = {
+    position: 'relative' as 'relative',
     boxSizing: 'border-box' as 'border-box',
     display: 'flex',
     flexDirection: 'column' as 'column',

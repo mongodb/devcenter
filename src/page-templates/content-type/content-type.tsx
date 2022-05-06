@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import useSWR from 'swr';
 import {
     GridLayout,
@@ -9,6 +9,8 @@ import {
     ESystemIconNames,
     Link,
     Button,
+    ThirdPartyLogo,
+    EThirdPartyLogoVariant,
 } from '@mdb/flora';
 
 import { fetcherv2 } from '../../components/search/utils';
@@ -39,6 +41,118 @@ import noResults from '../../../public/no-results.png';
 
 import { FeaturedCardSection } from '../../components/card-section';
 
+import ShowcaseCard from '../../components/showcase-card';
+import { ShowcaseCardItem } from '../../components/showcase-card/types';
+import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
+import TopicCard, { TopicCardsContainer } from '../../components/topic-card';
+import { iconStyles } from '../../components/topic-card/styles';
+interface ProgrammingLanguageSectionProps {
+    title: string;
+    items: ShowcaseCardItem[];
+}
+
+interface TechnologySectionProps {
+    title: string;
+    items: ITopicCard[];
+}
+
+const TechnologySection: React.FunctionComponent<TechnologySectionProps> = ({
+    title,
+    items,
+}) => {
+    const [loaded, setLoaded] = useState(false);
+    useEffect(() => {
+        setLoaded(true);
+    }, []);
+
+    const itemsWithIcons = items.map(item => {
+        const image = (
+            <ThirdPartyLogo
+                sx={iconStyles}
+                variant={item.icon as EThirdPartyLogoVariant}
+            />
+        );
+        return {
+            ...item,
+            icon: image,
+        };
+    });
+    return (
+        <div
+            sx={{
+                marginBottom: ['section20', null, null, 'section40'],
+            }}
+        >
+            <div
+                sx={{
+                    display: 'flex',
+                    gap: ['inc30', null, 'inc40'],
+                }}
+            >
+                <TopicCardsContainer
+                    topics={itemsWithIcons}
+                    title={title}
+                    sx={{ width: '100%' }}
+                />
+            </div>
+        </div>
+    );
+};
+
+const ProgrammingLanguageSection: React.FunctionComponent<
+    ProgrammingLanguageSectionProps
+> = ({ title, items }) => {
+    const [itemsExpanded, setItemsExpanded] = useState(false);
+    const itemsToDisplay = itemsExpanded ? undefined : 4;
+    return (
+        <div
+            sx={{
+                marginBottom: ['section20', null, null, 'section40'],
+            }}
+        >
+            <TypographyScale variant="heading5" sx={{ marginBottom: 'inc40' }}>
+                {title}
+            </TypographyScale>
+
+            <div
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: ['inc30', null, 'inc40'],
+                    marginBottom: 'inc40',
+                }}
+            >
+                {items
+                    .slice(0, itemsToDisplay)
+                    .map(({ titleLink, imageString }) => {
+                        const image = (
+                            <ThirdPartyLogo
+                                variant={imageString as EThirdPartyLogoVariant}
+                            />
+                        );
+                        return (
+                            <ShowcaseCard
+                                key={titleLink.text}
+                                alignment="center"
+                                image={image}
+                                titleLink={titleLink}
+                                sx={{ width: '100%' }}
+                            />
+                        );
+                    })}
+            </div>
+            {items.length > 4 && (
+                <Link
+                    onClick={() => setItemsExpanded(!itemsExpanded)}
+                    sx={{ display: 'block', mx: 'auto' }}
+                >
+                    {itemsExpanded ? 'Less' : 'More'} languages
+                </Link>
+            )}
+        </div>
+    );
+};
+
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     contentType,
     l1Items,
@@ -46,6 +160,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     technologyItems,
     contributedByItems,
     featured,
+    featuredLanguages,
+    featuredTechnologies,
 }) => {
     ///////////////////////////////////////
     // HOOKS
@@ -118,6 +234,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const numberOfResults = filteredData.length;
     const shownData = filteredData.slice(0, resultstoShow);
     const fullyLoaded = resultstoShow >= numberOfResults;
+    const hasExtraSections = !!featuredLanguages && !!featuredTechnologies;
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
@@ -152,7 +269,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             }}
         >
             <div>
-                <Image src={noResults}></Image>
+                <NextImage src={noResults}></NextImage>
             </div>
             <Button
                 hasIcon={true}
@@ -233,7 +350,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const resultsStringAndTags = (
         <div sx={resultsStringAndTagsStyles}>
             {(data || isValidating) && (
-                <TypographyScale variant="heading6">
+                <TypographyScale variant="heading5">
                     {!allFilters.length && !searchString
                         ? `All ${contentType}s`
                         : isValidating
@@ -307,17 +424,31 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             />
                         </div>
                         {!searchString && !hasFiltersSet && (
-                            <FeaturedCardSection
-                                content={featured}
-                                sx={{
-                                    marginBottom: [
-                                        'section20',
-                                        null,
-                                        'section50',
-                                    ],
-                                }}
-                                title={`Featured ${contentType}s`}
-                            />
+                            <>
+                                <FeaturedCardSection
+                                    content={featured}
+                                    sx={{
+                                        marginBottom: [
+                                            'section20',
+                                            null,
+                                            'section50',
+                                        ],
+                                    }}
+                                    title={`Featured ${contentType}s`}
+                                />
+                                {hasExtraSections && (
+                                    <>
+                                        <ProgrammingLanguageSection
+                                            title={`${contentType}s by Programming Language`}
+                                            items={featuredLanguages}
+                                        />
+                                        <TechnologySection
+                                            title={`${contentType}s by Technology`}
+                                            items={featuredTechnologies}
+                                        />
+                                    </>
+                                )}
+                            </>
                         )}
                         {resultsStringAndTags}
                         {!!filteredData.length || isValidating || error ? (

@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { GridLayout, SideNav } from '@mdb/flora';
+import { GridLayout, SideNav, BrandedIcon } from '@mdb/flora';
 
 import Hero from '../../components/hero';
 import Search from '../../components/search';
@@ -19,6 +19,8 @@ import { getSideNav } from '../../service/get-side-nav';
 import TertiaryNav from '../../components/tertiary-nav';
 import { createTopicPageCTAS } from '../../components/hero/utils';
 import { getDistinctL1L2Slugs } from '../../service/get-distinct-l1-l2-slugs';
+
+import { iconStyles } from '../../components/topic-card/styles';
 
 interface TopicProps {
     name: string;
@@ -83,6 +85,16 @@ const Topic: NextPage<TopicProps> = ({
 
     const CTAComponents = createTopicPageCTAS(ctas);
 
+    const topicItems = topics.map(topic => {
+        const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
+        return { ...topic, icon };
+    });
+
+    const relatedTopicItems = relatedTopics.map(topic => {
+        const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
+        return { ...topic, icon };
+    });
+
     return (
         <>
             <Hero
@@ -111,7 +123,7 @@ const Topic: NextPage<TopicProps> = ({
                         <>
                             {topics.length > 0 && (
                                 <TopicCardsContainer
-                                    topics={topics}
+                                    topics={topicItems}
                                     title={`${name} Topics`}
                                 />
                             )}
@@ -152,7 +164,7 @@ const Topic: NextPage<TopicProps> = ({
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer
-                            topics={relatedTopics}
+                            topics={relatedTopicItems}
                             title="Related Topics"
                         />
                     )}

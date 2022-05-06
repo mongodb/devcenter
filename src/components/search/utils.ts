@@ -69,10 +69,12 @@ const searchItemToContentItem = ({
     date,
     tags,
 }: SearchItem): ContentItem => {
-    const itemImage: Image = {
-        url: image.url,
-        alt: image.alternativeText,
-    };
+    const itemImage: Image | undefined = image
+        ? {
+              url: image.url,
+              alt: image.alternativeText,
+          }
+        : undefined;
     const itemAuthors: Author[] = authors.map(auth => ({
         name: auth.name,
         image: {
@@ -96,6 +98,7 @@ const searchItemToContentItem = ({
 export const fetcherv2: Fetcher<ContentItem[], string> = queryString => {
     return fetch(`${searchEndpoint}?${queryString}`).then(async response => {
         const r_json: SearchItem[] = await response.json();
+        console.log(r_json);
         return r_json.map(searchItemToContentItem);
     });
-}; // Simulate request loading time
+};

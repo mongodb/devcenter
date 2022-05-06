@@ -1,6 +1,8 @@
 import { FilterItem } from '../../components/search-filters';
 import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
+import { ShowcaseCardItem } from '../../components/showcase-card/types';
+import { ITopicCard } from '../../components/topic-card/types';
 
 export interface ContentTypePageProps {
     contentType: PillCategory;
@@ -9,4 +11,6 @@ export interface ContentTypePageProps {
     technologyItems: FilterItem[];
     contributedByItems: FilterItem[];
     featured: ContentItem[];
+    featuredLanguages?: ShowcaseCardItem[];
+    featuredTechnologies?: ITopicCard[];
 }
