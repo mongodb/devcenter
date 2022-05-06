@@ -1,9 +1,9 @@
 import theme from '@mdb/flora/theme';
 
-export const showcaseCardWrapper = (alignment: 'center' | 'left') => ({
+export const showcaseCardWrapper = {
     display: 'flex',
+    boxSizing: 'border-box' as 'border-box',
     flexDirection: 'column' as 'column',
-    alignItems: alignment === 'center' ? 'center' : 'start',
     boxShadow: 'level01',
     borderRadius: ['inc50', null, null, null, 'inc70'],
     padding: [
@@ -13,4 +13,4 @@ export const showcaseCardWrapper = (alignment: 'center' | 'left') => ({
         theme.space.cards.paddingXS,
         theme.space.cards.paddingM,
     ],
-});
+};

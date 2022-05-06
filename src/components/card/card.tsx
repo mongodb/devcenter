@@ -113,13 +113,13 @@ const Card: React.FunctionComponent<CardProps> = ({
                         authors.length &&
                         hasAuthorLockup(variant, pillCategory) && (
                             <AuthorLockup
-                                sx={{ display: ['none', null, 'flex'] }}
+                                sx={{
+                                    display: ['none', null, 'flex'],
+                                    flexGrow: 0,
+                                }}
                                 authors={parseAuthorsToAuthorLockup(authors)}
                             />
                         )}
-                    <TypographyScale variant="body3">
-                        {formatDateToDisplayDateFormat(new Date(contentDate))}
-                    </TypographyScale>
                 </div>
             </div>
         </div>

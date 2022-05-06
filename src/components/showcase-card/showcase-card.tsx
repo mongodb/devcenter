@@ -11,14 +11,14 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
     cta,
     className,
 }) => {
-    const smallImage = !description && !titleLink && !cta && image;
-    const imageDimensions = !image
-        ? null
-        : smallImage
-        ? ['40px', null, '56px']
-        : '72px';
+    const smallImage = !description && !cta && image;
+    const imageDimensions = smallImage ? ['40px', null, '56px'] : '72px';
+    const imagePaddingBottom = smallImage
+        ? ['inc40', null, null, null, 'inc50']
+        : 'inc50';
+    const alignItems = alignment === 'center' ? 'center' : 'start';
     return (
-        <div sx={showcaseCardWrapper(alignment)} className={className}>
+        <div sx={{ ...showcaseCardWrapper, alignItems }} className={className}>
             {image && (
                 <div
                     sx={{
@@ -26,6 +26,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
                             width: imageDimensions,
                             height: imageDimensions,
                         },
+                        paddingBottom: imagePaddingBottom,
                     }}
                 >
                     {image}

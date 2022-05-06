@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
 import useSWR from 'swr';
@@ -9,8 +9,6 @@ import {
     ESystemIconNames,
     Link,
     Button,
-    ThirdPartyLogo,
-    EThirdPartyLogoVariant,
 } from '@mdb/flora';
 
 import { fetcherv2 } from '../../components/search/utils';
@@ -41,117 +39,8 @@ import noResults from '../../../public/no-results.png';
 
 import { FeaturedCardSection } from '../../components/card-section';
 
-import ShowcaseCard from '../../components/showcase-card';
-import { ShowcaseCardItem } from '../../components/showcase-card/types';
-import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
-import TopicCard, { TopicCardsContainer } from '../../components/topic-card';
-import { iconStyles } from '../../components/topic-card/styles';
-interface ProgrammingLanguageSectionProps {
-    title: string;
-    items: ShowcaseCardItem[];
-}
-
-interface TechnologySectionProps {
-    title: string;
-    items: ITopicCard[];
-}
-
-const TechnologySection: React.FunctionComponent<TechnologySectionProps> = ({
-    title,
-    items,
-}) => {
-    const [loaded, setLoaded] = useState(false);
-    useEffect(() => {
-        setLoaded(true);
-    }, []);
-
-    const itemsWithIcons = items.map(item => {
-        const image = (
-            <ThirdPartyLogo
-                sx={iconStyles}
-                variant={item.icon as EThirdPartyLogoVariant}
-            />
-        );
-        return {
-            ...item,
-            icon: image,
-        };
-    });
-    return (
-        <div
-            sx={{
-                marginBottom: ['section20', null, null, 'section40'],
-            }}
-        >
-            <div
-                sx={{
-                    display: 'flex',
-                    gap: ['inc30', null, 'inc40'],
-                }}
-            >
-                <TopicCardsContainer
-                    topics={itemsWithIcons}
-                    title={title}
-                    sx={{ width: '100%' }}
-                />
-            </div>
-        </div>
-    );
-};
-
-const ProgrammingLanguageSection: React.FunctionComponent<
-    ProgrammingLanguageSectionProps
-> = ({ title, items }) => {
-    const [itemsExpanded, setItemsExpanded] = useState(false);
-    const itemsToDisplay = itemsExpanded ? undefined : 4;
-    return (
-        <div
-            sx={{
-                marginBottom: ['section20', null, null, 'section40'],
-            }}
-        >
-            <TypographyScale variant="heading5" sx={{ marginBottom: 'inc40' }}>
-                {title}
-            </TypographyScale>
-
-            <div
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    gap: ['inc30', null, 'inc40'],
-                    marginBottom: 'inc40',
-                }}
-            >
-                {items
-                    .slice(0, itemsToDisplay)
-                    .map(({ titleLink, imageString }) => {
-                        const image = (
-                            <ThirdPartyLogo
-                                variant={imageString as EThirdPartyLogoVariant}
-                            />
-                        );
-                        return (
-                            <ShowcaseCard
-                                key={titleLink.text}
-                                alignment="center"
-                                image={image}
-                                titleLink={titleLink}
-                                sx={{ width: '100%' }}
-                            />
-                        );
-                    })}
-            </div>
-            {items.length > 4 && (
-                <Link
-                    onClick={() => setItemsExpanded(!itemsExpanded)}
-                    sx={{ display: 'block', mx: 'auto' }}
-                >
-                    {itemsExpanded ? 'Less' : 'More'} languages
-                </Link>
-            )}
-        </div>
-    );
-};
+import LanguagesSection from './languages-section';
+import TechnologiesSection from './technologies-section';
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     contentType,
@@ -438,11 +327,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                 />
                                 {hasExtraSections && (
                                     <>
-                                        <ProgrammingLanguageSection
+                                        <LanguagesSection
                                             title={`${contentType}s by Programming Language`}
                                             items={featuredLanguages}
                                         />
-                                        <TechnologySection
+                                        <TechnologiesSection
                                             title={`${contentType}s by Technology`}
                                             items={featuredTechnologies}
                                         />
