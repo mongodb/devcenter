@@ -2,10 +2,10 @@
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: devcenter-staging
+name: build-devcenter-staging
 
 steps:
-- name: publish
+- name: publish-staging
   image: plugins/kaniko-ecr
   environment:
     NPM_AUTH:
@@ -61,10 +61,10 @@ trigger:
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: devcenter-prod
+name: build-devcenter-prod
 
 steps:
-- name: publish
+- name: publish-production
   image: plugins/kaniko-ecr
   environment:
     NPM_AUTH:
@@ -89,7 +89,23 @@ steps:
     secret_key:
       from_secret: ecr_secret_key
     values_files: [ "environments/prod.yaml" ]
+  when:
+    event:
+    - push
 
+trigger:
+  branch:
+    - main
+  event:
+    - push
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: deploy-devcenter-prod
+
+steps:
 - name: deploy-prod
   image: quay.io/mongodb/drone-helm:v3
   settings:
@@ -107,5 +123,6 @@ steps:
 trigger:
   event:
     - promote
+    - rollback
   target:
     - production

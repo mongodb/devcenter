@@ -1,3 +1,5 @@
+[![Build Status](https://drone.corp.mongodb.com/api/badges/mongodb/devcenter/status.svg?ref=refs/heads/main)](https://drone.corp.mongodb.com/mongodb/devcenter)
+
 # MongoDB Developer Center
 
 This project uses [Next.js](https://nextjs.org) with TypeScript as a basis for the Developer Center site. The main source code (pages, components, data fetching, etc.) is contained in the `src` directory.
