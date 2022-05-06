@@ -53,7 +53,7 @@ steps:
 
 trigger:
   branch:
-    - ah/update-base-path
+    - main
   event:
     - push
 
