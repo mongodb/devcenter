@@ -59,7 +59,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - ah/preview-developer-base-change
   event:
     - push
 
