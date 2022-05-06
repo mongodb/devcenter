@@ -1,4 +1,5 @@
 const configVals = {
+    basePath: '/developer',
     reactStrictMode: true,
     images: {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
