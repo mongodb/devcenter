@@ -120,15 +120,14 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                         )}
                     </SubLinks>
                     {all && (
-                        <Link href={path} passHref>
-                            <FloraLink
-                                inverse
-                                linkIcon="chevron"
-                                linkIconDisableExpand={true}
-                            >
-                                {all}
-                            </FloraLink>
-                        </Link>
+                        <FloraLink
+                            href={path}
+                            inverse
+                            linkIcon="chevron"
+                            linkIconDisableExpand={true}
+                        >
+                            {all}
+                        </FloraLink>
                     )}
                 </>
             )}
