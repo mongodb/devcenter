@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import theme from '@mdb/flora/theme';
-import { Link } from '@mdb/flora';
 
 export const StyledSecondaryNavContainer = styled('nav')`
     display: inline-flex;
