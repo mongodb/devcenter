@@ -3,10 +3,10 @@ import theme from '@mdb/flora/theme';
 
 import { ESystemIconNames, Link, SystemIcon } from '@mdb/flora';
 import { myData } from '../../data/secondary-nav';
-import { StyledSecondaryNavContainer } from '../secondarynavdup/styles';
+import { StyledSecondaryNavContainer } from './styles';
 
-import SecondaryLinksList from '../secondarynavdup/nav-item';
-import DropDownMenu from '../secondarynavdup/dropdown-menu';
+import SecondaryLinksList from './nav-item';
+import DropDownMenu from './dropdown-menu';
 import styled from '@emotion/styled';
 
 const linkWrapperStyles = {

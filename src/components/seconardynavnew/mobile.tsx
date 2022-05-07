@@ -5,7 +5,7 @@ import theme from '@mdb/flora/theme';
 import { HorizontalRule, Link as FloraLink } from '@mdb/flora';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
-import SecondaryLinksList from '../secondarynavdup/nav-item';
+import SecondaryLinksList from './nav-item';
 import styled from '@emotion/styled';
 
 type SecondaryMenuListProps = {
