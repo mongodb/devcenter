@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { myData } from '../../data/secondary-nav';
 import theme from '@mdb/flora/theme';
-import { HorizontalRule, Link as FloraLink } from '@mdb/flora';
+import { Link as FloraLink } from '@mdb/flora';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from './nav-item';
