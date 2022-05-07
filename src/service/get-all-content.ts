@@ -1,23 +1,22 @@
-import getAllPodcastsFromAPI from '../api-requests/get-all-podcasts';
-import getAllVideosFromAPI from '../api-requests/get-all-videos';
 import { Podcast } from '../interfaces/podcast';
 import { Video } from '../interfaces/video';
 import { Article } from '../interfaces/article';
 import { getAllArticlesFromAPI } from '../api-requests/get-articles';
 import { ContentItem } from '../interfaces/content-item';
 import { Series } from '../interfaces/series';
-import { addSeriesToItem } from './add-series-to-item';
 import { STRAPI_CLIENT } from '../config/api-client';
 import { getAllArticleSeries } from './get-all-article-series';
 import { getAllVideoSeries } from './get-all-video-series';
 import { getAllPodcastSeries } from './get-all-podcast-series';
 import { flattenTags } from '../utils/flatten-tags';
-import { MOCK_PODCAST_TAGS, MOCK_VIDEO_TAGS } from '../mockdata/mock-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
+import { getAllVideos } from './get-all-videos';
+import { getAllPodcasts } from './get-all-podcasts';
+import { setPrimaryTag } from './set-primary-tag';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
-    const allPodcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
-    const allVideos = await getAllVideosFromAPI(STRAPI_CLIENT);
+    const allPodcasts = await getAllPodcasts();
+    const allVideos = await getAllVideos();
     const allArticles = await getAllArticlesFromAPI(STRAPI_CLIENT);
     /*
     series
@@ -45,11 +44,11 @@ export const mapPodcastsToContentItems = (
     const items: ContentItem[] = [];
     allPodcasts.forEach((p: Podcast) => {
         const item: ContentItem = {
+            collectionType: 'Podcast',
             category: 'Podcast',
             contentDate: p.publishDate,
             slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
-            //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: MOCK_PODCAST_TAGS,
+            tags: flattenTags([p.otherTags]),
             title: p.title,
             featured: false,
         };
@@ -60,6 +59,7 @@ export const mapPodcastsToContentItems = (
             item.image = { url: p.thumbnailUrl, alt: 'randomAlt' };
         }
         item.podcastFileUrl = p.casted_slug;
+        setPrimaryTag(item, p);
         //addSeriesToItem(item, 'podcast', podcastSeries);
         items.push(item);
     });
@@ -73,11 +73,11 @@ export const mapVideosToContentItems = (
     const items: ContentItem[] = [];
     allVideos.forEach((v: Video) => {
         const item: ContentItem = {
+            collectionType: 'Video',
             category: 'Video',
             contentDate: v.publishDate,
             slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
-            //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: MOCK_VIDEO_TAGS,
+            tags: flattenTags([v.otherTags]),
             title: v.title,
             featured: false,
         };
@@ -91,6 +91,7 @@ export const mapVideosToContentItems = (
         };
 
         item.videoId = v.videoId;
+        setPrimaryTag(item, v);
         //addSeriesToItem(item, 'video', videoSeries);
         items.push(item);
     });
@@ -109,15 +110,9 @@ export const mapArticlesToContentItems = (
 
     filteredArticles.forEach((a: Article) => {
         const item: ContentItem = {
+            collectionType: 'Article',
             authors: a.authors,
-            /*
-            very important - some times we see content type as video and podcast in article type of data - set their category to 'Article'
-             */
-            category:
-                a.otherTags[0].contentType.contentType === 'Video' ||
-                a.otherTags[0].contentType.contentType === 'Podcast'
-                    ? 'Article'
-                    : a.otherTags[0].contentType.contentType,
+            category: a.otherTags[0].contentType.contentType,
             contentDate: a.originalPublishDate || a.publishDate,
             updateDate: a.updateDate,
             description: a.description,
