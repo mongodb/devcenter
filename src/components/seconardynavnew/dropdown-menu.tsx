@@ -31,8 +31,8 @@ const DropDownMenuList = styled.ul`
     }
 
     li {
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top: ${theme.space.inc30};
+        padding-bottom: ${theme.space.inc30};
         position: relative;
         a:hover {
             color: ${theme.colors.green40};
@@ -47,7 +47,7 @@ const SubLinks = styled.ul`
     ul {
         list-style-type: none;
         padding: 0;
-        margin-top: 15px;
+        margin-top: ${theme.space.inc30};
 
         > li {
             position: relative;
@@ -60,8 +60,7 @@ const SubLinks = styled.ul`
 
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: grid;
-        grid-column-gap: 30px;
-
+        grid-column-gap: ${theme.space.inc50};
         grid-template-columns: repeat(3, 1fr);
     }
 `;

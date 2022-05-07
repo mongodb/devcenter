@@ -80,7 +80,6 @@ const DesktopView = () => {
                         <SecondaryLinksList key={name}>
                             {dropDownItems?.length ? (
                                 <>
-                                    {' '}
                                     <div sx={linkWrapperStyles}>
                                         <StyledFloraLink
                                             onClick={onClickShowMenu}
@@ -90,12 +89,7 @@ const DesktopView = () => {
                                                 <SystemIcon
                                                     sx={{
                                                         paddingLeft: 'inc10',
-                                                        display: [
-                                                            'none',
-                                                            'none',
-                                                            'none',
-                                                            'inline',
-                                                        ],
+                                                        display: 'inline',
                                                     }}
                                                     name={
                                                         ESystemIconNames.CHEVRON_DOWN
@@ -107,12 +101,7 @@ const DesktopView = () => {
                                                 <SystemIcon
                                                     sx={{
                                                         paddingLeft: 'inc10',
-                                                        display: [
-                                                            'none',
-                                                            'none',
-                                                            'none',
-                                                            'inline',
-                                                        ],
+                                                        display: 'inline',
                                                     }}
                                                     name={
                                                         ESystemIconNames.CHEVRON_UP

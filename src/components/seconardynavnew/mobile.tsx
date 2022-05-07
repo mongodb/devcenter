@@ -69,7 +69,7 @@ const SecondaryLinks = styled.ul`
     margin: 0;
     /* L1 */
     > li {
-        padding-bottom: 16px;
+        padding-bottom: ${theme.space.inc30};
         position: relative;
 
         &:first-child {
@@ -113,8 +113,8 @@ const DropDownStyles = {
 const DropDownWrapper = styled.div`
     .dropdown-titles {
         display: inline-block;
-        font-size: 20px;
-        margin-bottom: 25px;
+        font-size: ${theme.fontSizes.inc40};
+        margin-bottom: ${theme.space.inc40};
     }
 
     background-color: #fff;
@@ -124,11 +124,11 @@ const DropDownWrapper = styled.div`
 const DropDownMenuList = styled.ul`
     list-style-type: none;
     white-space: nowrap;
-    padding-top: 16px;
+    padding-top: ${theme.space.inc30};
     padding-left: 0;
     /* L2 */
     li:not(:last-child) {
-        padding-bottom: 15px;
+        padding-bottom: ${theme.space.inc30};
     }
 `;
 
@@ -136,26 +136,26 @@ const DropDownMenuList = styled.ul`
 const SubLinks = styled.ul`
     background-color: #f5f7fa;
     list-style-type: none;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: ${theme.space.inc40};
+    padding-bottom: ${theme.space.inc40};
     margin-left: -${theme.space.inc40};
     margin-right: -${theme.space.inc40};
     /* L3 */
     > li {
-        padding-left: 30px;
+        padding-left: ${theme.space.inc50};
 
         &:not(:last-child) {
-            padding-bottom: 30px;
+            padding-bottom: ${theme.space.inc50};
         }
     }
 
     ul {
         list-style-type: none;
         padding-left: ${theme.space.inc40};
-        padding-top: 20px;
+        padding-top: ${theme.space.inc40};
         /* L4 */
         > li:not(:last-child) {
-            padding-bottom: 40px;
+            padding-bottom: ${theme.space.inc60};
         }
         > li:last-child {
             color: #006cfa;
