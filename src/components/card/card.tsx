@@ -21,6 +21,9 @@ import {
 } from './utils';
 import TagSection from '../tag-section';
 import { CardProps } from './types';
+import parse from 'html-react-parser';
+import { formatDateToDisplayDateFormat } from '../../utils/format-date';
+import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 
 // Still need to add authors section.
 const Card: React.FunctionComponent<CardProps> = ({
@@ -79,7 +82,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                                 variant="body2"
                                 sx={descriptionStyles(variant, pillCategory)}
                             >
-                                {description}
+                                {parse(description ? description : '')}
                             </TypographyScale>
                         )}
                         {hasTags(variant) && tags && (
@@ -101,20 +104,13 @@ const Card: React.FunctionComponent<CardProps> = ({
                         {authors && hasAuthorLockup(variant, pillCategory) && (
                             <AuthorLockup
                                 sx={{ display: ['none', null, 'flex'] }}
-                                authors={[
-                                    { name: 'Some Person', url: '#' },
-                                    {
-                                        name: 'Other Person',
-                                        image: {
-                                            src: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png',
-                                        },
-                                        url: '#',
-                                    },
-                                ]}
+                                authors={parseAuthorsToAuthorLockup(authors)}
                             />
                         )}
                         <TypographyScale variant="body3">
-                            {contentDate}
+                            {formatDateToDisplayDateFormat(
+                                new Date(contentDate)
+                            )}
                         </TypographyScale>
                     </div>
                 </div>

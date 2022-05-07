@@ -21,6 +21,7 @@ export interface Feedback {
     comment: string;
     email: string;
     slug: string;
+    title?: string;
 }
 
 export interface FeedbackModalProps {
@@ -29,4 +30,5 @@ export interface FeedbackModalProps {
     stars: number;
     contentCategory: PillCategory;
     slug: string;
+    title?: string;
 }

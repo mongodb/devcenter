@@ -1,5 +1,6 @@
 describe('L1', () => {
-    it('should have all content heavy components', () => {
+    //TODO enable them once enough data is added in staging.
+    xit('should have all content heavy components', () => {
         cy.visit('/product/atlas');
         cy.viewport(1440, 900);
         // Hero
@@ -43,7 +44,7 @@ describe('L1', () => {
         cy.get('button').contains('Load more').click();
         cy.get('[data-testid="card-list"]').should('have.length', 20);
     }),
-        it('should have all content medium components', () => {
+        xit('should have all content medium components', () => {
             cy.visit('/product/data-lake');
             cy.viewport(1440, 900);
             // Hero
@@ -77,7 +78,7 @@ describe('L1', () => {
             // Search
             cy.get('h5').contains('All Data Lake Content').should('exist');
         }),
-        it('should have all content light components', () => {
+        xit('should have all content light components', () => {
             cy.visit('/product/vs-code');
             cy.viewport(1440, 900);
             // Hero

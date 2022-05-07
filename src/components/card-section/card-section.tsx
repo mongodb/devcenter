@@ -3,7 +3,7 @@ import { TypographyScale, Link } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { Grid, ThemeUIStyleObject } from 'theme-ui';
 
-import Card from '../card';
+import Card, { getCardProps } from '../card';
 import { CardSectionProps } from './types';
 import {
     cardSectionListStyles,
@@ -13,7 +13,6 @@ import {
     linkStyles,
     linkWrapperStyles,
 } from './styles';
-import { getCardProps } from '../card';
 
 const CardSection: React.FunctionComponent<CardSectionProps> = ({
     content,

@@ -61,7 +61,7 @@ jobs:
               with:
                   install: false
                   start: yarn start
-                  wait-on: 'http://localhost:3000'
+                  wait-on: 'http://localhost:3000/developer'
             - name: Generate artifacts on failure
               uses: actions/upload-artifact@v2
               if: ${{ failure() }}

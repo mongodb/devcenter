@@ -12,7 +12,8 @@ import { getAllArticleSeries } from './get-all-article-series';
 import { getAllVideoSeries } from './get-all-video-series';
 import { getAllPodcastSeries } from './get-all-podcast-series';
 import { flattenTags } from '../utils/flatten-tags';
-import { MOCK_TAGS } from '../mockdata/mock-tags';
+import { MOCK_PODCAST_TAGS, MOCK_VIDEO_TAGS } from '../mockdata/mock-tags';
+import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
@@ -48,8 +49,9 @@ export const mapPodcastsToContentItems = (
             contentDate: p.publishDate,
             slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
             //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: MOCK_TAGS,
+            tags: MOCK_PODCAST_TAGS,
             title: p.title,
+            featured: false,
         };
         if (p.description) {
             item.description = p.description;
@@ -57,8 +59,8 @@ export const mapPodcastsToContentItems = (
         if (p.thumbnailUrl) {
             item.image = { url: p.thumbnailUrl, alt: 'randomAlt' };
         }
-        item.podcastFileUrl = p.podcastFileUrl;
-        addSeriesToItem(item, 'podcast', podcastSeries);
+        item.podcastFileUrl = p.casted_slug;
+        //addSeriesToItem(item, 'podcast', podcastSeries);
         items.push(item);
     });
     return items;
@@ -75,17 +77,21 @@ export const mapVideosToContentItems = (
             contentDate: v.publishDate,
             slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
             //TODO Implement logic to flatten primary and other tags - preferably in Graphql Query
-            tags: MOCK_TAGS,
+            tags: MOCK_VIDEO_TAGS,
             title: v.title,
+            featured: false,
         };
         if (v.description) {
             item.description = v.description;
         }
-        if (v.thumbnailUrl) {
-            item.image = { url: v.thumbnailUrl, alt: 'randomAlt' };
-        }
+
+        item.image = {
+            url: getPlaceHolderImage(v.thumbnailUrl),
+            alt: 'randomAlt',
+        };
+
         item.videoId = v.videoId;
-        addSeriesToItem(item, 'video', videoSeries);
+        //addSeriesToItem(item, 'video', videoSeries);
         items.push(item);
     });
     return items;
@@ -103,7 +109,7 @@ export const mapArticlesToContentItems = (
 
     filteredArticles.forEach((a: Article) => {
         const item: ContentItem = {
-            authors: a.authors.map(author => author.name),
+            authors: a.authors,
             /*
             very important - some times we see content type as video and podcast in article type of data - set their category to 'Article'
              */
@@ -121,11 +127,12 @@ export const mapArticlesToContentItems = (
                 : a.calculatedSlug,
             tags: flattenTags(a.otherTags),
             title: a.title,
+            featured: false,
         };
         if (a.image) {
             item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };
         }
-        addSeriesToItem(item, 'article', articleSeries);
+        //addSeriesToItem(item, 'article', articleSeries);
         items.push(item);
     });
     return items;

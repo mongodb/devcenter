@@ -6,6 +6,7 @@ import CheckboxFeedback from './dialogs/checkbox-feedback';
 import TextFeedback from './dialogs/text-feedback';
 import ThankYou from './dialogs/thank-you';
 import { FeedbackModalProps, Feedback } from './types';
+import axios from 'axios';
 
 const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
     setModalStage,
@@ -13,6 +14,7 @@ const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
     stars,
     contentCategory,
     slug,
+    title,
 }) => {
     const [checkboxComments, setCheckboxComments] = useState<string[]>([]);
 
@@ -23,8 +25,20 @@ const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
             email,
             slug,
             stars,
+            title,
         };
-        console.log(feedbackContent);
+        const url =
+            'https://data.mongodb-api.com/app/devhub-api-ztlmp/endpoint/devhub_content_feedback';
+        axios
+            .post(url, feedbackContent, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                },
+            })
+            .then(({ data }) => {
+                console.log(data);
+            });
     };
 
     return (

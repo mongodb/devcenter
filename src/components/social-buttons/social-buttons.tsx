@@ -41,7 +41,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                 title="Copy link"
             >
                 <img
-                    src="/link.svg"
+                    src="/developer/link.svg"
                     alt="Copy Link"
                     sx={{ width: '12px', height: '12px', display: 'block' }}
                 />
@@ -54,7 +54,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                 title="Share on Facebook"
             >
                 <img
-                    src="/facebook.svg"
+                    src="/developer/facebook.svg"
                     alt="facebook icon"
                     sx={{ width: '12px', height: '12px', display: 'block' }}
                 />
@@ -67,7 +67,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                 title="Share on Twitter"
             >
                 <img
-                    src="/twitter.svg"
+                    src="/developer/twitter.svg"
                     alt="twitter icon"
                     sx={{ width: '12px', height: '12px', display: 'block' }}
                 />
@@ -81,7 +81,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                 title="Share on LinkedIn"
             >
                 <img
-                    src="/linkedin.svg"
+                    src="/developer/linkedin.svg"
                     alt="linkedin icon"
                     sx={{ width: '12px', height: '12px', display: 'block' }}
                 />

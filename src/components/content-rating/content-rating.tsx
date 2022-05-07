@@ -68,7 +68,7 @@ const ContentRating: React.FunctionComponent<ContentRatingProps> = ({
                             <div sx={{ padding: iconPadding }}>
                                 <Image
                                     alt="star-empty"
-                                    src="/rating-star.svg"
+                                    src="/developer/rating-star.svg"
                                     width={iconHeight}
                                     height={iconHeight}
                                 ></Image>

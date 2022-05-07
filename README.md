@@ -1,3 +1,5 @@
+[![Build Status](https://drone.corp.mongodb.com/api/badges/mongodb/devcenter/status.svg?ref=refs/heads/main)](https://drone.corp.mongodb.com/mongodb/devcenter)
+
 # MongoDB Developer Center
 
 This project uses [Next.js](https://nextjs.org) with TypeScript as a basis for the Developer Center site. The main source code (pages, components, data fetching, etc.) is contained in the `src` directory.
@@ -16,13 +18,25 @@ Currently the only variable we need to set in this file is `STRAPI_URL`. See [th
 
 ## Running Locally
 
-Run `yarn` to install dependencies. Run `yarn dev` to start the server locally in development mode. It then should be accessible at http://localhost:3000.
+Run `yarn` to install dependencies. Run `yarn dev` to start the server locally in development mode. It then should be accessible at http://localhost:3000/developer.
+
+### Running Locally with Docker
+
+Ensure you have the necessary environment variables set in your terminal session (NPM_AUTH and NPM_EMAIL).
+
+To build the Docker image, run the following:
+
+`docker build -t nextjs-docker --no-cache --build-arg NPM_AUTH --build-arg NPM_EMAIL .`
+
+To create the container, run:
+
+`docker run -p 3000:3000 --env-file ./.env.local nextjs-docker`
 
 ## Testing
 
 Run `yarn test` to run all unit tests and integration tests.
 
-Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000 before running cypress tests.
+Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000/developer before running cypress tests.
 
 ## Formatting
 
