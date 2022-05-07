@@ -3,10 +3,7 @@ import theme from '@mdb/flora/theme';
 
 import { ESystemIconNames, Link, SystemIcon } from '@mdb/flora';
 import { myData } from '../../data/secondary-nav';
-import {
-    SecondaryLinks,
-    StyledSecondaryNavContainer,
-} from '../secondarynavdup/styles';
+import { StyledSecondaryNavContainer } from '../secondarynavdup/styles';
 
 import SecondaryLinksList from '../secondarynavdup/nav-item';
 import DropDownMenu from '../secondarynavdup/dropdown-menu';
@@ -23,6 +20,15 @@ const MainLinkStyles = {
     fontSize: 'inc30',
     fontWeight: 500,
 };
+
+const SecondaryLinks = styled.ul`
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    li:not(:last-child) {
+        margin-right: ${theme.space.inc40};
+    }
+`;
 
 const MainLink = styled(Link)`
     .textlink-default-text-class {

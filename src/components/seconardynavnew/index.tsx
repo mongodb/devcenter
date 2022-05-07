@@ -5,12 +5,13 @@ const SecondaryNav = () => (
     <>
         <div
             sx={{
+                boxSizing: 'border-box',
+                background: '#fff',
+                backgroundColor: 'white',
                 display: ['block', 'block', 'block', 'none'],
                 position: 'fixed',
-                background: '#fff',
                 overflowY: 'auto',
                 width: '100%',
-                backgroundColor: 'white',
                 zIndex: '10',
             }}
         >

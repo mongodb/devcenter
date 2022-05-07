@@ -33,6 +33,7 @@ const DropDownMenuList = styled.ul`
     li {
         padding-top: 15px;
         padding-bottom: 15px;
+        position: relative;
         a:hover {
             color: ${theme.colors.green40};
         }
@@ -49,6 +50,8 @@ const SubLinks = styled.ul`
         margin-top: 15px;
 
         > li {
+            position: relative;
+
             &:last-child {
                 display: none;
             }
@@ -135,9 +138,9 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                     href="example.com"
                     sx={{
                         marginTop: '25px',
-                        "&:hover": {
+                        '&:hover': {
                             color: 'initial!important',
-                        }
+                        },
                     }}
                     variant="primary"
                 >

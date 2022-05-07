@@ -10,15 +10,6 @@ export const StyledSecondaryNavContainer = styled('nav')`
     padding-bottom: ${theme.space.elementXSmall};
     position: relative;
 `;
-export const SecondaryLinks = styled.ul`
-    padding: 0;
-    margin: 0;
-    overflow: visible;
-    li:not(:last-child) {
-        margin-right: ${theme.space.inc40};
-    }
-`;
-
 export const StyledList = styled('li')`
     padding-left: 0;
     display: block;
