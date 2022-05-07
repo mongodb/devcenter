@@ -17,7 +17,12 @@ const SecondaryNav = () => (
         >
             <MobileView />
         </div>
-        <div sx={{ display: ['none', 'none', 'none', 'block'] }}>
+        <div
+            sx={{
+                display: ['none', 'none', 'none', 'block'],
+                borderBottom: 'solid 1px #B8C4C2',
+            }}
+        >
             <DesktopView />
         </div>
     </>

@@ -50,8 +50,8 @@ const StyledFloraLink = styled(Link)`
         font-size: ${theme.fontSizes.inc20};
         font-family: ${theme.fonts.body};
         font-weight: 300;
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            font-weight: 300;
+        @media only screen and (max-width: 1050px) {
+            font-size: ${theme.fontSizes.inc10};
         }
     }
     span:hover {
