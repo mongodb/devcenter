@@ -172,7 +172,7 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
     return (
         <>
             <div sx={DropDownStyles}>
-                {/* Topics */}
+                {/* Level 1 */}
                 <div onClick={onClickShowMenu}>
                     {text} L1
                     {!isOpen && (
@@ -212,7 +212,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                         display: 'inline',
                     }}
                 >
-                    {/* Topics titles mobile view */}
+                    {/* Level 2 */}
                     <StyledFloraLink onClick={onClickShowMenu}>
                         {name} L2
                         {!isOpen && (
@@ -280,6 +280,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                                                     }}
                                                                     key={name}
                                                                 >
+                                                                    {/* Level 3 */}
                                                                     <StyledFloraLink>
                                                                         {name}{' '}
                                                                         L3
@@ -402,6 +403,7 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
             </div>
             {dropDownItems && isOpenL1 && (
                 <ul>
+                    {/* Product Level 4 */}
                     {dropDownItems.map(({ name }: any) => (
                         <li sx={{ marginLeft: 'inc40' }} key={name}>
                             <Link href={slug} passHref>
