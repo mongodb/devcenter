@@ -69,7 +69,12 @@ const DesktopView = () => {
     };
 
     return (
-        <>
+        <div
+            sx={{
+                display: ['none', 'none', 'none', 'block'],
+                borderBottom: 'solid 1px #B8C4C2',
+            }}
+        >
             <StyledSecondaryNavContainer>
                 <div sx={linkWrapperStyles}>
                     <MainLink sx={MainLinkStyles}>Developer Center</MainLink>
@@ -128,7 +133,7 @@ const DesktopView = () => {
                     ))}
                 </SecondaryLinks>
             </StyledSecondaryNavContainer>
-        </>
+        </div>
     );
 };
 

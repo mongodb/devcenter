@@ -423,7 +423,18 @@ const MobileView = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);
     };
     return (
-        <>
+        <div
+            sx={{
+                boxSizing: 'border-box',
+                background: '#fff',
+                backgroundColor: 'white',
+                display: ['block', 'block', 'block', 'none'],
+                position: 'fixed',
+                overflowY: 'auto',
+                width: '100%',
+                zIndex: '10',
+            }}
+        >
             <div sx={{ display: 'grid', gridTemplateColumns: '240px 1fr' }}>
                 <FloraLink sx={MainLinkStyles} onClick={openMobileMenu}>
                     MongoDB Developer
@@ -473,7 +484,7 @@ const MobileView = () => {
                     </SecondaryLinksList>
                 ))}
             </SecondaryLinks>
-        </>
+        </div>
     );
 };
 
