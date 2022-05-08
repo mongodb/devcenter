@@ -34,11 +34,7 @@ const MainLink = styled(Link)`
     .textlink-default-text-class {
         color: ${theme.colors.text.default}!important;
         :hover {
-            border-bottom: none !important;
-            @media only screen and (min-width: ${theme.sizes.breakpoint
-                    .large}) {
-                border-bottom: 2px solid ${theme.colors.green40}!important;
-            }
+            border-bottom: 2px solid ${theme.colors.green40}!important;
         }
     }
 `;
@@ -55,10 +51,7 @@ const StyledFloraLink = styled(Link)`
         }
     }
     span:hover {
-        border-bottom: none !important;
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            border-bottom: 2px solid ${theme.colors.green40}!important;
-        }
+        border-bottom: 2px solid ${theme.colors.green40}!important;
     }
 `;
 
