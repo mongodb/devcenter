@@ -454,6 +454,7 @@ const MobileView = () => {
                             className="chevron-icon"
                             name={ESystemIconNames.CHEVRON_UP}
                             size="small"
+                            strokeWeight="large"
                         />
                     )}
                 </FloraLink>

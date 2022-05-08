@@ -86,25 +86,27 @@ const DesktopView = () => {
                                             {!isOpen && (
                                                 <SystemIcon
                                                     sx={{
-                                                        paddingLeft: 'inc10',
+                                                        paddingLeft: 'inc20',
                                                         display: 'inline',
                                                     }}
                                                     name={
                                                         ESystemIconNames.CHEVRON_DOWN
                                                     }
                                                     size="small"
+                                                    strokeWeight="large"
                                                 />
                                             )}
                                             {isOpen && (
                                                 <SystemIcon
                                                     sx={{
-                                                        paddingLeft: 'inc10',
+                                                        paddingLeft: 'inc20',
                                                         display: 'inline',
                                                     }}
                                                     name={
                                                         ESystemIconNames.CHEVRON_UP
                                                     }
                                                     size="small"
+                                                    strokeWeight="large"
                                                 />
                                             )}
                                         </StyledFloraLink>
