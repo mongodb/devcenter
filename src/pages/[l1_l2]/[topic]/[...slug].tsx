@@ -11,6 +11,7 @@ import {
     TypographyScale,
     Button,
     HorizontalRule,
+    BrandedIcon,
 } from '@mdb/flora';
 import { getDistinctTags } from '../../../service/get-distinct-tags';
 import { CTAContainerStyles } from '../../../components/hero/styles';
@@ -25,6 +26,8 @@ import { getAllContentTypes } from '../../../service/get-all-content-types';
 import { ContentTypeTag } from '../../../interfaces/tag-type-response';
 import { capitalizeFirstLetter } from '../../../utils/format-string';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
+
+import { iconStyles } from '../../../components/topic-card/styles';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -77,14 +80,10 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
-    //TODO revisit the logic
-    // const subTopicsWithHrefs = subTopics.map(
-    //     ({ name, icon, slug, category }) => ({
-    //         name,
-    //         icon,
-    //         href: `/${category}/${slug}/${contentTypeSlug}`,
-    //     })
-    // );
+    const subTopicItems = subTopics.map(subTopic => {
+        const icon = <BrandedIcon sx={iconStyles} name={subTopic.icon} />;
+        return { ...subTopic, icon };
+    });
 
     const header = (
         <GridLayout
@@ -148,7 +147,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     <HorizontalRule sx={spanAllColumns} spacing="xlarge" />
                     {subTopics.length > 0 && (
                         <TopicCardsContainer
-                            topics={subTopics}
+                            topics={subTopicItems}
                             title="By Category"
                             sx={{
                                 marginBottom: [
@@ -162,7 +161,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     )}
                     <Search
                         title={`All ${topicName} ${contentType}s`}
-                        slug={topicSlug}
+                        tagSlug={topicSlug}
                         contentType={contentType}
                         resultsLayout="grid"
                         titleLink={{

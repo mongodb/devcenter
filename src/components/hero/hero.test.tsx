@@ -3,6 +3,8 @@ import '@testing-library/jest-dom';
 
 import Hero from '.';
 
+import { createTopicPageCTAS } from './utils';
+
 const crumbs = [
     { text: 'MongoDB Developer Center', url: '/' },
     { text: 'Developer Topics', url: '/topics' },
@@ -20,13 +22,15 @@ const ctas = [
     },
 ];
 
+const ctaElements = createTopicPageCTAS(ctas);
+
 test('renders hero', () => {
     render(
         <Hero
             crumbs={crumbs}
             name={name}
             description={description}
-            ctas={ctas}
+            ctas={ctaElements}
         />
     );
     // Breadcrumbs

@@ -8,5 +8,5 @@ export interface HeroProps {
     crumbs?: Crumb[];
     name: string;
     description?: string;
-    ctas?: CTA[];
+    ctas?: JSX.Element | null;
 }

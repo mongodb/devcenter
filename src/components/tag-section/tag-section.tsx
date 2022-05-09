@@ -9,11 +9,23 @@ const TagSection: React.FunctionComponent<TagSectionProps> = ({
     className,
 }) => (
     <div sx={tagWrapperStyles(disappearOnMobile)} className={className}>
-        {tags.map(tag => (
-            <Tag key={tag.name} href={tag.slug} variant="small" sx={tagStyles}>
-                {tag.name}
-            </Tag>
-        ))}
+        {tags
+            .filter(
+                tag =>
+                    !['AuthorType', 'ExpertiseLevel', 'ContentType'].includes(
+                        tag.type
+                    )
+            )
+            .map(tag => (
+                <Tag
+                    key={`${tag.name} ${tag.type}`}
+                    href={tag.slug}
+                    variant="small"
+                    sx={tagStyles}
+                >
+                    {tag.name}
+                </Tag>
+            ))}
     </div>
 );
 export default TagSection;

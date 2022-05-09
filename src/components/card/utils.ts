@@ -17,11 +17,11 @@ export const hasTags = (variant: CardVariant) =>
 
 export const hasDescription = (variant: CardVariant, category: PillCategory) =>
     ['large', 'list'].includes(variant) ||
-    (category === 'Demo App' && ['small', 'medium'].includes(variant));
+    (category === 'Code Example' && ['small', 'medium'].includes(variant));
 
 export const hasAuthorLockup = (variant: CardVariant, category: PillCategory) =>
-    variant === 'large' &&
-    ['Article', 'Tutorial', 'Demo App'].includes(category);
+    ['large', 'list'].includes(variant) &&
+    ['Article', 'Tutorial', 'Code Example', 'Quickstart'].includes(category);
 
 export const getCardProps = (
     {

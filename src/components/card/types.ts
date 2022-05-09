@@ -1,11 +1,7 @@
 import { PillCategory } from '../../types/pill-category';
 import { Tag } from '../../interfaces/tag';
 import { Author } from '../../interfaces/author';
-
-export interface Thumbnail {
-    url: string;
-    alt?: string;
-}
+import { Image } from '../../interfaces/image';
 
 export type CardVariant = 'small' | 'medium' | 'large' | 'list' | 'related';
 
@@ -17,7 +13,7 @@ export interface CardProps {
     title: string;
     pillCategory: PillCategory;
     tags?: Tag[];
-    thumbnail?: Thumbnail;
+    thumbnail?: Image;
     variant: CardVariant;
     slug: string;
 }

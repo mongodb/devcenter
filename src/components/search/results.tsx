@@ -8,26 +8,33 @@ import Card, { getCardProps } from '../card';
 
 import loadingAnimation from '../../../public/loading-animation.gif';
 
-// This isn't working as desired. The child components are still rendering depspite this being memoized.
+// TODO: This isn't being memoized correctly.
 const Results: React.FunctionComponent<ResultsProps> = React.memo(
     ({ data, isLoading, hasError, layout = 'list' }) => {
         const extraCardStyles =
             layout === 'list' ? { width: '100%' } : { height: '100%' };
         return (
-            <div data-testid="search-results" sx={dataStyles(layout)}>
-                {data &&
-                    data.map(page =>
-                        page.map(piece => (
+            <div
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}
+            >
+                {data && (
+                    <div data-testid="search-results" sx={dataStyles(layout)}>
+                        {data.map(item => (
                             <Card
-                                key={piece.slug}
+                                key={item.slug}
                                 sx={extraCardStyles}
                                 {...getCardProps(
-                                    piece,
+                                    item,
                                     layout === 'list' ? 'list' : 'medium'
                                 )}
                             />
-                        ))
-                    )}
+                        ))}
+                    </div>
+                )}
                 {isLoading ? (
                     <Image alt="Loading..." src={loadingAnimation}></Image>
                 ) : hasError ? (
