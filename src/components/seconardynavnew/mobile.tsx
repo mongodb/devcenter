@@ -65,7 +65,6 @@ const SecondaryLinks = styled.ul`
         props.isOpen ? '100vh' : '0'};
     padding-left: ${theme.space.inc40};
     padding-right: ${theme.space.inc40};
-    padding-top: ${theme.space.inc40};
     margin: 0;
     /* L1 */
     > li {
@@ -74,6 +73,7 @@ const SecondaryLinks = styled.ul`
 
         &:first-child {
             min-height: 30px;
+            padding-top: ${theme.space.inc40};
         }
         &:not(:last-child) {
             border-bottom: solid #e7eeec 1px;
