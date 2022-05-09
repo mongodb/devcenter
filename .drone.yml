@@ -10,58 +10,97 @@ resources:
     memory: 4GiB
 
 steps:
-- name: publish-staging
-  image: plugins/kaniko-ecr
-  environment:
-    NPM_AUTH:
-      from_secret: NPM_AUTH
-    NPM_EMAIL:
-      from_secret: NPM_EMAIL
-    STRAPI_URL:
-      from_secret: STRAPI_URL_STAGING
-  settings:
-    create_repository: true
-    enable_cache: true
-    registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
-    repo: devrel/${DRONE_REPO_NAME}
-    build_args:
-      - NPM_AUTH
-      - NPM_EMAIL
-      - STRAPI_URL
-    tags:
-    - git-${DRONE_COMMIT_SHA:0:7}
-    - latest
-    access_key:
-      from_secret: ecr_access_key
-    secret_key:
-      from_secret: ecr_secret_key
-    values_files: [ "environments/staging.yaml" ]
-  when:
-    event:
-    - push
+  - name: publish-staging
+    image: plugins/kaniko-ecr
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+    settings:
+      create_repository: true
+      enable_cache: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: devrel/${DRONE_REPO_NAME}
+      build_args:
+        - NPM_AUTH
+        - NPM_EMAIL
+        - STRAPI_URL
+        - APP_RELEASE=${DRONE_COMMIT_SHA}
+      tags:
+        - git-${DRONE_COMMIT_SHA:0:7}
+        - latest
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+      values_files: ["environments/staging.yaml"]
+    when:
+      event:
+        - push
 
-- name: deploy-staging
-  image: quay.io/mongodb/drone-helm:v3
-  settings:
-    chart: mongodb/web-app
-    chart_version: 4.7.3
-    add_repos: [mongodb=https://10gen.github.io/helm-charts]
-    namespace: devrel
-    release: devcenter-frontend
-    values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
-    api_server: https://api.staging.corp.mongodb.com
-    kubernetes_token:
-      from_secret: staging_kubernetes_token
-    values_files: [ "environments/staging.yaml" ]
-  when:
-    event:
-    - push
+  - name: deploy-staging
+    image: drone/cli:1.4.0-alpine
+    commands:
+    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} staging
+    environment:
+      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
+      DRONE_TOKEN:
+        from_secret: drone_token
+    when:
+      event:
+      - push
 
 trigger:
   branch:
     - main
   event:
     - push
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: deploy-devcenter-staging
+
+steps:
+  - name: deploy-staging
+    image: quay.io/mongodb/drone-helm:v3
+    settings:
+      chart: mongodb/web-app
+      chart_version: 4.7.3
+      add_repos: [mongodb=https://10gen.github.io/helm-charts]
+      namespace: devrel
+      release: devcenter-frontend
+      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
+      api_server: https://api.staging.corp.mongodb.com
+      kubernetes_token:
+        from_secret: staging_kubernetes_token
+      values_files: ["environments/staging.yaml"]
+
+  - name: set-release-sha
+    image: drone/cli:1.4.0-alpine
+    commands:
+    # Since drone doesn't have a way of setting and getting environment variables between steps,
+    # the usage of "secret" here is not to obfuscate the commit sha, but rather to set it when
+    # deployments are made. The secret will represent the current "release" of the application,
+    # which is the latest git sha that the live application is using. This will allow the re-build
+    # trigger to re-build based upon the last deployed git sha (which will cover rollback cases).
+    # See https://community.harness.io/t/can-you-set-env-vars-via-a-pipeline-step/11739/6
+    - drone secret update --name app_release_staging --data ${DRONE_COMMIT_SHA} mongodb/devcenter
+    environment:
+      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
+      DRONE_TOKEN:
+        from_secret: drone_token
+
+trigger:
+  event:
+    - promote
+    - rollback
+  target:
+    - staging
 
 ---
 depends_on: null
@@ -75,35 +114,36 @@ resources:
     memory: 4GiB
 
 steps:
-- name: publish-production
-  image: plugins/kaniko-ecr
-  environment:
-    NPM_AUTH:
-      from_secret: NPM_AUTH
-    NPM_EMAIL:
-      from_secret: NPM_EMAIL
-    STRAPI_URL:
-      from_secret: STRAPI_URL_PROD
-  settings:
-    create_repository: true
-    enable_cache: true
-    registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
-    repo: devrel/${DRONE_REPO_NAME}
-    build_args:
-      - NPM_AUTH
-      - NPM_EMAIL
-      - STRAPI_URL
-    tags:
-    - git-${DRONE_COMMIT_SHA:0:7}
-    - latest
-    access_key:
-      from_secret: ecr_access_key
-    secret_key:
-      from_secret: ecr_secret_key
-    values_files: [ "environments/prod.yaml" ]
-  when:
-    event:
-    - push
+  - name: publish-production
+    image: plugins/kaniko-ecr
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      STRAPI_URL:
+        from_secret: STRAPI_URL_PROD
+    settings:
+      create_repository: true
+      enable_cache: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: devrel/${DRONE_REPO_NAME}
+      build_args:
+        - NPM_AUTH
+        - NPM_EMAIL
+        - STRAPI_URL
+        - APP_RELEASE=${DRONE_COMMIT_SHA}
+      tags:
+        - git-${DRONE_COMMIT_SHA:0:7}
+        - latest
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+      values_files: ["environments/prod.yaml"]
+    when:
+      event:
+        - push
 
 trigger:
   branch:
@@ -118,19 +158,29 @@ type: kubernetes
 name: deploy-devcenter-prod
 
 steps:
-- name: deploy-prod
-  image: quay.io/mongodb/drone-helm:v3
-  settings:
-    chart: mongodb/web-app
-    chart_version: 4.7.3
-    add_repos: [mongodb=https://10gen.github.io/helm-charts]
-    namespace: devrel
-    release: devcenter-frontend
-    values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.prod.corp.mongodb.com
-    api_server: https://api.prod.corp.mongodb.com
-    kubernetes_token:
-      from_secret: prod_kubernetes_token
-    values_files: [ "environments/prod.yaml" ]
+  - name: deploy-prod
+    image: quay.io/mongodb/drone-helm:v3
+    settings:
+      chart: mongodb/web-app
+      chart_version: 4.7.3
+      add_repos: [mongodb=https://10gen.github.io/helm-charts]
+      namespace: devrel
+      release: devcenter-frontend
+      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.prod.corp.mongodb.com
+      api_server: https://api.prod.corp.mongodb.com
+      kubernetes_token:
+        from_secret: prod_kubernetes_token
+      values_files: ["environments/prod.yaml"]
+
+  - name: set-release-sha
+    image: drone/cli:1.4.0-alpine
+    commands:
+    # See comment to similar line above regarding usage.
+    - drone secret update --name app_release_production --data ${DRONE_COMMIT_SHA} mongodb/devcenter
+    environment:
+      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
+      DRONE_TOKEN:
+        from_secret: drone_token
 
 trigger:
   event:
@@ -138,3 +188,123 @@ trigger:
     - rollback
   target:
     - production
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: deploy-devcenter-stage-trigger
+
+steps:
+  - name: checkout-to-current-release
+    image: alpine/git
+    environment:
+      APP_RELEASE:
+        from_secret: app_release_staging
+    commands:
+    # "$${APP_RELEASE}" is the latest staging revision that was promoted successfully.
+    - git checkout "$${APP_RELEASE}"
+
+  - name: publish-staging-from-trigger
+    image: plugins/kaniko-ecr
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      APP_RELEASE:
+        from_secret: app_release_staging
+    settings:
+      create_repository: true
+      enable_cache: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: devrel/${DRONE_REPO_NAME}
+      build_args:
+        - NPM_AUTH
+        - NPM_EMAIL
+        - STRAPI_URL
+        - APP_RELEASE
+      tags:
+        - devcenter-staging-build-${DRONE_BUILD_NUMBER}
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+      values_files: ["environments/staging.yaml"]
+
+  - name: deploy-staging-from-trigger
+    image: drone/cli:1.4.0-alpine
+    commands:
+    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} staging
+    environment:
+      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
+      DRONE_TOKEN:
+        from_secret: drone_token
+
+trigger:
+  branch:
+    - main
+  event:
+    - custom
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: deploy-devcenter-prod-trigger
+
+steps:
+  - name: checkout-to-current-release
+    image: alpine/git
+    environment:
+      APP_RELEASE:
+        from_secret: app_release_production
+    commands:
+    # "$${APP_RELEASE}" is the latest production revision that was promoted successfully.
+    - git checkout "$${APP_RELEASE}"
+
+  - name: publish-prod-from-trigger
+    image: plugins/kaniko-ecr
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      STRAPI_URL:
+        from_secret: STRAPI_URL_PROD
+      APP_RELEASE:
+        from_secret: app_release_production
+    settings:
+      create_repository: true
+      enable_cache: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: devrel/${DRONE_REPO_NAME}
+      build_args:
+        - NPM_AUTH
+        - NPM_EMAIL
+        - STRAPI_URL
+        - APP_RELEASE
+      tags:
+        - devcenter-prod-build-${DRONE_BUILD_NUMBER}
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+      values_files: ["environments/prod.yaml"]
+
+  - name: deploy-prod-from-trigger
+    image: drone/cli:1.4.0-alpine
+    commands:
+    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} production
+    environment:
+      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
+      DRONE_TOKEN:
+        from_secret: drone_token
+
+trigger:
+  branch:
+    - main
+  event:
+    - custom
