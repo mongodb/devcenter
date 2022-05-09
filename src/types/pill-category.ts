@@ -13,7 +13,7 @@ export type PillCategory = typeof PillCategoryValues[number];
 export const pillCategoryToSlug = new Map<PillCategory, string>([
     ['Article', '/articles'],
     ['Demo App', '/demo-apps'],
-    ['Quickstart', '/quick-starts'],
+    ['Quickstart', '/quickstarts'],
     ['Code Example', '/code-examples'],
     ['Tutorial', '/tutorials'],
     [

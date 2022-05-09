@@ -44,6 +44,7 @@ import { VideoEmbed } from '../components/article-body/body-components/video-emb
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import PodcastPlayer from '../components/podcast-player/podcast-player';
 import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
+import { CollectionType } from '../types/collection-type';
 
 interface ContentPageProps {
     contentItem: ContentItem;
@@ -130,7 +131,7 @@ const getCtaTextForVideosOrPodcasts = (category: PillCategory) => {
 
 const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
     return category === 'Video'
-        ? '/video'
+        ? '/videos'
         : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
 };
 
@@ -138,11 +139,18 @@ const parseDescription = (description: string, category: PillCategory) => {
     return category === 'Podcast' ? parse(description) : description;
 };
 
+const determineVideoOrPodcast = (
+    collectionType: CollectionType | undefined
+) => {
+    return collectionType === 'Video' || collectionType === 'Podcast';
+};
+
 const ContentPage: NextPage<ContentPageProps> = ({
     contentItem,
     tertiaryNavItems,
 }) => {
     const {
+        collectionType,
         authors,
         category,
         contentDate,
@@ -171,7 +179,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
     } ${category}`; // Regex to tell if it starts with a vowel.
 
-    const vidOrPod = category === 'Video' || category === 'Podcast';
+    const vidOrPod = determineVideoOrPodcast(collectionType);
 
     const displayDate = constructDateDisplay(vidOrPod, contentDate, updateDate);
 
@@ -469,13 +477,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
     const contents: ContentItem[] = await getAllContentItems();
 
-    //TODO - not sure how to construct side nav for podcasts and videos since they don't have primary tags
-    const sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
-    const tertiaryNavItems = await getSideNav(sideNavFilterSlug);
-
     const contentItem = contents.filter(
         content => content.slug === slug.join('/')
     )[0];
+
+    const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
+    let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
+
+    if (vidOrPod) {
+        if (contentItem.primaryTag?.programmingLanguage) {
+            sideNavFilterSlug =
+                contentItem.primaryTag.programmingLanguage.calculatedSlug;
+        }
+        if (contentItem.primaryTag?.l1Product) {
+            sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
+        }
+    }
+    const tertiaryNavItems = await getSideNav(sideNavFilterSlug);
 
     const data = {
         contentItem,
