@@ -16,7 +16,7 @@ const Hero: React.FunctionComponent<HeroProps> = ({
     return (
         <div sx={heroContainerStyles}>
             <GridLayout sx={{ rowGap: 'inc30' }}>
-                <Breadcrumbs crumbs={crumbs} />
+                {crumbs && <Breadcrumbs crumbs={crumbs} />}
                 <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
                     <TypographyScale
                         variant="heading2"
@@ -25,11 +25,13 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                     >
                         {name}
                     </TypographyScale>
-                    <TypographyScale variant="body2">
-                        {description}
-                    </TypographyScale>
+                    {!!description && (
+                        <TypographyScale variant="body2">
+                            {description}
+                        </TypographyScale>
+                    )}
                 </div>
-                {ctas.length > 0 && (
+                {ctas && ctas.length > 0 && (
                     <div sx={CTAContainerStyles}>
                         {ctas.length < 3
                             ? ctas.map((cta, i) => {
