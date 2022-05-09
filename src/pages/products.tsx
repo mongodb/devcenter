@@ -15,6 +15,7 @@ import { Grid } from 'theme-ui';
 
 import { getDistinctTags } from '../service/get-distinct-tags';
 import { Tag } from '../interfaces/tag';
+import Link from 'next/link';
 
 const crumbs: Crumb[] = [
     { text: 'MongoDB Developer Center', url: '/developer' },
@@ -88,7 +89,93 @@ const flashCardStyles = {
     div: { minHeight: 'unset' },
     py: 'inc60',
 };
-const ProductsPage: NextPage = () => (
+interface L1Product {
+    name: string;
+    slug: string;
+    l2s: Tag[];
+}
+interface ProductsPageProps {
+    products: L1Product[];
+}
+
+interface L1LinkProps {
+    name: string;
+    slug: string;
+}
+const L1Link: React.FunctionComponent<L1LinkProps> = ({ name, slug }) => (
+    <Link href={slug} passHref key={slug}>
+        <a
+            sx={{
+                '&:hover': {
+                    '*': {
+                        color: 'green60',
+                        stroke: 'green60',
+                    },
+                },
+                display: 'block',
+                width: 'max-content',
+                marginBottom: 'inc50',
+            }}
+        >
+            <TypographyScale
+                sx={{
+                    display: 'inline-block',
+                    marginRight: 'inc40',
+                }}
+                variant="heading5"
+            >
+                {name}
+            </TypographyScale>
+            <SystemIcon name={ESystemIconNames.CHEVRON_RIGHT} size="medium" />
+        </a>
+    </Link>
+);
+
+const ProductSection: React.FunctionComponent<L1Product> = ({
+    name,
+    slug,
+    l2s,
+}) => {
+    return (
+        <div sx={{ marginBottom: l2s.length ? 'inc70' : 0 }}>
+            <L1Link name={name} slug={slug} />
+            {l2s.length && (
+                <Grid columns={[1, null, 2, 4]} gap="inc70">
+                    {l2s.map(l2 => {
+                        const flashCardProps = {
+                            imageConfig: {
+                                src: 'https://webimages.mongodb.com/_com_assets/cms/ktxaqsnnbqbx3o876-search_Slalom2.svg?ixlib=js-3.5.1&auto=format%2Ccompress&w=1075',
+                                variant: ESingleImageVariant.LETTERBOX,
+                            },
+                            cta: {
+                                type: 'link-arrow' as CTAType,
+                                text: 'Explore Content',
+                                config: {
+                                    href: '/developer/products/search',
+                                    linkIconDisableExpand: true,
+                                },
+                            },
+                            imageryType: 'image' as ImageryType,
+                            title: 'Search',
+                            text: 'Advanced search capabilities, built for MongoDB. ',
+                        };
+                        return (
+                            <FlashCard
+                                key={l2.slug}
+                                {...flashCardProps}
+                                sx={{
+                                    boxSizing: 'border-box' as 'border-box',
+                                    div: { minHeight: 'unset' },
+                                }}
+                            />
+                        );
+                    })}
+                </Grid>
+            )}
+        </div>
+    );
+};
+const ProductsPage: NextPage<ProductsPageProps> = ({ products }) => (
     <>
         <Hero crumbs={crumbs} name="All Products" />
         <div
@@ -136,20 +223,21 @@ const ProductsPage: NextPage = () => (
                 <div sx={{ gridColumn: ['span 6', null, 'span 8', 'span 12'] }}>
                     <TypographyScale
                         variant="heading4"
-                        sx={{ marginBottom: 'inc90' }}
+                        sx={{ marginBottom: 'inc90', width: 'max-content' }}
                     >
                         All Topics
                     </TypographyScale>
-                    <TypographyScale
-                        sx={{ display: 'inline-block', marginRight: 'inc40' }}
-                        variant="heading5"
+                    <div
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 'inc70',
+                        }}
                     >
-                        Atlas
-                    </TypographyScale>
-                    <SystemIcon
-                        name={ESystemIconNames.CHEVRON_RIGHT}
-                        size="medium"
-                    />
+                        {products.map(product => (
+                            <ProductSection {...product} key={product.slug} />
+                        ))}
+                    </div>
                 </div>
             </GridLayout>
         </div>
@@ -158,29 +246,22 @@ const ProductsPage: NextPage = () => (
 
 export default ProductsPage;
 
-interface L1Product extends Tag {
-    l2s?: Tag[];
-}
-
 export const getStaticProps: GetStaticProps = async () => {
     const distinctTags = await getDistinctTags();
     const l1Products = distinctTags.filter(tag => tag.type === 'L1Product');
     const l2Products = distinctTags.filter(tag => tag.type === 'L2Product');
 
-    const products: L1Product[] = l1Products;
+    const products: L1Product[] = l1Products.map(({ type, ...rest }) => ({
+        ...rest,
+        l2s: [],
+    }));
     l2Products.forEach(l2 => {
         const existingL1 = products.find(l1 => l2.slug.startsWith(l1.slug));
         if (existingL1) {
-            if (existingL1.l2s) {
-                if (
-                    !existingL1.l2s.find(
-                        existingL2 => existingL2.slug === l2.slug
-                    )
-                ) {
-                    existingL1.l2s.push(l2);
-                }
-            } else {
-                existingL1.l2s = [l2];
+            if (
+                !existingL1.l2s.find(existingL2 => existingL2.slug === l2.slug)
+            ) {
+                existingL1.l2s.push(l2);
             }
         } else {
             throw Error('Did not find corresponding l1 for ' + l2.name);
@@ -189,5 +270,5 @@ export const getStaticProps: GetStaticProps = async () => {
 
     console.log(products);
 
-    return { props: products };
+    return { props: { products } };
 };

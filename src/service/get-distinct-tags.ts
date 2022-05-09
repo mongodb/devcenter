@@ -1,7 +1,6 @@
 import { ContentItem } from '../interfaces/content-item';
 import { getAllContentItems } from './get-all-content';
 import { Tag } from '../interfaces/tag';
-import { L1L2_TOPIC_PAGE_TYPES } from '../data/constants';
 
 export const getDistinctTags = async () => {
     const contents: ContentItem[] = await getAllContentItems();
