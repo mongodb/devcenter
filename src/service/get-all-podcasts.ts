@@ -5,12 +5,20 @@ import getAllPodcastsFromAPI from '../api-requests/get-all-podcasts';
 export const getAllPodcasts = async (): Promise<Podcast[]> => {
     const podcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
     podcasts.forEach(p => {
-        p.otherTags = {
-            contentType: {
+        if (p.otherTags) {
+            p.otherTags.contentType = {
                 contentType: 'Podcast',
                 calculatedSlug: '/podcasts',
-            },
-        };
+            };
+        } else {
+            p.otherTags = {
+                contentType: {
+                    contentType: 'Podcast',
+                    calculatedSlug: '/podcasts',
+                },
+            };
+        }
+
         if (p.l1Product) {
             p.otherTags.l1Product = p.l1Product;
         }

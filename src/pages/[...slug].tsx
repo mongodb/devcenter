@@ -172,6 +172,10 @@ const ContentPage: NextPage<ContentPageProps> = ({
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
+    const site = 'https://mongodb.com/developer';
+    const canonicalURL = site + '/' + slug;
+    console.log(canonicalURL);
+
     // const relatedContent = getRelatedContent(slug);
     // const slugList = slug.split('/');
 
