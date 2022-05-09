@@ -16,6 +16,7 @@ import { Grid } from 'theme-ui';
 import { getDistinctTags } from '../service/get-distinct-tags';
 import { Tag } from '../interfaces/tag';
 import Link from 'next/link';
+import { productToLogo } from '../utils/product-to-logo';
 
 const crumbs: Crumb[] = [
     { text: 'MongoDB Developer Center', url: '/developer' },
@@ -30,7 +31,10 @@ const atlasFeaturedConfig = {
     cta: {
         type: 'link-arrow' as CTAType,
         text: 'Explore Content',
-        config: { href: '/developer/products/atlas' },
+        config: {
+            href: '/developer/products/atlas',
+            linkIconDisableExpand: true, // Doesn't seem to work
+        },
     },
     imageryType: 'image' as ImageryType,
     title: 'Atlas',
@@ -44,7 +48,10 @@ const mongodbFeaturedConfig = {
     cta: {
         type: 'link-arrow' as CTAType,
         text: 'Explore Content',
-        config: { href: '/developer/products/mongodb' },
+        config: {
+            href: '/developer/products/mongodb',
+            linkIconDisableExpand: true, // Doesn't seem to work
+        },
     },
     imageryType: 'image' as ImageryType,
     title: 'MongoDB',
@@ -59,7 +66,10 @@ const realmFeaturedConfig = {
     cta: {
         type: 'link-arrow' as CTAType,
         text: 'Explore Content',
-        config: { href: '/developer/products/realm' },
+        config: {
+            href: '/developer/products/realm',
+            linkIconDisableExpand: true, // Doesn't seem to work
+        },
     },
     imageryType: 'image' as ImageryType,
     title: 'Realm (Mobile)',
@@ -76,7 +86,7 @@ const searchFeaturedConfig = {
         text: 'Explore Content',
         config: {
             href: '/developer/products/search',
-            linkIconDisableExpand: true,
+            linkIconDisableExpand: true, // Doesn't seem to work
         },
     },
     imageryType: 'image' as ImageryType,
@@ -139,25 +149,26 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
     return (
         <div sx={{ marginBottom: l2s.length ? 'inc70' : 0 }}>
             <L1Link name={name} slug={slug} />
-            {l2s.length && (
+            {l2s.length ? (
                 <Grid columns={[1, null, 2, 4]} gap="inc70">
                     {l2s.map(l2 => {
                         const flashCardProps = {
-                            imageConfig: {
-                                src: 'https://webimages.mongodb.com/_com_assets/cms/ktxaqsnnbqbx3o876-search_Slalom2.svg?ixlib=js-3.5.1&auto=format%2Ccompress&w=1075',
-                                variant: ESingleImageVariant.LETTERBOX,
+                            iconConfig: {
+                                name: productToLogo[l2.name],
                             },
                             cta: {
                                 type: 'link-arrow' as CTAType,
-                                text: 'Explore Content',
+                                text: 'Learn More',
                                 config: {
-                                    href: '/developer/products/search',
-                                    linkIconDisableExpand: true,
+                                    href: '/developer' + l2.slug,
+                                    linkIconDisableExpand: true, // Doesn't seem to work
                                 },
                             },
-                            imageryType: 'image' as ImageryType,
-                            title: 'Search',
-                            text: 'Advanced search capabilities, built for MongoDB. ',
+                            imageryType: 'icon' as ImageryType,
+                            title: l2.name,
+                            text: 'We still need descriptions for all of these right?',
+                            background: false,
+                            alignment: 'left' as 'left',
                         };
                         return (
                             <FlashCard
@@ -171,6 +182,10 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                         );
                     })}
                 </Grid>
+            ) : (
+                <TypographyScale variant="body2">
+                    We still need descriptions for all of these right?
+                </TypographyScale>
             )}
         </div>
     );
@@ -267,8 +282,6 @@ export const getStaticProps: GetStaticProps = async () => {
             throw Error('Did not find corresponding l1 for ' + l2.name);
         }
     });
-
-    console.log(products);
 
     return { props: { products } };
 };
