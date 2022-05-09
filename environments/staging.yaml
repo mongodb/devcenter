@@ -18,7 +18,7 @@ autoscaling:
 
 probes:
   enabled: true
-  path: /api/health
+  path: /developer/api/health
   headers: {}
   liveness:
     httpGet: true
@@ -35,3 +35,8 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
+
+ingress:
+  enabled: true
+  path: /developer
+  hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]

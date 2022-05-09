@@ -18,7 +18,7 @@ Currently the only variable we need to set in this file is `STRAPI_URL`. See [th
 
 ## Running Locally
 
-Run `yarn` to install dependencies. Run `yarn dev` to start the server locally in development mode. It then should be accessible at http://localhost:3000.
+Run `yarn` to install dependencies. Run `yarn dev` to start the server locally in development mode. It then should be accessible at http://localhost:3000/developer.
 
 ### Running Locally with Docker
 
@@ -36,7 +36,7 @@ To create the container, run:
 
 Run `yarn test` to run all unit tests and integration tests.
 
-Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000 before running cypress tests.
+Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000/developer before running cypress tests.
 
 ## Formatting
 

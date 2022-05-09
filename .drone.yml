@@ -4,6 +4,11 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter-staging
 
+resources:
+  requests:
+    cpu: 8
+    memory: 4GiB
+
 steps:
 - name: publish-staging
   image: plugins/kaniko-ecr
@@ -16,6 +21,7 @@ steps:
       from_secret: STRAPI_URL_STAGING
   settings:
     create_repository: true
+    enable_cache: true
     registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
     repo: devrel/${DRONE_REPO_NAME}
     build_args:
@@ -42,7 +48,7 @@ steps:
     add_repos: [mongodb=https://10gen.github.io/helm-charts]
     namespace: devrel
     release: devcenter-frontend
-    values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.staging.corp.mongodb.com
+    values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
     api_server: https://api.staging.corp.mongodb.com
     kubernetes_token:
       from_secret: staging_kubernetes_token
@@ -63,6 +69,11 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter-prod
 
+resources:
+  requests:
+    cpu: 8
+    memory: 4GiB
+
 steps:
 - name: publish-production
   image: plugins/kaniko-ecr
@@ -75,6 +86,7 @@ steps:
       from_secret: STRAPI_URL_PROD
   settings:
     create_repository: true
+    enable_cache: true
     registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
     repo: devrel/${DRONE_REPO_NAME}
     build_args:
