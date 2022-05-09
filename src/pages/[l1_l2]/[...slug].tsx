@@ -150,7 +150,7 @@ const Topic: NextPage<TopicProps> = ({
                     )}
                     <Search
                         title={`All ${name} Content`}
-                        slug={slug}
+                        tagSlug={slug}
                         sx={{
                             gridColumn: [
                                 'span 6',

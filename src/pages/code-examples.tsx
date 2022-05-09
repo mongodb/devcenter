@@ -145,7 +145,6 @@ export const getStaticProps: GetStaticProps = async () => {
             })),
         };
     });
-    console.log(featuredProducts);
 
     return {
         props: {

@@ -160,7 +160,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     )}
                     <Search
                         title={`All ${topicName} ${contentType}s`}
-                        slug={topicSlug}
+                        tagSlug={topicSlug}
                         contentType={contentType}
                         resultsLayout="grid"
                         titleLink={{

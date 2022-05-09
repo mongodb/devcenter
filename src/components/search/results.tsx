@@ -14,20 +14,21 @@ const Results: React.FunctionComponent<ResultsProps> = React.memo(
         const extraCardStyles =
             layout === 'list' ? { width: '100%' } : { height: '100%' };
         return (
-            <div data-testid="search-results" sx={dataStyles(layout)}>
-                {data &&
-                    data.map(page =>
-                        page.map(piece => (
+            <div sx={{ display: 'flex', justifyContent: 'center' }}>
+                {data && (
+                    <div data-testid="search-results" sx={dataStyles(layout)}>
+                        {data.map(item => (
                             <Card
-                                key={piece.slug}
+                                key={item.slug}
                                 sx={extraCardStyles}
                                 {...getCardProps(
-                                    piece,
+                                    item,
                                     layout === 'list' ? 'list' : 'medium'
                                 )}
                             />
-                        ))
-                    )}
+                        ))}
+                    </div>
+                )}
                 {isLoading ? (
                     <Image alt="Loading..." src={loadingAnimation}></Image>
                 ) : hasError ? (

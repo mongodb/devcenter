@@ -11,7 +11,7 @@ import {
     Button,
 } from '@mdb/flora';
 
-import { fetcherv2 } from '../../components/search/utils';
+import { fetcher } from '../../components/search/utils';
 import Results from '../../components/search/results';
 import Hero from '../../components/hero';
 import RequestContentModal, {
@@ -64,7 +64,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         useState<requestContentModalStages>('closed');
     const { data, error, isValidating } = useSWR(
         () => `s=${searchString}&contentType=${contentType}`,
-        fetcherv2,
+        fetcher,
         {
             revalidateIfStale: false,
             revalidateOnFocus: false,
@@ -350,7 +350,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         {!!filteredData.length || isValidating || error ? (
                             <>
                                 <Results
-                                    data={[shownData]}
+                                    data={shownData}
                                     isLoading={isValidating}
                                     hasError={error}
                                 />
