@@ -25,7 +25,6 @@ import parse from 'html-react-parser';
 import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 
-// Still need to add authors section.
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
     contentDate,
@@ -58,20 +57,22 @@ const Card: React.FunctionComponent<CardProps> = ({
                 }}
             />
             <div sx={cardHeaderStyles(variant, pillCategory)}>
-                {thumbnail && hasThumbnail(variant, pillCategory) && (
-                    <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
-                        <Image
-                            alt={thumbnail.alt || 'alt not provided'}
-                            loader={thumbnailLoader}
-                            src={thumbnail.url}
-                            sx={{
-                                borderRadius: 'inc30',
-                                objectFit: 'cover',
-                            }}
-                            layout="fill"
-                        />
-                    </div>
-                )}
+                {thumbnail &&
+                    thumbnail.url &&
+                    hasThumbnail(variant, pillCategory) && (
+                        <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
+                            <Image
+                                alt={thumbnail.alt || 'alt not provided'}
+                                loader={thumbnailLoader}
+                                src={thumbnail.url}
+                                sx={{
+                                    borderRadius: 'inc30',
+                                    objectFit: 'cover',
+                                }}
+                                layout="fill"
+                            />
+                        </div>
+                    )}
                 <div>
                     <Pill
                         sx={pillStyles(pillCategory)}
@@ -110,7 +111,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                         {displayDate}
                     </TypographyScale>
                     {authors &&
-                        authors.length &&
+                        !!authors.length &&
                         hasAuthorLockup(variant, pillCategory) && (
                             <AuthorLockup
                                 sx={{

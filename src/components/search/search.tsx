@@ -52,7 +52,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
     const numberOfResults = resultsData.length;
     const shownData = resultsData.slice(0, resultsToShow);
     const fullyLoaded = resultsToShow >= numberOfResults;
-    console.log(fullyLoaded, resultsToShow, numberOfResults);
 
     const emptyState = (
         <div

@@ -70,7 +70,6 @@ const searchItemToContentItem = ({
 export const fetcher: Fetcher<ContentItem[], string> = queryString => {
     return fetch(`${searchEndpoint}?${queryString}`).then(async response => {
         const r_json: SearchItem[] = await response.json();
-        console.log(r_json);
         return r_json.map(searchItemToContentItem);
     });
 };

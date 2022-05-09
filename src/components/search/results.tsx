@@ -14,7 +14,13 @@ const Results: React.FunctionComponent<ResultsProps> = React.memo(
         const extraCardStyles =
             layout === 'list' ? { width: '100%' } : { height: '100%' };
         return (
-            <div sx={{ display: 'flex', justifyContent: 'center' }}>
+            <div
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}
+            >
                 {data && (
                     <div data-testid="search-results" sx={dataStyles(layout)}>
                         {data.map(item => (

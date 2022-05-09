@@ -176,19 +176,19 @@ export const descriptionStyles = (
     let tabletDesktopDisplay;
     switch (variant) {
         case 'large':
-            tabletDesktopDisplay = 'block';
-            mobileDisplay = category === 'Demo App' ? 'block' : 'none';
+            tabletDesktopDisplay = '-webkit-box';
+            mobileDisplay = category === 'Demo App' ? '-webkit-box' : 'none';
             break;
         case 'medium':
             tabletDesktopDisplay = mobileDisplay =
-                category === 'Demo App' ? 'block' : 'none';
+                category === 'Demo App' ? '-webkit-box' : 'none';
             break;
         case 'small':
             tabletDesktopDisplay = 'none';
-            mobileDisplay = category === 'Demo App' ? 'block' : 'none';
+            mobileDisplay = category === 'Demo App' ? '-webkit-box' : 'none';
             break;
         case 'list':
-            tabletDesktopDisplay = 'block';
+            tabletDesktopDisplay = '-webkit-box';
             mobileDisplay = 'none';
             break;
         case 'related':
@@ -199,6 +199,9 @@ export const descriptionStyles = (
         display: [mobileDisplay, null, tabletDesktopDisplay],
         marginBottom: [null, null, 'inc50'],
         marginTop: [null, null, 'inc30'],
+        WebkitLineClamp: 4,
+        '-webkit-box-orient': 'vertical',
+        overflow: 'hidden',
     };
 };
 
