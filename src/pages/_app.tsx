@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Head>
                 <title>MongoDB Developer Center</title>
                 <meta name="description" content="MongoDB Developer Center" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/developer/favicon.ico" />
             </Head>
             <ThemeProvider theme={theme}>
                 <Layout>
