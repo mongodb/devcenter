@@ -11,7 +11,7 @@ const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
     size,
 }) => {
     const { image, name } = author;
-    if (!image || !image.url) {
+    if (!image || !image.src) {
         return (
             <div className={className} sx={avatarPlaceholder(size)}>
                 <TypographyScale
@@ -30,13 +30,13 @@ const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
             </div>
         );
     }
-    const { url, alt } = image;
+    const { src, alt } = image;
     return (
         <div sx={profileImage(size)} className={className}>
             <Image
                 sx={profileImage(size)}
                 layout="fill"
-                src={url}
+                src={src}
                 alt={alt || ''}
             />
         </div>
