@@ -59,7 +59,7 @@ test('renders large', () => {
     const title = screen.queryByText(cardContent.title);
     expect(title).toBeInTheDocument();
 
-    const description = screen.queryByText(cardContent.description);
+    const description = screen.queryByText(cardContent.description as string);
     expect(description).toBeInTheDocument();
 
     // cardContent.tags.forEach(tag => {
@@ -88,11 +88,11 @@ test('renders medium', () => {
     const title = screen.queryByText(cardContent.title);
     expect(title).toBeInTheDocument();
 
-    const description = screen.queryByText(cardContent.description);
+    const description = screen.queryByText(cardContent.description as string);
     expect(description).toBeNull();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeNull();
+        expect(screen.queryByText(tag.name)).toBeNull();
     });
 
     const pill = screen.queryByText(cardContent.category);
@@ -117,11 +117,11 @@ test('renders small', () => {
     const title = screen.queryByText(cardContent.title);
     expect(title).toBeInTheDocument();
 
-    const description = screen.queryByText(cardContent.description);
+    const description = screen.queryByText(cardContent.description as string);
     expect(description).toBeNull();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeNull();
+        expect(screen.queryByText(tag.name)).toBeNull();
     });
 
     const pill = screen.queryByText(cardContent.category);
@@ -146,7 +146,7 @@ test('renders list', () => {
     const title = screen.queryByText(cardContent.title);
     expect(title).toBeInTheDocument();
 
-    const description = screen.queryByText(cardContent.description);
+    const description = screen.queryByText(cardContent.description as string);
     expect(description).toBeInTheDocument();
 
     // cardContent.tags.forEach(tag => {
@@ -175,11 +175,11 @@ test('renders related', () => {
     const title = screen.queryByText(cardContent.title);
     expect(title).toBeInTheDocument();
 
-    const description = screen.queryByText(cardContent.description);
+    const description = screen.queryByText(cardContent.description as string);
     expect(description).toBeNull();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag)).toBeNull();
+        expect(screen.queryByText(tag.name)).toBeNull();
     });
 
     const pill = screen.queryByText(cardContent.category);
