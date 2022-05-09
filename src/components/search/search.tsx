@@ -48,8 +48,11 @@ const Search: React.FunctionComponent<SearchProps> = ({
         setSearchString(event.target.value);
     };
 
-    const numberOfResults = data ? data.length : 0;
+    const resultsData = data || [];
+    const numberOfResults = resultsData.length;
+    const shownData = resultsData.slice(0, resultsToShow);
     const fullyLoaded = resultsToShow >= numberOfResults;
+    console.log(fullyLoaded, resultsToShow, numberOfResults);
 
     const emptyState = (
         <div
@@ -90,7 +93,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
             {!!numberOfResults || isValidating || error ? (
                 <>
                     <Results
-                        data={data}
+                        data={shownData}
                         isLoading={isValidating}
                         hasError={error}
                         layout={resultsLayout}

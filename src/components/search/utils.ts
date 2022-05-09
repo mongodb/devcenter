@@ -25,7 +25,7 @@ interface SearchItem {
     name: string;
     image: SearchImage;
     description: string;
-    calculated_slug: string;
+    slug: string;
     date: string;
     tags: Tag[];
 }
@@ -36,7 +36,7 @@ const searchItemToContentItem = ({
     name,
     image,
     description,
-    calculated_slug,
+    slug,
     date,
     tags,
 }: SearchItem): ContentItem => {
@@ -60,7 +60,7 @@ const searchItemToContentItem = ({
         contentDate: date,
         description,
         image: itemImage,
-        slug: calculated_slug,
+        slug: slug,
         tags,
         title: name,
         featured: false,
