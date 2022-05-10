@@ -40,6 +40,7 @@
         "remark-directive": "1.0.1",
         "remark-gfm": "1.0.0",
         "sanitize-html": "2.7.0",
+        "slugify": "1.6.5",
         "styled-components": "5.3.3",
         "swr": "1.2.1",
         "theme-ui": "0.10.0",

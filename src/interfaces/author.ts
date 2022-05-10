@@ -1,10 +1,10 @@
 import { OtherTags } from './other-tags';
 
-type Image = {
+export type Image = {
     url: string;
 };
 
-type ArticlesByAuthor = {
+export type ArticlesByAuthor = {
     name: string;
     calculated_slug: string;
     description: string;
