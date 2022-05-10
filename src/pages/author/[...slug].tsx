@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { getAllAuthors } from '../../service/get-all-authors';
-import { ArticlesByAuthor, Author, Image } from '../../interfaces/author';
+import { Author, Image } from '../../interfaces/author';
 import {
     Eyebrow,
     GridLayout,
@@ -9,12 +9,7 @@ import {
     TypographyScale,
 } from '@mdb/flora';
 import React from 'react';
-import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
-import AuthorLockup from '../../components/author-lockup';
-import * as https from 'https';
-import CardSection from '../../components/card-section';
 import Card, { getCardProps } from '../../components/card';
-import { cardListStyles } from '../../components/card-section/styles';
 import { getAllContentItems } from '../../service/get-all-content';
 import { ContentItem } from '../../interfaces/content-item';
 
@@ -28,7 +23,7 @@ interface AuthorPageProps {
     twitter?: string;
     youtube?: string;
     calculated_slug: string;
-    articles?: ArticlesByAuthor[];
+    articles?: ContentItem[];
 }
 
 const middleSectionStyles = {
@@ -94,13 +89,12 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                     <div sx={contentStyles}>
                         {articles &&
                             articles.map(article => {
-                                const cardProps = getCardProps(piece, 'medium');
+                                const cardProps = getCardProps(
+                                    article,
+                                    'medium'
+                                );
                                 return (
-                                    <Card
-                                        key={piece.slug}
-                                        {...cardProps}
-                                        sx={cardListStyles(direction)}
-                                    />
+                                    <Card key={article.slug} {...cardProps} />
                                 );
                             })}
                     </div>
@@ -164,7 +158,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         facebook: author.facebook,
         twitter: author.twitter,
         youtube: author.youtube,
-        articles: author.articles,
+        articles: filteredContent,
         calculated_slug: author.calculated_slug,
     };
 
