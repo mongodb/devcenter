@@ -1942,6 +1942,31 @@ const redirects = async () => {
             destination: '/developer/podcasts/',
             permanent: true,
         },
+        {
+            source: '/developer/tag/public-speaking/',
+            destination: 'https://www.mongodb.com/community',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/releases',
+            destination: '/developer/news/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/schema-design',
+            destination: '/developer/products/mongodb/schema-design/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/security',
+            destination: '/developer/products/mongodb/security/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/soft-skills',
+            destination: 'https://university.mongodb.com',
+            permanent: true,
+        },
     ];
 };
 
