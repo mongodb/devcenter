@@ -435,14 +435,14 @@ interface IParams extends ParsedUrlQuery {
 } // Need this to avoid TS errors.
 
 const removesErroringArticles = (contents: ContentItem[]) => {
-    const removeSlugs = [
-        'article/mongodb-charts-embedding-sdk-react/',
-        'article/new-time-series-collections',
-        'article/pymongoarrow-and-data-analysis',
-        'article/build-movie-search-application',
+    const removeItems = [
+        'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
+        'new-time-series-collections',
+        'mongodb-charts-embedding-sdk-react/',
+        'build-movie-search-application',
     ];
 
-    return contents.filter(content => !removeSlugs.includes(content.slug));
+    return contents.filter(content => !removeItems.includes(content.title));
 };
 
 export const getStaticPaths = async () => {
