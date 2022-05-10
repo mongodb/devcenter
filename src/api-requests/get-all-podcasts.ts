@@ -56,7 +56,37 @@ const getAllPodcastsFromAPI = async (
     const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
         await client.query({ query });
 
-    return data.podcasts;
+    const podcasts = JSON.parse(JSON.stringify(data.podcasts));
+    podcasts.forEach(p => {
+        if (p.otherTags) {
+            p.otherTags.contentType = {
+                contentType: 'Podcast',
+                calculatedSlug: '/podcasts',
+            };
+        } else {
+            p.otherTags = {
+                contentType: {
+                    contentType: 'Podcast',
+                    calculatedSlug: '/podcasts',
+                },
+            };
+        }
+
+        if (p.l1Product) {
+            p.otherTags.l1Product = p.l1Product;
+        }
+        if (p.l2Product) {
+            p.otherTags.l2Product = p.l2Product;
+        }
+        if (p.programmingLanguage) {
+            p.otherTags.programmingLanguage = p.programmingLanguage;
+        }
+        if (p.technology) {
+            p.otherTags.technology = p.technology;
+        }
+    });
+
+    return podcasts;
 };
 
 export default getAllPodcastsFromAPI;
