@@ -212,7 +212,7 @@ steps:
         from_secret: webhook_token
     commands:
     - if [[ "${APP_ENV}" != "staging" ]]; then exit 78; fi
-    - if [[ "${APP_WEBHOOK_TOKEN}" != "${TOKEN}" ]]; then exit 78; fi
+    - if [[ "${APP_WEBHOOK_TOKEN}" != "$${TOKEN}" ]]; then exit 78; fi
 
   - name: publish-staging-from-trigger
     image: plugins/kaniko-ecr
@@ -280,7 +280,7 @@ steps:
         from_secret: webhook_token
     commands:
     - if [[ "${APP_ENV}" != "production" ]]; then exit 78; fi
-    - if [[ "${APP_WEBHOOK_TOKEN}" != "${TOKEN}" ]]; then exit 78; fi
+    - if [[ "${APP_WEBHOOK_TOKEN}" != "$${TOKEN}" ]]; then exit 78; fi
 
   - name: publish-prod-from-trigger
     image: plugins/kaniko-ecr
