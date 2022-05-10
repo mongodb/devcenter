@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { myData } from '../../data/secondary-nav';
+import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink } from '@mdb/flora';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
@@ -370,7 +370,7 @@ const MobileView = () => {
                 ></div>
             </div>
             <SecondaryLinks isOpen={mobileMenuIsOpen}>
-                {myData.map(({ name, slug, dropDownItems }) => (
+                {secondaryNavData.map(({ name, slug, dropDownItems }) => (
                     <SecondaryLinksList key={name}>
                         {dropDownItems?.length ? (
                             <DropDownButton

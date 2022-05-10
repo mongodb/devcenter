@@ -2,7 +2,7 @@ import { useState } from 'react';
 import theme from '@mdb/flora/theme';
 
 import { ESystemIconNames, Link, SystemIcon } from '@mdb/flora';
-import { myData } from '../../data/secondary-nav';
+import { secondaryNavData } from '../../data/secondary-nav';
 
 import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
@@ -74,7 +74,7 @@ const DesktopView = () => {
                 </div>
 
                 <SecondaryLinks>
-                    {myData.map(({ name, slug, dropDownItems }) => (
+                    {secondaryNavData.map(({ name, slug, dropDownItems }) => (
                         <SecondaryLinksList key={name}>
                             {dropDownItems?.length ? (
                                 <>
