@@ -13,8 +13,6 @@ steps:
   - name: publish-staging
     image: plugins/kaniko-ecr
     environment:
-      ECR_REGISTRY:
-        from_secret: ecr_registry
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -24,7 +22,7 @@ steps:
     settings:
       create_repository: true
       enable_cache: true
-      registry: ${ECR_REGISTRY}
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
         - NPM_AUTH
@@ -70,16 +68,13 @@ name: deploy-devcenter-staging
 steps:
   - name: deploy-staging
     image: quay.io/mongodb/drone-helm:v3
-    environment:
-      ECR_REGISTRY:
-        from_secret: ecr_registry
     settings:
       chart: mongodb/web-app
       chart_version: 4.7.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
-      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=${ECR_REGISTRY}/devrel/${DRONE_REPO_NAME}
+      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
@@ -122,8 +117,6 @@ steps:
   - name: publish-production
     image: plugins/kaniko-ecr
     environment:
-      ECR_REGISTRY:
-        from_secret: ecr_registry
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -133,7 +126,7 @@ steps:
     settings:
       create_repository: true
       enable_cache: true
-      registry: ${ECR_REGISTRY}
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
         - NPM_AUTH
@@ -167,16 +160,13 @@ name: deploy-devcenter-prod
 steps:
   - name: deploy-prod
     image: quay.io/mongodb/drone-helm:v3
-    environment:
-      ECR_REGISTRY:
-        from_secret: ecr_registry
     settings:
       chart: mongodb/web-app
       chart_version: 4.7.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
-      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=${ECR_REGISTRY}/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.prod.corp.mongodb.com
+      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.prod.corp.mongodb.com
       api_server: https://api.prod.corp.mongodb.com
       kubernetes_token:
         from_secret: prod_kubernetes_token
@@ -228,8 +218,6 @@ steps:
     environment:
       APP_RELEASE:
         from_secret: app_release_staging
-      ECR_REGISTRY:
-        from_secret: ecr_registry
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -239,7 +227,7 @@ steps:
     settings:
       create_repository: true
       enable_cache: true
-      registry: ${ECR_REGISTRY}
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
         - NPM_AUTH
@@ -297,8 +285,6 @@ steps:
     environment:
       APP_RELEASE:
         from_secret: app_release_production
-      ECR_REGISTRY:
-        from_secret: ecr_registry
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -308,7 +294,7 @@ steps:
     settings:
       create_repository: true
       enable_cache: true
-      registry: ${ECR_REGISTRY}
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
         - NPM_AUTH
