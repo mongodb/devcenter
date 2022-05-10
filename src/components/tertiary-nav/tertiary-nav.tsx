@@ -32,7 +32,11 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
                 />
                 <nav sx={navTagStyles} id="navScroll">
                     {items.map(({ title, url }) => (
-                        <Link href={url} key={title} navItem={true}>
+                        <Link
+                            href={'/developer' + url}
+                            key={title}
+                            navItem={true}
+                        >
                             {title}
                         </Link>
                     ))}

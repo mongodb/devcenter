@@ -12,6 +12,8 @@ export const getSideNav = async (
         return slugsInTags.includes(inputSlug);
     });
 
+    // #TODO:
+
     let pluralize = require('pluralize');
 
     filteredContents.forEach((fc: ContentItem) => {

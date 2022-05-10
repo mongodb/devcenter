@@ -47,7 +47,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         >
             {/* This absolute anchor is to avoid nesting anchor tags */}
             <a
-                href={slug}
+                href={'/developer' + slug}
                 sx={{
                     position: 'absolute',
                     width: '100%',

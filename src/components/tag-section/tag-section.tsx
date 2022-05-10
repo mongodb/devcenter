@@ -19,7 +19,7 @@ const TagSection: React.FunctionComponent<TagSectionProps> = ({
             .map(tag => (
                 <Tag
                     key={`${tag.name} ${tag.type}`}
-                    href={tag.slug}
+                    href={'/developer' + tag.slug}
                     variant="small"
                     sx={tagStyles}
                 >
