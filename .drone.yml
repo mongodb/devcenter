@@ -198,12 +198,17 @@ name: deploy-devcenter-stage-trigger
 steps:
   - name: checkout-to-current-release
     image: alpine/git
+    failure: ignore
     environment:
       APP_RELEASE:
         from_secret: app_release_staging
     commands:
-    # "$${APP_RELEASE}" is the latest staging revision that was promoted successfully.
-    - git checkout "$${APP_RELEASE}"
+    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest staging revision that was promoted successfully.
+
+  - name: check-environment
+    image: alpine
+    commands:
+    - if [[ "${APP_ENV}" != "staging" ]]; then exit 78; fi
 
   - name: publish-staging-from-trigger
     image: plugins/kaniko-ecr
@@ -262,8 +267,12 @@ steps:
       APP_RELEASE:
         from_secret: app_release_production
     commands:
-    # "$${APP_RELEASE}" is the latest production revision that was promoted successfully.
-    - git checkout "$${APP_RELEASE}"
+    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest production revision that was promoted successfully.
+
+  - name: check-environment
+    image: alpine
+    commands:
+    - if [[ "${APP_ENV}" != "production" ]]; then exit 78; fi
 
   - name: publish-prod-from-trigger
     image: plugins/kaniko-ecr
