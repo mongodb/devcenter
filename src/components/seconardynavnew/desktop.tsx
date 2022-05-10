@@ -1,28 +1,18 @@
 import { useState } from 'react';
 import theme from '@mdb/flora/theme';
 
-import { ESystemIconNames, Link, SystemIcon } from '@mdb/flora';
+import { ESystemIconNames, Link as FloraLink, SystemIcon } from '@mdb/flora';
 import { secondaryNavData } from '../../data/secondary-nav';
 
 import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
 import styled from '@emotion/styled';
 import { StyledSecondaryNavContainer } from './desktop-styles';
-
-type StyledFloraLinkProps = {
-    isActive: boolean;
-};
+import Link from 'next/link';
 
 const linkWrapperStyles = {
     position: 'relative' as 'relative',
     padding: 0,
-};
-
-const MainLinkStyles = {
-    float: 'left' as 'left',
-    marginRight: 'inc90',
-    fontSize: 'inc30',
-    fontWeight: 500,
 };
 
 const StyledSecondaryLinks = {
@@ -34,38 +24,42 @@ const StyledSecondaryLinks = {
     },
 };
 
-const MainLink = styled(Link)`
-    .textlink-default-text-class {
-        color: ${theme.colors.text.default}!important;
-        border-bottom: ${(props: StyledFloraLinkProps) =>
-            props.isActive
-                ? `2px solid ${theme.colors.green40}!important`
-                : 'none'};
-        :hover {
-            border-bottom: 2px solid ${theme.colors.green40}!important;
-        }
-    }
-`;
+const MainLinkStyles = (isActive: boolean) => ({
+    float: 'left' as 'left',
+    marginRight: 'inc90',
+    fontSize: 'inc30',
+    fontWeight: 500,
 
-const StyledFloraLink = styled(Link)`
-    display: 'inline-block';
-    span {
-        border-bottom: ${(props: StyledFloraLinkProps) =>
-            props.isActive
-                ? `2px solid ${theme.colors.green40}!important`
-                : 'none'};
-        color: ${theme.colors.text.default}!important;
-        font-size: ${theme.fontSizes.inc20};
-        font-family: ${theme.fonts.body};
-        font-weight: 300;
-        @media only screen and (max-width: 1050px) {
-            font-size: ${theme.fontSizes.inc10};
-        }
-    }
-    span:hover {
-        border-bottom: 2px solid ${theme.colors.green40}!important;
-    }
-`;
+    'span.textlink-default-text-class': {
+        color: theme.colors.text.default,
+        ':hover': {
+            borderBottom: `2px solid ${theme.colors.green40}`,
+        },
+    },
+    borderBottom: `${isActive ? `2px solid ${theme.colors.green40}` : 'none'}`,
+});
+
+const FloraLinkStyles = (isActive: boolean) => ({
+    display: 'inline-block',
+    'span.textlink-default-text-class': {
+        borderBottom: `${
+            isActive ? `2px solid ${theme.colors.green40}` : 'none'
+        }`,
+        color: theme.colors.text.default,
+        fontSize: [
+            theme.fontSizes.inc20,
+            theme.fontSizes.inc20,
+            theme.fontSizes.inc20,
+            theme.fontSizes.inc10,
+            theme.fontSizes.inc20,
+        ],
+        fontFamily: theme.fonts.body,
+        fontWeight: '300',
+        '&:hover': {
+            borderBottom: `2px solid ${theme.colors.green40}`,
+        },
+    },
+});
 
 const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -82,13 +76,16 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
         >
             <nav sx={StyledSecondaryNavContainer}>
                 <div sx={linkWrapperStyles}>
-                    <MainLink
-                        href="/developer"
-                        isActive={activePath === '/' ? true : false}
-                        sx={MainLinkStyles}
-                    >
-                        Developer Center
-                    </MainLink>
+                    <Link href="/" passHref>
+                        <FloraLink
+                            href="/developer"
+                            sx={MainLinkStyles(
+                                activePath === '/' ? true : false
+                            )}
+                        >
+                            Developer Center
+                        </FloraLink>
+                    </Link>
                 </div>
 
                 <ul sx={StyledSecondaryLinks}>
@@ -97,29 +94,31 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             {dropDownItems?.length ? (
                                 <>
                                     <div sx={linkWrapperStyles}>
-                                        <StyledFloraLink
-                                            isActive={
-                                                activePath === slug
-                                                    ? true
-                                                    : false
-                                            }
-                                            onClick={onClickShowMenu}
-                                        >
-                                            {name}
-                                            <SystemIcon
-                                                sx={{
-                                                    paddingLeft: 'inc20',
-                                                    display: 'inline',
-                                                }}
-                                                name={
-                                                    isOpen
-                                                        ? ESystemIconNames.CHEVRON_UP
-                                                        : ESystemIconNames.CHEVRON_DOWN
-                                                }
-                                                size="small"
-                                                strokeWeight="large"
-                                            />
-                                        </StyledFloraLink>
+                                        <Link href={slug} passHref>
+                                            <FloraLink
+                                                sx={FloraLinkStyles(
+                                                    activePath === slug
+                                                        ? true
+                                                        : false
+                                                )}
+                                                onClick={onClickShowMenu}
+                                            >
+                                                {name}
+                                                <SystemIcon
+                                                    sx={{
+                                                        paddingLeft: 'inc20',
+                                                        display: 'inline',
+                                                    }}
+                                                    name={
+                                                        isOpen
+                                                            ? ESystemIconNames.CHEVRON_UP
+                                                            : ESystemIconNames.CHEVRON_DOWN
+                                                    }
+                                                    size="small"
+                                                    strokeWeight="large"
+                                                />
+                                            </FloraLink>
+                                        </Link>
                                     </div>
                                     {isOpen && (
                                         <DropDownMenu items={dropDownItems} />
@@ -128,16 +127,17 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             ) : (
                                 <>
                                     <div sx={linkWrapperStyles}>
-                                        <StyledFloraLink
-                                            isActive={
-                                                activePath === slug
-                                                    ? true
-                                                    : false
-                                            }
-                                            href={slug}
-                                        >
-                                            {name}
-                                        </StyledFloraLink>
+                                        <Link href={slug} passHref>
+                                            <FloraLink
+                                                sx={FloraLinkStyles(
+                                                    activePath === slug
+                                                        ? true
+                                                        : false
+                                                )}
+                                            >
+                                                {name}
+                                            </FloraLink>
+                                        </Link>
                                     </div>
                                 </>
                             )}
