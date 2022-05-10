@@ -29,7 +29,7 @@ import CTALink from '../components/hero/CTALink';
 import { getTableOfContents } from '../utils/markdown-parser/get-table-of-contents';
 import { TableOfContents } from '../components/article-body/table-of-contents';
 
-import { formatDateToDisplayDateFormat } from '../utils/format-date';
+import { constructDateDisplay } from '../utils/format-date';
 import { ContentItem } from '../interfaces/content-item';
 import { thumbnailLoader } from '../components/card/utils';
 import { getAllContentItems } from '../service/get-all-content';
@@ -101,24 +101,6 @@ const footerRatingStyles = {
 
 const middleSectionStyles = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
-};
-
-const constructDateDisplay = (
-    vidOrPod: boolean,
-    contentDate: string,
-    updateDate: string | undefined
-) => {
-    const date = `Published ${formatDateToDisplayDateFormat(
-        new Date(contentDate)
-    )}`;
-    if (vidOrPod) {
-        return date;
-    }
-    if (updateDate) {
-        return date.concat(
-            ` . Updated ${formatDateToDisplayDateFormat(new Date(updateDate))}`
-        );
-    }
 };
 
 const parseUndefinedValue = (description: string | undefined): string => {

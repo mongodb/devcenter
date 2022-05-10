@@ -1,49 +1,39 @@
 import React, { useState } from 'react';
-import useSWRInfinite from 'swr/infinite';
+import NextImage from 'next/image';
+import useSWR from 'swr';
 import { Grid } from 'theme-ui';
 
 import {
     Button,
     TextInput,
-    Select,
     ESystemIconNames,
     TypographyScale,
 } from '@mdb/flora';
 
-import {
-    titleStyles,
-    searchBoxStyles,
-    sortBoxStyles,
-    loadMoreStyles,
-    linkStyleOverride,
-} from './styles';
-import { SearchProps, SortByType } from './types';
-import { fetcher, sortByOptions } from './utils';
+import { titleStyles, searchBoxStyles, linkStyleOverride } from './styles';
+import { SearchProps } from './types';
+import { fetcher } from './utils';
 import Results from './results';
 import ExpandingLink from '../expanding-link';
-import { ContentItem } from '../../interfaces/content-item';
+
+import noResults from '../../../public/no-results.png';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     className,
-    slug = '',
+    tagSlug = '',
     contentType = '',
     title,
-    hideSortBy = false,
-    filters = [],
     resultsLayout = 'list',
     titleLink,
 }) => {
-    const [search, setSearch] = useState('');
-    const [sortBy, setSortBy] = useState<SortByType>('recent');
+    const [searchString, setSearchString] = useState('');
+    const [resultsToShow, setResultsToShow] = useState(10);
 
-    const getKey = (pageIndex: number, previousPageData: ContentItem[]) => {
-        if (previousPageData && !previousPageData.length) return null;
-        return `topic=${slug}&contentType=${contentType}&search=${search}&sort=${sortBy}&page=${pageIndex}&filters=${filters.join(
-            ','
-        )}`;
-    };
-    const { data, size, setSize, error, isValidating } = useSWRInfinite(
-        getKey,
+    const { data, error, isValidating } = useSWR(
+        () =>
+            `s=${searchString}&contentType=${contentType}&tagSlug=${encodeURIComponent(
+                tagSlug
+            )}`,
         fetcher,
         {
             revalidateIfStale: false,
@@ -54,72 +44,83 @@ const Search: React.FunctionComponent<SearchProps> = ({
     );
 
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSize(1);
-        setSearch(event.target.value);
-    };
-    const onSort = (val: string) => {
-        setSize(1);
-        setSortBy(sortByOptions[val] as SortByType);
+        setResultsToShow(10);
+        setSearchString(event.target.value);
     };
 
-    const fullyLoaded =
-        data && data.length > 0 && data[data.length - 1].length < 10;
+    const resultsData = data || [];
+    const numberOfResults = resultsData.length;
+    const shownData = resultsData.slice(0, resultsToShow);
+    const fullyLoaded = resultsToShow >= numberOfResults;
+
+    const emptyState = (
+        <div
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <div>
+                <NextImage src={noResults}></NextImage>
+            </div>
+            <TypographyScale>No Results</TypographyScale>
+        </div>
+    );
 
     return (
         <form role="search" className={className}>
-            <Grid columns={[6, 6, 8, 12, 9]} sx={{ rowGap: 0 }}>
-                <div sx={titleStyles}>
-                    <TypographyScale variant="heading5">
-                        {title}
-                    </TypographyScale>
-                    {titleLink && (
-                        <ExpandingLink
-                            {...titleLink}
-                            hoverStyleOverrides={linkStyleOverride}
-                        />
-                    )}
-                </div>
-                <div sx={searchBoxStyles}>
-                    <TextInput
-                        name="search-text-input"
-                        label="Search Content"
-                        iconName={ESystemIconNames.SEARCH}
-                        value={search}
-                        onChange={onSearch}
-                    />
-                </div>
-                {!hideSortBy && (
-                    <Select
-                        sx={sortBoxStyles}
-                        label="Sort by"
-                        name="sort-by-dropdown"
-                        options={Object.keys(sortByOptions)}
-                        value={sortByOptions[sortBy]}
-                        onSelect={onSort}
-                        width="100%"
-                        height="84px" // Select and TextInput borders function differently...
+            <div sx={titleStyles}>
+                <TypographyScale variant="heading5">{title}</TypographyScale>
+                {titleLink && (
+                    <ExpandingLink
+                        {...titleLink}
+                        hoverStyleOverrides={linkStyleOverride}
                     />
                 )}
-
-                <Results
-                    data={data}
-                    isLoading={isValidating}
-                    hasError={error}
-                    layout={resultsLayout}
+            </div>
+            <div sx={searchBoxStyles}>
+                <TextInput
+                    name="search-text-input"
+                    label="Search Content"
+                    iconName={ESystemIconNames.SEARCH}
+                    value={searchString}
+                    onChange={onSearch}
                 />
-                {!fullyLoaded && (
-                    <div sx={loadMoreStyles}>
-                        {!isValidating && data && (
-                            <Button
-                                onClick={() => setSize(size + 1)}
-                                variant="secondary"
-                            >
-                                Load more
-                            </Button>
-                        )}
-                    </div>
-                )}
-            </Grid>
+            </div>
+            {!!numberOfResults || isValidating || error ? (
+                <>
+                    <Results
+                        data={shownData}
+                        isLoading={isValidating}
+                        hasError={error}
+                        layout={resultsLayout}
+                    />
+                    {!fullyLoaded && (
+                        <div
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginTop: ['inc70', null, 'inc90'],
+                            }}
+                        >
+                            {!isValidating && data && (
+                                <Button
+                                    onClick={() =>
+                                        setResultsToShow(resultsToShow + 10)
+                                    }
+                                    variant="secondary"
+                                >
+                                    Load more
+                                </Button>
+                            )}
+                        </div>
+                    )}
+                </>
+            ) : (
+                emptyState
+            )}
         </form>
     );
 };
