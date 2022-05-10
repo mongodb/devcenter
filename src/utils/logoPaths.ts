@@ -1,5 +1,8 @@
 // This is just copied from flora because they don't expose it
 // Hopefully we can get them to expose it and use it instead.
+
+// https://github.com/10gen/flora/blob/main/src/ThirdPartyLogo/constants.ts#L97
+
 import { EThirdPartyLogoVariant } from '@mdb/flora';
 export const LogoPaths: { [key in EThirdPartyLogoVariant]: string } = {
     [EThirdPartyLogoVariant.C]:
