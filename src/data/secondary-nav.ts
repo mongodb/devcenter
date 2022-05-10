@@ -1,7 +1,7 @@
 export const secondaryNavData = [
     {
         name: 'Topics',
-        slug: '/',
+        slug: '',
         dropDownItems: [
             {
                 name: 'Products',

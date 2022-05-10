@@ -9,6 +9,10 @@ import DropDownMenu from './dropdown-menu';
 import styled from '@emotion/styled';
 import { StyledSecondaryNavContainer } from './desktop-styles';
 
+type StyledFloraLinkProps = {
+    isActive: boolean;
+};
+
 const linkWrapperStyles = {
     position: 'relative' as 'relative',
     padding: 0,
@@ -21,18 +25,22 @@ const MainLinkStyles = {
     fontWeight: 500,
 };
 
-const SecondaryLinks = styled.ul`
-    padding: 0;
-    margin: 0;
-    overflow: visible;
-    li:not(:last-child) {
-        margin-right: ${theme.space.inc40};
-    }
-`;
+const StyledSecondaryLinks = {
+    padding: 0,
+    margin: 0,
+    overflow: 'visible',
+    'li:not(:last-child)': {
+        marginRight: theme.space.inc40,
+    },
+};
 
 const MainLink = styled(Link)`
     .textlink-default-text-class {
         color: ${theme.colors.text.default}!important;
+        border-bottom: ${(props: StyledFloraLinkProps) =>
+            props.isActive
+                ? `2px solid ${theme.colors.green40}!important`
+                : 'none'};
         :hover {
             border-bottom: 2px solid ${theme.colors.green40}!important;
         }
@@ -42,6 +50,10 @@ const MainLink = styled(Link)`
 const StyledFloraLink = styled(Link)`
     display: 'inline-block';
     span {
+        border-bottom: ${(props: StyledFloraLinkProps) =>
+            props.isActive
+                ? `2px solid ${theme.colors.green40}!important`
+                : 'none'};
         color: ${theme.colors.text.default}!important;
         font-size: ${theme.fontSizes.inc20};
         font-family: ${theme.fonts.body};
@@ -55,7 +67,7 @@ const StyledFloraLink = styled(Link)`
     }
 `;
 
-const DesktopView = () => {
+const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(!isOpen);
@@ -70,16 +82,27 @@ const DesktopView = () => {
         >
             <nav sx={StyledSecondaryNavContainer}>
                 <div sx={linkWrapperStyles}>
-                    <MainLink sx={MainLinkStyles}>Developer Center</MainLink>
+                    <MainLink
+                        href="/developer"
+                        isActive={activePath === '/' ? true : false}
+                        sx={MainLinkStyles}
+                    >
+                        Developer Center
+                    </MainLink>
                 </div>
 
-                <SecondaryLinks>
+                <ul sx={StyledSecondaryLinks}>
                     {secondaryNavData.map(({ name, slug, dropDownItems }) => (
                         <SecondaryLinksList key={name}>
                             {dropDownItems?.length ? (
                                 <>
                                     <div sx={linkWrapperStyles}>
                                         <StyledFloraLink
+                                            isActive={
+                                                activePath === slug
+                                                    ? true
+                                                    : false
+                                            }
                                             onClick={onClickShowMenu}
                                         >
                                             {name}
@@ -105,7 +128,14 @@ const DesktopView = () => {
                             ) : (
                                 <>
                                     <div sx={linkWrapperStyles}>
-                                        <StyledFloraLink href={slug}>
+                                        <StyledFloraLink
+                                            isActive={
+                                                activePath === slug
+                                                    ? true
+                                                    : false
+                                            }
+                                            href={slug}
+                                        >
                                             {name}
                                         </StyledFloraLink>
                                     </div>
@@ -113,7 +143,7 @@ const DesktopView = () => {
                             )}
                         </SecondaryLinksList>
                     ))}
-                </SecondaryLinks>
+                </ul>
             </nav>
         </div>
     );
