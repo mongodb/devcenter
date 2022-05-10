@@ -177,6 +177,7 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                                 sx={{
                                     boxSizing: 'border-box' as 'border-box',
                                     div: { minHeight: 'unset' },
+                                    padding: 0,
                                 }}
                             />
                         );
