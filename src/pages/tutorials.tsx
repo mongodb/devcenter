@@ -112,7 +112,7 @@ export const getStaticProps: GetStaticProps = async () => {
                     text: tag.name,
                     url: tag.slug + '/tutorials',
                 },
-                imageString: languageToLogo[tag.name],
+                imageString: languageToLogo[tag.name] || null,
             };
         }
     );
@@ -134,7 +134,7 @@ export const getStaticProps: GetStaticProps = async () => {
                 url: tag.slug + '/tutorials',
             },
             href: tag.slug + '/tutorials',
-            imageString: productToLogo[tag.name],
+            imageString: productToLogo[tag.name] || null,
             cta: {
                 text: 'More',
                 url: tag.slug + '/tutorials',

@@ -3,9 +3,8 @@ export interface ShowcaseCardItem {
         text: string;
         url: string;
     };
-    imageString: string;
+    imageString: string | null;
     description?: string;
-    image?: JSX.Element;
     cta?: {
         text: string;
         url: string;
@@ -23,7 +22,7 @@ export interface ShowcaseCardProps {
         url: string;
     };
     description?: string;
-    image?: JSX.Element;
+    image?: JSX.Element | null;
     cta?: {
         text: string;
         url: string;
