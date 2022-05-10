@@ -1,12 +1,16 @@
 import React from 'react';
-import { StyledList } from './styles';
 
 interface IProps {
     children: React.ReactNode;
 }
+const StyledList = {
+    paddingLeft: 0,
+    listStyle: [null, null, null, 'none'],
+    display: ['block', 'block', 'block', 'inline-block'],
+};
 
 const SecondaryLinksList: React.FunctionComponent<IProps> = ({ children }) => {
-    return <StyledList>{children}</StyledList>;
+    return <li sx={StyledList}>{children}</li>;
 };
 
 export default SecondaryLinksList;

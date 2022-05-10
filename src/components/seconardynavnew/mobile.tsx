@@ -1,169 +1,31 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { myData } from '../../data/secondary-nav';
-import theme from '@mdb/flora/theme';
 import { Link as FloraLink } from '@mdb/flora';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from './nav-item';
-import styled from '@emotion/styled';
+import {
+    aLinkStyles,
+    chevronStylesForMainLink,
+    DropDownStyles,
+    MainLinkStyles,
+    plusOrMinusStylesForDropDowns,
+    SecondaryLinks,
+    StylesDropDownMenuList,
+    StylesDropDownWrapper,
+    StylesFloraLink,
+    StylesFloraLinkChevronRight,
+    StylesSubLinks,
+} from './mobile-styles';
 
-type SecondaryMenuListProps = {
-    isOpen: boolean;
-};
-
-const MainLinkStyles = {
-    borderBottom: 'solid #00ED64 2px',
-    color: 'red',
-    fontSize: 'inc30',
-    fontWeight: 500,
-    paddingLeft: 'inc50',
-    paddingTop: 'inc30',
-    paddingBottom: 'inc30',
-    '.textlink-default-text-class': {
-        color: '#000!important',
-        fontSize: '18px!important',
-        '&:hover': {
-            borderBottom: '2px solid transparent!important',
-        },
-    },
-};
-
-const StyledFloraLink = styled(FloraLink)`
-    display: 'inline-block';
-    padding-left: ${theme.space.inc40};
-    line-height: normal;
-    span {
-        color: ${theme.colors.text.default}!important;
-        font-size: ${theme.fontSizes.inc20};
-        font-family: ${theme.fonts.body};
-        font-weight: 300;
-        &:hover {
-            border-bottom: 2px solid transparent !important;
-        }
-    }
-`;
-
-const StyledFloraLinkChevronRight = styled(FloraLink)`
-    display: 'flex';
-    padding-left: ${theme.space.inc40};
-    line-height: normal;
-    span {
-        color: ${theme.colors.text.default}!important;
-        font-size: ${theme.fontSizes.inc20};
-        font-family: ${theme.fonts.body};
-        font-weight: 300;
-        &:hover {
-            border-bottom: solid 2px transparent !important;
-        }
-    }
-`;
-
-const SecondaryLinks = styled.ul`
-    overflow: hidden;
-    height: ${(props: SecondaryMenuListProps) =>
-        props.isOpen ? '100vh' : '0'};
-    padding-left: ${theme.space.inc40};
-    padding-right: ${theme.space.inc40};
-    margin: 0;
-    /* L1 */
-    > li {
-        padding-bottom: ${theme.space.inc30};
-        position: relative;
-
-        &:first-child {
-            min-height: 30px;
-            padding-top: ${theme.space.inc40};
-        }
-        &:not(:last-child) {
-            border-bottom: solid #e7eeec 1px;
-        }
-    }
-`;
-
-const plusOrMinusStylesForDropDowns = {
-    position: 'absolute' as 'absolute',
-    right: '0',
-};
-
-const aLinkStyles = {
-    display: 'inline-block',
-    alignItems: 'center',
-    fontSize: 'inc20',
-    fontFamily: 'euclid-circular-a',
-    fontWeight: 300,
-
-    '&:hover': {
-        color: 'text.selected',
-        textDecoration: 'none',
-    },
-};
-
-const chevronStylesForMainLink = {
-    display: 'inline',
-    position: 'absolute' as 'absolute',
-    right: 'inc40',
-    stroke: 'icon.system.success',
-};
-
-const DropDownStyles = {
-    position: 'relative' as 'relative',
-};
-
-const DropDownWrapper = styled.div`
-    .dropdown-titles {
-        display: inline-block;
-        font-size: ${theme.fontSizes.inc40};
-        margin-bottom: ${theme.space.inc40};
-    }
-
-    background-color: #fff;
-    color: #000;
-`;
-
-const DropDownMenuList = styled.ul`
-    list-style-type: none;
-    white-space: nowrap;
-    padding-top: ${theme.space.inc30};
-    padding-left: 0;
-    /* L2 */
-    li:not(:last-child) {
-        padding-bottom: ${theme.space.inc30};
-    }
-`;
-
-// L2
-const SubLinks = styled.ul`
-    background-color: #f5f7fa;
-    list-style-type: none;
-    padding-top: ${theme.space.inc40};
-    padding-bottom: ${theme.space.inc40};
-    margin-left: -${theme.space.inc40};
-    margin-right: -${theme.space.inc40};
-    /* L3 */
-    > li {
-        padding-left: ${theme.space.inc50};
-
-        &:not(:last-child) {
-            padding-bottom: ${theme.space.inc50};
-        }
-    }
-
-    ul {
-        list-style-type: none;
-        padding-left: ${theme.space.inc40};
-        padding-top: ${theme.space.inc40};
-        /* L4 */
-        > li:not(:last-child) {
-            padding-bottom: ${theme.space.inc60};
-        }
-        > li:last-child {
-            color: #006cfa;
-        }
-    }
-`;
-
-const DropDownButton = ({ path, text, dropdownItems }: any) => {
+const DropDownButton = ({
+    text,
+    dropDownItems,
+}: {
+    text: string;
+    dropDownItems: unknown[];
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(!isOpen);
@@ -174,7 +36,7 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
             <div sx={DropDownStyles}>
                 {/* Level 1 */}
                 <div onClick={onClickShowMenu}>
-                    {text} L1
+                    {text}
                     {!isOpen && (
                         <SystemIcon
                             sx={plusOrMinusStylesForDropDowns}
@@ -193,128 +55,163 @@ const DropDownButton = ({ path, text, dropdownItems }: any) => {
                     )}
                 </div>
             </div>
-            {isOpen && <DropDownMenu items={dropdownItems} />}
+            {isOpen && <DropDownMenu items={dropDownItems} />}
         </>
     );
 };
 
-const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
+type NavLinks = {
+    name: string;
+    slug: string;
+    dropDownItems: [];
+    path?: string;
+    all?: string;
+    l1Product?: boolean;
+    keyValue?: string;
+};
+
+const SubNavLink = ({
+    name,
+    slug,
+    dropDownItems,
+    path,
+    all,
+    keyValue,
+}: NavLinks) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(!isOpen);
     };
 
     return (
-        <li key={name}>
-            <>
-                <span
-                    sx={{
-                        display: 'inline',
-                    }}
-                >
-                    {/* Level 2 */}
-                    <StyledFloraLink onClick={onClickShowMenu}>
-                        {name} L2
-                        {!isOpen && (
-                            <SystemIcon
-                                sx={plusOrMinusStylesForDropDowns}
-                                name={ESystemIconNames.PLUS}
-                                size="small"
-                                color="success"
-                            />
-                        )}
-                        {isOpen && (
-                            <SystemIcon
-                                sx={plusOrMinusStylesForDropDowns}
-                                name={ESystemIconNames.MINUS}
-                                size="small"
-                                color="success"
-                            />
-                        )}
-                    </StyledFloraLink>
-                </span>
-            </>
+        <li key={keyValue}>
+            <span
+                sx={{
+                    display: 'inline',
+                }}
+            >
+                {/* Level 2 */}
+                <FloraLink sx={StylesFloraLink} onClick={onClickShowMenu}>
+                    {name}
+                    {!isOpen && (
+                        <SystemIcon
+                            sx={plusOrMinusStylesForDropDowns}
+                            name={ESystemIconNames.PLUS}
+                            size="small"
+                            color="success"
+                        />
+                    )}
+                    {isOpen && (
+                        <SystemIcon
+                            sx={plusOrMinusStylesForDropDowns}
+                            name={ESystemIconNames.MINUS}
+                            size="small"
+                            color="success"
+                        />
+                    )}
+                </FloraLink>
+            </span>
             {dropDownItems && (
                 <>
                     {isOpen && (
                         <>
                             {/* Dropdown link mobile view */}
                             <>
-                                {' '}
-                                <div sx={{ backgroundColor: 'red' }}>
-                                    <SubLinks>
-                                        {dropDownItems?.map(
-                                            ({
-                                                name,
-                                                slug,
-                                                l1Product,
-                                                dropDownItems,
-                                            }: any) => (
-                                                <>
-                                                    {l1Product ? (
-                                                        <li key={name}>
-                                                            <MobileViewL1ProductLinks
-                                                                name={name}
-                                                                slug={slug}
-                                                                dropDownItems={
-                                                                    dropDownItems
-                                                                }
-                                                                l1Product={
-                                                                    l1Product
-                                                                }
-                                                            />
-                                                        </li>
-                                                    ) : (
-                                                        <li>
-                                                            <Link
-                                                                href={slug}
-                                                                passHref
+                                <ul sx={StylesSubLinks}>
+                                    {dropDownItems?.map(
+                                        ({
+                                            name,
+                                            slug,
+                                            l1Product,
+                                            dropDownItems,
+                                        }: NavLinks) => (
+                                            <>
+                                                {l1Product ? (
+                                                    <li key={name}>
+                                                        <MobileViewL1ProductLinks
+                                                            name={name}
+                                                            slug={slug}
+                                                            dropDownItems={
+                                                                dropDownItems
+                                                            }
+                                                            l1Product={
+                                                                l1Product
+                                                            }
+                                                        />
+                                                    </li>
+                                                ) : (
+                                                    <li key={name}>
+                                                        <Link
+                                                            href={slug}
+                                                            passHref
+                                                        >
+                                                            <a
+                                                                sx={{
+                                                                    ...aLinkStyles,
+                                                                    display:
+                                                                        'flex',
+                                                                    alignItems:
+                                                                        'center',
+                                                                }}
+                                                                key={name}
                                                             >
-                                                                <a
-                                                                    sx={{
-                                                                        ...aLinkStyles,
-                                                                        display:
-                                                                            'flex',
-                                                                        alignItems:
-                                                                            'center',
-                                                                    }}
-                                                                    key={name}
+                                                                {/* Level 3 */}
+                                                                <FloraLink
+                                                                    sx={
+                                                                        StylesFloraLink
+                                                                    }
                                                                 >
-                                                                    {/* Level 3 */}
-                                                                    <StyledFloraLink>
-                                                                        {name}{' '}
-                                                                        L3
-                                                                    </StyledFloraLink>
-                                                                    <SystemIcon
-                                                                        sx={{
-                                                                            paddingLeft:
-                                                                                'inc10',
-                                                                            display:
-                                                                                'inline',
-                                                                        }}
-                                                                        name={
-                                                                            ESystemIconNames.CHEVRON_RIGHT
-                                                                        }
-                                                                        size="small"
-                                                                    />
-                                                                </a>
-                                                            </Link>
-                                                        </li>
-                                                    )}
-                                                </>
-                                            )
-                                        )}
-                                        <li>
-                                            <Link href={slug} passHref>
-                                                <a sx={aLinkStyles} key={name}>
-                                                    <StyledFloraLink>
-                                                        {all} L3
-                                                    </StyledFloraLink>
-                                                </a>
-                                            </Link>
-                                        </li>
-                                    </SubLinks>
-                                </div>
+                                                                    {name}
+                                                                </FloraLink>
+                                                                <SystemIcon
+                                                                    sx={{
+                                                                        paddingLeft:
+                                                                            'inc10',
+                                                                        display:
+                                                                            'inline',
+                                                                    }}
+                                                                    name={
+                                                                        ESystemIconNames.CHEVRON_RIGHT
+                                                                    }
+                                                                    size="small"
+                                                                />
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                )}
+                                            </>
+                                        )
+                                    )}
+                                    <li key={all}>
+                                        <Link href={slug} passHref>
+                                            <a
+                                                sx={{
+                                                    ...aLinkStyles,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                }}
+                                                key={name}
+                                            >
+                                                <FloraLink
+                                                    className="all-link"
+                                                    sx={StylesFloraLink}
+                                                >
+                                                    {all}
+                                                </FloraLink>
+                                                <SystemIcon
+                                                    sx={{
+                                                        paddingLeft: 'inc10',
+                                                        display: 'inline',
+                                                    }}
+                                                    name={
+                                                        ESystemIconNames.CHEVRON_RIGHT
+                                                    }
+                                                    size="small"
+                                                />
+                                            </a>
+                                        </Link>
+                                    </li>
+                                </ul>
                             </>
                         </>
                     )}
@@ -324,35 +221,41 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
     );
 };
 
+// Need help with items typeing
 const DropDownMenu = ({ items }: any) => {
     return (
-        <DropDownWrapper>
-            <DropDownMenuList>
-                {items.map(({ name, slug, all, path, dropDownItems }: any) => (
-                    <>
-                        <SubNavLink
-                            key={name}
-                            name={name}
-                            slug={slug}
-                            all={all}
-                            path={path}
-                            dropDownItems={dropDownItems}
-                        />
-                    </>
-                ))}
-                <li>
+        // StylesDropDownMenuList
+        <div sx={StylesDropDownWrapper}>
+            <ul sx={StylesDropDownMenuList}>
+                {items.map(
+                    ({ name, slug, all, path, dropDownItems }: NavLinks) => (
+                        <>
+                            <SubNavLink
+                                keyValue={name}
+                                name={name}
+                                slug={slug}
+                                all={all}
+                                path={path}
+                                dropDownItems={dropDownItems}
+                            />
+                        </>
+                    )
+                )}
+                <li key="all topics">
                     <Link href="all-topics" passHref>
-                        <a sx={aLinkStyles} key="All Topics">
-                            <StyledFloraLink>All Topics</StyledFloraLink>
+                        <a sx={aLinkStyles}>
+                            <FloraLink sx={StylesFloraLink}>
+                                All Topics
+                            </FloraLink>
                         </a>
                     </Link>
                 </li>
-            </DropDownMenuList>
-        </DropDownWrapper>
+            </ul>
+        </div>
     );
 };
 
-const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
+const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: NavLinks) => {
     const [isOpenL1, setIsOpenL1] = useState(false);
     const onClickShowL1Menu = () => {
         setIsOpenL1(!isOpenL1);
@@ -369,9 +272,9 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
                         }}
                         key={name}
                     >
-                        <StyledFloraLinkChevronRight>
-                            {name} | Products{` ->`} L3
-                        </StyledFloraLinkChevronRight>
+                        <FloraLink sx={StylesFloraLinkChevronRight}>
+                            {name}
+                        </FloraLink>
                         <SystemIcon
                             sx={{
                                 paddingLeft: 'inc10',
@@ -404,11 +307,11 @@ const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: any) => {
             {dropDownItems && isOpenL1 && (
                 <ul>
                     {/* Product Level 4 */}
-                    {dropDownItems.map(({ name }: any) => (
+                    {dropDownItems.map(({ name }: { name: string }) => (
                         <li sx={{ marginLeft: 'inc40' }} key={name}>
                             <Link href={slug} passHref>
                                 <a sx={aLinkStyles} key={name}>
-                                    {name} | Products L4
+                                    {name}
                                 </a>
                             </Link>
                         </li>
@@ -471,16 +374,21 @@ const MobileView = () => {
                     <SecondaryLinksList key={name}>
                         {dropDownItems?.length ? (
                             <DropDownButton
-                                path={slug}
                                 text={name}
-                                dropdownItems={dropDownItems}
+                                dropDownItems={dropDownItems}
                             />
                         ) : (
                             <>
                                 <div sx={DropDownStyles}>
-                                    <StyledFloraLink href={slug}>
-                                        {name} L1
-                                    </StyledFloraLink>
+                                    <FloraLink
+                                        sx={{
+                                            ...StylesFloraLink,
+                                            paddingLeft: 0,
+                                        }}
+                                        href={slug}
+                                    >
+                                        {name}
+                                    </FloraLink>
                                 </div>
                             </>
                         )}

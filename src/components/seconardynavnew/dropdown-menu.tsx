@@ -2,10 +2,9 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import theme from '@mdb/flora/theme';
 import { Link as FloraLink, TypographyScale, Button } from '@mdb/flora';
-import { DropDownWrapper } from './styles';
 
 const aLinkStyles = {
-    display: 'inline',
+    display: 'inline' as 'inline',
     alignItems: 'center',
     fontSize: 'inc20',
     fontFamily: 'euclid-circular-a',
@@ -149,9 +148,36 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
     );
 };
 
+const StylesDropDownWrapper = {
+    '.dropdown-titles': {
+        display: 'inline-block' as 'inline-block',
+        fontSize: 'inc40',
+        marginBottom: 'inc40',
+    },
+
+    boxShadow: [null, null, null, theme.shadows.level01],
+    borderBottomRightRadius: [null, null, null, theme.radii.inc50],
+    borderBottomLeftRadius: [null, null, null, theme.radii.inc50],
+    backgroundColor: ['#fff', '#fff', '#fff', theme.colors.blue80],
+    color: ['#000', '#000', '#000', theme.colors.text.inverse],
+    left: [null, null, null, 0],
+    marginTop: [null, null, null, theme.space.elementXSmall],
+    position: ['initial', 'initial', 'initial', 'absolute'] as [
+        'initial',
+        'initial',
+        'initial',
+        'absolute'
+    ],
+    paddingTop: [null, null, null, theme.space.inc70],
+    paddingBottom: [null, null, null, theme.space.inc70],
+    paddingRight: [null, null, null, theme.space.inc90],
+    paddingLeft: ['inc50', 'inc50', 'inc50', theme.space.inc90],
+    zIndex: [null, null, null, 2],
+};
+
 const DropDownMenu = ({ items }: any) => {
     return (
-        <DropDownWrapper>
+        <div sx={StylesDropDownWrapper}>
             <DropDownMenuList>
                 {items.map(({ name, slug, all, path, dropDownItems }: any) => (
                     <>
@@ -166,7 +192,7 @@ const DropDownMenu = ({ items }: any) => {
                     </>
                 ))}
             </DropDownMenuList>
-        </DropDownWrapper>
+        </div>
     );
 };
 

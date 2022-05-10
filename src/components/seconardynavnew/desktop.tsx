@@ -3,11 +3,11 @@ import theme from '@mdb/flora/theme';
 
 import { ESystemIconNames, Link, SystemIcon } from '@mdb/flora';
 import { myData } from '../../data/secondary-nav';
-import { StyledSecondaryNavContainer } from './styles';
 
 import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
 import styled from '@emotion/styled';
+import { StyledSecondaryNavContainer } from './desktop-styles';
 
 const linkWrapperStyles = {
     position: 'relative' as 'relative',
@@ -65,10 +65,10 @@ const DesktopView = () => {
         <div
             sx={{
                 display: ['none', 'none', 'none', 'block'],
-                borderBottom: 'solid 1px #B8C4C2',
+                borderBottom: 'solid 1px black30',
             }}
         >
-            <StyledSecondaryNavContainer>
+            <nav sx={StyledSecondaryNavContainer}>
                 <div sx={linkWrapperStyles}>
                     <MainLink sx={MainLinkStyles}>Developer Center</MainLink>
                 </div>
@@ -83,32 +83,19 @@ const DesktopView = () => {
                                             onClick={onClickShowMenu}
                                         >
                                             {name}
-                                            {!isOpen && (
-                                                <SystemIcon
-                                                    sx={{
-                                                        paddingLeft: 'inc20',
-                                                        display: 'inline',
-                                                    }}
-                                                    name={
-                                                        ESystemIconNames.CHEVRON_DOWN
-                                                    }
-                                                    size="small"
-                                                    strokeWeight="large"
-                                                />
-                                            )}
-                                            {isOpen && (
-                                                <SystemIcon
-                                                    sx={{
-                                                        paddingLeft: 'inc20',
-                                                        display: 'inline',
-                                                    }}
-                                                    name={
-                                                        ESystemIconNames.CHEVRON_UP
-                                                    }
-                                                    size="small"
-                                                    strokeWeight="large"
-                                                />
-                                            )}
+                                            <SystemIcon
+                                                sx={{
+                                                    paddingLeft: 'inc20',
+                                                    display: 'inline',
+                                                }}
+                                                name={
+                                                    isOpen
+                                                        ? ESystemIconNames.CHEVRON_UP
+                                                        : ESystemIconNames.CHEVRON_DOWN
+                                                }
+                                                size="small"
+                                                strokeWeight="large"
+                                            />
                                         </StyledFloraLink>
                                     </div>
                                     {isOpen && (
@@ -127,7 +114,7 @@ const DesktopView = () => {
                         </SecondaryLinksList>
                     ))}
                 </SecondaryLinks>
-            </StyledSecondaryNavContainer>
+            </nav>
         </div>
     );
 };
