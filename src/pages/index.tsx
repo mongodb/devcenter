@@ -29,8 +29,6 @@ export default Home;
 export const getStaticProps: GetStaticProps = async ({}) => {
     const client = clientFactory('ApolloREST', process.env.STRAPI_URL);
     const articles = await getArticles(client);
-    const secNav = await getSecondaryNavMenu();
-    console.log(JSON.stringify(secNav));
     return {
         props: { articles },
     };

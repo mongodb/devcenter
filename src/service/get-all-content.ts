@@ -13,6 +13,7 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { getAllVideos } from './get-all-videos';
 import { getAllPodcasts } from './get-all-podcasts';
 import { setPrimaryTag } from './set-primary-tag';
+import { PillCategoryValues } from '../types/pill-category';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcasts();
@@ -63,7 +64,7 @@ export const mapPodcastsToContentItems = (
         //addSeriesToItem(item, 'podcast', podcastSeries);
         items.push(item);
     });
-    return items;
+    return items.filter(item => item.title !== '');
 };
 
 export const mapVideosToContentItems = (
@@ -95,7 +96,7 @@ export const mapVideosToContentItems = (
         //addSeriesToItem(item, 'video', videoSeries);
         items.push(item);
     });
-    return items;
+    return items.filter(item => item.title !== '');
 };
 
 export const mapArticlesToContentItems = (
@@ -130,5 +131,6 @@ export const mapArticlesToContentItems = (
         //addSeriesToItem(item, 'article', articleSeries);
         items.push(item);
     });
-    return items;
+
+    return items.filter(item => PillCategoryValues.includes(item.category));
 };
