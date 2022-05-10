@@ -22,7 +22,7 @@ export const getFeaturedLangProdTech = (
     content: ContentItem[]
 ) => {
     const aggregateSlug =
-        contentType === 'Tutorial' ? '/tutorials' : 'code-examples';
+        contentType === 'Tutorial' ? '/tutorials' : '/code-examples';
     let languages: TagWithCount[] = [];
     let technologies: TagWithCount[] = [];
     let products: L1TagWithCount[] = [];
