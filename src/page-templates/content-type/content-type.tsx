@@ -330,18 +330,24 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                 />
                                 {hasExtraSections && (
                                     <>
-                                        <LanguagesSection
-                                            title={`${contentType}s by Programming Language`}
-                                            items={featuredLanguages}
-                                        />
-                                        <TechnologiesSection
-                                            title={`${contentType}s by Technology`}
-                                            items={featuredTechnologies}
-                                        />
-                                        <ProductsSection
-                                            title={`${contentType}s by Product`}
-                                            items={featuredProducts}
-                                        />
+                                        {!!featuredLanguages.length && (
+                                            <LanguagesSection
+                                                title={`${contentType}s by Programming Language`}
+                                                items={featuredLanguages}
+                                            />
+                                        )}
+                                        {!!featuredTechnologies.length && (
+                                            <TechnologiesSection
+                                                title={`${contentType}s by Technology`}
+                                                items={featuredTechnologies}
+                                            />
+                                        )}
+                                        {!!featuredProducts.length && (
+                                            <ProductsSection
+                                                title={`${contentType}s by Product`}
+                                                items={featuredProducts}
+                                            />
+                                        )}
                                     </>
                                 )}
                             </>
