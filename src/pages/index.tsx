@@ -14,25 +14,27 @@ import {
 import theme from '@mdb/flora/theme';
 import styled from '@emotion/styled';
 import ShowcaseCard from '../components/showcase-card';
-import { cardsLanguagesData, cardsTechnologiesData } from '../data/homepage';
+import {
+    cardsLanguagesData,
+    cardsProductsData,
+    cardsTechnologiesData,
+} from '../data/homepage';
 
 interface HomeProps {
     articles: Article[];
 }
 
 const Main = styled.main`
+    overflow: hidden;
+    position: relative;
     padding-left: 25px;
     padding-right: 25px;
 
-    .svg-wrapper-top {
-        position: relative;
-
-        > svg {
-            position: absolute;
-            top: -860px;
-            left: -150px;
-            z-index: -1;
-        }
+    > svg {
+        position: absolute;
+        top: -860px;
+        left: -150px;
+        z-index: -1;
     }
 
     .svg-wrapper-bottom {
@@ -104,7 +106,7 @@ const Main = styled.main`
         }
     }
 
-    .developer-center-cards {
+    .developer-languages-cards {
         grid-column: span 6;
 
         @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
@@ -125,7 +127,7 @@ const Main = styled.main`
         }
 
         @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            grid-column: span 12;
+            grid-column: span 10;
         }
     }
 
@@ -198,108 +200,112 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
 
     return (
         <Main>
-            <div className="svg-wrapper-top">
-                <svg
-                    width="1800"
-                    height="1800"
-                    viewBox="0 0 1800 1800"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+            <svg
+                id="svg-top"
+                width="1800"
+                height="1800"
+                viewBox="0 0 1800 1800"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M452.141 0.00323121L1128.33 2.49631C1251.17 2.96385 1350.51 103.015 1350.04 226.132V230.964C1349.57 355.327 1450.93 455.846 1575.02 454.6C1698.95 453.197 1800 553.404 1800 677.3V678.547C1800 802.131 1699.58 902.027 1576.27 901.248L1353.78 900.002C1104.35 898.599 901.323 1100.42 900.856 1349.92C900.389 1598.65 698.919 1800 450.428 1800C201.626 1800 0 1598.18 0 1349.14V450.703C0 201.197 202.716 -0.931832 452.141 0.00323121Z"
+                    fill="#F9EBFF"
+                />
+            </svg>
+            <GridLayout>
+                <div
+                    className="search-hero"
+                    sx={{
+                        gridColumn: [
+                            'span 6',
+                            'span 8',
+                            'span 8',
+                            '2 / span 10',
+                        ],
+                        textAlign: 'center',
+                        marginTop: 'section40',
+                        marginBottom: 'section40',
+                    }}
                 >
-                    <path
-                        d="M452.141 0.00323121L1128.33 2.49631C1251.17 2.96385 1350.51 103.015 1350.04 226.132V230.964C1349.57 355.327 1450.93 455.846 1575.02 454.6C1698.95 453.197 1800 553.404 1800 677.3V678.547C1800 802.131 1699.58 902.027 1576.27 901.248L1353.78 900.002C1104.35 898.599 901.323 1100.42 900.856 1349.92C900.389 1598.65 698.919 1800 450.428 1800C201.626 1800 0 1598.18 0 1349.14V450.703C0 201.197 202.716 -0.931832 452.141 0.00323121Z"
-                        fill="#F9EBFF"
-                    />
-                </svg>
-                <GridLayout>
-                    <div
-                        className="search-hero"
-                        sx={{
-                            gridColumn: [
-                                'span 6',
-                                'span 8',
-                                'span 8',
-                                '2 / span 10',
-                            ],
-                            textAlign: 'center',
-                            marginTop: 'section40',
-                            marginBottom: 'section40',
-                        }}
+                    <TypographyScale
+                        variant="heading1"
+                        sx={{ marginBottom: 'inc60' }}
                     >
-                        <TypographyScale
-                            variant="heading1"
-                            sx={{ marginBottom: 'inc60' }}
-                        >
-                            MongoDB Developer Center
-                        </TypographyScale>
-                        <TypographyScale variant="body1" color="default">
-                            More than 100 open source projects, a library of
-                            knowledge resources, developer advocates ready to
-                            help, and a global community of developers. What
-                            will you create?
-                        </TypographyScale>
+                        MongoDB Developer Center
+                    </TypographyScale>
+                    <TypographyScale variant="body1" color="default">
+                        More than 100 open source projects, a library of
+                        knowledge resources, developer advocates ready to help,
+                        and a global community of developers. What will you
+                        create?
+                    </TypographyScale>
+                    <div sx={{ marginTop: 'inc90' }} className="search-input">
+                        <TextInput
+                            name="search"
+                            label="Search all MongoDB Developer Content"
+                            onChange={e => myHandleChange(e)}
+                            buttonText="Search"
+                            onButtonClick={() => myHandleSearch()}
+                        />
+                    </div>
+                </div>
+            </GridLayout>
+            <GridLayout>
+                <div className="developer-center-header">
+                    <TypographyScale variant="heading5">
+                        Develop in your language
+                    </TypographyScale>
+                </div>
+                <div
+                    className="developer-center-call-to-action"
+                    sx={{ gridColumn: '11 / span 2', marginTop: 'inc50' }}
+                >
+                    <Link
+                        href="/developer/language"
+                        linkIcon="arrow"
+                        linkIconDisableExpand={true}
+                    >
+                        View All Languages
+                    </Link>
+                </div>
+                {cardsLanguagesData?.map(
+                    ({ titleLink, href, imageString, cta, links }) => (
                         <div
-                            sx={{ marginTop: 'inc90' }}
-                            className="search-input"
+                            className="developer-languages-cards"
+                            key={titleLink.text}
                         >
-                            <TextInput
-                                name="search"
-                                label="Search all MongoDB Developer Content"
-                                onChange={e => myHandleChange(e)}
-                                buttonText="Search"
-                                onButtonClick={() => myHandleSearch()}
+                            <ShowcaseCard
+                                sx={{ backgroundColor: 'white' }}
+                                alignment="left"
+                                titleLink={titleLink}
+                                image={
+                                    <ThirdPartyLogo
+                                        variant={imageString}
+                                        href={href}
+                                        target="_blank"
+                                        imageWidth="150px"
+                                    />
+                                }
+                                cta={cta}
+                                links={links}
                             />
                         </div>
-                    </div>
-                </GridLayout>
-                <GridLayout>
-                    <div className="developer-center-header">
-                        <TypographyScale variant="heading5">
-                            Develop in your language
-                        </TypographyScale>
-                    </div>
-                    <div
-                        className="developer-center-call-to-action"
-                        sx={{ gridColumn: '11 / span 2', marginTop: 'inc50' }}
+                    )
+                )}
+                <div
+                    className="developer-center-call-to-action-mobile"
+                    sx={{ gridColumn: '11 / span 2', marginTop: 'inc50' }}
+                >
+                    <Link
+                        href="/developer/languages"
+                        linkIcon="arrow"
+                        linkIconDisableExpand={true}
                     >
-                        <Link linkIcon="arrow" linkIconDisableExpand={true}>
-                            View All Languages
-                        </Link>
-                    </div>
-                    {cardsLanguagesData?.map(
-                        ({ titleLink, href, imageString, cta, links }) => (
-                            <div
-                                className="developer-center-cards"
-                                key={titleLink.text}
-                            >
-                                <ShowcaseCard
-                                    sx={{ backgroundColor: 'white' }}
-                                    alignment="left"
-                                    titleLink={titleLink}
-                                    image={
-                                        <ThirdPartyLogo
-                                            variant={imageString}
-                                            href={href}
-                                            target="_blank"
-                                            imageWidth="150px"
-                                        />
-                                    }
-                                    cta={cta}
-                                    links={links}
-                                />
-                            </div>
-                        )
-                    )}
-                    <div
-                        className="developer-center-call-to-action-mobile"
-                        sx={{ gridColumn: '11 / span 2', marginTop: 'inc50' }}
-                    >
-                        <Link linkIcon="arrow" linkIconDisableExpand={true}>
-                            View All Languages
-                        </Link>
-                    </div>
-                </GridLayout>
-            </div>
+                        View All Languages
+                    </Link>
+                </div>
+            </GridLayout>
             <div className="svg-wrapper-bottom">
                 <svg
                     width="1706"
@@ -319,10 +325,19 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             Integrate MongoDB with the technologies you use
                         </TypographyScale>
                     </div>
+                    <div className="products-call-to-action">
+                        <Link
+                            href="/developer/technologies"
+                            linkIcon="arrow"
+                            linkIconDisableExpand={true}
+                        >
+                            View All Products
+                        </Link>
+                    </div>
                     {cardsTechnologiesData?.map(
                         ({ titleLink, imageString, href }) => (
                             <div
-                                className="developer-center-cards"
+                                className="technologies-cards"
                                 key={titleLink.text}
                             >
                                 <ShowcaseCard
@@ -341,6 +356,15 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             </div>
                         )
                     )}
+                    <div className="products-call-to-action-mobile">
+                        <Link
+                            href="/developer/technologies"
+                            linkIcon="arrow"
+                            linkIconDisableExpand={true}
+                        >
+                            View All Products
+                        </Link>
+                    </div>
                 </GridLayout>
                 <GridLayout className="last-row">
                     <div className="products-header">
@@ -349,27 +373,52 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                         </TypographyScale>
                     </div>
                     <div className="products-call-to-action">
-                        <Link linkIcon="arrow" linkIconDisableExpand={true}>
+                        <Link
+                            href="/developer/languages"
+                            linkIcon="arrow"
+                            linkIconDisableExpand={true}
+                        >
                             View All Products
                         </Link>
                     </div>
-                    {Array(3)
-                        .fill('Card Placeholder')
-                        .map((card, index) => (
+                    {cardsProductsData?.map(
+                        ({
+                            titleLink,
+                            href,
+                            imageString,
+                            cta,
+                            links,
+                            description,
+                        }) => (
                             <div
-                                className="card-placeholder products-cards"
-                                key={index}
+                                className="products-cards"
+                                key={titleLink.text}
                             >
-                                <TypographyScale
-                                    variant="body1"
-                                    color="default"
-                                >
-                                    Card Placeholder
-                                </TypographyScale>
+                                <ShowcaseCard
+                                    sx={{ backgroundColor: 'white' }}
+                                    alignment="left"
+                                    description={description}
+                                    titleLink={titleLink}
+                                    image={
+                                        <ThirdPartyLogo
+                                            variant={imageString}
+                                            href={href}
+                                            target="_blank"
+                                            imageWidth="150px"
+                                        />
+                                    }
+                                    cta={cta}
+                                    links={links}
+                                />
                             </div>
-                        ))}
+                        )
+                    )}
                     <div className="products-call-to-action-mobile">
-                        <Link linkIcon="arrow" linkIconDisableExpand={true}>
+                        <Link
+                            href="/developer/languages"
+                            linkIcon="arrow"
+                            linkIconDisableExpand={true}
+                        >
                             View All Products
                         </Link>
                     </div>
