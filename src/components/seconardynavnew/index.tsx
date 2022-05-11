@@ -10,7 +10,7 @@ const SecondaryNav = () => {
         if (isReady) {
             setActivePath(asPath);
         }
-    }, [isReady]);
+    }, [isReady, asPath]);
 
     return (
         <>
