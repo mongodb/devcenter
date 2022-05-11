@@ -1296,848 +1296,824 @@ const redirects = async () => {
         },
         {
             source: '/how-to/stitch-hosting',
-            destination: '/developer/products/realm/realm-hosting/',
+            destination: '/products/realm/realm-hosting/',
             permanent: true,
         },
         {
             source: '/how-to/storing-large-objects-and-files',
-            destination:
-                '/developer/products/mongodb/storing-large-objects-and-files/',
+            destination: '/products/mongodb/storing-large-objects-and-files/',
             permanent: true,
         },
         {
             source: '/how-to/strapi-headless-cms-with-atlas',
-            destination:
-                '/developer/products/atlas/strapi-headless-cms-with-atlas/',
+            destination: '/products/atlas/strapi-headless-cms-with-atlas/',
             permanent: true,
         },
         {
             source: '/how-to/subscribing-changes-browser-websockets',
             destination:
-                '/developer/products/mongodb/subscribing-changes-browser-websockets/',
+                '/products/mongodb/subscribing-changes-browser-websockets/',
             permanent: true,
         },
         {
             source: '/how-to/subset-pattern',
-            destination: '/developer/products/mongodb/subset-pattern/',
+            destination: '/products/mongodb/subset-pattern/',
             permanent: true,
         },
         {
             source: '/how-to/swiftui-previews',
-            destination: '/developer/products/realm/swiftui-previews/',
+            destination: '/products/realm/swiftui-previews/',
             permanent: true,
         },
         {
             source: '/how-to/transactions-c-dotnet',
-            destination: '/developer/languages/csharp/transactions-c-dotnet/',
+            destination: '/languages/csharp/transactions-c-dotnet/',
             permanent: true,
         },
         {
             source: '/how-to/tuning-mongodb-kafka-connector',
-            destination:
-                '/developer/products/connectors/tuning-mongodb-kafka-connector/',
+            destination: '/products/connectors/tuning-mongodb-kafka-connector/',
             permanent: true,
         },
         {
             source: '/how-to/type-projections',
-            destination: '/developer/products/realm/type-projections/',
+            destination: '/products/realm/type-projections/',
             permanent: true,
         },
         {
             source: '/how-to/unit-test-realm-serverless-functions',
             destination:
-                '/developer/products/realm/unit-test-realm-serverless-functions/',
+                '/products/realm/unit-test-realm-serverless-functions/',
             permanent: true,
         },
         {
             source: '/how-to/update-array-elements-document-mql-positional-operators',
             destination:
-                '/developer/products/mongodb/update-array-elements-document-mql-positional-operators/',
+                '/products/mongodb/update-array-elements-document-mql-positional-operators/',
             permanent: true,
         },
         {
             source: '/how-to/upgrade-fearlessly-stable-api',
-            destination:
-                '/developer/products/mongodb/upgrade-fearlessly-stable-api/',
+            destination: '/products/mongodb/upgrade-fearlessly-stable-api/',
             permanent: true,
         },
         {
             source: '/how-to/upgrade-fearlessly-versioned-api',
-            destination:
-                '/developer/products/atlas/upgrade-fearlessly-versioned-api/',
+            destination: '/products/atlas/upgrade-fearlessly-versioned-api/',
             permanent: true,
         },
         {
             source: '/how-to/use-atlas-on-heroku',
-            destination: '/developer/products/atlas/use-atlas-on-heroku/',
+            destination: '/products/atlas/use-atlas-on-heroku/',
             permanent: true,
         },
         {
             source: '/how-to/use-azure-key-vault-mongodb-client-side-field-level-encryption',
             destination:
-                '/developer/products/mongodb/use-azure-key-vault-mongodb-client-side-field-level-encryption/',
+                '/products/mongodb/use-azure-key-vault-mongodb-client-side-field-level-encryption/',
             permanent: true,
         },
         {
             source: '/how-to/use-function-accumulator-operators',
             destination:
-                '/developer/products/mongodb/use-function-accumulator-operators/',
+                '/products/mongodb/use-function-accumulator-operators/',
             permanent: true,
         },
         {
             source: '/how-to/use-union-all-aggregation-pipeline-stage',
             destination:
-                '/developer/products/mongodb/use-union-all-aggregation-pipeline-stage/',
+                '/products/mongodb/use-union-all-aggregation-pipeline-stage/',
             permanent: true,
         },
         {
             source: '/how-to/using-expo-realm-expo-dev-client',
-            destination:
-                '/developer/products/realm/using-expo-realm-expo-dev-client/',
+            destination: '/products/realm/using-expo-realm-expo-dev-client/',
             permanent: true,
         },
         {
             source: '/how-to/using-linq-query-mongodb-dotnet-core-application',
             destination:
-                '/developer/languages/csharp/using-linq-query-mongodb-dotnet-core-application/',
+                '/languages/csharp/using-linq-query-mongodb-dotnet-core-application/',
             permanent: true,
         },
         {
             source: '/how-to/visually-showing-atlas-search-highlights-javascript-html',
             destination:
-                '/developer/products/atlas/visually-showing-atlas-search-highlights-javascript-html/',
+                '/products/atlas/visually-showing-atlas-search-highlights-javascript-html/',
             permanent: true,
         },
         {
             source: '/how-to/zap-tweet-repeat-how-to-use-zapier-mongodb',
             destination:
-                '/developer/languages/javascript/zap-tweet-repeat-how-to-use-zapier-mongodb/',
+                '/languages/javascript/zap-tweet-repeat-how-to-use-zapier-mongodb/',
             permanent: true,
         },
         {
             source: '/language/c-',
-            destination: '/developer/languages/csharp/',
+            destination: '/languages/csharp/',
             permanent: true,
         },
         {
             source: '/language/c',
-            destination: '/developer/languages/csharp/',
+            destination: '/languages/csharp/',
             permanent: true,
         },
         {
             source: '/language/cpp',
-            destination: '/developer/languages/cpp/',
+            destination: '/languages/cpp/',
             permanent: true,
         },
         {
             source: '/language/go',
-            destination: '/developer/languages/go/',
+            destination: '/languages/go/',
             permanent: true,
         },
         {
             source: '/language/java',
-            destination: '/developer/languages/java/',
+            destination: '/languages/java/',
             permanent: true,
         },
         {
             source: '/language/javascript',
-            destination: '/developer/languages/javascript/',
+            destination: '/languages/javascript/',
             permanent: true,
         },
         {
             source: '/language/kotlin',
-            destination: '/developer/languages/kotlin/',
+            destination: '/languages/kotlin/',
             permanent: true,
         },
         {
             source: '/language/mql',
-            destination: '/developer/products/mongodb/mql/',
+            destination: '/products/mongodb/mql/',
             permanent: true,
         },
         {
             source: '/language/php',
-            destination: '/developer/languages/php/',
+            destination: '/languages/php/',
             permanent: true,
         },
         {
             source: '/language/python',
-            destination: '/developer/languages/python/',
+            destination: '/languages/python/',
             permanent: true,
         },
         {
             source: '/language/rust',
-            destination: '/developer/languages/rust/',
+            destination: '/languages/rust/',
             permanent: true,
         },
         {
             source: '/language/swift',
-            destination: '/developer/languages/swift/',
+            destination: '/languages/swift/',
             permanent: true,
         },
         {
             source: '/learn',
-            destination: '/developer/',
+            destination: '/',
             permanent: true,
         },
         {
             source: '/podcasts/welcome-to-the-mongodb-podcast',
-            destination: '/developer/news/welcome-to-the-mongodb-podcast/',
+            destination: '/news/welcome-to-the-mongodb-podcast/',
             permanent: true,
         },
         {
             source: '/product/atlas-search',
-            destination: '/developer/products/atlas/atlas-search/',
+            destination: '/products/atlas/atlas-search/',
             permanent: true,
         },
         {
             source: '/product/atlas',
-            destination: '/developer/products/atlas/',
+            destination: '/products/atlas/',
             permanent: true,
         },
         {
             source: '/product/charts',
-            destination: '/developer/products/charts/',
+            destination: '/products/charts/',
             permanent: true,
         },
         {
             source: '/product/cloud-manager',
-            destination: '/developer/products/cloud-manager/',
+            destination: '/products/cloud-manager/',
             permanent: true,
         },
         {
             source: '/product/compass',
-            destination: '/developer/products/compass/',
+            destination: '/products/compass/',
             permanent: true,
         },
         {
             source: '/product/data-lake',
-            destination: '/developer/products/atlas/data-lake/',
+            destination: '/products/atlas/data-lake/',
             permanent: true,
         },
         {
             source: '/product/mobile',
-            destination: '/developer/products/realm/mobile/',
+            destination: '/products/realm/mobile/',
             permanent: true,
         },
         {
             source: '/product/mongodb',
-            destination: '/developer/products/mongodb/',
+            destination: '/products/mongodb/',
             permanent: true,
         },
         {
             source: '/product/online-archive',
-            destination: '/developer/products/atlas/online-archive/',
+            destination: '/products/atlas/online-archive/',
             permanent: true,
         },
         {
             source: '/product/ops-manager',
-            destination: '/developer/products/ops-manager/',
+            destination: '/products/ops-manager/',
             permanent: true,
         },
         {
             source: '/product/realm',
-            destination: '/developer/products/realm/',
+            destination: '/products/realm/',
             permanent: true,
         },
         {
             source: '/product/realmstudio',
-            destination: '/developer/products/realm/realmstudio/',
+            destination: '/products/realm/realmstudio/',
             permanent: true,
         },
         {
             source: '/product/vs-code',
-            destination: '/developer/products/vs-code-extension/vs-code/',
+            destination: '/products/vs-code-extension/vs-code/',
             permanent: true,
         },
         {
             source: '/project/anonytexts',
-            destination: '/developer/languages/javascript/anonytexts/',
+            destination: '/languages/javascript/anonytexts/',
             permanent: true,
         },
         {
             source: '/project/blogue',
-            destination: '/developer/languages/javascript/blogue/',
+            destination: '/languages/javascript/blogue/',
             permanent: true,
         },
         {
             source: '/project/chember',
-            destination: '/developer/languages/javascript/chember/',
+            destination: '/languages/javascript/chember/',
             permanent: true,
         },
         {
             source: '/project/EHRS-Peru',
-            destination: '/developer/languages/javascript/ehrs-peru/',
+            destination: '/languages/javascript/ehrs-peru/',
             permanent: true,
         },
         {
             source: '/project/EnSat',
-            destination: '/developer/languages/javascript/ensat/',
+            destination: '/languages/javascript/ensat/',
             permanent: true,
         },
         {
             source: '/project/go-fifa',
-            destination: '/developer/languages/php/go-fifa/',
+            destination: '/languages/php/go-fifa/',
             permanent: true,
         },
         {
             source: '/project/groupus',
-            destination: '/developer/languages/python/groupus/',
+            destination: '/languages/python/groupus/',
             permanent: true,
         },
         {
             source: '/project/hostels-kenya',
-            destination: '/developer/languages/php/hostels-kenya/',
+            destination: '/languages/php/hostels-kenya/',
             permanent: true,
         },
         {
             source: '/project/magazine-management',
-            destination: '/developer/languages/javascript/magazine-management/',
+            destination: '/languages/javascript/magazine-management/',
             permanent: true,
         },
         {
             source: '/project/mergeurl',
-            destination: '/developer/languages/python/mergeurl/',
+            destination: '/languages/python/mergeurl/',
             permanent: true,
         },
         {
             source: '/project/plasma-do',
-            destination: '/developer/languages/java/plasma-do/',
+            destination: '/languages/java/plasma-do/',
             permanent: true,
         },
         {
             source: '/project/safewoman',
-            destination: '/developer/languages/java/safewoman/',
+            destination: '/languages/java/safewoman/',
             permanent: true,
         },
         {
             source: '/project/trends-analyser',
-            destination: '/developer/languages/javascript/trends-analyser/',
+            destination: '/languages/javascript/trends-analyser/',
             permanent: true,
         },
         {
             source: '/quickstart/atlas_data_api_excel_power_query',
-            destination:
-                '/developer/products/atlas/atlas-data-api-excel-power-query/',
+            destination: '/products/atlas/atlas-data-api-excel-power-query/',
             permanent: true,
         },
         {
             source: '/quickstart/atlas_data_api_google_sheets_apps_script',
             destination:
-                '/developer/products/atlas/atlas-data-api-google-sheets-apps-script/',
+                '/products/atlas/atlas-data-api-google-sheets-apps-script/',
             permanent: true,
         },
         {
             source: '/quickstart/atlas_data_api_introduction',
-            destination:
-                '/developer/products/atlas/atlas-data-api-introduction/',
+            destination: '/products/atlas/atlas-data-api-introduction/',
             permanent: true,
         },
         {
             source: '/quickstart/awtlas_data_api_aws_gateway',
-            destination:
-                '/developer/products/atlas/atlas-data-api-aws-gateway/',
+            destination: '/products/atlas/atlas-data-api-aws-gateway/',
             permanent: true,
         },
         {
             source: '/quickstart/bson-data-types-date',
-            destination: '/developer/products/mongodb/bson-data-types-date/',
+            destination: '/products/mongodb/bson-data-types-date/',
             permanent: true,
         },
         {
             source: '/quickstart/bson-data-types-decimal128',
-            destination:
-                '/developer/products/mongodb/bson-data-types-decimal128/',
+            destination: '/products/mongodb/bson-data-types-decimal128/',
             permanent: true,
         },
         {
             source: '/quickstart/bson-data-types-objectid',
-            destination:
-                '/developer/products/mongodb/bson-data-types-objectid/',
+            destination: '/products/mongodb/bson-data-types-objectid/',
             permanent: true,
         },
         {
             source: '/quickstart/cheat-sheet',
-            destination: '/developer/products/mongodb/cheat-sheet/',
+            destination: '/products/mongodb/cheat-sheet/',
             permanent: true,
         },
         {
             source: '/quickstart/csharp-crud-tutorial',
-            destination: '/developer/languages/csharp/csharp-crud-tutorial/',
+            destination: '/languages/csharp/csharp-crud-tutorial/',
             permanent: true,
         },
         {
             source: '/quickstart/csharp-crud-tutorial',
-            destination: '/developer/products/',
+            destination: '/products/',
             permanent: true,
         },
         {
             source: '/quickstart/document-swift-powered-frameworks-using-docc',
             destination:
-                '/developer/products/realm/document-swift-powered-frameworks-using-docc/',
+                '/products/realm/document-swift-powered-frameworks-using-docc/',
             permanent: true,
         },
         {
             source: '/quickstart/free-atlas-cluster',
-            destination: '/developer/products/atlas/free-atlas-cluster/',
+            destination: '/products/atlas/free-atlas-cluster/',
             permanent: true,
         },
         {
             source: '/quickstart/golang-change-streams',
-            destination: '/developer/languages/go/golang-change-streams/',
+            destination: '/languages/go/golang-change-streams/',
             permanent: true,
         },
         {
             source: '/quickstart/golang-multi-document-acid-transactions',
             destination:
-                '/developer/languages/go/golang-multi-document-acid-transactions/',
+                '/languages/go/golang-multi-document-acid-transactions/',
             permanent: true,
         },
         {
             source: '/quickstart/introduction-aggregation-framework',
             destination:
-                '/developer/products/mongodb/introduction-aggregation-framework/',
+                '/products/mongodb/introduction-aggregation-framework/',
             permanent: true,
         },
         {
             source: '/quickstart/java-aggregation-pipeline',
-            destination: '/developer/languages/java/java-aggregation-pipeline/',
+            destination: '/languages/java/java-aggregation-pipeline/',
             permanent: true,
         },
         {
             source: '/quickstart/java-change-streams',
-            destination: '/developer/languages/java/java-change-streams/',
+            destination: '/languages/java/java-change-streams/',
             permanent: true,
         },
         {
             source: '/quickstart/java-client-side-field-level-encryption',
             destination:
-                '/developer/products/mongodb/java-client-side-field-level-encryption/',
+                '/products/mongodb/java-client-side-field-level-encryption/',
             permanent: true,
         },
         {
             source: '/quickstart/java-mapping-pojos',
-            destination: '/developer/languages/java/java-mapping-pojos/',
+            destination: '/languages/java/java-mapping-pojos/',
             permanent: true,
         },
         {
             source: '/quickstart/java-setup-crud-operations',
-            destination:
-                '/developer/languages/java/java-setup-crud-operations/',
+            destination: '/languages/java/java-setup-crud-operations/',
             permanent: true,
         },
         {
             source: '/quickstart/jetpack-compose-experience-android',
-            destination:
-                '/developer/products/realm/jetpack-compose-experience-android/',
+            destination: '/products/realm/jetpack-compose-experience-android/',
             permanent: true,
         },
         {
             source: '/quickstart/node-aggregation-framework-3-3-2',
-            destination:
-                '/developer/languages/javascript/node-aggregation-framework/',
+            destination: '/languages/javascript/node-aggregation-framework/',
             permanent: true,
         },
         {
             source: '/quickstart/node-aggregation-framework',
-            destination:
-                '/developer/languages/javascript/node-aggregation-framework/',
+            destination: '/languages/javascript/node-aggregation-framework/',
             permanent: true,
         },
         {
             source: '/quickstart/node-crud-tutorial-3-3-2',
-            destination: '/developer/languages/javascript/node-crud-tutorial/',
+            destination: '/languages/javascript/node-crud-tutorial/',
             permanent: true,
         },
         {
             source: '/quickstart/node-crud-tutorial',
-            destination: '/developer/languages/javascript/node-crud-tutorial/',
+            destination: '/languages/javascript/node-crud-tutorial/',
             permanent: true,
         },
         {
             source: '/quickstart/node-transactions-3-3-2',
-            destination: '/developer/languages/javascript/node-transactions/',
+            destination: '/languages/javascript/node-transactions/',
             permanent: true,
         },
         {
             source: '/quickstart/node-transactions',
-            destination: '/developer/languages/javascript/node-transactions/',
+            destination: '/languages/javascript/node-transactions/',
             permanent: true,
         },
         {
             source: '/quickstart/nodejs-change-streams-triggers-3-3-2',
             destination:
-                '/developer/languages/javascript/nodejs-change-streams-triggers/',
+                '/languages/javascript/nodejs-change-streams-triggers/',
             permanent: true,
         },
         {
             source: '/quickstart/nodejs-change-streams-triggers',
             destination:
-                '/developer/languages/javascript/nodejs-change-streams-triggers/',
+                '/languages/javascript/nodejs-change-streams-triggers/',
             permanent: true,
         },
         {
             source: '/quickstart/php-crud',
-            destination: '/developer/languages/php/php-crud/',
+            destination: '/languages/php/php-crud/',
             permanent: true,
         },
         {
             source: '/quickstart/php-setup',
-            destination: '/developer/languages/php/php-setup/',
+            destination: '/languages/php/php-setup/',
             permanent: true,
         },
         {
             source: '/quickstart/pymongoarrow-and-data-analysis',
-            destination:
-                '/developer/languages/python/pymongoarrow-and-data-analysis/',
+            destination: '/languages/python/pymongoarrow-and-data-analysis/',
             permanent: true,
         },
         {
             source: '/quickstart/python-acid-transactions',
-            destination:
-                '/developer/languages/python/python-acid-transactions/',
+            destination: '/languages/python/python-acid-transactions/',
             permanent: true,
         },
         {
             source: '/quickstart/python-change-streams',
-            destination: '/developer/languages/python/python-change-streams/',
+            destination: '/languages/python/python-change-streams/',
             permanent: true,
         },
         {
             source: '/quickstart/python-quickstart-aggregation',
-            destination:
-                '/developer/languages/python/python-quickstart-aggregation/',
+            destination: '/languages/python/python-quickstart-aggregation/',
             permanent: true,
         },
         {
             source: '/quickstart/python-quickstart-crud',
-            destination: '/developer/languages/python/python-quickstart-crud/',
+            destination: '/languages/python/python-quickstart-crud/',
             permanent: true,
         },
         {
             source: '/quickstart/python-quickstart-fastapi',
-            destination:
-                '/developer/languages/python/python-quickstart-fastapi/',
+            destination: '/languages/python/python-quickstart-fastapi/',
             permanent: true,
         },
         {
             source: '/quickstart/python-quickstart-fle',
-            destination: '/developer/languages/python/python-quickstart-fle/',
+            destination: '/languages/python/python-quickstart-fle/',
             permanent: true,
         },
         {
             source: '/quickstart/python-quickstart-sanic',
-            destination: '/developer/languages/python/python-quickstart-sanic/',
+            destination: '/languages/python/python-quickstart-sanic/',
             permanent: true,
         },
         {
             source: '/quickstart/python-quickstart-starlette',
-            destination:
-                '/developer/languages/python/python-quickstart-starlette/',
+            destination: '/languages/python/python-quickstart-starlette/',
             permanent: true,
         },
         {
             source: '/quickstart/python-quickstart-tornado',
-            destination:
-                '/developer/languages/python/python-quickstart-tornado/',
+            destination: '/languages/python/python-quickstart-tornado/',
             permanent: true,
         },
         {
             source: '/quickstart/realm-web-sdk',
-            destination: '/developer/products/realm/realm-web-sdk/',
+            destination: '/products/realm/realm-web-sdk/',
             permanent: true,
         },
         {
             source: '/quickstart/rust-crud-tutorial',
-            destination: '/developer/languages/rust/rust-crud-tutorial/',
+            destination: '/languages/rust/rust-crud-tutorial/',
             permanent: true,
         },
         {
             source: '/quickstart/rust-quickstart-aggregation',
-            destination:
-                '/developer/languages/rust/rust-quickstart-aggregation/',
+            destination: '/languages/rust/rust-quickstart-aggregation/',
             permanent: true,
         },
         {
             source: '/tag/-net-core',
-            destination: '/developer/technologies/dotnet-framework/',
+            destination: '/technologies/dotnet-framework/',
             permanent: true,
         },
         {
             source: '/tag/aggregation-framework',
-            destination: '/developer/products/mongodb/aggregation-framework/',
+            destination: '/products/mongodb/aggregation-framework/',
             permanent: true,
         },
         {
             source: '/tag/analytics',
-            destination: '/developer/products/mongodb/analytics/',
+            destination: '/products/mongodb/analytics/',
             permanent: true,
         },
         {
             source: '/tag/android',
-            destination: '/developer/technologies/android/',
+            destination: '/technologies/android/',
             permanent: true,
         },
         {
             source: '/tag/api',
-            destination: '/developer/products/mongodb/api/',
+            destination: '/products/mongodb/api/',
             permanent: true,
         },
         {
             source: '/tag/bson',
-            destination: '/developer/products/mongodb/',
+            destination: '/products/mongodb/',
             permanent: true,
         },
         {
             source: '/tag/cloud',
-            destination: '/developer/products/atlas/cloud/',
+            destination: '/products/atlas/cloud/',
             permanent: true,
         },
         {
             source: '/tag/containers',
-            destination: '/developer/technologies/docker/',
+            destination: '/technologies/docker/',
             permanent: true,
         },
         {
             source: '/tag/dotnet',
-            destination: '/developer/technologies/dotnet-framework/dotnet/',
+            destination: '/technologies/dotnet-framework/dotnet/',
             permanent: true,
         },
         {
             source: '/tag/field-level-encryption',
-            destination: '/developer/products/mongodb/field-level-encryption/',
+            destination: '/products/mongodb/field-level-encryption/',
             permanent: true,
         },
         {
             source: '/tag/full-text-search',
-            destination: '/developer/products/atlas/search/',
+            destination: '/products/atlas/search/',
             permanent: true,
         },
         {
             source: '/tag/graphql',
-            destination: '/developer/technologies/graphql/',
+            destination: '/technologies/graphql/',
             permanent: true,
         },
         {
             source: '/tag/ios',
-            destination: '/developer/technologies/ios/',
+            destination: '/technologies/ios/',
             permanent: true,
         },
         {
             source: '/tag/kafka',
-            destination: '/developer/products/connectors/kafka/',
+            destination: '/products/connectors/kafka/',
             permanent: true,
         },
         {
             source: '/tag/mobile',
-            destination: '/developer/products/realm/',
+            destination: '/products/realm/',
             permanent: true,
         },
         {
             source: '/tag/mongodb-4-4',
-            destination: '/developer/products/mongodb/4-4/',
+            destination: '/products/mongodb/4-4/',
             permanent: true,
         },
         {
             source: '/tag/podcast',
-            destination: '/developer/podcasts/',
+            destination: '/podcasts/',
             permanent: true,
         },
         {
-            source: '/developer/tag/public-speaking/',
+            source: '/tag/public-speaking/',
             destination: 'https://www.mongodb.com/community',
             permanent: true,
         },
         {
-            source: '/developer/tag/releases',
-            destination: '/developer/news/',
+            source: '/tag/releases',
+            destination: '/news/',
             permanent: true,
         },
         {
-            source: '/developer/tag/schema-design',
-            destination: '/developer/products/mongodb/schema-design/',
+            source: '/tag/schema-design',
+            destination: '/products/mongodb/schema-design/',
             permanent: true,
         },
         {
-            source: '/developer/tag/security',
-            destination: '/developer/products/mongodb/security/',
+            source: '/tag/security',
+            destination: '/products/mongodb/security/',
             permanent: true,
         },
         {
-            source: '/developer/tag/soft-skills',
+            source: '/tag/soft-skills',
             destination: 'https://university.mongodb.com',
             permanent: true,
         },
         {
-            source: '/developer/tag/speaker-program',
-            destination: '/developer/community/speaker-program/',
+            source: '/tag/speaker-program',
+            destination: '/community/speaker-program/',
             permanent: true,
         },
         {
-            source: '/developer/tag/swift-ui',
-            destination: '/developer/languages/swift/ui/',
+            source: '/tag/swift-ui',
+            destination: '/languages/swift/ui/',
             permanent: true,
         },
         {
-            source: '/developer/tag/technical',
-            destination: '/developer/',
+            source: '/tag/technical',
+            destination: '/',
             permanent: true,
         },
         {
-            source: '/developer/tag/time-series',
-            destination: '/developer/products/mongodb/time-series/',
+            source: '/tag/time-series',
+            destination: '/products/mongodb/time-series/',
             permanent: true,
         },
         {
-            source: '/developer/tag/transactions',
-            destination: '/developer/products/mongodb/transactions/',
+            source: '/tag/transactions',
+            destination: '/products/mongodb/transactions/',
             permanent: true,
         },
         {
-            source: '/developer/tag/triggers',
-            destination: '/developer/products/atlas/triggers/',
+            source: '/tag/triggers',
+            destination: '/products/atlas/triggers/',
             permanent: true,
         },
         {
-            source: '/developer/tag/unity',
-            destination: '/developer/technologies/unity',
+            source: '/tag/unity',
+            destination: '/technologies/unity/',
             permanent: true,
         },
         {
-            source: '/developer/tag/university',
+            source: '/tag/university',
             destination: 'https://university.mongodb.com',
             permanent: true,
         },
         {
-            source: '/developer/type/article',
-            destination: '/developer/articles/',
+            source: '/type/article',
+            destination: '/articles/',
             permanent: true,
         },
         {
-            source: '/developer/type/how-to',
-            destination: '/developer/tutorials/',
+            source: '/type/how-to',
+            destination: '/tutorials/',
             permanent: true,
         },
         {
-            source: '/developer/type/podcast',
-            destination: '/developer/podcasts/',
+            source: '/type/podcast',
+            destination: '/podcasts/',
             permanent: true,
         },
         {
-            source: '/developer/type/quickstart',
-            destination: '/developer/quickstart/',
+            source: '/type/quickstart',
+            destination: '/quickstarts/',
             permanent: true,
         },
     ];
 };
 
-const rewrites = async () => {
-    return [
-        {
-            source: '/academia',
-            destination: `${process.env.DEVHUB_URL}/academia`,
-        },
-        {
-            source: '/academia/educators',
-            destination: `${process.env.DEVHUB_URL}/academia/educators`,
-        },
-        {
-            source: '/article/10-tips-making-remote-work-actually-work',
-            destination: `${process.env.DEVHUB_URL}/article/10-tips-making-remote-work-actually-work/`,
-        },
-        {
-            source: '/article/10-ways-raise-your-profile-developer',
-            destination: `${process.env.DEVHUB_URL}/article/10-ways-raise-your-profile-developer/`,
-        },
-        {
-            source: '/article/behind-scenes-mongodb-podcast',
-            destination: `${process.env.DEVHUB_URL}/article/behind-scenes-mongodb-podcast/`,
-        },
-        {
-            source: '/article/introduction-to-modern-databases-mongodb-academia',
-            destination: `${process.env.DEVHUB_URL}/article/introduction-to-modern-databases-mongodb-academia/`,
-        },
-        {
-            source: '/community/art-of-creating-talk',
-            destination: `${process.env.DEVHUB_URL}/community/art-of-creating-talk/`,
-        },
-        {
-            source: '/community/creating-stunning-slides',
-            destination: `${process.env.DEVHUB_URL}/community/creating-stunning-slides/`,
-        },
-        {
-            source: '/community/surviving-the-stage',
-            destination: `${process.env.DEVHUB_URL}/community/surviving-the-stage/`,
-        },
-        {
-            source: '/community/virtual-presentation',
-            destination: `${process.env.DEVHUB_URL}/community/virtual-presentation/`,
-        },
-        {
-            source: '/community-champions',
-            destination: `${process.env.DEVHUB_URL}/community-champions/`,
-        },
-        {
-            source: '/community-champions/arkadiusz-borucki',
-            destination: `${process.env.DEVHUB_URL}/community-champions/arkadiusz-borucki/`,
-        },
-        {
-            source: '/community-champions/chris-dellaway',
-            destination: `${process.env.DEVHUB_URL}/community-champions/chris-dellaway/`,
-        },
-        {
-            source: '/community-champions/dani-monteiro',
-            destination: `${process.env.DEVHUB_URL}/community-champions/dani-monteiro/`,
-        },
-        {
-            source: '/community-champions/hans-peter-grahsl',
-            destination: `${process.env.DEVHUB_URL}/community-champions/hans-peter-grahsl/`,
-        },
-        {
-            source: '/community-champions/jai-hirsch',
-            destination: `${process.env.DEVHUB_URL}/community-champions/jai-hirsch/`,
-        },
-        {
-            source: '/community-champions/jay-wooten',
-            destination: `${process.env.DEVHUB_URL}/community-champions/jay-wooten/`,
-        },
-        {
-            source: '/community-champions/leandro-domingues',
-            destination: `${process.env.DEVHUB_URL}/community-champions/leandro-domingues/`,
-        },
-        {
-            source: '/community-champions/lina-lora',
-            destination: `${process.env.DEVHUB_URL}/community-champions/lina-lora/`,
-        },
-        {
-            source: '/community-champions/malak-abu%20hammad',
-            destination: `${process.env.DEVHUB_URL}/community-champions/malak-abu%20hammad/`,
-        },
-        {
-            source: '/community-champions/michael-h%C3%B6ller',
-            destination: `${process.env.DEVHUB_URL}/community-champions/michael-h%C3%B6ller/`,
-        },
-        {
-            source: '/community-champions/nuri-halperin',
-            destination: `${process.env.DEVHUB_URL}/community-champions/nuri-halperin/`,
-        },
-        {
-            source: '/community-champions/rajesh-nair',
-            destination: `${process.env.DEVHUB_URL}/community-champions/rajesh-nair/`,
-        },
-        {
-            source: '/community-champions/rodrigo-nascimento',
-            destination: `${process.env.DEVHUB_URL}/community-champions/rodrigo-nascimento/`,
-        },
-        {
-            source: '/tag/ios',
-            destination: `${process.env.DEVHUB_URL}/tag/ios/`,
-        },
-        {
-            source: '/tag/remote-work',
-            destination: `${process.env.DEVHUB_URL}/tag/remote-work/`,
-        },
-    ];
-};
+const rewrites = [
+    {
+        source: '/academia',
+        destination: `${process.env.DEVHUB_URL}/academia/`,
+    },
+    {
+        source: '/academia/educators',
+        destination: `${process.env.DEVHUB_URL}/academia/educators/`,
+    },
+    {
+        source: '/article/10-tips-making-remote-work-actually-work',
+        destination: `${process.env.DEVHUB_URL}/article/10-tips-making-remote-work-actually-work/`,
+    },
+    {
+        source: '/article/10-ways-raise-your-profile-developer',
+        destination: `${process.env.DEVHUB_URL}/article/10-ways-raise-your-profile-developer/`,
+    },
+    {
+        source: '/article/behind-scenes-mongodb-podcast',
+        destination: `${process.env.DEVHUB_URL}/article/behind-scenes-mongodb-podcast/`,
+    },
+    {
+        source: '/article/introduction-to-modern-databases-mongodb-academia',
+        destination: `${process.env.DEVHUB_URL}/article/introduction-to-modern-databases-mongodb-academia/`,
+    },
+    {
+        source: '/community/art-of-creating-talk',
+        destination: `${process.env.DEVHUB_URL}/community/art-of-creating-talk/`,
+    },
+    {
+        source: '/community/creating-stunning-slides',
+        destination: `${process.env.DEVHUB_URL}/community/creating-stunning-slides/`,
+    },
+    {
+        source: '/community/surviving-the-stage',
+        destination: `${process.env.DEVHUB_URL}/community/surviving-the-stage/`,
+    },
+    {
+        source: '/community/virtual-presentation',
+        destination: `${process.env.DEVHUB_URL}/community/virtual-presentation/`,
+    },
+    {
+        source: '/community-champions',
+        destination: `${process.env.DEVHUB_URL}/community-champions/`,
+    },
+    {
+        source: '/community-champions/arkadiusz-borucki',
+        destination: `${process.env.DEVHUB_URL}/community-champions/arkadiusz-borucki/`,
+    },
+    {
+        source: '/community-champions/chris-dellaway',
+        destination: `${process.env.DEVHUB_URL}/community-champions/chris-dellaway/`,
+    },
+    {
+        source: '/community-champions/dani-monteiro',
+        destination: `${process.env.DEVHUB_URL}/community-champions/dani-monteiro/`,
+    },
+    {
+        source: '/community-champions/hans-peter-grahsl',
+        destination: `${process.env.DEVHUB_URL}/community-champions/hans-peter-grahsl/`,
+    },
+    {
+        source: '/community-champions/jai-hirsch',
+        destination: `${process.env.DEVHUB_URL}/community-champions/jai-hirsch/`,
+    },
+    {
+        source: '/community-champions/jay-wooten',
+        destination: `${process.env.DEVHUB_URL}/community-champions/jay-wooten/`,
+    },
+    {
+        source: '/community-champions/leandro-domingues',
+        destination: `${process.env.DEVHUB_URL}/community-champions/leandro-domingues/`,
+    },
+    {
+        source: '/community-champions/lina-lora',
+        destination: `${process.env.DEVHUB_URL}/community-champions/lina-lora/`,
+    },
+    {
+        source: '/community-champions/malak-abu%20hammad',
+        destination: `${process.env.DEVHUB_URL}/community-champions/malak-abu%20hammad/`,
+    },
+    {
+        source: '/community-champions/michael-h%C3%B6ller',
+        destination: `${process.env.DEVHUB_URL}/community-champions/michael-h%C3%B6ller/`,
+    },
+    {
+        source: '/community-champions/nuri-halperin',
+        destination: `${process.env.DEVHUB_URL}/community-champions/nuri-halperin/`,
+    },
+    {
+        source: '/community-champions/rajesh-nair',
+        destination: `${process.env.DEVHUB_URL}/community-champions/rajesh-nair/`,
+    },
+    {
+        source: '/community-champions/rodrigo-nascimento',
+        destination: `${process.env.DEVHUB_URL}/community-champions/rodrigo-nascimento/`,
+    },
+    {
+        source: '/tag/ios',
+        destination: `${process.env.DEVHUB_URL}/tag/ios/`,
+    },
+    {
+        source: '/tag/remote-work',
+        destination: `${process.env.DEVHUB_URL}/tag/remote-work/`,
+    },
+];
 
 module.exports = {
     redirects: redirects,

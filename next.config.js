@@ -1,4 +1,4 @@
-const { redirects, rewrites } = require('./config/redirects');
+const { redirects } = require('./config/redirects');
 
 const configVals = {
     basePath: '/developer',
@@ -7,9 +7,6 @@ const configVals = {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
     redirects: redirects,
-    rewrites: {
-        fallback: rewrites,
-    },
 };
 if (process.env.ANALYZE === 'true') {
     const withBundleAnalyzer = require('@next/bundle-analyzer')({
