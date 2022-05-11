@@ -5465,11 +5465,6 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-slugify@^1.6.5:
-  version "1.6.5"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/slugify/-/slugify-1.6.5.tgz#c8f5c072bf2135b80703589b39a3d41451fbe8c8"
-  integrity sha1-yPXAcr8hNbgHA1ibOaPUFFH76Mg=
-
 source-map-js@^1.0.1, source-map-js@^1.0.2:
   version "1.0.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
