@@ -1,4 +1,4 @@
-const redirects = () => {
+const redirects = async () => {
     return [
         {
             source: '/academia/students',
