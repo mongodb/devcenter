@@ -25,7 +25,6 @@ const parsePrimaryTag = (primaryTag: PrimaryTag) => {
 
 const parseOtherTags = (otherTags: OtherTags) => {
     const tags: Tag[] = [];
-    if (!otherTags) return tags;
 
     const contentType = otherTags.contentType;
     const technology = otherTags.technology;
