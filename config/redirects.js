@@ -1,4 +1,4 @@
-const redirects = async () => {
+const redirects = () => {
     return [
         {
             source: '/academia/students',
@@ -2007,6 +2007,8 @@ const redirects = async () => {
         },
     ];
 };
+
+console.log('test');
 
 module.exports = {
     redirects: redirects,
