@@ -9,6 +9,7 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
     languageItems,
     technologyItems,
     contributedByItems,
+    contentTypeItems = [],
 }) => {
     return (
         <div className={className}>
@@ -24,6 +25,14 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
                 <FilterGroup
                     title="Language"
                     items={languageItems}
+                    filters={allFilters}
+                    setFilters={onFilter}
+                />
+            )}
+            {!!contentTypeItems.length && (
+                <FilterGroup
+                    title="Content Type"
+                    items={contentTypeItems}
                     filters={allFilters}
                     setFilters={onFilter}
                 />

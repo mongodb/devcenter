@@ -24,4 +24,5 @@ export interface FiltersProps {
     languageItems: FilterItem[];
     technologyItems: FilterItem[];
     contributedByItems: FilterItem[];
+    contentTypeItems?: FilterItem[];
 }

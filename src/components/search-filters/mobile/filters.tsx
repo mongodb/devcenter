@@ -23,6 +23,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
     languageItems,
     technologyItems,
     contributedByItems,
+    contentTypeItems = [],
     closeModal,
 }) => {
     const [tempFilters, setTempFilters] = useState<FilterItem[]>(allFilters);
@@ -58,6 +59,18 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                         <FilterGroup
                             title="Language"
                             items={languageItems}
+                            filters={tempFilters}
+                            setFilters={onTempFilter}
+                            isMobile={true}
+                        />
+                        <HorizontalRule spacing="small" />
+                    </>
+                )}
+                {!!contentTypeItems.length && (
+                    <>
+                        <FilterGroup
+                            title="Content Type"
+                            items={contentTypeItems}
                             filters={tempFilters}
                             setFilters={onTempFilter}
                             isMobile={true}

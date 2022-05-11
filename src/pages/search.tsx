@@ -1,69 +1,54 @@
 import { useState } from 'react';
-import type { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 import NextImage from 'next/image';
-import useSWR from 'swr';
 import {
     GridLayout,
-    TypographyScale,
     TextInput,
     ESystemIconNames,
-    Link,
     Button,
+    Link,
+    TypographyScale,
 } from '@mdb/flora';
+import useSWR from 'swr';
 
-import { fetcher } from '../../components/search/utils';
-import Results from '../../components/search/results';
-import Hero from '../../components/hero';
-import RequestContentModal, {
-    requestContentModalStages,
-} from '../../components/request-content-modal';
-import { CTAContainerStyles } from '../../components/hero/styles';
+import Hero from '../components/hero';
+import { DesktopFilters, MobileFilters } from '../components/search-filters';
+import { pageWrapper } from '../styled/styles';
 
-import FilterTag from './filter-tag';
+import { FilterItem } from '../components/search-filters';
+import { fetcher } from '../components/search/utils';
+import { getFilters } from '../page-templates/content-type/utils';
 import {
-    FilterItem,
-    DesktopFilters,
-    MobileFilters,
-} from '../../components/search-filters';
-import { Tag } from '../../interfaces/tag';
-
-import { ContentTypePageProps } from './types';
-import {
-    pageWrapper,
-    desktopFiltersStyles,
     resultsStringAndTagsStyles,
-} from './styles';
+    desktopFiltersStyles,
+} from '../page-templates/content-type/styles';
+import { searchBoxStyles } from '../components/search/styles';
+import FilterTag from '../page-templates/content-type/filter-tag';
 
-import { searchBoxStyles } from '../../components/search/styles';
-import noResults from '../../../public/no-results.png';
+import { Tag } from '../interfaces/tag';
+import noResults from '../../public/no-results.png';
+import Results from '../components/search/results';
 
-import { FeaturedCardSection } from '../../components/card-section';
+export interface SearchProps {
+    l1Items: FilterItem[];
+    languageItems: FilterItem[];
+    technologyItems: FilterItem[];
+    contributedByItems: FilterItem[];
+    contentTypeItems: FilterItem[];
+}
 
-import LanguagesSection from './languages-section';
-import TechnologiesSection from './technologies-section';
-import ProductsSection from './products-section';
-
-const ContentTypePage: NextPage<ContentTypePageProps> = ({
-    contentType,
+const Search: NextPage<SearchProps> = ({
     l1Items,
     languageItems,
     technologyItems,
     contributedByItems,
-    featured,
-    featuredLanguages,
-    featuredTechnologies,
-    featuredProducts,
+    contentTypeItems,
 }) => {
-    ///////////////////////////////////////
-    // HOOKS
-    ///////////////////////////////////////
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
     const [searchString, setSearchString] = useState<string>('');
     const [resultstoShow, setResultsToShow] = useState<number>(10);
-    const [requestContentModalStage, setRequestContentModalStage] =
-        useState<requestContentModalStages>('closed');
     const { data, error, isValidating } = useSWR(
-        () => `s=${searchString}&contentType=${contentType}`,
+        () => `s=${searchString}`,
         fetcher,
         {
             revalidateIfStale: false,
@@ -74,10 +59,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     );
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-
-    ///////////////////////////////////////
-    // HANDLERS
-    ///////////////////////////////////////
+    const onFilter = (filters: FilterItem[]) => {
+        setResultsToShow(10);
+        setAllFilters(filters);
+    };
 
     const clearFilters = () => {
         setAllFilters([]);
@@ -86,11 +71,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setResultsToShow(10);
         setSearchString(event.target.value);
-    };
-
-    const onFilter = (filters: FilterItem[]) => {
-        setResultsToShow(10);
-        setAllFilters(filters);
     };
 
     const onFilterTabClose = (filterTag: FilterItem) => {
@@ -109,15 +89,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         if (!data) {
             return [];
         } else if (!hasFiltersSet) {
-            return data.filter(({ category }) => category === contentType);
+            return data;
         } else {
-            return data.filter(({ tags, category }) => {
-                return (
-                    category === contentType &&
-                    tags.some(
-                        tag => tag.type !== 'ContentType' && tagInFilters(tag)
-                    )
-                );
+            return data.filter(({ tags }) => {
+                return tags.some(tag => tagInFilters(tag));
             });
         }
     })();
@@ -125,12 +100,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const numberOfResults = filteredData.length;
     const shownData = filteredData.slice(0, resultstoShow);
     const fullyLoaded = resultstoShow >= numberOfResults;
-    const hasExtraSections =
-        !!featuredLanguages && !!featuredTechnologies && !!featuredProducts;
-
-    const requestButtonText = `Request ${
-        /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
-    } ${contentType}`; // Regex to tell if it starts with a vowel.
 
     ///////////////////////////////////////
     // COMPUTED ELEMENTS
@@ -138,18 +107,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     if (allFilters.length <= 5 && filterTagsExpanded) {
         setFilterTagsExpanded(false);
     }
-
-    const CTAElement = (
-        <div sx={CTAContainerStyles}>
-            <Button
-                variant="secondary"
-                onClick={() => setRequestContentModalStage('text')}
-                size="large"
-            >
-                {requestButtonText}
-            </Button>
-        </div>
-    );
 
     const emptyState = (
         <div
@@ -172,7 +129,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     setSearchString('');
                 }}
             >
-                Back to all {contentType.toLowerCase()}s
+                Back to all content
             </Button>
         </div>
     );
@@ -244,7 +201,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             {(data || isValidating) && (
                 <TypographyScale variant="heading5">
                     {!allFilters.length && !searchString
-                        ? `All ${contentType}s`
+                        ? 'All Content'
                         : isValidating
                         ? ''
                         : numberOfResults === 1
@@ -280,12 +237,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     return (
         <>
-            <Hero
-                crumbs={[]}
-                name={`${contentType}s`}
-                description="Some description"
-                ctas={CTAElement}
-            />
+            <Hero name="Search" />
             <div sx={pageWrapper}>
                 <GridLayout
                     sx={{
@@ -300,6 +252,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         languageItems={languageItems}
                         technologyItems={technologyItems}
                         contributedByItems={contributedByItems}
+                        contentTypeItems={contentTypeItems}
                     />
                     <div
                         sx={{
@@ -309,49 +262,12 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         <div sx={searchBoxStyles}>
                             <TextInput
                                 name="search-text-input"
-                                label={`Search ${contentType}s`}
+                                label="Search All"
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
                                 onChange={onSearch}
                             />
                         </div>
-                        {!searchString && !hasFiltersSet && (
-                            <>
-                                <FeaturedCardSection
-                                    content={featured}
-                                    sx={{
-                                        marginBottom: [
-                                            'section20',
-                                            null,
-                                            'section50',
-                                        ],
-                                    }}
-                                    title={`Featured ${contentType}s`}
-                                />
-                                {hasExtraSections && (
-                                    <>
-                                        {!!featuredLanguages.length && (
-                                            <LanguagesSection
-                                                title={`${contentType}s by Programming Language`}
-                                                items={featuredLanguages}
-                                            />
-                                        )}
-                                        {!!featuredTechnologies.length && (
-                                            <TechnologiesSection
-                                                title={`${contentType}s by Technology`}
-                                                items={featuredTechnologies}
-                                            />
-                                        )}
-                                        {!!featuredProducts.length && (
-                                            <ProductsSection
-                                                title={`${contentType}s by Product`}
-                                                items={featuredProducts}
-                                            />
-                                        )}
-                                    </>
-                                )}
-                            </>
-                        )}
                         {resultsStringAndTags}
                         {!!filteredData.length || isValidating || error ? (
                             <>
@@ -389,11 +305,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     </div>
                 </GridLayout>
             </div>
-            <RequestContentModal
-                setModalStage={setRequestContentModalStage}
-                modalStage={requestContentModalStage}
-                contentCategory={contentType}
-            />
             {mobileFiltersOpen && (
                 <MobileFilters
                     onFilter={onFilter}
@@ -402,6 +313,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     languageItems={languageItems}
                     technologyItems={technologyItems}
                     contributedByItems={contributedByItems}
+                    contentTypeItems={contentTypeItems}
                     closeModal={() => setMobileFiltersOpen(false)}
                 />
             )}
@@ -409,4 +321,13 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     );
 };
 
-export default ContentTypePage;
+export const getStaticProps: GetStaticProps<SearchProps> = async () => {
+    // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
+    const filters = await getFilters();
+
+    return {
+        props: filters,
+    };
+};
+
+export default Search;

@@ -1,6 +1,5 @@
 import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
-import { getAllContentItems } from '../../service/get-all-content';
 import { FilterItem } from '../../components/search-filters';
 import { Tag } from '../../interfaces/tag';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';
@@ -8,6 +7,8 @@ import { languageToLogo } from '../../utils/language-to-logo';
 import { technologyToLogo } from '../../utils/technology-to-logo';
 import { productToLogo } from '../../utils/product-to-logo';
 import { ITopicCard } from '../../components/topic-card/types';
+import getAllSearchContent from '../../api-requests/get-all-search-content';
+import { SearchItem } from '../../components/search/types';
 
 interface TagWithCount extends Tag {
     count: number;
@@ -117,18 +118,19 @@ export const getFeaturedLangProdTech = (
     return { featuredLanguages, featuredTechnologies, featuredProducts };
 };
 
-export const getFilters = async (contentType: PillCategory) => {
-    const allContent: ContentItem[] = await getAllContentItems();
+export const getFilters = async (contentType?: PillCategory) => {
+    const allFilters = contentType === undefined;
+    const allContent: SearchItem[] = await getAllSearchContent();
 
     const filterItems: FilterItem[] = [];
 
-    allContent.forEach(({ tags, category }) => {
+    allContent.forEach(({ tags, type }) => {
         tags.forEach(tag => {
             if (tag.type === 'L2Product') {
                 const l2FilterItem: FilterItem = {
                     type: tag.type,
                     name: tag.name,
-                    count: category === contentType ? 1 : 0,
+                    count: allFilters || type === contentType ? 1 : 0,
                     subItems: [],
                 };
                 const l1 = tags.filter(tag => tag.type === 'L1Product')[0]; // There should always be an L1 on a piece with an L2 tag.
@@ -144,7 +146,7 @@ export const getFilters = async (contentType: PillCategory) => {
                     );
                     if (existingL2) {
                         // If L2 is already attached, only bump the count (if the content type matches).
-                        if (category === contentType) {
+                        if (allFilters || type === contentType) {
                             existingL2.count++;
                         }
                         return;
@@ -156,7 +158,7 @@ export const getFilters = async (contentType: PillCategory) => {
                         type: l1.type,
                         name: l1.name,
                         subItems: [l2FilterItem],
-                        count: category === contentType ? 1 : 0,
+                        count: allFilters || type === contentType ? 1 : 0,
                     };
                     return filterItems.push(l1FilterItem);
                 }
@@ -168,7 +170,7 @@ export const getFilters = async (contentType: PillCategory) => {
                 );
                 if (existingItem) {
                     // If it exists, increment count only if the content type matches.
-                    if (category === contentType) {
+                    if (allFilters || type === contentType) {
                         existingItem.count++;
                     }
                     return;
@@ -177,7 +179,7 @@ export const getFilters = async (contentType: PillCategory) => {
                     const filterItem: FilterItem = {
                         type: tag.type,
                         name: tag.name,
-                        count: category === contentType ? 1 : 0,
+                        count: allFilters || type === contentType ? 1 : 0,
                         subItems: [],
                     };
                     return filterItems.push(filterItem);

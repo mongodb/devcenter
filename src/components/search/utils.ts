@@ -1,36 +1,14 @@
 import { Fetcher } from 'swr';
 
 import { ContentItem } from '../../interfaces/content-item';
-import { PillCategory } from '../../types/pill-category';
-import { Tag } from '../../interfaces/tag';
+import { SearchItem } from './types';
 import { Image } from '../../interfaces/image';
 import { Author } from '../../interfaces/author';
 
 const searchEndpoint =
     'https://data.mongodb-api.com/app/devhub-search-service-fldiy/endpoint/search_devcenter';
 
-interface SearchImage {
-    url: string;
-    alternativeText: string;
-}
-
-interface SearchAuthor {
-    name: string;
-    image: SearchImage;
-    calculated_slug: string;
-}
-interface SearchItem {
-    type: PillCategory;
-    authors: SearchAuthor[];
-    name: string;
-    image: SearchImage;
-    description: string;
-    slug: string;
-    date: string;
-    tags: Tag[];
-}
-
-const searchItemToContentItem = ({
+export const searchItemToContentItem = ({
     type,
     authors,
     name,
