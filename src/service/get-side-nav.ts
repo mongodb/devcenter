@@ -26,8 +26,6 @@ export const getSideNav = async (
         });
     });
 
-    setURLPathForNavItems(tertiaryNavItems);
-
     const uniqueTertiaryNavItems = deduplicate(tertiaryNavItems);
     return uniqueTertiaryNavItems.sort((a, b) => {
         return a.title.toLowerCase().localeCompare(b.title.toLowerCase());

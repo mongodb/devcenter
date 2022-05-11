@@ -45,6 +45,7 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import PodcastPlayer from '../components/podcast-player/podcast-player';
 import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
 import { CollectionType } from '../types/collection-type';
+import { setURLPathForNavItems } from '../utils/format-url-path';
 
 interface ContentPageProps {
     contentItem: ContentItem;
@@ -475,7 +476,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
         }
     }
-    const tertiaryNavItems = await getSideNav(sideNavFilterSlug);
+    let tertiaryNavItems = await getSideNav(sideNavFilterSlug);
+    setURLPathForNavItems(tertiaryNavItems);
 
     const data = {
         contentItem,
