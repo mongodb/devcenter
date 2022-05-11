@@ -12,12 +12,16 @@ import React from 'react';
 import Card, { getCardProps } from '../../components/card';
 import { getAllContentItems } from '../../service/get-all-content';
 import { ContentItem } from '../../interfaces/content-item';
+import { Grid } from 'theme-ui';
+import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
+import AuthorSocialButtons from '../../components/author-social-buttons';
 
 interface AuthorPageProps {
     name: string;
     bio?: string;
     image?: Image;
     location?: string;
+    title?: string;
     linkedin?: string;
     facebook?: string;
     twitter?: string;
@@ -30,26 +34,54 @@ const middleSectionStyles = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', '3 /span 9'],
 };
 const eyebrowStyles = {
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 12'],
-    marginBottom: ['inc20', null, null, 'inc30'],
+    gridColumn: ['span 6', null, 'span 8', 'span 12'],
+    marginBottom: ['inc70', null, null, 'inc100'],
 };
 
 const contentStyles = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 12'],
+    paddingTop: 'inc70',
+};
+
+const speakerStyles = {
+    marginBottom: ['inc40'],
+};
+
+const getTitleAndLocation = (
+    title: string | undefined,
+    location: string | undefined
+) => {
+    if (title && location) {
+        return title + '-' + location;
+    } else if (title) {
+        return title;
+    } else if (location) {
+        return location;
+    } else {
+        return null;
+    }
 };
 
 const AuthorPage: NextPage<AuthorPageProps> = ({
     name,
     bio,
     image,
+    location,
+    title,
+    linkedin,
+    facebook,
+    twitter,
+    youtube,
     calculated_slug,
     articles,
 }) => {
+    const titleAndLocation = getTitleAndLocation(title, location);
+    const hasSocial = facebook || twitter || linkedin || youtube;
     return (
         <>
             <div
                 sx={{
-                    paddingBottom: 'inc160',
+                    //paddingBottom: 'inc160',
                     px: ['inc40', null, 'inc50', 'inc70'],
                     paddingTop: ['inc40', null, 'inc50', 'inc70'],
                 }}
@@ -62,43 +94,115 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                     <Eyebrow sx={eyebrowStyles}>Developer Topics</Eyebrow>
                     <div sx={middleSectionStyles}>
                         <SpeakerLockup
+                            sx={speakerStyles}
                             profileImage={{
                                 src: image
                                     ? image.url
-                                    : 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_7a04dd64b1.png',
+                                    : getPlaceHolderImage(undefined),
                                 alt: 'Random people avatar',
                             }}
                         />
                         <TypographyScale
                             variant="heading2"
                             sx={{
-                                marginBottom: ['inc20', null, null, 'inc30'],
+                                marginBottom: 'inc50',
                             }}
                         >
                             {name}
                         </TypographyScale>
-                        <TypographyScale
-                            variant="body1"
+                        {titleAndLocation && (
+                            <TypographyScale
+                                variant="body1"
+                                sx={{
+                                    display: 'block',
+                                    color: 'black50',
+                                    marginBottom: 'inc50',
+                                }}
+                            >
+                                {titleAndLocation}
+                            </TypographyScale>
+                        )}
+                        {bio && (
+                            <TypographyScale
+                                variant="body1"
+                                sx={{
+                                    display: 'block',
+                                    marginBottom: [
+                                        'inc70',
+                                        null,
+                                        null,
+                                        'inc100',
+                                    ],
+                                }}
+                            >
+                                {bio}
+                            </TypographyScale>
+                        )}
+                    </div>
+                    {hasSocial && (
+                        <div
                             sx={{
-                                marginBottom: ['inc20', null, null, 'inc30'],
+                                gridColumn: [
+                                    'span 6',
+                                    null,
+                                    'span 8',
+                                    'span 12',
+                                    'span 12',
+                                ],
+                                marginBottom: 'inc40',
                             }}
                         >
-                            {bio}
-                        </TypographyScale>
-                    </div>
-                    <div sx={contentStyles}>
-                        {articles &&
-                            articles.map(article => {
-                                const cardProps = getCardProps(
-                                    article,
-                                    'medium'
-                                );
-                                return (
-                                    <Card key={article.slug} {...cardProps} />
-                                );
-                            })}
-                    </div>
+                            <AuthorSocialButtons
+                                facebookUrl={facebook}
+                                linkedinUrl={linkedin}
+                                twitterUrl={twitter}
+                                youtubeUrl={youtube}
+                            />
+                        </div>
+                    )}
                 </GridLayout>
+            </div>
+            <div
+                sx={{
+                    backgroundColor: 'black10',
+                }}
+            >
+                <div
+                    sx={{
+                        paddingBottom: 'inc160',
+                        px: ['inc40', null, 'inc50', 'inc70'],
+                    }}
+                >
+                    <GridLayout
+                        sx={{
+                            rowGap: 0,
+                        }}
+                    >
+                        <div sx={contentStyles}>
+                            <TypographyScale
+                                variant="heading5"
+                                sx={{
+                                    marginBottom: 'inc40',
+                                }}
+                            >
+                                Content by {name}
+                            </TypographyScale>
+                            <Grid
+                                gap={['inc30', null, 'inc40']}
+                                columns={[1, null, 2, 4]}
+                            >
+                                {articles &&
+                                    articles.map(piece => (
+                                        <Card
+                                            sx={{ height: '100%' }}
+                                            key={piece.slug}
+                                            {...getCardProps(piece, 'small')}
+                                        />
+                                    ))}
+                            </Grid>
+                        </div>
+                    </GridLayout>
+                </div>
             </div>
         </>
     );
@@ -154,6 +258,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         bio: author.bio,
         image: author.image,
         location: author.location,
+        title: author.title,
         linkedin: author.linkedin,
         facebook: author.facebook,
         twitter: author.twitter,
