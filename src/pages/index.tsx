@@ -3,10 +3,18 @@ import { GetStaticProps } from 'next';
 import { clientFactory } from '../utils/client-factory';
 import { getArticles } from '../api-requests/get-articles';
 import { Article } from '../interfaces/article';
-import { getSecondaryNavMenu } from '../service/get-secondary-nav-menu';
-import { GridLayout, Link, TextInput, TypographyScale } from '@mdb/flora';
+import {
+    EThirdPartyLogoVariant,
+    GridLayout,
+    Link,
+    TextInput,
+    ThirdPartyLogo,
+    TypographyScale,
+} from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import styled from '@emotion/styled';
+import ShowcaseCard from '../components/showcase-card';
+import { cardsLanguagesData, cardsTechnologiesData } from '../data/homepage';
 
 interface HomeProps {
     articles: Article[];
@@ -40,7 +48,7 @@ const Main = styled.main`
 
     .search-input {
         > div {
-            width: 100%;
+            max-width: 100%;
         }
     }
 
@@ -207,7 +215,12 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                     <div
                         className="search-hero"
                         sx={{
-                            gridColumn: '1 / span 11',
+                            gridColumn: [
+                                'span 6',
+                                'span 8',
+                                'span 8',
+                                '2 / span 10',
+                            ],
                             textAlign: 'center',
                             marginTop: 'section40',
                             marginBottom: 'section40',
@@ -253,21 +266,30 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             View All Languages
                         </Link>
                     </div>
-                    {Array(4)
-                        .fill('Card Placeholder')
-                        .map((card, index) => (
+                    {cardsLanguagesData?.map(
+                        ({ titleLink, href, imageString, cta, links }) => (
                             <div
-                                className="card-placeholder developer-center-cards"
-                                key={index}
+                                className="developer-center-cards"
+                                key={titleLink.text}
                             >
-                                <TypographyScale
-                                    variant="body1"
-                                    color="default"
-                                >
-                                    Card Placeholder 1
-                                </TypographyScale>
+                                <ShowcaseCard
+                                    sx={{ backgroundColor: 'white' }}
+                                    alignment="left"
+                                    titleLink={titleLink}
+                                    image={
+                                        <ThirdPartyLogo
+                                            variant={imageString}
+                                            href={href}
+                                            target="_blank"
+                                            imageWidth="150px"
+                                        />
+                                    }
+                                    cta={cta}
+                                    links={links}
+                                />
                             </div>
-                        ))}
+                        )
+                    )}
                     <div
                         className="developer-center-call-to-action-mobile"
                         sx={{ gridColumn: '11 / span 2', marginTop: 'inc50' }}
@@ -297,21 +319,28 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             Integrate MongoDB with the technologies you use
                         </TypographyScale>
                     </div>
-                    {Array(9)
-                        .fill('Card Placeholder')
-                        .map((card, index) => (
+                    {cardsTechnologiesData?.map(
+                        ({ titleLink, imageString, href }) => (
                             <div
-                                className="card-placeholder technologies-cards"
-                                key={index}
+                                className="developer-center-cards"
+                                key={titleLink.text}
                             >
-                                <TypographyScale
-                                    variant="body1"
-                                    color="default"
-                                >
-                                    Card Placeholder
-                                </TypographyScale>
+                                <ShowcaseCard
+                                    sx={{ backgroundColor: 'white' }}
+                                    alignment="center"
+                                    titleLink={titleLink}
+                                    image={
+                                        <ThirdPartyLogo
+                                            variant={imageString}
+                                            href={href}
+                                            target="_blank"
+                                            imageWidth="150px"
+                                        />
+                                    }
+                                />
                             </div>
-                        ))}
+                        )
+                    )}
                 </GridLayout>
                 <GridLayout className="last-row">
                     <div className="products-header">
