@@ -37,7 +37,9 @@ const ProductsSection: React.FunctionComponent<ProductsSectionProps> = ({
                 {items
                     .slice(0, itemsToDisplay)
                     .map(({ titleLink, imageString, cta, links }) => {
-                        const image = <BrandedIcon name={imageString} />;
+                        const image = imageString ? (
+                            <BrandedIcon name={imageString} />
+                        ) : null;
                         return (
                             <ShowcaseCard
                                 key={titleLink.text}

@@ -41,11 +41,11 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
                 {items
                     .slice(0, itemsToDisplay)
                     .map(({ titleLink, imageString }) => {
-                        const image = (
+                        const image = imageString ? (
                             <ThirdPartyLogo
                                 variant={imageString as EThirdPartyLogoVariant}
                             />
-                        );
+                        ) : null;
                         return (
                             <ShowcaseCard
                                 key={titleLink.text}

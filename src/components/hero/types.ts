@@ -5,8 +5,8 @@ export interface CTA {
     customCSS?: React.CSSProperties;
 }
 export interface HeroProps {
-    crumbs: Crumb[];
+    crumbs?: Crumb[];
     name: string;
-    description: string;
-    ctas: JSX.Element | null;
+    description?: string;
+    ctas?: JSX.Element | null;
 }
