@@ -85,12 +85,12 @@ const searchFeaturedConfig = {
         type: 'link-arrow' as CTAType,
         text: 'Explore Content',
         config: {
-            href: '/developer/products/search',
+            href: '/developer/products/atlas/full-text-search',
             linkIconDisableExpand: true, // Doesn't seem to work
         },
     },
     imageryType: 'image' as ImageryType,
-    title: 'Search',
+    title: 'Full Text Search',
     text: 'Advanced search capabilities, built for MongoDB. ',
 };
 

@@ -35,7 +35,7 @@ const jsFeaturedConfig = {
         },
     },
     imageryType: 'image' as ImageryType,
-    title: 'JavaScript',
+    title: 'Javascript',
     text: 'We still need descriptions for all of these right?',
 };
 const javaFeaturedConfig = {
@@ -65,7 +65,7 @@ const cSharpFeaturedConfig = {
         type: 'link-arrow' as CTAType,
         text: 'Explore Content',
         config: {
-            href: '/developer/languages/c-sharp',
+            href: '/developer/languages/csharp',
             linkIconDisableExpand: true, // Doesn't seem to work
         },
     },
