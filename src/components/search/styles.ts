@@ -12,6 +12,7 @@ export const titleStyles = {
 export const searchBoxStyles = {
     '& > div': {
         width: '100%',
+        maxWidth: 'unset',
     },
     marginBottom: ['inc30', null, 'inc70'],
 };
