@@ -1,6 +1,7 @@
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import { getAllContentItems } from './get-all-content';
 import { ContentItem } from '../interfaces/content-item';
+import { setURLPathForNavItems } from '../utils/format-url-path';
 
 export const getSideNav = async (
     inputSlug: string
@@ -11,8 +12,6 @@ export const getSideNav = async (
         const slugsInTags = c.tags.map(tag => tag.slug);
         return slugsInTags.includes(inputSlug);
     });
-
-    // #TODO:
 
     let pluralize = require('pluralize');
 
@@ -26,6 +25,8 @@ export const getSideNav = async (
             }
         });
     });
+
+    setURLPathForNavItems(tertiaryNavItems);
 
     const uniqueTertiaryNavItems = deduplicate(tertiaryNavItems);
     return uniqueTertiaryNavItems.sort((a, b) => {

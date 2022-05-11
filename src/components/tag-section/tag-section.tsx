@@ -1,4 +1,5 @@
 import { Tag } from '@mdb/flora';
+import { getURLPath } from '../../utils/format-url-path';
 
 import { tagStyles, tagWrapperStyles } from './styles';
 import { TagSectionProps } from './types';
@@ -19,7 +20,7 @@ const TagSection: React.FunctionComponent<TagSectionProps> = ({
             .map(tag => (
                 <Tag
                     key={`${tag.name} ${tag.type}`}
-                    href={'/developer' + tag.slug}
+                    href={getURLPath(tag.slug)}
                     variant="small"
                     sx={tagStyles}
                 >

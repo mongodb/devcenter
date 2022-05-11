@@ -21,6 +21,7 @@ import { createTopicPageCTAS } from '../../components/hero/utils';
 import { getDistinctL1L2Slugs } from '../../service/get-distinct-l1-l2-slugs';
 
 import { iconStyles } from '../../components/topic-card/styles';
+import { setURLPathForNavItems } from '../../utils/format-url-path';
 
 interface TopicProps {
     name: string;
@@ -94,6 +95,8 @@ const Topic: NextPage<TopicProps> = ({
         const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
         return { ...topic, icon };
     });
+
+    setURLPathForNavItems(tertiaryNavItems);
 
     return (
         <>

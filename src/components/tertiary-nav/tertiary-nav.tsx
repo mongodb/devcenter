@@ -9,6 +9,7 @@ import {
 } from './styles';
 import { scrollListener } from './utils';
 import { useEffect } from 'react';
+import { getURLPath } from '../../utils/format-url-path';
 
 const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
     items,
@@ -32,11 +33,7 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
                 />
                 <nav sx={navTagStyles} id="navScroll">
                     {items.map(({ title, url }) => (
-                        <Link
-                            href={'/developer' + url}
-                            key={title}
-                            navItem={true}
-                        >
+                        <Link href={getURLPath(url)} key={title} navItem={true}>
                             {title}
                         </Link>
                     ))}

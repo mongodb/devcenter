@@ -27,6 +27,7 @@ import { ContentTypeTag } from '../../../interfaces/tag-type-response';
 import { capitalizeFirstLetter } from '../../../utils/format-string';
 
 import { iconStyles } from '../../../components/topic-card/styles';
+import { setURLPathForNavItems } from '../../../utils/format-url-path';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -83,6 +84,8 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         const icon = <BrandedIcon sx={iconStyles} name={subTopic.icon} />;
         return { ...subTopic, icon };
     });
+
+    setURLPathForNavItems(tertiaryNavItems);
 
     const header = (
         <GridLayout
@@ -201,7 +204,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
             const parsedItemUrl = item.url.startsWith('/')
                 ? item.url.substring(1)
                 : item.url;
+
             console.log(parsedItemUrl);
+
             /*
             eg: tertiary nav item url /product/atlas/article
             /product/atlas/video etc
