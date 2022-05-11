@@ -83,7 +83,7 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
 
     const LENGTH = articles.length;
     const DATA = articles;
-    const LIMIT = 2;
+    const LIMIT = 8;
     const SHOW_MORE_INITIAL_STATE = LENGTH > LIMIT;
 
     const [showMore, setShowMore] = useState(SHOW_MORE_INITIAL_STATE);
@@ -92,7 +92,7 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
 
     const loadMore = () => {
         const newIndex = index + LIMIT;
-        const newShowMore = newIndex < LENGTH - 1;
+        const newShowMore = newIndex <= LENGTH - 1;
         const newList = list.concat(DATA.slice(index, newIndex));
         setIndex(newIndex);
         setList(newList);
@@ -214,7 +214,7 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                             </TypographyScale>
                             <Grid
                                 gap={['inc30', null, 'inc40']}
-                                columns={[1, null, 2, 2]}
+                                columns={[1, null, 2, 4]}
                             >
                                 {list.map(piece => (
                                     <Card
