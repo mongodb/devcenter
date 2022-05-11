@@ -4,6 +4,7 @@ import getAllVideosFromAPI from '../api-requests/get-all-videos';
 
 export const getAllVideos = async (): Promise<Video[]> => {
     const videos = await getAllVideosFromAPI(STRAPI_CLIENT);
+
     videos.forEach(v => {
         if (v.otherTags) {
             v.otherTags.contentType = {

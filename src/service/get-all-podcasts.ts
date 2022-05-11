@@ -4,6 +4,7 @@ import getAllPodcastsFromAPI from '../api-requests/get-all-podcasts';
 
 export const getAllPodcasts = async (): Promise<Podcast[]> => {
     const podcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
+
     podcasts.forEach(p => {
         if (p.otherTags) {
             p.otherTags.contentType = {

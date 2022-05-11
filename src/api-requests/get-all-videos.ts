@@ -55,7 +55,6 @@ const getAllVideosFromAPI = async (
     const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
         { query }
     );
-
     return data.videos;
 };
 
