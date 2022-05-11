@@ -5,7 +5,7 @@ import { getArticles } from '../../src/api-requests/get-articles';
 
 const expectedQuery = gql`
     query Articles {
-        articles @rest(type: "Article", path: "/articles") {
+        articles @rest(type: "Article", path: "/articles?_limit=-1") {
             title: name
             description
             slug
