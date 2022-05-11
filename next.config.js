@@ -6,9 +6,10 @@ const configVals = {
     images: {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
-    // #TODO: Fix issue with router.js refetching
     redirects: redirects,
-    rewrites: rewrites,
+    rewrites: {
+        fallback: rewrites,
+    },
 };
 if (process.env.ANALYZE === 'true') {
     const withBundleAnalyzer = require('@next/bundle-analyzer')({
