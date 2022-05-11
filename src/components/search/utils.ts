@@ -18,12 +18,14 @@ export const searchItemToContentItem = ({
     date,
     tags,
 }: SearchItem): ContentItem => {
-    const itemImage: Image | undefined = image
-        ? {
-              url: image.url,
-              alt: image.alternativeText,
-          }
-        : undefined;
+    const itemImage: Image | undefined =
+        // Sometimes the image url can be an object with an "$undefined" key.
+        !!image && !!image.url && typeof image.url === 'string'
+            ? {
+                  url: image.url,
+                  alt: image.alternativeText,
+              }
+            : undefined;
     const itemAuthors: Author[] = authors.map(auth => ({
         name: auth.name,
         image: {

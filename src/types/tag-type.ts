@@ -6,4 +6,5 @@ export type TagType =
     | 'ExpertiseLevel'
     | 'AuthorType'
     | 'SpokenLanguage'
-    | 'ContentType';
+    | 'ContentType'
+    | 'CodeLevel';

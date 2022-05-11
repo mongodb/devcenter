@@ -9,30 +9,15 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
     languageItems,
     technologyItems,
     contributedByItems,
+    expertiseLevelItems,
     contentTypeItems = [],
 }) => {
     return (
         <div className={className}>
-            {!!l1Items.length && (
-                <FilterGroup
-                    title="Products"
-                    items={l1Items}
-                    filters={allFilters}
-                    setFilters={onFilter}
-                />
-            )}
             {!!languageItems.length && (
                 <FilterGroup
                     title="Language"
                     items={languageItems}
-                    filters={allFilters}
-                    setFilters={onFilter}
-                />
-            )}
-            {!!contentTypeItems.length && (
-                <FilterGroup
-                    title="Content Type"
-                    items={contentTypeItems}
                     filters={allFilters}
                     setFilters={onFilter}
                 />
@@ -45,12 +30,32 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
                     setFilters={onFilter}
                 />
             )}
-            {/* <FilterGroup
-        title="Expertise Level"
-        items={expertiseLevelItems}
-        filters={expertiseLevelFilters}
-        setFilters={setExpertiseLevelFilters}
-    /> */}
+
+            {!!contentTypeItems.length && (
+                <FilterGroup
+                    title="Content Type"
+                    items={contentTypeItems}
+                    filters={allFilters}
+                    setFilters={onFilter}
+                />
+            )}
+            {!!l1Items.length && (
+                <FilterGroup
+                    title="Products"
+                    items={l1Items}
+                    filters={allFilters}
+                    setFilters={onFilter}
+                />
+            )}
+
+            {!!expertiseLevelItems.length && (
+                <FilterGroup
+                    title="Expertise Level"
+                    items={expertiseLevelItems}
+                    filters={allFilters}
+                    setFilters={onFilter}
+                />
+            )}
             {!!contributedByItems.length && (
                 <FilterGroup
                     title="Contributed By"

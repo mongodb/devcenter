@@ -162,6 +162,45 @@ export const getFilters = async (contentType?: PillCategory) => {
                     };
                     return filterItems.push(l1FilterItem);
                 }
+            } else if (tag.type === 'CodeLevel') {
+                // Basically repeating the logic for L2s, can probably be separated and reused.
+                const codeLevelItem: FilterItem = {
+                    type: tag.type,
+                    name: tag.name,
+                    count: allFilters || type === contentType ? 1 : 0,
+                    subItems: [],
+                };
+                const codeExampleFilterItem = filterItems.find(
+                    item =>
+                        item.type === 'ContentType' &&
+                        item.name === 'Code Example'
+                );
+                if (codeExampleFilterItem) {
+                    // If code examples tag already exists, check if this code level is attached.
+                    const existingCodeLevel =
+                        codeExampleFilterItem.subItems.find(
+                            subItem =>
+                                codeLevelItem.name === subItem.name &&
+                                codeLevelItem.type === codeLevelItem.type
+                        );
+                    if (existingCodeLevel) {
+                        // If code level is already attached, only bump the count (if the content type matches).
+                        if (allFilters || type === contentType) {
+                            existingCodeLevel.count++;
+                        }
+                        return;
+                    }
+                    return codeExampleFilterItem.subItems.push(codeLevelItem);
+                } else {
+                    // If the Code Example tag doesn't exist, neither does the L2, so create L1 and add new L2 to it.
+                    const codeExampleFilterItem: FilterItem = {
+                        type: 'ContentType',
+                        name: 'Code Example',
+                        subItems: [codeLevelItem],
+                        count: allFilters || type === contentType ? 1 : 0,
+                    };
+                    return filterItems.push(codeExampleFilterItem);
+                }
             } else {
                 // For everything else, just check if it exists.
                 const existingItem = filterItems.find(
@@ -209,9 +248,11 @@ export const getFilters = async (contentType?: PillCategory) => {
     const contributedByItems = filterItems
         .filter(({ type }) => type === 'AuthorType')
         .sort((prev, next) => next.count - prev.count);
-
     const contentTypeItems = filterItems
         .filter(({ type }) => type === 'ContentType')
+        .sort((prev, next) => next.count - prev.count);
+    const expertiseLevelItems = filterItems
+        .filter(({ type }) => type === 'ExpertiseLevel')
         .sort((prev, next) => next.count - prev.count);
 
     return {
@@ -220,5 +261,6 @@ export const getFilters = async (contentType?: PillCategory) => {
         technologyItems,
         contributedByItems,
         contentTypeItems,
+        expertiseLevelItems,
     };
 };

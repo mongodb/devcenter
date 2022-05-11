@@ -19,7 +19,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
     setFilters,
     isMobile = false,
 }) => {
-    const [expanded, setExpanded] = useState<boolean>(title ? false : true);
+    const [expanded, setExpanded] = useState<boolean>(isMobile ? false : true);
     const [showAll, setShowAll] = useState<boolean>(false);
 
     const onExpand = () => {
@@ -113,10 +113,15 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                                 if (filter.subItems && filter.subItems.length) {
                                     return (
                                         <div
-                                            key={`${filter.name} ${filter.type}`}
+                                            // Need to specify mobile here or it gets confused with mobile and desktop checkboxes present.
+                                            key={`${filter.name} ${
+                                                filter.type
+                                            } ${isMobile ? 'mobile' : ''}`}
                                         >
                                             <Checkbox
-                                                name={`${filter.name} ${filter.type}`}
+                                                name={`${filter.name} ${
+                                                    filter.type
+                                                } ${isMobile ? 'mobile' : ''}`}
                                                 label={`${filter.name} (${filter.count})`}
                                                 onToggle={checked =>
                                                     onCheckToggle(
@@ -144,8 +149,12 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = ({
                                 }
                                 return (
                                     <Checkbox
-                                        key={`${filter.name} ${filter.type}`}
-                                        name={`${filter.name} ${filter.type}`}
+                                        key={`${filter.name} ${filter.type} ${
+                                            isMobile ? 'mobile' : ''
+                                        }`}
+                                        name={`${filter.name} ${filter.type} ${
+                                            isMobile ? 'mobile' : ''
+                                        }`}
                                         label={`${filter.name} (${filter.count})`}
                                         onToggle={checked =>
                                             onCheckToggle(checked, filter)

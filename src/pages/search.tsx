@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import type { NextPage, GetStaticProps } from 'next';
 import NextImage from 'next/image';
 import {
@@ -28,6 +28,7 @@ import FilterTag from '../page-templates/content-type/filter-tag';
 import { Tag } from '../interfaces/tag';
 import noResults from '../../public/no-results.png';
 import Results from '../components/search/results';
+import { useRouter } from 'next/router';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -35,6 +36,7 @@ export interface SearchProps {
     technologyItems: FilterItem[];
     contributedByItems: FilterItem[];
     contentTypeItems: FilterItem[];
+    expertiseLevelItems: FilterItem[];
 }
 
 const Search: NextPage<SearchProps> = ({
@@ -43,7 +45,11 @@ const Search: NextPage<SearchProps> = ({
     technologyItems,
     contributedByItems,
     contentTypeItems,
+    expertiseLevelItems,
 }) => {
+    const router = useRouter();
+    const { isReady, query } = router;
+
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
     const [searchString, setSearchString] = useState<string>('');
     const [resultstoShow, setResultsToShow] = useState<number>(10);
@@ -59,22 +65,219 @@ const Search: NextPage<SearchProps> = ({
     );
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+    // Populate the search/filters with query params on page load/param change.
+    useEffect(() => {
+        if (isReady) {
+            const {
+                s,
+                product,
+                language,
+                technology,
+                contributedBy,
+                contentType,
+                expertiseLevel,
+            } = query;
+            if (s && typeof s === 'string' && s !== searchString) {
+                setSearchString(s);
+            }
+            let allNewFilters: FilterItem[] = [];
+            if (product) {
+                // Gotta look for L1s and L2s that match.
+                const products =
+                    typeof product === 'object' ? product : [product];
+                let productFilters: FilterItem[] = [];
+
+                products.forEach(prod => {
+                    const filterProduct = l1Items.find(
+                        l1 =>
+                            l1.name === prod ||
+                            l1.subItems.find(l2 => l2.name === prod)
+                    );
+                    if (filterProduct) {
+                        if (filterProduct.name !== prod) {
+                            // This means it's an L2 match.
+                            productFilters.push(
+                                filterProduct.subItems.find(
+                                    l2 => l2.name === prod
+                                ) as FilterItem
+                            );
+                        } else {
+                            productFilters.push(filterProduct);
+                        }
+                    }
+                });
+                allNewFilters = allNewFilters.concat(productFilters);
+            }
+            if (contentType) {
+                // Gotta look for content types and dig down into the subcategories of Code Examples.
+                const contentTypes =
+                    typeof contentType === 'object'
+                        ? contentType
+                        : [contentType];
+                let contentTypeFilters: FilterItem[] = [];
+
+                contentTypes.forEach(ct => {
+                    const filterContentType = contentTypeItems.find(
+                        l1 =>
+                            l1.name === ct ||
+                            l1.subItems.find(l2 => l2.name === ct)
+                    );
+                    if (filterContentType) {
+                        if (filterContentType.name !== ct) {
+                            // This means it's an L2 match.
+                            contentTypeFilters.push(
+                                filterContentType.subItems.find(
+                                    l2 => l2.name === ct
+                                ) as FilterItem
+                            );
+                        } else {
+                            contentTypeFilters.push(filterContentType);
+                        }
+                    }
+                });
+                allNewFilters = allNewFilters.concat(contentTypeFilters);
+            }
+            // For the rest, just map it to the corresponding item.
+            if (language) {
+                // Technically can either come in as a string of a string[], so convert to a string[]
+                // and loop over by default.
+                const languages =
+                    typeof language === 'object' ? language : [language];
+                const languageFilters = languageItems.filter(lang =>
+                    languages.includes(lang.name)
+                );
+                allNewFilters = allNewFilters.concat(languageFilters);
+            }
+            if (technology) {
+                const technologies =
+                    typeof technology === 'object' ? technology : [technology];
+                const technologyFilters = technologyItems.filter(tech =>
+                    technologies.includes(tech.name)
+                );
+                allNewFilters = allNewFilters.concat(technologyFilters);
+            }
+            if (contributedBy) {
+                const contributedBys =
+                    typeof contributedBy === 'object'
+                        ? contributedBy
+                        : [contributedBy];
+                const contributedByFilters = contributedByItems.filter(
+                    contrib => contributedBys.includes(contrib.name)
+                );
+                allNewFilters = allNewFilters.concat(contributedByFilters);
+            }
+            if (expertiseLevel) {
+                const expertiseLevels =
+                    typeof expertiseLevel === 'object'
+                        ? expertiseLevel
+                        : [expertiseLevel];
+                const expertiseLevelFilters = expertiseLevelItems.filter(exp =>
+                    expertiseLevels.includes(exp.name)
+                );
+                allNewFilters = allNewFilters.concat(expertiseLevelFilters);
+            }
+            setAllFilters(allNewFilters);
+        }
+    }, [isReady, query]);
+
     const onFilter = (filters: FilterItem[]) => {
         setResultsToShow(10);
         setAllFilters(filters);
+        const product = filters
+            .filter(
+                filter =>
+                    filter.type === 'L1Product' || filter.type === 'L2Product'
+            )
+            .map(filter => filter.name);
+        const language = filters
+            .filter(filter => filter.type === 'ProgrammingLanguage')
+            .map(filter => filter.name);
+        const technology = filters
+            .filter(filter => filter.type === 'Technology')
+            .map(filter => filter.name);
+        const contentType = filters
+            .filter(
+                filter =>
+                    filter.type === 'ContentType' || filter.type === 'CodeLevel'
+            )
+            .map(filter => filter.name);
+        const contributedBy = filters
+            .filter(filter => filter.type === 'AuthorType')
+            .map(filter => filter.name);
+        const expertiseLevel = filters
+            .filter(filter => filter.type === 'ExpertiseLevel')
+            .map(filter => filter.name);
+
+        const query = {
+            s: searchString,
+            product,
+            language,
+            technology,
+            contentType,
+            contributedBy,
+            expertiseLevel,
+        };
+        router.replace({ pathname: '/search', query }, undefined, {
+            scroll: false,
+            shallow: true,
+        });
     };
 
     const clearFilters = () => {
-        setAllFilters([]);
+        onFilter([]);
     };
 
-    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
         setResultsToShow(10);
         setSearchString(event.target.value);
+        // Have to preserve the filters here as well.
+        const product = allFilters
+            .filter(
+                filter =>
+                    filter.type === 'L1Product' || filter.type === 'L2Product'
+            )
+            .map(filter => filter.name);
+        const language = allFilters
+            .filter(filter => filter.type === 'ProgrammingLanguage')
+            .map(filter => filter.name);
+        const technology = allFilters
+            .filter(filter => filter.type === 'Technology')
+            .map(filter => filter.name);
+        const contentType = allFilters
+            .filter(
+                filter =>
+                    filter.type === 'ContentType' || filter.type === 'CodeLevel'
+            )
+            .map(filter => filter.name);
+        const contributedBy = allFilters
+            .filter(filter => filter.type === 'AuthorType')
+            .map(filter => filter.name);
+        const expertiseLevel = allFilters
+            .filter(filter => filter.type === 'ExpertiseLevel')
+            .map(filter => filter.name);
+
+        router.replace(
+            {
+                pathname: '/search',
+                query: {
+                    s: event.target.value,
+                    product,
+                    language,
+                    technology,
+                    contentType,
+                    contributedBy,
+                    expertiseLevel,
+                },
+            },
+            undefined,
+            { scroll: false, shallow: true }
+        );
     };
 
     const onFilterTabClose = (filterTag: FilterItem) => {
-        setAllFilters(allFilters.filter(filter => filter !== filterTag));
+        const newFilters = allFilters.filter(filter => filter !== filterTag);
+        onFilter(newFilters);
     };
 
     const hasFiltersSet = !!allFilters.length;
@@ -253,6 +456,7 @@ const Search: NextPage<SearchProps> = ({
                         technologyItems={technologyItems}
                         contributedByItems={contributedByItems}
                         contentTypeItems={contentTypeItems}
+                        expertiseLevelItems={expertiseLevelItems}
                     />
                     <div
                         sx={{
@@ -261,11 +465,14 @@ const Search: NextPage<SearchProps> = ({
                     >
                         <div sx={searchBoxStyles}>
                             <TextInput
+                                // The key prop will force it to rerender on external searchString changes.
+                                key={searchString}
                                 name="search-text-input"
                                 label="Search All"
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
                                 onChange={onSearch}
+                                autoFocus={true}
                             />
                         </div>
                         {resultsStringAndTags}
@@ -314,6 +521,7 @@ const Search: NextPage<SearchProps> = ({
                     technologyItems={technologyItems}
                     contributedByItems={contributedByItems}
                     contentTypeItems={contentTypeItems}
+                    expertiseLevelItems={expertiseLevelItems}
                     closeModal={() => setMobileFiltersOpen(false)}
                 />
             )}
