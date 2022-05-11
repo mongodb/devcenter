@@ -205,8 +205,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
                 ? item.url.substring(1)
                 : item.url;
 
-            console.log(parsedItemUrl);
-
             /*
             eg: tertiary nav item url /product/atlas/article
             /product/atlas/video etc
