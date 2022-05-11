@@ -28,6 +28,7 @@ import { capitalizeFirstLetter } from '../../../utils/format-string';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
 
 import { iconStyles } from '../../../components/topic-card/styles';
+import { setURLPathForNavItems } from '../../../utils/format-url-path';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -84,6 +85,8 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         const icon = <BrandedIcon sx={iconStyles} name={subTopic.icon} />;
         return { ...subTopic, icon };
     });
+
+    setURLPathForNavItems(tertiaryNavItems);
 
     const header = (
         <GridLayout
