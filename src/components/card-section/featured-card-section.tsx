@@ -14,6 +14,9 @@ import { getCardProps } from '../card';
 const FeaturedCardSection: React.FunctionComponent<
     FeaturedCardSectionProps
 > = ({ content, className, title = 'Featured' }) => {
+    if (content.length < 3) {
+        return null;
+    }
     return (
         <div
             data-testid="featured-card-section"
