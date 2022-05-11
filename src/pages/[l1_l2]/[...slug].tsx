@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { GridLayout, SideNav } from '@mdb/flora';
+import { GridLayout, SideNav, BrandedIcon } from '@mdb/flora';
 
 import Hero from '../../components/hero';
 import Search from '../../components/search';
@@ -12,15 +12,17 @@ import CardSection, {
 } from '../../components/card-section';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import { ContentItem } from '../../interfaces/content-item';
-import { Tag } from '../../interfaces/tag';
-import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
 import { PillCategoryValues } from '../../types/pill-category';
 import { capitalizeFirstLetter } from '../../utils/format-string';
-import { getAllContentItems } from '../../service/get-all-content';
 import { getSideNav } from '../../service/get-side-nav';
 import TertiaryNav from '../../components/tertiary-nav';
-import { getDistinctL1L2Slugs } from '../../service/get-distinct-l1-l2-slugs';
+import { getDistinctTags } from '../../service/get-distinct-tags';
+import { createTopicPageCTAS } from '../../components/hero/utils';
+
+import { iconStyles } from '../../components/topic-card/styles';
+
+import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
 
 interface TopicProps {
     name: string;
@@ -83,13 +85,25 @@ const Topic: NextPage<TopicProps> = ({
         searchRow +
         relatedTopicsRow;
 
+    const CTAComponents = createTopicPageCTAS(ctas);
+
+    const topicItems = topics.map(topic => {
+        const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
+        return { ...topic, icon };
+    });
+
+    const relatedTopicItems = relatedTopics.map(topic => {
+        const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
+        return { ...topic, icon };
+    });
+
     return (
         <>
             <Hero
                 crumbs={crumbs}
                 name={name}
                 description={description}
-                ctas={ctas}
+                ctas={CTAComponents}
             />
             <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div
@@ -111,7 +125,7 @@ const Topic: NextPage<TopicProps> = ({
                         <>
                             {topics.length > 0 && (
                                 <TopicCardsContainer
-                                    topics={topics}
+                                    topics={topicItems}
                                     title={`${name} Topics`}
                                 />
                             )}
@@ -138,7 +152,7 @@ const Topic: NextPage<TopicProps> = ({
                     )}
                     <Search
                         title={`All ${name} Content`}
-                        slug={slug}
+                        tagSlug={slug}
                         sx={{
                             gridColumn: [
                                 'span 6',
@@ -152,7 +166,7 @@ const Topic: NextPage<TopicProps> = ({
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer
-                            topics={relatedTopics}
+                            topics={relatedTopicItems}
                             title="Related Topics"
                         />
                     )}
@@ -172,7 +186,11 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async () => {
     let paths: any[] = [];
 
-    const distinctSlugs = await getDistinctL1L2Slugs();
+    const distinctTags = await getDistinctTags();
+
+    const distinctSlugs = distinctTags
+        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
+        .map(tag => tag.slug);
 
     distinctSlugs.forEach(distinctSlug => {
         const parsedSlug = distinctSlug.startsWith('/')
@@ -191,9 +209,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { l1_l2, slug } = params as IParams;
 
-    const name = capitalizeFirstLetter(slug[slug.length - 1]);
-
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
+
+    const categoryTag = (await getDistinctTags()).find(
+        tag => tag.slug === slugString
+    );
+
+    if (!categoryTag) {
+        throw Error('Could not find corresponding tag for ' + slugString);
+    }
+
+    const { name } = categoryTag; // Will destruct ctas from this as well when available.
 
     const tertiaryNavItems = await getSideNav(slugString);
 

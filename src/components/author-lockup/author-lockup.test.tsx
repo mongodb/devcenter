@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import AuthorLockup from '.';
-import { initial } from 'cypress/types/lodash';
 
 const authorWithImage = {
     name: 'Image Author',
