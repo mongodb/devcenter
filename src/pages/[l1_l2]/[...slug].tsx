@@ -209,9 +209,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { l1_l2, slug } = params as IParams;
 
-    const name = capitalizeFirstLetter(slug[slug.length - 1]);
-
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
+
+    const categoryTag = (await getDistinctTags()).find(
+        tag => tag.slug === slugString
+    );
+
+    if (!categoryTag) {
+        throw Error('Could not find corresponding tag for ' + slugString);
+    }
+
+    const { name } = categoryTag; // Will destruct ctas from this as well when available.
 
     const tertiaryNavItems = await getSideNav(slugString);
 
