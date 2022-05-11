@@ -1967,6 +1967,66 @@ const redirects = async () => {
             destination: 'https://university.mongodb.com',
             permanent: true,
         },
+        {
+            source: '/developer/tag/speaker-program',
+            destination: '/developer/community/speaker-program/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/swift-ui',
+            destination: '/developer/languages/swift/ui/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/technical',
+            destination: '/developer/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/time-series',
+            destination: '/developer/products/mongodb/time-series/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/transactions',
+            destination: '/developer/products/mongodb/transactions/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/triggers',
+            destination: '/developer/products/atlas/triggers/',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/unity',
+            destination: '/developer/technologies/unity',
+            permanent: true,
+        },
+        {
+            source: '/developer/tag/university',
+            destination: 'https://university.mongodb.com',
+            permanent: true,
+        },
+        {
+            source: '/developer/type/article',
+            destination: '/developer/articles/',
+            permanent: true,
+        },
+        {
+            source: '/developer/type/how-to',
+            destination: '/developer/tutorials/',
+            permanent: true,
+        },
+        {
+            source: '/developer/type/podcast',
+            destination: '/developer/podcasts/',
+            permanent: true,
+        },
+        {
+            source: '/developer/type/quickstart',
+            destination: '/developer/quickstart/',
+            permanent: true,
+        },
     ];
 };
 
