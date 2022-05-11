@@ -7,12 +7,12 @@ import { TopicCardsContainerProps } from './types';
 
 const TopicCardsContainer: React.FunctionComponent<
     TopicCardsContainerProps
-> = ({ topics, title }) => (
-    <div sx={topicsCardsContainerStyles}>
+> = ({ topics, title, className }) => (
+    <div sx={topicsCardsContainerStyles} className={className}>
         <TypographyScale variant="heading5">{title}</TypographyScale>
         <Grid columns={4} sx={topicsGridStyles}>
             {topics.map(topic => (
-                <TopicCard key={topic.title} {...topic} />
+                <TopicCard {...topic} key={topic.title} />
             ))}
         </Grid>
     </div>

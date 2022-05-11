@@ -4,8 +4,14 @@ export interface ITopicCard {
     href: string;
 }
 
+export interface TopicCardProps {
+    title: string;
+    icon: JSX.Element;
+    href: string;
+}
+
 export interface TopicCardsContainerProps {
-    topics: ITopicCard[];
+    topics: TopicCardProps[];
     title: string;
     className?: string;
 }

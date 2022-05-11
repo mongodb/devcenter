@@ -1,8 +1,8 @@
-import { PrimaryTags } from '../interfaces/primary-tags';
+import { PrimaryTag } from '../interfaces/primary-tag';
 import { OtherTags } from '../interfaces/other-tags';
 import { Tag } from '../interfaces/tag';
 
-const parsePrimaryTag = (primaryTag: PrimaryTags) => {
+const parsePrimaryTag = (primaryTag: PrimaryTag) => {
     const tags: Tag[] = [];
     const l1Product = primaryTag.l1Product;
     const programmingLanguage = primaryTag.programmingLanguage;
