@@ -3,12 +3,13 @@ import { ParsedUrlQuery } from 'querystring';
 import { getAllAuthors } from '../../service/get-all-authors';
 import { Author, Image } from '../../interfaces/author';
 import {
+    Button,
     Eyebrow,
     GridLayout,
     SpeakerLockup,
     TypographyScale,
 } from '@mdb/flora';
-import React from 'react';
+import React, { useState } from 'react';
 import Card, { getCardProps } from '../../components/card';
 import { getAllContentItems } from '../../service/get-all-content';
 import { ContentItem } from '../../interfaces/content-item';
@@ -27,7 +28,7 @@ interface AuthorPageProps {
     twitter?: string;
     youtube?: string;
     calculated_slug: string;
-    articles?: ContentItem[];
+    articles: ContentItem[];
 }
 
 const middleSectionStyles = {
@@ -44,6 +45,8 @@ const contentStyles = {
 };
 
 const speakerStyles = {
+    display: 'flex',
+    justifyContent: 'center',
     marginBottom: ['inc40'],
 };
 
@@ -77,6 +80,24 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
 }) => {
     const titleAndLocation = getTitleAndLocation(title, location);
     const hasSocial = facebook || twitter || linkedin || youtube;
+
+    const LENGTH = articles.length;
+    const DATA = articles;
+    const LIMIT = 2;
+    const SHOW_MORE_INITIAL_STATE = LENGTH > LIMIT;
+
+    const [showMore, setShowMore] = useState(SHOW_MORE_INITIAL_STATE);
+    const [list, setList] = useState(DATA.slice(0, LIMIT));
+    const [index, setIndex] = useState(LIMIT);
+
+    const loadMore = () => {
+        const newIndex = index + LIMIT;
+        const newShowMore = newIndex < LENGTH - 1;
+        const newList = list.concat(DATA.slice(index, newIndex));
+        setIndex(newIndex);
+        setList(newList);
+        setShowMore(newShowMore);
+    };
     return (
         <>
             <div
@@ -105,6 +126,8 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                         <TypographyScale
                             variant="heading2"
                             sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
                                 marginBottom: 'inc50',
                             }}
                         >
@@ -114,7 +137,8 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                             <TypographyScale
                                 variant="body1"
                                 sx={{
-                                    display: 'block',
+                                    display: 'flex',
+                                    justifyContent: 'center',
                                     color: 'black50',
                                     marginBottom: 'inc50',
                                 }}
@@ -126,7 +150,8 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                             <TypographyScale
                                 variant="body1"
                                 sx={{
-                                    display: 'block',
+                                    display: 'flex',
+                                    justifyContent: 'center',
                                     marginBottom: [
                                         'inc70',
                                         null,
@@ -189,17 +214,32 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                             </TypographyScale>
                             <Grid
                                 gap={['inc30', null, 'inc40']}
-                                columns={[1, null, 2, 4]}
+                                columns={[1, null, 2, 2]}
                             >
-                                {articles &&
-                                    articles.map(piece => (
-                                        <Card
-                                            sx={{ height: '100%' }}
-                                            key={piece.slug}
-                                            {...getCardProps(piece, 'small')}
-                                        />
-                                    ))}
+                                {list.map(piece => (
+                                    <Card
+                                        sx={{ height: '100%' }}
+                                        key={piece.slug}
+                                        {...getCardProps(piece, 'small')}
+                                    />
+                                ))}
                             </Grid>
+                            <div
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    marginTop: ['inc70', null, 'inc90'],
+                                }}
+                            >
+                                {showMore && (
+                                    <Button
+                                        onClick={loadMore}
+                                        variant="secondary"
+                                    >
+                                        Load more
+                                    </Button>
+                                )}
+                            </div>
                         </div>
                     </GridLayout>
                 </div>
@@ -263,7 +303,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         facebook: author.facebook,
         twitter: author.twitter,
         youtube: author.youtube,
-        articles: filteredContent,
+        articles: filteredContent ? filteredContent : [],
         calculated_slug: author.calculated_slug,
     };
 
