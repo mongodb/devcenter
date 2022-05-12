@@ -1791,7 +1791,7 @@
     },
     {
         "source": "/tag/podcast",
-        "destination": "/podcasts/",
+        "destination": "https://podcasts.mongodb.com/",
         "permanent": true
     },
     {
@@ -1876,12 +1876,12 @@
     },
     {
         "source": "/type/podcast",
-        "destination": "/podcasts/",
+        "destination": "https://podcasts.mongodb.com/",
         "permanent": true
     },
     {
         "source": "/type/quickstart",
-        "destination": "/quickstart/",
+        "destination": "/quickstarts/",
         "permanent": true
     }
 ]
