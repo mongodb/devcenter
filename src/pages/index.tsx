@@ -1,10 +1,4 @@
-import type { NextPage } from 'next';
-import { GetStaticProps } from 'next';
-import { clientFactory } from '../utils/client-factory';
-import { getArticles } from '../api-requests/get-articles';
-import { Article } from '../interfaces/article';
 import {
-    EThirdPartyLogoVariant,
     GridLayout,
     Link,
     TextInput,
@@ -12,7 +6,6 @@ import {
     TypographyScale,
 } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
-import styled from '@emotion/styled';
 import ShowcaseCard from '../components/showcase-card';
 import {
     cardsLanguagesData,
@@ -20,176 +13,7 @@ import {
     cardsTechnologiesData,
 } from '../data/homepage';
 
-interface HomeProps {
-    articles: Article[];
-}
-
-const Main = styled.main`
-    overflow: hidden;
-    position: relative;
-    padding-left: 25px;
-    padding-right: 25px;
-
-    > svg {
-        position: absolute;
-        top: -860px;
-        left: -150px;
-        z-index: -1;
-    }
-
-    .svg-wrapper-bottom {
-        position: relative;
-
-        > svg {
-            position: absolute;
-            top: 80px;
-            right: -580px;
-            z-index: -1;
-        }
-    }
-
-    .search-input {
-        > div {
-            max-width: 100%;
-        }
-    }
-
-    .last-row {
-        margin-bottom: ${theme.space.inc90};
-    }
-
-    .card-placeholder {
-        position: relative;
-        min-height: 300px;
-        background-color: #eee;
-        border-radius: 4px;
-
-        > span {
-            text-align: center;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-    }
-
-    .developer-center-header {
-        grid-column: span 6;
-        margin-top: ${theme.space.inc50};
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-            grid-column: span 8;
-        }
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            grid-column: span 10;
-        }
-    }
-
-    .developer-center-call-to-action {
-        display: none;
-        grid-column: span 2;
-        margin-top: ${theme.space.inc50};
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            display: block;
-            grid-column: span 2;
-        }
-    }
-
-    .developer-center-call-to-action-mobile {
-        grid-column: span 6;
-        margin-top: ${theme.space.inc50};
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            display: none;
-        }
-    }
-
-    .developer-languages-cards {
-        grid-column: span 6;
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-            grid-column: span 4;
-        }
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            grid-column: span 3;
-        }
-    }
-
-    .technologies-header {
-        margin-top: ${theme.space.section40};
-        grid-column: span 6;
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-            grid-column: span 8;
-        }
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            grid-column: span 10;
-        }
-    }
-
-    .technologies-cards {
-        grid-column: span 3;
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-            grid-column: span 4;
-        }
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            grid-column: span 3;
-        }
-    }
-
-    .products-header {
-        grid-column: span 6;
-        margin-top: ${theme.space.inc50};
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-            grid-column: span 8;
-        }
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            grid-column: span 10;
-        }
-    }
-
-    .products-call-to-action {
-        display: none;
-        grid-column: span 2;
-        margin-top: ${theme.space.inc50};
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            display: block;
-            grid-column: span 2;
-        }
-    }
-
-    .products-call-to-action-mobile {
-        grid-column: span 6;
-        margin-top: ${theme.space.inc50};
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            display: none;
-        }
-    }
-
-    .products-cards {
-        grid-column: span 6;
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.medium}) {
-            grid-column: span 8;
-        }
-
-        @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-            grid-column: span 4;
-        }
-    }
-`;
-
-const Home: NextPage<HomeProps> = ({ articles }) => {
+const Home = () => {
     const myHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.value);
     };
@@ -199,7 +23,21 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
     };
 
     return (
-        <Main>
+        <main
+            sx={{
+                overflow: 'hidden' as 'hidden',
+                position: 'relative' as 'relative',
+                paddingLeft: '25px',
+                paddingRight: '25px',
+
+                '> svg': {
+                    position: 'absolute' as 'absolute',
+                    top: '-860px',
+                    left: '-150px',
+                    zIndex: '-1',
+                },
+            }}
+        >
             <svg
                 id="svg-top"
                 width="1800"
@@ -215,7 +53,6 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
             </svg>
             <GridLayout>
                 <div
-                    className="search-hero"
                     sx={{
                         gridColumn: [
                             'span 6',
@@ -240,7 +77,17 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                         and a global community of developers. What will you
                         create?
                     </TypographyScale>
-                    <div sx={{ marginTop: 'inc90' }} className="search-input">
+                    <div
+                        sx={{
+                            marginTop: 'inc90',
+                            '> div': {
+                                maxWidth: '100%',
+                            },
+                            button: {
+                                display: ['none', 'none', 'none', 'block'],
+                            },
+                        }}
+                    >
                         <TextInput
                             name="search"
                             label="Search all MongoDB Developer Content"
@@ -252,14 +99,27 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                 </div>
             </GridLayout>
             <GridLayout>
-                <div className="developer-center-header">
+                <div
+                    sx={{
+                        gridColumn: ['span 6', 'span 8', 'span 8', 'span 10'],
+                        marginTop: theme.space.inc50,
+                    }}
+                >
                     <TypographyScale variant="heading5">
                         Develop in your language
                     </TypographyScale>
                 </div>
                 <div
-                    className="developer-center-call-to-action"
-                    sx={{ gridColumn: '11 / span 2', marginTop: 'inc50' }}
+                    sx={{
+                        display: ['none', 'none', 'none', 'block'],
+                        gridColumn: [
+                            'span 2',
+                            'span 2',
+                            'span 2',
+                            '11 / span 2',
+                        ],
+                        marginTop: theme.space.inc50,
+                    }}
                 >
                     <Link
                         href="/developer/language"
@@ -272,7 +132,14 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                 {cardsLanguagesData?.map(
                     ({ titleLink, href, imageString, cta, links }) => (
                         <div
-                            className="developer-languages-cards"
+                            sx={{
+                                gridColumn: [
+                                    'span 6',
+                                    'span 4',
+                                    'span 4',
+                                    'span 3',
+                                ],
+                            }}
                             key={titleLink.text}
                         >
                             <ShowcaseCard
@@ -294,8 +161,16 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                     )
                 )}
                 <div
-                    className="developer-center-call-to-action-mobile"
-                    sx={{ gridColumn: '11 / span 2', marginTop: 'inc50' }}
+                    sx={{
+                        display: ['block', 'block', 'block', 'none'],
+                        gridColumn: [
+                            'span 6',
+                            'span 6',
+                            'span 6',
+                            '11 / span 2',
+                        ],
+                        marginTop: theme.space.inc50,
+                    }}
                 >
                     <Link
                         href="/developer/languages"
@@ -306,7 +181,18 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                     </Link>
                 </div>
             </GridLayout>
-            <div className="svg-wrapper-bottom">
+            <div
+                sx={{
+                    position: 'relative' as 'relative',
+
+                    '> svg': {
+                        position: 'absolute' as 'absolute',
+                        top: '80px',
+                        right: '-580px',
+                        zIndex: '-1',
+                    },
+                }}
+            >
                 <svg
                     width="1706"
                     height="1706"
@@ -320,12 +206,28 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                     />
                 </svg>
                 <GridLayout>
-                    <div className="technologies-header">
+                    <div
+                        sx={{
+                            marginTop: theme.space.section40,
+                            gridColumn: [
+                                'span 6',
+                                'span 8',
+                                'span 8',
+                                'span 10',
+                            ],
+                        }}
+                    >
                         <TypographyScale variant="heading5">
                             Integrate MongoDB with the technologies you use
                         </TypographyScale>
                     </div>
-                    <div className="products-call-to-action">
+                    <div
+                        sx={{
+                            display: ['none', 'none', 'none', 'block'],
+                            gridColumn: 'span 2',
+                            marginTop: theme.space.inc50,
+                        }}
+                    >
                         <Link
                             href="/developer/technologies"
                             linkIcon="arrow"
@@ -337,7 +239,14 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                     {cardsTechnologiesData?.map(
                         ({ titleLink, imageString, href }) => (
                             <div
-                                className="technologies-cards"
+                                sx={{
+                                    gridColumn: [
+                                        'span 3',
+                                        'span 3',
+                                        'span 4',
+                                        'span 3',
+                                    ],
+                                }}
                                 key={titleLink.text}
                             >
                                 <ShowcaseCard
@@ -356,7 +265,13 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             </div>
                         )
                     )}
-                    <div className="products-call-to-action-mobile">
+                    <div
+                        sx={{
+                            gridColumn: 'span 6',
+                            marginTop: theme.space.inc50,
+                            display: ['block', 'block', 'block', 'none'],
+                        }}
+                    >
                         <Link
                             href="/developer/technologies"
                             linkIcon="arrow"
@@ -366,13 +281,29 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                         </Link>
                     </div>
                 </GridLayout>
-                <GridLayout className="last-row">
-                    <div className="products-header">
+                <GridLayout sx={{ marginBottom: theme.space.inc90 }}>
+                    <div
+                        sx={{
+                            gridColumn: [
+                                'span 6',
+                                'span 8',
+                                'span 8',
+                                'span 10',
+                            ],
+                            marginTop: theme.space.inc50,
+                        }}
+                    >
                         <TypographyScale variant="heading5">
                             Start building with these MongoDB products
                         </TypographyScale>
                     </div>
-                    <div className="products-call-to-action">
+                    <div
+                        sx={{
+                            gridColumn: [null, null, null, 'span 2'],
+                            marginTop: theme.space.inc50,
+                            display: ['none', 'none', 'none', 'block'],
+                        }}
+                    >
                         <Link
                             href="/developer/languages"
                             linkIcon="arrow"
@@ -391,7 +322,14 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             description,
                         }) => (
                             <div
-                                className="products-cards"
+                                sx={{
+                                    gridColumn: [
+                                        'span 6',
+                                        'span 8',
+                                        'span 8',
+                                        'span 4',
+                                    ],
+                                }}
                                 key={titleLink.text}
                             >
                                 <ShowcaseCard
@@ -413,7 +351,13 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             </div>
                         )
                     )}
-                    <div className="products-call-to-action-mobile">
+                    <div
+                        sx={{
+                            gridColumn: 'span 6',
+                            marginTop: theme.space.inc50,
+                            display: ['block', 'block', 'block', 'none'],
+                        }}
+                    >
                         <Link
                             href="/developer/languages"
                             linkIcon="arrow"
@@ -424,16 +368,8 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                     </div>
                 </GridLayout>
             </div>
-        </Main>
+        </main>
     );
 };
 
 export default Home;
-
-export const getStaticProps: GetStaticProps = async ({}) => {
-    const client = clientFactory('ApolloREST', process.env.STRAPI_URL);
-    const articles = await getArticles(client);
-    return {
-        props: { articles },
-    };
-};
