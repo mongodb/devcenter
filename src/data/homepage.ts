@@ -19,7 +19,7 @@ export const cardsLanguagesData = [
             },
             {
                 text: 'Documentation',
-                url: 'https://www.google.com/',
+                url: 'https://www.mongodb.com/docs/',
             },
             {
                 text: 'Code Samples',
@@ -27,7 +27,7 @@ export const cardsLanguagesData = [
             },
             {
                 text: 'Getting Started',
-                url: 'https://www.google.com/',
+                url: '/developer/languages/java/gettingstarted',
             },
         ],
     },
@@ -49,7 +49,7 @@ export const cardsLanguagesData = [
             },
             {
                 text: 'Documentation',
-                url: 'https://www.google.com/',
+                url: 'https://www.mongodb.com/docs/',
             },
             {
                 text: 'Code Samples',
@@ -57,7 +57,7 @@ export const cardsLanguagesData = [
             },
             {
                 text: 'Getting Started',
-                url: 'https://www.google.com/',
+                url: '/developer/languages/python/gettingstarted',
             },
         ],
     },
@@ -79,7 +79,7 @@ export const cardsLanguagesData = [
             },
             {
                 text: 'Documentation',
-                url: 'https://www.google.com/',
+                url: 'https://www.mongodb.com/docs/',
             },
             {
                 text: 'Code Samples',
@@ -87,7 +87,7 @@ export const cardsLanguagesData = [
             },
             {
                 text: 'Getting Started',
-                url: 'https://www.google.com/',
+                url: '/developer/languages/c/gettingstarted',
             },
         ],
     },
@@ -109,7 +109,7 @@ export const cardsLanguagesData = [
             },
             {
                 text: 'Documentation',
-                url: 'https://www.google.com/',
+                url: 'https://www.mongodb.com/docs/',
             },
             {
                 text: 'Code Samples',
@@ -117,7 +117,7 @@ export const cardsLanguagesData = [
             },
             {
                 text: 'Getting Started',
-                url: 'https://www.google.com/',
+                url: '/developer/languages/javascript/gettingstarted',
             },
         ],
     },
@@ -127,55 +127,55 @@ export const cardsTechnologiesData = [
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.AWS,
     },
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.AWS,
     },
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.JAVA,
     },
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.JAVA,
     },
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.AZURE,
     },
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.AZURE,
     },
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
         href: 'href',
         imageString: EThirdPartyLogoVariant.JAVA,
@@ -183,25 +183,25 @@ export const cardsTechnologiesData = [
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.JAVA,
     },
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.JAVA,
     },
     {
         titleLink: {
             text: 'Java',
-            url: 'http',
+            url: 'https://www.google.com/',
         },
-        href: 'href',
+        href: 'https://www.google.com/',
         imageString: EThirdPartyLogoVariant.JAVA,
     },
 ];

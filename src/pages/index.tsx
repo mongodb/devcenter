@@ -331,7 +331,7 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             linkIcon="arrow"
                             linkIconDisableExpand={true}
                         >
-                            View All Products
+                            View All Technologies
                         </Link>
                     </div>
                     {cardsTechnologiesData?.map(
@@ -362,7 +362,7 @@ const Home: NextPage<HomeProps> = ({ articles }) => {
                             linkIcon="arrow"
                             linkIconDisableExpand={true}
                         >
-                            View All Products
+                            View All Technologies
                         </Link>
                     </div>
                 </GridLayout>
