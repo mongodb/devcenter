@@ -466,22 +466,12 @@
     },
     {
         "source": "/author/a--jesse-jiryu-davis",
-        "destination": "/author/a-jesse-jiryu-davis/",
+        "destination": "/author/a.-jesse-jiryu-davis/",
         "permanent": true
     },
     {
-        "source": "/community/apply-to-speak",
-        "destination": "/news/apply-to-speak/",
-        "permanent": true
-    },
-    {
-        "source": "/community/community-speaker-grant",
-        "destination": "/news/community-speaker-grant/",
-        "permanent": true
-    },
-    {
-        "source": "/community/speaker-program",
-        "destination": "/news/speaker-program/",
+        "source": "/author/ken-w--alger",
+        "destination": "/author/ken-w.-alger",
         "permanent": true
     },
     {
@@ -1360,11 +1350,6 @@
         "permanent": true
     },
     {
-        "source": "/podcasts/welcome-to-the-mongodb-podcast",
-        "destination": "/news/welcome-to-the-mongodb-podcast/",
-        "permanent": true
-    },
-    {
         "source": "/product/atlas",
         "destination": "/products/atlas/",
         "permanent": true
@@ -1800,11 +1785,6 @@
         "permanent": true
     },
     {
-        "source": "/tag/releases",
-        "destination": "/news/",
-        "permanent": true
-    },
-    {
         "source": "/tag/schema-design",
         "destination": "/products/mongodb/schema-design/",
         "permanent": true
@@ -1817,11 +1797,6 @@
     {
         "source": "/tag/soft-skills",
         "destination": "https://university.mongodb.com",
-        "permanent": true
-    },
-    {
-        "source": "/tag/speaker-program",
-        "destination": "/community/speaker-program/",
         "permanent": true
     },
     {
