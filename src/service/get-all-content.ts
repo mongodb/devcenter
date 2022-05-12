@@ -14,11 +14,13 @@ import { getAllVideos } from './get-all-videos';
 import { getAllPodcasts } from './get-all-podcasts';
 import { setPrimaryTag } from './set-primary-tag';
 import { PillCategoryValues } from '../types/pill-category';
+import { getAllFeatured } from './get-all-featured';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcasts();
     const allVideos = await getAllVideos();
     const allArticles = await getAllArticlesFromAPI(STRAPI_CLIENT);
+    const allFeatured = await getAllFeatured();
     /*
     series
      */
@@ -27,12 +29,18 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const articleSeries = await getAllArticleSeries();
     const mappedPodcasts = mapPodcastsToContentItems(
         allPodcasts,
-        podcastSeries
+        podcastSeries,
+        allFeatured.podcasts
     );
-    const mappedVideos = mapVideosToContentItems(allVideos, videoSeries);
+    const mappedVideos = mapVideosToContentItems(
+        allVideos,
+        videoSeries,
+        allFeatured.videos
+    );
     const mappedArticles = mapArticlesToContentItems(
         allArticles,
-        articleSeries
+        articleSeries,
+        allFeatured.articles
     );
 
     return mappedPodcasts.concat(mappedVideos).concat(mappedArticles).flat();
@@ -40,7 +48,8 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
-    podcastSeries: Series[]
+    podcastSeries: Series[],
+    featured: string[]
 ) => {
     const items: ContentItem[] = [];
     allPodcasts.forEach((p: Podcast) => {
@@ -51,7 +60,7 @@ export const mapPodcastsToContentItems = (
             slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
             tags: flattenTags([p.otherTags]),
             title: p.title,
-            featured: false,
+            featured: featured.includes(p.title),
         };
         if (p.description) {
             item.description = p.description;
@@ -69,7 +78,8 @@ export const mapPodcastsToContentItems = (
 
 export const mapVideosToContentItems = (
     allVideos: Video[],
-    videoSeries: Series[]
+    videoSeries: Series[],
+    featured: string[]
 ) => {
     const items: ContentItem[] = [];
     allVideos.forEach((v: Video) => {
@@ -80,7 +90,7 @@ export const mapVideosToContentItems = (
             slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
             tags: flattenTags([v.otherTags]),
             title: v.title,
-            featured: false,
+            featured: featured.includes(v.title),
         };
         if (v.description) {
             item.description = v.description;
@@ -101,7 +111,8 @@ export const mapVideosToContentItems = (
 
 export const mapArticlesToContentItems = (
     allArticles: Article[],
-    articleSeries: Series[]
+    articleSeries: Series[],
+    featured: string[]
 ) => {
     const items: ContentItem[] = [];
     /*
@@ -123,7 +134,7 @@ export const mapArticlesToContentItems = (
                 : a.calculatedSlug,
             tags: flattenTags(a.otherTags),
             title: a.title,
-            featured: false,
+            featured: featured.includes(a.title),
         };
         if (a.image) {
             item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };

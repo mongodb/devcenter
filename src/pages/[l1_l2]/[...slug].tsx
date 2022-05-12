@@ -14,7 +14,6 @@ import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
 import { PillCategoryValues } from '../../types/pill-category';
-import { capitalizeFirstLetter } from '../../utils/format-string';
 import { getSideNav } from '../../service/get-side-nav';
 import TertiaryNav from '../../components/tertiary-nav';
 import { getDistinctTags } from '../../service/get-distinct-tags';
@@ -24,6 +23,8 @@ import { iconStyles } from '../../components/topic-card/styles';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 
 import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
+import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-featured';
+import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 
 interface TopicProps {
     name: string;
@@ -74,6 +75,16 @@ const Topic: NextPage<TopicProps> = ({
               ).filter(contentRow => contentRow.length > 2)
             : [];
 
+    const sortedContentRows: ContentItem[][] = [];
+
+    contentRows.forEach(contentRow => {
+        sortedContentRows.push(
+            contentRow.sort((a, b) =>
+                b.contentDate.localeCompare(a.contentDate)
+            )
+        );
+    });
+
     const topicsRow = topics.length > 0 ? 1 : 0;
     const featuredRow = variant === 'light' ? 0 : 1;
     const relatedTopicsRow = variant === 'light' ? 1 : 0;
@@ -82,7 +93,7 @@ const Topic: NextPage<TopicProps> = ({
     const mainGridDesktopRowsCount =
         topicsRow +
         featuredRow +
-        contentRows.length +
+        sortedContentRows.length +
         searchRow +
         relatedTopicsRow;
 
@@ -136,7 +147,7 @@ const Topic: NextPage<TopicProps> = ({
                                 <FeaturedCardSection content={featured} />
                             )}
                             {variant === 'heavy' &&
-                                contentRows.map(contentRow => {
+                                sortedContentRows.map(contentRow => {
                                     const contentType = contentRow[0].category;
                                     const direction =
                                         contentType === 'Podcast'
@@ -224,6 +235,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const { name } = categoryTag; // Will destruct ctas from this as well when available.
 
+    const metaInfoForTopic = await getMetaInfoForTopic(name);
+
     const tertiaryNavItems = await getSideNav(slugString);
 
     const content = await getL1L2Content(slugString);
@@ -231,8 +244,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
 
-    //TODO Filter for the ones which
-    const featured = content.slice(0, 3);
+    const featured = parseContentToGetFeatured(content);
 
     const data = {
         name,
@@ -241,10 +253,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         variant,
         tertiaryNavItems: tertiaryNavItems,
         featured: featured,
-        //TODO
-        description: 'Description',
-        ctas: [],
-        topics: [],
+        description: metaInfoForTopic?.description
+            ? metaInfoForTopic.description
+            : '',
+        ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
+        topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
+        //TODO - only for light stuff not sure of the logic
         relatedTopics: [],
     };
 

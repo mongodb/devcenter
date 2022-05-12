@@ -14,6 +14,7 @@ export const getAllAuthorsFromAPI = async (
                     url
                 }
                 location
+                title
                 linkedin
                 facebook
                 twitter
