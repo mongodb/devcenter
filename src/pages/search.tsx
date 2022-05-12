@@ -1,5 +1,6 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import type { NextPage, GetStaticProps } from 'next';
+import debounce from 'lodash.debounce';
 import NextImage from 'next/image';
 import {
     GridLayout,
@@ -179,9 +180,9 @@ const Search: NextPage<SearchProps> = ({
             }
             setAllFilters(allNewFilters);
         }
-    }, [isReady, query]);
+    }, [isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
 
-    const onFilter = (filters: FilterItem[]) => {
+    const onFilter = useCallback((filters: FilterItem[]) => {
         setResultsToShow(10);
         setAllFilters(filters);
         const product = filters
@@ -222,7 +223,7 @@ const Search: NextPage<SearchProps> = ({
             scroll: false,
             shallow: true,
         });
-    };
+    }, []);
 
     const clearFilters = () => {
         onFilter([]);
@@ -274,6 +275,18 @@ const Search: NextPage<SearchProps> = ({
             { scroll: false, shallow: true }
         );
     };
+
+    const debouncedOnSearch = useMemo(
+        () => debounce(onSearch, 400), // Not sure what this value should be.
+        [allFilters]
+    );
+    // Stop the invocation of the debounced function
+    // after unmounting
+    useEffect(() => {
+        return () => {
+            debouncedOnSearch.cancel();
+        };
+    }, []);
 
     const onFilterTabClose = (filterTag: FilterItem) => {
         const newFilters = allFilters.filter(filter => filter !== filterTag);
@@ -471,7 +484,7 @@ const Search: NextPage<SearchProps> = ({
                                 label="Search All"
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
-                                onChange={onSearch}
+                                onChange={debouncedOnSearch}
                                 autoFocus={true}
                             />
                         </div>
