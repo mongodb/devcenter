@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import debounce from 'lodash.debounce';
 import NextImage from 'next/image';
 import useSWR from 'swr';
 import { Grid } from 'theme-ui';
@@ -48,6 +49,18 @@ const Search: React.FunctionComponent<SearchProps> = ({
         setSearchString(event.target.value);
     };
 
+    const debouncedOnSearch = useMemo(
+        () => debounce(onSearch, 400), // Not sure what this value should be.
+        []
+    );
+    // Stop the invocation of the debounced function
+    // after unmounting
+    useEffect(() => {
+        return () => {
+            debouncedOnSearch.cancel();
+        };
+    }, []);
+
     const resultsData = data || [];
     const numberOfResults = resultsData.length;
     const shownData = resultsData.slice(0, resultsToShow);
@@ -86,7 +99,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     label="Search Content"
                     iconName={ESystemIconNames.SEARCH}
                     value={searchString}
-                    onChange={onSearch}
+                    onChange={debouncedOnSearch}
                 />
             </div>
             {!!numberOfResults || isValidating || error ? (

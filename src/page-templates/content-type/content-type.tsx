@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
+import debounce from 'lodash.debounce';
 import useSWR from 'swr';
 import {
     GridLayout,
@@ -88,6 +89,18 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setResultsToShow(10);
         setSearchString(event.target.value);
     };
+
+    const debouncedOnSearch = useMemo(
+        () => debounce(onSearch, 400), // Not sure what this value should be.
+        [allFilters]
+    );
+    // Stop the invocation of the debounced function
+    // after unmounting
+    useEffect(() => {
+        return () => {
+            debouncedOnSearch.cancel();
+        };
+    }, []);
 
     const onFilter = (filters: FilterItem[]) => {
         setResultsToShow(10);
@@ -314,7 +327,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                 label={`Search ${contentType}s`}
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
-                                onChange={onSearch}
+                                onChange={debouncedOnSearch}
                             />
                         </div>
                         {!searchString && !hasFiltersSet && (
