@@ -3,7 +3,6 @@ import { GetStaticProps } from 'next';
 import { clientFactory } from '../utils/client-factory';
 import { getArticles } from '../api-requests/get-articles';
 import { Article } from '../interfaces/article';
-import { getSecondaryNavMenu } from '../service/get-secondary-nav-menu';
 
 interface HomeProps {
     articles: Article[];

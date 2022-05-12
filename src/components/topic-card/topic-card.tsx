@@ -2,6 +2,7 @@ import { TypographyScale } from '@mdb/flora';
 
 import { topicCardStyles } from './styles';
 import { TopicCardProps } from './types';
+import { getURLPath } from '../../utils/format-url-path';
 
 const TopicCard: React.FunctionComponent<TopicCardProps> = ({
     title,
@@ -12,7 +13,7 @@ const TopicCard: React.FunctionComponent<TopicCardProps> = ({
         <div sx={{ ...topicCardStyles, position: 'relative' }} tabIndex={0}>
             {/* Sometimes the icon itself can be a link, so we need this absolute wrapping element */}
             <a
-                href={href}
+                href={getURLPath(href)}
                 sx={{
                     position: 'absolute',
                     width: '100%',
