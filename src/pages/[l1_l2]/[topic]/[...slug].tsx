@@ -24,7 +24,6 @@ import { ITopicCard } from '../../../components/topic-card/types';
 import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
 import { getAllContentTypes } from '../../../service/get-all-content-types';
 import { ContentTypeTag } from '../../../interfaces/tag-type-response';
-import { capitalizeFirstLetter } from '../../../utils/format-string';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
 
 import { iconStyles } from '../../../components/topic-card/styles';
@@ -32,6 +31,7 @@ import { setURLPathForNavItems } from '../../../utils/format-url-path';
 import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
 
 const spanAllColumns = {
+    width: '100%',
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
 };
 
@@ -108,10 +108,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                 >
                     {contentType}s
                 </TypographyScale>
-                <TypographyScale variant="body2">
-                    Blurb consisting of a description of the title or tag for
-                    the page. No more than 2 - 3 lines, and 4 column max
-                </TypographyScale>
+                <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
             <div sx={CTAContainerStyles}>
                 <Button
@@ -257,16 +254,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const tertiaryNavItems = await getSideNav(topicSlug);
 
-    const topicName = pathComponents[pathComponents.length - 2];
-
-    const metaInfoForTopic = await getMetaInfoForTopic(topicName);
+    const metaInfoForTopic = await getMetaInfoForTopic(topicSlug);
 
     const contentTypeAggregateSlug = pillCategoryToSlug.get(contentType);
 
     const data = {
         contentType: contentType,
         tertiaryNavItems: tertiaryNavItems,
-        topicName: capitalizeFirstLetter(topicName),
+        topicName: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
         topicSlug: topicSlug,
         contentTypeSlug: contentTypeSlug,
         contentTypeAggregateSlug: contentTypeAggregateSlug,

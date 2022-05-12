@@ -225,17 +225,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
 
-    const categoryTag = (await getDistinctTags()).find(
-        tag => tag.slug === slugString
-    );
-
-    if (!categoryTag) {
-        throw Error('Could not find corresponding tag for ' + slugString);
-    }
-
-    const { name } = categoryTag; // Will destruct ctas from this as well when available.
-
-    const metaInfoForTopic = await getMetaInfoForTopic(name);
+    const metaInfoForTopic = await getMetaInfoForTopic(slugString);
 
     const tertiaryNavItems = await getSideNav(slugString);
 
@@ -247,7 +237,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const featured = parseContentToGetFeatured(content);
 
     const data = {
-        name,
+        name: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
         slug: slugString,
         content,
         variant,

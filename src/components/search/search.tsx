@@ -33,9 +33,11 @@ const Search: React.FunctionComponent<SearchProps> = ({
 
     const { data, error, isValidating } = useSWR(
         () =>
-            `s=${searchString}&contentType=${contentType}&tagSlug=${encodeURIComponent(
-                tagSlug
-            )}`,
+            `s=${encodeURIComponent(
+                searchString
+            )}&contentType=${encodeURIComponent(
+                contentType
+            )}&tagSlug=${encodeURIComponent(tagSlug)}`,
         fetcher,
         {
             revalidateIfStale: false,
