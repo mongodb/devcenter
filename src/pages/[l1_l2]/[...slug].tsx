@@ -17,10 +17,13 @@ import { PillCategoryValues } from '../../types/pill-category';
 import { capitalizeFirstLetter } from '../../utils/format-string';
 import { getSideNav } from '../../service/get-side-nav';
 import TertiaryNav from '../../components/tertiary-nav';
+import { getDistinctTags } from '../../service/get-distinct-tags';
 import { createTopicPageCTAS } from '../../components/hero/utils';
-import { getDistinctL1L2Slugs } from '../../service/get-distinct-l1-l2-slugs';
 
 import { iconStyles } from '../../components/topic-card/styles';
+import { setURLPathForNavItems } from '../../utils/format-url-path';
+
+import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
 
 interface TopicProps {
     name: string;
@@ -94,6 +97,8 @@ const Topic: NextPage<TopicProps> = ({
         const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
         return { ...topic, icon };
     });
+
+    setURLPathForNavItems(tertiaryNavItems);
 
     return (
         <>
@@ -184,7 +189,11 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async () => {
     let paths: any[] = [];
 
-    const distinctSlugs = await getDistinctL1L2Slugs();
+    const distinctTags = await getDistinctTags();
+
+    const distinctSlugs = distinctTags
+        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
+        .map(tag => tag.slug);
 
     distinctSlugs.forEach(distinctSlug => {
         const parsedSlug = distinctSlug.startsWith('/')
@@ -203,9 +212,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { l1_l2, slug } = params as IParams;
 
-    const name = capitalizeFirstLetter(slug[slug.length - 1]);
-
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
+
+    const categoryTag = (await getDistinctTags()).find(
+        tag => tag.slug === slugString
+    );
+
+    if (!categoryTag) {
+        throw Error('Could not find corresponding tag for ' + slugString);
+    }
+
+    const { name } = categoryTag; // Will destruct ctas from this as well when available.
 
     const tertiaryNavItems = await getSideNav(slugString);
 

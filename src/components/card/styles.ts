@@ -200,7 +200,7 @@ export const descriptionStyles = (
         marginBottom: [null, null, 'inc50'],
         marginTop: [null, null, 'inc30'],
         WebkitLineClamp: 4,
-        '-webkit-box-orient': 'vertical',
+        WebkitBoxOrient: 'vertical',
         overflow: 'hidden',
     };
 };

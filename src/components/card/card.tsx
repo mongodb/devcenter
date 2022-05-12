@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { TypographyScale, Pill, Tag, HorizontalRule } from '@mdb/flora';
+import { TypographyScale, Pill, HorizontalRule } from '@mdb/flora';
 
 import AuthorLockup from '../author-lockup';
 
@@ -24,6 +23,7 @@ import { CardProps } from './types';
 import parse from 'html-react-parser';
 import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
+import { getURLPath } from '../../utils/format-url-path';
 
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
@@ -47,7 +47,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         >
             {/* This absolute anchor is to avoid nesting anchor tags */}
             <a
-                href={slug}
+                href={getURLPath(slug)}
                 sx={{
                     position: 'absolute',
                     width: '100%',

@@ -3,6 +3,7 @@ import { ThemeUIStyleObject } from 'theme-ui';
 
 import { Link } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
+import { getURLPath } from '../../utils/format-url-path';
 
 const linkStyles = {
     position: 'relative' as 'relative',
@@ -44,7 +45,7 @@ const ExpandingLink: React.FunctionComponent<ExpandingLinkProps> = ({
             onMouseLeave={onLinkLeave}
         >
             <Link
-                href={href}
+                href={getURLPath(href)}
                 linkIcon="arrow"
                 sx={{
                     ...linkStyles,

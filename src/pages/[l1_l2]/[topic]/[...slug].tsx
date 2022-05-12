@@ -13,7 +13,7 @@ import {
     HorizontalRule,
     BrandedIcon,
 } from '@mdb/flora';
-import { getDistinctL1L2Slugs } from '../../../service/get-distinct-l1-l2-slugs';
+import { getDistinctTags } from '../../../service/get-distinct-tags';
 import { CTAContainerStyles } from '../../../components/hero/styles';
 import RequestContentModal, {
     requestContentModalStages,
@@ -25,8 +25,10 @@ import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
 import { getAllContentTypes } from '../../../service/get-all-content-types';
 import { ContentTypeTag } from '../../../interfaces/tag-type-response';
 import { capitalizeFirstLetter } from '../../../utils/format-string';
+import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
 
 import { iconStyles } from '../../../components/topic-card/styles';
+import { setURLPathForNavItems } from '../../../utils/format-url-path';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -83,6 +85,8 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         const icon = <BrandedIcon sx={iconStyles} name={subTopic.icon} />;
         return { ...subTopic, icon };
     });
+
+    setURLPathForNavItems(tertiaryNavItems);
 
     const header = (
         <GridLayout
@@ -191,7 +195,11 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async () => {
     let paths: any[] = [];
 
-    const distinctSlugs = await getDistinctL1L2Slugs();
+    const distinctTags = await getDistinctTags();
+
+    const distinctSlugs = distinctTags
+        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
+        .map(tag => tag.slug);
 
     //distinct slugs = ["/product/atlas", "product/atlas/full-text-search", "language/java"]
     for (const distinctSlug of distinctSlugs) {
