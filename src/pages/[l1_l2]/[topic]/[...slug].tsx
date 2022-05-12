@@ -29,6 +29,7 @@ import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
 
 import { iconStyles } from '../../../components/topic-card/styles';
 import { setURLPathForNavItems } from '../../../utils/format-url-path';
+import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -60,6 +61,7 @@ export interface TopicContentTypePageProps {
     topicSlug: string;
     contentTypeSlug: string;
     contentTypeAggregateSlug: string;
+    description: string;
     subTopics: ITopicCard[];
 }
 
@@ -70,6 +72,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
     topicSlug,
     contentTypeSlug,
     contentTypeAggregateSlug,
+    description,
     subTopics,
 }) => {
     const requestButtonText = `Request ${
@@ -254,21 +257,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const tertiaryNavItems = await getSideNav(topicSlug);
 
-    const topicName = capitalizeFirstLetter(
-        pathComponents[pathComponents.length - 2]
-    );
+    const topicName = pathComponents[pathComponents.length - 2];
+
+    const metaInfoForTopic = await getMetaInfoForTopic(topicName);
 
     const contentTypeAggregateSlug = pillCategoryToSlug.get(contentType);
 
     const data = {
         contentType: contentType,
         tertiaryNavItems: tertiaryNavItems,
-        topicName: topicName,
+        topicName: capitalizeFirstLetter(topicName),
         topicSlug: topicSlug,
         contentTypeSlug: contentTypeSlug,
         contentTypeAggregateSlug: contentTypeAggregateSlug,
-        //TODO
-        subTopics: [],
+        description: metaInfoForTopic?.description
+            ? metaInfoForTopic.description
+            : '',
+        subTopics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
     };
     return { props: data };
 };
