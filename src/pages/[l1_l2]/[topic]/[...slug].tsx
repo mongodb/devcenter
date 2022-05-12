@@ -95,6 +95,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         <GridLayout
             sx={{
                 rowGap: 'inc30',
+                width: '100%',
                 ...spanAllColumns,
             }}
         >
@@ -108,10 +109,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                 >
                     {contentType}s
                 </TypographyScale>
-                <TypographyScale variant="body2">
-                    Blurb consisting of a description of the title or tag for
-                    the page. No more than 2 - 3 lines, and 4 column max
-                </TypographyScale>
+                <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
             <div sx={CTAContainerStyles}>
                 <Button
