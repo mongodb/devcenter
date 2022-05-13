@@ -25,9 +25,13 @@ import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
 import { getAllContentTypes } from '../../../service/get-all-content-types';
 import { ContentTypeTag } from '../../../interfaces/tag-type-response';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
+import { sideNavTitleStyles } from '../../../components/tertiary-nav/styles';
 
 import { iconStyles } from '../../../components/topic-card/styles';
-import { setURLPathForNavItems } from '../../../utils/format-url-path';
+import {
+    getURLPath,
+    setURLPathForNavItems,
+} from '../../../utils/format-url-path';
 import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
 
 const spanAllColumns = {
@@ -45,14 +49,6 @@ const sideNavStyles = (rowCount: number) => ({
     // before render and update this accordingly.
     gridRow: [null, null, null, null, `span ${rowCount}`],
 });
-
-const sideNavTitleStyles = {
-    borderLeft: 'solid',
-    borderWidth: '2px',
-    borderColor: 'black20',
-    paddingBottom: 'inc30',
-    px: 'inc60',
-};
 
 export interface TopicContentTypePageProps {
     contentType: PillCategory;
@@ -137,12 +133,21 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
-                        <TypographyScale
-                            variant="heading6"
-                            sx={sideNavTitleStyles}
+                        <a
+                            href={getURLPath(topicSlug)}
+                            sx={{
+                                '&:hover': {
+                                    textDecoration: 'underline',
+                                },
+                            }}
                         >
-                            {topicName}
-                        </TypographyScale>
+                            <TypographyScale
+                                variant="heading6"
+                                sx={sideNavTitleStyles}
+                            >
+                                {topicName}
+                            </TypographyScale>
+                        </a>
 
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>

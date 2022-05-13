@@ -12,7 +12,6 @@ import {
     Button,
 } from '@mdb/flora';
 
-import Card, { getCardProps } from '../components/card';
 import TagSection from '../components/tag-section';
 import ContentRating from '../components/content-rating';
 
@@ -45,9 +44,13 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import PodcastPlayer from '../components/podcast-player/podcast-player';
 import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
 import { CollectionType } from '../types/collection-type';
-import { setURLPathForNavItems } from '../utils/format-url-path';
+import { setURLPathForNavItems, getURLPath } from '../utils/format-url-path';
+import { sideNavTitleStyles } from '../components/tertiary-nav/styles';
+import { getMetaInfoForTopic } from '../service/get-meta-info-for-topic';
 
 interface ContentPageProps {
+    topicSlug: string;
+    topicName: string;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
 }
@@ -129,6 +132,8 @@ const determineVideoOrPodcast = (
 };
 
 const ContentPage: NextPage<ContentPageProps> = ({
+    topicSlug,
+    topicName,
     contentItem,
     tertiaryNavItems,
 }) => {
@@ -388,6 +393,21 @@ const ContentPage: NextPage<ContentPageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles}>
+                        <a
+                            href={getURLPath(topicSlug)}
+                            sx={{
+                                '&:hover': {
+                                    textDecoration: 'underline',
+                                },
+                            }}
+                        >
+                            <TypographyScale
+                                variant="heading6"
+                                sx={sideNavTitleStyles}
+                            >
+                                {topicName}
+                            </TypographyScale>
+                        </a>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
 
@@ -479,9 +499,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     let tertiaryNavItems = await getSideNav(sideNavFilterSlug);
     setURLPathForNavItems(tertiaryNavItems);
 
+    const metaInfoForTopic = await getMetaInfoForTopic(sideNavFilterSlug);
+    const topicSlug = sideNavFilterSlug;
+    const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
+
     const data = {
         contentItem,
         tertiaryNavItems,
+        topicSlug,
+        topicName,
     };
 
     return { props: data };
