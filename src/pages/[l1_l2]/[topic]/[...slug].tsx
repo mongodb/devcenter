@@ -95,6 +95,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         <GridLayout
             sx={{
                 rowGap: 'inc30',
+                width: '100%',
                 ...spanAllColumns,
             }}
         >
