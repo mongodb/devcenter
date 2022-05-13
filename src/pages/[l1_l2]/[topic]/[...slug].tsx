@@ -33,8 +33,7 @@ import {
     setURLPathForNavItems,
 } from '../../../utils/format-url-path';
 import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
-import { getBreadcrumbsFromSlug } from '../../../components/breadcrumbs/utils';
-import { Crumb } from '../../../components/breadcrumbs/types';
+import { getAllContentItems } from '../../../service/get-all-content';
 
 const spanAllColumns = {
     width: '100%',
@@ -86,7 +85,8 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
     const subTopicItems = subTopics.map(subTopic => {
         const icon = <BrandedIcon sx={iconStyles} name={subTopic.icon} />;
-        return { ...subTopic, icon };
+        const href = subTopic.href + contentTypeSlug;
+        return { ...subTopic, href, icon };
     });
 
     setURLPathForNavItems(tertiaryNavItems);
@@ -267,7 +267,36 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const metaInfoForTopic = await getMetaInfoForTopic(topicSlug);
 
+    const metaInfoForContentType = await getMetaInfoForTopic(contentTypeSlug);
+
     const contentTypeAggregateSlug = pillCategoryToSlug.get(contentType);
+
+    const subTopics = metaInfoForTopic?.topics;
+    let subTopicsWithContentType: ITopicCard[] = [];
+    // This is super annoying, but we need to only show the subtopics that have the content type we are looking at.
+    if (subTopics) {
+        const allContent = await getAllContentItems();
+        const allRelevantContent = allContent.filter(
+            item =>
+                item.tags.find(
+                    tag =>
+                        tag.type === 'ContentType' && tag.name === contentType
+                ) &&
+                item.tags.find(
+                    tag =>
+                        tag.type === 'L1Product' &&
+                        tag.name === metaInfoForTopic?.tagName
+                )
+        );
+        subTopicsWithContentType = subTopics.filter(subTopic =>
+            allRelevantContent.find(item =>
+                item.tags.find(
+                    tag =>
+                        tag.type === 'L2Product' && tag.name === subTopic.title
+                )
+            )
+        );
+    }
 
     const data = {
         // crumbs,
@@ -277,10 +306,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         topicSlug: topicSlug,
         contentTypeSlug: contentTypeSlug,
         contentTypeAggregateSlug: contentTypeAggregateSlug,
-        description: metaInfoForTopic?.description
-            ? metaInfoForTopic.description
+        description: metaInfoForContentType?.description
+            ? metaInfoForContentType.description
             : '',
-        subTopics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
+        subTopics: subTopicsWithContentType,
     };
     return { props: data };
 };
