@@ -461,22 +461,22 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-const removesErroringArticles = (contents: ContentItem[]) => {
-    const removeItems = [
-        'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
-        'new-time-series-collections',
-        'mongodb-charts-embedding-sdk-react/',
-        'build-movie-search-application',
-    ];
+// const removesErroringArticles = (contents: ContentItem[]) => {
+//     const removeItems = [
+//         'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
+//         'new-time-series-collections',
+//         'mongodb-charts-embedding-sdk-react/',
+//         'build-movie-search-application',
+//     ];
 
-    return contents.filter(content => !removeItems.includes(content.title));
-};
+//     return contents.filter(content => !removeItems.includes(content.title));
+// };
 
 export const getStaticPaths = async () => {
     const contents: ContentItem[] = await getAllContentItems();
-    const filteredContents = removesErroringArticles(contents);
+    // const filteredContents = removesErroringArticles(contents);
 
-    const paths = filteredContents.map((content: ContentItem) => ({
+    const paths = contents.map((content: ContentItem) => ({
         params: { slug: content.slug.split('/') },
     }));
     return { paths, fallback: false };
