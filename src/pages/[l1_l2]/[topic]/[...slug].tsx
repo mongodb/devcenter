@@ -36,7 +36,6 @@ import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
 import { getAllContentItems } from '../../../service/get-all-content';
 
 const spanAllColumns = {
-    width: '100%',
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
 };
 
