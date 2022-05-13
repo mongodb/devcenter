@@ -1,9 +1,12 @@
+const { redirects } = require('./config/redirects');
+
 const configVals = {
     basePath: '/developer',
     reactStrictMode: true,
     images: {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
+    redirects: redirects,
 };
 if (process.env.ANALYZE === 'true') {
     const withBundleAnalyzer = require('@next/bundle-analyzer')({
