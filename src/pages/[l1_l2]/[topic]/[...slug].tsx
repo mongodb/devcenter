@@ -33,6 +33,8 @@ import {
     setURLPathForNavItems,
 } from '../../../utils/format-url-path';
 import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
+import { getBreadcrumbsFromSlug } from '../../../components/breadcrumbs/utils';
+import { Crumb } from '../../../components/breadcrumbs/types';
 
 const spanAllColumns = {
     width: '100%',
@@ -51,6 +53,7 @@ const sideNavStyles = (rowCount: number) => ({
 });
 
 export interface TopicContentTypePageProps {
+    // crumbs: Crumb[]
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
     topicName: string;
@@ -62,6 +65,7 @@ export interface TopicContentTypePageProps {
 }
 
 const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
+    // crumbs,
     contentType,
     tertiaryNavItems,
     topicName,
@@ -242,6 +246,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     */
 
     const pathComponents = [l1_l2, topic].concat(slug);
+
+    // const crumbs = await getBreadcrumbsFromSlug(pathComponents.join('/'));
     const contentTypeSlug = '/' + pathComponents[pathComponents.length - 1];
     const topicSlug =
         '/' + pathComponents.slice(0, pathComponents.length - 1).join('/');
@@ -264,6 +270,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const contentTypeAggregateSlug = pillCategoryToSlug.get(contentType);
 
     const data = {
+        // crumbs,
         contentType: contentType,
         tertiaryNavItems: tertiaryNavItems,
         topicName: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',

@@ -47,8 +47,12 @@ import { CollectionType } from '../types/collection-type';
 import { setURLPathForNavItems, getURLPath } from '../utils/format-url-path';
 import { sideNavTitleStyles } from '../components/tertiary-nav/styles';
 import { getMetaInfoForTopic } from '../service/get-meta-info-for-topic';
+import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
+import { Crumb } from '../components/breadcrumbs/types';
+import Breadcrumbs from '../components/breadcrumbs';
 
 interface ContentPageProps {
+    crumbs: Crumb[];
     topicSlug: string;
     topicName: string;
     contentItem: ContentItem;
@@ -132,6 +136,7 @@ const determineVideoOrPodcast = (
 };
 
 const ContentPage: NextPage<ContentPageProps> = ({
+    crumbs,
     topicSlug,
     topicName,
     contentItem,
@@ -205,9 +210,10 @@ const ContentPage: NextPage<ContentPageProps> = ({
     const contentHeader = (
         <>
             <div sx={middleSectionStyles}>
-                <Eyebrow sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}>
-                    {category}
-                </Eyebrow>
+                <Breadcrumbs
+                    crumbs={crumbs}
+                    sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}
+                />
                 <TypographyScale
                     variant="heading2"
                     sx={{
@@ -486,6 +492,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
+    let slugString = slug.join('/');
 
     if (vidOrPod) {
         if (contentItem.primaryTag?.programmingLanguage) {
@@ -495,7 +502,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         if (contentItem.primaryTag?.l1Product) {
             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
         }
+        slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
     }
+    const crumbs = await getBreadcrumbsFromSlug(slugString);
     let tertiaryNavItems = await getSideNav(sideNavFilterSlug);
     setURLPathForNavItems(tertiaryNavItems);
 
@@ -504,6 +513,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
 
     const data = {
+        crumbs,
         contentItem,
         tertiaryNavItems,
         topicSlug,

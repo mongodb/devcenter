@@ -25,8 +25,11 @@ import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
 import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-featured';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
+import { Crumb } from '../../components/breadcrumbs/types';
+import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 
 interface TopicProps {
+    crumbs: Crumb[];
     name: string;
     slug: string;
     description: string;
@@ -51,6 +54,7 @@ const sideNavStyles = (rowCount: number) => ({
 });
 
 const Topic: NextPage<TopicProps> = ({
+    crumbs,
     name,
     slug,
     description,
@@ -62,12 +66,6 @@ const Topic: NextPage<TopicProps> = ({
     variant,
     tertiaryNavItems,
 }) => {
-    const crumbs = [
-        { text: 'MongoDB Developer Center', url: '/' },
-        { text: 'Developer Topics', url: '/topics' },
-        { text: 'Products', url: '/' },
-    ];
-
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -236,7 +234,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const featured = parseContentToGetFeatured(content);
 
+    const crumbs = await getBreadcrumbsFromSlug(slugString);
+
     const data = {
+        crumbs,
         name: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
         slug: slugString,
         content,
