@@ -3,10 +3,29 @@ import { clientFactory } from '../utils/client-factory';
 import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { getURLPath } from '../utils/format-url-path';
 
-const getProductsByName = (name: string, topics: any) => {
+interface Cta {
+    text: string;
+    url: string;
+}
+
+interface Topic {
+    title: string;
+    icon: string;
+    href: string;
+}
+
+interface TopicProps {
+    category: string;
+    tagName: string;
+    description: string;
+    slug: string;
+    ctas: Cta[];
+    topics: Topic[];
+}
+
+const getProductsByName = (name: string, topics: TopicProps[]) => {
     const L1Products = topics.filter(
-        ({ category, tagName }: any) =>
-            category === 'L1Product' && tagName === name
+        ({ category, tagName }) => category === 'L1Product' && tagName === name
     );
     const productName = L1Products[0].tagName;
     const slug = L1Products[0].slug;
@@ -25,15 +44,15 @@ const ULStyles = {
     columnCount: 6,
 };
 
-const Topic = ({ topics }: any) => {
+const Topic = ({ topics }: { topics: TopicProps[] }) => {
     const getExpertiseLevels = topics.filter(
-        ({ category }: any) => category === 'ExpertiseLevel'
+        ({ category }) => category === 'ExpertiseLevel'
     );
-    const getLanguages = topics.filter(
-        ({ category }: any) => category === 'ProgrammingLanguage'
+    const getLanguages = topics?.filter(
+        ({ category }) => category === 'ProgrammingLanguage'
     );
-    const getTechnologies = topics.filter(
-        ({ category }: any) => category === 'Technology'
+    const getTechnologies = topics?.filter(
+        ({ category }) => category === 'Technology'
     );
 
     const {
@@ -72,7 +91,7 @@ const Topic = ({ topics }: any) => {
             <h1>Topics</h1>
             <h2>Expertise Level</h2>
             <ul sx={ULStyles}>
-                {getExpertiseLevels.map(({ tagName, slug }: any) => (
+                {getExpertiseLevels.map(({ tagName, slug }) => (
                     <li key={tagName}>
                         <a href={getURLPath(slug)}>{tagName}</a>
                     </li>
@@ -80,7 +99,7 @@ const Topic = ({ topics }: any) => {
             </ul>
             <h2>Languages</h2>
             <ul sx={ULStyles}>
-                {getLanguages.map(({ tagName, slug }: any) => (
+                {getLanguages.map(({ tagName, slug }) => (
                     <li key={tagName}>
                         <a href={getURLPath(slug)}>{tagName}</a>
                     </li>
@@ -88,7 +107,7 @@ const Topic = ({ topics }: any) => {
             </ul>
             <h2>Technologies</h2>
             <ul sx={ULStyles}>
-                {getTechnologies.map(({ tagName, slug }: any) => (
+                {getTechnologies.map(({ tagName, slug }) => (
                     <li key={tagName}>
                         <a href={getURLPath(slug)}>{tagName}</a>
                     </li>
@@ -99,7 +118,7 @@ const Topic = ({ topics }: any) => {
                 <a href={getURLPath(atlasSlug)}>{atlasProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {atlasTopics.map(({ title, href }: any) => (
+                {atlasTopics.map(({ title, href }) => (
                     <li key={title}>
                         <a href={getURLPath(href)}>{title}</a>
                     </li>
@@ -110,7 +129,7 @@ const Topic = ({ topics }: any) => {
                 <a href={getURLPath(compassSlug)}>{compassProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {compassTopics.map(({ title, href }: any) => (
+                {compassTopics.map(({ title, href }) => (
                     <li key={title}>
                         <a href={getURLPath(href)}>{title}</a>
                     </li>
@@ -120,7 +139,7 @@ const Topic = ({ topics }: any) => {
                 <a href={getURLPath(connectorsSlug)}>{connectorsProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {connectorsTopics.map(({ title, href }: any) => (
+                {connectorsTopics.map(({ title, href }) => (
                     <li key={title}>
                         <a href={getURLPath(href)}>{title}</a>
                     </li>
@@ -130,7 +149,7 @@ const Topic = ({ topics }: any) => {
                 <a href={getURLPath(mongoDBSlug)}>{mongoDBProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {mongoDBTopics.map(({ title, href }: any) => (
+                {mongoDBTopics.map(({ title, href }) => (
                     <li key={title}>
                         <a href={getURLPath(href)}>{title}</a>
                     </li>
@@ -140,7 +159,7 @@ const Topic = ({ topics }: any) => {
                 <a href={getURLPath(opsManagerSlug)}>{opsManagerProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {opsManagerTopics.map(({ title, href }: any) => (
+                {opsManagerTopics.map(({ title, href }) => (
                     <li key={title}>
                         <a href={getURLPath(href)}>{title}</a>
                     </li>
@@ -150,7 +169,7 @@ const Topic = ({ topics }: any) => {
                 <a href={getURLPath(realmSlug)}>{realmProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {realmTopics.map(({ title, href }: any) => (
+                {realmTopics.map(({ title, href }) => (
                     <li key={title}>
                         <a href={getURLPath(href)}>{title}</a>
                     </li>
