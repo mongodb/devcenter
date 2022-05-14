@@ -3,14 +3,29 @@ import { clientFactory } from '../utils/client-factory';
 import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { getURLPath } from '../utils/format-url-path';
 
-const Topic = ({ topics }: any) => {
-    const ULStyles = {
-        listStyleType: 'none',
-        padding: 0,
-        margin: 0,
-        columnCount: 6,
+const getProductsByName = (name: string, topics: any) => {
+    const L1Products = topics.filter(
+        ({ category, tagName }: any) =>
+            category === 'L1Product' && tagName === name
+    );
+    const productName = L1Products[0].tagName;
+    const slug = L1Products[0].slug;
+    const topicsArray = L1Products[0].topics;
+    return {
+        productName,
+        slug,
+        topicsArray,
     };
+};
 
+const ULStyles = {
+    listStyleType: 'none',
+    padding: 0,
+    margin: 0,
+    columnCount: 6,
+};
+
+const Topic = ({ topics }: any) => {
     const getExpertiseLevels = topics.filter(
         ({ category }: any) => category === 'ExpertiseLevel'
     );
@@ -21,20 +36,36 @@ const Topic = ({ topics }: any) => {
         ({ category }: any) => category === 'Technology'
     );
 
-    const getProductsByName = (name: string) => {
-        const L1Products = topics.filter(
-            ({ category, tagName }: any) =>
-                category === 'L1Product' && tagName === name
-        );
-        const productName = L1Products[0].tagName;
-        const slug = L1Products[0].slug;
-        const topicsArray = L1Products[0].topics;
-        return {
-            productName,
-            slug,
-            topicsArray,
-        };
-    };
+    const {
+        productName: atlasProductName,
+        slug: atlasSlug,
+        topicsArray: atlasTopics,
+    } = getProductsByName('Atlas', topics);
+    const {
+        productName: compassProductName,
+        slug: compassSlug,
+        topicsArray: compassTopics,
+    } = getProductsByName('Compass', topics);
+    const {
+        productName: connectorsProductName,
+        slug: connectorsSlug,
+        topicsArray: connectorsTopics,
+    } = getProductsByName('Connectors', topics);
+    const {
+        productName: mongoDBProductName,
+        slug: mongoDBSlug,
+        topicsArray: mongoDBTopics,
+    } = getProductsByName('MongoDB', topics);
+    const {
+        productName: opsManagerProductName,
+        slug: opsManagerSlug,
+        topicsArray: opsManagerTopics,
+    } = getProductsByName('Ops Manager', topics);
+    const {
+        productName: realmProductName,
+        slug: realmSlug,
+        topicsArray: realmTopics,
+    } = getProductsByName('Realm (Mobile)', topics);
 
     return (
         <>
@@ -65,89 +96,65 @@ const Topic = ({ topics }: any) => {
             </ul>
             <h2>Products</h2>
             <h3>
-                <a href={getProductsByName('Atlas').slug}>
-                    {getProductsByName('Atlas').productName}
-                </a>
+                <a href={getURLPath(atlasSlug)}>{atlasProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {getProductsByName('Atlas').topicsArray.map(
-                    ({ title, href }: any) => (
-                        <li key={title}>
-                            <a href={getURLPath(href)}>{title}</a>
-                        </li>
-                    )
-                )}
+                {atlasTopics.map(({ title, href }: any) => (
+                    <li key={title}>
+                        <a href={getURLPath(href)}>{title}</a>
+                    </li>
+                ))}
             </ul>
 
             <h3>
-                <a href={getProductsByName('Compass').slug}>
-                    {getProductsByName('Compass').productName}
-                </a>
+                <a href={getURLPath(compassSlug)}>{compassProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {getProductsByName('Compass').topicsArray.map(
-                    ({ title, href }: any) => (
-                        <li key={title}>
-                            <a href={getURLPath(href)}>{title}</a>
-                        </li>
-                    )
-                )}
+                {compassTopics.map(({ title, href }: any) => (
+                    <li key={title}>
+                        <a href={getURLPath(href)}>{title}</a>
+                    </li>
+                ))}
             </ul>
             <h3>
-                <a href={getProductsByName('Connectors').slug}>
-                    {getProductsByName('Connectors').productName}
-                </a>
+                <a href={getURLPath(connectorsSlug)}>{connectorsProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {getProductsByName('Connectors').topicsArray.map(
-                    ({ title, href }: any) => (
-                        <li key={title}>
-                            <a href={getURLPath(href)}>{title}</a>
-                        </li>
-                    )
-                )}
+                {connectorsTopics.map(({ title, href }: any) => (
+                    <li key={title}>
+                        <a href={getURLPath(href)}>{title}</a>
+                    </li>
+                ))}
             </ul>
             <h3>
-                <a href={getProductsByName('MongoDB').slug}>
-                    {getProductsByName('MongoDB').productName}
-                </a>
+                <a href={getURLPath(mongoDBSlug)}>{mongoDBProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {getProductsByName('MongoDB').topicsArray.map(
-                    ({ title, href }: any) => (
-                        <li key={title}>
-                            <a href={getURLPath(href)}>{title}</a>
-                        </li>
-                    )
-                )}
+                {mongoDBTopics.map(({ title, href }: any) => (
+                    <li key={title}>
+                        <a href={getURLPath(href)}>{title}</a>
+                    </li>
+                ))}
             </ul>
             <h3>
-                <a href={getProductsByName('Ops Manager').slug}>
-                    {getProductsByName('Ops Manager').productName}
-                </a>
+                <a href={getURLPath(opsManagerSlug)}>{opsManagerProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {getProductsByName('Ops Manager').topicsArray.map(
-                    ({ title, href }: any) => (
-                        <li key={title}>
-                            <a href={getURLPath(href)}>{title}</a>
-                        </li>
-                    )
-                )}
+                {opsManagerTopics.map(({ title, href }: any) => (
+                    <li key={title}>
+                        <a href={getURLPath(href)}>{title}</a>
+                    </li>
+                ))}
             </ul>
             <h3>
-                <a href={getProductsByName('Realm (Mobile)').slug}>
-                    {getProductsByName('Realm (Mobile)').productName}
-                </a>
+                <a href={getURLPath(realmSlug)}>{realmProductName}</a>
             </h3>
             <ul sx={ULStyles}>
-                {getProductsByName('Realm (Mobile)').topicsArray.map(
-                    ({ title, href }: any) => (
-                        <li key={title}>
-                            <a href={getURLPath(href)}>{title}</a>
-                        </li>
-                    )
-                )}
+                {realmTopics.map(({ title, href }: any) => (
+                    <li key={title}>
+                        <a href={getURLPath(href)}>{title}</a>
+                    </li>
+                ))}
             </ul>
         </>
     );
