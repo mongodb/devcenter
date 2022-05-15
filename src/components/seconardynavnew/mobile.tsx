@@ -18,13 +18,14 @@ import {
     StylesFloraLinkChevronRight,
     StylesSubLinks,
 } from './mobile-styles';
+import { DropDownItem, DropDownItem2 } from './dropdown-menu';
 
 const DropDownButton = ({
     text,
     dropDownItems,
 }: {
     text: string;
-    dropDownItems: unknown[];
+    dropDownItems: DropDownItem[];
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
@@ -60,31 +61,14 @@ const DropDownButton = ({
     );
 };
 
-type NavLinks = {
-    name: string;
-    slug: string;
-    dropDownItems: [];
-    path?: string;
-    all?: string;
-    l1Product?: boolean;
-    keyValue?: string;
-};
-
-const SubNavLink = ({
-    name,
-    slug,
-    dropDownItems,
-    path,
-    all,
-    keyValue,
-}: NavLinks) => {
+const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(!isOpen);
     };
 
     return (
-        <li key={keyValue}>
+        <li>
             <span
                 sx={{
                     display: 'inline',
@@ -124,7 +108,7 @@ const SubNavLink = ({
                                             slug,
                                             l1Product,
                                             dropDownItems,
-                                        }: NavLinks) => (
+                                        }: DropDownItem2) => (
                                             <>
                                                 {l1Product ? (
                                                     <li key={name}>
@@ -133,9 +117,6 @@ const SubNavLink = ({
                                                             slug={slug}
                                                             dropDownItems={
                                                                 dropDownItems
-                                                            }
-                                                            l1Product={
-                                                                l1Product
                                                             }
                                                         />
                                                     </li>
@@ -221,26 +202,22 @@ const SubNavLink = ({
     );
 };
 
-// Need help with items typeing
-const DropDownMenu = ({ items }: any) => {
+const DropDownMenu = ({ items }: { items: DropDownItem[] }) => {
     return (
         // StylesDropDownMenuList
         <div sx={StylesDropDownWrapper}>
             <ul sx={StylesDropDownMenuList}>
-                {items.map(
-                    ({ name, slug, all, path, dropDownItems }: NavLinks) => (
-                        <>
-                            <SubNavLink
-                                keyValue={name}
-                                name={name}
-                                slug={slug}
-                                all={all}
-                                path={path}
-                                dropDownItems={dropDownItems}
-                            />
-                        </>
-                    )
-                )}
+                {items.map(({ name, slug, all, path, dropDownItems }: any) => (
+                    <>
+                        <SubNavLink
+                            name={name}
+                            slug={slug}
+                            all={all}
+                            path={path}
+                            dropDownItems={dropDownItems}
+                        />
+                    </>
+                ))}
                 <li key="all topics">
                     <Link href="all-topics" passHref>
                         <a sx={aLinkStyles}>
@@ -255,7 +232,11 @@ const DropDownMenu = ({ items }: any) => {
     );
 };
 
-const MobileViewL1ProductLinks = ({ name, slug, dropDownItems }: NavLinks) => {
+const MobileViewL1ProductLinks = ({
+    name,
+    slug,
+    dropDownItems,
+}: DropDownItem2) => {
     const [isOpenL1, setIsOpenL1] = useState(false);
     const onClickShowL1Menu = () => {
         setIsOpenL1(!isOpenL1);

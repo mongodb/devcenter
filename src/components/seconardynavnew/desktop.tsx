@@ -94,31 +94,29 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             {dropDownItems?.length ? (
                                 <>
                                     <div sx={linkWrapperStyles}>
-                                        <Link href={slug} passHref>
-                                            <FloraLink
-                                                sx={FloraLinkStyles(
-                                                    activePath === slug
-                                                        ? true
-                                                        : false
-                                                )}
-                                                onClick={onClickShowMenu}
-                                            >
-                                                {name}
-                                                <SystemIcon
-                                                    sx={{
-                                                        paddingLeft: 'inc20',
-                                                        display: 'inline',
-                                                    }}
-                                                    name={
-                                                        isOpen
-                                                            ? ESystemIconNames.CHEVRON_UP
-                                                            : ESystemIconNames.CHEVRON_DOWN
-                                                    }
-                                                    size="small"
-                                                    strokeWeight="large"
-                                                />
-                                            </FloraLink>
-                                        </Link>
+                                        <FloraLink
+                                            sx={FloraLinkStyles(
+                                                activePath === slug
+                                                    ? true
+                                                    : false
+                                            )}
+                                            onClick={onClickShowMenu}
+                                        >
+                                            {name}
+                                            <SystemIcon
+                                                sx={{
+                                                    paddingLeft: 'inc20',
+                                                    display: 'inline',
+                                                }}
+                                                name={
+                                                    isOpen
+                                                        ? ESystemIconNames.CHEVRON_UP
+                                                        : ESystemIconNames.CHEVRON_DOWN
+                                                }
+                                                size="small"
+                                                strokeWeight="large"
+                                            />
+                                        </FloraLink>
                                     </div>
                                     {isOpen && (
                                         <DropDownMenu items={dropDownItems} />
@@ -127,17 +125,16 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             ) : (
                                 <>
                                     <div sx={linkWrapperStyles}>
-                                        <Link href={slug} passHref>
-                                            <FloraLink
-                                                sx={FloraLinkStyles(
-                                                    activePath === slug
-                                                        ? true
-                                                        : false
-                                                )}
-                                            >
-                                                {name}
-                                            </FloraLink>
-                                        </Link>
+                                        <FloraLink
+                                            href={slug}
+                                            sx={FloraLinkStyles(
+                                                activePath === slug
+                                                    ? true
+                                                    : false
+                                            )}
+                                        >
+                                            {name}
+                                        </FloraLink>
                                     </div>
                                 </>
                             )}

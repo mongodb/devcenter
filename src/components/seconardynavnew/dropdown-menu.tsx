@@ -3,6 +3,26 @@ import Link from 'next/link';
 import theme from '@mdb/flora/theme';
 import { Link as FloraLink, TypographyScale, Button } from '@mdb/flora';
 
+export interface DropDownItem {
+    name: string;
+    slug: string;
+    all: string;
+    path: string;
+    dropDownItems: DropDownItem2[];
+}
+
+export interface DropDownItem2 {
+    name: string;
+    l1Product?: boolean;
+    slug: string;
+    dropDownItems?: DropDownItem3[];
+}
+
+interface DropDownItem3 {
+    name: string;
+    slug: string;
+}
+
 const aLinkStyles = {
     display: 'inline' as 'inline',
     alignItems: 'center',
@@ -64,7 +84,7 @@ const SubLinks = styled.ul`
     }
 `;
 
-const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
+const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
     return (
         <li key={name}>
             {slug ? (
@@ -82,7 +102,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                 <>
                     <SubLinks>
                         {dropDownItems?.map(
-                            ({ name, slug, dropDownItems, l1Product }: any) => (
+                            ({ name, slug, dropDownItems, l1Product }) => (
                                 <li key={name}>
                                     <Link href={slug} passHref>
                                         <a sx={aLinkStyles} key={name}>
@@ -96,7 +116,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: any) => {
                                     {dropDownItems && (
                                         <ul>
                                             {dropDownItems?.map(
-                                                ({ name, slug }: any) => (
+                                                ({ name, slug }) => (
                                                     <li key={name}>
                                                         <Link
                                                             href={slug}
@@ -175,7 +195,7 @@ const StylesDropDownWrapper = {
     zIndex: [null, null, null, 2],
 };
 
-const DropDownMenu = ({ items }: any) => {
+const DropDownMenu = ({ items }: { items: DropDownItem[] }) => {
     return (
         <div sx={StylesDropDownWrapper}>
             <DropDownMenuList>
