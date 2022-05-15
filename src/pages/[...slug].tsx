@@ -8,7 +8,6 @@ import {
     SideNav,
     TypographyScale,
     HorizontalRule,
-    Eyebrow,
     Button,
 } from '@mdb/flora';
 
@@ -30,7 +29,7 @@ import { TableOfContents } from '../components/article-body/table-of-contents';
 
 import { constructDateDisplay } from '../utils/format-date';
 import { ContentItem } from '../interfaces/content-item';
-import { thumbnailLoader } from '../components/card/utils';
+import { getCardProps, thumbnailLoader } from '../components/card/utils';
 import { getAllContentItems } from '../service/get-all-content';
 import SeriesCard from '../components/series-card';
 import SocialButtons from '../components/social-buttons';
@@ -50,6 +49,9 @@ import { getMetaInfoForTopic } from '../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
 import { Crumb } from '../components/breadcrumbs/types';
 import Breadcrumbs from '../components/breadcrumbs';
+import getRelatedContent from '../api-requests/get-related-content';
+import { Grid } from 'theme-ui';
+import Card from '../components/card';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -57,6 +59,7 @@ interface ContentPageProps {
     topicName: string;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
+    relatedContent: ContentItem[];
 }
 
 const sideNavStyles = {
@@ -141,6 +144,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
     topicName,
     contentItem,
     tertiaryNavItems,
+    relatedContent,
 }) => {
     const {
         collectionType,
@@ -164,9 +168,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
         useState<feedbackModalStages>('closed');
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
-
-    // const relatedContent = getRelatedContent(slug);
-    // const slugList = slug.split('/');
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
@@ -364,14 +365,15 @@ const ContentPage: NextPage<ContentPageProps> = ({
                 >
                     Related
                 </TypographyScale>
-                {/*<Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>*/}
-                {/*    {relatedContent.map(piece => (*/}
-                {/*        <Card*/}
-                {/*            key={piece.slug}*/}
-                {/*            {...getCardProps(piece, 'related')}*/}
-                {/*        />*/}
-                {/*    ))}*/}
-                {/*</Grid>*/}
+                <Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>
+                    {relatedContent.map(piece => (
+                        <Card
+                            sx={{ height: '100%' }}
+                            key={piece.slug}
+                            {...getCardProps(piece, 'related')}
+                        />
+                    ))}
+                </Grid>
             </div>
             <div sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
@@ -494,6 +496,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
     let slugString = slug.join('/');
 
+    //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag
+    if (contentItem.category === 'Code Example') {
+        sideNavFilterSlug =
+            '/languages/' + slug.slice(1, slug.length - 1).join('/');
+        slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
+    }
+
     if (vidOrPod) {
         if (contentItem.primaryTag?.programmingLanguage) {
             sideNavFilterSlug =
@@ -512,12 +521,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const topicSlug = sideNavFilterSlug;
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
 
+    const relatedContent = getRelatedContent(sideNavFilterSlug, contents);
+
     const data = {
         crumbs,
         contentItem,
         tertiaryNavItems,
         topicSlug,
         topicName,
+        relatedContent,
     };
 
     return { props: data };

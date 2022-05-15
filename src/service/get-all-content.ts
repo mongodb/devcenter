@@ -15,6 +15,7 @@ import { getAllPodcasts } from './get-all-podcasts';
 import { setPrimaryTag } from './set-primary-tag';
 import { PillCategoryValues } from '../types/pill-category';
 import { getAllFeatured } from './get-all-featured';
+import { addSeriesToItem } from './add-series-to-item';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcasts();
@@ -70,7 +71,7 @@ export const mapPodcastsToContentItems = (
         }
         item.podcastFileUrl = p.casted_slug;
         setPrimaryTag(item, p);
-        //addSeriesToItem(item, 'podcast', podcastSeries);
+        addSeriesToItem(item, 'podcast', podcastSeries);
         items.push(item);
     });
     return items.filter(item => item.title !== '');
@@ -103,7 +104,7 @@ export const mapVideosToContentItems = (
 
         item.videoId = v.videoId;
         setPrimaryTag(item, v);
-        //addSeriesToItem(item, 'video', videoSeries);
+        addSeriesToItem(item, 'video', videoSeries);
         items.push(item);
     });
     return items.filter(item => item.title !== '');
@@ -139,7 +140,7 @@ export const mapArticlesToContentItems = (
         if (a.image) {
             item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };
         }
-        //addSeriesToItem(item, 'article', articleSeries);
+        addSeriesToItem(item, 'article', articleSeries);
         items.push(item);
     });
 

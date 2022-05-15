@@ -73,19 +73,19 @@ const series: Series = {
     seriesEntry: [
         {
             title: 'This is 101 article',
-            slug: '/product/atlas/a1',
+            calculatedSlug: '/product/atlas/a1',
         },
         {
             title: 'This is 102 article',
-            slug: '/product/atlas/a2',
+            calculatedSlug: '/product/atlas/a2',
         },
         {
             title: 'This is 103 article',
-            slug: '/product/atlas/a3',
+            calculatedSlug: '/product/atlas/a3',
         },
         {
             title: 'This is 104 article',
-            slug: '/product/atlas/a4',
+            calculatedSlug: '/product/atlas/a4',
         },
     ],
 };
@@ -112,7 +112,7 @@ test("renders series with with piece that isn't last in series", () => {
     ).toHaveLength(2);
     expect(screen.getByRole('link', { name: 'Continue' })).toBeInTheDocument();
     series.seriesEntry.forEach(piece => {
-        if (piece.slug !== notLastSlug) {
+        if (piece.calculatedSlug !== notLastSlug) {
             expect(
                 screen
                     .getAllByRole('listitem')
