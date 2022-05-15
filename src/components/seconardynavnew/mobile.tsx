@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useState } from 'react';
 import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink } from '@mdb/flora';
@@ -19,6 +18,7 @@ import {
     StylesSubLinks,
 } from './mobile-styles';
 import { DropDownItem, DropDownItem2 } from './dropdown-menu';
+import { getURLPath } from '../../utils/format-url-path';
 
 const DropDownButton = ({
     text,
@@ -122,75 +122,71 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                                     </li>
                                                 ) : (
                                                     <li key={name}>
-                                                        <Link
-                                                            href={slug}
-                                                            passHref
+                                                        <a
+                                                            href={getURLPath(
+                                                                slug
+                                                            )}
+                                                            sx={{
+                                                                ...aLinkStyles,
+                                                                display: 'flex',
+                                                                alignItems:
+                                                                    'center',
+                                                            }}
+                                                            key={name}
                                                         >
-                                                            <a
-                                                                sx={{
-                                                                    ...aLinkStyles,
-                                                                    display:
-                                                                        'flex',
-                                                                    alignItems:
-                                                                        'center',
-                                                                }}
-                                                                key={name}
+                                                            {/* Level 3 */}
+                                                            <FloraLink
+                                                                sx={
+                                                                    StylesFloraLink
+                                                                }
                                                             >
-                                                                {/* Level 3 */}
-                                                                <FloraLink
-                                                                    sx={
-                                                                        StylesFloraLink
-                                                                    }
-                                                                >
-                                                                    {name}
-                                                                </FloraLink>
-                                                                <SystemIcon
-                                                                    sx={{
-                                                                        paddingLeft:
-                                                                            'inc10',
-                                                                        display:
-                                                                            'inline',
-                                                                    }}
-                                                                    name={
-                                                                        ESystemIconNames.CHEVRON_RIGHT
-                                                                    }
-                                                                    size="small"
-                                                                />
-                                                            </a>
-                                                        </Link>
+                                                                {name}
+                                                            </FloraLink>
+                                                            <SystemIcon
+                                                                sx={{
+                                                                    paddingLeft:
+                                                                        'inc10',
+                                                                    display:
+                                                                        'inline',
+                                                                }}
+                                                                name={
+                                                                    ESystemIconNames.CHEVRON_RIGHT
+                                                                }
+                                                                size="small"
+                                                            />
+                                                        </a>
                                                     </li>
                                                 )}
                                             </>
                                         )
                                     )}
                                     <li key={all}>
-                                        <Link href={slug} passHref>
-                                            <a
-                                                sx={{
-                                                    ...aLinkStyles,
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                }}
-                                                key={name}
+                                        <a
+                                            href={getURLPath(slug)}
+                                            sx={{
+                                                ...aLinkStyles,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                            }}
+                                            key={name}
+                                        >
+                                            <FloraLink
+                                                className="all-link"
+                                                sx={StylesFloraLink}
                                             >
-                                                <FloraLink
-                                                    className="all-link"
-                                                    sx={StylesFloraLink}
-                                                >
-                                                    {all}
-                                                </FloraLink>
-                                                <SystemIcon
-                                                    sx={{
-                                                        paddingLeft: 'inc10',
-                                                        display: 'inline',
-                                                    }}
-                                                    name={
-                                                        ESystemIconNames.CHEVRON_RIGHT
-                                                    }
-                                                    size="small"
-                                                />
-                                            </a>
-                                        </Link>
+                                                {all}
+                                            </FloraLink>
+                                            <SystemIcon
+                                                sx={{
+                                                    paddingLeft: 'inc10',
+                                                    display: 'inline',
+                                                }}
+                                                name={
+                                                    ESystemIconNames.CHEVRON_RIGHT
+                                                }
+                                                size="small"
+                                            />
+                                        </a>
                                     </li>
                                 </ul>
                             </>
@@ -219,13 +215,9 @@ const DropDownMenu = ({ items }: { items: DropDownItem[] }) => {
                     </>
                 ))}
                 <li key="all topics">
-                    <Link href="all-topics" passHref>
-                        <a sx={aLinkStyles}>
-                            <FloraLink sx={StylesFloraLink}>
-                                All Topics
-                            </FloraLink>
-                        </a>
-                    </Link>
+                    <a href={getURLPath('all-topics')} sx={aLinkStyles}>
+                        <FloraLink sx={StylesFloraLink}>All Topics</FloraLink>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -244,28 +236,27 @@ const MobileViewL1ProductLinks = ({
     return (
         <>
             <div sx={{ display: 'flex', alignItems: 'center' }}>
-                <Link href={slug} passHref>
-                    <a
+                <a
+                    href={getURLPath(slug)}
+                    sx={{
+                        ...aLinkStyles,
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                    key={name}
+                >
+                    <FloraLink sx={StylesFloraLinkChevronRight}>
+                        {name}
+                    </FloraLink>
+                    <SystemIcon
                         sx={{
-                            ...aLinkStyles,
-                            display: 'flex',
-                            alignItems: 'center',
+                            paddingLeft: 'inc10',
+                            display: 'inline',
                         }}
-                        key={name}
-                    >
-                        <FloraLink sx={StylesFloraLinkChevronRight}>
-                            {name}
-                        </FloraLink>
-                        <SystemIcon
-                            sx={{
-                                paddingLeft: 'inc10',
-                                display: 'inline',
-                            }}
-                            name={ESystemIconNames.CHEVRON_RIGHT}
-                            size="small"
-                        />
-                    </a>
-                </Link>
+                        name={ESystemIconNames.CHEVRON_RIGHT}
+                        size="small"
+                    />
+                </a>
                 <span onClick={onClickShowL1Menu}>
                     {!isOpenL1 && (
                         <SystemIcon
@@ -290,11 +281,13 @@ const MobileViewL1ProductLinks = ({
                     {/* Product Level 4 */}
                     {dropDownItems.map(({ name }: { name: string }) => (
                         <li sx={{ marginLeft: 'inc40' }} key={name}>
-                            <Link href={slug} passHref>
-                                <a sx={aLinkStyles} key={name}>
-                                    {name}
-                                </a>
-                            </Link>
+                            <a
+                                href={getURLPath(slug)}
+                                sx={aLinkStyles}
+                                key={name}
+                            >
+                                {name}
+                            </a>
                         </li>
                     ))}
                 </ul>
@@ -366,7 +359,7 @@ const MobileView = () => {
                                             ...StylesFloraLink,
                                             paddingLeft: 0,
                                         }}
-                                        href={slug}
+                                        href={getURLPath(slug)}
                                     >
                                         {name}
                                     </FloraLink>

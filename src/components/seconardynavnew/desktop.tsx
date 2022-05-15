@@ -6,9 +6,8 @@ import { secondaryNavData } from '../../data/secondary-nav';
 
 import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
-import styled from '@emotion/styled';
 import { StyledSecondaryNavContainer } from './desktop-styles';
-import Link from 'next/link';
+import { getURLPath } from '../../utils/format-url-path';
 
 const linkWrapperStyles = {
     position: 'relative' as 'relative',
@@ -76,16 +75,12 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
         >
             <nav sx={StyledSecondaryNavContainer}>
                 <div sx={linkWrapperStyles}>
-                    <Link href="/" passHref>
-                        <FloraLink
-                            href="/developer"
-                            sx={MainLinkStyles(
-                                activePath === '/' ? true : false
-                            )}
-                        >
-                            Developer Center
-                        </FloraLink>
-                    </Link>
+                    <FloraLink
+                        href="/developer"
+                        sx={MainLinkStyles(activePath === '/' ? true : false)}
+                    >
+                        Developer Center
+                    </FloraLink>
                 </div>
 
                 <ul sx={StyledSecondaryLinks}>
@@ -126,7 +121,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                                 <>
                                     <div sx={linkWrapperStyles}>
                                         <FloraLink
-                                            href={slug}
+                                            href={getURLPath(slug)}
                                             sx={FloraLinkStyles(
                                                 activePath === slug
                                                     ? true

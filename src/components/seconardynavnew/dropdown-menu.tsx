@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
 import theme from '@mdb/flora/theme';
 import { Link as FloraLink, TypographyScale, Button } from '@mdb/flora';
+import { getURLPath } from '../../utils/format-url-path';
 
 export interface DropDownItem {
     name: string;
@@ -88,11 +88,14 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
     return (
         <li key={name}>
             {slug ? (
-                <Link href={slug} passHref>
-                    <a className="dropdown-titles" sx={aLinkStyles} key={name}>
-                        {name}
-                    </a>
-                </Link>
+                <a
+                    href={getURLPath(slug)}
+                    className="dropdown-titles"
+                    sx={aLinkStyles}
+                    key={name}
+                >
+                    {name}
+                </a>
             ) : (
                 <TypographyScale inverse variant="body1">
                     {name}
@@ -104,31 +107,31 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                         {dropDownItems?.map(
                             ({ name, slug, dropDownItems, l1Product }) => (
                                 <li key={name}>
-                                    <Link href={slug} passHref>
-                                        <a sx={aLinkStyles} key={name}>
-                                            {l1Product ? (
-                                                <strong>{name}</strong>
-                                            ) : (
-                                                name
-                                            )}
-                                        </a>
-                                    </Link>
+                                    <a
+                                        href={getURLPath(slug)}
+                                        sx={aLinkStyles}
+                                        key={name}
+                                    >
+                                        {l1Product ? (
+                                            <strong>{name}</strong>
+                                        ) : (
+                                            name
+                                        )}
+                                    </a>
                                     {dropDownItems && (
                                         <ul>
                                             {dropDownItems?.map(
                                                 ({ name, slug }) => (
                                                     <li key={name}>
-                                                        <Link
-                                                            href={slug}
-                                                            passHref
+                                                        <a
+                                                            href={getURLPath(
+                                                                slug
+                                                            )}
+                                                            sx={aLinkStyles}
+                                                            key={name}
                                                         >
-                                                            <a
-                                                                sx={aLinkStyles}
-                                                                key={name}
-                                                            >
-                                                                {name}
-                                                            </a>
-                                                        </Link>
+                                                            {name}
+                                                        </a>
                                                     </li>
                                                 )
                                             )}
