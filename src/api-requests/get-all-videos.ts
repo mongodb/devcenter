@@ -12,13 +12,43 @@ const getAllVideosFromAPI = async (
 ): Promise<Video[]> => {
     const query = gql`
         query Videos {
-            videos @rest(type: "Video", path: "/new-videos") {
+            videos @rest(type: "Video", path: "/new-videos?_limit=-1") {
                 description
                 publishDate: originalPublishDate
                 title
                 slug
                 videoId
                 thumbnailUrl
+                l1Product: l_1_product {
+                    name
+                    calculatedSlug: calculated_slug
+                }
+                l2Product: l_2_product {
+                    name
+                    calculatedSlug: calculated_slug
+                }
+                programmingLanguage: programming_language {
+                    name
+                    calculatedSlug: calculated_slug
+                }
+                technology: technology {
+                    name
+                    calculatedSlug: calculated_slug
+                }
+                otherTags: other_tags {
+                    spokenLanguage: spoken_language {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                    expertiseLevel: expertise_level {
+                        name: level
+                        calculatedSlug: calculated_slug
+                    }
+                    authorType: author_type {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                }
             }
         }
     `;

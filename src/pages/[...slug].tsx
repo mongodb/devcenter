@@ -29,7 +29,7 @@ import CTALink from '../components/hero/CTALink';
 import { getTableOfContents } from '../utils/markdown-parser/get-table-of-contents';
 import { TableOfContents } from '../components/article-body/table-of-contents';
 
-import { formatDateToDisplayDateFormat } from '../utils/format-date';
+import { constructDateDisplay } from '../utils/format-date';
 import { ContentItem } from '../interfaces/content-item';
 import { thumbnailLoader } from '../components/card/utils';
 import { getAllContentItems } from '../service/get-all-content';
@@ -44,6 +44,8 @@ import { VideoEmbed } from '../components/article-body/body-components/video-emb
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import PodcastPlayer from '../components/podcast-player/podcast-player';
 import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
+import { CollectionType } from '../types/collection-type';
+import { setURLPathForNavItems } from '../utils/format-url-path';
 
 interface ContentPageProps {
     contentItem: ContentItem;
@@ -102,24 +104,6 @@ const middleSectionStyles = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
 };
 
-const constructDateDisplay = (
-    vidOrPod: boolean,
-    contentDate: string,
-    updateDate: string | undefined
-) => {
-    const date = `Published ${formatDateToDisplayDateFormat(
-        new Date(contentDate)
-    )}`;
-    if (vidOrPod) {
-        return date;
-    }
-    if (updateDate) {
-        return date.concat(
-            ` . Updated ${formatDateToDisplayDateFormat(new Date(updateDate))}`
-        );
-    }
-};
-
 const parseUndefinedValue = (description: string | undefined): string => {
     return description ? description : '';
 };
@@ -130,7 +114,7 @@ const getCtaTextForVideosOrPodcasts = (category: PillCategory) => {
 
 const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
     return category === 'Video'
-        ? '/video'
+        ? '/developer/videos'
         : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
 };
 
@@ -138,11 +122,18 @@ const parseDescription = (description: string, category: PillCategory) => {
     return category === 'Podcast' ? parse(description) : description;
 };
 
+const determineVideoOrPodcast = (
+    collectionType: CollectionType | undefined
+) => {
+    return collectionType === 'Video' || collectionType === 'Podcast';
+};
+
 const ContentPage: NextPage<ContentPageProps> = ({
     contentItem,
     tertiaryNavItems,
 }) => {
     const {
+        collectionType,
         authors,
         category,
         contentDate,
@@ -171,7 +162,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
     } ${category}`; // Regex to tell if it starts with a vowel.
 
-    const vidOrPod = category === 'Video' || category === 'Podcast';
+    const vidOrPod = determineVideoOrPodcast(collectionType);
 
     const displayDate = constructDateDisplay(vidOrPod, contentDate, updateDate);
 
@@ -445,14 +436,14 @@ interface IParams extends ParsedUrlQuery {
 } // Need this to avoid TS errors.
 
 const removesErroringArticles = (contents: ContentItem[]) => {
-    const removeSlugs = [
-        'article/mongodb-charts-embedding-sdk-react/',
-        'article/new-time-series-collections',
-        'article/pymongoarrow-and-data-analysis',
-        'article/build-movie-search-application',
+    const removeItems = [
+        'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
+        'new-time-series-collections',
+        'mongodb-charts-embedding-sdk-react/',
+        'build-movie-search-application',
     ];
 
-    return contents.filter(content => !removeSlugs.includes(content.slug));
+    return contents.filter(content => !removeItems.includes(content.title));
 };
 
 export const getStaticPaths = async () => {
@@ -469,13 +460,24 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
     const contents: ContentItem[] = await getAllContentItems();
 
-    //TODO - not sure how to construct side nav for podcasts and videos since they don't have primary tags
-    const sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
-    const tertiaryNavItems = await getSideNav(sideNavFilterSlug);
-
     const contentItem = contents.filter(
         content => content.slug === slug.join('/')
     )[0];
+
+    const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
+    let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
+
+    if (vidOrPod) {
+        if (contentItem.primaryTag?.programmingLanguage) {
+            sideNavFilterSlug =
+                contentItem.primaryTag.programmingLanguage.calculatedSlug;
+        }
+        if (contentItem.primaryTag?.l1Product) {
+            sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
+        }
+    }
+    let tertiaryNavItems = await getSideNav(sideNavFilterSlug);
+    setURLPathForNavItems(tertiaryNavItems);
 
     const data = {
         contentItem,

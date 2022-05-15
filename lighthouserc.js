@@ -3,7 +3,7 @@ module.exports = {
         collect: {
             staticDistDir: './.next',
             numberOfRuns: 2,
-            url: ['http://localhost/server/pages/index.html'],
+            url: ['http://localhost/server/pages/articles.html'],
         },
         upload: {
             target: 'temporary-public-storage',

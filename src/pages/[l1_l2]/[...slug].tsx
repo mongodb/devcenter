@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { GridLayout, SideNav } from '@mdb/flora';
+import { GridLayout, SideNav, BrandedIcon } from '@mdb/flora';
 
 import Hero from '../../components/hero';
 import Search from '../../components/search';
@@ -12,15 +12,19 @@ import CardSection, {
 } from '../../components/card-section';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import { ContentItem } from '../../interfaces/content-item';
-import { Tag } from '../../interfaces/tag';
-import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
 import { PillCategoryValues } from '../../types/pill-category';
-import { capitalizeFirstLetter } from '../../utils/format-string';
-import { getAllContentItems } from '../../service/get-all-content';
 import { getSideNav } from '../../service/get-side-nav';
 import TertiaryNav from '../../components/tertiary-nav';
-import { getDistinctL1L2Slugs } from '../../service/get-distinct-l1-l2-slugs';
+import { getDistinctTags } from '../../service/get-distinct-tags';
+import { createTopicPageCTAS } from '../../components/hero/utils';
+
+import { iconStyles } from '../../components/topic-card/styles';
+import { setURLPathForNavItems } from '../../utils/format-url-path';
+
+import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
+import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-featured';
+import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 
 interface TopicProps {
     name: string;
@@ -71,6 +75,16 @@ const Topic: NextPage<TopicProps> = ({
               ).filter(contentRow => contentRow.length > 2)
             : [];
 
+    const sortedContentRows: ContentItem[][] = [];
+
+    contentRows.forEach(contentRow => {
+        sortedContentRows.push(
+            contentRow.sort((a, b) =>
+                b.contentDate.localeCompare(a.contentDate)
+            )
+        );
+    });
+
     const topicsRow = topics.length > 0 ? 1 : 0;
     const featuredRow = variant === 'light' ? 0 : 1;
     const relatedTopicsRow = variant === 'light' ? 1 : 0;
@@ -79,9 +93,23 @@ const Topic: NextPage<TopicProps> = ({
     const mainGridDesktopRowsCount =
         topicsRow +
         featuredRow +
-        contentRows.length +
+        sortedContentRows.length +
         searchRow +
         relatedTopicsRow;
+
+    const CTAComponents = createTopicPageCTAS(ctas);
+
+    const topicItems = topics.map(topic => {
+        const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
+        return { ...topic, icon };
+    });
+
+    const relatedTopicItems = relatedTopics.map(topic => {
+        const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
+        return { ...topic, icon };
+    });
+
+    setURLPathForNavItems(tertiaryNavItems);
 
     return (
         <>
@@ -89,7 +117,7 @@ const Topic: NextPage<TopicProps> = ({
                 crumbs={crumbs}
                 name={name}
                 description={description}
-                ctas={ctas}
+                ctas={CTAComponents}
             />
             <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div
@@ -111,7 +139,7 @@ const Topic: NextPage<TopicProps> = ({
                         <>
                             {topics.length > 0 && (
                                 <TopicCardsContainer
-                                    topics={topics}
+                                    topics={topicItems}
                                     title={`${name} Topics`}
                                 />
                             )}
@@ -119,7 +147,7 @@ const Topic: NextPage<TopicProps> = ({
                                 <FeaturedCardSection content={featured} />
                             )}
                             {variant === 'heavy' &&
-                                contentRows.map(contentRow => {
+                                sortedContentRows.map(contentRow => {
                                     const contentType = contentRow[0].category;
                                     const direction =
                                         contentType === 'Podcast'
@@ -138,7 +166,7 @@ const Topic: NextPage<TopicProps> = ({
                     )}
                     <Search
                         title={`All ${name} Content`}
-                        slug={slug}
+                        tagSlug={slug}
                         sx={{
                             gridColumn: [
                                 'span 6',
@@ -152,7 +180,7 @@ const Topic: NextPage<TopicProps> = ({
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer
-                            topics={relatedTopics}
+                            topics={relatedTopicItems}
                             title="Related Topics"
                         />
                     )}
@@ -172,7 +200,11 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async () => {
     let paths: any[] = [];
 
-    const distinctSlugs = await getDistinctL1L2Slugs();
+    const distinctTags = await getDistinctTags();
+
+    const distinctSlugs = distinctTags
+        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
+        .map(tag => tag.slug);
 
     distinctSlugs.forEach(distinctSlug => {
         const parsedSlug = distinctSlug.startsWith('/')
@@ -191,9 +223,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { l1_l2, slug } = params as IParams;
 
-    const name = capitalizeFirstLetter(slug[slug.length - 1]);
-
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
+
+    const categoryTag = (await getDistinctTags()).find(
+        tag => tag.slug === slugString
+    );
+
+    if (!categoryTag) {
+        throw Error('Could not find corresponding tag for ' + slugString);
+    }
+
+    const { name } = categoryTag; // Will destruct ctas from this as well when available.
+
+    const metaInfoForTopic = await getMetaInfoForTopic(name);
 
     const tertiaryNavItems = await getSideNav(slugString);
 
@@ -202,8 +244,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
 
-    //TODO Filter for the ones which
-    const featured = content.slice(0, 3);
+    const featured = parseContentToGetFeatured(content);
 
     const data = {
         name,
@@ -212,10 +253,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         variant,
         tertiaryNavItems: tertiaryNavItems,
         featured: featured,
-        //TODO
-        description: 'Description',
-        ctas: [],
-        topics: [],
+        description: metaInfoForTopic?.description
+            ? metaInfoForTopic.description
+            : '',
+        ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
+        topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
+        //TODO - only for light stuff not sure of the logic
         relatedTopics: [],
     };
 

@@ -15,7 +15,7 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
 }) => {
     const nameStyles = clickableLinks
         ? {
-              '&:hover': { color: 'black60' },
+              '&:hover': { textDecoration: 'underline' },
           }
         : {};
 
@@ -61,7 +61,7 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
             className={className}
             sx={container}
         >
-            <div sx={{ display: 'flex' }}>
+            <div sx={{ display: 'flex', alignItems: 'center' }}>
                 {authors.map((author, index) => {
                     let extraStyles = {};
                     if (index > 0) {

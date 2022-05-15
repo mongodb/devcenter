@@ -12,7 +12,7 @@ const getAllPodcastsFromAPI = async (
 ): Promise<Podcast[]> => {
     const query = gql`
         query Podcasts {
-            podcasts @rest(type: "Podcast", path: "/podcasts") {
+            podcasts @rest(type: "Podcast", path: "/podcasts?_limit=-1") {
                 description
                 publishDate: originalPublishDate
                 title
@@ -20,6 +20,36 @@ const getAllPodcastsFromAPI = async (
                 podcastFileUrl
                 thumbnailUrl
                 casted_slug
+                l1Product: l_1_product {
+                    name
+                    calculatedSlug: calculated_slug
+                }
+                l2Product: l_2_product {
+                    name
+                    calculatedSlug: calculated_slug
+                }
+                programmingLanguage: programming_language {
+                    name
+                    calculatedSlug: calculated_slug
+                }
+                technology: technology {
+                    name
+                    calculatedSlug: calculated_slug
+                }
+                otherTags: other_tags {
+                    spokenLanguage: spoken_language {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                    expertiseLevel: expertise_level {
+                        name: level
+                        calculatedSlug: calculated_slug
+                    }
+                    authorType: author_type {
+                        name
+                        calculatedSlug: calculated_slug
+                    }
+                }
             }
         }
     `;

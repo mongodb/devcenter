@@ -1,9 +1,42 @@
-import { NextPage } from 'next';
+import type { NextPage, GetStaticProps } from 'next';
 
-const Tutorials: NextPage = () => (
-    <>
-        <h1>Tutorials</h1>
-    </>
-);
+import ContentTypePage from '../page-templates/content-type';
+import { PillCategory } from '../types/pill-category';
+import { ContentTypePageProps } from '../page-templates/content-type/types';
+import {
+    getFeaturedLangProdTech,
+    getFilters,
+} from '../page-templates/content-type/utils';
+import { getAllContentItems } from '../service/get-all-content';
 
-export default Tutorials;
+const TutorialsPage: NextPage<ContentTypePageProps> = props => {
+    return <ContentTypePage {...props} />;
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+    const contentType: PillCategory = 'Tutorial';
+    // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
+    const { contentTypeItems, ...filters } = await getFilters(contentType);
+
+    // TODO: When the featured collection is populated, we will hit that and filter by content type.
+    const content = await getAllContentItems();
+    const tutorials = content.filter(item => item.category === contentType);
+    const featured = tutorials
+        .sort((a, b) => b.contentDate.localeCompare(a.contentDate))
+        .slice(0, 3);
+    const { featuredLanguages, featuredTechnologies, featuredProducts } =
+        getFeaturedLangProdTech(contentType, tutorials);
+
+    return {
+        props: {
+            contentType,
+            ...filters,
+            featured,
+            featuredLanguages,
+            featuredTechnologies,
+            featuredProducts,
+        },
+    };
+};
+
+export default TutorialsPage;

@@ -5,4 +5,5 @@ export const L1L2_TOPIC_PAGE_TYPES: TagType[] = [
     'L2Product',
     'ProgrammingLanguage',
     'Technology',
+    'ExpertiseLevel',
 ];

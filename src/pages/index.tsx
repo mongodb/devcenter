@@ -3,7 +3,6 @@ import { GetStaticProps } from 'next';
 import { clientFactory } from '../utils/client-factory';
 import { getArticles } from '../api-requests/get-articles';
 import { Article } from '../interfaces/article';
-import { getSecondaryNavMenu } from '../service/get-secondary-nav-menu';
 
 interface HomeProps {
     articles: Article[];
@@ -29,8 +28,6 @@ export default Home;
 export const getStaticProps: GetStaticProps = async ({}) => {
     const client = clientFactory('ApolloREST', process.env.STRAPI_URL);
     const articles = await getArticles(client);
-    const secNav = await getSecondaryNavMenu();
-    console.log(JSON.stringify(secNav));
     return {
         props: { articles },
     };

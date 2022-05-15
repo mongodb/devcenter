@@ -13,16 +13,20 @@ import { getCardProps } from '../card';
 
 const FeaturedCardSection: React.FunctionComponent<
     FeaturedCardSectionProps
-> = ({ content }) => {
+> = ({ content, className, title = 'Featured' }) => {
+    if (content.length < 3) {
+        return null;
+    }
     return (
         <div
             data-testid="featured-card-section"
             sx={{
                 gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
             }}
+            className={className}
         >
             <div sx={sectionHeadingTopStyles}>
-                <TypographyScale variant="heading5">Featured</TypographyScale>
+                <TypographyScale variant="heading5">{title}</TypographyScale>
             </div>
             <Grid columns={6} sx={featuredCardSectionListStyles}>
                 <Card

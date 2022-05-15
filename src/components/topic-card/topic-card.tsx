@@ -1,23 +1,32 @@
-import Link from 'next/link';
-import { BrandedIcon, TypographyScale } from '@mdb/flora';
+import { TypographyScale } from '@mdb/flora';
 
-import { topicCardStyles, iconStyles } from './styles';
-import { ITopicCard } from './types';
+import { topicCardStyles } from './styles';
+import { TopicCardProps } from './types';
+import { getURLPath } from '../../utils/format-url-path';
 
-const TopicCard: React.FunctionComponent<ITopicCard> = ({
+const TopicCard: React.FunctionComponent<TopicCardProps> = ({
     title,
     icon,
     href,
 }) => {
     return (
-        <Link href={href} passHref={true}>
-            <a sx={topicCardStyles} tabIndex={0}>
-                <BrandedIcon sx={iconStyles} name={icon} />
-                <TypographyScale variant="body3" sx={{ my: 'auto' }}>
-                    {title}
-                </TypographyScale>
-            </a>
-        </Link>
+        <div sx={{ ...topicCardStyles, position: 'relative' }} tabIndex={0}>
+            {/* Sometimes the icon itself can be a link, so we need this absolute wrapping element */}
+            <a
+                href={getURLPath(href)}
+                sx={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    left: 0,
+                    top: 0,
+                }}
+            />
+            {icon}
+            <TypographyScale variant="body3" sx={{ my: 'auto' }}>
+                {title}
+            </TypographyScale>
+        </div>
     );
 };
 

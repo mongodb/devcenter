@@ -1,6 +1,7 @@
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import { getAllContentItems } from './get-all-content';
 import { ContentItem } from '../interfaces/content-item';
+import { setURLPathForNavItems } from '../utils/format-url-path';
 
 export const getSideNav = async (
     inputSlug: string

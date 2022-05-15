@@ -11,8 +11,9 @@ import {
     TypographyScale,
     Button,
     HorizontalRule,
+    BrandedIcon,
 } from '@mdb/flora';
-import { getDistinctL1L2Slugs } from '../../../service/get-distinct-l1-l2-slugs';
+import { getDistinctTags } from '../../../service/get-distinct-tags';
 import { CTAContainerStyles } from '../../../components/hero/styles';
 import RequestContentModal, {
     requestContentModalStages,
@@ -24,6 +25,11 @@ import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
 import { getAllContentTypes } from '../../../service/get-all-content-types';
 import { ContentTypeTag } from '../../../interfaces/tag-type-response';
 import { capitalizeFirstLetter } from '../../../utils/format-string';
+import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
+
+import { iconStyles } from '../../../components/topic-card/styles';
+import { setURLPathForNavItems } from '../../../utils/format-url-path';
+import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -55,6 +61,7 @@ export interface TopicContentTypePageProps {
     topicSlug: string;
     contentTypeSlug: string;
     contentTypeAggregateSlug: string;
+    description: string;
     subTopics: ITopicCard[];
 }
 
@@ -65,6 +72,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
     topicSlug,
     contentTypeSlug,
     contentTypeAggregateSlug,
+    description,
     subTopics,
 }) => {
     const requestButtonText = `Request ${
@@ -76,19 +84,18 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
-    //TODO revisit the logic
-    // const subTopicsWithHrefs = subTopics.map(
-    //     ({ name, icon, slug, category }) => ({
-    //         name,
-    //         icon,
-    //         href: `/${category}/${slug}/${contentTypeSlug}`,
-    //     })
-    // );
+    const subTopicItems = subTopics.map(subTopic => {
+        const icon = <BrandedIcon sx={iconStyles} name={subTopic.icon} />;
+        return { ...subTopic, icon };
+    });
+
+    setURLPathForNavItems(tertiaryNavItems);
 
     const header = (
         <GridLayout
             sx={{
                 rowGap: 'inc30',
+                width: '100%',
                 ...spanAllColumns,
             }}
         >
@@ -102,10 +109,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                 >
                     {contentType}s
                 </TypographyScale>
-                <TypographyScale variant="body2">
-                    Blurb consisting of a description of the title or tag for
-                    the page. No more than 2 - 3 lines, and 4 column max
-                </TypographyScale>
+                <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
             <div sx={CTAContainerStyles}>
                 <Button
@@ -147,7 +151,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     <HorizontalRule sx={spanAllColumns} spacing="xlarge" />
                     {subTopics.length > 0 && (
                         <TopicCardsContainer
-                            topics={subTopics}
+                            topics={subTopicItems}
                             title="By Category"
                             sx={{
                                 marginBottom: [
@@ -161,7 +165,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     )}
                     <Search
                         title={`All ${topicName} ${contentType}s`}
-                        slug={topicSlug}
+                        tagSlug={topicSlug}
                         contentType={contentType}
                         resultsLayout="grid"
                         titleLink={{
@@ -192,7 +196,11 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticPaths: GetStaticPaths = async () => {
     let paths: any[] = [];
 
-    const distinctSlugs = await getDistinctL1L2Slugs();
+    const distinctTags = await getDistinctTags();
+
+    const distinctSlugs = distinctTags
+        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
+        .map(tag => tag.slug);
 
     //distinct slugs = ["/product/atlas", "product/atlas/full-text-search", "language/java"]
     for (const distinctSlug of distinctSlugs) {
@@ -247,21 +255,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const tertiaryNavItems = await getSideNav(topicSlug);
 
-    const topicName = capitalizeFirstLetter(
-        pathComponents[pathComponents.length - 2]
-    );
+    const topicName = pathComponents[pathComponents.length - 2];
+
+    const metaInfoForTopic = await getMetaInfoForTopic(topicName);
 
     const contentTypeAggregateSlug = pillCategoryToSlug.get(contentType);
 
     const data = {
         contentType: contentType,
         tertiaryNavItems: tertiaryNavItems,
-        topicName: topicName,
+        topicName: capitalizeFirstLetter(topicName),
         topicSlug: topicSlug,
         contentTypeSlug: contentTypeSlug,
         contentTypeAggregateSlug: contentTypeAggregateSlug,
-        //TODO
-        subTopics: [],
+        description: metaInfoForTopic?.description
+            ? metaInfoForTopic.description
+            : '',
+        subTopics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
     };
     return { props: data };
 };

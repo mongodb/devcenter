@@ -1,6 +1,6 @@
 import { OtherTags } from './other-tags';
 
-type Image = {
+export type Image = {
     url: string;
 };
 
@@ -13,9 +13,11 @@ type ArticlesByAuthor = {
 
 export interface Author {
     name: string;
+    url?: string;
     bio?: string;
     image?: Image;
     location?: string;
+    title?: string;
     linkedin?: string;
     facebook?: string;
     twitter?: string;
