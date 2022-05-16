@@ -13,9 +13,16 @@ const TagSection: React.FunctionComponent<TagSectionProps> = ({
         {tags
             .filter(
                 tag =>
-                    !['AuthorType', 'ExpertiseLevel', 'ContentType'].includes(
-                        tag.type
-                    )
+                    tag &&
+                    tag.type &&
+                    tag.name &&
+                    tag.slug &&
+                    [
+                        'L1Product',
+                        'L2Product',
+                        'Technology',
+                        'ProgrammingLanguage',
+                    ].includes(tag.type)
             )
             .map(tag => (
                 <Tag

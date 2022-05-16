@@ -11,7 +11,7 @@ export const getArticles = async (
 ): Promise<Article[]> => {
     const query = gql`
         query Articles {
-            articles @rest(type: "Article", path: "/articles?_limit=-1") {
+            articles @rest(type: "Article", path: "/articles") {
                 title: name
                 description
                 slug
@@ -80,6 +80,9 @@ export const getAllArticlesFromAPI = async (
                         name
                         calculatedSlug: calculated_slug
                     }
+                    githubUrl: githuburl
+                    liveSiteUrl: livesiteurl
+                    codeType: code_type
                 }
                 calculatedSlug: calculated_slug
             }

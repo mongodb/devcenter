@@ -13,7 +13,7 @@ export const getAllPodcastSeriesFromAPI = async (
                 seriesEntry {
                     podcast {
                         title
-                        slug
+                        calculatedSlug: slug
                     }
                 }
             }
