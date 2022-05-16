@@ -438,9 +438,7 @@ interface IParams extends ParsedUrlQuery {
 const removesErroringArticles = (contents: ContentItem[]) => {
     const removeItems = [
         'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
-        'new-time-series-collections',
         'mongodb-charts-embedding-sdk-react/',
-        'build-movie-search-application',
     ];
 
     return contents.filter(content => !removeItems.includes(content.title));
