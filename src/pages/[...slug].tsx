@@ -12,7 +12,6 @@ import {
     Button,
 } from '@mdb/flora';
 
-import Card, { getCardProps } from '../components/card';
 import TagSection from '../components/tag-section';
 import ContentRating from '../components/content-rating';
 
@@ -45,9 +44,17 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import PodcastPlayer from '../components/podcast-player/podcast-player';
 import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
 import { CollectionType } from '../types/collection-type';
-import { setURLPathForNavItems } from '../utils/format-url-path';
+import { setURLPathForNavItems, getURLPath } from '../utils/format-url-path';
+import { sideNavTitleStyles } from '../components/tertiary-nav/styles';
+import { getMetaInfoForTopic } from '../service/get-meta-info-for-topic';
+import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
+import { Crumb } from '../components/breadcrumbs/types';
+import Breadcrumbs from '../components/breadcrumbs';
 
 interface ContentPageProps {
+    crumbs: Crumb[];
+    topicSlug: string;
+    topicName: string;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
 }
@@ -129,6 +136,9 @@ const determineVideoOrPodcast = (
 };
 
 const ContentPage: NextPage<ContentPageProps> = ({
+    crumbs,
+    topicSlug,
+    topicName,
     contentItem,
     tertiaryNavItems,
 }) => {
@@ -200,9 +210,10 @@ const ContentPage: NextPage<ContentPageProps> = ({
     const contentHeader = (
         <>
             <div sx={middleSectionStyles}>
-                <Eyebrow sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}>
-                    {category}
-                </Eyebrow>
+                <Breadcrumbs
+                    crumbs={crumbs}
+                    sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}
+                />
                 <TypographyScale
                     variant="heading2"
                     sx={{
@@ -388,6 +399,21 @@ const ContentPage: NextPage<ContentPageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles}>
+                        <a
+                            href={getURLPath(topicSlug)}
+                            sx={{
+                                '&:hover': {
+                                    textDecoration: 'underline',
+                                },
+                            }}
+                        >
+                            <TypographyScale
+                                variant="heading6"
+                                sx={sideNavTitleStyles}
+                            >
+                                {topicName}
+                            </TypographyScale>
+                        </a>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
 
@@ -435,22 +461,22 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-const removesErroringArticles = (contents: ContentItem[]) => {
-    const removeItems = [
-        'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
-        'new-time-series-collections',
-        'mongodb-charts-embedding-sdk-react/',
-        'build-movie-search-application',
-    ];
+// const removesErroringArticles = (contents: ContentItem[]) => {
+//     const removeItems = [
+//         'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
+//         'new-time-series-collections',
+//         'mongodb-charts-embedding-sdk-react/',
+//         'build-movie-search-application',
+//     ];
 
-    return contents.filter(content => !removeItems.includes(content.title));
-};
+//     return contents.filter(content => !removeItems.includes(content.title));
+// };
 
 export const getStaticPaths = async () => {
     const contents: ContentItem[] = await getAllContentItems();
-    const filteredContents = removesErroringArticles(contents);
+    // const filteredContents = removesErroringArticles(contents);
 
-    const paths = filteredContents.map((content: ContentItem) => ({
+    const paths = contents.map((content: ContentItem) => ({
         params: { slug: content.slug.split('/') },
     }));
     return { paths, fallback: false };
@@ -466,6 +492,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
+    let slugString = slug.join('/');
 
     if (vidOrPod) {
         if (contentItem.primaryTag?.programmingLanguage) {
@@ -475,13 +502,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         if (contentItem.primaryTag?.l1Product) {
             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
         }
+        slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
     }
+    const crumbs = await getBreadcrumbsFromSlug(slugString);
     let tertiaryNavItems = await getSideNav(sideNavFilterSlug);
     setURLPathForNavItems(tertiaryNavItems);
 
+    const metaInfoForTopic = await getMetaInfoForTopic(sideNavFilterSlug);
+    const topicSlug = sideNavFilterSlug;
+    const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
+
     const data = {
+        crumbs,
         contentItem,
         tertiaryNavItems,
+        topicSlug,
+        topicName,
     };
 
     return { props: data };
