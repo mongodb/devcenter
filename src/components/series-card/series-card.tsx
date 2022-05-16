@@ -33,9 +33,9 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
 }) => {
     const nextInSeries = findNextInSeries(series.seriesEntry, currentTitle);
 
-    const listItems = series.seriesEntry.map(({ title, slug }) => ({
+    const listItems = series.seriesEntry.map(({ title, calculatedSlug }) => ({
         text: title,
-        url: slug,
+        url: calculatedSlug,
     }));
 
     return (
@@ -61,12 +61,12 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
                         Up Next
                     </TypographyScale>
                     <div sx={{ marginBottom: ['inc30', null, null, 'inc40'] }}>
-                        <Link href={nextInSeries.slug}>
+                        <Link href={nextInSeries.calculatedSlug}>
                             {nextInSeries.title}
                         </Link>
                     </div>
                     <Button
-                        href={nextInSeries.slug}
+                        href={nextInSeries.calculatedSlug}
                         variant="secondary"
                         size="small"
                         customStyles={{ width: 'unset' }}
