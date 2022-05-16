@@ -137,6 +137,8 @@ const rewrites = [
     },
 ];
 
+console.log(rewrites);
+
 module.exports = {
     rewrites: rewrites,
 };
