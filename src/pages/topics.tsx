@@ -23,11 +23,11 @@ interface TopicsProps {
     topics: Topic[];
 }
 
-const getProductsByName = (arr: string[], topics: TopicsProps[]) => {
+const getProductsByName = (productsArray: string[], topics: TopicsProps[]) => {
     const L1Products = topics.filter(
         ({ category, tagName }) =>
             category === 'L1Product' &&
-            arr.some(productName => productName === tagName)
+            productsArray.some(productName => productName === tagName)
     );
     return L1Products;
 };
