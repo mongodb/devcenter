@@ -21,10 +21,7 @@ export async function middleware(req: NextRequest) {
             destination = rewrite.destination;
         }
 
-        if (destination) {
-            console.log('destination', destination);
-            return NextResponse.rewrite(destination);
-        }
+        if (destination) return NextResponse.rewrite(destination);
     }
 
     return NextResponse.next();
