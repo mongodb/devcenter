@@ -1,14 +1,15 @@
-import type { NextPage, GetStaticProps } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import {
+    Button,
+    ESystemIconNames,
     GridLayout,
+    HorizontalRule,
     SideNav,
     TypographyScale,
-    HorizontalRule,
-    Button,
 } from '@mdb/flora';
 
 import TagSection from '../components/tag-section';
@@ -43,7 +44,7 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import PodcastPlayer from '../components/podcast-player/podcast-player';
 import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
 import { CollectionType } from '../types/collection-type';
-import { setURLPathForNavItems, getURLPath } from '../utils/format-url-path';
+import { getURLPath, setURLPathForNavItems } from '../utils/format-url-path';
 import { sideNavTitleStyles } from '../components/tertiary-nav/styles';
 import { getMetaInfoForTopic } from '../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
@@ -52,6 +53,9 @@ import Breadcrumbs from '../components/breadcrumbs';
 import getRelatedContent from '../api-requests/get-related-content';
 import { Grid } from 'theme-ui';
 import Card from '../components/card';
+import * as url from 'url';
+import SecondaryTag from '../components/card/secondary-tag';
+import { CodeLevel } from '../types/tag-type';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -138,6 +142,15 @@ const determineVideoOrPodcast = (
     return collectionType === 'Video' || collectionType === 'Podcast';
 };
 
+const ratingSectionCondition = (category: PillCategory) => {
+    return (
+        category === 'Video' ||
+        category === 'Podcast' ||
+        category === 'News & Announcements' ||
+        category === 'Code Example'
+    );
+};
+
 const ContentPage: NextPage<ContentPageProps> = ({
     crumbs,
     topicSlug,
@@ -161,6 +174,9 @@ const ContentPage: NextPage<ContentPageProps> = ({
         podcastFileUrl,
         videoId,
         series,
+        githubUrl,
+        liveSiteUrl,
+        codeType,
     } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
 
@@ -255,6 +271,9 @@ const ContentPage: NextPage<ContentPageProps> = ({
                     <div sx={{ gridArea: 'tags' }}>
                         {tags && <TagSection tags={tags} />}
                     </div>
+                    {codeType && (
+                        <SecondaryTag codeLevel={codeType as CodeLevel} />
+                    )}
                     <SocialButtons
                         description={parseUndefinedValue(description)}
                         heading={title}
@@ -293,7 +312,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         />
                     )}
                 </div>
-                {!vidOrPod && ratingSection}
+                {!ratingSectionCondition(category) && ratingSection}
             </div>
         </>
     );
@@ -329,6 +348,26 @@ const ContentPage: NextPage<ContentPageProps> = ({
                 />
             )}
             {!vidOrPod && <DocumentBody content={contentAst} />}
+            <div
+                sx={{
+                    display: [null, 'flex'],
+                    columnGap: [0, 'inc70'],
+                    marginTop: ['inc40'],
+                }}
+            >
+                {githubUrl && (
+                    <Button
+                        href={githubUrl}
+                        target="_blank"
+                        variant="secondary"
+                        hasIcon
+                        iconName={ESystemIconNames.HAMBURGER}
+                    >
+                        View Code
+                    </Button>
+                )}
+                {liveSiteUrl && <CTALink text="Try it" url={liveSiteUrl} />}
+            </div>
         </div>
     );
 
@@ -348,7 +387,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         description={parseUndefinedValue(description)}
                         heading={title}
                     />
-                    {!vidOrPod && ratingSection}
+                    {!ratingSectionCondition && ratingSection}
                 </div>
             </div>
             {series && (
