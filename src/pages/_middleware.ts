@@ -13,7 +13,7 @@ export async function middleware(req: NextRequest) {
         if (rewrite.regex) {
             const regex = new RegExp(rewrite.regex);
             if (regex.test(pathname)) {
-                destination = `${process.env.DEVHUB_URL}${pathname}`;
+                destination = `${process.env.DEVHUB_URL_TEST_1}${pathname}`;
             }
         }
 
