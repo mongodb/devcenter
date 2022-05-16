@@ -14,7 +14,7 @@ interface Topic {
     href: string;
 }
 
-interface TopicProps {
+interface TopicsProps {
     category: string;
     tagName: string;
     description: string;
@@ -23,13 +23,12 @@ interface TopicProps {
     topics: Topic[];
 }
 
-const getProductsByName = (arr: string[], topics: TopicProps[]) => {
+const getProductsByName = (arr: string[], topics: TopicsProps[]) => {
     const L1Products = topics.filter(
         ({ category, tagName }) =>
             category === 'L1Product' &&
             arr.some(productName => productName === tagName)
     );
-    console.log('hello', L1Products);
     return L1Products;
 };
 
@@ -40,7 +39,7 @@ const ULStyles = {
     columnCount: 6,
 };
 
-const Topic = ({ topics }: { topics: TopicProps[] }) => {
+const Topic = ({ topics }: { topics: TopicsProps[] }) => {
     const getExpertiseLevels = topics.filter(
         ({ category }) => category === 'ExpertiseLevel'
     );
@@ -68,7 +67,7 @@ const Topic = ({ topics }: { topics: TopicProps[] }) => {
             <h1>Topics</h1>
             <h2>Expertise Level</h2>
             <ul sx={ULStyles}>
-                {getExpertiseLevels.map(({ tagName, slug }) => (
+                {getExpertiseLevels?.map(({ tagName, slug }) => (
                     <li key={tagName}>
                         <a href={getURLPath(slug)}>{tagName}</a>
                     </li>
@@ -76,7 +75,7 @@ const Topic = ({ topics }: { topics: TopicProps[] }) => {
             </ul>
             <h2>Languages</h2>
             <ul sx={ULStyles}>
-                {getLanguages.map(({ tagName, slug }) => (
+                {getLanguages?.map(({ tagName, slug }) => (
                     <li key={tagName}>
                         <a href={getURLPath(slug)}>{tagName}</a>
                     </li>
@@ -84,7 +83,7 @@ const Topic = ({ topics }: { topics: TopicProps[] }) => {
             </ul>
             <h2>Technologies</h2>
             <ul sx={ULStyles}>
-                {getTechnologies.map(({ tagName, slug }) => (
+                {getTechnologies?.map(({ tagName, slug }) => (
                     <li key={tagName}>
                         <a href={getURLPath(slug)}>{tagName}</a>
                     </li>
