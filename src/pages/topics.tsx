@@ -40,6 +40,7 @@ const ULStyles = {
     padding: 0,
     marginBottom: ['section20', 'section20', 'section20', 'section40'],
     display: 'grid',
+    columnGap: 'inc70',
     gridTemplateColumns: [
         'repeat(2, 1fr)',
         'repeat(2, 1fr)',
@@ -48,7 +49,7 @@ const ULStyles = {
         'repeat(6, 1fr)',
     ],
     li: {
-        // paddingBottom: ['inc30', 'inc30', 'inc30', 'inc40'],
+        paddingBottom: ['inc30', 'inc30', 'inc30', 'inc40'],
         'a:hover': {
             textDecoration: 'underline !important',
         },
