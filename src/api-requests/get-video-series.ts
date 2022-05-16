@@ -7,12 +7,12 @@ export const getAllVideoSeriesFromAPI = async (
 ): Promise<SeriesResponse[]> => {
     const query = gql`
         query VideoSeries {
-            videoSeries @rest(type: "VideoSeries", path: "/video-series") {
+            videoSeries @rest(type: "VideoSeries", path: "/new-video-series") {
                 title
                 seriesEntry {
-                    video {
+                    video: new_video {
                         title
-                        slug
+                        calculatedSlug: slug
                     }
                 }
             }

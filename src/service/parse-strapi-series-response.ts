@@ -14,8 +14,12 @@ export const parseStrapiSeriesResponse = (
     data.forEach((series: SeriesResponse) => {
         const seriesEntries: SeriesEntry[] = [];
         series.seriesEntry.forEach((seriesEntry: SeriesEntryInResponse) => {
-            const seriesEntryItem = seriesEntry[seriesType];
-            seriesEntries.push(seriesEntryItem);
+            //for drafts strapi is returning series entry as nulls
+            // eg article: null
+            if (seriesEntry && seriesEntry[seriesType]) {
+                const seriesEntryItem = seriesEntry[seriesType];
+                seriesEntries.push(seriesEntryItem);
+            }
         });
         const seriesItem: Series = {
             title: series.title,

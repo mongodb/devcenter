@@ -50,6 +50,8 @@ const sideNavStyles = (rowCount: number) => ({
     gridRow: [null, null, null, null, `span ${rowCount}`],
 });
 
+let pluralize = require('pluralize');
+
 export interface TopicContentTypePageProps {
     // crumbs: Crumb[]
     contentType: PillCategory;
@@ -61,6 +63,19 @@ export interface TopicContentTypePageProps {
     description: string;
     subTopics: ITopicCard[];
 }
+
+const getSearchTitleLink = (
+    contentType: PillCategory,
+    contentTypeAggregateSlug: string
+) => {
+    if (contentType === 'News & Announcements') {
+        return undefined;
+    }
+    return {
+        href: contentTypeAggregateSlug,
+        text: `All ${pluralize(contentType)}`,
+    };
+};
 
 const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
     // crumbs,
@@ -172,14 +187,14 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                         />
                     )}
                     <Search
-                        title={`All ${topicName} ${contentType}s`}
+                        title={`All ${topicName} ${pluralize(contentType)}`}
                         tagSlug={topicSlug}
                         contentType={contentType}
                         resultsLayout="grid"
-                        titleLink={{
-                            text: `All ${contentType}s`,
-                            href: contentTypeAggregateSlug,
-                        }}
+                        titleLink={getSearchTitleLink(
+                            contentType,
+                            contentTypeAggregateSlug
+                        )}
                         sx={spanAllColumns}
                     />
                 </GridLayout>

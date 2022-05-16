@@ -13,7 +13,10 @@ import CardSection, {
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
-import { PillCategoryValues } from '../../types/pill-category';
+import {
+    pillCategoryToSlug,
+    PillCategoryValues,
+} from '../../types/pill-category';
 import { getSideNav } from '../../service/get-side-nav';
 import TertiaryNav from '../../components/tertiary-nav';
 import { getDistinctTags } from '../../service/get-distinct-tags';
@@ -27,6 +30,7 @@ import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-feat
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
+let pluralize = require('pluralize');
 
 interface TopicProps {
     crumbs: Crumb[];
@@ -147,6 +151,8 @@ const Topic: NextPage<TopicProps> = ({
                             {variant === 'heavy' &&
                                 sortedContentRows.map(contentRow => {
                                     const contentType = contentRow[0].category;
+                                    const contentTypeSlug =
+                                        pillCategoryToSlug.get(contentType);
                                     const direction =
                                         contentType === 'Podcast'
                                             ? 'column'
@@ -155,7 +161,10 @@ const Topic: NextPage<TopicProps> = ({
                                         <CardSection
                                             key={contentType}
                                             content={contentRow}
-                                            title={`${contentRow[0].category}s`}
+                                            title={`${pluralize(
+                                                contentRow[0].category
+                                            )}`}
+                                            href={contentTypeSlug}
                                             direction={direction}
                                         />
                                     );

@@ -3,7 +3,7 @@ import { PrimaryTag } from './primary-tag';
 
 export interface SeriesEntry {
     title: string;
-    slug: string;
+    calculatedSlug: string;
     otherTags?: OtherTags;
     primaryTags?: PrimaryTag;
 }
