@@ -6,6 +6,7 @@ envSecrets:
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
   STRAPI_URL: devcenter-secrets
+  DEVHUB_URL: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
@@ -36,7 +37,7 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-ingress:
-  enabled: true
-  path: /developer
-  hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
+# ingress:
+#   enabled: true
+#   path: /developer
+#   hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]

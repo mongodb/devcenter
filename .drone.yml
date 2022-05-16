@@ -19,6 +19,8 @@ steps:
         from_secret: NPM_EMAIL
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
     settings:
       create_repository: true
       enable_cache: true
@@ -28,6 +30,7 @@ steps:
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
+        - DEVHUB_URL
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
@@ -74,7 +77,7 @@ steps:
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
-      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
+      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend-rewrite.devrel.staging.corp.mongodb.com
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
