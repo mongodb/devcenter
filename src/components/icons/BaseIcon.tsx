@@ -11,7 +11,7 @@ const BaseIcon: React.FunctionComponent<BaseIconProps> = ({
     return (
         <svg
             viewBox="0 0 24 24"
-            {...(isFilled ? {} : { fill: 'none' })}
+            {...(!isFilled && { fill: 'none' })}
             xmlns="http://www.w3.org/2000/svg"
             sx={{
                 width: 'inc20',

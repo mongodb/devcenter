@@ -2,9 +2,9 @@ import { Crumb } from './types';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 
 const categoryToCrumb: { [key: string]: Crumb } = {
-    products: { text: 'Products', url: '/developer/products' },
-    languages: { text: 'Languages', url: '/developer/languages' },
-    technologies: { text: 'Technologies', url: '/developer/technologies' },
+    products: { text: 'Products', url: '/products' },
+    languages: { text: 'Languages', url: '/languages' },
+    technologies: { text: 'Technologies', url: '/technologies' },
 };
 
 export const getBreadcrumbsFromSlug = async (
@@ -12,7 +12,7 @@ export const getBreadcrumbsFromSlug = async (
 ): Promise<Crumb[]> => {
     const crumbs: Crumb[] = [
         { text: 'MongoDB Developer Center', url: '/' },
-        { text: 'Developer Topics', url: '/developer/topics' },
+        { text: 'Developer Topics', url: '/topics' },
     ];
     const slugList = slug.startsWith('/')
         ? slug.split('/').slice(1)
