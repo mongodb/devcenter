@@ -136,6 +136,9 @@ export const mapArticlesToContentItems = (
             tags: flattenTags(a.otherTags),
             title: a.title,
             featured: featured.includes(a.title),
+            codeType: a.otherTags[0].codeType,
+            githubUrl: a.otherTags[0].githubUrl,
+            liveSiteUrl: a.otherTags[0].liveSiteUrl,
         };
         if (a.image) {
             item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };

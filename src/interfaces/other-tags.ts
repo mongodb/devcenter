@@ -8,6 +8,7 @@ import {
     SpokenLanguageTag,
     TechnologyTag,
 } from './tag-type-response';
+import { CodeLevel } from '../types/tag-type';
 
 export interface OtherTags {
     contentType: ContentTypeTag;
@@ -18,4 +19,7 @@ export interface OtherTags {
     spokenLanguage?: SpokenLanguageTag;
     expertiseLevel?: ExpertiseLevelTag;
     programmingLanguage?: ProgrammingLanguageTag[];
+    codeType?: CodeLevel;
+    githubUrl?: string;
+    liveSiteUrl?: string;
 }
