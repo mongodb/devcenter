@@ -45,6 +45,7 @@ import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
+    description,
     contentType,
     l1Items,
     languageItems,
@@ -65,7 +66,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
     const { data, error, isValidating } = useSWR(
-        () => `s=${searchString}&contentType=${contentType}`,
+        () =>
+            `s=${encodeURIComponent(
+                searchString
+            )}&contentType=${encodeURIComponent(contentType)}`,
         fetcher,
         {
             revalidateIfStale: false,
@@ -297,7 +301,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             <Hero
                 crumbs={[]}
                 name={`${contentType}s`}
-                description="Some description"
+                description={description}
                 ctas={CTAElement}
             />
             <div sx={pageWrapper}>

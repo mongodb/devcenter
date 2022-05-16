@@ -8,3 +8,5 @@ export type TagType =
     | 'SpokenLanguage'
     | 'ContentType'
     | 'CodeLevel';
+
+export type CodeLevel = 'Full Application' | 'Snippet';
