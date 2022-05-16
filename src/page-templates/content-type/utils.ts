@@ -126,6 +126,7 @@ export const getFilters = async (contentType?: PillCategory) => {
 
     allContent.forEach(({ tags, type }) => {
         tags.forEach(tag => {
+            if (!tag.name) return; // Short circuit if the tag name is null.
             if (tag.type === 'L2Product') {
                 const l2FilterItem: FilterItem = {
                     type: tag.type,
