@@ -91,67 +91,22 @@ const Topic = ({ topics }: { topics: TopicProps[] }) => {
                 ))}
             </ul>
             <h2>Products</h2>
-            <h3>
-                <a href={getURLPath(Atlas.slug)}>{Atlas.tagName}</a>
-            </h3>
-            <ul sx={ULStyles}>
-                {Atlas.topics?.map(({ title, href }) => (
-                    <li key={title}>
-                        <a href={getURLPath(href)}>{title}</a>
-                    </li>
-                ))}
-            </ul>
-
-            <h3>
-                <a href={getURLPath(Compass.slug)}>{Compass.tagName}</a>
-            </h3>
-            <ul sx={ULStyles}>
-                {Compass.topics?.map(({ title, href }) => (
-                    <li key={title}>
-                        <a href={getURLPath(href)}>{title}</a>
-                    </li>
-                ))}
-            </ul>
-            <h3>
-                <a href={getURLPath(Connectors.slug)}>{Connectors.tagName}</a>
-            </h3>
-            <ul sx={ULStyles}>
-                {Connectors.topics?.map(({ title, href }) => (
-                    <li key={title}>
-                        <a href={getURLPath(href)}>{title}</a>
-                    </li>
-                ))}
-            </ul>
-            <h3>
-                <a href={getURLPath(MongoDB.slug)}>{MongoDB.tagName}</a>
-            </h3>
-            <ul sx={ULStyles}>
-                {MongoDB.topics?.map(({ title, href }) => (
-                    <li key={title}>
-                        <a href={getURLPath(href)}>{title}</a>
-                    </li>
-                ))}
-            </ul>
-            <h3>
-                <a href={getURLPath(OpsManager.slug)}>{OpsManager.tagName}</a>
-            </h3>
-            <ul sx={ULStyles}>
-                {OpsManager.topics?.map(({ title, href }) => (
-                    <li key={title}>
-                        <a href={getURLPath(href)}>{title}</a>
-                    </li>
-                ))}
-            </ul>
-            <h3>
-                <a href={getURLPath(Realm.slug)}>{Realm.tagName}</a>
-            </h3>
-            <ul sx={ULStyles}>
-                {Realm.topics?.map(({ title, href }) => (
-                    <li key={title}>
-                        <a href={getURLPath(href)}>{title}</a>
-                    </li>
-                ))}
-            </ul>
+            {[Atlas, Compass, Connectors, MongoDB, OpsManager, Realm].map(
+                ({ slug, tagName, topics }) => (
+                    <div key={tagName}>
+                        <h3>
+                            <a href={getURLPath(slug)}>{tagName}</a>
+                        </h3>
+                        <ul sx={ULStyles}>
+                            {topics?.map(({ title, href }) => (
+                                <li key={title}>
+                                    <a href={getURLPath(href)}>{title}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )
+            )}
         </>
     );
 };
