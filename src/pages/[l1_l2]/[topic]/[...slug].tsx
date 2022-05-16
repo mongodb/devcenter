@@ -247,11 +247,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const pathComponents = [l1_l2, topic].concat(slug);
 
-    // const crumbs = await getBreadcrumbsFromSlug(pathComponents.join('/'));
     const contentTypeSlug = '/' + pathComponents[pathComponents.length - 1];
     const topicSlug =
         '/' + pathComponents.slice(0, pathComponents.length - 1).join('/');
-    //
+
     const allContentTypesInStrapi = await getAllContentTypes();
 
     const contentType: PillCategory = allContentTypesInStrapi
