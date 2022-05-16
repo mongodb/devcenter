@@ -5,6 +5,7 @@ on:
 env:
     NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
     NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
+    DEVHUB_URL_TEST_1: ${{ secrets.DEVHUB_URL_TEST_1 }}
 jobs:
     deploy-prod-vercel:
         runs-on: ubuntu-latest
@@ -21,5 +22,5 @@ jobs:
                   vercel-token: ${{secrets.VERCEL_TOKEN}}
                   vercel-org-id: ${{secrets.VERCEL_ORG_ID}}
                   vercel-project-id: ${{secrets.VERCEL_PROJECT_ID}}
-                  vercel-args: '--prod --build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }} --build-env STRAPI_URL=${{ secrets.STRAPI_DEV_URL }}'
+                  vercel-args: '--prod --build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }} --build-env STRAPI_URL=${{ secrets.STRAPI_DEV_URL }} --build-env DEVHUB_URL_TEST_1=${{ secrets.DEVHUB_URL_TEST_1 }}'
                   scope: ${{secrets.VERCEL_ORG_ID}}
