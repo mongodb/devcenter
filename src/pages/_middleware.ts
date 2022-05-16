@@ -3,7 +3,6 @@ import { rewrites } from '../../config/rewrites';
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
-    console.log(pathname);
 
     // Rewrites are done in this middleware due to
     // existing issue with SSG and dynamic routing
@@ -14,10 +13,7 @@ export async function middleware(req: NextRequest) {
         if (rewrite.regex) {
             const regex = new RegExp(rewrite.regex);
             if (regex.test(pathname)) {
-                destination =
-                    rewrite.type == 'external'
-                        ? `${process.env.DEVHUB_URL}${pathname}`
-                        : `/developer_hub${pathname}`;
+                destination = `${process.env.DEVHUB_URL}${pathname}`;
             }
         }
 
@@ -26,13 +22,7 @@ export async function middleware(req: NextRequest) {
         }
 
         if (destination) {
-            if (rewrite.type == 'internal') {
-                const url = req.nextUrl.clone();
-                url.pathname = destination;
-                return NextResponse.rewrite(url);
-            } else {
-                return NextResponse.rewrite(destination);
-            }
+            return NextResponse.rewrite(destination);
         }
     }
 

@@ -8,178 +8,132 @@ need to be modified before setting the rewrites attribute in the next.config.js.
 const rewrites = [
     {
         source: '/academia',
-        destination: '/developer_hub/academia/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/academia/`,
     },
     {
         source: '/academia/educators',
-        destination: '/developer_hub/academia/educators/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/academia/educators/`,
     },
     {
         source: '/article/10-tips-making-remote-work-actually-work',
-        destination:
-            '/developer_hub/article/10-tips-making-remote-work-actually-work/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/article/10-tips-making-remote-work-actually-work/`,
     },
     {
         source: '/article/10-ways-raise-your-profile-developer',
-        destination:
-            '/developer_hub/article/10-ways-raise-your-profile-developer/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/article/10-ways-raise-your-profile-developer/`,
     },
     {
         source: '/article/behind-scenes-mongodb-podcast',
-        destination:
-            '/developer_hub/article/behind-scenes-mongodb-podcast/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/article/behind-scenes-mongodb-podcast/`,
     },
     {
         source: '/article/introduction-to-modern-databases-mongodb-academia',
-        destination:
-            '/developer_hub/article/introduction-to-modern-databases-mongodb-academia/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/article/introduction-to-modern-databases-mongodb-academia/`,
     },
     {
         source: '/community/art-of-creating-talk',
-        destination: '/developer_hub/community/art-of-creating-talk/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community/art-of-creating-talk/`,
     },
     {
         source: '/community/creating-stunning-slides',
-        destination:
-            '/developer_hub/community/creating-stunning-slides/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community/creating-stunning-slides/`,
     },
     {
         source: '/community/surviving-the-stage',
-        destination: '/developer_hub/community/surviving-the-stage/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community/surviving-the-stage/`,
     },
     {
         source: '/community/virtual-presentation',
-        destination: '/developer_hub/community/virtual-presentation/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community/virtual-presentation/`,
     },
     {
         source: '/community-champions',
-        destination: '/developer_hub/community-champions/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/`,
     },
     {
         source: '/community-champions/arkadiusz-borucki',
-        destination:
-            '/developer_hub/community-champions/arkadiusz-borucki/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/arkadiusz-borucki/`,
     },
     {
         source: '/community-champions/chris-dellaway',
-        destination:
-            '/developer_hub/community-champions/chris-dellaway/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/chris-dellaway/`,
     },
     {
         source: '/community-champions/dani-monteiro',
-        destination:
-            '/developer_hub/community-champions/dani-monteiro/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/dani-monteiro/`,
     },
     {
         source: '/community-champions/hans-peter-grahsl',
-        destination:
-            '/developer_hub/community-champions/hans-peter-grahsl/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/hans-peter-grahsl/`,
     },
     {
         source: '/community-champions/jai-hirsch',
-        destination: '/developer_hub/community-champions/jai-hirsch/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/jai-hirsch/`,
     },
     {
         source: '/community-champions/jay-wooten',
-        destination: '/developer_hub/community-champions/jay-wooten/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/jay-wooten/`,
     },
     {
         source: '/community-champions/leandro-domingues',
-        destination:
-            '/developer_hub/community-champions/leandro-domingues/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/leandro-domingues/`,
     },
     {
         source: '/community-champions/lina-lora',
-        destination: '/developer_hub/community-champions/lina-lora/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/lina-lora/`,
     },
     {
         source: '/community-champions/malak-abu%20hammad',
-        destination:
-            '/developer_hub/community-champions/malak-abu%20hammad/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/malak-abu%20hammad/`,
     },
     {
         source: '/community-champions/michael-h%C3%B6ller',
-        destination:
-            '/developer_hub/community-champions/michael-h%C3%B6ller/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/michael-h%C3%B6ller/`,
     },
     {
         source: '/community-champions/nuri-halperin',
-        destination:
-            '/developer_hub/community-champions/nuri-halperin/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/nuri-halperin/`,
     },
     {
         source: '/community-champions/rajesh-nair',
-        destination:
-            '/developer_hub/community-champions/rajesh-nair/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/rajesh-nair/`,
     },
     {
         source: '/community-champions/rodrigo-nascimento',
-        destination:
-            '/developer_hub/community-champions/rodrigo-nascimento/index.html',
-        type: 'internal',
-    },
-    {
-        source: '/:file.js',
-        destination: '/developer_hub/:file.js',
-        regex: '^/(.+).js$',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/community-champions/rodrigo-nascimento/`,
     },
     {
         source: '/tag/ios',
-        destination: '/developer_hub/tag/ios/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/tag/ios/`,
     },
     {
         source: '/tag/remote-work',
-        destination: '/developer_hub/tag/remote-work/index.html',
-        type: 'internal',
+        destination: `${process.env.DEVHUB_URL}/tag/remote-work/`,
+    },
+    {
+        source: '/:file.js',
+        destination: `${process.env.DEVHUB_URL}/:file.js`,
+        regex: '^/(.+).js$',
     },
     {
         source: '/page-data/:data*.json',
-        destination: '/developer_hub/page-data/:data*.json',
+        destination: `${process.env.DEVHUB_URL}/page-data/:data*.json`,
         regex: '^/page-data/(.+).json$',
-        type: 'internal',
     },
     {
         source: '/static/:file.(png|svg|woff|woff2)',
         destination: `${process.env.DEVHUB_URL}/static/:file.png`,
-        regex: '/static/(.+).(png|svg|woff|woff2)',
-        type: 'external',
+        regex: '^/static/(.+).(png|svg|woff|woff2)$',
     },
     {
         source: '/images/bios/:image.jpg',
         destination: `${process.env.DEVHUB_URL}/images/bios/:image.jpg`,
-        regex: '/images/bios/(.+).jpg',
-        type: 'external',
+        regex: '^/images/bios/(.+).jpg$',
     },
     {
         source: '/images/atf-images/:image*.png',
         destination: `${process.env.DEVHUB_URL}/images/atf-images/:image*.png`,
-        regex: '/images/atf-images/(.+).png',
-        type: 'external',
+        regex: '^/images/atf-images/(.+).png$',
     },
 ];
 
