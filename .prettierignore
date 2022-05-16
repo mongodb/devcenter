@@ -4,7 +4,6 @@ next-env.d.ts
 README.md
 .babelrc
 build
-public/developer_hub
 .vscode
 .next
 .dockerignore

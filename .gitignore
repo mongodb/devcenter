@@ -18,7 +18,6 @@ cypress/screenshots
 
 # production
 /build
-/public/developer_hub
 
 # misc
 .DS_Store
