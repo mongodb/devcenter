@@ -58,7 +58,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - ah/old-devhub-rewrites-test
   event:
     - push
 
