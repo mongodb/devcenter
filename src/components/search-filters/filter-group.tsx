@@ -11,6 +11,8 @@ import theme from '@mdb/flora/theme';
 import { FilterGroupProps, FilterItem } from './types';
 import { titleStyles, itemsStyles } from './styles';
 
+const FILTER_STEP = 5;
+
 const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
     ({ className, title, items, filters, setFilters, isMobile = false }) => {
         const [expanded, setExpanded] = useState<boolean>(
@@ -68,10 +70,10 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
             const filterNames = getFilterNames(items);
 
             const filterString =
-                filterNames.length < 5
+                filterNames.length < FILTER_STEP
                     ? filterNames.join(', ')
-                    : `${filterNames.slice(0, 5).join(', ')} +${
-                          filterNames.length - 5
+                    : `${filterNames.slice(0, FILTER_STEP).join(', ')} +${
+                          filterNames.length - FILTER_STEP
                       }`;
             return (
                 <TypographyScale variant="body1" color="mark">
@@ -96,8 +98,6 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                     transform: expanded
                                         ? 'rotate(180deg)'
                                         : null,
-                                    transitionDuration:
-                                        theme.motion.linkAnimation,
                                 }}
                             />
                         </div>
@@ -105,29 +105,26 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                     </div>
                 )}
                 {expanded && (
-                    <div>
+                    <>
                         <div sx={itemsStyles(title)}>
                             {items
-                                .slice(0, showAll ? undefined : 5) // Show 5 to start, then all if they click "Show more"
+                                .slice(0, showAll ? undefined : FILTER_STEP) // Show FILTER_STEP to start, then all if they click "Show more"
                                 .map(filter => {
-                                    if (
-                                        filter.subItems &&
-                                        filter.subItems.length
-                                    ) {
+                                    const { subItems, name, type, count } =
+                                        filter;
+                                    if (subItems && subItems.length) {
                                         return (
                                             <div
                                                 // Need to specify mobile here or it gets confused with mobile and desktop checkboxes present.
-                                                key={`${filter.name} ${
-                                                    filter.type
-                                                } ${isMobile ? 'mobile' : ''}`}
+                                                key={`${name} ${type} ${
+                                                    isMobile ? 'mobile' : ''
+                                                }`}
                                             >
                                                 <Checkbox
-                                                    name={`${filter.name} ${
-                                                        filter.type
-                                                    } ${
+                                                    name={`${name} ${type} ${
                                                         isMobile ? 'mobile' : ''
                                                     }`}
-                                                    label={`${filter.name} (${filter.count})`}
+                                                    label={`${name} (${count})`}
                                                     onToggle={checked =>
                                                         onCheckToggle(
                                                             checked,
@@ -137,16 +134,14 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                                     checked={
                                                         !!filters.find(
                                                             ({ type, name }) =>
-                                                                filter.type ===
-                                                                    type &&
-                                                                filter.name ===
-                                                                    name
+                                                                type === type &&
+                                                                name === name
                                                         )
                                                     }
                                                 />
                                                 <FilterGroup
                                                     sx={{ marginLeft: 'inc40' }}
-                                                    items={filter.subItems}
+                                                    items={subItems}
                                                     filters={filters}
                                                     setFilters={setFilters}
                                                 />
@@ -155,28 +150,28 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                     }
                                     return (
                                         <Checkbox
-                                            key={`${filter.name} ${
-                                                filter.type
-                                            } ${isMobile ? 'mobile' : ''}`}
-                                            name={`${filter.name} ${
-                                                filter.type
-                                            } ${isMobile ? 'mobile' : ''}`}
-                                            label={`${filter.name} (${filter.count})`}
+                                            key={`${name} ${type} ${
+                                                isMobile ? 'mobile' : ''
+                                            }`}
+                                            name={`${name} ${type} ${
+                                                isMobile ? 'mobile' : ''
+                                            }`}
+                                            label={`${name} (${count})`}
                                             onToggle={checked =>
                                                 onCheckToggle(checked, filter)
                                             }
                                             checked={
                                                 !!filters.find(
                                                     ({ type, name }) =>
-                                                        filter.type === type &&
-                                                        filter.name === name
+                                                        type === type &&
+                                                        name === name
                                                 )
                                             }
                                         />
                                     );
                                 })}
                         </div>
-                        {items.length > 5 && (
+                        {items.length > FILTER_STEP && (
                             <Link
                                 onClick={() => setShowAll(!showAll)}
                                 sx={{ marginTop: 'inc30' }}
@@ -184,7 +179,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                 Show {showAll ? 'less' : 'more'}
                             </Link>
                         )}
-                    </div>
+                    </>
                 )}
             </div>
         );
