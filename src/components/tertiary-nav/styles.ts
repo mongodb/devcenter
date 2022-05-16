@@ -49,3 +49,11 @@ export const smallDesktopNavFadeLeftStyles = {
     background:
         'linear-gradient(90deg, #FFFFFF 29.17%, rgba(255, 255, 255, 0) 100% )',
 };
+
+export const sideNavTitleStyles = {
+    borderLeft: 'solid',
+    borderWidth: '2px',
+    borderColor: 'black20',
+    paddingBottom: 'inc30',
+    px: 'inc60',
+};
