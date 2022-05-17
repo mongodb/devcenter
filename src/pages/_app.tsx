@@ -9,9 +9,7 @@ import { GTM_ID, pageView } from '../lib/gtm';
 import Layout from '../components/layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
-    {
-        /* Is used to track route changes and send page views to Google Tag Manager */
-    }
+    // Is used to track route changes and send page views to Google Tag Manager
     const router = useRouter();
     useEffect(() => {
         router.events.on('routeChangeComplete', pageView);
