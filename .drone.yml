@@ -25,6 +25,7 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
+        - SITE_URL=mongodbcom-cdn.website.staging.corp.mongodb.com/developer
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
@@ -129,6 +130,7 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
+        - SITE_URL=mongodb.com/developer
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
@@ -231,6 +233,7 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
+        - SITE_URL=mongodbcom-cdn.website.staging.corp.mongodb.com/developer
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
@@ -299,6 +302,7 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
+        - SITE_URL=mongodb.com/developer
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL

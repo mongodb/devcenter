@@ -13,7 +13,7 @@ const configVals = {
     },
     redirects: redirects,
     publicRuntimeConfig: {
-        absoluteBasePath: `${httpProtocol}://${siteURL}/developer`,
+        absoluteBasePath: `${httpProtocol}://${siteURL}`,
     },
 };
 if (process.env.ANALYZE === 'true') {

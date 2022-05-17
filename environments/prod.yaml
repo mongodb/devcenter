@@ -3,6 +3,7 @@ service:
   targetPort: 3000
 
 envSecrets:
+  SITE_URL: mongodb.com/developer
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
   STRAPI_URL: devcenter-secrets
