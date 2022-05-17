@@ -10,7 +10,11 @@ import Layout from '../components/layout';
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
-    const canonicalUrl = publicRuntimeConfig.absoluteBasePath + router.asPath;
+
+    let canonicalUrl = null;
+    if (router.route !== '/_error') {
+        canonicalUrl = publicRuntimeConfig.absoluteBasePath + router.asPath;
+    }
 
     return (
         <>
@@ -18,7 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <title>MongoDB Developer Center</title>
                 <meta name="description" content="MongoDB Developer Center" />
                 <link rel="icon" href="/developer/favicon.ico" />
-                <link rel="canonical" href={`${canonicalUrl}`} />
+                {canonicalUrl && (
+                    <link rel="canonical" href={`${canonicalUrl}`} />
+                )}
             </Head>
             <ThemeProvider theme={theme}>
                 <Layout>
