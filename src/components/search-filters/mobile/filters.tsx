@@ -23,10 +23,14 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
     languageItems,
     technologyItems,
     contributedByItems,
+    expertiseLevelItems,
+    contentTypeItems = [],
     closeModal,
 }) => {
     const [tempFilters, setTempFilters] = useState<FilterItem[]>(allFilters);
-    const onTempFilter = (filters: FilterItem[]) => setTempFilters(filters);
+    const onTempFilter = (filters: FilterItem[]) => {
+        setTempFilters(filters);
+    };
     return (
         <div className={className} sx={filtersModal}>
             <div sx={{ padding: 'inc50', marginBottom: '120px' }}>
@@ -41,18 +45,6 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     />
                 </div>
                 <HorizontalRule spacing="small" />
-                {!!l1Items.length && (
-                    <>
-                        <FilterGroup
-                            title="Products"
-                            items={l1Items}
-                            filters={tempFilters}
-                            setFilters={onTempFilter}
-                            isMobile={true}
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
                 {!!languageItems.length && (
                     <>
                         <FilterGroup
@@ -77,13 +69,44 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                         <HorizontalRule spacing="small" />
                     </>
                 )}
-                {/* <FilterGroup
-        title="Expertise Level"
-        items={expertiseLevelItems}
-        filters={expertiseLevelFilters}
-        setFilters={setExpertiseLevelFilters}
-        isMobile={true}
-    /> */}
+                {!!contentTypeItems.length && (
+                    <>
+                        <FilterGroup
+                            title="Content Type"
+                            items={contentTypeItems}
+                            filters={tempFilters}
+                            setFilters={onTempFilter}
+                            isMobile={true}
+                        />
+                        <HorizontalRule spacing="small" />
+                    </>
+                )}
+                {!!l1Items.length && (
+                    <>
+                        <FilterGroup
+                            title="Products"
+                            items={l1Items}
+                            filters={tempFilters}
+                            setFilters={onTempFilter}
+                            isMobile={true}
+                        />
+                        <HorizontalRule spacing="small" />
+                    </>
+                )}
+
+                {!!expertiseLevelItems.length && (
+                    <>
+                        <FilterGroup
+                            title="Expertise Level"
+                            items={expertiseLevelItems}
+                            filters={tempFilters}
+                            setFilters={onTempFilter}
+                            isMobile={true}
+                        />
+                        <HorizontalRule spacing="small" />
+                    </>
+                )}
+
                 {!!contributedByItems.length && (
                     <FilterGroup
                         title="Contributed By"
