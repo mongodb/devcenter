@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
+import debounce from 'lodash.debounce';
 import useSWR from 'swr';
 import {
     GridLayout,
@@ -29,12 +30,12 @@ import { Tag } from '../../interfaces/tag';
 
 import { ContentTypePageProps } from './types';
 import {
-    searchBoxStyles,
     pageWrapper,
     desktopFiltersStyles,
     resultsStringAndTagsStyles,
 } from './styles';
 
+import { searchBoxStyles } from '../../components/search/styles';
 import noResults from '../../../public/no-results.png';
 
 import { FeaturedCardSection } from '../../components/card-section';
@@ -44,11 +45,13 @@ import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
+    description,
     contentType,
     l1Items,
     languageItems,
     technologyItems,
     contributedByItems,
+    expertiseLevelItems,
     featured,
     featuredLanguages,
     featuredTechnologies,
@@ -63,7 +66,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
     const { data, error, isValidating } = useSWR(
-        () => `s=${searchString}&contentType=${contentType}`,
+        () =>
+            `s=${encodeURIComponent(
+                searchString
+            )}&contentType=${encodeURIComponent(contentType)}`,
         fetcher,
         {
             revalidateIfStale: false,
@@ -87,6 +93,18 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setResultsToShow(10);
         setSearchString(event.target.value);
     };
+
+    const debouncedOnSearch = useMemo(
+        () => debounce(onSearch, 400), // Not sure what this value should be.
+        [allFilters]
+    );
+    // Stop the invocation of the debounced function
+    // after unmounting
+    useEffect(() => {
+        return () => {
+            debouncedOnSearch.cancel();
+        };
+    }, []);
 
     const onFilter = (filters: FilterItem[]) => {
         setResultsToShow(10);
@@ -283,7 +301,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             <Hero
                 crumbs={[]}
                 name={`${contentType}s`}
-                description="Some description"
+                description={description}
                 ctas={CTAElement}
             />
             <div sx={pageWrapper}>
@@ -300,6 +318,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         languageItems={languageItems}
                         technologyItems={technologyItems}
                         contributedByItems={contributedByItems}
+                        expertiseLevelItems={expertiseLevelItems}
                     />
                     <div
                         sx={{
@@ -312,7 +331,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                 label={`Search ${contentType}s`}
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
-                                onChange={onSearch}
+                                onChange={debouncedOnSearch}
                             />
                         </div>
                         {!searchString && !hasFiltersSet && (
@@ -401,6 +420,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     l1Items={l1Items}
                     languageItems={languageItems}
                     technologyItems={technologyItems}
+                    expertiseLevelItems={expertiseLevelItems}
                     contributedByItems={contributedByItems}
                     closeModal={() => setMobileFiltersOpen(false)}
                 />

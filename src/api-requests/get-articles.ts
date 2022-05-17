@@ -80,6 +80,9 @@ export const getAllArticlesFromAPI = async (
                         name
                         calculatedSlug: calculated_slug
                     }
+                    githubUrl: githuburl
+                    liveSiteUrl: livesiteurl
+                    codeType: code_type
                 }
                 calculatedSlug: calculated_slug
             }

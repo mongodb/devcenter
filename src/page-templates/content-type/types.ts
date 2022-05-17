@@ -5,11 +5,13 @@ import { ShowcaseCardItem } from '../../components/showcase-card/types';
 import { ITopicCard } from '../../components/topic-card/types';
 
 export interface ContentTypePageProps {
+    description: string;
     contentType: PillCategory;
     l1Items: FilterItem[];
     languageItems: FilterItem[];
     technologyItems: FilterItem[];
     contributedByItems: FilterItem[];
+    expertiseLevelItems: FilterItem[];
     featured: ContentItem[];
     featuredLanguages?: ShowcaseCardItem[];
     featuredTechnologies?: ITopicCard[];
