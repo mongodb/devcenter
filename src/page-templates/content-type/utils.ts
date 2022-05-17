@@ -9,6 +9,9 @@ import { technologyToLogo } from '../../utils/technology-to-logo';
 import { productToLogo } from '../../utils/product-to-logo';
 import { ITopicCard } from '../../components/topic-card/types';
 
+// Temporary until we find a logo to include in Flora.
+const serverlessLogo =
+    'https://webimages.mongodb.com/_com_assets/icons/atlas_serverless.svg';
 interface TagWithCount extends Tag {
     count: number;
 }
@@ -91,7 +94,10 @@ export const getFeaturedLangProdTech = (
             return {
                 title: tag.name,
                 href: tag.slug + aggregateSlug,
-                icon: technologyToLogo[tag.name] || null,
+                icon:
+                    tag.name === 'Serverless'
+                        ? serverlessLogo
+                        : technologyToLogo[tag.name] || null,
             };
         }
     );

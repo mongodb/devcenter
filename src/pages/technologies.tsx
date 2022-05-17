@@ -15,6 +15,10 @@ import { Tag } from '../interfaces/tag';
 import { LogoPaths } from '../utils/logoPaths';
 import { technologyToLogo } from '../utils/technology-to-logo';
 
+// Temporary until we find a logo to include in Flora.
+const serverlessLogo =
+    'https://webimages.mongodb.com/_com_assets/icons/atlas_serverless.svg';
+
 const crumbs: Crumb[] = [
     { text: 'MongoDB Developer Center', url: '/developer' },
     { text: 'Developer Topics', url: '/developer/topics' },
@@ -30,11 +34,34 @@ const TechnologiesSection: React.FunctionComponent<{ technologies: Tag[] }> = ({
     return (
         <Grid columns={[1, null, 2, 4]} gap="inc70">
             {technologies.map(tech => {
+                let imageProps;
+                const hasLogo =
+                    tech.name === 'Serverless' ||
+                    LogoPaths[technologyToLogo[tech.name]];
+                if (hasLogo) {
+                    // Really annoying, but we have a special case where we use a branded icon for serverless.
+                    if (tech.name === 'Serverless') {
+                        imageProps = {
+                            imageConfig: {
+                                src: serverlessLogo,
+                                variant: ESingleImageVariant.NO_RATIO,
+                            },
+                            imageryType: 'image' as ImageryType,
+                        };
+                    } else {
+                        imageProps = {
+                            imageConfig: {
+                                src: LogoPaths[technologyToLogo[tech.name]],
+                                variant: ESingleImageVariant.NO_RATIO,
+                            },
+                            imageryType: 'image' as ImageryType,
+                        };
+                    }
+                } else {
+                    imageProps = { imageryType: 'none' as ImageryType };
+                }
                 const flashCardProps = {
-                    imageConfig: {
-                        src: LogoPaths[technologyToLogo[tech.name]],
-                        variant: ESingleImageVariant.NO_RATIO,
-                    },
+                    ...imageProps,
                     cta: {
                         type: 'link-arrow' as CTAType,
                         text: 'Learn More',
@@ -43,7 +70,6 @@ const TechnologiesSection: React.FunctionComponent<{ technologies: Tag[] }> = ({
                             linkIconDisableExpand: true, // Doesn't seem to work
                         },
                     },
-                    imageryType: 'image' as ImageryType,
                     title: tech.name,
                     text: 'We still need descriptions for all of these right?',
                     background: false,
