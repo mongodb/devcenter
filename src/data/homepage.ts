@@ -14,6 +14,10 @@ export const cardsLanguagesData = [
         },
         links: [
             {
+                text: 'Getting Started',
+                url: '/developer/languages/java/gettingstarted',
+            },
+            {
                 text: 'Tutorials',
                 url: '/developer/languages/java/tutorials',
             },
@@ -24,10 +28,6 @@ export const cardsLanguagesData = [
             {
                 text: 'Code Samples',
                 url: '/developer/languages/java/code-examples',
-            },
-            {
-                text: 'Getting Started',
-                url: '/developer/languages/java/gettingstarted',
             },
         ],
     },
@@ -44,6 +44,10 @@ export const cardsLanguagesData = [
         },
         links: [
             {
+                text: 'Getting Started',
+                url: '/developer/languages/python/gettingstarted',
+            },
+            {
                 text: 'Tutorials',
                 url: '/developer/languages/python/tutorials',
             },
@@ -55,15 +59,11 @@ export const cardsLanguagesData = [
                 text: 'Code Samples',
                 url: '/developer/languages/python/code-examples',
             },
-            {
-                text: 'Getting Started',
-                url: '/developer/languages/python/gettingstarted',
-            },
         ],
     },
     {
         titleLink: {
-            text: 'C',
+            text: 'C#',
             url: '/developer/languages/c',
         },
         href: '/developer/languages/c',
@@ -73,6 +73,10 @@ export const cardsLanguagesData = [
             url: '/developer/languages/c',
         },
         links: [
+            {
+                text: 'Getting Started',
+                url: '/developer/languages/c/quickstart',
+            },
             {
                 text: 'Tutorials',
                 url: '/developer/languages/c/tutorials',
@@ -84,10 +88,6 @@ export const cardsLanguagesData = [
             {
                 text: 'Code Samples',
                 url: '/developer/languages/c/code-examples',
-            },
-            {
-                text: 'Getting Started',
-                url: '/developer/languages/c/gettingstarted',
             },
         ],
     },
@@ -104,6 +104,10 @@ export const cardsLanguagesData = [
         },
         links: [
             {
+                text: 'Getting Started',
+                url: '/developer/languages/javascript/quickstart',
+            },
+            {
                 text: 'Tutorials',
                 url: '/developer/languages/javascript/tutorials',
             },
@@ -115,10 +119,6 @@ export const cardsLanguagesData = [
                 text: 'Code Samples',
                 url: '/developer/languages/javascript/code-examples',
             },
-            {
-                text: 'Getting Started',
-                url: '/developer/languages/javascript/gettingstarted',
-            },
         ],
     },
 ];
@@ -126,7 +126,7 @@ export const cardsLanguagesData = [
 export const cardsTechnologiesData = [
     {
         titleLink: {
-            text: 'Java',
+            text: 'AWS',
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
@@ -134,7 +134,7 @@ export const cardsTechnologiesData = [
     },
     {
         titleLink: {
-            text: 'Java',
+            text: 'Azure',
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
@@ -142,7 +142,7 @@ export const cardsTechnologiesData = [
     },
     {
         titleLink: {
-            text: 'Java',
+            text: 'GCP',
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
@@ -150,7 +150,7 @@ export const cardsTechnologiesData = [
     },
     {
         titleLink: {
-            text: 'Java',
+            text: 'NodeJS',
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
@@ -158,7 +158,7 @@ export const cardsTechnologiesData = [
     },
     {
         titleLink: {
-            text: 'Java',
+            text: '.Net Framework',
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
@@ -166,7 +166,7 @@ export const cardsTechnologiesData = [
     },
     {
         titleLink: {
-            text: 'Java',
+            text: 'Serverless',
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
@@ -174,15 +174,7 @@ export const cardsTechnologiesData = [
     },
     {
         titleLink: {
-            text: 'Java',
-            url: 'https://www.google.com/',
-        },
-        href: 'href',
-        imageString: EThirdPartyLogoVariant.JAVA,
-    },
-    {
-        titleLink: {
-            text: 'Java',
+            text: 'Unity',
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
@@ -190,15 +182,7 @@ export const cardsTechnologiesData = [
     },
     {
         titleLink: {
-            text: 'Java',
-            url: 'https://www.google.com/',
-        },
-        href: 'https://www.google.com/',
-        imageString: EThirdPartyLogoVariant.JAVA,
-    },
-    {
-        titleLink: {
-            text: 'Java',
+            text: 'Kubernetes',
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
@@ -215,23 +199,23 @@ export const cardsProductsData = [
         href: '/developer/products/atlas',
         imageString: EThirdPartyLogoVariant.JAVA,
         description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ',
+            'Cloud Document Database as a Service. The Easiest Way to Deploy, Operate, and Scale MongoDB.',
         cta: {
             text: 'More with Atlas',
-            url: 'https://www.google.com/',
+            url: 'https://www.mongodb.com/developer/products/atlas',
         },
         links: [
             {
-                text: 'Connecting your application',
-                url: 'https://www.google.com/',
+                text: 'Data API',
+                url: 'https://www.mongodb.com/developer/products/atlas/data-api',
             },
             {
-                text: 'CRUD',
-                url: 'https://www.google.com/',
+                text: 'Full Text Search',
+                url: 'https://www.mongodb.com/developer/products/atlas/full-text-search',
             },
             {
-                text: 'Data Models',
-                url: 'https://www.google.com/',
+                text: 'GraphQL Integration',
+                url: 'https://www.mongodb.com/developer/technologies/graphQL',
             },
         ],
     },
@@ -242,24 +226,23 @@ export const cardsProductsData = [
         },
         href: '/developer/products/realm',
         imageString: EThirdPartyLogoVariant.PYTHON_LOGOMARK,
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ',
+        description: "Get great mobile apps in user's hands, faster.",
         cta: {
             text: 'More with Realm',
-            url: 'https://www.google.com/',
+            url: 'https://www.mongodb.com/products/realm',
         },
         links: [
             {
-                text: 'Build a Mobile App',
-                url: 'https://www.google.com/',
+                text: 'Swift app development',
+                url: 'https://www.mongodb.com/developer/languages/swift',
             },
             {
-                text: 'Realm Sync',
-                url: 'https://www.google.com/',
+                text: 'Android app development',
+                url: 'https://www.mongodb.com/developer/technologies/android',
             },
             {
-                text: 'Triggers',
-                url: 'https://www.google.com/',
+                text: 'Realm Studio',
+                url: 'https://www.mongodb.com/developer/products/realm/studio',
             },
         ],
     },
@@ -270,24 +253,23 @@ export const cardsProductsData = [
         },
         href: '/developer/products/mongodb',
         imageString: EThirdPartyLogoVariant.C,
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ',
+        description: 'MongoDB - the original document-oriented NoSQL database.',
         cta: {
             text: 'More with MongoDB',
             url: '/developer/products/mongodb',
         },
         links: [
             {
-                text: 'Aggregation Framework',
-                url: 'https://www.google.com/',
+                text: 'MongoDB Compass',
+                url: 'https://www.mongodb.com/products/compass',
             },
             {
-                text: 'Protect your database with Security',
-                url: 'https://www.google.com/',
+                text: 'The MongoDB aggregation framework',
+                url: 'https://www.mongodb.com/developer/products/mongodb/aggregation-framework',
             },
             {
-                text: 'Full Text Search',
-                url: 'https://www.google.com/',
+                text: 'Schema Design and Data Modeling',
+                url: 'https://www.mongodb.com/developer/products/mongodb/schema',
             },
         ],
     },

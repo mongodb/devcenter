@@ -72,10 +72,10 @@ const Home = () => {
                         MongoDB Developer Center
                     </TypographyScale>
                     <TypographyScale variant="body1" color="default">
-                        More than 100 open source projects, a library of
-                        knowledge resources, developer advocates ready to help,
-                        and a global community of developers. What will you
-                        create?
+                        More than 100 open source projects, MongoDB tutorials,
+                        videos, and code examples. A global community of more
+                        than 7 million developers. Build something {`{big}`}{' '}
+                        with MongoDB.
                     </TypographyScale>
                     <div
                         sx={{
@@ -335,7 +335,6 @@ const Home = () => {
                                             imageWidth="150px"
                                         />
                                     }
-                                    cta={cta}
                                     links={links}
                                 />
                             </div>
