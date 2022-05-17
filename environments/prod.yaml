@@ -2,8 +2,10 @@ service:
   type: ClusterIP
   targetPort: 3000
 
-envSecrets:
+env:
   SITE_URL: mongodb.com/developer
+
+envSecrets:
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
   STRAPI_URL: devcenter-secrets

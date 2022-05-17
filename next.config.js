@@ -3,7 +3,7 @@ const { redirects } = require('./config/redirects');
 const siteURL = process.env.VERCEL_URL
     ? process.env.VERCEL_URL
     : process.env.SITE_URL;
-const httpProtocol = siteURL == 'localhost:3000' ? 'http' : 'https';
+const httpProtocol = siteURL == 'localhost:3000/developer' ? 'http' : 'https';
 
 const configVals = {
     basePath: '/developer',
