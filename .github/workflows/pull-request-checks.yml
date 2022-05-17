@@ -120,6 +120,7 @@ jobs:
               run: lhci autorun
               env:
                   LHCI_GITHUB_APP_TOKEN: ${{secrets.LIGHTHOUSE_CI_TOKEN}}
+                  HOST_URL: http://localhost:3000
     deploy-stage-vercel:
         name: Vercel Staging
         runs-on: ubuntu-latest
