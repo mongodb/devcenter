@@ -24,6 +24,8 @@ import parse from 'html-react-parser';
 import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 import { getURLPath } from '../../utils/format-url-path';
+import SecondaryTag from './secondary-tag';
+import { CodeLevel } from '../../types/tag-type';
 
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
@@ -38,6 +40,15 @@ const Card: React.FunctionComponent<CardProps> = ({
     slug,
 }) => {
     const displayDate = formatDateToDisplayDateFormat(new Date(contentDate));
+    let secondaryTagElement = null;
+    if (tags && pillCategory === 'Code Example') {
+        const codeLevelTag = tags.find(tag => tag.type === 'CodeLevel');
+        if (codeLevelTag && codeLevelTag.name) {
+            secondaryTagElement = (
+                <SecondaryTag codeLevel={codeLevelTag.name as CodeLevel} />
+            );
+        }
+    }
     return (
         <div
             sx={cardWrapperStyles}
@@ -80,6 +91,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                         text={pillCategory}
                         size="small"
                     />
+                    {secondaryTagElement}
                     <TypographyScale variant="heading6">
                         {title}
                     </TypographyScale>

@@ -6,7 +6,8 @@
 export const getURLPath = (url: string | undefined) => {
     if (typeof url !== 'string') return url;
     if (url.startsWith('#')) return url;
-
+    if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0)
+        return url;
     const basePath = '/developer';
     if (!url.startsWith(basePath)) {
         if (url[0] !== '/') {

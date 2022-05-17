@@ -1,18 +1,17 @@
-import type { NextPage, GetStaticProps } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import {
+    Button,
+    ESystemIconNames,
     GridLayout,
+    HorizontalRule,
     SideNav,
     TypographyScale,
-    HorizontalRule,
-    Eyebrow,
-    Button,
 } from '@mdb/flora';
 
-import Card, { getCardProps } from '../components/card';
 import TagSection from '../components/tag-section';
 import ContentRating from '../components/content-rating';
 
@@ -31,7 +30,7 @@ import { TableOfContents } from '../components/article-body/table-of-contents';
 
 import { constructDateDisplay } from '../utils/format-date';
 import { ContentItem } from '../interfaces/content-item';
-import { thumbnailLoader } from '../components/card/utils';
+import { getCardProps, thumbnailLoader } from '../components/card/utils';
 import { getAllContentItems } from '../service/get-all-content';
 import SeriesCard from '../components/series-card';
 import SocialButtons from '../components/social-buttons';
@@ -45,11 +44,26 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import PodcastPlayer from '../components/podcast-player/podcast-player';
 import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
 import { CollectionType } from '../types/collection-type';
-import { setURLPathForNavItems } from '../utils/format-url-path';
+import { getURLPath, setURLPathForNavItems } from '../utils/format-url-path';
+import { sideNavTitleStyles } from '../components/tertiary-nav/styles';
+import { getMetaInfoForTopic } from '../service/get-meta-info-for-topic';
+import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
+import { Crumb } from '../components/breadcrumbs/types';
+import Breadcrumbs from '../components/breadcrumbs';
+import getRelatedContent from '../api-requests/get-related-content';
+import { Grid } from 'theme-ui';
+import Card from '../components/card';
+import * as url from 'url';
+import SecondaryTag from '../components/card/secondary-tag';
+import { CodeLevel } from '../types/tag-type';
 
 interface ContentPageProps {
+    crumbs: Crumb[];
+    topicSlug: string;
+    topicName: string;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
+    relatedContent: ContentItem[];
 }
 
 const sideNavStyles = {
@@ -128,9 +142,22 @@ const determineVideoOrPodcast = (
     return collectionType === 'Video' || collectionType === 'Podcast';
 };
 
+const ratingSectionCondition = (category: PillCategory) => {
+    return (
+        category === 'Video' ||
+        category === 'Podcast' ||
+        category === 'News & Announcements' ||
+        category === 'Code Example'
+    );
+};
+
 const ContentPage: NextPage<ContentPageProps> = ({
+    crumbs,
+    topicSlug,
+    topicName,
     contentItem,
     tertiaryNavItems,
+    relatedContent,
 }) => {
     const {
         collectionType,
@@ -147,6 +174,9 @@ const ContentPage: NextPage<ContentPageProps> = ({
         podcastFileUrl,
         videoId,
         series,
+        githubUrl,
+        liveSiteUrl,
+        codeType,
     } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
 
@@ -154,9 +184,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
         useState<feedbackModalStages>('closed');
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
-
-    // const relatedContent = getRelatedContent(slug);
-    // const slugList = slug.split('/');
 
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(category) ? 'an' : 'a'
@@ -200,9 +227,10 @@ const ContentPage: NextPage<ContentPageProps> = ({
     const contentHeader = (
         <>
             <div sx={middleSectionStyles}>
-                <Eyebrow sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}>
-                    {category}
-                </Eyebrow>
+                <Breadcrumbs
+                    crumbs={crumbs}
+                    sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}
+                />
                 <TypographyScale
                     variant="heading2"
                     sx={{
@@ -243,6 +271,9 @@ const ContentPage: NextPage<ContentPageProps> = ({
                     <div sx={{ gridArea: 'tags' }}>
                         {tags && <TagSection tags={tags} />}
                     </div>
+                    {codeType && (
+                        <SecondaryTag codeLevel={codeType as CodeLevel} />
+                    )}
                     <SocialButtons
                         description={parseUndefinedValue(description)}
                         heading={title}
@@ -281,7 +312,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         />
                     )}
                 </div>
-                {!vidOrPod && ratingSection}
+                {!ratingSectionCondition(category) && ratingSection}
             </div>
         </>
     );
@@ -317,6 +348,26 @@ const ContentPage: NextPage<ContentPageProps> = ({
                 />
             )}
             {!vidOrPod && <DocumentBody content={contentAst} />}
+            <div
+                sx={{
+                    display: [null, 'flex'],
+                    columnGap: [0, 'inc70'],
+                    marginTop: ['inc40'],
+                }}
+            >
+                {githubUrl && (
+                    <Button
+                        href={githubUrl}
+                        target="_blank"
+                        variant="secondary"
+                        hasIcon
+                        iconName={ESystemIconNames.HAMBURGER}
+                    >
+                        View Code
+                    </Button>
+                )}
+                {liveSiteUrl && <CTALink text="Try it" url={liveSiteUrl} />}
+            </div>
         </div>
     );
 
@@ -336,7 +387,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         description={parseUndefinedValue(description)}
                         heading={title}
                     />
-                    {!vidOrPod && ratingSection}
+                    {!ratingSectionCondition && ratingSection}
                 </div>
             </div>
             {series && (
@@ -353,14 +404,15 @@ const ContentPage: NextPage<ContentPageProps> = ({
                 >
                     Related
                 </TypographyScale>
-                {/*<Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>*/}
-                {/*    {relatedContent.map(piece => (*/}
-                {/*        <Card*/}
-                {/*            key={piece.slug}*/}
-                {/*            {...getCardProps(piece, 'related')}*/}
-                {/*        />*/}
-                {/*    ))}*/}
-                {/*</Grid>*/}
+                <Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>
+                    {relatedContent.map(piece => (
+                        <Card
+                            sx={{ height: '100%' }}
+                            key={piece.slug}
+                            {...getCardProps(piece, 'related')}
+                        />
+                    ))}
+                </Grid>
             </div>
             <div sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
@@ -388,6 +440,21 @@ const ContentPage: NextPage<ContentPageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles}>
+                        <a
+                            href={getURLPath(topicSlug)}
+                            sx={{
+                                '&:hover': {
+                                    textDecoration: 'underline',
+                                },
+                            }}
+                        >
+                            <TypographyScale
+                                variant="heading6"
+                                sx={sideNavTitleStyles}
+                            >
+                                {topicName}
+                            </TypographyScale>
+                        </a>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
 
@@ -435,22 +502,22 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-const removesErroringArticles = (contents: ContentItem[]) => {
-    const removeItems = [
-        'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
-        'new-time-series-collections',
-        'mongodb-charts-embedding-sdk-react/',
-        'build-movie-search-application',
-    ];
+// const removesErroringArticles = (contents: ContentItem[]) => {
+//     const removeItems = [
+//         'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
+//         'new-time-series-collections',
+//         'mongodb-charts-embedding-sdk-react/',
+//         'build-movie-search-application',
+//     ];
 
-    return contents.filter(content => !removeItems.includes(content.title));
-};
+//     return contents.filter(content => !removeItems.includes(content.title));
+// };
 
 export const getStaticPaths = async () => {
     const contents: ContentItem[] = await getAllContentItems();
-    const filteredContents = removesErroringArticles(contents);
+    // const filteredContents = removesErroringArticles(contents);
 
-    const paths = filteredContents.map((content: ContentItem) => ({
+    const paths = contents.map((content: ContentItem) => ({
         params: { slug: content.slug.split('/') },
     }));
     return { paths, fallback: false };
@@ -466,6 +533,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
+    let slugString = slug.join('/');
+
+    //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag
+    if (contentItem.category === 'Code Example') {
+        sideNavFilterSlug =
+            '/languages/' + slug.slice(1, slug.length - 1).join('/');
+        slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
+    }
 
     if (vidOrPod) {
         if (contentItem.primaryTag?.programmingLanguage) {
@@ -475,13 +550,25 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         if (contentItem.primaryTag?.l1Product) {
             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
         }
+        slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
     }
+    const crumbs = await getBreadcrumbsFromSlug(slugString);
     let tertiaryNavItems = await getSideNav(sideNavFilterSlug);
     setURLPathForNavItems(tertiaryNavItems);
 
+    const metaInfoForTopic = await getMetaInfoForTopic(sideNavFilterSlug);
+    const topicSlug = sideNavFilterSlug;
+    const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
+
+    const relatedContent = getRelatedContent(sideNavFilterSlug, contents);
+
     const data = {
+        crumbs,
         contentItem,
         tertiaryNavItems,
+        topicSlug,
+        topicName,
+        relatedContent,
     };
 
     return { props: data };

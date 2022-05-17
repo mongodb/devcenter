@@ -55,6 +55,9 @@ export const ComponentFactory = ({
     parentNode?: any;
 }) => {
     const selectComponent = () => {
+        if (!nodeData) {
+            return null;
+        }
         const { name, type } = nodeData;
         const lookup = type === 'directive' ? name : type;
         let ComponentType = lookup && componentMap[lookup];

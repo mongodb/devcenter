@@ -13,7 +13,10 @@ import CardSection, {
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
-import { PillCategoryValues } from '../../types/pill-category';
+import {
+    pillCategoryToSlug,
+    PillCategoryValues,
+} from '../../types/pill-category';
 import { getSideNav } from '../../service/get-side-nav';
 import TertiaryNav from '../../components/tertiary-nav';
 import { getDistinctTags } from '../../service/get-distinct-tags';
@@ -25,8 +28,12 @@ import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
 import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-featured';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
+import { Crumb } from '../../components/breadcrumbs/types';
+import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
+let pluralize = require('pluralize');
 
 interface TopicProps {
+    crumbs: Crumb[];
     name: string;
     slug: string;
     description: string;
@@ -51,6 +58,7 @@ const sideNavStyles = (rowCount: number) => ({
 });
 
 const Topic: NextPage<TopicProps> = ({
+    crumbs,
     name,
     slug,
     description,
@@ -62,12 +70,6 @@ const Topic: NextPage<TopicProps> = ({
     variant,
     tertiaryNavItems,
 }) => {
-    const crumbs = [
-        { text: 'MongoDB Developer Center', url: '/' },
-        { text: 'Developer Topics', url: '/topics' },
-        { text: 'Products', url: '/' },
-    ];
-
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -149,6 +151,8 @@ const Topic: NextPage<TopicProps> = ({
                             {variant === 'heavy' &&
                                 sortedContentRows.map(contentRow => {
                                     const contentType = contentRow[0].category;
+                                    const contentTypeSlug =
+                                        pillCategoryToSlug.get(contentType);
                                     const direction =
                                         contentType === 'Podcast'
                                             ? 'column'
@@ -157,7 +161,10 @@ const Topic: NextPage<TopicProps> = ({
                                         <CardSection
                                             key={contentType}
                                             content={contentRow}
-                                            title={`${contentRow[0].category}s`}
+                                            title={`${pluralize(
+                                                contentRow[0].category
+                                            )}`}
+                                            href={contentTypeSlug}
                                             direction={direction}
                                         />
                                     );
@@ -225,17 +232,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
 
-    const categoryTag = (await getDistinctTags()).find(
-        tag => tag.slug === slugString
-    );
-
-    if (!categoryTag) {
-        throw Error('Could not find corresponding tag for ' + slugString);
-    }
-
-    const { name } = categoryTag; // Will destruct ctas from this as well when available.
-
-    const metaInfoForTopic = await getMetaInfoForTopic(name);
+    const metaInfoForTopic = await getMetaInfoForTopic(slugString);
 
     const tertiaryNavItems = await getSideNav(slugString);
 
@@ -246,8 +243,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const featured = parseContentToGetFeatured(content);
 
+    const crumbs = await getBreadcrumbsFromSlug(slugString);
+
     const data = {
-        name,
+        crumbs,
+        name: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
         slug: slugString,
         content,
         variant,

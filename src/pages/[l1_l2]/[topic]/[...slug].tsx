@@ -24,12 +24,16 @@ import { ITopicCard } from '../../../components/topic-card/types';
 import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
 import { getAllContentTypes } from '../../../service/get-all-content-types';
 import { ContentTypeTag } from '../../../interfaces/tag-type-response';
-import { capitalizeFirstLetter } from '../../../utils/format-string';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
+import { sideNavTitleStyles } from '../../../components/tertiary-nav/styles';
 
 import { iconStyles } from '../../../components/topic-card/styles';
-import { setURLPathForNavItems } from '../../../utils/format-url-path';
+import {
+    getURLPath,
+    setURLPathForNavItems,
+} from '../../../utils/format-url-path';
 import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
+import { getAllContentItems } from '../../../service/get-all-content';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -46,15 +50,10 @@ const sideNavStyles = (rowCount: number) => ({
     gridRow: [null, null, null, null, `span ${rowCount}`],
 });
 
-const sideNavTitleStyles = {
-    borderLeft: 'solid',
-    borderWidth: '2px',
-    borderColor: 'black20',
-    paddingBottom: 'inc30',
-    px: 'inc60',
-};
+let pluralize = require('pluralize');
 
 export interface TopicContentTypePageProps {
+    // crumbs: Crumb[]
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
     topicName: string;
@@ -65,7 +64,21 @@ export interface TopicContentTypePageProps {
     subTopics: ITopicCard[];
 }
 
+const getSearchTitleLink = (
+    contentType: PillCategory,
+    contentTypeAggregateSlug: string
+) => {
+    if (contentType === 'News & Announcements') {
+        return undefined;
+    }
+    return {
+        href: contentTypeAggregateSlug,
+        text: `All ${pluralize(contentType)}`,
+    };
+};
+
 const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
+    // crumbs,
     contentType,
     tertiaryNavItems,
     topicName,
@@ -86,7 +99,8 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
     const subTopicItems = subTopics.map(subTopic => {
         const icon = <BrandedIcon sx={iconStyles} name={subTopic.icon} />;
-        return { ...subTopic, icon };
+        const href = subTopic.href + contentTypeSlug;
+        return { ...subTopic, href, icon };
     });
 
     setURLPathForNavItems(tertiaryNavItems);
@@ -138,12 +152,21 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
-                        <TypographyScale
-                            variant="heading6"
-                            sx={sideNavTitleStyles}
+                        <a
+                            href={getURLPath(topicSlug)}
+                            sx={{
+                                '&:hover': {
+                                    textDecoration: 'underline',
+                                },
+                            }}
                         >
-                            {topicName}
-                        </TypographyScale>
+                            <TypographyScale
+                                variant="heading6"
+                                sx={sideNavTitleStyles}
+                            >
+                                {topicName}
+                            </TypographyScale>
+                        </a>
 
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
@@ -164,14 +187,14 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                         />
                     )}
                     <Search
-                        title={`All ${topicName} ${contentType}s`}
+                        title={`All ${topicName} ${pluralize(contentType)}`}
                         tagSlug={topicSlug}
                         contentType={contentType}
                         resultsLayout="grid"
-                        titleLink={{
-                            text: `All ${contentType}s`,
-                            href: contentTypeAggregateSlug,
-                        }}
+                        titleLink={getSearchTitleLink(
+                            contentType,
+                            contentTypeAggregateSlug
+                        )}
                         sx={spanAllColumns}
                     />
                 </GridLayout>
@@ -238,10 +261,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     */
 
     const pathComponents = [l1_l2, topic].concat(slug);
+
     const contentTypeSlug = '/' + pathComponents[pathComponents.length - 1];
     const topicSlug =
         '/' + pathComponents.slice(0, pathComponents.length - 1).join('/');
-    //
+
     const allContentTypesInStrapi = await getAllContentTypes();
 
     const contentType: PillCategory = allContentTypesInStrapi
@@ -255,23 +279,51 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const tertiaryNavItems = await getSideNav(topicSlug);
 
-    const topicName = pathComponents[pathComponents.length - 2];
+    const metaInfoForTopic = await getMetaInfoForTopic(topicSlug);
 
-    const metaInfoForTopic = await getMetaInfoForTopic(topicName);
+    const metaInfoForContentType = await getMetaInfoForTopic(contentTypeSlug);
 
     const contentTypeAggregateSlug = pillCategoryToSlug.get(contentType);
 
+    const subTopics = metaInfoForTopic?.topics;
+    let subTopicsWithContentType: ITopicCard[] = [];
+    // This is super annoying, but we need to only show the subtopics that have the content type we are looking at.
+    if (subTopics) {
+        const allContent = await getAllContentItems();
+        const allRelevantContent = allContent.filter(
+            item =>
+                item.tags.find(
+                    tag =>
+                        tag.type === 'ContentType' && tag.name === contentType
+                ) &&
+                item.tags.find(
+                    tag =>
+                        tag.type === 'L1Product' &&
+                        tag.name === metaInfoForTopic?.tagName
+                )
+        );
+        subTopicsWithContentType = subTopics.filter(subTopic =>
+            allRelevantContent.find(item =>
+                item.tags.find(
+                    tag =>
+                        tag.type === 'L2Product' && tag.name === subTopic.title
+                )
+            )
+        );
+    }
+
     const data = {
+        // crumbs,
         contentType: contentType,
         tertiaryNavItems: tertiaryNavItems,
-        topicName: capitalizeFirstLetter(topicName),
+        topicName: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
         topicSlug: topicSlug,
         contentTypeSlug: contentTypeSlug,
         contentTypeAggregateSlug: contentTypeAggregateSlug,
-        description: metaInfoForTopic?.description
-            ? metaInfoForTopic.description
+        description: metaInfoForContentType?.description
+            ? metaInfoForContentType.description
             : '',
-        subTopics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
+        subTopics: subTopicsWithContentType,
     };
     return { props: data };
 };

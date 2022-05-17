@@ -13,11 +13,17 @@ import {
     linkStyles,
     linkWrapperStyles,
 } from './styles';
+import { getURLPath } from '../../utils/format-url-path';
+
+const isNewsAndArticle = (title: string) => {
+    return title.toLowerCase() === 'News & Announcements'.toLowerCase();
+};
 
 const CardSection: React.FunctionComponent<CardSectionProps> = ({
     content,
     title,
     direction = 'row',
+    href,
 }) => {
     const [hoverStyles, setHoverStyles] = useState<ThemeUIStyleObject>({});
 
@@ -61,44 +67,48 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
         >
             <div sx={sectionHeadingTopStyles}>
                 <TypographyScale variant="heading5">{title}</TypographyScale>
-                <div
-                    sx={linkWrapperStyles}
-                    onMouseEnter={onLinkEnter}
-                    onMouseLeave={onLinkLeave}
-                >
-                    <Link
-                        href="#"
-                        linkIcon="arrow"
-                        sx={{
-                            ...linkStyles,
-                            ...hoverStyles,
-                            display: ['none', null, 'inline'],
-                        }}
+                {!isNewsAndArticle(title) && (
+                    <div
+                        sx={linkWrapperStyles}
+                        onMouseEnter={onLinkEnter}
+                        onMouseLeave={onLinkLeave}
                     >
-                        All {title}
-                    </Link>
-                </div>
+                        <Link
+                            href={getURLPath(href ? href : '#')}
+                            linkIcon="arrow"
+                            sx={{
+                                ...linkStyles,
+                                ...hoverStyles,
+                                display: ['none', null, 'inline'],
+                            }}
+                        >
+                            All {title}
+                        </Link>
+                    </div>
+                )}
             </div>
             {contentSection}
-            <div sx={sectionHeadingBottomStyles}>
-                <div
-                    sx={linkWrapperStyles}
-                    onMouseEnter={onLinkEnter}
-                    onMouseLeave={onLinkLeave}
-                >
-                    <Link
-                        href="#"
-                        linkIcon="arrow"
-                        sx={{
-                            ...linkStyles,
-                            ...hoverStyles,
-                            display: ['inline', null, 'none'],
-                        }}
+            {!isNewsAndArticle(title) && (
+                <div sx={sectionHeadingBottomStyles}>
+                    <div
+                        sx={linkWrapperStyles}
+                        onMouseEnter={onLinkEnter}
+                        onMouseLeave={onLinkLeave}
                     >
-                        All {title}
-                    </Link>
+                        <Link
+                            href={getURLPath(href ? href : '#')}
+                            linkIcon="arrow"
+                            sx={{
+                                ...linkStyles,
+                                ...hoverStyles,
+                                display: ['inline', null, 'none'],
+                            }}
+                        >
+                            All {title}
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
