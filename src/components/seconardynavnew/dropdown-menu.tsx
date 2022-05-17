@@ -164,7 +164,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
             )}
             {name.includes('Expertise Levels') && (
                 <Button
-                    href="example.com"
+                    href={getURLPath('topics')}
                     sx={{
                         marginTop: '25px',
                         '&:hover': {
@@ -214,7 +214,6 @@ const DropDownMenu = ({ items }: { items: DropDownItem[] }) => {
                 {items.map(({ name, slug, all, path, dropDownItems }: any) => (
                     <>
                         <SubNavLink
-                            key={name}
                             name={name}
                             slug={slug}
                             all={all}

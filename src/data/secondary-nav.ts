@@ -7,7 +7,7 @@ export const secondaryNavData = [
                 name: 'Products',
                 slug: '',
                 all: 'All Products',
-                path: '/all-topics',
+                path: '/products',
                 dropDownItems: [
                     {
                         name: 'Atlas',
@@ -73,7 +73,7 @@ export const secondaryNavData = [
                 name: 'Languages',
                 slug: '',
                 all: 'All Languages',
-                path: '/all-topics',
+                path: '/languages',
                 dropDownItems: [
                     { name: 'Go', slug: '/languages/go' },
                     { name: 'Java', slug: '/languages/java' },
@@ -85,7 +85,7 @@ export const secondaryNavData = [
                 name: 'Technologies',
                 slug: '',
                 all: 'All Technologies',
-                path: '/all-topics',
+                path: '/technologies',
                 dropDownItems: [
                     { name: 'GCP', slug: '/technologies/gcp' },
                     { name: 'BI', slug: '/technologies/bi' },
@@ -96,7 +96,7 @@ export const secondaryNavData = [
                 name: 'Expertise Levels',
                 slug: '',
                 all: '',
-                path: '/all-topics',
+                path: '/topics',
                 dropDownItems: [
                     {
                         name: 'Introductory',

@@ -160,34 +160,36 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                             </>
                                         )
                                     )}
-                                    <li key={all}>
-                                        <a
-                                            href={getURLPath(slug)}
-                                            sx={{
-                                                ...aLinkStyles,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                            }}
-                                            key={name}
-                                        >
-                                            <FloraLink
-                                                className="all-link"
-                                                sx={StylesFloraLink}
-                                            >
-                                                {all}
-                                            </FloraLink>
-                                            <SystemIcon
+                                    {!!all && (
+                                        <li key={all}>
+                                            <a
+                                                href={getURLPath(slug)}
                                                 sx={{
-                                                    paddingLeft: 'inc10',
-                                                    display: 'inline',
+                                                    ...aLinkStyles,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
                                                 }}
-                                                name={
-                                                    ESystemIconNames.CHEVRON_RIGHT
-                                                }
-                                                size="small"
-                                            />
-                                        </a>
-                                    </li>
+                                                key={name}
+                                            >
+                                                <FloraLink
+                                                    className="all-link"
+                                                    sx={StylesFloraLink}
+                                                >
+                                                    {all}
+                                                </FloraLink>
+                                                <SystemIcon
+                                                    sx={{
+                                                        paddingLeft: 'inc10',
+                                                        display: 'inline',
+                                                    }}
+                                                    name={
+                                                        ESystemIconNames.CHEVRON_RIGHT
+                                                    }
+                                                    size="small"
+                                                />
+                                            </a>
+                                        </li>
+                                    )}
                                 </ul>
                             </>
                         </>
@@ -215,7 +217,7 @@ const DropDownMenu = ({ items }: { items: DropDownItem[] }) => {
                     </>
                 ))}
                 <li key="all topics">
-                    <a href={getURLPath('all-topics')} sx={aLinkStyles}>
+                    <a href={getURLPath('topics')} sx={aLinkStyles}>
                         <FloraLink sx={StylesFloraLink}>All Topics</FloraLink>
                     </a>
                 </li>
