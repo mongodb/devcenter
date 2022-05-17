@@ -115,7 +115,7 @@ jobs:
             - name: yarn build
               run: yarn run build
               env:
-                  HOST_URL: http://localhost:3000
+                  HOST_URL: localhost:3000
             - name: Install Lighthouse
               run: yarn global add @lhci/cli@0.8.x
             - name: Run Lighthouse
