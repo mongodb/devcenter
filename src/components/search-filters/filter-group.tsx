@@ -109,9 +109,9 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                         <div sx={itemsStyles(title)}>
                             {items
                                 .slice(0, showAll ? undefined : FILTER_STEP) // Show FILTER_STEP to start, then all if they click "Show more"
-                                .map(filter => {
+                                .map(item => {
                                     const { subItems, name, type, count } =
-                                        filter;
+                                        item;
                                     if (subItems && subItems.length) {
                                         return (
                                             <div
@@ -128,14 +128,16 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                                     onToggle={checked =>
                                                         onCheckToggle(
                                                             checked,
-                                                            filter
+                                                            item
                                                         )
                                                     }
                                                     checked={
                                                         !!filters.find(
-                                                            ({ type, name }) =>
-                                                                type === type &&
-                                                                name === name
+                                                            filter =>
+                                                                filter.type ===
+                                                                    type &&
+                                                                filter.name ===
+                                                                    name
                                                         )
                                                     }
                                                 />
@@ -158,13 +160,13 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                             }`}
                                             label={`${name} (${count})`}
                                             onToggle={checked =>
-                                                onCheckToggle(checked, filter)
+                                                onCheckToggle(checked, item)
                                             }
                                             checked={
                                                 !!filters.find(
-                                                    ({ type, name }) =>
-                                                        type === type &&
-                                                        name === name
+                                                    filter =>
+                                                        filter.type === type &&
+                                                        filter.name === name
                                                 )
                                             }
                                         />
