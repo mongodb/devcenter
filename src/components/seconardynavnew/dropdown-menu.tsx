@@ -109,7 +109,16 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                 <li key={name}>
                                     <a
                                         href={getURLPath(slug)}
-                                        sx={aLinkStyles}
+                                        sx={{
+                                            ...aLinkStyles,
+                                            fontWeight: [
+                                                null,
+                                                null,
+                                                null,
+                                                '700',
+                                                '700',
+                                            ],
+                                        }}
                                         key={name}
                                     >
                                         {l1Product ? (

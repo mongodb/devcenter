@@ -7,7 +7,7 @@ type SecondaryMenuListProps = {
 
 // Do we need this in sx since it uses props?
 export const SecondaryLinks = styled.ul`
-    overflow: hidden;
+    overflow-y: auto;
     height: ${(props: SecondaryMenuListProps) =>
         props.isOpen ? '100vh' : '0'};
     padding-left: ${theme.space.inc40};

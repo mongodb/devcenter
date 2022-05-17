@@ -10,53 +10,62 @@ export const secondaryNavData = [
                 path: '/all-topics',
                 dropDownItems: [
                     {
-                        name: 'MongoDB',
-                        l1Product: true,
-                        slug: '/products/mongodb',
+                        name: 'Atlas',
+                        slug: '/products/atlas',
                         dropDownItems: [
                             {
+                                name: 'Online Archive',
+                                slug: '/products/atlas/online-archive',
+                            },
+                            {
+                                name: 'Data Lake',
+                                slug: '/products/atlas/data-lake',
+                            },
+                            {
                                 name: 'Full Text Search',
-                                slug: '/products/mongodb/full-text-search',
+                                slug: '/products/atlas/full-text-search',
                             },
                             {
-                                name: 'Sharding',
-                                slug: '/products/mongodb/sharding',
+                                name: 'Charts',
+                                slug: '/products/atlas/charts',
                             },
                             {
-                                name: 'All MongoDB Products',
-                                slug: '/products/mongodb',
+                                name: 'Data API',
+                                slug: '/products/atlas/data-api',
+                            },
+                            {
+                                name: 'Multi-Cloud',
+                                slug: '/products/atlas/multi-cloud',
                             },
                         ],
                     },
                     {
+                        name: 'Compass',
+                        slug: '/products/compass',
+                        dropDownItems: [],
+                    },
+                    {
                         name: 'Realm (Mobile)',
-                        l1Product: true,
                         slug: '/products/realm',
                         dropDownItems: [
+                            {
+                                name: 'SDK',
+                                slug: '/products/realm/sdk',
+                            },
                             {
                                 name: 'Sync',
                                 slug: '/products/realm/sync',
                             },
                             {
-                                name: 'All Realm Products',
-                                slug: '/products/realm',
+                                name: 'Studio',
+                                slug: '/products/realm/studio',
                             },
                         ],
                     },
                     {
-                        name: 'Atlas',
-                        l1Product: true,
-                        slug: '/products/atlas',
-                        dropDownItems: [
-                            {
-                                name: 'Aggregations',
-                                slug: '/products/atlas/aggregations',
-                            },
-                            {
-                                name: 'All Atlas Products',
-                                slug: '/products/atlas',
-                            },
-                        ],
+                        name: 'Connectors',
+                        slug: '/products/connectors',
+                        dropDownItems: [],
                     },
                 ],
             },
