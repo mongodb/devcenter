@@ -11,86 +11,34 @@ import {
 } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
-import { getDistinctTags } from '../service/get-distinct-tags';
-import { Tag } from '../interfaces/tag';
 import { languageToLogo } from '../utils/language-to-logo';
 import { LogoPaths } from '../utils/logoPaths';
+import { getAllMetaInfo } from '../service/get-all-meta-info';
+import { MetaInfo } from '../interfaces/meta-info';
+import { getURLPath } from '../utils/format-url-path';
 
 const crumbs: Crumb[] = [
     { text: 'MongoDB Developer Center', url: '/developer' },
     { text: 'Developer Topics', url: '/developer/topics' },
 ];
 
-const jsFeaturedConfig = {
+const featuredConfig = (lang: MetaInfo) => ({
     imageConfig: {
-        src: 'https://webimages.mongodb.com/_com_assets/cms/ks67pb1b0pxch9df4-lang_javascript.svg?auto=format%252Ccompress',
+        src: LogoPaths[languageToLogo[lang.tagName]],
         variant: ESingleImageVariant.NO_RATIO,
     },
     cta: {
         type: 'link-arrow' as CTAType,
         text: 'Explore Content',
         config: {
-            href: '/developer/languages/javascript',
+            href: getURLPath(lang.slug),
             linkIconDisableExpand: true, // Doesn't seem to work
         },
     },
     imageryType: 'image' as ImageryType,
-    title: 'Javascript',
-    text: 'We still need descriptions for all of these right?',
-};
-const javaFeaturedConfig = {
-    imageConfig: {
-        src: 'https://webimages.mongodb.com/_com_assets/cms/ks67or52h1vtq9spj-lang_java_logomark.svg?auto=format%252Ccompress',
-        variant: ESingleImageVariant.NO_RATIO,
-    },
-    cta: {
-        type: 'link-arrow' as CTAType,
-        text: 'Explore Content',
-        config: {
-            href: '/developer/languages/java',
-            linkIconDisableExpand: true, // Doesn't seem to work
-        },
-    },
-    imageryType: 'image' as ImageryType,
-    title: 'Java',
-    text: 'We still need descriptions for all of these right?',
-};
-
-const cSharpFeaturedConfig = {
-    imageConfig: {
-        src: 'https://webimages.mongodb.com/_com_assets/cms/ks67l72x98g3whceo-lang_c_sharp.svg?auto=format%252Ccompress',
-        variant: ESingleImageVariant.NO_RATIO,
-    },
-    cta: {
-        type: 'link-arrow' as CTAType,
-        text: 'Explore Content',
-        config: {
-            href: '/developer/languages/csharp',
-            linkIconDisableExpand: true, // Doesn't seem to work
-        },
-    },
-    imageryType: 'image' as ImageryType,
-    title: 'C#',
-    text: 'We still need descriptions for all of these right?',
-};
-
-const cFeaturedConfig = {
-    imageConfig: {
-        src: 'https://webimages.mongodb.com/_com_assets/cms/ks66s0ohwdti1j4es-lang_c.svg?auto=format%252Ccompress',
-        variant: ESingleImageVariant.NO_RATIO,
-    },
-    cta: {
-        type: 'link-arrow' as CTAType,
-        text: 'Learn More',
-        config: {
-            href: '/developer/languages/c',
-            linkIconDisableExpand: true, // Doesn't seem to work
-        },
-    },
-    imageryType: 'image' as ImageryType,
-    title: 'C',
-    text: 'We still need descriptions for all of these right?',
-};
+    title: lang.tagName,
+    text: lang.description,
+});
 
 const flashCardStyles = {
     boxSizing: 'border-box' as 'border-box',
@@ -108,10 +56,11 @@ const flashCardStyles = {
 };
 
 interface LanguagesPageProps {
-    languages: Tag[];
+    languages: MetaInfo[];
+    featured: MetaInfo[];
 }
 
-const LanguagesSection: React.FunctionComponent<{ languages: Tag[] }> = ({
+const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
     languages,
 }) => {
     return (
@@ -119,20 +68,20 @@ const LanguagesSection: React.FunctionComponent<{ languages: Tag[] }> = ({
             {languages.map(lang => {
                 const flashCardProps = {
                     imageConfig: {
-                        src: LogoPaths[languageToLogo[lang.name]],
+                        src: LogoPaths[languageToLogo[lang.tagName]],
                         variant: ESingleImageVariant.NO_RATIO,
                     },
                     cta: {
                         type: 'link-arrow' as CTAType,
                         text: 'Learn More',
                         config: {
-                            href: '/developer' + lang.slug,
+                            href: getURLPath(lang.slug),
                             linkIconDisableExpand: true, // Doesn't seem to work
                         },
                     },
                     imageryType: 'image' as ImageryType,
-                    title: lang.name,
-                    text: 'We still need descriptions for all of these right?',
+                    title: lang.tagName,
+                    text: lang.description,
                     background: false,
                     alignment: 'left' as 'left',
                 };
@@ -160,7 +109,10 @@ const LanguagesSection: React.FunctionComponent<{ languages: Tag[] }> = ({
         </Grid>
     );
 };
-const LanguagesPage: NextPage<LanguagesPageProps> = ({ languages }) => (
+const LanguagesPage: NextPage<LanguagesPageProps> = ({
+    languages,
+    featured,
+}) => (
     <>
         <Hero crumbs={crumbs} name="All Languages" />
         <div
@@ -187,16 +139,13 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({ languages }) => (
                         columns={[1, null, 2, 4]}
                         gap={['inc50', null, null, 'inc40']}
                     >
-                        <FlashCard sx={flashCardStyles} {...jsFeaturedConfig} />
-                        <FlashCard
-                            sx={flashCardStyles}
-                            {...javaFeaturedConfig}
-                        />
-                        <FlashCard
-                            sx={flashCardStyles}
-                            {...cSharpFeaturedConfig}
-                        />
-                        <FlashCard sx={flashCardStyles} {...cFeaturedConfig} />
+                        {featured.map(lang => (
+                            <FlashCard
+                                key={lang.slug}
+                                sx={flashCardStyles}
+                                {...featuredConfig(lang)}
+                            />
+                        ))}
                     </Grid>
                 </div>
                 <div sx={{ gridColumn: ['span 6', null, 'span 8', 'span 12'] }}>
@@ -224,12 +173,24 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({ languages }) => (
 export default LanguagesPage;
 
 export const getStaticProps: GetStaticProps<{
-    languages: Tag[];
+    languages: MetaInfo[];
+    featured: MetaInfo[];
 }> = async () => {
-    const distinctTags = await getDistinctTags();
-    const languages = distinctTags.filter(
-        tag => tag.type === 'ProgrammingLanguage'
+    const tags = await getAllMetaInfo();
+
+    const languages = tags.filter(
+        tag => tag.category === 'ProgrammingLanguage'
     );
 
-    return { props: { languages } };
+    const js = languages.filter(
+        ({ slug }) => slug === '/languages/javascript'
+    )[0];
+    const java = languages.filter(({ slug }) => slug === '/languages/java')[0];
+    const csharp = languages.filter(
+        ({ slug }) => slug === '/languages/csharp'
+    )[0];
+    const c = languages.filter(({ slug }) => slug === '/languages/c')[0];
+    const featured = [js, java, csharp, c].filter(lang => !!lang);
+
+    return { props: { languages, featured } };
 };

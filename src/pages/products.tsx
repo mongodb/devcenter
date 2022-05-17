@@ -5,7 +5,6 @@ import {
     TypographyScale,
     FlashCard,
     GridLayout,
-    ESingleImageVariant,
     ImageryType,
     CTAType,
     SystemIcon,
@@ -13,86 +12,33 @@ import {
 } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
-import { getDistinctTags } from '../service/get-distinct-tags';
-import { Tag } from '../interfaces/tag';
 import Link from 'next/link';
 import { productToLogo } from '../utils/product-to-logo';
+import { getAllMetaInfo } from '../service/get-all-meta-info';
+import { MetaInfo } from '../interfaces/meta-info';
+import { getURLPath } from '../utils/format-url-path';
 
 const crumbs: Crumb[] = [
     { text: 'MongoDB Developer Center', url: '/developer' },
     { text: 'Developer Topics', url: '/developer/topics' },
 ];
 
-const atlasFeaturedConfig = {
-    imageConfig: {
-        src: 'https://webimages.mongodb.com/_com_assets/cms/kykgzd0sd3qiv9n36-atlas-hero.svg?ixlib=js-3.5.1&auto=format%2Ccompress&w=3038',
-        variant: ESingleImageVariant.LETTERBOX,
+const featuredConfig = (prod: L1Product) => ({
+    iconConfig: {
+        name: productToLogo[prod.tagName],
     },
     cta: {
         type: 'link-arrow' as CTAType,
         text: 'Explore Content',
         config: {
-            href: '/developer/products/atlas',
+            href: getURLPath(prod.slug),
             linkIconDisableExpand: true, // Doesn't seem to work
         },
     },
-    imageryType: 'image' as ImageryType,
-    title: 'Atlas',
-    text: 'The multi-cloud application data platform.',
-};
-const mongodbFeaturedConfig = {
-    imageConfig: {
-        src: 'https://webimages.mongodb.com/_com_assets/cms/kv15ttga69clkiw6z-Homepage_Hero.svg?ixlib=js-3.5.1&auto=format%2Ccompress&w=3038',
-        variant: ESingleImageVariant.LETTERBOX,
-    },
-    cta: {
-        type: 'link-arrow' as CTAType,
-        text: 'Explore Content',
-        config: {
-            href: '/developer/products/mongodb',
-            linkIconDisableExpand: true, // Doesn't seem to work
-        },
-    },
-    imageryType: 'image' as ImageryType,
-    title: 'MongoDB',
-    text: 'The leading modern database with the data model developers love.',
-};
-
-const realmFeaturedConfig = {
-    imageConfig: {
-        src: 'https://webimages.mongodb.com/_com_assets/cms/kykfz1q9c4ynklfrg-realm-hero.svg?ixlib=js-3.5.1&auto=format%2Ccompress&w=3038',
-        variant: ESingleImageVariant.LETTERBOX,
-    },
-    cta: {
-        type: 'link-arrow' as CTAType,
-        text: 'Explore Content',
-        config: {
-            href: '/developer/products/realm',
-            linkIconDisableExpand: true, // Doesn't seem to work
-        },
-    },
-    imageryType: 'image' as ImageryType,
-    title: 'Realm (Mobile)',
-    text: 'Build, deploy, and scale mobile applications with ease.',
-};
-
-const searchFeaturedConfig = {
-    imageConfig: {
-        src: 'https://webimages.mongodb.com/_com_assets/cms/ktxaqsnnbqbx3o876-search_Slalom2.svg?ixlib=js-3.5.1&auto=format%2Ccompress&w=1075',
-        variant: ESingleImageVariant.LETTERBOX,
-    },
-    cta: {
-        type: 'link-arrow' as CTAType,
-        text: 'Explore Content',
-        config: {
-            href: '/developer/products/atlas/full-text-search',
-            linkIconDisableExpand: true, // Doesn't seem to work
-        },
-    },
-    imageryType: 'image' as ImageryType,
-    title: 'Full Text Search',
-    text: 'Advanced search capabilities, built for MongoDB. ',
-};
+    imageryType: 'icon' as ImageryType,
+    title: prod.tagName,
+    text: prod.description,
+});
 
 const flashCardStyles = {
     boxSizing: 'border-box' as 'border-box',
@@ -100,12 +46,14 @@ const flashCardStyles = {
     py: 'inc60',
 };
 interface L1Product {
-    name: string;
+    tagName: string;
     slug: string;
-    l2s: Tag[];
+    description: string;
+    l2s: MetaInfo[];
 }
 interface ProductsPageProps {
     products: L1Product[];
+    featured: L1Product[];
 }
 
 interface L1LinkProps {
@@ -142,31 +90,32 @@ const L1Link: React.FunctionComponent<L1LinkProps> = ({ name, slug }) => (
 );
 
 const ProductSection: React.FunctionComponent<L1Product> = ({
-    name,
+    tagName,
     slug,
+    description,
     l2s,
 }) => {
     return (
         <div sx={{ marginBottom: l2s.length ? 'inc70' : 0 }}>
-            <L1Link name={name} slug={slug} />
+            <L1Link name={tagName} slug={slug} />
             {l2s.length ? (
                 <Grid columns={[1, null, 2, 4]} gap="inc70">
                     {l2s.map(l2 => {
                         const flashCardProps = {
                             iconConfig: {
-                                name: productToLogo[l2.name],
+                                name: productToLogo[l2.tagName],
                             },
                             cta: {
                                 type: 'link-arrow' as CTAType,
                                 text: 'Learn More',
                                 config: {
-                                    href: '/developer' + l2.slug,
+                                    href: getURLPath(l2.slug),
                                     linkIconDisableExpand: true, // Doesn't seem to work
                                 },
                             },
                             imageryType: 'icon' as ImageryType,
-                            title: l2.name,
-                            text: 'We still need descriptions for all of these right?',
+                            title: l2.tagName,
+                            text: l2.description,
                             background: false,
                             alignment: 'left' as 'left',
                         };
@@ -184,14 +133,12 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                     })}
                 </Grid>
             ) : (
-                <TypographyScale variant="body2">
-                    We still need descriptions for all of these right?
-                </TypographyScale>
+                <TypographyScale variant="body2">{description}</TypographyScale>
             )}
         </div>
     );
 };
-const ProductsPage: NextPage<ProductsPageProps> = ({ products }) => (
+const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
     <>
         <Hero crumbs={crumbs} name="All Products" />
         <div
@@ -218,22 +165,13 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products }) => (
                         columns={[1, null, 2, 4]}
                         gap={['inc50', null, null, 'inc40']}
                     >
-                        <FlashCard
-                            sx={flashCardStyles}
-                            {...atlasFeaturedConfig}
-                        />
-                        <FlashCard
-                            sx={flashCardStyles}
-                            {...mongodbFeaturedConfig}
-                        />
-                        <FlashCard
-                            sx={flashCardStyles}
-                            {...realmFeaturedConfig}
-                        />
-                        <FlashCard
-                            sx={flashCardStyles}
-                            {...searchFeaturedConfig}
-                        />
+                        {featured.map(prod => (
+                            <FlashCard
+                                key={prod.slug}
+                                sx={flashCardStyles}
+                                {...featuredConfig(prod)}
+                            />
+                        ))}
                     </Grid>
                 </div>
                 <div sx={{ gridColumn: ['span 6', null, 'span 8', 'span 12'] }}>
@@ -263,12 +201,13 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products }) => (
 export default ProductsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-    const distinctTags = await getDistinctTags();
-    const l1Products = distinctTags.filter(tag => tag.type === 'L1Product');
-    const l2Products = distinctTags.filter(tag => tag.type === 'L2Product');
+    const tags = await getAllMetaInfo();
 
-    const products: L1Product[] = l1Products.map(({ type, ...rest }) => ({
-        ...rest,
+    const l1Products = tags.filter(tag => tag.category === 'L1Product');
+    const l2Products = tags.filter(tag => tag.category === 'L2Product');
+
+    const products: L1Product[] = l1Products.map(prod => ({
+        ...prod,
         l2s: [],
     }));
     l2Products.forEach(l2 => {
@@ -280,9 +219,19 @@ export const getStaticProps: GetStaticProps = async () => {
                 existingL1.l2s.push(l2);
             }
         } else {
-            throw Error('Did not find corresponding l1 for ' + l2.name);
+            throw Error('Did not find corresponding l1 for ' + l2.tagName);
         }
     });
 
-    return { props: { products } };
+    const atlas = products.filter(({ slug }) => slug === '/products/atlas')[0];
+    const mongodb = products.filter(
+        ({ slug }) => slug === '/products/mongodb'
+    )[0];
+    const realm = products.filter(({ slug }) => slug === '/products/realm')[0];
+    const search = atlas.l2s.filter(
+        ({ slug }) => slug === '/products/atlas/full-text-search'
+    )[0];
+    const featured = [atlas, mongodb, realm, search].filter(prod => !!prod);
+
+    return { props: { products, featured } };
 };

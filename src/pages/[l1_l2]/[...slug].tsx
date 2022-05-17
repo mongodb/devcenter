@@ -30,6 +30,7 @@ import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-feat
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
+import { productToLogo } from '../../utils/product-to-logo';
 let pluralize = require('pluralize');
 
 interface TopicProps {
@@ -101,15 +102,17 @@ const Topic: NextPage<TopicProps> = ({
 
     const CTAComponents = createTopicPageCTAS(ctas);
 
-    const topicItems = topics.map(topic => {
-        const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
+    const topicToItem = (topic: ITopicCard) => {
+        const iconName = productToLogo[topic.title];
+        const icon = iconName ? (
+            <BrandedIcon sx={iconStyles} name={productToLogo[topic.title]} />
+        ) : null;
         return { ...topic, icon };
-    });
+    };
 
-    const relatedTopicItems = relatedTopics.map(topic => {
-        const icon = <BrandedIcon sx={iconStyles} name={topic.icon} />;
-        return { ...topic, icon };
-    });
+    const topicItems = topics.map(topicToItem);
+
+    const relatedTopicItems = relatedTopics.map(topicToItem);
 
     setURLPathForNavItems(tertiaryNavItems);
 

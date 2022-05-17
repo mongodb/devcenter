@@ -10,10 +10,11 @@ import {
 } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
-import { getDistinctTags } from '../service/get-distinct-tags';
-import { Tag } from '../interfaces/tag';
 import { LogoPaths } from '../utils/logoPaths';
 import { technologyToLogo } from '../utils/technology-to-logo';
+import { getAllMetaInfo } from '../service/get-all-meta-info';
+import { MetaInfo } from '../interfaces/meta-info';
+import { getURLPath } from '../utils/format-url-path';
 
 // Temporary until we find a logo to include in Flora.
 const serverlessLogo =
@@ -25,22 +26,22 @@ const crumbs: Crumb[] = [
 ];
 
 interface TechnologiesPageProps {
-    technologies: Tag[];
+    technologies: MetaInfo[];
 }
 
-const TechnologiesSection: React.FunctionComponent<{ technologies: Tag[] }> = ({
-    technologies,
-}) => {
+const TechnologiesSection: React.FunctionComponent<{
+    technologies: MetaInfo[];
+}> = ({ technologies }) => {
     return (
         <Grid columns={[1, null, 2, 4]} gap="inc70">
             {technologies.map(tech => {
                 let imageProps;
                 const hasLogo =
-                    tech.name === 'Serverless' ||
-                    LogoPaths[technologyToLogo[tech.name]];
+                    tech.tagName === 'Serverless' ||
+                    LogoPaths[technologyToLogo[tech.tagName]];
                 if (hasLogo) {
                     // Really annoying, but we have a special case where we use a branded icon for serverless.
-                    if (tech.name === 'Serverless') {
+                    if (tech.tagName === 'Serverless') {
                         imageProps = {
                             imageConfig: {
                                 src: serverlessLogo,
@@ -51,7 +52,7 @@ const TechnologiesSection: React.FunctionComponent<{ technologies: Tag[] }> = ({
                     } else {
                         imageProps = {
                             imageConfig: {
-                                src: LogoPaths[technologyToLogo[tech.name]],
+                                src: LogoPaths[technologyToLogo[tech.tagName]],
                                 variant: ESingleImageVariant.NO_RATIO,
                             },
                             imageryType: 'image' as ImageryType,
@@ -66,12 +67,12 @@ const TechnologiesSection: React.FunctionComponent<{ technologies: Tag[] }> = ({
                         type: 'link-arrow' as CTAType,
                         text: 'Learn More',
                         config: {
-                            href: '/developer' + tech.slug,
+                            href: getURLPath(tech.slug),
                             linkIconDisableExpand: true, // Doesn't seem to work
                         },
                     },
-                    title: tech.name,
-                    text: 'We still need descriptions for all of these right?',
+                    title: tech.tagName,
+                    text: tech.description,
                     background: false,
                     alignment: 'left' as 'left',
                 };
@@ -123,10 +124,10 @@ const TechnologiesPage: NextPage<TechnologiesPageProps> = ({
 export default TechnologiesPage;
 
 export const getStaticProps: GetStaticProps<{
-    technologies: Tag[];
+    technologies: MetaInfo[];
 }> = async () => {
-    const distinctTags = await getDistinctTags();
-    const technologies = distinctTags.filter(tag => tag.type === 'Technology');
+    const tags = await getAllMetaInfo();
+    const technologies = tags.filter(tag => tag.category === 'Technology');
 
     return { props: { technologies } };
 };
