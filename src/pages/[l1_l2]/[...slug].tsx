@@ -105,7 +105,7 @@ const Topic: NextPage<TopicProps> = ({
     const topicToItem = (topic: ITopicCard) => {
         const iconName = productToLogo[topic.title];
         const icon = iconName ? (
-            <BrandedIcon sx={iconStyles} name={productToLogo[topic.title]} />
+            <BrandedIcon sx={iconStyles} name={iconName} />
         ) : null;
         return { ...topic, icon };
     };

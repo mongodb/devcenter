@@ -7,10 +7,10 @@ import {
     ESingleImageVariant,
     ImageryType,
     CTAType,
+    LogoPaths,
 } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
-import { LogoPaths } from '../utils/logoPaths';
 import { technologyToLogo } from '../utils/technology-to-logo';
 import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { MetaInfo } from '../interfaces/meta-info';

@@ -23,22 +23,25 @@ const crumbs: Crumb[] = [
     { text: 'Developer Topics', url: '/developer/topics' },
 ];
 
-const featuredConfig = (prod: L1Product) => ({
-    iconConfig: {
-        name: productToLogo[prod.tagName],
-    },
-    cta: {
-        type: 'link-arrow' as CTAType,
-        text: 'Explore Content',
-        config: {
-            href: getURLPath(prod.slug),
-            linkIconDisableExpand: true, // Doesn't seem to work
+const featuredConfig = (prod: L1Product) => {
+    const iconName = productToLogo[prod.tagName];
+    return {
+        iconConfig: {
+            name: iconName,
         },
-    },
-    imageryType: 'icon' as ImageryType,
-    title: prod.tagName,
-    text: prod.description,
-});
+        cta: {
+            type: 'link-arrow' as CTAType,
+            text: 'Explore Content',
+            config: {
+                href: getURLPath(prod.slug),
+                linkIconDisableExpand: true, // Doesn't seem to work
+            },
+        },
+        imageryType: (iconName ? 'icon' : 'none') as ImageryType,
+        title: prod.tagName,
+        text: prod.description,
+    };
+};
 
 const flashCardStyles = {
     boxSizing: 'border-box' as 'border-box',
@@ -101,9 +104,10 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
             {l2s.length ? (
                 <Grid columns={[1, null, 2, 4]} gap="inc70">
                     {l2s.map(l2 => {
+                        const iconName = productToLogo[l2.tagName];
                         const flashCardProps = {
                             iconConfig: {
-                                name: productToLogo[l2.tagName],
+                                name: iconName,
                             },
                             cta: {
                                 type: 'link-arrow' as CTAType,
@@ -113,7 +117,9 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                                     linkIconDisableExpand: true, // Doesn't seem to work
                                 },
                             },
-                            imageryType: 'icon' as ImageryType,
+                            imageryType: (iconName
+                                ? 'icon'
+                                : 'none') as ImageryType,
                             title: l2.tagName,
                             text: l2.description,
                             background: false,

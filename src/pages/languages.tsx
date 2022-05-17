@@ -8,11 +8,11 @@ import {
     ESingleImageVariant,
     ImageryType,
     CTAType,
+    LogoPaths,
 } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
 import { languageToLogo } from '../utils/language-to-logo';
-import { LogoPaths } from '../utils/logoPaths';
 import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { MetaInfo } from '../interfaces/meta-info';
 import { getURLPath } from '../utils/format-url-path';
@@ -22,23 +22,26 @@ const crumbs: Crumb[] = [
     { text: 'Developer Topics', url: '/developer/topics' },
 ];
 
-const featuredConfig = (lang: MetaInfo) => ({
-    imageConfig: {
-        src: LogoPaths[languageToLogo[lang.tagName]],
-        variant: ESingleImageVariant.NO_RATIO,
-    },
-    cta: {
-        type: 'link-arrow' as CTAType,
-        text: 'Explore Content',
-        config: {
-            href: getURLPath(lang.slug),
-            linkIconDisableExpand: true, // Doesn't seem to work
+const featuredConfig = (lang: MetaInfo) => {
+    const imageSrc = LogoPaths[languageToLogo[lang.tagName]];
+    return {
+        imageConfig: {
+            src: imageSrc,
+            variant: ESingleImageVariant.NO_RATIO,
         },
-    },
-    imageryType: 'image' as ImageryType,
-    title: lang.tagName,
-    text: lang.description,
-});
+        cta: {
+            type: 'link-arrow' as CTAType,
+            text: 'Explore Content',
+            config: {
+                href: getURLPath(lang.slug),
+                linkIconDisableExpand: true, // Doesn't seem to work
+            },
+        },
+        imageryType: (imageSrc ? 'image' : 'none') as ImageryType,
+        title: lang.tagName,
+        text: lang.description,
+    };
+};
 
 const flashCardStyles = {
     boxSizing: 'border-box' as 'border-box',
@@ -66,9 +69,10 @@ const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
     return (
         <Grid columns={[1, null, 2, 4]} gap="inc70">
             {languages.map(lang => {
+                const imageSrc = LogoPaths[languageToLogo[lang.tagName]];
                 const flashCardProps = {
                     imageConfig: {
-                        src: LogoPaths[languageToLogo[lang.tagName]],
+                        src: imageSrc,
                         variant: ESingleImageVariant.NO_RATIO,
                     },
                     cta: {
@@ -79,7 +83,7 @@ const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
                             linkIconDisableExpand: true, // Doesn't seem to work
                         },
                     },
-                    imageryType: 'image' as ImageryType,
+                    imageryType: (imageSrc ? 'image' : 'none') as ImageryType,
                     title: lang.tagName,
                     text: lang.description,
                     background: false,
