@@ -4,5 +4,6 @@ export interface Crumb {
 }
 
 export interface BreadcrumbsProps {
+    className?: string;
     crumbs: Crumb[];
 }

@@ -5,6 +5,7 @@ import { Image } from './image';
 import { Author } from './author';
 import { PrimaryTag } from './primary-tag';
 import { CollectionType } from '../types/collection-type';
+import { CodeLevel } from '../types/tag-type';
 
 export interface ContentItem {
     collectionType?: CollectionType;
@@ -23,4 +24,7 @@ export interface ContentItem {
     series?: Series;
     featured: boolean;
     primaryTag?: PrimaryTag;
+    codeType?: CodeLevel;
+    githubUrl?: string;
+    liveSiteUrl?: string;
 }
