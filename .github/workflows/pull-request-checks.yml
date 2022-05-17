@@ -114,13 +114,14 @@ jobs:
               run: yarn install --frozen-lockfile
             - name: yarn build
               run: yarn run build
+              env:
+                  HOST_URL: http://localhost:3000
             - name: Install Lighthouse
               run: yarn global add @lhci/cli@0.8.x
             - name: Run Lighthouse
               run: lhci autorun
               env:
                   LHCI_GITHUB_APP_TOKEN: ${{secrets.LIGHTHOUSE_CI_TOKEN}}
-                  HOST_URL: http://localhost:3000
     deploy-stage-vercel:
         name: Vercel Staging
         runs-on: ubuntu-latest
