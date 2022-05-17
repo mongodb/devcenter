@@ -101,7 +101,7 @@ const Home = () => {
             <GridLayout>
                 <div
                     sx={{
-                        gridColumn: ['span 6', 'span 8', 'span 8', 'span 10'],
+                        gridColumn: ['span 6', 'span 6', 'span 8', 'span 10'],
                         marginTop: theme.space.inc50,
                     }}
                 >
@@ -112,12 +112,7 @@ const Home = () => {
                 <div
                     sx={{
                         display: ['none', 'none', 'none', 'block'],
-                        gridColumn: [
-                            'span 2',
-                            'span 2',
-                            'span 2',
-                            '11 / span 2',
-                        ],
+                        gridColumn: [null, null, null, '11 / span 2'],
                         marginTop: theme.space.inc50,
                     }}
                 >
@@ -135,7 +130,7 @@ const Home = () => {
                             sx={{
                                 gridColumn: [
                                     'span 6',
-                                    'span 4',
+                                    'span 6',
                                     'span 4',
                                     'span 3',
                                 ],
@@ -163,12 +158,7 @@ const Home = () => {
                 <div
                     sx={{
                         display: ['block', 'block', 'block', 'none'],
-                        gridColumn: [
-                            'span 6',
-                            'span 6',
-                            'span 6',
-                            '11 / span 2',
-                        ],
+                        gridColumn: ['span 6', 'span 6', 'span 6', null],
                         marginTop: theme.space.inc50,
                     }}
                 >
