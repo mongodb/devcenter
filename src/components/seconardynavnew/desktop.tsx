@@ -76,7 +76,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
             <nav sx={StyledSecondaryNavContainer}>
                 <div sx={linkWrapperStyles}>
                     <FloraLink
-                        href="/developer"
+                        href={getURLPath('/')}
                         sx={MainLinkStyles(activePath === '/' ? true : false)}
                     >
                         Developer Center

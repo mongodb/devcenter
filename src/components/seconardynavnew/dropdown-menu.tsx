@@ -152,7 +152,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                     </SubLinks>
                     {all && (
                         <FloraLink
-                            href={path}
+                            href={getURLPath(path)}
                             inverse
                             linkIcon="chevron"
                             linkIconDisableExpand={true}
