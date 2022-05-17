@@ -12,7 +12,7 @@ const getAllPodcastsFromAPI = async (
 ): Promise<Podcast[]> => {
     const query = gql`
         query Podcasts {
-            podcasts @rest(type: "Podcast", path: "/podcasts") {
+            podcasts @rest(type: "Podcast", path: "/podcasts?_limit=-1") {
                 description
                 publishDate: originalPublishDate
                 title

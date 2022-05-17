@@ -8,12 +8,12 @@ export const getAllArticleSeriesFromAPI = async (
     const query = gql`
         query ArticleSeries {
             articleSeries
-                @rest(type: "ArticleSeries", path: "/article-series") {
+                @rest(type: "ArticleSeries", path: "/new-article-series") {
                 title
                 seriesEntry {
-                    article {
+                    article: new_article {
                         title: name
-                        slug
+                        calculatedSlug: calculated_slug
                     }
                 }
             }
@@ -21,5 +21,6 @@ export const getAllArticleSeriesFromAPI = async (
     `;
     const { data }: ApolloQueryResult<{ articleSeries: SeriesResponse[] }> =
         await client.query({ query });
+
     return data.articleSeries;
 };

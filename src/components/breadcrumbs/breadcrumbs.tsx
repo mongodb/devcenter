@@ -10,14 +10,18 @@ import {
     breadcrumbStyles,
     linkStyles,
 } from './styles';
+import { getURLPath } from '../../utils/format-url-path';
 
-const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({ crumbs }) => {
+const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
+    crumbs,
+    className,
+}) => {
     const crumbLength = crumbs.length;
     return (
-        <div sx={breadcrumbsContainerStyles}>
+        <div sx={breadcrumbsContainerStyles} className={className}>
             {crumbs.map(({ text, url }, i) => (
                 <div key={text} sx={breadcrumbStyles}>
-                    <Link navItem={true} href={url} sx={linkStyles}>
+                    <Link navItem={true} href={getURLPath(url)} sx={linkStyles}>
                         {/* The negative margin is to offset the added 3px from the letter-spacing on the last character that Flora adds.*/}
                         <Eyebrow sx={{ marginRight: '-3px' }}>{text}</Eyebrow>
                     </Link>

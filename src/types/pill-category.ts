@@ -1,4 +1,6 @@
 export const PillCategoryValues = [
+    /* order determines how categories appear in topic landing pages */
+    'News & Announcements',
     'Article',
     'Demo App',
     'Quickstart',
@@ -6,7 +8,6 @@ export const PillCategoryValues = [
     'Tutorial',
     'Podcast',
     'Video',
-    'News & Announcements',
 ] as const;
 
 export type PillCategory = typeof PillCategoryValues[number];
