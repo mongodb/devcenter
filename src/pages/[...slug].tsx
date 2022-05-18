@@ -177,7 +177,9 @@ const ContentPage: NextPage<ContentPageProps> = ({
         githubUrl,
         liveSiteUrl,
         codeType,
+        seo,
     } = contentItem;
+    console.log(seo);
     const [ratingStars, setRatingStars] = useState(0);
 
     const [feedbackModalStage, setFeedbackModalStage] =
