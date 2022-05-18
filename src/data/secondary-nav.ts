@@ -100,9 +100,9 @@ export const secondaryNavData = [
                 dropDownItems: [
                     {
                         name: 'Introductory',
-                        slug: '/search?expertiseLevel=Introductory',
+                        slug: 'expertise-levels/introductory',
                     },
-                    { name: 'Expert', slug: '/search?expertiseLevel=Expert' },
+                    { name: 'Advanced', slug: '/expertise-levels/advanced' },
                 ],
             },
         ],
