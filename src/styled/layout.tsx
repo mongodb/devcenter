@@ -26,6 +26,12 @@ const globalStyles = css`
 const Main = styled('main')`
     /* ensure content takes up full space between header & footer*/
     margin: 0;
+
+    /* Margin top set for secondary nav on mobile */
+    @media only screen and (max-width: ${theme.sizes.breakpoint.large}) {
+        margin-top: 70px;
+    }
+
     max-width: 100%;
     min-height: calc(100vh - 300px);
     width: 100%;

@@ -15,7 +15,7 @@ export const addSeriesToItem = (
 
     series.forEach(eachSeries => {
         const titlesInThisSeries = eachSeries.seriesEntry.map(
-            seriesTypeEntry => seriesTypeEntry.title
+            seriesTypeEntry => seriesTypeEntry?.title
         );
         if (titlesInThisSeries.includes(item.title)) {
             item.series = {
