@@ -5,6 +5,7 @@ import {
     TechnologyTag,
 } from './tag-type-response';
 import { OtherTags } from './other-tags';
+import { SEO } from './seo';
 
 export interface Media {
     description?: string;
@@ -17,4 +18,5 @@ export interface Media {
     technology?: TechnologyTag[];
     programmingLanguage?: ProgrammingLanguageTag[];
     otherTags: OtherTags;
+    SEO?: SEO;
 }

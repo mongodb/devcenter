@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -177,6 +178,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         githubUrl,
         liveSiteUrl,
         codeType,
+        SEO,
     } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
 
@@ -204,6 +206,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
     );
 
     const authorsToDisplay = parseAuthorsToAuthorLockup(authors);
+    const seoConfig: any = SEO ? SEO : {};
 
     const ratingSection = (
         <div
@@ -427,6 +430,18 @@ const ContentPage: NextPage<ContentPageProps> = ({
 
     return (
         <>
+            <NextSeo
+                title={seoConfig.title || 'Default title'}
+                description={seoConfig.metaDescription || 'Default description'}
+                {...(seoConfig.canonicalUrl && {
+                    canonical: seoConfig.canonicalUrl,
+                })}
+                // openGraph={{
+                //     url: 'https://www.url.ie/a',
+                //     title: 'Open Graph Title',
+                //     description: 'Open Graph Description'
+                // }}
+            />
             <div
                 sx={{
                     paddingBottom: 'inc160',

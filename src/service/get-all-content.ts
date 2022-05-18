@@ -62,6 +62,14 @@ export const mapPodcastsToContentItems = (
             tags: flattenTags([p.otherTags]),
             title: p.title,
             featured: featured.includes(p.title),
+            SEO: {
+                title: p.title,
+                canonicalUrl: p.SEO ? p.SEO.canonicalUrl : null,
+                metaDescription: p.SEO
+                    ? p.SEO.metaDescription
+                    : 'This is a test podcast meta description',
+                og: p.SEO ? p.SEO.og : null,
+            },
         };
         if (p.description) {
             item.description = p.description;
@@ -92,6 +100,14 @@ export const mapVideosToContentItems = (
             tags: flattenTags([v.otherTags]),
             title: v.title,
             featured: featured.includes(v.title),
+            SEO: {
+                title: v.title,
+                canonicalUrl: v.SEO ? v.SEO.canonicalUrl : null,
+                metaDescription: v.SEO
+                    ? v.SEO.metaDescription
+                    : 'This is a test video meta description',
+                og: v.SEO ? v.SEO.og : null,
+            },
         };
         if (v.description) {
             item.description = v.description;
@@ -139,6 +155,14 @@ export const mapArticlesToContentItems = (
             codeType: a.otherTags[0].codeType,
             githubUrl: a.otherTags[0].githubUrl,
             liveSiteUrl: a.otherTags[0].liveSiteUrl,
+            SEO: {
+                title: a.title,
+                canonicalUrl: a.SEO ? a.SEO.canonicalUrl : null,
+                metaDescription: a.SEO
+                    ? a.SEO.metaDescription
+                    : 'This is a test article meta description',
+                og: a.SEO ? a.SEO.og : null,
+            },
         };
         if (a.image) {
             item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };

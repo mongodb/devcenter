@@ -4662,6 +4662,11 @@ natural-compare@^1.4.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
+next-seo@^5.4.0:
+  version "5.4.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/next-seo/-/next-seo-5.4.0.tgz#37a7784b30b3f70cec3fa0d77f9dde5990822d24"
+  integrity sha1-N6d4SzCz9wzsP6DXf53eWZCCLSQ=
+
 next@12.1.0:
   version "12.1.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/next/-/next-12.1.0.tgz#c33d753b644be92fc58e06e5a214f143da61dd5d"
