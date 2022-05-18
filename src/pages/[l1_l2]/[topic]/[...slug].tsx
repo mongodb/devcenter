@@ -34,6 +34,7 @@ import {
 } from '../../../utils/format-url-path';
 import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
 import { getAllContentItems } from '../../../service/get-all-content';
+import { productToLogo } from '../../../utils/product-to-logo';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -98,7 +99,10 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
     const subTopicItems = subTopics.map(subTopic => {
-        const icon = <BrandedIcon sx={iconStyles} name={subTopic.icon} />;
+        const iconName = productToLogo[subTopic.title];
+        const icon = iconName ? (
+            <BrandedIcon sx={iconStyles} name={iconName} />
+        ) : null;
         const href = subTopic.href + contentTypeSlug;
         return { ...subTopic, href, icon };
     });

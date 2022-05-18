@@ -13,13 +13,6 @@ export const pageWrapper = {
     paddingTop: ['inc40', null, 'inc50', 'inc70'],
 };
 
-export const searchBoxStyles = {
-    '& > div': {
-        width: '100%',
-    },
-    marginBottom: ['inc30', null, 'inc70'],
-};
-
 export const resultsStringAndTagsStyles = {
     marginBottom: 'inc50',
     display: 'flex',

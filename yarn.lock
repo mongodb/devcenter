@@ -778,10 +778,10 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.7.tgz#0ac71beba9b607825982e23c4a000fbdef83abf2"
   integrity sha1-Cscb66m2B4JZguI8SgAPve+Dq/I=
 
-"@mdb/flora@0.20.6":
-  version "0.20.6"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-0.20.6.tgz#3f508970a15abfaac204e704a6007f9c57452d1a"
-  integrity sha1-P1CJcKFav6rCBOcEpgB/nFdFLRo=
+"@mdb/flora@0.21.0":
+  version "0.21.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-0.21.0.tgz#0dbd46d914c724ad7ead49d2bbf8d9f2c2723baa"
+  integrity sha1-Db1G2RTHJK1+rUnSu/jZ8sJyO6o=
   dependencies:
     "@imgix/js-core" "^3.2.1"
     codemirror "^5.62.2"
@@ -1227,6 +1227,18 @@
   version "0.0.29"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+
+"@types/lodash.debounce@4.0.7":
+  version "4.0.7"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/lodash.debounce/-/lodash.debounce-4.0.7.tgz#0285879defb7cdb156ae633cecd62d5680eded9f"
+  integrity sha1-AoWHne+3zbFWrmM87NYtVoDt7Z8=
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.182"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/lodash/-/lodash-4.14.182.tgz#05301a4d5e62963227eaafe0ce04dd77c54ea5c2"
+  integrity sha1-BTAaTV5iljIn6q/gzgTdd8VOpcI=
 
 "@types/mdast@^3.0.0":
   version "3.0.10"
@@ -4319,6 +4331,11 @@ locate-path@^6.0.0:
   integrity sha1-VTIeswn+u8WcSAHZMackUqaB0oY=
   dependencies:
     p-locate "^5.0.0"
+
+lodash.debounce@4.0.8:
+  version "4.0.8"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
 lodash.merge@^4.6.2:
   version "4.6.2"
