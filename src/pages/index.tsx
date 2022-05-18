@@ -1,4 +1,6 @@
 import {
+    BrandedIcon,
+    EThirdPartyLogoVariant,
     GridLayout,
     Link,
     TextInput,
@@ -14,6 +16,19 @@ import {
     cardsTechnologiesData,
 } from '../data/homepage';
 import { getURLPath } from '../utils/format-url-path';
+
+const getImage = (imageString: string | EThirdPartyLogoVariant) =>
+    Object.values(EThirdPartyLogoVariant).includes(
+        imageString as EThirdPartyLogoVariant
+    ) ? (
+        <ThirdPartyLogo
+            variant={imageString as EThirdPartyLogoVariant}
+            target="_blank"
+            imageWidth="150px"
+        />
+    ) : (
+        <BrandedIcon name={imageString} />
+    );
 
 const HomepageSearch: React.FunctionComponent = () => {
     // const router = useRouter();
@@ -117,29 +132,32 @@ const Home = () => {
             <GridLayout>
                 <div
                     sx={{
-                        gridColumn: ['span 6', 'span 6', 'span 8', 'span 10'],
+                        gridColumn: ['span 6', 'span 6', 'span 8', 'span 12'],
                         marginTop: theme.space.inc50,
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
                     }}
                 >
                     <TypographyScale variant="heading5">
                         Develop in your language
                     </TypographyScale>
-                </div>
-                <div
-                    sx={{
-                        display: ['none', 'none', 'none', 'block'],
-                        gridColumn: [null, null, null, '11 / span 2'],
-                        marginTop: theme.space.inc50,
-                    }}
-                >
-                    <Link
-                        href="/developer/language"
-                        linkIcon="arrow"
-                        linkIconDisableExpand={true}
+                    <div
+                        sx={{
+                            display: ['none', 'none', 'none', 'block'],
+                            gridColumn: [null, null, null, '11 / span 2'],
+                        }}
                     >
-                        View All Languages
-                    </Link>
+                        <Link
+                            href="/developer/languages"
+                            linkIcon="arrow"
+                            linkIconDisableExpand={true}
+                        >
+                            View All Languages
+                        </Link>
+                    </div>
                 </div>
+
                 {cardsLanguagesData?.map(
                     ({ titleLink, href, imageString, cta, links }) => (
                         <div
@@ -160,7 +178,6 @@ const Home = () => {
                                 image={
                                     <ThirdPartyLogo
                                         variant={imageString}
-                                        href={href}
                                         target="_blank"
                                         imageWidth="150px"
                                     />
@@ -219,29 +236,32 @@ const Home = () => {
                                 'span 6',
                                 'span 8',
                                 'span 8',
-                                'span 10',
+                                'span 12',
                             ],
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
                         }}
                     >
                         <TypographyScale variant="heading5">
                             Integrate MongoDB with the technologies you use
                         </TypographyScale>
-                    </div>
-                    <div
-                        sx={{
-                            display: ['none', 'none', 'none', 'block'],
-                            gridColumn: 'span 2',
-                            marginTop: theme.space.inc50,
-                        }}
-                    >
-                        <Link
-                            href="/developer/technologies"
-                            linkIcon="arrow"
-                            linkIconDisableExpand={true}
+                        <div
+                            sx={{
+                                display: ['none', 'none', 'none', 'block'],
+                                gridColumn: 'span 2',
+                            }}
                         >
-                            View All Technologies
-                        </Link>
+                            <Link
+                                href="/developer/technologies"
+                                linkIcon="arrow"
+                                linkIconDisableExpand={true}
+                            >
+                                View All Technologies
+                            </Link>
+                        </div>
                     </div>
+
                     {cardsTechnologiesData?.map(
                         ({ titleLink, imageString, href }) => (
                             <div
@@ -259,14 +279,7 @@ const Home = () => {
                                     sx={{ backgroundColor: 'white' }}
                                     alignment="center"
                                     titleLink={titleLink}
-                                    image={
-                                        <ThirdPartyLogo
-                                            variant={imageString}
-                                            href={href}
-                                            target="_blank"
-                                            imageWidth="150px"
-                                        />
-                                    }
+                                    image={getImage(imageString)}
                                 />
                             </div>
                         )
@@ -294,30 +307,33 @@ const Home = () => {
                                 'span 6',
                                 'span 8',
                                 'span 8',
-                                'span 10',
+                                'span 12',
                             ],
                             marginTop: theme.space.inc50,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
                         }}
                     >
                         <TypographyScale variant="heading5">
                             Start building with these MongoDB products
                         </TypographyScale>
-                    </div>
-                    <div
-                        sx={{
-                            gridColumn: [null, null, null, 'span 2'],
-                            marginTop: theme.space.inc50,
-                            display: ['none', 'none', 'none', 'block'],
-                        }}
-                    >
-                        <Link
-                            href="/developer/languages"
-                            linkIcon="arrow"
-                            linkIconDisableExpand={true}
+                        <div
+                            sx={{
+                                gridColumn: [null, null, null, 'span 2'],
+                                display: ['none', 'none', 'none', 'block'],
+                            }}
                         >
-                            View All Products
-                        </Link>
+                            <Link
+                                href="/developer/languages"
+                                linkIcon="arrow"
+                                linkIconDisableExpand={true}
+                            >
+                                View All Products
+                            </Link>
+                        </div>
                     </div>
+
                     {cardsProductsData?.map(
                         ({
                             titleLink,
@@ -343,14 +359,7 @@ const Home = () => {
                                     alignment="left"
                                     description={description}
                                     titleLink={titleLink}
-                                    image={
-                                        <ThirdPartyLogo
-                                            variant={imageString}
-                                            href={href}
-                                            target="_blank"
-                                            imageWidth="150px"
-                                        />
-                                    }
+                                    image={getImage(imageString)}
                                     links={links}
                                 />
                             </div>

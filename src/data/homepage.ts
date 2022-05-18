@@ -1,4 +1,5 @@
 import { EThirdPartyLogoVariant } from '@mdb/flora';
+import { productToLogo } from '../utils/product-to-logo';
 
 export const cardsLanguagesData = [
     {
@@ -14,8 +15,8 @@ export const cardsLanguagesData = [
         },
         links: [
             {
-                text: 'Getting Started',
-                url: '/developer/languages/java/gettingstarted',
+                text: 'Quickstarts',
+                url: '/developer/languages/java/quickstarts',
             },
             {
                 text: 'Tutorials',
@@ -26,7 +27,7 @@ export const cardsLanguagesData = [
                 url: 'https://www.mongodb.com/docs/',
             },
             {
-                text: 'Code Samples',
+                text: 'Code Examples',
                 url: '/developer/languages/java/code-examples',
             },
         ],
@@ -44,8 +45,8 @@ export const cardsLanguagesData = [
         },
         links: [
             {
-                text: 'Getting Started',
-                url: '/developer/languages/python/gettingstarted',
+                text: 'Quickstarts',
+                url: '/developer/languages/python/quickstarts',
             },
             {
                 text: 'Tutorials',
@@ -56,7 +57,7 @@ export const cardsLanguagesData = [
                 url: 'https://www.mongodb.com/docs/',
             },
             {
-                text: 'Code Samples',
+                text: 'Code Examples',
                 url: '/developer/languages/python/code-examples',
             },
         ],
@@ -64,30 +65,30 @@ export const cardsLanguagesData = [
     {
         titleLink: {
             text: 'C#',
-            url: '/developer/languages/c',
+            url: '/developer/languages/csharp',
         },
-        href: '/developer/languages/c',
-        imageString: EThirdPartyLogoVariant.C,
+        href: '/developer/languages/csharp',
+        imageString: EThirdPartyLogoVariant.C_SHARP,
         cta: {
             text: 'See All',
-            url: '/developer/languages/c',
+            url: '/developer/languages/csharp',
         },
         links: [
             {
-                text: 'Getting Started',
-                url: '/developer/languages/c/quickstart',
+                text: 'Quickstarts',
+                url: '/developer/languages/csharp/quickstarts',
             },
             {
                 text: 'Tutorials',
-                url: '/developer/languages/c/tutorials',
+                url: '/developer/languages/csharp/tutorials',
             },
             {
                 text: 'Documentation',
                 url: 'https://www.mongodb.com/docs/',
             },
             {
-                text: 'Code Samples',
-                url: '/developer/languages/c/code-examples',
+                text: 'Code Examples',
+                url: '/developer/languages/csharp/code-examples',
             },
         ],
     },
@@ -104,8 +105,8 @@ export const cardsLanguagesData = [
         },
         links: [
             {
-                text: 'Getting Started',
-                url: '/developer/languages/javascript/quickstart',
+                text: 'Quickstarts',
+                url: '/developer/languages/javascript/quickstarts',
             },
             {
                 text: 'Tutorials',
@@ -116,7 +117,7 @@ export const cardsLanguagesData = [
                 url: 'https://www.mongodb.com/docs/',
             },
             {
-                text: 'Code Samples',
+                text: 'Code Examples',
                 url: '/developer/languages/javascript/code-examples',
             },
         ],
@@ -138,7 +139,7 @@ export const cardsTechnologiesData = [
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
-        imageString: EThirdPartyLogoVariant.AWS,
+        imageString: EThirdPartyLogoVariant.AZURE,
     },
     {
         titleLink: {
@@ -146,7 +147,7 @@ export const cardsTechnologiesData = [
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
-        imageString: EThirdPartyLogoVariant.JAVA,
+        imageString: EThirdPartyLogoVariant.GOOGLE_CLOUD_LOGOMARK,
     },
     {
         titleLink: {
@@ -154,7 +155,7 @@ export const cardsTechnologiesData = [
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
-        imageString: EThirdPartyLogoVariant.JAVA,
+        imageString: EThirdPartyLogoVariant.NODEJS,
     },
     {
         titleLink: {
@@ -162,7 +163,7 @@ export const cardsTechnologiesData = [
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
-        imageString: EThirdPartyLogoVariant.AZURE,
+        imageString: EThirdPartyLogoVariant.DOTNET,
     },
     {
         titleLink: {
@@ -170,7 +171,7 @@ export const cardsTechnologiesData = [
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
-        imageString: EThirdPartyLogoVariant.AZURE,
+        imageString: 'atlas_serverless',
     },
     {
         titleLink: {
@@ -178,7 +179,7 @@ export const cardsTechnologiesData = [
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
-        imageString: EThirdPartyLogoVariant.JAVA,
+        imageString: EThirdPartyLogoVariant.UNITY,
     },
     {
         titleLink: {
@@ -186,7 +187,7 @@ export const cardsTechnologiesData = [
             url: 'https://www.google.com/',
         },
         href: 'https://www.google.com/',
-        imageString: EThirdPartyLogoVariant.JAVA,
+        imageString: EThirdPartyLogoVariant.KUBERNETES,
     },
 ];
 
@@ -197,52 +198,52 @@ export const cardsProductsData = [
             url: '/developer/products/atlas',
         },
         href: '/developer/products/atlas',
-        imageString: EThirdPartyLogoVariant.JAVA,
+        imageString: productToLogo['Atlas'],
         description:
             'Cloud Document Database as a Service. The Easiest Way to Deploy, Operate, and Scale MongoDB.',
         cta: {
             text: 'More with Atlas',
-            url: 'https://www.mongodb.com/developer/products/atlas',
+            url: '/developer/products/atlas',
         },
         links: [
             {
                 text: 'Data API',
-                url: 'https://www.mongodb.com/developer/products/atlas/data-api',
+                url: '/developer/products/atlas/data-api',
             },
             {
                 text: 'Full Text Search',
-                url: 'https://www.mongodb.com/developer/products/atlas/full-text-search',
+                url: 'developer/products/atlas/full-text-search',
             },
             {
                 text: 'GraphQL Integration',
-                url: 'https://www.mongodb.com/developer/technologies/graphQL',
+                url: '/developer/technologies/graphQL',
             },
         ],
     },
     {
         titleLink: {
-            text: 'Realm',
+            text: 'Realm (Mobile)',
             url: '/developer/products/realm',
         },
         href: '/developer/products/realm',
-        imageString: EThirdPartyLogoVariant.PYTHON_LOGOMARK,
+        imageString: productToLogo['Realm (Mobile)'],
         description: "Get great mobile apps in user's hands, faster.",
         cta: {
             text: 'More with Realm',
-            url: 'https://www.mongodb.com/products/realm',
+            url: '/developer/products/realm',
         },
         links: [
             {
                 text: 'Swift app development',
-                url: 'https://www.mongodb.com/developer/languages/swift',
+                url: 'developer/languages/swift',
             },
             {
                 text: 'Android app development',
-                url: 'https://www.mongodb.com/developer/technologies/android',
+                url: '/developer/technologies/android',
             },
             {
                 text: 'Realm Studio',
-                url: 'https://www.mongodb.com/developer/products/realm/studio',
+                url: '/developer/products/realm/studio',
             },
         ],
     },
@@ -252,7 +253,7 @@ export const cardsProductsData = [
             url: '/developer/products/mongodb',
         },
         href: '/developer/products/mongodb',
-        imageString: EThirdPartyLogoVariant.C,
+        imageString: productToLogo['MongoDB'],
         description: 'MongoDB - the original document-oriented NoSQL database.',
         cta: {
             text: 'More with MongoDB',
@@ -261,15 +262,15 @@ export const cardsProductsData = [
         links: [
             {
                 text: 'MongoDB Compass',
-                url: 'https://www.mongodb.com/products/compass',
+                url: '/developer/products/compass',
             },
             {
                 text: 'The MongoDB aggregation framework',
-                url: 'https://www.mongodb.com/developer/products/mongodb/aggregation-framework',
+                url: '/developer/products/mongodb/aggregation-framework',
             },
             {
                 text: 'Schema Design and Data Modeling',
-                url: 'https://www.mongodb.com/developer/products/mongodb/schema',
+                url: '/developer/products/mongodb/schema',
             },
         ],
     },
