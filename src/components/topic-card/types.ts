@@ -6,7 +6,7 @@ export interface ITopicCard {
 
 export interface TopicCardProps {
     title: string;
-    icon: JSX.Element;
+    icon: JSX.Element | null;
     href: string;
 }
 

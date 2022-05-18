@@ -6,6 +6,7 @@ envSecrets:
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
   STRAPI_URL: devcenter-secrets
+  DEVHUB_URL: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
