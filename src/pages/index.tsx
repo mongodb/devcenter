@@ -6,22 +6,56 @@ import {
     TypographyScale,
 } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
+import { useState } from 'react';
 import ShowcaseCard from '../components/showcase-card';
 import {
     cardsLanguagesData,
     cardsProductsData,
     cardsTechnologiesData,
 } from '../data/homepage';
+import { getURLPath } from '../utils/format-url-path';
+
+const HomepageSearch: React.FunctionComponent = () => {
+    // const router = useRouter();
+
+    // Do we want client-side routing?
+    const [query, setQuery] = useState('');
+    const handleSearch = () => {
+        if (window) {
+            const urlPath = getURLPath(
+                `/search?s=${encodeURIComponent(query)}`
+            );
+            if (urlPath) {
+                window.location.href = urlPath;
+            }
+        }
+        // router.push({ pathname: '/search', query });
+    };
+
+    return (
+        <div
+            sx={{
+                marginTop: 'inc90',
+                '> div': {
+                    maxWidth: '100%',
+                },
+                button: {
+                    display: ['none', 'none', 'none', 'block'],
+                },
+            }}
+        >
+            <TextInput
+                name="search"
+                label="Search all MongoDB Developer Content"
+                onChange={e => setQuery(e.target.value)}
+                buttonText="Search"
+                onButtonClick={handleSearch}
+            />
+        </div>
+    );
+};
 
 const Home = () => {
-    const myHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value);
-    };
-
-    const myHandleSearch = () => {
-        console.log('submit');
-    };
-
     return (
         <main
             sx={{
@@ -77,25 +111,7 @@ const Home = () => {
                         than 7 million developers. Build something {`{big}`}{' '}
                         with MongoDB.
                     </TypographyScale>
-                    <div
-                        sx={{
-                            marginTop: 'inc90',
-                            '> div': {
-                                maxWidth: '100%',
-                            },
-                            button: {
-                                display: ['none', 'none', 'none', 'block'],
-                            },
-                        }}
-                    >
-                        <TextInput
-                            name="search"
-                            label="Search all MongoDB Developer Content"
-                            onChange={e => myHandleChange(e)}
-                            buttonText="Search"
-                            onButtonClick={() => myHandleSearch()}
-                        />
-                    </div>
+                    <HomepageSearch />
                 </div>
             </GridLayout>
             <GridLayout>
