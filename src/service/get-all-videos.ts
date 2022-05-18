@@ -1,23 +1,23 @@
 import { STRAPI_CLIENT } from '../config/api-client';
 import { Video } from '../interfaces/video';
 import getAllVideosFromAPI from '../api-requests/get-all-videos';
+import { ContentTypeTag } from '../interfaces/tag-type-response';
 
 export const getAllVideos = async (): Promise<Video[]> => {
     const videos = await getAllVideosFromAPI(STRAPI_CLIENT);
-    videos.forEach(v => {
-        if (v.otherTags) {
-            v.otherTags.contentType = {
-                contentType: 'Video',
-                calculatedSlug: '/videos',
-            };
-        } else {
-            v.otherTags = {
-                contentType: {
-                    contentType: 'Video',
-                    calculatedSlug: '/videos',
-                },
-            };
-        }
+    const contentType: ContentTypeTag = {
+        contentType: 'Video',
+        calculatedSlug: '/videos',
+    };
+    const modifiedVideos = videos.map(item => ({
+        ...item,
+        otherTags: {
+            ...item.otherTags,
+            contentType: contentType,
+        },
+    }));
+
+    modifiedVideos.forEach(v => {
         if (v.l1Product) {
             v.otherTags.l1Product = v.l1Product;
         }
@@ -32,5 +32,5 @@ export const getAllVideos = async (): Promise<Video[]> => {
         }
     });
 
-    return videos;
+    return modifiedVideos;
 };

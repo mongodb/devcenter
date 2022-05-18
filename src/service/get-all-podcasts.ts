@@ -1,24 +1,22 @@
 import { STRAPI_CLIENT } from '../config/api-client';
 import { Podcast } from '../interfaces/podcast';
 import getAllPodcastsFromAPI from '../api-requests/get-all-podcasts';
+import { ContentTypeTag } from '../interfaces/tag-type-response';
 
 export const getAllPodcasts = async (): Promise<Podcast[]> => {
     const podcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
-    podcasts.forEach(p => {
-        if (p.otherTags) {
-            p.otherTags.contentType = {
-                contentType: 'Podcast',
-                calculatedSlug: '/podcasts',
-            };
-        } else {
-            p.otherTags = {
-                contentType: {
-                    contentType: 'Podcast',
-                    calculatedSlug: '/podcasts',
-                },
-            };
-        }
-
+    const contentType: ContentTypeTag = {
+        contentType: 'Podcast',
+        calculatedSlug: '/podcasts',
+    };
+    const modifiedPodcasts = podcasts.map(item => ({
+        ...item,
+        otherTags: {
+            ...item.otherTags,
+            contentType: contentType,
+        },
+    }));
+    modifiedPodcasts.forEach(p => {
         if (p.l1Product) {
             p.otherTags.l1Product = p.l1Product;
         }
@@ -33,5 +31,5 @@ export const getAllPodcasts = async (): Promise<Podcast[]> => {
         }
     });
 
-    return podcasts;
+    return modifiedPodcasts;
 };
