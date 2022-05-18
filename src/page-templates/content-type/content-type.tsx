@@ -285,7 +285,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     sx={{
                         justifyContent: 'center',
                     }}
-                    iconName={ESystemIconNames.HAMBURGER}
+                    iconName={ESystemIconNames.FILTER_HAMBURGER}
+                    iconStrokeWeight="medium"
                     hasIcon={true}
                     iconPosition="right"
                     onClick={() => setMobileFiltersOpen(true)}
