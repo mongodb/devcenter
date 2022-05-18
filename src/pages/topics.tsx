@@ -1,15 +1,9 @@
 import { GetStaticProps } from 'next';
-import { clientFactory } from '../utils/client-factory';
 import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { getURLPath } from '../utils/format-url-path';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 import { GridLayout, TypographyScale } from '@mdb/flora';
-
-interface Cta {
-    text: string;
-    url: string;
-}
 
 interface Topic {
     title: string;
@@ -22,18 +16,8 @@ interface TopicsProps {
     tagName: string;
     description: string;
     slug: string;
-    ctas: Cta[];
-    topics: Topic[];
+    topics: TopicsProps[];
 }
-
-const getProductsByName = (productsArray: string[], topics: TopicsProps[]) => {
-    const L1Products = topics.filter(
-        ({ category, tagName }) =>
-            category === 'L1Product' &&
-            productsArray.some(productName => productName === tagName)
-    );
-    return L1Products;
-};
 
 const ULStyles = {
     listStyleType: 'none',
@@ -57,10 +41,7 @@ const ULStyles = {
 };
 
 const Topic = ({ topics }: { topics: TopicsProps[] }) => {
-    const crumbs: Crumb[] = [
-        { text: 'MongoDB Developer Center', url: '/developer' },
-        { text: 'Developer Topics', url: '/developer/topics' },
-    ];
+    const crumbs: Crumb[] = [{ text: 'MongoDB Developer Center', url: '/' }];
 
     const getExpertiseLevels = topics.filter(
         ({ category }) => category === 'ExpertiseLevel'
@@ -72,17 +53,27 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
         ({ category }) => category === 'Technology'
     );
 
-    const L1productsArray = [
-        'Atlas',
-        'Compass',
-        'Connectors',
-        'MongoDB',
-        'Ops Manager',
-        'Realm (Mobile)',
-    ];
+    const l1Products = topics.filter(tag => tag.category === 'L1Product');
+    const l2Products = topics.filter(tag => tag.category === 'L2Product');
 
-    const [Atlas, Compass, Connectors, MongoDB, OpsManager, Realm] =
-        getProductsByName(L1productsArray, topics);
+    const products: TopicsProps[] = l1Products.map(prod => ({
+        ...prod,
+        topics: [],
+    }));
+    l2Products.forEach(l2 => {
+        const existingL1 = products.find(l1 => l2.slug.startsWith(l1.slug));
+        if (existingL1) {
+            if (
+                !existingL1.topics.find(
+                    existingL2 => existingL2.slug === l2.slug
+                )
+            ) {
+                existingL1.topics.push(l2);
+            }
+        } else {
+            throw Error('Did not find corresponding l1 for ' + l2.tagName);
+        }
+    });
 
     return (
         <>
@@ -170,14 +161,7 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
                     >
                         Products
                     </TypographyScale>
-                    {[
-                        Atlas,
-                        Compass,
-                        Connectors,
-                        MongoDB,
-                        OpsManager,
-                        Realm,
-                    ].map(({ slug, tagName, topics }) => (
+                    {products.map(({ slug, tagName, topics }) => (
                         <div key={tagName}>
                             <TypographyScale
                                 sx={{
@@ -196,11 +180,11 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
                             </TypographyScale>
                             {!!topics.length && (
                                 <ul sx={{ ...ULStyles, marginBottom: 'inc90' }}>
-                                    {topics?.map(({ title, href }) => (
-                                        <li key={title}>
+                                    {topics.map(({ tagName, slug }) => (
+                                        <li key={tagName}>
                                             <TypographyScale variant="body1">
-                                                <a href={getURLPath(href)}>
-                                                    {title}
+                                                <a href={getURLPath(slug)}>
+                                                    {tagName}
                                                 </a>
                                             </TypographyScale>
                                         </li>
@@ -218,7 +202,6 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
 export default Topic;
 
 export const getStaticProps: GetStaticProps = async ({}) => {
-    const client = clientFactory('ApolloREST', process.env.STRAPI_URL);
     const metaInfo = await getAllMetaInfo();
     return {
         props: { topics: metaInfo },
