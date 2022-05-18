@@ -1,16 +1,14 @@
 describe('index page', () => {
     beforeEach(() => {
-        cy.visit('/');
+        cy.visit('/developer');
     });
     it('should have a descriptive header.', () => {
         cy.get('h1').should('have.text', 'MongoDB Developer Center');
     });
 
-    it('should have an h2 for articles.', () => {
-        cy.get('h2').should('have.text', 'Articles');
-    });
-
-    it('should have a list of articles.', () => {
-        cy.get('ul').find('> li').should('have.length.above', 0);
+    it('should have secondary text.', () => {
+        cy.get('h2').contains(
+            'More than 100 open source projects, MongoDB tutorials, videos, and code examples. A global community of more than 7 million developers.'
+        );
     });
 });
