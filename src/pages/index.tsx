@@ -58,6 +58,11 @@ const HomepageSearch: React.FunctionComponent = () => {
                     display: ['none', 'none', 'none', 'block'],
                 },
             }}
+            onKeyPress={e => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            }}
         >
             <TextInput
                 name="search"
