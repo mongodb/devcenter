@@ -11,6 +11,7 @@ import CardSection, {
     FeaturedCardSection,
 } from '../../components/card-section';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
+import { sideNavStyles } from '../../components/tertiary-nav/styles';
 import { ContentItem } from '../../interfaces/content-item';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
 import {
@@ -46,17 +47,6 @@ interface TopicProps {
     variant: 'light' | 'medium' | 'heavy';
     tertiaryNavItems: TertiaryNavItem[];
 }
-
-const sideNavStyles = (rowCount: number) => ({
-    display: ['none', null, null, null, 'block'],
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
-    nav: {
-        position: 'static' as 'static',
-    },
-    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
-    // before render and update this accordingly.
-    gridRow: [null, null, null, null, `span ${rowCount}`],
-});
 
 const Topic: NextPage<TopicProps> = ({
     crumbs,

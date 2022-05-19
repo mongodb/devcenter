@@ -25,7 +25,10 @@ import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
 import { getAllContentTypes } from '../../../service/get-all-content-types';
 import { ContentTypeTag } from '../../../interfaces/tag-type-response';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
-import { sideNavTitleStyles } from '../../../components/tertiary-nav/styles';
+import {
+    sideNavTitleStyles,
+    sideNavStyles,
+} from '../../../components/tertiary-nav/styles';
 
 import { iconStyles } from '../../../components/topic-card/styles';
 import {
@@ -39,17 +42,6 @@ import { productToLogo } from '../../../utils/product-to-logo';
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
 };
-
-const sideNavStyles = (rowCount: number) => ({
-    display: ['none', null, null, null, 'block'],
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
-    nav: {
-        position: 'static' as 'static',
-    },
-    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
-    // before render and update this accordingly.
-    gridRow: [null, null, null, null, `span ${rowCount}`],
-});
 
 let pluralize = require('pluralize');
 
@@ -156,14 +148,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
-                        <a
-                            href={getURLPath(topicSlug)}
-                            sx={{
-                                '&:hover': {
-                                    textDecoration: 'underline',
-                                },
-                            }}
-                        >
+                        <a href={getURLPath(topicSlug)}>
                             <TypographyScale
                                 variant="heading6"
                                 sx={sideNavTitleStyles}
