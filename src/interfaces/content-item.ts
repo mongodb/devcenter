@@ -6,6 +6,7 @@ import { Author } from './author';
 import { PrimaryTag } from './primary-tag';
 import { CollectionType } from '../types/collection-type';
 import { CodeLevel } from '../types/tag-type';
+import { SEO } from './seo';
 
 export interface ContentItem {
     collectionType?: CollectionType;
@@ -27,4 +28,5 @@ export interface ContentItem {
     codeType?: CodeLevel;
     githubUrl?: string;
     liveSiteUrl?: string;
+    seo?: SEO;
 }

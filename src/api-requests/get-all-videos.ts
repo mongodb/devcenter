@@ -49,6 +49,25 @@ const getAllVideosFromAPI = async (
                         calculatedSlug: calculated_slug
                     }
                 }
+                seo: SEO {
+                    canonical_url
+                    meta_description
+                    og_description
+                    og_image {
+                        url
+                    }
+                    og_title
+                    og_type
+                    og_url
+                    twitter_card
+                    twitter_creator
+                    twitter_description
+                    twitter_image {
+                        url
+                    }
+                    twitter_site
+                    twitter_title
+                }
             }
         }
     `;
