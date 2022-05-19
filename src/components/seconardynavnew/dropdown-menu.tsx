@@ -195,7 +195,7 @@ const StylesDropDownWrapper = {
     backgroundColor: ['#fff', '#fff', '#fff', theme.colors.blue80],
     color: ['#000', '#000', '#000', theme.colors.text.inverse],
     left: [null, null, null, 0],
-    top: [null, null, null, '70px'],
+    top: [null, null, null, '66px', '70px', '70px'],
     position: ['initial', 'initial', 'initial', 'absolute'] as [
         'initial',
         'initial',

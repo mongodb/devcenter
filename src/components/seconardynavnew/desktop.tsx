@@ -19,7 +19,14 @@ const StyledSecondaryLinks = {
     margin: 0,
     overflow: 'visible',
     'li:not(:last-child)': {
-        marginRight: theme.space.inc90,
+        marginRight: [
+            null,
+            null,
+            null,
+            theme.space.inc50,
+            theme.space.inc50,
+            theme.space.inc90,
+        ],
     },
 };
 
