@@ -1,4 +1,5 @@
 import { NextPage, GetStaticProps } from 'next';
+import { NextSeo } from 'next-seo';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 import {
@@ -104,6 +105,10 @@ const TechnologiesPage: NextPage<TechnologiesPageProps> = ({
     technologies,
 }) => (
     <>
+        <NextSeo
+            title={'All Technologies | MongoDB'}
+            // description: '' #TODO
+        />
         <Hero crumbs={crumbs} name="All Technologies" />
         <div
             sx={{

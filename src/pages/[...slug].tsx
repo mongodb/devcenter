@@ -206,7 +206,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
     );
 
     const authorsToDisplay = parseAuthorsToAuthorLockup(authors);
-    const seoConfig: any = SEO ? SEO : {};
 
     const ratingSection = (
         <div
@@ -428,19 +427,32 @@ const ContentPage: NextPage<ContentPageProps> = ({
         </div>
     );
 
+    const og: any = {
+        url: seo?.og_url,
+        title: seo?.og_title,
+        type: seo?.og_type,
+        description: seo?.og_description,
+    };
+
+    og['images'] = seo?.og_image?.url ? [{ url: seo?.og_image?.url }] : [];
+
+    const twitter: any = {
+        handle: seo?.twitter_creator,
+        site: seo?.twitter_site,
+    };
+
     return (
         <>
             <NextSeo
-                title={seoConfig.title || 'Default title'}
-                description={seoConfig.metaDescription || 'Default description'}
-                {...(seoConfig.canonicalUrl && {
-                    canonical: seoConfig.canonicalUrl,
+                title={`${title} | MongoDB`}
+                {...(seo?.meta_description && {
+                    description: seo.meta_description,
                 })}
-                // openGraph={{
-                //     url: 'https://www.url.ie/a',
-                //     title: 'Open Graph Title',
-                //     description: 'Open Graph Description'
-                // }}
+                {...(seo?.canonical_url && {
+                    canonical: seo.canonical_url,
+                })}
+                openGraph={og}
+                twitter={twitter}
             />
             <div
                 sx={{

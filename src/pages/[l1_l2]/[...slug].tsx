@@ -1,4 +1,5 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import { GridLayout, SideNav, BrandedIcon } from '@mdb/flora';
 
@@ -43,6 +44,7 @@ interface TopicProps {
     relatedTopics: ITopicCard[];
     featured: ContentItem[];
     content: ContentItem[];
+    contentType: string;
     variant: 'light' | 'medium' | 'heavy';
     tertiaryNavItems: TertiaryNavItem[];
 }
@@ -68,6 +70,7 @@ const Topic: NextPage<TopicProps> = ({
     relatedTopics,
     featured,
     content,
+    contentType,
     variant,
     tertiaryNavItems,
 }) => {
@@ -116,8 +119,21 @@ const Topic: NextPage<TopicProps> = ({
 
     setURLPathForNavItems(tertiaryNavItems);
 
+    let pageTitle = `${name} | MongoDB`;
+    if (contentType === 'languages' || contentType === 'technologies') {
+        pageTitle = `${name} and MongoDB`;
+    } else if (contentType === 'products') {
+        pageTitle = `MongoDB ${name}`;
+    }
+
     return (
         <>
+            <NextSeo
+                title={pageTitle}
+                {...(description && {
+                    description: description,
+                })}
+            />
             <Hero
                 crumbs={crumbs}
                 name={name}
@@ -253,6 +269,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         name: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
         slug: slugString,
         content,
+        contentType: l1_l2,
         variant,
         tertiaryNavItems: tertiaryNavItems,
         featured: featured,

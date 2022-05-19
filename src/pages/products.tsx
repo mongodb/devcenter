@@ -1,4 +1,5 @@
 import { NextPage, GetStaticProps } from 'next';
+import { NextSeo } from 'next-seo';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 import {
@@ -146,6 +147,10 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
 };
 const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
     <>
+        <NextSeo
+            title={'All Products | MongoDB'}
+            // description: '' #TODO
+        />
         <Hero crumbs={crumbs} name="All Products" />
         <div
             sx={{

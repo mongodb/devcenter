@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { NextSeo } from 'next-seo';
 import type { NextPage, GetStaticProps } from 'next';
 import debounce from 'lodash.debounce';
 import NextImage from 'next/image';
@@ -454,6 +455,10 @@ const Search: NextPage<SearchProps> = ({
 
     return (
         <>
+            <NextSeo
+                title={'Search | MongoDB'}
+                // description: '' #TODO
+            />
             <Hero name="Search" />
             <div sx={pageWrapper}>
                 <GridLayout
