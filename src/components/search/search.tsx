@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import debounce from 'lodash.debounce';
 import NextImage from 'next/image';
 import useSWR from 'swr';
 
@@ -52,6 +53,17 @@ const Search: React.FunctionComponent<SearchProps> = ({
         setSearchString(event.target.value);
     };
 
+    const debouncedOnSearch = useMemo(
+        () => debounce(onSearch, 400), // Not sure what this value should be.
+        []
+    );
+    // Stop the invocation of the debounced function
+    // after unmounting
+    useEffect(() => {
+        return () => {
+            debouncedOnSearch.cancel();
+        };
+    }, []);
     const onCheckToggle = (checked: boolean, filter: string) => {
         if (checked) {
             setCodeLevelFilters([...codeLevelFilters, filter]);
@@ -114,7 +126,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     label="Search Content"
                     iconName={ESystemIconNames.SEARCH}
                     value={searchString}
-                    onChange={onSearch}
+                    onChange={debouncedOnSearch}
                 />
             </div>
             {contentType === 'Code Example' && (
