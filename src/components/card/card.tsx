@@ -108,9 +108,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                             tags={tags}
                             disappearOnMobile={true}
                             sx={{
-                                marginTop: ['medium', 'grid'].includes(variant)
-                                    ? 'inc30'
-                                    : 0,
+                                marginTop: variant === 'medium' ? 'inc30' : 0,
                             }}
                         />
                     )}
