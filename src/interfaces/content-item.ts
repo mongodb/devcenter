@@ -2,11 +2,11 @@ import { PillCategory } from '../types/pill-category';
 import { Series } from './series';
 import { Tag } from './tag';
 import { Image } from './image';
-import { SEO } from './seo';
 import { Author } from './author';
 import { PrimaryTag } from './primary-tag';
 import { CollectionType } from '../types/collection-type';
 import { CodeLevel } from '../types/tag-type';
+import { SEO } from './seo';
 
 export interface ContentItem {
     collectionType?: CollectionType;
@@ -28,5 +28,5 @@ export interface ContentItem {
     codeType?: CodeLevel;
     githubUrl?: string;
     liveSiteUrl?: string;
-    SEO?: SEO;
+    seo?: SEO;
 }

@@ -1,16 +1,23 @@
-type Nullable<T> = T | null;
+interface OGImage {
+    url: string;
+}
 
-export interface OG {
-    description: string;
-    image: string;
-    title: string;
-    type: string;
+interface TwitterImage {
     url: string;
 }
 
 export interface SEO {
-    title: string;
-    metaDescription: string;
-    canonicalUrl?: Nullable<string>;
-    og?: Nullable<OG>;
+    canonical_url?: string;
+    meta_description?: string;
+    og_description?: string;
+    og_image?: OGImage;
+    og_title?: string;
+    og_type?: string;
+    og_url?: string;
+    twitter_card?: string;
+    twitter_creator?: string;
+    twitter_description?: string;
+    twitter_image?: TwitterImage;
+    twitter_site?: string;
+    twitter_title?: string;
 }

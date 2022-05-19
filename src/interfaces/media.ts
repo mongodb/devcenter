@@ -18,5 +18,5 @@ export interface Media {
     technology?: TechnologyTag[];
     programmingLanguage?: ProgrammingLanguageTag[];
     otherTags: OtherTags;
-    SEO?: SEO;
+    seo: SEO;
 }

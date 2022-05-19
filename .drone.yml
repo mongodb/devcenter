@@ -19,6 +19,8 @@ steps:
         from_secret: NPM_EMAIL
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
     settings:
       create_repository: true
       enable_cache: true
@@ -29,6 +31,7 @@ steps:
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
+        - DEVHUB_URL
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
@@ -124,6 +127,8 @@ steps:
         from_secret: NPM_EMAIL
       STRAPI_URL:
         from_secret: STRAPI_URL_PROD
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
     settings:
       create_repository: true
       enable_cache: true
@@ -134,6 +139,7 @@ steps:
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
+        - DEVHUB_URL
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
@@ -227,6 +233,8 @@ steps:
         from_secret: NPM_EMAIL
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
     settings:
       create_repository: true
       enable_cache: true
@@ -237,6 +245,7 @@ steps:
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
+        - DEVHUB_URL
         - APP_RELEASE
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
@@ -296,6 +305,8 @@ steps:
         from_secret: NPM_EMAIL
       STRAPI_URL:
         from_secret: STRAPI_URL_PROD
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
     settings:
       create_repository: true
       enable_cache: true
@@ -306,6 +317,7 @@ steps:
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
+        - DEVHUB_URL
         - APP_RELEASE
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}

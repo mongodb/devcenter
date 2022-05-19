@@ -20,5 +20,5 @@ export interface Article {
     originalPublishDate: string;
     updateDate: string;
     otherTags: OtherTags[];
-    SEO?: SEO;
+    seo: SEO;
 }

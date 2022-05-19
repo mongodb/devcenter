@@ -178,7 +178,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         githubUrl,
         liveSiteUrl,
         codeType,
-        SEO,
+        seo,
     } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
 

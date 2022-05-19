@@ -1,7 +1,7 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
-
 import { ClientType, UnderlyingClient } from '../types/client-factory';
+import { RetryLink } from '@apollo/client/link/retry';
 
 /**
  * Returns a client instance used to make external requests.
@@ -16,8 +16,15 @@ const clientFactory = <T extends ClientType>(
         case 'ApolloREST':
             return new ApolloClient({
                 cache: new InMemoryCache(),
-                link: new RestLink({ uri }),
+
+                //link: new RestLink({ uri }),
+                link: ApolloLink.from([
+                    // ordering is important
+                    new RetryLink(),
+                    new RestLink({ uri }),
+                ]),
             }) as UnderlyingClient<T>;
+
         case 'ApolloGraphQL':
             return new ApolloClient({
                 cache: new InMemoryCache(),
