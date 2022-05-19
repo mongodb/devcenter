@@ -92,7 +92,9 @@ const Card: React.FunctionComponent<CardProps> = ({
                         size="small"
                     />
                     {secondaryTagElement}
-                    <TypographyScale variant="heading6">
+                    <TypographyScale
+                        variant={variant === 'large' ? 'heading5' : 'heading6'}
+                    >
                         {title}
                     </TypographyScale>
                     {hasDescription(variant, pillCategory) && (
