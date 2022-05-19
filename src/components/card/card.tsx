@@ -73,9 +73,17 @@ const Card: React.FunctionComponent<CardProps> = ({
                     hasThumbnail(variant, pillCategory) && (
                         <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
                             <Image
-                                alt={thumbnail.alt || 'alt not provided'}
+                                alt={
+                                    pillCategory === 'Podcast'
+                                        ? 'Play Button'
+                                        : thumbnail.alt || 'alt not provided'
+                                }
                                 loader={thumbnailLoader}
-                                src={thumbnail.url}
+                                src={
+                                    pillCategory === 'Podcast'
+                                        ? '/developer/play-button.svg'
+                                        : thumbnail.url
+                                }
                                 sx={{
                                     borderRadius: 'inc30',
                                     objectFit: 'cover',
