@@ -166,6 +166,7 @@ const Topic: NextPage<TopicProps> = ({
                     )}
                     <Search
                         title={`All ${name} Content`}
+                        placeholder={`Search ${name} Content`}
                         tagSlug={slug}
                         sx={{
                             gridColumn: [

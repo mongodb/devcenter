@@ -176,6 +176,9 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     )}
                     <Search
                         title={`All ${topicName} ${pluralize(contentType)}`}
+                        placeholder={`Search ${topicName} ${pluralize(
+                            contentType
+                        )}`}
                         tagSlug={topicSlug}
                         contentType={contentType}
                         resultsLayout="grid"
