@@ -36,6 +36,7 @@ export const getAllArticlesFromAPI = async (
                     image {
                         url
                     }
+                    calculated_slug
                 }
                 description
                 content
