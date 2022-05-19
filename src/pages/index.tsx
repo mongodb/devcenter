@@ -181,6 +181,7 @@ const Home = () => {
                             key={titleLink.text}
                         >
                             <ShowcaseCard
+                                defaultLink
                                 sx={{ backgroundColor: 'white' }}
                                 alignment="left"
                                 titleLink={titleLink}
@@ -343,14 +344,7 @@ const Home = () => {
                     </div>
 
                     {cardsProductsData?.map(
-                        ({
-                            titleLink,
-                            href,
-                            imageString,
-                            cta,
-                            links,
-                            description,
-                        }) => (
+                        ({ titleLink, imageString, links, description }) => (
                             <div
                                 sx={{
                                     gridColumn: [
@@ -363,7 +357,10 @@ const Home = () => {
                                 key={titleLink.text}
                             >
                                 <ShowcaseCard
-                                    sx={{ backgroundColor: 'white' }}
+                                    sx={{
+                                        backgroundColor: 'white',
+                                        minHeight: '500px',
+                                    }}
                                     alignment="left"
                                     description={description}
                                     titleLink={titleLink}
