@@ -2,8 +2,7 @@ import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { TertiaryNavItem } from '../../../components/tertiary-nav/types';
 import { getSideNav } from '../../../service/get-side-nav';
-import TertiaryNav from '../../../components/tertiary-nav';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     SideNav,
     GridLayout,
@@ -38,6 +37,9 @@ import {
 import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
 import { getAllContentItems } from '../../../service/get-all-content';
 import { productToLogo } from '../../../utils/product-to-logo';
+import { getBreadcrumbsFromSlug } from '../../../components/breadcrumbs/utils';
+import { Crumb } from '../../../components/breadcrumbs/types';
+import Breadcrumbs from '../../../components/breadcrumbs';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -46,7 +48,7 @@ const spanAllColumns = {
 let pluralize = require('pluralize');
 
 export interface TopicContentTypePageProps {
-    // crumbs: Crumb[]
+    crumbs: Crumb[];
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
     topicName: string;
@@ -71,7 +73,7 @@ const getSearchTitleLink = (
 };
 
 const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
-    // crumbs,
+    crumbs,
     contentType,
     tertiaryNavItems,
     topicName,
@@ -109,15 +111,21 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                 ...spanAllColumns,
             }}
         >
+            <Breadcrumbs
+                crumbs={crumbs}
+                sx={{
+                    marginBottom: 'inc30',
+                    gridColumn: ['span 6', null, 'span 8', 'span 12'],
+                }}
+            />
             <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
-                <Eyebrow sx={{ marginBottom: 'inc30' }}>{topicName}</Eyebrow>
                 <TypographyScale
                     variant="heading2"
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc40'],
                     }}
                 >
-                    {contentType}s
+                    {pluralize(contentType)}
                 </TypographyScale>
                 <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
@@ -257,6 +265,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const pathComponents = [l1_l2, topic].concat(slug);
 
+    const crumbs = await getBreadcrumbsFromSlug(pathComponents.join('/'));
+
     const contentTypeSlug = '/' + pathComponents[pathComponents.length - 1];
     const topicSlug =
         '/' + pathComponents.slice(0, pathComponents.length - 1).join('/');
@@ -308,7 +318,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
 
     const data = {
-        // crumbs,
+        crumbs,
         contentType: contentType,
         tertiaryNavItems: tertiaryNavItems,
         topicName: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
