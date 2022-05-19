@@ -5,7 +5,7 @@ import { GridLayout, SideNav, BrandedIcon } from '@mdb/flora';
 import Hero from '../../components/hero';
 import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
-import { ITopicCard } from '../../components/topic-card/types';
+import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
 import { CTA } from '../../components/hero/types';
 import CardSection, {
     FeaturedCardSection,
@@ -32,6 +32,8 @@ import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { productToLogo } from '../../utils/product-to-logo';
+import { getAllMetaInfo } from '../../service/get-all-meta-info';
+import { topicWithIcon } from '../../page-templates/content-type/technologies-section';
 let pluralize = require('pluralize');
 
 interface TopicProps {
@@ -41,7 +43,7 @@ interface TopicProps {
     description: string;
     ctas: CTA[];
     topics: ITopicCard[];
-    relatedTopics: ITopicCard[];
+    relatedTopics: TopicCardProps[];
     featured: ContentItem[];
     content: ContentItem[];
     variant: 'light' | 'medium' | 'heavy';
@@ -102,7 +104,7 @@ const Topic: NextPage<TopicProps> = ({
 
     const topicItems = topics.map(topicToItem);
 
-    const relatedTopicItems = relatedTopics.map(topicToItem);
+    const realtedTopicsWithIcons = relatedTopics.map(topicWithIcon);
 
     setURLPathForNavItems(tertiaryNavItems);
 
@@ -181,7 +183,7 @@ const Topic: NextPage<TopicProps> = ({
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer
-                            topics={relatedTopicItems}
+                            topics={realtedTopicsWithIcons}
                             title="Related Topics"
                         />
                     )}
@@ -239,6 +241,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const crumbs = await getBreadcrumbsFromSlug(slugString);
 
+    let relatedTopics: TopicCardProps[] = [];
+    if (variant === 'light') {
+        // Per Product, we are just putting all technologies as related.
+        const allTags = await getAllMetaInfo();
+        const related = allTags.filter(
+            ({ category }) => category === 'Technology'
+        );
+        relatedTopics = related.map(({ tagName, slug }) => ({
+            title: tagName,
+            href: slug,
+            icon: null,
+        }));
+        relatedTopics.slice(0, 12);
+    }
+
     const data = {
         crumbs,
         name: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
@@ -253,7 +270,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
         topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
         //TODO - only for light stuff not sure of the logic
-        relatedTopics: [],
+        relatedTopics,
     };
 
     return { props: data };
