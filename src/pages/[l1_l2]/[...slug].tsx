@@ -123,6 +123,9 @@ const Topic: NextPage<TopicProps> = ({
     if (contentType === 'languages' || contentType === 'technologies') {
         pageTitle = `${name} and MongoDB`;
     } else if (contentType === 'products') {
+        if (name.toLowerCase() === 'mongodb') {
+            pageTitle = `Products | MongoDB`;
+        }
         pageTitle = `MongoDB ${name}`;
     }
 
