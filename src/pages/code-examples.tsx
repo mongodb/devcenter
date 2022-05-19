@@ -14,7 +14,7 @@ const CodeExamplesPage: NextPage<ContentTypePageProps> = props => {
     return (
         <>
             <NextSeo
-                title={'Articles | MongoDB'}
+                title={'Code-examples | MongoDB'}
                 {...(props.description && {
                     description: props.description,
                 })}

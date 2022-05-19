@@ -78,10 +78,7 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
 
     return (
         <>
-            <NextSeo
-                title={'All Topics | MongoDB'}
-                // description: '' #TODO
-            />
+            <NextSeo title={'All Topics | MongoDB'} />
             <Hero crumbs={crumbs} name="All Topics" />
             <GridLayout
                 sx={{

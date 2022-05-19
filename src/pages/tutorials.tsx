@@ -13,10 +13,7 @@ import { getAllContentItems } from '../service/get-all-content';
 const TutorialsPage: NextPage<ContentTypePageProps> = props => {
     return (
         <>
-            <NextSeo
-                title={'Tutorials | MongoDB'}
-                // description: '' #TODO
-            />
+            <NextSeo title={'Tutorials | MongoDB'} />
             <ContentTypePage {...props} />
         </>
     );

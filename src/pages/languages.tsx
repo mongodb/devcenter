@@ -119,10 +119,7 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({
     featured,
 }) => (
     <>
-        <NextSeo
-            title={'All Languages | MongoDB'}
-            // description: '' #TODO
-        />
+        <NextSeo title={'All Languages | MongoDB'} />
         <Hero crumbs={crumbs} name="All Languages" />
         <div
             sx={{

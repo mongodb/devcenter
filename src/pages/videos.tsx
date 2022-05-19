@@ -10,10 +10,7 @@ import { getAllContentItems } from '../service/get-all-content';
 const VideosPage: NextPage<ContentTypePageProps> = props => {
     return (
         <>
-            <NextSeo
-                title={'Videos | MongoDB'}
-                // description: '' #TODO
-            />
+            <NextSeo title={'Videos | MongoDB'} />
             <ContentTypePage {...props} />
         </>
     );

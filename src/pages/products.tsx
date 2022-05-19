@@ -147,10 +147,7 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
 };
 const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
     <>
-        <NextSeo
-            title={'All Products | MongoDB'}
-            // description: '' #TODO
-        />
+        <NextSeo title={'All Products | MongoDB'} />
         <Hero crumbs={crumbs} name="All Products" />
         <div
             sx={{

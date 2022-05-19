@@ -455,10 +455,7 @@ const Search: NextPage<SearchProps> = ({
 
     return (
         <>
-            <NextSeo
-                title={'Search | MongoDB'}
-                // description: '' #TODO
-            />
+            <NextSeo title={'Search | MongoDB'} />
             <Hero name="Search" />
             <div sx={pageWrapper}>
                 <GridLayout

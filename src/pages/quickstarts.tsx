@@ -10,10 +10,7 @@ import { getAllContentItems } from '../service/get-all-content';
 const QuickstartsPage: NextPage<ContentTypePageProps> = props => {
     return (
         <>
-            <NextSeo
-                title={'Quickstarts | MongoDB'}
-                // description: '' #TODO
-            />
+            <NextSeo title={'Quickstarts | MongoDB'} />
             <ContentTypePage {...props} />
         </>
     );

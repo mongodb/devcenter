@@ -105,10 +105,7 @@ const TechnologiesPage: NextPage<TechnologiesPageProps> = ({
     technologies,
 }) => (
     <>
-        <NextSeo
-            title={'All Technologies | MongoDB'}
-            // description: '' #TODO
-        />
+        <NextSeo title={'All Technologies | MongoDB'} />
         <Hero crumbs={crumbs} name="All Technologies" />
         <div
             sx={{
