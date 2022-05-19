@@ -121,14 +121,16 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                 </TypographyScale>
                 <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
-            <div sx={CTAContainerStyles}>
-                <Button
-                    onClick={() => setRequestContentModalStage('text')}
-                    variant="secondary"
-                >
-                    {requestButtonText}
-                </Button>
-            </div>
+            {contentType !== 'News & Announcements' && (
+                <div sx={CTAContainerStyles}>
+                    <Button
+                        onClick={() => setRequestContentModalStage('text')}
+                        variant="secondary"
+                    >
+                        {requestButtonText}
+                    </Button>
+                </div>
+            )}
         </GridLayout>
     );
 
@@ -190,11 +192,13 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     />
                 </GridLayout>
             </div>
-            <RequestContentModal
-                setModalStage={setRequestContentModalStage}
-                modalStage={requestContentModalStage}
-                contentCategory={contentType}
-            />
+            {contentType !== 'News & Announcements' && (
+                <RequestContentModal
+                    setModalStage={setRequestContentModalStage}
+                    modalStage={requestContentModalStage}
+                    contentCategory={contentType}
+                />
+            )}
         </>
     );
 };
