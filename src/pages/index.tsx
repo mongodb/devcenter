@@ -191,7 +191,6 @@ const Home = () => {
                                         imageWidth="150px"
                                     />
                                 }
-                                cta={cta}
                                 links={links}
                             />
                         </div>

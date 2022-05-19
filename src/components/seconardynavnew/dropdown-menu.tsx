@@ -111,21 +111,10 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                         href={getURLPath(slug)}
                                         sx={{
                                             ...aLinkStyles,
-                                            fontWeight: [
-                                                null,
-                                                null,
-                                                null,
-                                                '700',
-                                                '700',
-                                            ],
                                         }}
                                         key={name}
                                     >
-                                        {l1Product ? (
-                                            <strong>{name}</strong>
-                                        ) : (
-                                            name
-                                        )}
+                                        {l1Product ? { name } : name}
                                     </a>
                                     {dropDownItems && (
                                         <ul>
