@@ -1,4 +1,5 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import { TertiaryNavItem } from '../../../components/tertiary-nav/types';
 import { getSideNav } from '../../../service/get-side-nav';
@@ -93,6 +94,10 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
 
+    const contentTypeTitle =
+        contentTypeSlug.charAt(1).toUpperCase() + contentTypeSlug.slice(2);
+    const pageTitle = `${topicName} ${contentTypeTitle} | MongoDB`;
+
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
@@ -142,6 +147,12 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
     return (
         <>
+            <NextSeo
+                title={pageTitle}
+                {...(description && {
+                    description: description,
+                })}
+            />
             <TertiaryNav items={tertiaryNavItems} topic={topicName} />
             <div
                 sx={{
