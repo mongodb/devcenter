@@ -134,7 +134,6 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
     return (
         <>
-            <TertiaryNav items={tertiaryNavItems} topic={topicName} />
             <div
                 sx={{
                     paddingBottom: 'inc160',
