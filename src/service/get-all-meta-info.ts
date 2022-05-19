@@ -10,28 +10,53 @@ import {
 } from '../api-requests/get-all-meta-info';
 import { CTA } from '../components/hero/types';
 import { ITopicCard } from '../components/topic-card/types';
+import { getDistinctTags } from './get-distinct-tags';
+import { TagType } from '../types/tag-type';
 
 export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
-    const l2MetaInfoResponse = await getAllL2ProductsMetaInfo(STRAPI_CLIENT);
+    const existingTags = await getDistinctTags();
+    // We have no use for tags that have no content associated with them
+    const getExisting = (tags: MetaInfoResponse[], category: TagType) =>
+        tags.filter(tag =>
+            existingTags.find(
+                ({ slug, type }) => slug === tag.slug && type === category
+            )
+        );
+    const l2MetaInfoResponse = getExisting(
+        await getAllL2ProductsMetaInfo(STRAPI_CLIENT),
+        'L2Product'
+    );
 
     const l1ProductsMetaInfo = parseMetaInfoResponseForL1(
-        await getAllL1ProductsMetaInfo(STRAPI_CLIENT),
+        getExisting(await getAllL1ProductsMetaInfo(STRAPI_CLIENT), 'L1Product'),
         l2MetaInfoResponse
     );
 
     const l2ProductsMetaInfo = parseMetaInfoResponse(l2MetaInfoResponse);
 
     const programmingLanguagesMetaInfo = parseMetaInfoResponse(
-        await getAllProgrammingLanguagesMetaInfo(STRAPI_CLIENT)
+        getExisting(
+            await getAllProgrammingLanguagesMetaInfo(STRAPI_CLIENT),
+            'ProgrammingLanguage'
+        )
     );
     const technologiesMetaInfo = parseMetaInfoResponse(
-        await getAllTechnologiesMetaInfo(STRAPI_CLIENT)
+        getExisting(
+            await getAllTechnologiesMetaInfo(STRAPI_CLIENT),
+            'Technology'
+        )
     );
     const expertiseLevelsMetaInfo = parseMetaInfoResponse(
-        await getAllExpertiseLevelsMetaInfo(STRAPI_CLIENT)
+        getExisting(
+            await getAllExpertiseLevelsMetaInfo(STRAPI_CLIENT),
+            'ExpertiseLevel'
+        )
     );
     const contentTypesMetaInfo = parseMetaInfoResponse(
-        await getAllContentTypesMetaInfo(STRAPI_CLIENT)
+        getExisting(
+            await getAllContentTypesMetaInfo(STRAPI_CLIENT),
+            'ContentType'
+        )
     );
     return l1ProductsMetaInfo
         .concat(l2ProductsMetaInfo)
