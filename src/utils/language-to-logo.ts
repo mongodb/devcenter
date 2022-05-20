@@ -13,7 +13,7 @@ export const languageToLogo: { [key: string]: EThirdPartyLogoVariant } = {
     Kotlin: EThirdPartyLogoVariant.KOTLIN,
     PHP: EThirdPartyLogoVariant.PHP,
     Python: EThirdPartyLogoVariant.PYTHON_LOGOMARK,
-    Ruby: EThirdPartyLogoVariant.RUBY,
+    Ruby: EThirdPartyLogoVariant.RUBY_LOGOMARK,
     Rust: EThirdPartyLogoVariant.RUST,
     Scala: EThirdPartyLogoVariant.SCALA,
     Swift: EThirdPartyLogoVariant.SWIFT,
