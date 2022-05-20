@@ -26,6 +26,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
     title,
     resultsLayout = 'list',
     titleLink,
+    placeholder,
 }) => {
     const [searchString, setSearchString] = useState('');
     const [resultsToShow, setResultsToShow] = useState(10);
@@ -123,7 +124,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
             <div sx={{ ...searchBoxStyles, ...extraSearchBoxStyles }}>
                 <TextInput
                     name="search-text-input"
-                    label="Search Content"
+                    label={placeholder}
                     iconName={ESystemIconNames.SEARCH}
                     value={searchString}
                     onChange={debouncedOnSearch}

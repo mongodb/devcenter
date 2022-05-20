@@ -23,7 +23,12 @@ const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
                 <div key={text} sx={breadcrumbStyles}>
                     <Link navItem={true} href={getURLPath(url)} sx={linkStyles}>
                         {/* The negative margin is to offset the added 3px from the letter-spacing on the last character that Flora adds.*/}
-                        <Eyebrow sx={{ marginRight: '-3px' }}>{text}</Eyebrow>
+                        <Eyebrow
+                            customElement="span"
+                            sx={{ marginRight: '-3px' }}
+                        >
+                            {text}
+                        </Eyebrow>
                     </Link>
                     {i < crumbLength - 1 && (
                         <SystemIcon
