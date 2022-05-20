@@ -178,7 +178,11 @@ const Topic: NextPage<TopicProps> = ({
                                             title={`${pluralize(
                                                 contentRow[0].category
                                             )}`}
-                                            href={contentTypeSlug}
+                                            href={
+                                                contentType == 'Podcast'
+                                                    ? 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624'
+                                                    : contentTypeSlug
+                                            }
                                             direction={direction}
                                         />
                                     );

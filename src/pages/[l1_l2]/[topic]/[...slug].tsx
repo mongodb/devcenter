@@ -67,6 +67,12 @@ const getSearchTitleLink = (
     if (contentType === 'News & Announcements') {
         return undefined;
     }
+    if (contentType === 'Podcast') {
+        return {
+            href: 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624',
+            text: 'All Podcasts',
+        };
+    }
     return {
         href: contentTypeAggregateSlug,
         text: `All ${pluralize(contentType)}`,
