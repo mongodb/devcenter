@@ -1,4 +1,5 @@
 import type { NextPage, GetStaticProps } from 'next';
+import { NextSeo } from 'next-seo';
 import ContentTypePage from '../page-templates/content-type';
 import { PillCategory } from '../types/pill-category';
 
@@ -7,7 +8,12 @@ import { getFilters } from '../page-templates/content-type/utils';
 import { getAllContentItems } from '../service/get-all-content';
 
 const VideosPage: NextPage<ContentTypePageProps> = props => {
-    return <ContentTypePage {...props} />;
+    return (
+        <>
+            <NextSeo title={'Videos | MongoDB'} />
+            <ContentTypePage {...props} />
+        </>
+    );
 };
 
 export const getStaticProps: GetStaticProps = async () => {

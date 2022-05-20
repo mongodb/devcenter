@@ -62,6 +62,7 @@ export const mapPodcastsToContentItems = (
             tags: flattenTags([p.otherTags]),
             title: p.title,
             featured: featured.includes(p.title),
+            seo: p.seo,
         };
         if (p.description) {
             item.description = p.description;
@@ -92,6 +93,7 @@ export const mapVideosToContentItems = (
             tags: flattenTags([v.otherTags]),
             title: v.title,
             featured: featured.includes(v.title),
+            seo: v.seo,
         };
         if (v.description) {
             item.description = v.description;
@@ -139,6 +141,7 @@ export const mapArticlesToContentItems = (
             codeType: a.otherTags[0].codeType,
             githubUrl: a.otherTags[0].githubUrl,
             liveSiteUrl: a.otherTags[0].liveSiteUrl,
+            seo: a.seo,
         };
         if (a.image) {
             item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };

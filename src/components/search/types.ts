@@ -30,6 +30,7 @@ export interface SearchProps {
         text: string;
         href: string;
     };
+    placeholder: string;
 }
 
 export interface SearchItem {

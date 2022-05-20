@@ -13,7 +13,7 @@ export const hasThumbnail = (variant: CardVariant, category: PillCategory) =>
     !((variant === 'small' || variant === 'medium') && category === 'Tutorial');
 
 export const hasTags = (variant: CardVariant) =>
-    variant === 'large' || variant === 'list';
+    ['large', 'list', 'medium'].includes(variant);
 
 export const hasDescription = (variant: CardVariant, category: PillCategory) =>
     ['large', 'list'].includes(variant) ||

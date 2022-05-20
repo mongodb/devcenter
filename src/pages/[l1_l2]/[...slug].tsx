@@ -1,16 +1,18 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import { GridLayout, SideNav, BrandedIcon } from '@mdb/flora';
 
 import Hero from '../../components/hero';
 import Search from '../../components/search';
 import { TopicCardsContainer } from '../../components/topic-card';
-import { ITopicCard } from '../../components/topic-card/types';
+import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
 import { CTA } from '../../components/hero/types';
 import CardSection, {
     FeaturedCardSection,
 } from '../../components/card-section';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
+import { sideNavStyles } from '../../components/tertiary-nav/styles';
 import { ContentItem } from '../../interfaces/content-item';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
 import {
@@ -31,6 +33,8 @@ import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { productToLogo } from '../../utils/product-to-logo';
+import { getAllMetaInfo } from '../../service/get-all-meta-info';
+import { topicWithIcon } from '../../page-templates/content-type/technologies-section';
 let pluralize = require('pluralize');
 
 interface TopicProps {
@@ -40,23 +44,13 @@ interface TopicProps {
     description: string;
     ctas: CTA[];
     topics: ITopicCard[];
-    relatedTopics: ITopicCard[];
+    relatedTopics: TopicCardProps[];
     featured: ContentItem[];
     content: ContentItem[];
+    contentType: string;
     variant: 'light' | 'medium' | 'heavy';
     tertiaryNavItems: TertiaryNavItem[];
 }
-
-const sideNavStyles = (rowCount: number) => ({
-    display: ['none', null, null, null, 'block'],
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
-    nav: {
-        position: 'static' as 'static',
-    },
-    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
-    // before render and update this accordingly.
-    gridRow: [null, null, null, null, `span ${rowCount}`],
-});
 
 const Topic: NextPage<TopicProps> = ({
     crumbs,
@@ -68,6 +62,7 @@ const Topic: NextPage<TopicProps> = ({
     relatedTopics,
     featured,
     content,
+    contentType,
     variant,
     tertiaryNavItems,
 }) => {
@@ -112,12 +107,28 @@ const Topic: NextPage<TopicProps> = ({
 
     const topicItems = topics.map(topicToItem);
 
-    const relatedTopicItems = relatedTopics.map(topicToItem);
+    const realtedTopicsWithIcons = relatedTopics.map(topicWithIcon);
 
     setURLPathForNavItems(tertiaryNavItems);
 
+    let pageTitle = `${name} | MongoDB`;
+    if (contentType === 'languages' || contentType === 'technologies') {
+        pageTitle = `${name} and MongoDB`;
+    } else if (contentType === 'products') {
+        if (name.toLowerCase() === 'mongodb') {
+            pageTitle = `Products | MongoDB`;
+        }
+        pageTitle = `MongoDB ${name}`;
+    }
+
     return (
         <>
+            <NextSeo
+                title={pageTitle}
+                {...(description && {
+                    description: description,
+                })}
+            />
             <Hero
                 crumbs={crumbs}
                 name={name}
@@ -176,6 +187,7 @@ const Topic: NextPage<TopicProps> = ({
                     )}
                     <Search
                         title={`All ${name} Content`}
+                        placeholder={`Search ${name} Content`}
                         tagSlug={slug}
                         sx={{
                             gridColumn: [
@@ -190,7 +202,7 @@ const Topic: NextPage<TopicProps> = ({
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer
-                            topics={relatedTopicItems}
+                            topics={realtedTopicsWithIcons}
                             title="Related Topics"
                         />
                     )}
@@ -248,11 +260,27 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const crumbs = await getBreadcrumbsFromSlug(slugString);
 
+    let relatedTopics: TopicCardProps[] = [];
+    if (variant === 'light') {
+        // Per Product, we are just putting all technologies as related.
+        const allTags = await getAllMetaInfo();
+        const related = allTags.filter(
+            ({ category }) => category === 'Technology'
+        );
+        relatedTopics = related.map(({ tagName, slug }) => ({
+            title: tagName,
+            href: slug,
+            icon: null,
+        }));
+        relatedTopics.slice(0, 12);
+    }
+
     const data = {
         crumbs,
         name: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
         slug: slugString,
         content,
+        contentType: l1_l2,
         variant,
         tertiaryNavItems: tertiaryNavItems,
         featured: featured,
@@ -262,7 +290,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
         topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
         //TODO - only for light stuff not sure of the logic
-        relatedTopics: [],
+        relatedTopics,
     };
 
     return { props: data };

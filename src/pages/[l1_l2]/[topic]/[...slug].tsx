@@ -1,9 +1,9 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import { TertiaryNavItem } from '../../../components/tertiary-nav/types';
 import { getSideNav } from '../../../service/get-side-nav';
-import TertiaryNav from '../../../components/tertiary-nav';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     SideNav,
     GridLayout,
@@ -25,7 +25,10 @@ import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
 import { getAllContentTypes } from '../../../service/get-all-content-types';
 import { ContentTypeTag } from '../../../interfaces/tag-type-response';
 import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
-import { sideNavTitleStyles } from '../../../components/tertiary-nav/styles';
+import {
+    sideNavTitleStyles,
+    sideNavStyles,
+} from '../../../components/tertiary-nav/styles';
 
 import { iconStyles } from '../../../components/topic-card/styles';
 import {
@@ -35,26 +38,18 @@ import {
 import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
 import { getAllContentItems } from '../../../service/get-all-content';
 import { productToLogo } from '../../../utils/product-to-logo';
+import { getBreadcrumbsFromSlug } from '../../../components/breadcrumbs/utils';
+import { Crumb } from '../../../components/breadcrumbs/types';
+import Breadcrumbs from '../../../components/breadcrumbs';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
 };
 
-const sideNavStyles = (rowCount: number) => ({
-    display: ['none', null, null, null, 'block'],
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
-    nav: {
-        position: 'static' as 'static',
-    },
-    // We have a variable amount of rows, but should have at least 3. If this is problematic, maybe we calculate the rows
-    // before render and update this accordingly.
-    gridRow: [null, null, null, null, `span ${rowCount}`],
-});
-
 let pluralize = require('pluralize');
 
 export interface TopicContentTypePageProps {
-    // crumbs: Crumb[]
+    crumbs: Crumb[];
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
     topicName: string;
@@ -79,7 +74,7 @@ const getSearchTitleLink = (
 };
 
 const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
-    // crumbs,
+    crumbs,
     contentType,
     tertiaryNavItems,
     topicName,
@@ -92,6 +87,9 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
+
+    const contentTypeTitle = contentType + contentTypeSlug.slice(2);
+    const pageTitle = `${topicName} ${contentTypeTitle} | MongoDB`;
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
@@ -117,32 +115,45 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                 ...spanAllColumns,
             }}
         >
+            <Breadcrumbs
+                crumbs={crumbs}
+                sx={{
+                    marginBottom: 'inc30',
+                    gridColumn: ['span 6', null, 'span 8', 'span 12'],
+                }}
+            />
             <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
-                <Eyebrow sx={{ marginBottom: 'inc30' }}>{topicName}</Eyebrow>
                 <TypographyScale
                     variant="heading2"
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc40'],
                     }}
                 >
-                    {contentType}s
+                    {pluralize(contentType)}
                 </TypographyScale>
                 <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
-            <div sx={CTAContainerStyles}>
-                <Button
-                    onClick={() => setRequestContentModalStage('text')}
-                    variant="secondary"
-                >
-                    {requestButtonText}
-                </Button>
-            </div>
+            {contentType !== 'News & Announcements' && (
+                <div sx={CTAContainerStyles}>
+                    <Button
+                        onClick={() => setRequestContentModalStage('text')}
+                        variant="secondary"
+                    >
+                        {requestButtonText}
+                    </Button>
+                </div>
+            )}
         </GridLayout>
     );
 
     return (
         <>
-            <TertiaryNav items={tertiaryNavItems} topic={topicName} />
+            <NextSeo
+                title={pageTitle}
+                {...(description && {
+                    description: description,
+                })}
+            />
             <div
                 sx={{
                     paddingBottom: 'inc160',
@@ -156,14 +167,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
-                        <a
-                            href={getURLPath(topicSlug)}
-                            sx={{
-                                '&:hover': {
-                                    textDecoration: 'underline',
-                                },
-                            }}
-                        >
+                        <a href={getURLPath(topicSlug)}>
                             <TypographyScale
                                 variant="heading6"
                                 sx={sideNavTitleStyles}
@@ -192,6 +196,9 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     )}
                     <Search
                         title={`All ${topicName} ${pluralize(contentType)}`}
+                        placeholder={`Search ${topicName} ${pluralize(
+                            contentType
+                        )}`}
                         tagSlug={topicSlug}
                         contentType={contentType}
                         resultsLayout="grid"
@@ -203,11 +210,13 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                     />
                 </GridLayout>
             </div>
-            <RequestContentModal
-                setModalStage={setRequestContentModalStage}
-                modalStage={requestContentModalStage}
-                contentCategory={contentType}
-            />
+            {contentType !== 'News & Announcements' && (
+                <RequestContentModal
+                    setModalStage={setRequestContentModalStage}
+                    modalStage={requestContentModalStage}
+                    contentCategory={contentType}
+                />
+            )}
         </>
     );
 };
@@ -266,6 +275,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const pathComponents = [l1_l2, topic].concat(slug);
 
+    const crumbs = await getBreadcrumbsFromSlug(pathComponents.join('/'));
+
     const contentTypeSlug = '/' + pathComponents[pathComponents.length - 1];
     const topicSlug =
         '/' + pathComponents.slice(0, pathComponents.length - 1).join('/');
@@ -317,7 +328,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
 
     const data = {
-        // crumbs,
+        crumbs,
         contentType: contentType,
         tertiaryNavItems: tertiaryNavItems,
         topicName: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
