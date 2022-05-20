@@ -158,7 +158,7 @@ const Home = () => {
                         }}
                     >
                         <Link
-                            href="/developer/languages"
+                            href={getURLPath('/languages')}
                             linkIcon="arrow"
                             linkIconDisableExpand={true}
                         >
@@ -206,7 +206,7 @@ const Home = () => {
                     }}
                 >
                     <Link
-                        href="/developer/languages"
+                        href={getURLPath('/languages')}
                         linkIcon="arrow"
                         linkIconDisableExpand={true}
                     >
@@ -263,7 +263,7 @@ const Home = () => {
                             }}
                         >
                             <Link
-                                href="/developer/technologies"
+                                href={getURLPath('/technologies')}
                                 linkIcon="arrow"
                                 linkIconDisableExpand={true}
                             >
@@ -302,7 +302,7 @@ const Home = () => {
                         }}
                     >
                         <Link
-                            href="/developer/technologies"
+                            href={getURLPath('/technologies')}
                             linkIcon="arrow"
                             linkIconDisableExpand={true}
                         >
@@ -335,7 +335,7 @@ const Home = () => {
                             }}
                         >
                             <Link
-                                href="/developer/languages"
+                                href={getURLPath('/products')}
                                 linkIcon="arrow"
                                 linkIconDisableExpand={true}
                             >
@@ -387,7 +387,7 @@ const Home = () => {
                         }}
                     >
                         <Link
-                            href="/developer/languages"
+                            href={getURLPath('/products')}
                             linkIcon="arrow"
                             linkIconDisableExpand={true}
                         >
