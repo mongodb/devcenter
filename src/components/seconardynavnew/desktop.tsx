@@ -23,7 +23,7 @@ const StyledSecondaryLinks = {
             null,
             null,
             null,
-            theme.space.inc50,
+            theme.space.inc40,
             theme.space.inc50,
             theme.space.inc90,
         ],
@@ -113,7 +113,19 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                 <div sx={linkWrapperStyles}>
                     <FloraLink
                         href={getURLPath('/')}
-                        sx={MainLinkStyles(activePath === '/' ? true : false)}
+                        sx={{
+                            ...MainLinkStyles(
+                                activePath === '/' ? true : false
+                            ),
+                            marginRight: [
+                                null,
+                                null,
+                                null,
+                                'inc40',
+                                'inc70',
+                                'inc90',
+                            ],
+                        }}
                     >
                         Developer Center
                     </FloraLink>
