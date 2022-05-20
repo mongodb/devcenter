@@ -23,40 +23,32 @@ const StyledSecondaryLinks = {
     },
 };
 
+const hoverLinkStyles = (isActive: boolean) => ({
+    borderBottomWidth: 2,
+    borderBottomStyle: 'solid',
+    color: theme.colors.text.default,
+    borderBottomColor: isActive ? 'green40' : 'transparent',
+    ':hover': {
+        borderBottomColor: 'green40',
+    },
+});
+
 const MainLinkStyles = (isActive: boolean) => ({
     float: 'left' as 'left',
     marginRight: 'inc90',
     fontSize: 'inc30',
     fontWeight: 500,
 
-    'span.textlink-default-text-class': {
-        color: theme.colors.text.default,
-        ':hover': {
-            borderBottom: `2px solid ${theme.colors.green40}`,
-        },
-    },
-    borderBottom: `${isActive ? `2px solid ${theme.colors.green40}` : 'none'}`,
+    'span.textlink-default-text-class': hoverLinkStyles(isActive),
 });
 
 const FloraLinkStyles = (isActive: boolean) => ({
     display: 'inline-block',
     'span.textlink-default-text-class': {
-        borderBottom: `${
-            isActive ? `2px solid ${theme.colors.green40}` : 'none'
-        }`,
-        color: theme.colors.text.default,
-        fontSize: [
-            theme.fontSizes.inc20,
-            theme.fontSizes.inc20,
-            theme.fontSizes.inc20,
-            theme.fontSizes.inc10,
-            theme.fontSizes.inc20,
-        ],
-        fontFamily: theme.fonts.body,
+        ...hoverLinkStyles(isActive),
+        fontSize: [null, null, 'inc10', 'inc20'],
+        fontFamily: 'body',
         fontWeight: '300',
-        '&:hover': {
-            borderBottom: `2px solid ${theme.colors.green40}`,
-        },
     },
 });
 
