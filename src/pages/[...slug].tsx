@@ -561,7 +561,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const topicSlug = sideNavFilterSlug;
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
 
-    const relatedContent = getRelatedContent(sideNavFilterSlug, contents);
+    const relatedContent = getRelatedContent(
+        sideNavFilterSlug,
+        contents,
+        contentItem.slug
+    );
 
     const data = {
         crumbs,

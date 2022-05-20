@@ -129,14 +129,16 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                 </TypographyScale>
                 <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
-            <div sx={CTAContainerStyles}>
-                <Button
-                    onClick={() => setRequestContentModalStage('text')}
-                    variant="secondary"
-                >
-                    {requestButtonText}
-                </Button>
-            </div>
+            {contentType !== 'News & Announcements' && (
+                <div sx={CTAContainerStyles}>
+                    <Button
+                        onClick={() => setRequestContentModalStage('text')}
+                        variant="secondary"
+                    >
+                        {requestButtonText}
+                    </Button>
+                </div>
+            )}
         </GridLayout>
     );
 
