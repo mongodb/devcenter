@@ -168,7 +168,7 @@ const Home = () => {
                 </div>
 
                 {cardsLanguagesData?.map(
-                    ({ titleLink, href, imageString, cta, links }) => (
+                    ({ titleLink, imageString, cta, links }) => (
                         <div
                             sx={{
                                 gridColumn: [
@@ -193,6 +193,7 @@ const Home = () => {
                                     />
                                 }
                                 links={links}
+                                cta={cta}
                             />
                         </div>
                     )
@@ -344,7 +345,13 @@ const Home = () => {
                     </div>
 
                     {cardsProductsData?.map(
-                        ({ titleLink, imageString, links, description }) => (
+                        ({
+                            titleLink,
+                            imageString,
+                            links,
+                            description,
+                            cta,
+                        }) => (
                             <div
                                 sx={{
                                     gridColumn: [
@@ -357,6 +364,7 @@ const Home = () => {
                                 key={titleLink.text}
                             >
                                 <ShowcaseCard
+                                    defaultLink
                                     sx={{
                                         backgroundColor: 'white',
                                         minHeight: '500px',
@@ -365,6 +373,7 @@ const Home = () => {
                                     description={description}
                                     titleLink={titleLink}
                                     image={getImage(imageString)}
+                                    cta={cta}
                                     links={links}
                                 />
                             </div>
