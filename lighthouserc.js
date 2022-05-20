@@ -19,6 +19,7 @@ module.exports = {
                 'html-has-lang': 'warn',
                 'image-alt': 'warn',
                 'unsized-images': 'warn',
+                'crawlable-anchors': 'warn',
                 label: 'warn',
                 'external-anchors-use-rel-noopener': 'warn', // Should reset this when we get a solution.
                 'heading-order': 'warn',
