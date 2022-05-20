@@ -9,10 +9,9 @@ interface IPillColorMap {
 const pillColorMap: IPillColorMap = {
     Video: theme.colors.purple10,
     Article: theme.colors.blue10,
-    'Demo App': theme.colors.yellow20,
+    'Code Example': theme.colors.yellow20,
     Tutorial: theme.colors.green20,
     Podcast: theme.colors.red20,
-    'Code Example': theme.colors.yellow20,
     Quickstart: theme.colors.yellow20,
 };
 
@@ -67,15 +66,15 @@ export const thumbnailWrapperStyles = (
                 case 'Article':
                     mobileDimensions = '64px';
                     break;
-                case 'Demo App':
+                case 'Code Example':
                     mobileDimensions = '96px';
                     break;
                 case 'Podcast':
                     mobileDimensions = '48px';
                     break;
-                // case 'Quickstart':
-                //     mobileDimensions = '64px';
-                //     break;
+                case 'Quickstart':
+                    mobileDimensions = '64px';
+                    break;
                 default:
                     mobileDimensions = null;
             }
@@ -89,7 +88,7 @@ export const thumbnailWrapperStyles = (
                         desktopDimensions =
                             '64px';
                     break;
-                case 'Demo App':
+                case 'Code Example':
                     mobileDimensions =
                         tabletDimensions =
                         desktopDimensions =
@@ -99,9 +98,12 @@ export const thumbnailWrapperStyles = (
                     mobileDimensions = tabletDimensions = '48px';
                     desktopDimensions = '64px';
                     break;
-                // case 'Quickstart':
-                //     mobileDimensions = tabletDesktopDimensions = '64px';
-                //     break;
+                case 'Quickstart':
+                    mobileDimensions =
+                        tabletDimensions =
+                        desktopDimensions =
+                            '64px';
+                    break;
                 default:
                     mobileDimensions = null;
             }
@@ -111,15 +113,15 @@ export const thumbnailWrapperStyles = (
                 case 'Article':
                     mobileDimensions = '64px';
                     break;
-                case 'Demo App':
+                case 'Code Example':
                     mobileDimensions = '96px';
                     break;
                 case 'Podcast':
                     mobileDimensions = '48px';
                     break;
-                // case 'Quickstart':
-                //     mobileDimensions = '64px';
-                //     break;
+                case 'Quickstart':
+                    mobileDimensions = '64px';
+                    break;
                 default:
                     mobileDimensions = null;
             }
@@ -177,15 +179,17 @@ export const descriptionStyles = (
     switch (variant) {
         case 'large':
             tabletDesktopDisplay = '-webkit-box';
-            mobileDisplay = category === 'Demo App' ? '-webkit-box' : 'none';
+            mobileDisplay =
+                category === 'Code Example' ? '-webkit-box' : 'none';
             break;
         case 'medium':
             tabletDesktopDisplay = mobileDisplay =
-                category === 'Demo App' ? '-webkit-box' : 'none';
+                category === 'Code Example' ? '-webkit-box' : 'none';
             break;
         case 'small':
             tabletDesktopDisplay = 'none';
-            mobileDisplay = category === 'Demo App' ? '-webkit-box' : 'none';
+            mobileDisplay =
+                category === 'Code Example' ? '-webkit-box' : 'none';
             break;
         case 'list':
             tabletDesktopDisplay = '-webkit-box';

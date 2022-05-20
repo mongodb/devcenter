@@ -46,7 +46,10 @@ import PodcastPlayer from '../components/podcast-player/podcast-player';
 import { parseAuthorsToAuthorLockup } from '../utils/parse-authors-to-author-lockup';
 import { CollectionType } from '../types/collection-type';
 import { getURLPath, setURLPathForNavItems } from '../utils/format-url-path';
-import { sideNavTitleStyles } from '../components/tertiary-nav/styles';
+import {
+    sideNavTitleStyles,
+    sideNavStyles,
+} from '../components/tertiary-nav/styles';
 import { getMetaInfoForTopic } from '../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
 import { Crumb } from '../components/breadcrumbs/types';
@@ -54,7 +57,6 @@ import Breadcrumbs from '../components/breadcrumbs';
 import getRelatedContent from '../api-requests/get-related-content';
 import { Grid } from 'theme-ui';
 import Card from '../components/card';
-import * as url from 'url';
 import SecondaryTag from '../components/card/secondary-tag';
 import { CodeLevel } from '../types/tag-type';
 
@@ -66,15 +68,6 @@ interface ContentPageProps {
     tertiaryNavItems: TertiaryNavItem[];
     relatedContent: ContentItem[];
 }
-
-const sideNavStyles = {
-    display: ['none', null, null, null, 'block'],
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
-    nav: {
-        position: 'static' as 'static',
-    },
-    gridRow: 'span 4',
-};
 
 const imageStyles = {
     marginBottom: ['inc20', null, null, 'inc30'],
@@ -466,15 +459,8 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         rowGap: 0,
                     }}
                 >
-                    <div sx={sideNavStyles}>
-                        <a
-                            href={getURLPath(topicSlug)}
-                            sx={{
-                                '&:hover': {
-                                    textDecoration: 'underline',
-                                },
-                            }}
-                        >
+                    <div sx={sideNavStyles()}>
+                        <a href={getURLPath(topicSlug)}>
                             <TypographyScale
                                 variant="heading6"
                                 sx={sideNavTitleStyles}
