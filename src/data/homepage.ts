@@ -46,15 +46,15 @@ export const cardsLanguagesData = [
         links: [
             {
                 text: 'Quickstarts',
-                url: '/developer/languages/python/quickstarts',
+                url: '/languages/python/quickstarts',
             },
             {
                 text: 'Tutorials',
-                url: '/developer/languages/python/tutorials',
+                url: '/languages/python/tutorials',
             },
             {
                 text: 'Code Examples',
-                url: '/developer/languages/python/code-examples',
+                url: '/languages/python/code-examples',
             },
             {
                 text: 'Documentation',
@@ -106,7 +106,7 @@ export const cardsLanguagesData = [
         links: [
             {
                 text: 'Quickstarts',
-                url: '/developer/languages/javascript/quickstarts',
+                url: '/languages/javascript/quickstarts',
             },
             {
                 text: 'Tutorials',
@@ -235,11 +235,11 @@ export const cardsProductsData = [
         links: [
             {
                 text: 'Swift app development',
-                url: 'developer/languages/swift',
+                url: '/languages/swift',
             },
             {
                 text: 'Android app development',
-                url: '/developer/technologies/android',
+                url: '/technologies/android',
             },
             {
                 text: 'Realm Studio',
