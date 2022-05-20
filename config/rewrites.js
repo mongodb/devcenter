@@ -113,27 +113,27 @@ const rewrites = [
     {
         source: '/:file.js',
         destination: `${process.env.DEVHUB_URL}/:file.js`,
-        regex: '^/(.+).js$',
+        regex: '^/(.+)\\.js$',
     },
     {
         source: '/page-data/:data*.json',
         destination: `${process.env.DEVHUB_URL}/page-data/:data*.json`,
-        regex: '^/page-data/(.+).json$',
+        regex: '^/page-data/(.+)\\.json$',
     },
     {
         source: '/static/:file.(png|svg|woff|woff2)',
         destination: `${process.env.DEVHUB_URL}/static/:file.png`,
-        regex: '^/static/(.+).(png|svg|woff|woff2)$',
+        regex: '^/static/(.+)\\.(png|svg|woff|woff2)$',
     },
     {
         source: '/images/bios/:image.jpg',
         destination: `${process.env.DEVHUB_URL}/images/bios/:image.jpg`,
-        regex: '^/images/bios/(.+).jpg$',
+        regex: '^/images/bios/(.+)\\.jpg$',
     },
     {
         source: '/images/atf-images/:image*.png',
         destination: `${process.env.DEVHUB_URL}/images/atf-images/:image*.png`,
-        regex: '^/images/atf-images/(.+).png$',
+        regex: '^/images/atf-images/(.+)\\.png$',
     },
 ];
 
