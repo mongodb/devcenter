@@ -81,7 +81,9 @@ const Card: React.FunctionComponent<CardProps> = ({
                                 loader={thumbnailLoader}
                                 src={
                                     pillCategory === 'Podcast'
-                                        ? '/developer/play-button.svg'
+                                        ? (getURLPath(
+                                              '/play-button.svg'
+                                          ) as string)
                                         : thumbnail.url
                                 }
                                 sx={{
