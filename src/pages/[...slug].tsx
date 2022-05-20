@@ -1,6 +1,4 @@
-import type { GetStaticProps, NextPage } from 'next';
-import { NextSeo } from 'next-seo';
-import { ParsedUrlQuery } from 'querystring';
+import type { NextPage } from 'next';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
@@ -420,33 +418,8 @@ const ContentPage: NextPage<ContentPageProps> = ({
         </div>
     );
 
-    const og: any = {
-        url: seo?.og_url,
-        title: seo?.og_title,
-        type: seo?.og_type,
-        description: seo?.og_description,
-    };
-
-    og['images'] = seo?.og_image?.url ? [{ url: seo?.og_image?.url }] : [];
-
-    const twitter: any = {
-        handle: seo?.twitter_creator,
-        site: seo?.twitter_site,
-    };
-
     return (
         <>
-            <NextSeo
-                title={`${title} | MongoDB`}
-                {...(seo?.meta_description && {
-                    description: seo.meta_description,
-                })}
-                {...(seo?.canonical_url && {
-                    canonical: seo.canonical_url,
-                })}
-                openGraph={og}
-                twitter={twitter}
-            />
             <div
                 sx={{
                     paddingBottom: 'inc160',
@@ -511,33 +484,8 @@ const ContentPage: NextPage<ContentPageProps> = ({
 
 export default ContentPage;
 
-interface IParams extends ParsedUrlQuery {
-    slug: string[];
-} // Need this to avoid TS errors.
-
-// const removesErroringArticles = (contents: ContentItem[]) => {
-//     const removeItems = [
-//         'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
-//         'new-time-series-collections',
-//         'mongodb-charts-embedding-sdk-react/',
-//         'build-movie-search-application',
-//     ];
-
-//     return contents.filter(content => !removeItems.includes(content.title));
-// };
-
-export const getStaticPaths = async () => {
-    const contents: ContentItem[] = await getAllContentItems();
-    // const filteredContents = removesErroringArticles(contents);
-
-    const paths = contents.map((content: ContentItem) => ({
-        params: { slug: content.slug.split('/') },
-    }));
-    return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { slug } = params as IParams;
+export const getServerSideProps = async (context: any) => {
+    const slug = context.params.slug;
     const contents: ContentItem[] = await getAllContentItems();
 
     const contentItem = contents.filter(
@@ -590,3 +538,79 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     return { props: data };
 };
+
+// interface IParams extends ParsedUrlQuery {
+//     slug: string[];
+// } // Need this to avoid TS errors.
+
+// const removesErroringArticles = (contents: ContentItem[]) => {
+//     const removeItems = [
+//         'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
+//         'new-time-series-collections',
+//         'mongodb-charts-embedding-sdk-react/',
+//         'build-movie-search-application',
+//     ];
+
+//     return contents.filter(content => !removeItems.includes(content.title));
+// };
+
+// export const getStaticPaths = async () => {
+//     const contents: ContentItem[] = await getAllContentItems();
+//     // const filteredContents = removesErroringArticles(contents);
+//
+//     const paths = contents.map((content: ContentItem) => ({
+//         params: { slug: content.slug.split('/') },
+//     }));
+//     return { paths, fallback: false };
+// };
+//
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//     const { slug } = params as IParams;
+//     const contents: ContentItem[] = await getAllContentItems();
+//
+//     const contentItem = contents.filter(
+//         content => content.slug === slug.join('/')
+//     )[0];
+//
+//     const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
+//     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
+//     let slugString = slug.join('/');
+//
+//     //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag
+//     if (contentItem.category === 'Code Example') {
+//         sideNavFilterSlug =
+//             '/languages/' + slug.slice(1, slug.length - 1).join('/');
+//         slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
+//     }
+//
+//     if (vidOrPod) {
+//         if (contentItem.primaryTag?.programmingLanguage) {
+//             sideNavFilterSlug =
+//                 contentItem.primaryTag.programmingLanguage.calculatedSlug;
+//         }
+//         if (contentItem.primaryTag?.l1Product) {
+//             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
+//         }
+//         slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
+//     }
+//     const crumbs = await getBreadcrumbsFromSlug(slugString);
+//     let tertiaryNavItems = await getSideNav(sideNavFilterSlug);
+//     setURLPathForNavItems(tertiaryNavItems);
+//
+//     const metaInfoForTopic = await getMetaInfoForTopic(sideNavFilterSlug);
+//     const topicSlug = sideNavFilterSlug;
+//     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
+//
+//     const relatedContent = getRelatedContent(sideNavFilterSlug, contents);
+//
+//     const data = {
+//         crumbs,
+//         contentItem,
+//         tertiaryNavItems,
+//         topicSlug,
+//         topicName,
+//         relatedContent,
+//     };
+//
+//     return { props: data };
+// };
