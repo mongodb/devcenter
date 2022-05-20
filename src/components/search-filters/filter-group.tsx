@@ -124,7 +124,8 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                                     name={`${name} ${type} ${
                                                         isMobile ? 'mobile' : ''
                                                     }`}
-                                                    label={`${name} (${count})`}
+                                                    // label={`${name} (${count})`}
+                                                    label={name}
                                                     onToggle={checked =>
                                                         onCheckToggle(
                                                             checked,
@@ -158,7 +159,8 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                             name={`${name} ${type} ${
                                                 isMobile ? 'mobile' : ''
                                             }`}
-                                            label={`${name} (${count})`}
+                                            // label={`${name} (${count})`}
+                                            label={name}
                                             onToggle={checked =>
                                                 onCheckToggle(checked, item)
                                             }
