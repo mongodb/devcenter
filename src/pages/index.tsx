@@ -367,7 +367,7 @@ const Home = () => {
                                     defaultLink
                                     sx={{
                                         backgroundColor: 'white',
-                                        minHeight: '500px',
+                                        minHeight: '566px',
                                     }}
                                     alignment="left"
                                     description={description}
