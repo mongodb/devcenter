@@ -28,7 +28,11 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
                     key={name}
                     sx={nameStyles}
                     {...(clickableLinks
-                        ? { href: url, target: '_blank', rel: 'noreferrer' }
+                        ? {
+                              href: getURLPath(url),
+                              target: '_blank',
+                              rel: 'noreferrer',
+                          }
                         : {})}
                 >
                     {`${name}${
