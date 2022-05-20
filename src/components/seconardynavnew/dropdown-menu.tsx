@@ -47,6 +47,14 @@ const DropDownMenuList = styled.ul`
         a:not(:last-child) {
             margin-bottom: ${theme.space.inc40};
         }
+
+        li:nth-of-type(3) {
+            padding-bottom: 0;
+        }
+
+        li:nth-of-type(4) {
+            padding-bottom: 0;
+        }
     }
 
     li {
