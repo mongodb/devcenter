@@ -44,6 +44,7 @@ import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
 
 import { itemInFilters } from './utils';
+let pluralize = require('pluralize');
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     description,
@@ -292,8 +293,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     return (
         <>
             <Hero
-                crumbs={[]}
-                name={`${contentType}s`}
+                crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
+                name={pluralize(contentType)}
                 description={description}
                 ctas={CTAElement}
             />
