@@ -18,6 +18,7 @@ const Hero: React.FunctionComponent<HeroProps> = ({
                 {crumbs && <Breadcrumbs crumbs={crumbs} />}
                 <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
                     <TypographyScale
+                        customElement="h1"
                         variant="heading2"
                         color="mark"
                         sx={{ marginBottom: ['inc20', null, null, 'inc40'] }}

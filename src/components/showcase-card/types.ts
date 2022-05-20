@@ -16,6 +16,7 @@ export interface ShowcaseCardItem {
 }
 
 export interface ShowcaseCardProps {
+    defaultLink?: boolean;
     alignment: 'left' | 'center';
     titleLink: {
         text: string;

@@ -4,6 +4,7 @@ import { TypographyScale } from '@mdb/flora';
 import AuthorImage from './author-image';
 import { container, typographyContainer, stackedImageStyles } from './styles';
 import { AuthorLockupProps } from './types';
+import { getURLPath } from '../../utils/format-url-path';
 
 const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
     className,
@@ -27,7 +28,11 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
                     key={name}
                     sx={nameStyles}
                     {...(clickableLinks
-                        ? { href: url, target: '_blank', rel: 'noreferrer' }
+                        ? {
+                              href: getURLPath(url),
+                              target: '_blank',
+                              rel: 'noreferrer',
+                          }
                         : {})}
                 >
                     {`${name}${
@@ -44,7 +49,7 @@ const AuthorLockup: React.FunctionComponent<AuthorLockupProps> = ({
                 sx={nameStyles}
                 {...(clickableLinks
                     ? {
-                          href: authors[0].url,
+                          href: getURLPath(authors[0].url),
                           target: '_blank',
                           rel: 'noreferrer',
                       }
