@@ -67,7 +67,7 @@ export const secondaryNavData = [
                         dropDownItems: [],
                     },
                     {
-                        name: 'Encrytion',
+                        name: 'Encryption',
                         slug: '/products/encryption',
                         dropDownItems: [],
                     },

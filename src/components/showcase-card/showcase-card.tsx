@@ -2,6 +2,7 @@ import { ELinkVariant, Link, TypographyScale } from '@mdb/flora';
 
 import { ShowcaseCardProps } from './types';
 import { showcaseCardWrapper } from './styles';
+import { getURLPath } from '../../utils/format-url-path';
 
 const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
     alignment,
@@ -36,7 +37,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
             )}
             {defaultLink ? (
                 <Link
-                    href={titleLink.url}
+                    href={getURLPath(titleLink.url)}
                     sx={{
                         '.textlink-default-text-class': {
                             '&:hover': {
@@ -50,7 +51,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
                 </Link>
             ) : (
                 <Link
-                    href={titleLink.url}
+                    href={getURLPath(titleLink.url)}
                     linkIcon="chevron"
                     linkIconDisableExpand={true}
                 >
@@ -61,7 +62,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
             {!!links && (
                 <div>
                     {links.map(link => (
-                        <Link key={link.text} href={link.url}>
+                        <Link key={link.text} href={getURLPath(link.url)}>
                             {link.text}
                         </Link>
                     ))}
@@ -70,7 +71,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
             {!!cta && (
                 <Link
                     variant={ELinkVariant.SMALL}
-                    href={cta.url}
+                    href={getURLPath(cta.url)}
                     linkIcon="chevron"
                     linkIconDisableExpand={true}
                 >
