@@ -319,7 +319,7 @@ const Home = () => {
                                 'span 8',
                                 'span 12',
                             ],
-                            marginTop: theme.space.inc50,
+                            marginTop: theme.space.inc90,
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
