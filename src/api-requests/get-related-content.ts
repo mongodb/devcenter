@@ -2,10 +2,15 @@ import { ContentItem } from '../interfaces/content-item';
 
 const getRelatedContent = (
     slug: string,
-    allContents: ContentItem[]
+    allContents: ContentItem[],
+    currentSlug: string
 ): ContentItem[] => {
     const relatedContent = allContents.filter(c => {
-        if (c.collectionType !== 'Video' && c.collectionType !== 'Podcast') {
+        if (
+            c.collectionType !== 'Video' &&
+            c.collectionType !== 'Podcast' &&
+            c.slug !== currentSlug
+        ) {
             const slugsInTags = c.tags.map(tag => tag.slug);
             return slugsInTags.includes(slug);
         }
