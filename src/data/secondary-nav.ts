@@ -48,7 +48,7 @@ export const secondaryNavData = [
                     },
                     {
                         name: 'Atlas Search',
-                        slug: '/products/atlas-search',
+                        slug: '/products/atlas/full-text-search',
                         dropDownItems: [],
                     },
                     {
@@ -58,7 +58,7 @@ export const secondaryNavData = [
                     },
                     {
                         name: 'Aggregation',
-                        slug: '/products/aggregation',
+                        slug: '/products/mongodb/aggregation-framework',
                         dropDownItems: [],
                     },
                     {
@@ -68,7 +68,7 @@ export const secondaryNavData = [
                     },
                     {
                         name: 'Encryption',
-                        slug: '/products/encryption',
+                        slug: '/products/mongodb/encryption',
                         dropDownItems: [],
                     },
                     {
@@ -79,11 +79,6 @@ export const secondaryNavData = [
                     {
                         name: 'Connectors',
                         slug: '/products/connectors',
-                        dropDownItems: [],
-                    },
-                    {
-                        name: 'Ops Manager',
-                        slug: '/products/ops-manager',
                         dropDownItems: [],
                     },
                 ],
