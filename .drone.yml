@@ -337,3 +337,72 @@ trigger:
     - production
   event:
     - custom
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using the current SHA.
+
+steps:
+  - name: checkout-to-current-release
+    image: alpine/git
+    environment:
+      APP_RELEASE:
+        from_secret: app_release_production
+    commands:
+    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest production revision that was promoted successfully.
+
+  - name: publish-prod-from-cron
+    image: plugins/kaniko-ecr
+    environment:
+      APP_RELEASE:
+        from_secret: app_release_production
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      STRAPI_URL:
+        from_secret: STRAPI_URL_PROD
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
+    settings:
+      create_repository: true
+      enable_cache: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: devrel/${DRONE_REPO_NAME}
+      build_args:
+        - HOST_URL=mongodb.com
+        - NPM_AUTH
+        - NPM_EMAIL
+        - STRAPI_URL
+        - DEVHUB_URL
+        - APP_RELEASE
+      tags:
+        - devcenter-prod-build-${DRONE_BUILD_NUMBER}
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+      values_files: ["environments/prod.yaml"]
+
+  - name: deploy-prod-from-cron
+    image: drone/cli:1.4.0-alpine
+    commands:
+    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} production
+    environment:
+      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
+      DRONE_TOKEN:
+        from_secret: drone_token
+
+trigger:
+  branch:
+    - production
+  event:
+    - cron
+  cron:
+    include:
+    - daily
+    - hourly
+    - nightly
+    - weekly
