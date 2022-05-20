@@ -7,6 +7,7 @@ const StyledList = {
     paddingLeft: 0,
     listStyle: [null, null, null, 'none'],
     display: ['block', 'block', 'block', 'inline-block'],
+    minHeight: [null, null, null, null, '37px'],
 };
 
 const SecondaryLinksList: React.FunctionComponent<IProps> = ({ children }) => {

@@ -29,7 +29,7 @@ export const SecondaryLinks = styled.ul`
     }
 `;
 export const MainLinkStyles = {
-    borderBottom: 'solid #00ED64 2px',
+    borderBottom: 'solid #00684A 2px',
     fontSize: 'inc30',
     fontWeight: 500,
     paddingLeft: 'inc50',

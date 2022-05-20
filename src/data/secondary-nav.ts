@@ -4,81 +4,18 @@ export const secondaryNavData = [
         slug: '',
         dropDownItems: [
             {
-                name: 'Products',
-                slug: '',
-                all: 'All Products',
-                path: '/products',
-                dropDownItems: [
-                    {
-                        name: 'Atlas',
-                        slug: '/products/atlas',
-                        dropDownItems: [
-                            {
-                                name: 'Online Archive',
-                                slug: '/products/atlas/online-archive',
-                            },
-                            {
-                                name: 'Data Lake',
-                                slug: '/products/atlas/data-lake',
-                            },
-                            {
-                                name: 'Full Text Search',
-                                slug: '/products/atlas/full-text-search',
-                            },
-                            {
-                                name: 'Charts',
-                                slug: '/products/atlas/charts',
-                            },
-                            {
-                                name: 'Data API',
-                                slug: '/products/atlas/data-api',
-                            },
-                            {
-                                name: 'Multi-Cloud',
-                                slug: '/products/atlas/multi-cloud',
-                            },
-                        ],
-                    },
-                    {
-                        name: 'Compass',
-                        slug: '/products/compass',
-                        dropDownItems: [],
-                    },
-                    {
-                        name: 'Realm (Mobile)',
-                        slug: '/products/realm',
-                        dropDownItems: [
-                            {
-                                name: 'SDK',
-                                slug: '/products/realm/sdk',
-                            },
-                            {
-                                name: 'Sync',
-                                slug: '/products/realm/sync',
-                            },
-                            {
-                                name: 'Studio',
-                                slug: '/products/realm/studio',
-                            },
-                        ],
-                    },
-                    {
-                        name: 'Connectors',
-                        slug: '/products/connectors',
-                        dropDownItems: [],
-                    },
-                ],
-            },
-            {
                 name: 'Languages',
                 slug: '',
                 all: 'All Languages',
                 path: '/languages',
                 dropDownItems: [
-                    { name: 'Go', slug: '/languages/go' },
+                    { name: 'Javascript', slug: '/languages/javascript' },
+                    { name: 'C#', slug: '/languages/c#' },
+                    { name: 'Python', slug: '/languages/python' },
+                    { name: 'Kotlin', slug: '/languages/kotlin' },
                     { name: 'Java', slug: '/languages/java' },
-                    { name: 'CSharp', slug: '/languages/csharp' },
-                    { name: 'C', slug: '/languages/c' },
+                    { name: 'PHP', slug: '/languages/php' },
+                    { name: 'Swift', slug: '/languages/swift' },
                 ],
             },
             {
@@ -87,9 +24,68 @@ export const secondaryNavData = [
                 all: 'All Technologies',
                 path: '/technologies',
                 dropDownItems: [
-                    { name: 'GCP', slug: '/technologies/gcp' },
-                    { name: 'BI', slug: '/technologies/bi' },
+                    { name: 'Docker', slug: '/technologies/docker' },
+                    { name: 'Azure', slug: '/technologies/azure' },
                     { name: 'AWS', slug: '/technologies/aws' },
+                    { name: 'Kubernetes', slug: '/technologies/kubernetes' },
+                    { name: 'Heroku', slug: '/technologies/heroku' },
+                    { name: 'Nextjs', slug: '/technologies/nextjs' },
+                    { name: 'Nodejs', slug: '/technologies/nodejs' },
+                    { name: 'Unity', slug: '/technologies/unity' },
+                    { name: 'GCP', slug: '/technologies/gcp' },
+                ],
+            },
+            {
+                name: 'Products',
+                slug: '',
+                all: 'All Products',
+                path: '/products',
+                dropDownItems: [
+                    {
+                        name: 'Atlas',
+                        slug: '/products/atlas',
+                        dropDownItems: [],
+                    },
+                    {
+                        name: 'Atlas Search',
+                        slug: '/products/atlas-search',
+                        dropDownItems: [],
+                    },
+                    {
+                        name: 'Compass',
+                        slug: '/products/compass',
+                        dropDownItems: [],
+                    },
+                    {
+                        name: 'Aggregation',
+                        slug: '/products/aggregation',
+                        dropDownItems: [],
+                    },
+                    {
+                        name: 'MongoDB',
+                        slug: '/products/mongodb',
+                        dropDownItems: [],
+                    },
+                    {
+                        name: 'Encrytion',
+                        slug: '/products/encryption',
+                        dropDownItems: [],
+                    },
+                    {
+                        name: 'Realm',
+                        slug: '/products/realm',
+                        dropDownItems: [],
+                    },
+                    {
+                        name: 'Connectors',
+                        slug: '/products/connectors',
+                        dropDownItems: [],
+                    },
+                    {
+                        name: 'Ops Manager',
+                        slug: '/products/ops-manager',
+                        dropDownItems: [],
+                    },
                 ],
             },
             {

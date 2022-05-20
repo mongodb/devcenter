@@ -317,7 +317,15 @@ const MobileView = () => {
             }}
         >
             <div sx={{ display: 'grid', gridTemplateColumns: '240px 1fr' }}>
-                <FloraLink sx={MainLinkStyles} onClick={openMobileMenu}>
+                <FloraLink
+                    sx={{
+                        ...MainLinkStyles,
+                        ...(mobileMenuIsOpen && {
+                            borderBottom: 'solid #00ED64 2px',
+                        }),
+                    }}
+                    onClick={openMobileMenu}
+                >
                     MongoDB Developer
                     {!mobileMenuIsOpen && (
                         <SystemIcon
