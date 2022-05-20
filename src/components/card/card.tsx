@@ -104,7 +104,13 @@ const Card: React.FunctionComponent<CardProps> = ({
                         </TypographyScale>
                     )}
                     {hasTags(variant) && tags && (
-                        <TagSection tags={tags} disappearOnMobile={true} />
+                        <TagSection
+                            tags={tags}
+                            disappearOnMobile={true}
+                            sx={{
+                                marginTop: variant === 'medium' ? 'inc30' : 0,
+                            }}
+                        />
                     )}
                 </div>
             </div>

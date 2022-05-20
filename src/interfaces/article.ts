@@ -1,5 +1,6 @@
 import { Author } from './author';
 import { OtherTags } from './other-tags';
+import { SEO } from './seo';
 
 type Image = {
     url: string;
@@ -19,4 +20,5 @@ export interface Article {
     originalPublishDate: string;
     updateDate: string;
     otherTags: OtherTags[];
+    seo: SEO;
 }

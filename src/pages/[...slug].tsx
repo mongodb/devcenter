@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -177,6 +178,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         githubUrl,
         liveSiteUrl,
         codeType,
+        seo,
     } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
 
@@ -425,8 +427,33 @@ const ContentPage: NextPage<ContentPageProps> = ({
         </div>
     );
 
+    const og: any = {
+        url: seo?.og_url,
+        title: seo?.og_title,
+        type: seo?.og_type,
+        description: seo?.og_description,
+    };
+
+    og['images'] = seo?.og_image?.url ? [{ url: seo?.og_image?.url }] : [];
+
+    const twitter: any = {
+        handle: seo?.twitter_creator,
+        site: seo?.twitter_site,
+    };
+
     return (
         <>
+            <NextSeo
+                title={`${title} | MongoDB`}
+                {...(seo?.meta_description && {
+                    description: seo.meta_description,
+                })}
+                {...(seo?.canonical_url && {
+                    canonical: seo.canonical_url,
+                })}
+                openGraph={og}
+                twitter={twitter}
+            />
             <div
                 sx={{
                     paddingBottom: 'inc160',
