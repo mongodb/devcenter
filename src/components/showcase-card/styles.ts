@@ -6,6 +6,9 @@ export const showcaseCardWrapper = {
     flexDirection: 'column' as 'column',
     boxShadow: 'level01',
     borderRadius: ['inc50', null, null, null, 'inc70'],
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: 'transparent',
     padding: [
         theme.space.cards.paddingXXS,
         null,
@@ -13,4 +16,8 @@ export const showcaseCardWrapper = {
         theme.space.cards.paddingXS,
         theme.space.cards.paddingM,
     ],
+    '&:hover': {
+        borderColor: theme.colors.card.default.borderDarker,
+        boxShadow: 'level03',
+    },
 };
