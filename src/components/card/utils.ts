@@ -10,7 +10,10 @@ export const thumbnailLoader = ({ src, width, quality }: ImageLoaderProps) => {
 
 export const hasThumbnail = (variant: CardVariant, category: PillCategory) =>
     variant !== 'related' &&
-    !((variant === 'small' || variant === 'medium') && category === 'Tutorial');
+    !(
+        (variant === 'small' || variant === 'medium') &&
+        ['Tutorial', 'News & Announcements'].includes(category)
+    );
 
 export const hasTags = (variant: CardVariant) =>
     ['large', 'list', 'medium'].includes(variant);
