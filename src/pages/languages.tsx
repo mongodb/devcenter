@@ -1,4 +1,5 @@
 import { NextPage, GetStaticProps } from 'next';
+import { NextSeo } from 'next-seo';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 import {
@@ -118,6 +119,7 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({
     featured,
 }) => (
     <>
+        <NextSeo title={'All Languages | MongoDB'} />
         <Hero crumbs={crumbs} name="All Languages" />
         <div
             sx={{

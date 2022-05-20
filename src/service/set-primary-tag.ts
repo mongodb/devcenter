@@ -5,6 +5,7 @@ export const setPrimaryTag = (
     contentItem: ContentItem,
     videoOrPodcastObject: Media
 ) => {
+    if (!videoOrPodcastObject.otherTags) return;
     if (videoOrPodcastObject.otherTags.l1Product) {
         contentItem.primaryTag = {
             l1Product: videoOrPodcastObject.otherTags.l1Product,
