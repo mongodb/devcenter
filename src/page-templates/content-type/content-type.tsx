@@ -26,7 +26,6 @@ import {
     DesktopFilters,
     MobileFilters,
 } from '../../components/search-filters';
-import { Tag } from '../../interfaces/tag';
 
 import { ContentTypePageProps } from './types';
 import {
@@ -43,6 +42,8 @@ import { FeaturedCardSection } from '../../components/card-section';
 import LanguagesSection from './languages-section';
 import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
+
+import { itemInFilters } from './utils';
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     description,
@@ -117,26 +118,17 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     const hasFiltersSet = !!allFilters.length;
 
-    const tagInFilters = (tag: Tag) => {
-        return allFilters.some(
-            filter => filter.name === tag.name && filter.type === tag.type
-        );
-    };
-
     const filteredData = (() => {
         if (!data) {
             return [];
         } else if (!hasFiltersSet) {
             return data.filter(({ category }) => category === contentType);
         } else {
-            return data.filter(({ tags, category }) => {
-                return (
-                    category === contentType &&
-                    tags.some(
-                        tag => tag.type !== 'ContentType' && tagInFilters(tag)
-                    )
-                );
-            });
+            return data.filter(
+                item =>
+                    item.category === contentType &&
+                    itemInFilters(item, allFilters)
+            );
         }
     })();
 

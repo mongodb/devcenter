@@ -31,6 +31,7 @@ import { Tag } from '../interfaces/tag';
 import noResults from '../../public/no-results.png';
 import Results from '../components/search/results';
 import { useRouter } from 'next/router';
+import { itemInFilters } from '../page-templates/content-type/utils';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -296,20 +297,14 @@ const Search: NextPage<SearchProps> = ({
 
     const hasFiltersSet = !!allFilters.length;
 
-    const tagInFilters = (tag: Tag) => {
-        return allFilters.some(
-            filter => filter.name === tag.name && filter.type === tag.type
-        );
-    };
-
     const filteredData = (() => {
         if (!data) {
             return [];
         } else if (!hasFiltersSet) {
             return data;
         } else {
-            return data.filter(({ tags }) => {
-                return tags.some(tag => tagInFilters(tag));
+            return data.filter(item => {
+                return itemInFilters(item, allFilters);
             });
         }
     })();

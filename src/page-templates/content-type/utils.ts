@@ -271,3 +271,45 @@ export const getFilters = async (contentType?: PillCategory) => {
         expertiseLevelItems,
     };
 };
+
+const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
+    // This is inclusive within filter groups. If you check Python and C#, you get both Python and C# content.
+    if (!filters.length) return true;
+    return tags.some(tag =>
+        filters.some(
+            filter => filter.name === tag.name && filter.type === tag.type
+        )
+    );
+};
+
+export const itemInFilters = (
+    { tags }: ContentItem,
+    allFilters: FilterItem[]
+) => {
+    // This is exclusive between filter groups. If you check Python and Atlas, you only get things that are both Pyhton and Atlas,
+    // not everythign Pyhton and everything Atlas.
+    const productFilters = allFilters.filter(
+        ({ type }) => type === 'L1Product' || type === 'L2Product'
+    );
+    const languageFilters = allFilters.filter(
+        ({ type }) => type === 'ProgrammingLanguage'
+    );
+    const techFilters = allFilters.filter(({ type }) => type === 'Technology');
+    const expertiseFilters = allFilters.filter(
+        ({ type }) => type === 'ExpertiseLevel'
+    );
+    const contributedByFilters = allFilters.filter(
+        ({ type }) => type === 'AuthorType'
+    );
+    const contentTypeFilters = allFilters.filter(
+        ({ type }) => type === 'ContentType'
+    );
+    return (
+        itemInFilterGroup(tags, productFilters) &&
+        itemInFilterGroup(tags, languageFilters) &&
+        itemInFilterGroup(tags, techFilters) &&
+        itemInFilterGroup(tags, expertiseFilters) &&
+        itemInFilterGroup(tags, contributedByFilters) &&
+        itemInFilterGroup(tags, contentTypeFilters)
+    );
+};
