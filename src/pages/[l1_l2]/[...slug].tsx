@@ -175,14 +175,10 @@ const Topic: NextPage<TopicProps> = ({
                                         <CardSection
                                             key={contentType}
                                             content={contentRow}
-                                            title={`${pluralize(
-                                                contentRow[0].category
+                                            title={`${name} ${pluralize(
+                                                contentType
                                             )}`}
-                                            href={
-                                                contentType == 'Podcast'
-                                                    ? 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624'
-                                                    : contentTypeSlug
-                                            }
+                                            href={slug + contentTypeSlug}
                                             direction={direction}
                                         />
                                     );
@@ -293,7 +289,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             : '',
         ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
         topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
-        //TODO - only for light stuff not sure of the logic
         relatedTopics,
     };
 
