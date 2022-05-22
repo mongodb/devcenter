@@ -172,16 +172,31 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             ) : (
                                 <>
                                     <div sx={linkWrapperStyles}>
-                                        <FloraLink
-                                            href={getURLPath(slug)}
-                                            sx={FloraLinkStyles(
-                                                activePath === slug
-                                                    ? true
-                                                    : false
-                                            )}
-                                        >
-                                            {name}
-                                        </FloraLink>
+                                        {slug.indexOf('http://') == 0 ||
+                                        slug.indexOf('https://') == 0 ? (
+                                            <FloraLink
+                                                target="_blank"
+                                                href={slug}
+                                                sx={FloraLinkStyles(
+                                                    activePath === slug
+                                                        ? true
+                                                        : false
+                                                )}
+                                            >
+                                                {name}
+                                            </FloraLink>
+                                        ) : (
+                                            <FloraLink
+                                                href={getURLPath(slug)}
+                                                sx={FloraLinkStyles(
+                                                    activePath === slug
+                                                        ? true
+                                                        : false
+                                                )}
+                                            >
+                                                {name}
+                                            </FloraLink>
+                                        )}
                                     </div>
                                 </>
                             )}
