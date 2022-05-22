@@ -167,7 +167,7 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                         variant="heading5"
                         sx={{ marginBottom: 'inc40' }}
                     >
-                        Featured Topics
+                        Featured Products
                     </TypographyScale>
                     <Grid
                         columns={[1, null, 2, 4]}
@@ -187,7 +187,7 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                         variant="heading4"
                         sx={{ marginBottom: 'inc90', width: 'max-content' }}
                     >
-                        All Topics
+                        All Products
                     </TypographyScale>
                     <div
                         sx={{
