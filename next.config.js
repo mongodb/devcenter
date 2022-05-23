@@ -16,6 +16,7 @@ const configVals = {
     publicRuntimeConfig: {
         absoluteBasePath: `${httpProtocol}://${hostUrl}${basePath}`,
     },
+    trailingSlash: true,
 };
 if (process.env.ANALYZE === 'true') {
     const withBundleAnalyzer = require('@next/bundle-analyzer')({

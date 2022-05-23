@@ -1,5 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
+import getConfig from 'next/config';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -154,6 +156,8 @@ const ContentPage: NextPage<ContentPageProps> = ({
     tertiaryNavItems,
     relatedContent,
 }) => {
+    const router = useRouter();
+    const { publicRuntimeConfig } = getConfig();
     const {
         collectionType,
         authors,
@@ -430,6 +434,9 @@ const ContentPage: NextPage<ContentPageProps> = ({
         handle: seo?.twitter_creator,
         site: seo?.twitter_site,
     };
+    let canonicalUrl = seo?.canonical_url
+        ? seo?.canonical_url
+        : publicRuntimeConfig.absoluteBasePath + router.asPath;
 
     return (
         <>
@@ -438,9 +445,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                 {...(seo?.meta_description && {
                     description: seo.meta_description,
                 })}
-                {...(seo?.canonical_url && {
-                    canonical: seo.canonical_url,
-                })}
+                canonical={canonicalUrl}
                 openGraph={og}
                 twitter={twitter}
             />
