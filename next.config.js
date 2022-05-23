@@ -1,4 +1,5 @@
 const { redirects } = require('./config/redirects');
+const pageDescriptions = require('./config/seo/descriptions.json');
 
 const hostUrl = process.env.VERCEL_URL
     ? process.env.VERCEL_URL
@@ -15,6 +16,7 @@ const configVals = {
     redirects: redirects,
     publicRuntimeConfig: {
         absoluteBasePath: `${httpProtocol}://${hostUrl}${basePath}`,
+        pageDescriptions: pageDescriptions, //TODO: Move to CMS
     },
     trailingSlash: true,
 };

@@ -123,12 +123,7 @@ const Topic: NextPage<TopicProps> = ({
 
     return (
         <>
-            <NextSeo
-                title={pageTitle}
-                {...(description && {
-                    description: description,
-                })}
-            />
+            <NextSeo title={pageTitle} />
             <Hero
                 crumbs={crumbs}
                 name={name}

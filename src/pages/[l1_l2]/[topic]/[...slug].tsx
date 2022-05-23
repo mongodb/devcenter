@@ -153,12 +153,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
 
     return (
         <>
-            <NextSeo
-                title={pageTitle}
-                {...(description && {
-                    description: description,
-                })}
-            />
+            <NextSeo title={pageTitle} />
             <div
                 sx={{
                     paddingBottom: 'inc160',
