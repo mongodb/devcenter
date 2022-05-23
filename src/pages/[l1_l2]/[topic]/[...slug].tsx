@@ -185,7 +185,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
                     {header}
-                    <HorizontalRule sx={spanAllColumns} spacing="xlarge" />
+                    <HorizontalRule sx={spanAllColumns} spacing="large" />
                     {subTopics.length > 0 && (
                         <TopicCardsContainer
                             topics={subTopicItems}
