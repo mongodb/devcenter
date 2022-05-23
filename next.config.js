@@ -18,7 +18,6 @@ const configVals = {
         absoluteBasePath: `${httpProtocol}://${hostUrl}${basePath}`,
         pageDescriptions: pageDescriptions, //TODO: Move to CMS
     },
-    trailingSlash: true,
 };
 if (process.env.ANALYZE === 'true') {
     const withBundleAnalyzer = require('@next/bundle-analyzer')({
