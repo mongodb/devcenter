@@ -110,6 +110,7 @@ const footerRatingStyles = {
 };
 
 const middleSectionStyles = {
+    maxWidth: '100%', // patches a Codemirror bug on FF https://github.com/codemirror/CodeMirror/issues/4142.
     gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
 };
 
