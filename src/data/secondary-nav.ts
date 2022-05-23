@@ -9,7 +9,7 @@ export const secondaryNavData = [
                 all: 'All Languages',
                 path: '/languages',
                 dropDownItems: [
-                    { name: 'Javascript', slug: '/languages/javascript' },
+                    { name: 'JavaScript', slug: '/languages/javascript' },
                     { name: 'C#', slug: '/languages/c#' },
                     { name: 'Python', slug: '/languages/python' },
                     { name: 'Kotlin', slug: '/languages/kotlin' },

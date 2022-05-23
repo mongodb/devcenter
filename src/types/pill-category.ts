@@ -19,9 +19,6 @@ export const pillCategoryToSlug = new Map<PillCategory, string>([
     ['Code Example', '/code-examples'],
     ['Tutorial', '/tutorials'],
     ['News & Announcements', '/news'],
-    [
-        'Podcast',
-        'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624',
-    ],
+    ['Podcast', '/podcasts'],
     ['Video', '/videos'],
 ]);

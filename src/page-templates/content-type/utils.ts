@@ -262,6 +262,13 @@ export const getFilters = async (contentType?: PillCategory) => {
         .filter(({ type }) => type === 'ExpertiseLevel')
         .sort((prev, next) => next.count - prev.count);
 
+    // Parse the code levels from the subitmes of the Code Example content type filter.
+    const codeLevelItems = filterItems
+        .filter(
+            item => item.type === 'ContentType' && item.name === 'Code Example'
+        )[0]
+        .subItems.sort((prev, next) => next.count - prev.count);
+
     return {
         l1Items,
         languageItems,
@@ -269,5 +276,52 @@ export const getFilters = async (contentType?: PillCategory) => {
         contributedByItems,
         contentTypeItems,
         expertiseLevelItems,
+        codeLevelItems,
     };
+};
+
+const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
+    // This is inclusive within filter groups. If you check Python and C#, you get both Python and C# content.
+    if (!filters.length) return true;
+    return tags.some(tag =>
+        filters.some(
+            filter => filter.name === tag.name && filter.type === tag.type
+        )
+    );
+};
+
+export const itemInFilters = (
+    { tags }: ContentItem,
+    allFilters: FilterItem[]
+) => {
+    // This is exclusive between filter groups. If you check Python and Atlas, you only get things that are both Pyhton and Atlas,
+    // not everythign Pyhton and everything Atlas.
+    const productFilters = allFilters.filter(
+        ({ type }) => type === 'L1Product' || type === 'L2Product'
+    );
+    const languageFilters = allFilters.filter(
+        ({ type }) => type === 'ProgrammingLanguage'
+    );
+    const techFilters = allFilters.filter(({ type }) => type === 'Technology');
+    const expertiseFilters = allFilters.filter(
+        ({ type }) => type === 'ExpertiseLevel'
+    );
+    const contributedByFilters = allFilters.filter(
+        ({ type }) => type === 'AuthorType'
+    );
+    const contentTypeFilters = allFilters.filter(
+        ({ type }) => type === 'ContentType'
+    );
+    const codeLevelFilters = allFilters.filter(
+        ({ type }) => type === 'CodeLevel'
+    );
+    return (
+        itemInFilterGroup(tags, productFilters) &&
+        itemInFilterGroup(tags, languageFilters) &&
+        itemInFilterGroup(tags, techFilters) &&
+        itemInFilterGroup(tags, expertiseFilters) &&
+        itemInFilterGroup(tags, contributedByFilters) &&
+        itemInFilterGroup(tags, contentTypeFilters) &&
+        itemInFilterGroup(tags, codeLevelFilters)
+    );
 };

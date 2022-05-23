@@ -34,9 +34,10 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
             <div
                 sx={{
                     '& > div': {
-                        width: '100%',
+                        maxWidth: '100%',
                     },
                     marginBottom: 'inc30',
+                    maxWidth: '100%',
                 }}
             >
                 <TextInput
@@ -60,7 +61,7 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
             <div
                 sx={{
                     '& > div': {
-                        width: '100%',
+                        maxWidth: '100%',
                     },
                     marginBottom: ['inc40', null, null, 'inc50'],
                 }}

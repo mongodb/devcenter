@@ -11,9 +11,18 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
     contributedByItems,
     expertiseLevelItems,
     contentTypeItems = [],
+    codeLevelItems = [],
 }) => {
     return (
         <div className={className}>
+            {!!codeLevelItems.length && (
+                <FilterGroup
+                    title="Example Type"
+                    items={codeLevelItems}
+                    filters={allFilters}
+                    setFilters={onFilter}
+                />
+            )}
             {!!languageItems.length && (
                 <FilterGroup
                     title="Language"
