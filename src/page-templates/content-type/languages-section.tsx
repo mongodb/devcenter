@@ -6,6 +6,7 @@ import {
     ThirdPartyLogo,
     EThirdPartyLogoVariant,
 } from '@mdb/flora';
+import theme from '@mdb/flora/theme';
 import { Grid } from 'theme-ui';
 import ShowcaseCard from '../../components/showcase-card';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';
@@ -32,40 +33,78 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
             </TypographyScale>
 
             <Grid
-                columns={[4]}
+                columns={items.length}
                 sx={{
-                    gap: ['inc30', null, 'inc40'],
+                    display: ['grid', null, 'none'],
                     marginBottom: 'inc40',
+                    marginTop: ['inc30', null, null, 'inc40'],
+                    paddingBottom: ['inc30', null, '0'],
+                    gap: ['inc40', null, null, 'inc40'],
+                    overflow: ['auto', null, 'visible'],
+                    mx: [`-${theme.space.inc40}`, null, 'unset'],
+                    px: ['inc40', null, 'unset'],
                 }}
             >
-                {items
-                    .slice(0, itemsToDisplay)
-                    .map(({ titleLink, imageString }) => {
-                        const image = imageString ? (
-                            <ThirdPartyLogo
-                                variant={imageString as EThirdPartyLogoVariant}
-                            />
-                        ) : null;
-                        return (
-                            <ShowcaseCard
-                                key={titleLink.text}
-                                alignment="center"
-                                image={image}
-                                titleLink={titleLink}
-                                sx={{ width: '100%' }}
-                                wholeCardHref={titleLink.url}
-                            />
-                        );
-                    })}
+                {items.map(({ titleLink, imageString }) => {
+                    const image = imageString ? (
+                        <ThirdPartyLogo
+                            variant={imageString as EThirdPartyLogoVariant}
+                        />
+                    ) : null;
+                    return (
+                        <ShowcaseCard
+                            key={titleLink.text}
+                            alignment="center"
+                            image={image}
+                            titleLink={titleLink}
+                            sx={{
+                                boxSizing: 'border-box' as 'border-box',
+                                width: ['33vw', null, 'auto'],
+                            }}
+                            wholeCardHref={titleLink.url}
+                        />
+                    );
+                })}
             </Grid>
-            {items.length > 4 && (
-                <Link
-                    onClick={() => setItemsExpanded(!itemsExpanded)}
-                    sx={{ display: 'block', mx: 'auto' }}
+            <div sx={{ display: ['none', null, 'block'] }}>
+                <Grid
+                    columns={4}
+                    sx={{
+                        gap: ['inc30', null, 'inc40'],
+                        marginBottom: 'inc40',
+                    }}
                 >
-                    {itemsExpanded ? 'Less' : 'More'} languages
-                </Link>
-            )}
+                    {items
+                        .slice(0, itemsToDisplay)
+                        .map(({ titleLink, imageString }) => {
+                            const image = imageString ? (
+                                <ThirdPartyLogo
+                                    variant={
+                                        imageString as EThirdPartyLogoVariant
+                                    }
+                                />
+                            ) : null;
+                            return (
+                                <ShowcaseCard
+                                    key={titleLink.text}
+                                    alignment="center"
+                                    image={image}
+                                    titleLink={titleLink}
+                                    sx={{ width: '100%' }}
+                                    wholeCardHref={titleLink.url}
+                                />
+                            );
+                        })}
+                </Grid>
+                {items.length > 4 && (
+                    <Link
+                        onClick={() => setItemsExpanded(!itemsExpanded)}
+                        sx={{ display: 'block', mx: 'auto' }}
+                    >
+                        {itemsExpanded ? 'Less' : 'More'} languages
+                    </Link>
+                )}
+            </div>
         </div>
     );
 };
