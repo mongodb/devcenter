@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     const { publicRuntimeConfig } = getConfig();
 
     let canonicalUrl = null;
-    if (router.route !== '/_error') {
+    if (router.route !== '/_error' && router.route !== '/[...slug]') {
         canonicalUrl = publicRuntimeConfig.absoluteBasePath + router.asPath;
     }
 
