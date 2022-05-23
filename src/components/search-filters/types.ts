@@ -26,4 +26,5 @@ export interface FiltersProps {
     contributedByItems: FilterItem[];
     expertiseLevelItems: FilterItem[];
     contentTypeItems?: FilterItem[];
+    codeLevelItems?: FilterItem[];
 }

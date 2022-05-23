@@ -54,6 +54,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     technologyItems,
     contributedByItems,
     expertiseLevelItems,
+    codeLevelItems,
     featured,
     featuredLanguages,
     featuredTechnologies,
@@ -313,6 +314,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         technologyItems={technologyItems}
                         contributedByItems={contributedByItems}
                         expertiseLevelItems={expertiseLevelItems}
+                        codeLevelItems={codeLevelItems}
                     />
                     <div
                         sx={{
@@ -416,6 +418,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     technologyItems={technologyItems}
                     expertiseLevelItems={expertiseLevelItems}
                     contributedByItems={contributedByItems}
+                    codeLevelItems={codeLevelItems}
                     closeModal={() => setMobileFiltersOpen(false)}
                 />
             )}

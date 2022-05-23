@@ -262,6 +262,13 @@ export const getFilters = async (contentType?: PillCategory) => {
         .filter(({ type }) => type === 'ExpertiseLevel')
         .sort((prev, next) => next.count - prev.count);
 
+    // Parse the code levels from the subitmes of the Code Example content type filter.
+    const codeLevelItems = filterItems
+        .filter(
+            item => item.type === 'ContentType' && item.name === 'Code Example'
+        )[0]
+        .subItems.sort((prev, next) => next.count - prev.count);
+
     return {
         l1Items,
         languageItems,
@@ -269,6 +276,7 @@ export const getFilters = async (contentType?: PillCategory) => {
         contributedByItems,
         contentTypeItems,
         expertiseLevelItems,
+        codeLevelItems,
     };
 };
 
@@ -304,12 +312,16 @@ export const itemInFilters = (
     const contentTypeFilters = allFilters.filter(
         ({ type }) => type === 'ContentType'
     );
+    const codeLevelFilters = allFilters.filter(
+        ({ type }) => type === 'CodeLevel'
+    );
     return (
         itemInFilterGroup(tags, productFilters) &&
         itemInFilterGroup(tags, languageFilters) &&
         itemInFilterGroup(tags, techFilters) &&
         itemInFilterGroup(tags, expertiseFilters) &&
         itemInFilterGroup(tags, contributedByFilters) &&
-        itemInFilterGroup(tags, contentTypeFilters)
+        itemInFilterGroup(tags, contentTypeFilters) &&
+        itemInFilterGroup(tags, codeLevelFilters)
     );
 };
