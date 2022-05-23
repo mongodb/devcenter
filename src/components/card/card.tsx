@@ -68,15 +68,14 @@ const Card: React.FunctionComponent<CardProps> = ({
                 }}
             />
             <div sx={cardHeaderStyles(variant, pillCategory)}>
-                {thumbnail &&
-                    thumbnail.url &&
+                {((thumbnail && thumbnail.url) || pillCategory === 'Podcast') &&
                     hasThumbnail(variant, pillCategory) && (
                         <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
                             <Image
                                 alt={
                                     pillCategory === 'Podcast'
                                         ? 'Play Button'
-                                        : thumbnail.alt || 'alt not provided'
+                                        : thumbnail?.alt || 'alt not provided'
                                 }
                                 loader={thumbnailLoader}
                                 src={
@@ -84,7 +83,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                                         ? (getURLPath(
                                               '/play-button.svg'
                                           ) as string)
-                                        : thumbnail.url
+                                        : (thumbnail?.url as string)
                                 }
                                 sx={{
                                     borderRadius: 'inc30',
@@ -92,6 +91,26 @@ const Card: React.FunctionComponent<CardProps> = ({
                                 }}
                                 layout="fill"
                             />
+                            {pillCategory === 'Video' && (
+                                <div
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        height: '100%',
+                                    }}
+                                >
+                                    <Image
+                                        alt={'Play Button'}
+                                        src={
+                                            getURLPath(
+                                                '/play-button.svg'
+                                            ) as string
+                                        }
+                                        width={60}
+                                        height={60}
+                                    ></Image>
+                                </div>
+                            )}
                         </div>
                     )}
                 <div>

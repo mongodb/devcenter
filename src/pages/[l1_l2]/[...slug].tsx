@@ -175,10 +175,10 @@ const Topic: NextPage<TopicProps> = ({
                                         <CardSection
                                             key={contentType}
                                             content={contentRow}
-                                            title={`${pluralize(
-                                                contentRow[0].category
+                                            title={`${name} ${pluralize(
+                                                contentType
                                             )}`}
-                                            href={contentTypeSlug}
+                                            href={slug + contentTypeSlug}
                                             direction={direction}
                                         />
                                     );
@@ -272,7 +272,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             href: slug,
             icon: null,
         }));
-        relatedTopics.slice(0, 12);
+        relatedTopics = relatedTopics.slice(0, 12);
     }
 
     const data = {
@@ -289,7 +289,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             : '',
         ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
         topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
-        //TODO - only for light stuff not sure of the logic
         relatedTopics,
     };
 

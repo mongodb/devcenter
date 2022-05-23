@@ -62,6 +62,7 @@ const TextFeedback: React.FunctionComponent<TextFeedbackProps> = ({
                 sx={{
                     '& > div': {
                         width: '100%',
+                        maxWidth: '100%',
                     },
                     marginBottom: 'inc30',
                 }}

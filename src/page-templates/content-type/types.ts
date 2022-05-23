@@ -12,6 +12,7 @@ export interface ContentTypePageProps {
     technologyItems: FilterItem[];
     contributedByItems: FilterItem[];
     expertiseLevelItems: FilterItem[];
+    codeLevelItems: FilterItem[];
     featured: ContentItem[];
     featuredLanguages?: ShowcaseCardItem[];
     featuredTechnologies?: ITopicCard[];

@@ -1,5 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
+import getConfig from 'next/config';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -37,7 +39,7 @@ import SeriesCard from '../components/series-card';
 import SocialButtons from '../components/social-buttons';
 import AuthorLockup from '../components/author-lockup';
 import parse from 'html-react-parser';
-import { PillCategory } from '../types/pill-category';
+import { PillCategory, pillCategoryToSlug } from '../types/pill-category';
 import { getSideNav } from '../service/get-side-nav';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import { VideoEmbed } from '../components/article-body/body-components/video-embed';
@@ -59,6 +61,7 @@ import { Grid } from 'theme-ui';
 import Card from '../components/card';
 import SecondaryTag from '../components/card/secondary-tag';
 import { CodeLevel } from '../types/tag-type';
+let pluralize = require('pluralize');
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -153,6 +156,8 @@ const ContentPage: NextPage<ContentPageProps> = ({
     tertiaryNavItems,
     relatedContent,
 }) => {
+    const router = useRouter();
+    const { publicRuntimeConfig } = getConfig();
     const {
         collectionType,
         authors,
@@ -222,10 +227,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
     const contentHeader = (
         <>
             <div sx={middleSectionStyles}>
-                <Breadcrumbs
-                    crumbs={crumbs}
-                    sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}
-                />
                 <TypographyScale
                     variant="heading2"
                     sx={{
@@ -382,7 +383,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         description={parseUndefinedValue(description)}
                         heading={title}
                     />
-                    {!ratingSectionCondition && ratingSection}
+                    {!ratingSectionCondition(category) && ratingSection}
                 </div>
             </div>
             {series && (
@@ -433,6 +434,9 @@ const ContentPage: NextPage<ContentPageProps> = ({
         handle: seo?.twitter_creator,
         site: seo?.twitter_site,
     };
+    let canonicalUrl = seo?.canonical_url
+        ? seo?.canonical_url
+        : publicRuntimeConfig.absoluteBasePath + router.asPath;
 
     return (
         <>
@@ -441,9 +445,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                 {...(seo?.meta_description && {
                     description: seo.meta_description,
                 })}
-                {...(seo?.canonical_url && {
-                    canonical: seo.canonical_url,
-                })}
+                canonical={canonicalUrl}
                 openGraph={og}
                 twitter={twitter}
             />
@@ -459,7 +461,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         rowGap: 0,
                     }}
                 >
-                    <div sx={sideNavStyles()}>
+                    <div sx={sideNavStyles(5)}>
                         <a href={getURLPath(topicSlug)}>
                             <TypographyScale
                                 variant="heading6"
@@ -470,7 +472,19 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         </a>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
-
+                    <Breadcrumbs
+                        crumbs={crumbs}
+                        sx={{
+                            marginBottom: ['inc20', null, null, 'inc30'],
+                            gridColumn: [
+                                'span 6',
+                                null,
+                                'span 8',
+                                'span 12',
+                                'span 9',
+                            ],
+                        }}
+                    />
                     {contentHeader}
                     {contentBody}
                     {contentFooter}
@@ -479,7 +493,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                             sx={{
                                 display: ['none', null, null, null, 'block'],
                                 gridColumn: '10 /span 3',
-                                gridRow: '2 /4',
+                                gridRow: '3 / 5',
                             }}
                         >
                             {headingNodes.length > 0 && (
@@ -546,13 +560,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
-    let slugString = slug.join('/');
 
     //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag
     if (contentItem.category === 'Code Example') {
         sideNavFilterSlug =
             '/languages/' + slug.slice(1, slug.length - 1).join('/');
-        slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
     }
 
     if (vidOrPod) {
@@ -563,9 +575,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         if (contentItem.primaryTag?.l1Product) {
             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
         }
-        slugString = sideNavFilterSlug + '/slug'; // Do this so we get all crumbs up until this throwaway one.
     }
+
+    const slugString = `${sideNavFilterSlug}/slug`; // Add "slug" so we get all crumbs up until this throwaway one.
+
     const crumbs = await getBreadcrumbsFromSlug(slugString);
+    const contentTypeSlug = pillCategoryToSlug.get(contentItem.category);
+    const topicContentTypeCrumb: Crumb = {
+        text: pluralize(contentItem.category),
+        url: `${crumbs[crumbs.length - 1].url}${contentTypeSlug}`,
+    };
+    crumbs.push(topicContentTypeCrumb);
     let tertiaryNavItems = await getSideNav(sideNavFilterSlug);
     setURLPathForNavItems(tertiaryNavItems);
 

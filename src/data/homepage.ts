@@ -94,7 +94,7 @@ export const cardsLanguagesData = [
     },
     {
         titleLink: {
-            text: 'Javascript',
+            text: 'JavaScript',
             url: '/languages/javascript',
         },
         href: '/languages/javascript',

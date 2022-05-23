@@ -67,6 +67,12 @@ const getSearchTitleLink = (
     if (contentType === 'News & Announcements') {
         return undefined;
     }
+    if (contentType === 'Podcast') {
+        return {
+            href: 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624',
+            text: 'All Podcasts',
+        };
+    }
     return {
         href: contentTypeAggregateSlug,
         text: `All ${pluralize(contentType)}`,
@@ -88,8 +94,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
 
-    const contentTypeTitle = contentType + contentTypeSlug.slice(2);
-    const pageTitle = `${topicName} ${contentTypeTitle} | MongoDB`;
+    const pageTitle = `${topicName} ${pluralize(contentType)} | MongoDB`;
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
@@ -179,7 +184,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
                     {header}
-                    <HorizontalRule sx={spanAllColumns} spacing="xlarge" />
+                    <HorizontalRule sx={spanAllColumns} spacing="large" />
                     {subTopics.length > 0 && (
                         <TopicCardsContainer
                             topics={subTopicItems}

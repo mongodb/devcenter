@@ -26,7 +26,6 @@ import {
     DesktopFilters,
     MobileFilters,
 } from '../../components/search-filters';
-import { Tag } from '../../interfaces/tag';
 
 import { ContentTypePageProps } from './types';
 import {
@@ -44,6 +43,9 @@ import LanguagesSection from './languages-section';
 import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
 
+import { itemInFilters } from './utils';
+let pluralize = require('pluralize');
+
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     description,
     contentType,
@@ -52,6 +54,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     technologyItems,
     contributedByItems,
     expertiseLevelItems,
+    codeLevelItems,
     featured,
     featuredLanguages,
     featuredTechnologies,
@@ -117,26 +120,17 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     const hasFiltersSet = !!allFilters.length;
 
-    const tagInFilters = (tag: Tag) => {
-        return allFilters.some(
-            filter => filter.name === tag.name && filter.type === tag.type
-        );
-    };
-
     const filteredData = (() => {
         if (!data) {
             return [];
         } else if (!hasFiltersSet) {
             return data.filter(({ category }) => category === contentType);
         } else {
-            return data.filter(({ tags, category }) => {
-                return (
-                    category === contentType &&
-                    tags.some(
-                        tag => tag.type !== 'ContentType' && tagInFilters(tag)
-                    )
-                );
-            });
+            return data.filter(
+                item =>
+                    item.category === contentType &&
+                    itemInFilters(item, allFilters)
+            );
         }
     })();
 
@@ -300,8 +294,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     return (
         <>
             <Hero
-                crumbs={[]}
-                name={`${contentType}s`}
+                crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
+                name={pluralize(contentType)}
                 description={description}
                 ctas={CTAElement}
             />
@@ -320,6 +314,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         technologyItems={technologyItems}
                         contributedByItems={contributedByItems}
                         expertiseLevelItems={expertiseLevelItems}
+                        codeLevelItems={codeLevelItems}
                     />
                     <div
                         sx={{
@@ -423,6 +418,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     technologyItems={technologyItems}
                     expertiseLevelItems={expertiseLevelItems}
                     contributedByItems={contributedByItems}
+                    codeLevelItems={codeLevelItems}
                     closeModal={() => setMobileFiltersOpen(false)}
                 />
             )}
