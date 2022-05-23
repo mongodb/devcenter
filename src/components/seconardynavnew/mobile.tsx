@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { secondaryNavData } from '../../data/secondary-nav';
-import { Link as FloraLink } from '@mdb/flora';
+import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from './nav-item';
@@ -326,7 +326,9 @@ const MobileView = () => {
                     }}
                     onClick={openMobileMenu}
                 >
-                    MongoDB Developer
+                    <TypographyScale variant="body1">
+                        MongoDB Developer
+                    </TypographyScale>
                     {!mobileMenuIsOpen && (
                         <SystemIcon
                             sx={chevronStylesForMainLink}
