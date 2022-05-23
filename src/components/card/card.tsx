@@ -91,6 +91,26 @@ const Card: React.FunctionComponent<CardProps> = ({
                                 }}
                                 layout="fill"
                             />
+                            {pillCategory === 'Video' && (
+                                <div
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        height: '100%',
+                                    }}
+                                >
+                                    <Image
+                                        alt={'Play Button'}
+                                        src={
+                                            getURLPath(
+                                                '/play-button.svg'
+                                            ) as string
+                                        }
+                                        width={60}
+                                        height={60}
+                                    ></Image>
+                                </div>
+                            )}
                         </div>
                     )}
                 <div>
