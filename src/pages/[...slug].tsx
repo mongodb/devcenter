@@ -379,7 +379,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         description={parseUndefinedValue(description)}
                         heading={title}
                     />
-                    {!ratingSectionCondition && ratingSection}
+                    {!ratingSectionCondition(category) && ratingSection}
                 </div>
             </div>
             {series && (
