@@ -135,7 +135,7 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
-        - HOST_URL=mongodb.com
+        - HOST_URL=www.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
@@ -313,7 +313,7 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
-        - HOST_URL=mongodb.com
+        - HOST_URL=www.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
@@ -376,7 +376,7 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
-        - HOST_URL=mongodb.com
+        - HOST_URL=www.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
         - STRAPI_URL
