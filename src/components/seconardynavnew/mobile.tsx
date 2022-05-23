@@ -364,15 +364,29 @@ const MobileView = () => {
                         ) : (
                             <>
                                 <div sx={DropDownStyles}>
-                                    <FloraLink
-                                        sx={{
-                                            ...StylesFloraLink,
-                                            paddingLeft: 0,
-                                        }}
-                                        href={getURLPath(slug)}
-                                    >
-                                        {name}
-                                    </FloraLink>
+                                    {slug.indexOf('http://') == 0 ||
+                                    slug.indexOf('https://') == 0 ? (
+                                        <FloraLink
+                                            sx={{
+                                                ...StylesFloraLink,
+                                                paddingLeft: 0,
+                                            }}
+                                            target="_blank"
+                                            href={getURLPath(slug)}
+                                        >
+                                            {name}
+                                        </FloraLink>
+                                    ) : (
+                                        <FloraLink
+                                            sx={{
+                                                ...StylesFloraLink,
+                                                paddingLeft: 0,
+                                            }}
+                                            href={getURLPath(slug)}
+                                        >
+                                            {name}
+                                        </FloraLink>
+                                    )}
                                 </div>
                             </>
                         )}
