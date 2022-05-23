@@ -94,8 +94,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
 
-    const contentTypeTitle = contentType + contentTypeSlug.slice(2);
-    const pageTitle = `${topicName} ${contentTypeTitle} | MongoDB`;
+    const pageTitle = `${topicName} ${pluralize(contentType)} | MongoDB`;
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
