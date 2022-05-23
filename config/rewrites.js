@@ -103,10 +103,6 @@ const rewrites = [
         destination: `${process.env.DEVHUB_URL}/community-champions/rodrigo-nascimento/`,
     },
     {
-        source: '/tag/ios',
-        destination: `${process.env.DEVHUB_URL}/tag/ios/`,
-    },
-    {
         source: '/tag/remote-work',
         destination: `${process.env.DEVHUB_URL}/tag/remote-work/`,
     },
@@ -129,6 +125,16 @@ const rewrites = [
         source: '/images/bios/:image.jpg',
         destination: `${process.env.DEVHUB_URL}/images/bios/:image.jpg`,
         regex: '^/images/bios/(.+)\\.jpg$',
+    },
+    {
+        source: '/images/community/:image.jpg',
+        destination: `${process.env.DEVHUB_URL}/images/community/:image.jpg`,
+        regex: '^/images/community/(.+)\\.jpg$',
+    },
+    {
+        source: '/static/:image.jpg',
+        destination: `${process.env.DEVHUB_URL}/static/:image.jpg`,
+        regex: '^/static/(.+)\\.jpg$',
     },
     {
         source: '/images/atf-images/:image*.png',

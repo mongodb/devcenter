@@ -90,6 +90,26 @@
         "permanent": true
     },
     {
+        "source": "/languages/javascript/node-aggregation-framework-3-3-2",
+        "destination": "/languages/javascript/node-aggregation-framework/",
+        "permanent": true
+    },
+    {
+        "source": "/languages/javascript/node-connect-mongodb-3-3-2",
+        "destination": "/languages/javascript/node-connect-mongodb/",
+        "permanent": true
+    },
+    {
+        "source": "/languages/javascript/node-transactions-3-3-2",
+        "destination": "/languages/javascript/node-transactions/",
+        "permanent": true
+    },
+    {
+        "source": "/languages/javascript/nodejs-change-streams-triggers-3-3-2",
+        "destination": "/languages/javascript/nodejs-change-streams-triggers/",
+        "permanent": true
+    },
+    {
         "source": "/article/build-newsletter-website-mongodb-data-platform",
         "destination": "/products/realm/build-newsletter-website-mongodb-data-platform/",
         "permanent": true
