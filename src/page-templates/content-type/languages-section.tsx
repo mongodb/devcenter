@@ -53,6 +53,7 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
                                 image={image}
                                 titleLink={titleLink}
                                 sx={{ width: '100%' }}
+                                wholeCardHref={titleLink.url}
                             />
                         );
                     })}

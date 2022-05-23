@@ -20,4 +20,5 @@ export const showcaseCardWrapper = {
         borderColor: theme.colors.card.default.borderDarker,
         boxShadow: 'level03',
     },
+    position: 'relative' as 'relative',
 };

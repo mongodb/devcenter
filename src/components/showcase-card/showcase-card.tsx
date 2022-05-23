@@ -13,16 +13,30 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
     className,
     links,
     defaultLink,
+    wholeCardHref,
 }) => {
     const smallImage = !description && !cta && image;
     const imageDimensions = smallImage ? ['40px', null, '56px'] : '72px';
     const gap = smallImage ? ['inc40', null, null, null, 'inc50'] : 'inc50';
     const alignItems = alignment === 'center' ? 'center' : 'start';
+    const cursor = wholeCardHref ? 'pointer' : 'default';
     return (
         <div
-            sx={{ ...showcaseCardWrapper, alignItems, gap }}
+            sx={{ ...showcaseCardWrapper, alignItems, gap, cursor }}
             className={className}
         >
+            {wholeCardHref && (
+                <a
+                    href={getURLPath(wholeCardHref)}
+                    sx={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        left: 0,
+                        top: 0,
+                    }}
+                />
+            )}
             {image && (
                 <div
                     sx={{

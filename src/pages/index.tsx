@@ -290,6 +290,7 @@ const Home = () => {
                                     alignment="center"
                                     titleLink={titleLink}
                                     image={getImage(imageString)}
+                                    wholeCardHref={titleLink.url}
                                 />
                             </div>
                         )
