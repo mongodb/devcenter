@@ -15,11 +15,7 @@ export const createTopicPageCTAS = (ctas: CTA[]) => {
                                   <Button
                                       key={cta.text}
                                       href={cta.url}
-                                      variant={
-                                          ctas.length > 1
-                                              ? 'secondary'
-                                              : 'primary'
-                                      }
+                                      variant="secondary"
                                       size="large"
                                       target="_blank" // Flora doesn't add rel="noopener", so maybe we can contribute that.
                                   >

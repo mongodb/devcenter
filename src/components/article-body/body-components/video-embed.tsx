@@ -59,7 +59,6 @@ export const VideoEmbed = ({
                 }}
                 controls
                 light={thumbnail}
-                playing
                 url={value}
                 width="100%"
                 height="100%"

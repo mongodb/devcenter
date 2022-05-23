@@ -5,14 +5,13 @@ import Card from '.';
 import { CardProps } from './types';
 import { getCardProps } from './utils';
 import { ContentItem } from '../../interfaces/content-item';
-import {
-    MOCK_ARTICLE_TAGS,
-    MOCK_ARTICLE_TAGS_ATLAS,
-} from '../../mockdata/mock-tags';
+import { MOCK_ARTICLE_TAGS } from '../../mockdata/mock-tags';
 import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 
 const cardContent: ContentItem = {
-    authors: ['Farah Appleseed'],
+    authors: [
+        { name: 'Farah Appleseed', calculated_slug: '/author/farah-appleseed' },
+    ],
     category: 'Article',
     image: {
         alt: 'thumbnail',
@@ -31,7 +30,9 @@ const cardContent: ContentItem = {
 
 const expectedProps: CardProps = {
     slug: 'product/atlas/v1',
-    authors: ['Farah Appleseed'],
+    authors: [
+        { name: 'Farah Appleseed', calculated_slug: '/author/farah-appleseed' },
+    ],
     pillCategory: 'Article',
     thumbnail: {
         alt: 'thumbnail',
@@ -62,9 +63,9 @@ test('renders large', () => {
     const description = screen.queryByText(cardContent.description as string);
     expect(description).toBeInTheDocument();
 
-    // cardContent.tags.forEach(tag => {
-    //     expect(screen.queryByText(tag)).toBeInTheDocument();
-    // });
+    cardContent.tags.forEach(tag => {
+        expect(screen.queryByText(tag.name)).toBeInTheDocument();
+    });
 
     const pill = screen.queryByText(cardContent.category);
     expect(pill).toBeInTheDocument();
@@ -76,7 +77,7 @@ test('renders large', () => {
 
     expect(cardContent.image).toBeDefined();
     if (cardContent.image) {
-        const image = screen.queryByAltText(cardContent.image.alt);
+        const image = screen.queryByAltText(cardContent.image.alt as string);
         expect(image).toBeInTheDocument();
     }
 });
@@ -92,7 +93,7 @@ test('renders medium', () => {
     expect(description).toBeNull();
 
     cardContent.tags.forEach(tag => {
-        expect(screen.queryByText(tag.name)).toBeNull();
+        expect(screen.queryByText(tag.name)).toBeInTheDocument();
     });
 
     const pill = screen.queryByText(cardContent.category);
@@ -105,7 +106,7 @@ test('renders medium', () => {
 
     expect(cardContent.image).toBeDefined();
     if (cardContent.image) {
-        const image = screen.queryByAltText(cardContent.image.alt);
+        const image = screen.queryByAltText(cardContent.image.alt as string);
         expect(image).toBeInTheDocument();
     }
 });
@@ -134,7 +135,7 @@ test('renders small', () => {
 
     expect(cardContent.image).toBeDefined();
     if (cardContent.image) {
-        const image = screen.queryByAltText(cardContent.image.alt);
+        const image = screen.queryByAltText(cardContent.image.alt as string);
         expect(image).toBeInTheDocument();
     }
 });
@@ -163,7 +164,7 @@ test('renders list', () => {
 
     expect(cardContent.image).toBeDefined();
     if (cardContent.image) {
-        const image = screen.queryByAltText(cardContent.image.alt);
+        const image = screen.queryByAltText(cardContent.image.alt as string);
         expect(image).toBeInTheDocument();
     }
 });
@@ -192,7 +193,7 @@ test('renders related', () => {
 
     expect(cardContent.image).toBeDefined();
     if (cardContent.image) {
-        const image = screen.queryByAltText(cardContent.image.alt);
+        const image = screen.queryByAltText(cardContent.image.alt as string);
         expect(image).toBeNull();
     }
 });

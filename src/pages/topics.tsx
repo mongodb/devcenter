@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import { NextSeo } from 'next-seo';
 import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { getURLPath } from '../utils/format-url-path';
 import Hero from '../components/hero';
@@ -77,6 +78,7 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
 
     return (
         <>
+            <NextSeo title={'All Topics | MongoDB'} />
             <Hero crumbs={crumbs} name="All Topics" />
             <GridLayout
                 sx={{

@@ -47,15 +47,31 @@ const DropDownMenuList = styled.ul`
         a:not(:last-child) {
             margin-bottom: ${theme.space.inc40};
         }
+
+        li:nth-of-type(3) {
+            padding-bottom: 0;
+        }
+
+        li:nth-of-type(4) {
+            padding-bottom: 0;
+        }
     }
 
     li {
-        padding-top: ${theme.space.inc30};
-        padding-bottom: ${theme.space.inc30};
+        padding-bottom: ${theme.space.inc50};
         position: relative;
         a:hover {
             color: ${theme.colors.green40};
         }
+
+        ul {
+            margin-top: ${theme.space.inc50};
+            margin-bottom: ${theme.space.inc30};
+        }
+    }
+
+    li:nth-of-type(2) {
+        margin-right: 0;
     }
 `;
 
@@ -81,6 +97,7 @@ const SubLinks = styled.ul`
         display: grid;
         grid-column-gap: ${theme.space.inc50};
         grid-template-columns: repeat(3, 1fr);
+        margin-right: ${theme.space.inc30};
     }
 `;
 
@@ -111,23 +128,12 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                         href={getURLPath(slug)}
                                         sx={{
                                             ...aLinkStyles,
-                                            fontWeight: [
-                                                null,
-                                                null,
-                                                null,
-                                                '700',
-                                                '700',
-                                            ],
                                         }}
                                         key={name}
                                     >
-                                        {l1Product ? (
-                                            <strong>{name}</strong>
-                                        ) : (
-                                            name
-                                        )}
+                                        {l1Product ? { name } : name}
                                     </a>
-                                    {dropDownItems && (
+                                    {!!dropDownItems?.length && (
                                         <ul>
                                             {dropDownItems?.map(
                                                 ({ name, slug }) => (
@@ -152,6 +158,10 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                     </SubLinks>
                     {all && (
                         <FloraLink
+                            sx={{
+                                display: 'inline-block',
+                                marginBottom: theme.space.inc50,
+                            }}
                             href={getURLPath(path)}
                             inverse
                             linkIcon="chevron"
@@ -193,7 +203,7 @@ const StylesDropDownWrapper = {
     backgroundColor: ['#fff', '#fff', '#fff', theme.colors.blue80],
     color: ['#000', '#000', '#000', theme.colors.text.inverse],
     left: [null, null, null, 0],
-    marginTop: [null, null, null, theme.space.elementXSmall],
+    top: [null, null, null, '66px', '70px', '70px'],
     position: ['initial', 'initial', 'initial', 'absolute'] as [
         'initial',
         'initial',

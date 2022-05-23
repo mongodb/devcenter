@@ -158,7 +158,7 @@ const Home = () => {
                         }}
                     >
                         <Link
-                            href="/developer/languages"
+                            href={getURLPath('/languages')}
                             linkIcon="arrow"
                             linkIconDisableExpand={true}
                         >
@@ -168,7 +168,7 @@ const Home = () => {
                 </div>
 
                 {cardsLanguagesData?.map(
-                    ({ titleLink, href, imageString, cta, links }) => (
+                    ({ titleLink, imageString, cta, links }) => (
                         <div
                             sx={{
                                 gridColumn: [
@@ -181,6 +181,7 @@ const Home = () => {
                             key={titleLink.text}
                         >
                             <ShowcaseCard
+                                defaultLink
                                 sx={{ backgroundColor: 'white' }}
                                 alignment="left"
                                 titleLink={titleLink}
@@ -191,8 +192,8 @@ const Home = () => {
                                         imageWidth="150px"
                                     />
                                 }
-                                cta={cta}
                                 links={links}
+                                cta={cta}
                             />
                         </div>
                     )
@@ -205,7 +206,7 @@ const Home = () => {
                     }}
                 >
                     <Link
-                        href="/developer/languages"
+                        href={getURLPath('/languages')}
                         linkIcon="arrow"
                         linkIconDisableExpand={true}
                     >
@@ -262,7 +263,7 @@ const Home = () => {
                             }}
                         >
                             <Link
-                                href="/developer/technologies"
+                                href={getURLPath('/technologies')}
                                 linkIcon="arrow"
                                 linkIconDisableExpand={true}
                             >
@@ -301,7 +302,7 @@ const Home = () => {
                         }}
                     >
                         <Link
-                            href="/developer/technologies"
+                            href={getURLPath('/technologies')}
                             linkIcon="arrow"
                             linkIconDisableExpand={true}
                         >
@@ -318,7 +319,7 @@ const Home = () => {
                                 'span 8',
                                 'span 12',
                             ],
-                            marginTop: theme.space.inc50,
+                            marginTop: theme.space.inc90,
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
@@ -334,7 +335,7 @@ const Home = () => {
                             }}
                         >
                             <Link
-                                href="/developer/languages"
+                                href={getURLPath('/products')}
                                 linkIcon="arrow"
                                 linkIconDisableExpand={true}
                             >
@@ -346,11 +347,10 @@ const Home = () => {
                     {cardsProductsData?.map(
                         ({
                             titleLink,
-                            href,
                             imageString,
-                            cta,
                             links,
                             description,
+                            cta,
                         }) => (
                             <div
                                 sx={{
@@ -364,11 +364,16 @@ const Home = () => {
                                 key={titleLink.text}
                             >
                                 <ShowcaseCard
-                                    sx={{ backgroundColor: 'white' }}
+                                    defaultLink
+                                    sx={{
+                                        backgroundColor: 'white',
+                                        minHeight: '566px',
+                                    }}
                                     alignment="left"
                                     description={description}
                                     titleLink={titleLink}
                                     image={getImage(imageString)}
+                                    cta={cta}
                                     links={links}
                                 />
                             </div>
@@ -382,7 +387,7 @@ const Home = () => {
                         }}
                     >
                         <Link
-                            href="/developer/languages"
+                            href={getURLPath('/products')}
                             linkIcon="arrow"
                             linkIconDisableExpand={true}
                         >

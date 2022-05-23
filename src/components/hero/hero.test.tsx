@@ -38,7 +38,7 @@ test('renders hero', () => {
     expect(firstCrumb).toBeInTheDocument();
 
     // Text
-    const title = screen.getByRole('heading', { level: 2 });
+    const title = screen.getByRole('heading', { level: 1 });
     expect(title).toHaveTextContent(name);
 
     const descriptionBlock = screen.getByText(description);
