@@ -88,6 +88,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
                     href={getURLPath(cta.url)}
                     linkIcon="chevron"
                     linkIconDisableExpand={true}
+                    sx={{ marginTop: 'auto' }}
                 >
                     {cta.text}
                 </Link>
