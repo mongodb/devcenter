@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
 
     // Handles consistent navigation search as well as
     // redirect for /learn page.
-    if (pathname == '/learn') {
+    if (pathname == '/learn/') {
         const s = req.nextUrl.searchParams.get('text');
         if (s && s.length > 0) {
             const { href, search } = req.nextUrl;
@@ -36,7 +36,7 @@ export async function middleware(req: NextRequest) {
             }
         }
 
-        if (pathname == rewrite.source) {
+        if (pathname == rewrite.source || pathname == `${rewrite.source}/`) {
             destination = rewrite.destination;
         }
 
