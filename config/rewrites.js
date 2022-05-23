@@ -35,10 +35,6 @@ const rewrites = [
         destination: `${process.env.DEVHUB_URL}/community/art-of-creating-talk/`,
     },
     {
-        source: '/community/creating-stunning-slides',
-        destination: `${process.env.DEVHUB_URL}/community/creating-stunning-slides/`,
-    },
-    {
         source: '/community/surviving-the-stage',
         destination: `${process.env.DEVHUB_URL}/community/surviving-the-stage/`,
     },
