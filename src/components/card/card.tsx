@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { TypographyScale, Pill, HorizontalRule } from '@mdb/flora';
+import Truncate from 'react-truncate';
 
 import AuthorLockup from '../author-lockup';
 
@@ -39,6 +40,8 @@ const Card: React.FunctionComponent<CardProps> = ({
     variant,
     slug,
 }) => {
+    const truncatedDescription =
+        description && parse(description ? description : '');
     const displayDate = formatDateToDisplayDateFormat(new Date(contentDate));
     let secondaryTagElement = null;
     if (tags && pillCategory === 'Code Example') {
@@ -131,7 +134,9 @@ const Card: React.FunctionComponent<CardProps> = ({
                             variant="body2"
                             sx={descriptionStyles(variant, pillCategory)}
                         >
-                            {parse(description ? description : '')}
+                            <Truncate lines={4} ellipsis={<span>...</span>}>
+                                {truncatedDescription}
+                            </Truncate>
                         </TypographyScale>
                     )}
                     {hasTags(variant) && tags && (

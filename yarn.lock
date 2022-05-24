@@ -1277,6 +1277,28 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha1-XxnSuFqY6VWANvajysyIGUIPBc8=
 
+"@types/react-dom@17.0.2":
+  version "17.0.2"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react-dom/-/react-dom-17.0.2.tgz#35654cf6c49ae162d5bc90843d5437dc38008d43"
+  integrity sha1-NWVM9sSa4WLVvJCEPVQ33DgAjUM=
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-truncate@2.3.4":
+  version "2.3.4"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react-truncate/-/react-truncate-2.3.4.tgz#1d5002e71e393b81b7877a147992a050f40075fa"
+  integrity sha1-HVAC5x45O4G3h3oUeZKgUPQAdfo=
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@17.0.2":
+  version "17.0.2"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react/-/react-17.0.2.tgz#3de24c4efef902dd9795a49c75f760cbe4f7a5a8"
+  integrity sha1-PeJMTv75At2XlaScdfdgy+T3pag=
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^3.0.2"
+
 "@types/react@17.0.38":
   version "17.0.38"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
@@ -5185,6 +5207,11 @@ react-property@2.0.0:
   version "2.0.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/react-property/-/react-property-2.0.0.tgz#2156ba9d85fa4741faf1918b38efc1eae3c6a136"
   integrity sha1-IVa6nYX6R0H68ZGLOO/B6uPGoTY=
+
+react-truncate@2.4.0:
+  version "2.4.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/react-truncate/-/react-truncate-2.4.0.tgz#3cf5ff09ab86f93e3c078d359f4de6d75aa60510"
+  integrity sha1-PPX/CauG+T48B401n03m11qmBRA=
 
 react@17.0.2:
   version "17.0.2"
