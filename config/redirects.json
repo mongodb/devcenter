@@ -1396,7 +1396,7 @@
     },
     {
         "source": "/project/myleg",
-        "destination": "/languages/javascript/myleg/",
+        "destination": "/code-examples/typescript/myleg/",
         "permanent": true
     },
     {
@@ -1441,7 +1441,7 @@
     },
     {
         "source": "/project/EnSat",
-        "destination": "/languages/javascript/ensat/",
+        "destination": "/code-examples/javascript/satellite-code-example-mongodb/",
         "permanent": true
     },
     {
@@ -1476,7 +1476,7 @@
     },
     {
         "source": "/project/magazine-management",
-        "destination": "/languages/javascript/magazine-management/",
+        "destination": "/code-examples/javascript/code-example-js-mongodb-magazinemanagement/",
         "permanent": true
     },
     {
@@ -1496,7 +1496,7 @@
     },
     {
         "source": "/project/trends-analyser",
-        "destination": "/languages/javascript/trends-analyser/",
+        "destination": "/code-examples/typescript/twitter-trend-analyser/",
         "permanent": true
     },
     {

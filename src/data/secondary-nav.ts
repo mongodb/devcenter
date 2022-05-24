@@ -28,7 +28,6 @@ export const secondaryNavData = [
                     { name: 'Azure', slug: '/technologies/azure' },
                     { name: 'AWS', slug: '/technologies/aws' },
                     { name: 'Kubernetes', slug: '/technologies/kubernetes' },
-                    { name: 'Heroku', slug: '/technologies/heroku' },
                     { name: 'Nextjs', slug: '/technologies/nextjs' },
                     { name: 'Nodejs', slug: '/technologies/nodejs' },
                     { name: 'Unity', slug: '/technologies/unity' },
@@ -68,7 +67,7 @@ export const secondaryNavData = [
                     },
                     {
                         name: 'Encryption',
-                        slug: '/products/mongodb/encryption',
+                        slug: '/products/mongodb/security',
                         dropDownItems: [],
                     },
                     {

@@ -450,7 +450,10 @@ const Search: NextPage<SearchProps> = ({
 
     return (
         <>
-            <NextSeo title={'Search | MongoDB'} />
+            <NextSeo
+                title={'Search | MongoDB'}
+                noindex={router.asPath === '/search/' ? false : true}
+            />
             <Hero name="Search" />
             <div sx={pageWrapper}>
                 <GridLayout
