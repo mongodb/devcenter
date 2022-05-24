@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import theme from '@mdb/flora/theme';
 
-import { ESystemIconNames, Link as FloraLink, SystemIcon } from '@mdb/flora';
+import {
+    ESystemIconNames,
+    Link as FloraLink,
+    SystemIcon,
+    TypographyScale,
+} from '@mdb/flora';
 import { secondaryNavData } from '../../data/secondary-nav';
 
 import SecondaryLinksList from './nav-item';
@@ -42,8 +47,7 @@ const hoverLinkStyles = (isActive: boolean) => ({
 
 const MainLinkStyles = (isActive: boolean) => ({
     float: 'left' as 'left',
-    marginRight: 'inc90',
-    fontSize: 'inc30',
+    marginRight: ['inc60', 'inc60', 'inc60', 'inc90', 'inc90', 'inc90'],
     fontWeight: 500,
 
     'span.textlink-default-text-class': {
@@ -127,7 +131,22 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             ],
                         }}
                     >
-                        Developer Center
+                        <TypographyScale
+                            variant="body1"
+                            sx={{
+                                fontSize: [
+                                    '16px',
+                                    '16px',
+                                    '16px',
+                                    '16px',
+                                    '20px',
+                                    '20px',
+                                    '20px',
+                                ],
+                            }}
+                        >
+                            MongoDB Developer
+                        </TypographyScale>
                     </FloraLink>
                 </div>
 

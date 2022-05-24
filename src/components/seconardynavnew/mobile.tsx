@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { secondaryNavData } from '../../data/secondary-nav';
-import { Link as FloraLink } from '@mdb/flora';
+import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from './nav-item';
@@ -61,7 +61,7 @@ const DropDownButton = ({
     );
 };
 
-const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
+const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(!isOpen);
@@ -163,7 +163,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                     {!!all && (
                                         <li key={all}>
                                             <a
-                                                href={getURLPath(slug)}
+                                                href={getURLPath(path)}
                                                 sx={{
                                                     ...aLinkStyles,
                                                     display: 'flex',
@@ -326,7 +326,9 @@ const MobileView = () => {
                     }}
                     onClick={openMobileMenu}
                 >
-                    MongoDB Developer
+                    <TypographyScale variant="body1">
+                        MongoDB Developer
+                    </TypographyScale>
                     {!mobileMenuIsOpen && (
                         <SystemIcon
                             sx={chevronStylesForMainLink}

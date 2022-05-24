@@ -5,7 +5,7 @@ import { getURLPath } from '../../utils/format-url-path';
 
 export interface DropDownItem {
     name: string;
-    slug: string;
+    slug?: string;
     all: string;
     path: string;
     dropDownItems: DropDownItem2[];
