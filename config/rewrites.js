@@ -31,6 +31,14 @@ const rewrites = [
         destination: `${process.env.DEVHUB_URL}/article/introduction-to-modern-databases-mongodb-academia/`,
     },
     {
+        source: '/community/creating-stunning-slides',
+        destination: `${process.env.DEVHUB_URL}/community/creating-stunning-slides/`,
+    },
+    {
+        source: '/community/speaker-program',
+        destination: `${process.env.DEVHUB_URL}/community/speaker-program/`,
+    },
+    {
         source: '/community/art-of-creating-talk',
         destination: `${process.env.DEVHUB_URL}/community/art-of-creating-talk/`,
     },
