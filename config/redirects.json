@@ -1395,6 +1395,26 @@
         "permanent": true
     },
     {
+        "source": "/project/EnSat",
+        "destination": "/code-examples/languages/javascript/ensat/",
+        "permanent": true
+    },
+    {
+        "source": "/project/magazine-management",
+        "destination": "/code-examples/languages/javascript/magazine-management/",
+        "permanent": true
+    },
+    {
+        "source": "/project/trends-analyser",
+        "destination": "/code-examples/languages/javascript/trends-analyzer/",
+        "permanent": true
+    },
+    {
+        "source": "/project/myleg",
+        "destination": "/code-examples/languages/javascript/myleg/",
+        "permanent": true
+    },
+    {
         "source": "/product/mobile",
         "destination": "/products/realm/mobile/",
         "permanent": true
