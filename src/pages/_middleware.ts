@@ -4,11 +4,6 @@ import { rewrites } from '../../config/rewrites';
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
-    // Rewrite homepage to have trailing slash for SEO reasons.
-    if (pathname == '/developer') {
-        return NextResponse.rewrite(req.nextUrl.href + 'developer/');
-    }
-
     // Handles consistent navigation search as well as
     // redirect for /learn page.
     if (pathname == '/learn/') {
