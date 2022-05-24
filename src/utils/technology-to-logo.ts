@@ -35,6 +35,7 @@ export const technologyToLogo: { [key: string]: EThirdPartyLogoVariant } = {
     RaspberryPi: EThirdPartyLogoVariant.RASPBERRY_PI, // Incorrect
     'Raspberry Pi': EThirdPartyLogoVariant.RASPBERRY_PI,
     React: EThirdPartyLogoVariant.REACT,
+    'React Native': EThirdPartyLogoVariant.REACT,
     SQL: EThirdPartyLogoVariant.SQL,
     Spark: EThirdPartyLogoVariant.SPARK,
     Svelte: EThirdPartyLogoVariant.SVELTE,
