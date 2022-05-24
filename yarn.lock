@@ -1277,6 +1277,22 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha1-XxnSuFqY6VWANvajysyIGUIPBc8=
 
+"@types/react-truncate@^2.3.4":
+  version "2.3.4"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react-truncate/-/react-truncate-2.3.4.tgz#1d5002e71e393b81b7877a147992a050f40075fa"
+  integrity sha1-HVAC5x45O4G3h3oUeZKgUPQAdfo=
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*":
+  version "18.0.9"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react/-/react-18.0.9.tgz#d6712a38bd6cd83469603e7359511126f122e878"
+  integrity sha1-1nEqOL1s2DRpYD5zWVERJvEi6Hg=
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
 "@types/react@17.0.38":
   version "17.0.38"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
