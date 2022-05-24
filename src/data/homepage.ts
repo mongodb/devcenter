@@ -216,7 +216,7 @@ export const cardsProductsData = [
             },
             {
                 text: 'GraphQL Integration',
-                url: '/technologies/graphQL',
+                url: '/technologies/graphql',
             },
         ],
     },
