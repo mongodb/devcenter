@@ -40,6 +40,8 @@ const Card: React.FunctionComponent<CardProps> = ({
     variant,
     slug,
 }) => {
+    const truncatedDescription =
+        description && parse(description ? description : '');
     const displayDate = formatDateToDisplayDateFormat(new Date(contentDate));
     let secondaryTagElement = null;
     if (tags && pillCategory === 'Code Example') {
@@ -133,7 +135,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                             sx={descriptionStyles(variant, pillCategory)}
                         >
                             <Truncate lines={4} ellipsis={<span>...</span>}>
-                                {parse(description ? description : '')}
+                                {truncatedDescription}
                             </Truncate>
                         </TypographyScale>
                     )}
