@@ -61,7 +61,7 @@ const DropDownButton = ({
     );
 };
 
-const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
+const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(!isOpen);
@@ -163,7 +163,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                     {!!all && (
                                         <li key={all}>
                                             <a
-                                                href={getURLPath(slug)}
+                                                href={getURLPath(path)}
                                                 sx={{
                                                     ...aLinkStyles,
                                                     display: 'flex',
