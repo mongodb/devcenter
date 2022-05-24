@@ -195,6 +195,7 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
                         />
                     )}
                     <Search
+                        titleElement="h1"
                         title={`All ${topicName} ${pluralize(contentType)}`}
                         placeholder={`Search ${topicName} ${pluralize(
                             contentType

@@ -229,6 +229,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         <>
             <div sx={middleSectionStyles}>
                 <TypographyScale
+                    customElement="h1"
                     variant="heading2"
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc30'],

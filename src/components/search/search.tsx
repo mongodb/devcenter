@@ -20,6 +20,7 @@ import ExpandingLink from '../expanding-link';
 import noResults from '../../../public/no-results.png';
 
 const Search: React.FunctionComponent<SearchProps> = ({
+    titleElement = 'h5',
     className,
     tagSlug = '',
     contentType = '',
@@ -113,7 +114,12 @@ const Search: React.FunctionComponent<SearchProps> = ({
     return (
         <form role="search" className={className}>
             <div sx={titleStyles}>
-                <TypographyScale variant="heading5">{title}</TypographyScale>
+                <TypographyScale
+                    variant="heading5"
+                    customElement={titleElement}
+                >
+                    {title}
+                </TypographyScale>
                 {titleLink && (
                     <ExpandingLink
                         {...titleLink}
