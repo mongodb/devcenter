@@ -11,12 +11,12 @@ export const getURLPath = (url: string | undefined) => {
     const basePath = '/developer';
     if (!url.startsWith(basePath)) {
         if (url[0] !== '/') {
-            return `${basePath}/${url}`;
+            return `${basePath}/${url}/`;
         } else {
-            return basePath + url;
+            return basePath + url + '/';
         }
     }
-    return url;
+    return url + '/';
 };
 
 /**
