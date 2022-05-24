@@ -9,14 +9,21 @@ export const getURLPath = (url: string | undefined) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0)
         return url;
     const basePath = '/developer';
+
+    let urlPath = url;
     if (!url.startsWith(basePath)) {
         if (url[0] !== '/') {
-            return `${basePath}/${url}/`;
+            urlPath = `${basePath}/${url}`;
         } else {
-            return basePath + url + '/';
+            urlPath = basePath + url;
         }
     }
-    return url + '/';
+
+    if (urlPath[urlPath.length - 1] !== '/') {
+        urlPath += '/';
+    }
+
+    return urlPath;
 };
 
 /**
