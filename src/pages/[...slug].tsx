@@ -434,17 +434,18 @@ const ContentPage: NextPage<ContentPageProps> = ({
         handle: seo?.twitter_creator,
         site: seo?.twitter_site,
     };
-    let canonicalUrl = seo?.canonical_url
+    const canonicalUrl = seo?.canonical_url
         ? seo?.canonical_url
         : publicRuntimeConfig.absoluteBasePath + router.asPath;
+    const metaDescription = seo?.meta_description
+        ? seo.meta_description
+        : publicRuntimeConfig.pageDescriptions['/'];
 
     return (
         <>
             <NextSeo
                 title={`${title} | MongoDB`}
-                {...(seo?.meta_description && {
-                    description: seo.meta_description,
-                })}
+                description={metaDescription}
                 canonical={canonicalUrl}
                 openGraph={og}
                 twitter={twitter}
