@@ -12,10 +12,16 @@ import Layout from '../components/layout';
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
+    const { asPath, route } = router;
+
+    let pageDescription = null;
+    if (asPath in publicRuntimeConfig.pageDescriptions) {
+        pageDescription = publicRuntimeConfig.pageDescriptions[asPath];
+    }
 
     let canonicalUrl = null;
-    if (router.route !== '/_error' && router.route !== '/[...slug]') {
-        canonicalUrl = publicRuntimeConfig.absoluteBasePath + router.asPath;
+    if (route !== '/_error' && route !== '/[...slug]') {
+        canonicalUrl = publicRuntimeConfig.absoluteBasePath + asPath;
     }
 
     // Is used to track route changes and send page views to Google Tag Manager
@@ -30,7 +36,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <>
             <Head>
                 <title>MongoDB Developer Center</title>
-                <meta name="description" content="MongoDB Developer Center" />
+                {pageDescription && (
+                    <meta name="description" content={pageDescription} />
+                )}
                 <link rel="icon" href="/developer/favicon.ico" />
                 {canonicalUrl && (
                     <link rel="canonical" href={`${canonicalUrl}`} />

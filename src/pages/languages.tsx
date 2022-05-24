@@ -196,7 +196,10 @@ export const getStaticProps: GetStaticProps<{
         ({ slug }) => slug === '/languages/csharp'
     )[0];
     const c = languages.filter(({ slug }) => slug === '/languages/c')[0];
-    const featured = [js, java, csharp, c].filter(lang => !!lang);
+    const python = languages.filter(
+        ({ slug }) => slug === '/languages/python'
+    )[0];
+    const featured = [js, java, csharp, c, python].filter(lang => !!lang);
 
     return { props: { languages, featured } };
 };

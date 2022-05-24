@@ -3,7 +3,7 @@ service:
   targetPort: 3000
 
 env:
-  HOST_URL: mongodb.com
+  HOST_URL: www.mongodb.com
 
 envSecrets:
   NPM_EMAIL: devcenter-secrets

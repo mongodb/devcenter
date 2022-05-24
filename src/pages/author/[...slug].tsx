@@ -1,4 +1,5 @@
 import type { NextPage, GetStaticProps } from 'next';
+import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import { getAllAuthors } from '../../service/get-all-authors';
 import { Author, Image } from '../../interfaces/author';
@@ -100,6 +101,12 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
     };
     return (
         <>
+            <NextSeo
+                title={`${name} Articles | MongoDB`}
+                {...(bio && {
+                    description: bio,
+                })}
+            />
             <div
                 sx={{
                     //paddingBottom: 'inc160',
