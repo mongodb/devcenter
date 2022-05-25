@@ -4,6 +4,7 @@ import { TypographyScale } from '@mdb/flora';
 import { avatarPlaceholder, profileImage } from './styles';
 import { getInitials } from './utils';
 import { AuthorImageProps } from './types';
+import { getURLPath } from '../../utils/format-url-path';
 
 const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
     author,
@@ -36,7 +37,7 @@ const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
             <Image
                 sx={profileImage(size)}
                 layout="fill"
-                src={src}
+                src={getURLPath(src) as string}
                 alt={alt || ''}
             />
         </div>
