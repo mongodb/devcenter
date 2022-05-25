@@ -45,3 +45,6 @@ yarn-error.log*
 
 # editors
 .vscode
+
+# RSS feed generated at build time.
+rss.xml
