@@ -16,11 +16,15 @@ const configVals = {
     headers: async () => {
         return [
             {
-                source: '/:path*{/}?', // all pages
+                source: '/:path*', // all pages
                 headers: [
                     {
                         key: 'Cache-Control',
                         value: 'max-age=3600',
+                    },
+                    {
+                        key: 'Strict-Transport-Security',
+                        value: 'max-age=63072000; includeSubDomains; preload',
                     },
                 ],
             },
