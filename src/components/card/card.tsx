@@ -39,6 +39,7 @@ const Card: React.FunctionComponent<CardProps> = ({
     thumbnail,
     variant,
     slug,
+    hideTagsOnMobile = true,
 }) => {
     const truncatedDescription =
         description && parse(description ? description : '');
@@ -142,7 +143,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                     {hasTags(variant) && tags && (
                         <TagSection
                             tags={tags}
-                            disappearOnMobile={true}
+                            disappearOnMobile={hideTagsOnMobile}
                             sx={{
                                 marginTop: variant === 'medium' ? 'inc30' : 0,
                             }}

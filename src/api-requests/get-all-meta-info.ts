@@ -13,6 +13,7 @@ export const getAllL1ProductsMetaInfo = async (
                 slug: calculated_slug
                 primary_cta
                 secondary_cta
+                documentation_link
             }
         }
     `;
@@ -33,6 +34,7 @@ export const getAllL2ProductsMetaInfo = async (
                 slug: calculated_slug
                 primary_cta
                 secondary_cta
+                documentation_link
                 l1_product {
                     l_1_product {
                         name
@@ -62,6 +64,7 @@ export const getAllProgrammingLanguagesMetaInfo = async (
                 slug: calculated_slug
                 primary_cta
                 secondary_cta
+                documentation_link
             }
         }
     `;
@@ -88,6 +91,7 @@ export const getAllTechnologiesMetaInfo = async (
                 slug: calculated_slug
                 primary_cta
                 secondary_cta
+                documentation_link
             }
         }
     `;

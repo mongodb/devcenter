@@ -61,6 +61,10 @@ import { Grid } from 'theme-ui';
 import Card from '../components/card';
 import SecondaryTag from '../components/card/secondary-tag';
 import { CodeLevel } from '../types/tag-type';
+import {
+    addExternalIconToSideNav,
+    appendDocumentationLinkToSideNav,
+} from '../utils/add-documentation-link-to-side-nav';
 let pluralize = require('pluralize');
 
 interface ContentPageProps {
@@ -129,11 +133,6 @@ const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
         ? '/developer/videos'
         : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
 };
-
-const parseDescription = (description: string, category: PillCategory) => {
-    return category === 'Podcast' ? parse(description) : description;
-};
-
 const determineVideoOrPodcast = (
     collectionType: CollectionType | undefined
 ) => {
@@ -206,6 +205,11 @@ const ContentPage: NextPage<ContentPageProps> = ({
 
     const authorsToDisplay = parseAuthorsToAuthorLockup(authors);
 
+    tertiaryNavItems = addExternalIconToSideNav(
+        tertiaryNavItems,
+        'documentation'
+    );
+
     const ratingSection = (
         <div
             sx={{
@@ -229,6 +233,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         <>
             <div sx={middleSectionStyles}>
                 <TypographyScale
+                    customElement="h1"
                     variant="heading2"
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc30'],
@@ -329,10 +334,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         whiteSpace: 'pre-wrap',
                     }}
                 >
-                    {parseDescription(
-                        parseUndefinedValue(description),
-                        category
-                    )}
+                    {parse(parseUndefinedValue(description))}
                 </TypographyScale>
             )}
             {vidOrPod && (
@@ -531,20 +533,8 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-// const removesErroringArticles = (contents: ContentItem[]) => {
-//     const removeItems = [
-//         'PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App',
-//         'new-time-series-collections',
-//         'mongodb-charts-embedding-sdk-react/',
-//         'build-movie-search-application',
-//     ];
-
-//     return contents.filter(content => !removeItems.includes(content.title));
-// };
-
 export const getStaticPaths = async () => {
     const contents: ContentItem[] = await getAllContentItems();
-    // const filteredContents = removesErroringArticles(contents);
 
     const paths = contents.map((content: ContentItem) => ({
         params: { slug: content.slug.split('/') },
@@ -592,6 +582,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     setURLPathForNavItems(tertiaryNavItems);
 
     const metaInfoForTopic = await getMetaInfoForTopic(sideNavFilterSlug);
+    tertiaryNavItems = appendDocumentationLinkToSideNav(
+        tertiaryNavItems,
+        metaInfoForTopic
+    );
     const topicSlug = sideNavFilterSlug;
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
 

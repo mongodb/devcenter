@@ -35,7 +35,6 @@ import {
 } from './styles';
 
 import { searchBoxStyles } from '../../components/search/styles';
-import noResults from '../../../public/no-results.png';
 
 import { FeaturedCardSection } from '../../components/card-section';
 
@@ -44,6 +43,7 @@ import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
 
 import { itemInFilters } from './utils';
+import { getURLPath } from '../../utils/format-url-path';
 let pluralize = require('pluralize');
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
@@ -173,7 +173,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             }}
         >
             <div>
-                <NextImage src={noResults}></NextImage>
+                <NextImage
+                    src={getURLPath('/no-results.png') as string}
+                    height={500}
+                    width={500}
+                ></NextImage>
             </div>
             <Button
                 hasIcon={true}

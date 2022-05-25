@@ -3,13 +3,7 @@ import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import { getAllAuthors } from '../../service/get-all-authors';
 import { Author, Image } from '../../interfaces/author';
-import {
-    Button,
-    Eyebrow,
-    GridLayout,
-    SpeakerLockup,
-    TypographyScale,
-} from '@mdb/flora';
+import { Button, GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
 import React, { useState } from 'react';
 import Card, { getCardProps } from '../../components/card';
 import { getAllContentItems } from '../../service/get-all-content';
@@ -17,7 +11,10 @@ import { ContentItem } from '../../interfaces/content-item';
 import { Grid } from 'theme-ui';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import AuthorSocialButtons from '../../components/author-social-buttons';
+import Breadcrumbs from '../../components/breadcrumbs';
+import { Crumb } from '../../components/breadcrumbs/types';
 
+const crumbs: Crumb[] = [{ text: 'MongoDB Developer Center', url: '/' }];
 interface AuthorPageProps {
     name: string;
     bio?: string;
@@ -82,23 +79,23 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
     const titleAndLocation = getTitleAndLocation(title, location);
     const hasSocial = facebook || twitter || linkedin || youtube;
 
-    const LENGTH = articles.length;
-    const DATA = articles;
-    const LIMIT = 8;
-    const SHOW_MORE_INITIAL_STATE = LENGTH > LIMIT;
-
-    const [showMore, setShowMore] = useState(SHOW_MORE_INITIAL_STATE);
-    const [list, setList] = useState(DATA.slice(0, LIMIT));
-    const [index, setIndex] = useState(LIMIT);
-
-    const loadMore = () => {
-        const newIndex = index + LIMIT;
-        const newShowMore = newIndex <= LENGTH - 1;
-        const newList = list.concat(DATA.slice(index, newIndex));
-        setIndex(newIndex);
-        setList(newList);
-        setShowMore(newShowMore);
-    };
+    // const LENGTH = articles.length;
+    // const DATA = articles;
+    // const LIMIT = 8;
+    // const SHOW_MORE_INITIAL_STATE = LENGTH > LIMIT;
+    //
+    // const [showMore, setShowMore] = useState(SHOW_MORE_INITIAL_STATE);
+    // const [list, setList] = useState(DATA.slice(0, LIMIT));
+    // const [index, setIndex] = useState(LIMIT);
+    //
+    // const loadMore = () => {
+    //     const newIndex = index + LIMIT;
+    //     const newShowMore = newIndex <= LENGTH - 1;
+    //     const newList = list.concat(DATA.slice(index, newIndex));
+    //     setIndex(newIndex);
+    //     setList(newList);
+    //     setShowMore(newShowMore);
+    // };
     return (
         <>
             <NextSeo
@@ -109,7 +106,6 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
             />
             <div
                 sx={{
-                    //paddingBottom: 'inc160',
                     px: ['inc40', null, 'inc50', 'inc70'],
                     paddingTop: ['inc40', null, 'inc50', 'inc70'],
                 }}
@@ -119,7 +115,7 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                         rowGap: 0,
                     }}
                 >
-                    <Eyebrow sx={eyebrowStyles}>Developer Topics</Eyebrow>
+                    <Breadcrumbs crumbs={crumbs} />
                     <div sx={middleSectionStyles}>
                         <SpeakerLockup
                             sx={speakerStyles}
@@ -131,6 +127,7 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                             }}
                         />
                         <TypographyScale
+                            customElement="h1"
                             variant="heading2"
                             sx={{
                                 display: 'flex',
@@ -223,7 +220,7 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                                 gap={['inc30', null, 'inc40']}
                                 columns={[1, null, 2, 4]}
                             >
-                                {list.map(piece => (
+                                {articles.map(piece => (
                                     <Card
                                         sx={{ height: '100%' }}
                                         key={piece.slug}
@@ -231,22 +228,22 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                                     />
                                 ))}
                             </Grid>
-                            <div
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    marginTop: ['inc70', null, 'inc90'],
-                                }}
-                            >
-                                {showMore && (
-                                    <Button
-                                        onClick={loadMore}
-                                        variant="secondary"
-                                    >
-                                        Load more
-                                    </Button>
-                                )}
-                            </div>
+                            {/*<div*/}
+                            {/*    sx={{*/}
+                            {/*        display: 'flex',*/}
+                            {/*        justifyContent: 'center',*/}
+                            {/*        marginTop: ['inc70', null, 'inc90'],*/}
+                            {/*    }}*/}
+                            {/*>*/}
+                            {/*    {showMore && (*/}
+                            {/*        <Button*/}
+                            {/*            onClick={loadMore}*/}
+                            {/*            variant="secondary"*/}
+                            {/*        >*/}
+                            {/*            Load more*/}
+                            {/*        </Button>*/}
+                            {/*    )}*/}
+                            {/*</div>*/}
                         </div>
                     </GridLayout>
                 </div>
