@@ -22,17 +22,25 @@ const Results: React.FunctionComponent<ResultsProps> = React.memo(
                 }}
             >
                 {data && (
-                    <div data-testid="search-results" sx={dataStyles(layout)}>
-                        {data.map(item => (
-                            <Card
-                                key={item.slug}
-                                sx={extraCardStyles}
-                                {...getCardProps(
-                                    item,
-                                    layout === 'list' ? 'list' : 'medium'
-                                )}
-                            />
-                        ))}
+                    // Needs to be wrapped in a div because Safari isn't the best with grid...
+                    // https://stackoverflow.com/questions/44770074/css-grid-row-height-safari-bug
+                    <div>
+                        <div
+                            data-testid="search-results"
+                            sx={dataStyles(layout)}
+                        >
+                            {data.map(item => (
+                                <Card
+                                    key={item.slug}
+                                    sx={extraCardStyles}
+                                    hideTagsOnMobile={layout === 'list'}
+                                    {...getCardProps(
+                                        item,
+                                        layout === 'list' ? 'list' : 'medium'
+                                    )}
+                                />
+                            ))}
+                        </div>
                     </div>
                 )}
                 {isLoading ? (
