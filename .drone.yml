@@ -60,7 +60,7 @@ steps:
 
 trigger:
   branch:
-    - ah/misc-fixes
+    - main
   event:
     - push
 
