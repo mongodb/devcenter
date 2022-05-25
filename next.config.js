@@ -13,6 +13,19 @@ const configVals = {
     images: {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
+    headers: async () => {
+        return [
+            {
+                source: '/:all*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'max-age=3600',
+                    },
+                ],
+            },
+        ];
+    },
     redirects: redirects,
     publicRuntimeConfig: {
         absoluteBasePath: `${httpProtocol}://${hostUrl}${basePath}`,
