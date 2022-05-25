@@ -268,7 +268,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             href: slug,
             icon: null,
         }));
-        relatedTopics = relatedTopics.slice(0, 12);
+        relatedTopics = relatedTopics
+            .filter(({ title }) => title !== metaInfoForTopic?.tagName)
+            .slice(0, 12);
     }
 
     const data = {

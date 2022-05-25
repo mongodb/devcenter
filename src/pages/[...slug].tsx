@@ -129,11 +129,6 @@ const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
         ? '/developer/videos'
         : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
 };
-
-const parseDescription = (description: string, category: PillCategory) => {
-    return category === 'Podcast' ? parse(description) : description;
-};
-
 const determineVideoOrPodcast = (
     collectionType: CollectionType | undefined
 ) => {
@@ -229,6 +224,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         <>
             <div sx={middleSectionStyles}>
                 <TypographyScale
+                    customElement="h1"
                     variant="heading2"
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc30'],
@@ -329,10 +325,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         whiteSpace: 'pre-wrap',
                     }}
                 >
-                    {parseDescription(
-                        parseUndefinedValue(description),
-                        category
-                    )}
+                    {parse(parseUndefinedValue(description))}
                 </TypographyScale>
             )}
             {vidOrPod && (

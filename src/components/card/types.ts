@@ -16,4 +16,5 @@ export interface CardProps {
     thumbnail?: Image;
     variant: CardVariant;
     slug: string;
+    hideTagsOnMobile?: boolean;
 }

@@ -20,6 +20,7 @@ export interface ResultsProps {
     layout?: 'list' | 'grid';
 }
 export interface SearchProps {
+    titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
     className?: string;
     tagSlug?: string;
     title: string;
