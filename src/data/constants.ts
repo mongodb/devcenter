@@ -7,3 +7,5 @@ export const L1L2_TOPIC_PAGE_TYPES: TagType[] = [
     'Technology',
     'ExpertiseLevel',
 ];
+
+export const DOCS_UNIVERSAL_LINK = 'https://www.mongodb.com/docs/';

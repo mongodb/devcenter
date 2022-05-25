@@ -9,6 +9,7 @@ export interface MetaInfo {
     slug: string;
     ctas: CTA[];
     topics?: ITopicCard[];
+    documentationLink: string;
 }
 
 interface L1Props2 {
@@ -27,4 +28,5 @@ export interface MetaInfoResponse {
     l1_product?: L1Props;
     primary_cta?: string;
     secondary_cta?: string;
+    documentation_link?: string;
 }

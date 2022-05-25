@@ -12,6 +12,7 @@ import { CTA } from '../components/hero/types';
 import { ITopicCard } from '../components/topic-card/types';
 import { getDistinctTags } from './get-distinct-tags';
 import { TagType } from '../types/tag-type';
+import { DOCS_UNIVERSAL_LINK } from '../data/constants';
 
 export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
     const existingTags = await getDistinctTags();
@@ -99,6 +100,9 @@ const getMetaInfo = (m: MetaInfoResponse): MetaInfo => {
         slug: m.slug,
         ctas: getCTAs(m.primary_cta, m.secondary_cta),
         topics: [],
+        documentationLink: m.documentation_link
+            ? m.documentation_link
+            : DOCS_UNIVERSAL_LINK,
     };
 };
 
