@@ -13,10 +13,10 @@ const configVals = {
     images: {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
-    headers: async () => {
+    async headers() {
         return [
             {
-                source: '/:path*', // all pages
+                source: '/(.*)', // all pages
                 headers: [
                     {
                         key: 'Cache-Control',
