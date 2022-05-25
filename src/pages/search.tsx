@@ -27,11 +27,10 @@ import {
 import { searchBoxStyles } from '../components/search/styles';
 import FilterTag from '../page-templates/content-type/filter-tag';
 
-import { Tag } from '../interfaces/tag';
-import noResults from '../../public/no-results.png';
 import Results from '../components/search/results';
 import { useRouter } from 'next/router';
 import { itemInFilters } from '../page-templates/content-type/utils';
+import { getURLPath } from '../utils/format-url-path';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -330,7 +329,11 @@ const Search: NextPage<SearchProps> = ({
             }}
         >
             <div>
-                <NextImage src={noResults}></NextImage>
+                <NextImage
+                    src={getURLPath('/no-results.png') as string}
+                    height={500}
+                    width={500}
+                ></NextImage>
             </div>
             <Button
                 hasIcon={true}

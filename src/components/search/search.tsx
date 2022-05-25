@@ -16,8 +16,7 @@ import { SearchProps } from './types';
 import { fetcher } from './utils';
 import Results from './results';
 import ExpandingLink from '../expanding-link';
-
-import noResults from '../../../public/no-results.png';
+import { getURLPath } from '../../utils/format-url-path';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     titleElement = 'h5',
@@ -101,7 +100,11 @@ const Search: React.FunctionComponent<SearchProps> = ({
             }}
         >
             <div>
-                <NextImage src={noResults}></NextImage>
+                <NextImage
+                    src={getURLPath('/no-results.png') as string}
+                    height={500}
+                    width={500}
+                ></NextImage>
             </div>
             <TypographyScale>No Results</TypographyScale>
         </div>
