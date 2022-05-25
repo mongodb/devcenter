@@ -41,6 +41,10 @@ import { productToLogo } from '../../../utils/product-to-logo';
 import { getBreadcrumbsFromSlug } from '../../../components/breadcrumbs/utils';
 import { Crumb } from '../../../components/breadcrumbs/types';
 import Breadcrumbs from '../../../components/breadcrumbs';
+import {
+    addExternalIconToSideNav,
+    appendDocumentationLinkToSideNav,
+} from '../../../utils/add-documentation-link-to-side-nav';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -109,6 +113,11 @@ const TopicContentTypePage: NextPage<TopicContentTypePageProps> = ({
         const href = subTopic.href + contentTypeSlug;
         return { ...subTopic, href, icon };
     });
+
+    tertiaryNavItems = addExternalIconToSideNav(
+        tertiaryNavItems,
+        'documentation'
+    );
 
     setURLPathForNavItems(tertiaryNavItems);
 
@@ -293,9 +302,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         })
         .map((contentTypeTag: ContentTypeTag) => contentTypeTag.contentType)[0];
 
-    const tertiaryNavItems = await getSideNav(topicSlug);
+    let tertiaryNavItems = await getSideNav(topicSlug);
 
     const metaInfoForTopic = await getMetaInfoForTopic(topicSlug);
+
+    tertiaryNavItems = appendDocumentationLinkToSideNav(
+        tertiaryNavItems,
+        metaInfoForTopic
+    );
 
     const metaInfoForContentType = await getMetaInfoForTopic(contentTypeSlug);
 

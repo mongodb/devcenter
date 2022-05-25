@@ -35,6 +35,10 @@ import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { productToLogo } from '../../utils/product-to-logo';
 import { getAllMetaInfo } from '../../service/get-all-meta-info';
 import { topicWithIcon } from '../../page-templates/content-type/technologies-section';
+import {
+    addExternalIconToSideNav,
+    appendDocumentationLinkToSideNav,
+} from '../../utils/add-documentation-link-to-side-nav';
 let pluralize = require('pluralize');
 
 interface TopicProps {
@@ -121,6 +125,11 @@ const Topic: NextPage<TopicProps> = ({
             pageTitle = `MongoDB ${name}`;
         }
     }
+
+    tertiaryNavItems = addExternalIconToSideNav(
+        tertiaryNavItems,
+        'documentation'
+    );
 
     return (
         <>
@@ -245,7 +254,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const metaInfoForTopic = await getMetaInfoForTopic(slugString);
 
-    const tertiaryNavItems = await getSideNav(slugString);
+    let tertiaryNavItems = await getSideNav(slugString);
+
+    tertiaryNavItems = appendDocumentationLinkToSideNav(
+        tertiaryNavItems,
+        metaInfoForTopic
+    );
 
     const content = await getL1L2Content(slugString);
 
