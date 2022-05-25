@@ -413,9 +413,3 @@ steps:
 trigger:
   event:
     - cron
-  cron:
-    include:
-    - daily
-    - hourly
-    - nightly
-    - weekly

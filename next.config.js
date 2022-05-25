@@ -13,6 +13,27 @@ const configVals = {
     images: {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
+    async headers() {
+        return [
+            {
+                source: '/(.*)', // all pages
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'max-age=3600',
+                    },
+                    {
+                        key: 'Strict-Transport-Security',
+                        value: 'max-age=63072000; includeSubDomains; preload',
+                    },
+                    {
+                        key: 'X-Frame-Options',
+                        value: 'SAMEORIGIN',
+                    },
+                ],
+            },
+        ];
+    },
     redirects: redirects,
     publicRuntimeConfig: {
         absoluteBasePath: `${httpProtocol}://${hostUrl}${basePath}`,

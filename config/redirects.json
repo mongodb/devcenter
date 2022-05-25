@@ -1805,6 +1805,11 @@
         "permanent": true
     },
     {
+        "source": "/tag/speaker-program",
+        "destination": "https://www.mongodb.com/community",
+        "permanent": true
+    },
+    {
         "source": "/tag/schema-design",
         "destination": "/products/mongodb/schema-design/",
         "permanent": true
