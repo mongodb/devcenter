@@ -79,23 +79,23 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
     const titleAndLocation = getTitleAndLocation(title, location);
     const hasSocial = facebook || twitter || linkedin || youtube;
 
-    const LENGTH = articles.length;
-    const DATA = articles;
-    const LIMIT = 8;
-    const SHOW_MORE_INITIAL_STATE = LENGTH > LIMIT;
-
-    const [showMore, setShowMore] = useState(SHOW_MORE_INITIAL_STATE);
-    const [list, setList] = useState(DATA.slice(0, LIMIT));
-    const [index, setIndex] = useState(LIMIT);
-
-    const loadMore = () => {
-        const newIndex = index + LIMIT;
-        const newShowMore = newIndex <= LENGTH - 1;
-        const newList = list.concat(DATA.slice(index, newIndex));
-        setIndex(newIndex);
-        setList(newList);
-        setShowMore(newShowMore);
-    };
+    // const LENGTH = articles.length;
+    // const DATA = articles;
+    // const LIMIT = 8;
+    // const SHOW_MORE_INITIAL_STATE = LENGTH > LIMIT;
+    //
+    // const [showMore, setShowMore] = useState(SHOW_MORE_INITIAL_STATE);
+    // const [list, setList] = useState(DATA.slice(0, LIMIT));
+    // const [index, setIndex] = useState(LIMIT);
+    //
+    // const loadMore = () => {
+    //     const newIndex = index + LIMIT;
+    //     const newShowMore = newIndex <= LENGTH - 1;
+    //     const newList = list.concat(DATA.slice(index, newIndex));
+    //     setIndex(newIndex);
+    //     setList(newList);
+    //     setShowMore(newShowMore);
+    // };
     return (
         <>
             <NextSeo
@@ -220,7 +220,7 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                                 gap={['inc30', null, 'inc40']}
                                 columns={[1, null, 2, 4]}
                             >
-                                {list.map(piece => (
+                                {articles.map(piece => (
                                     <Card
                                         sx={{ height: '100%' }}
                                         key={piece.slug}
@@ -228,22 +228,22 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                                     />
                                 ))}
                             </Grid>
-                            <div
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    marginTop: ['inc70', null, 'inc90'],
-                                }}
-                            >
-                                {showMore && (
-                                    <Button
-                                        onClick={loadMore}
-                                        variant="secondary"
-                                    >
-                                        Load more
-                                    </Button>
-                                )}
-                            </div>
+                            {/*<div*/}
+                            {/*    sx={{*/}
+                            {/*        display: 'flex',*/}
+                            {/*        justifyContent: 'center',*/}
+                            {/*        marginTop: ['inc70', null, 'inc90'],*/}
+                            {/*    }}*/}
+                            {/*>*/}
+                            {/*    {showMore && (*/}
+                            {/*        <Button*/}
+                            {/*            onClick={loadMore}*/}
+                            {/*            variant="secondary"*/}
+                            {/*        >*/}
+                            {/*            Load more*/}
+                            {/*        </Button>*/}
+                            {/*    )}*/}
+                            {/*</div>*/}
                         </div>
                     </GridLayout>
                 </div>
