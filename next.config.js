@@ -16,7 +16,7 @@ const configVals = {
     headers: async () => {
         return [
             {
-                source: '/:all*',
+                source: '/:path*{/}?', // all pages
                 headers: [
                     {
                         key: 'Cache-Control',
