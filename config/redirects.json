@@ -1156,7 +1156,7 @@
     },
     {
         "source": "/how-to/saving-data-in-unity3d-using-sqlite",
-        "destination": "/languages/csharp/saving-data-in-unity3d-using-sqlite/",
+        "destination": "/code-examples/csharp/saving-data-in-unity3d-using-sqlite/",
         "permanent": true
     },
     {
