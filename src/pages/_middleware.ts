@@ -7,7 +7,8 @@ export async function middleware(req: NextRequest) {
     // Handles consistent navigation search as well as
     // redirect for /learn page.
     if (pathname == '/learn/') {
-        const s = req.nextUrl.searchParams.get('text');
+        const { searchParams } = req.nextUrl;
+        const s = searchParams.get('text');
         if (s && s.length > 0) {
             const { href, search } = req.nextUrl;
             req.nextUrl.href = href.replace(search, '');
@@ -16,6 +17,13 @@ export async function middleware(req: NextRequest) {
             req.nextUrl.searchParams.delete('content');
             req.nextUrl.searchParams.delete('text');
 
+            return NextResponse.redirect(req.nextUrl);
+        } else if (searchParams.get('products') === 'Mobile') {
+            if (searchParams.get('content') === 'articles') {
+                req.nextUrl.pathname = '/products/realm/articles/';
+            } else {
+                req.nextUrl.pathname = '/products/realm/';
+            }
             return NextResponse.redirect(req.nextUrl);
         } else {
             req.nextUrl.pathname = '/';
