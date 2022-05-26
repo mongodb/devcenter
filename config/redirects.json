@@ -1575,11 +1575,6 @@
         "permanent": true
     },
     {
-        "source": "/learn/",
-        "destination": "/developer/",
-        "permanent": true
-    },
-    {
         "source": "/podcasts/welcome-to-the-mongodb-podcast/",
         "destination": "https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624",
         "permanent": true
