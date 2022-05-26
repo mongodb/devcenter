@@ -131,7 +131,7 @@ const Home = () => {
                         color="default"
                     >
                         The latest MongoDB tutorials, videos and code examples
-                        with your languages and tools. A global community of
+                        with your languages and tools . A global community of
                         more than 7 million developers. Build something{' '}
                         {`{big}`} with MongoDB.
                     </TypographyScale>
