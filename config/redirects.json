@@ -20,18 +20,13 @@
         "permanent": true
     },
     {
+        "source": "/article/5-year-atlas-anniversary-episode-1-on-ramp/",
+        "destination": "/products/atlas/5-year-atlas-anniversary-episode-1-on-ramp/",
+        "permanent": true
+    },
+    {
         "source": "/article/7-things-learned-while-modeling-data-youtube-stats/",
         "destination": "/products/mongodb/7-things-learned-while-modeling-data-youtube-stats/",
-        "permanent": true
-    },
-    {
-        "source": "/article/Atlas-Search-vs-regex/",
-        "destination": "/products/atlas/atlas-search-vs-regex/",
-        "permanent": true
-    },
-    {
-        "source": "/article/Paginations_Time_Series_Collections_in_five_minutes/",
-        "destination": "/products/mongodb/paginations_time_series_collections_in_five_minutes/",
         "permanent": true
     },
     {
@@ -75,6 +70,11 @@
         "permanent": true
     },
     {
+        "source": "/article/Atlas-Search-vs-regex/",
+        "destination": "/products/atlas/atlas-search-vs-regex/",
+        "permanent": true
+    },
+    {
         "source": "/article/auto-pausing-inactive-clusters/",
         "destination": "/products/atlas/auto-pausing-inactive-clusters/",
         "permanent": true
@@ -90,43 +90,8 @@
         "permanent": true
     },
     {
-        "source": "/article/5-year-atlas-anniversary-episode-1-on-ramp/",
-        "destination": "/products/atlas/5-year-atlas-anniversary-episode-1-on-ramp/",
-        "permanent": true
-    },
-    {
-        "source": "/article/building-multi-environment-continuous-delivery-pipeline-mongodb-atlas/",
-        "destination": "/products/atlas/building-multi-environment-continuous-delivery-pipeline-mongodb-atlas/",
-        "permanent": true
-    },
-    {
-        "source": "/article/exploring-php-driver-jeremy-mikola/",
-        "destination": "/languages/php/exploring-php-driver-jeremy-mikola/",
-        "permanent": true
-    },
-    {
-        "source": "/article/swift-ui-meetup/",
-        "destination": "/products/realm/swift-ui-meetup/",
-        "permanent": true
-    },
-    {
-        "source": "/languages/javascript/node-aggregation-framework-3-3-2/",
-        "destination": "/languages/javascript/node-aggregation-framework/",
-        "permanent": true
-    },
-    {
-        "source": "/languages/javascript/node-connect-mongodb-3-3-2/",
-        "destination": "/languages/javascript/node-connect-mongodb/",
-        "permanent": true
-    },
-    {
-        "source": "/languages/javascript/node-transactions-3-3-2/",
-        "destination": "/languages/javascript/node-transactions/",
-        "permanent": true
-    },
-    {
-        "source": "/languages/javascript/nodejs-change-streams-triggers-3-3-2/",
-        "destination": "/languages/javascript/nodejs-change-streams-triggers/",
+        "source": "/article/behind-scenes-mongodb-podcast/",
+        "destination": "https://www.mongodb.com/blog/post/behind-scenes-mongodb-podcast",
         "permanent": true
     },
     {
@@ -135,8 +100,8 @@
         "permanent": true
     },
     {
-        "source": "/article/build-serverless-applications-sst-mongodb-atlas/",
-        "destination": "/products/atlas/build-serverless-applications-sst-mongodb-atlas/",
+        "source": "/article/building-multi-environment-continuous-delivery-pipeline-mongodb-atlas/",
+        "destination": "/products/atlas/building-multi-environment-continuous-delivery-pipeline-mongodb-atlas/",
         "permanent": true
     },
     {
@@ -155,6 +120,11 @@
         "permanent": true
     },
     {
+        "source": "/article/christmas-2021-mongodb-data-api/",
+        "destination": "/products/atlas/christmas-2021-mongodb-data-api/",
+        "permanent": true
+    },
+    {
         "source": "/article/conference-graphql-api-realm/",
         "destination": "/products/atlas/conference-graphql-api-realm/",
         "permanent": true
@@ -162,6 +132,11 @@
     {
         "source": "/article/coronavirus-map-live-data-tracker-charts/",
         "destination": "/products/atlas/coronavirus-map-live-data-tracker-charts/",
+        "permanent": true
+    },
+    {
+        "source": "/article/data-api-postman/",
+        "destination": "/products/atlas/data-api-postman/",
         "permanent": true
     },
     {
@@ -175,6 +150,11 @@
         "permanent": true
     },
     {
+        "source": "/article/enhancing-diabetes-data-visibility-with-tidepool-and-mongodb/",
+        "destination": "/products/mongodb/enhancing-diabetes-data-visibility-with-tidepool-and-mongodb/",
+        "permanent": true
+    },
+    {
         "source": "/article/enterprise-operator-kubernetes-openshift/",
         "destination": "/products/mongodb/enterprise-operator-kubernetes-openshift/",
         "permanent": true
@@ -182,6 +162,16 @@
     {
         "source": "/article/everything-you-know-is-wrong/",
         "destination": "/products/mongodb/everything-you-know-is-wrong/",
+        "permanent": true
+    },
+    {
+        "source": "/article/exploring-php-driver-jeremy-mikola/",
+        "destination": "/languages/php/exploring-php-driver-jeremy-mikola/",
+        "permanent": true
+    },
+    {
+        "source": "/article/generate-mql-with-mognosh-and-openai/",
+        "destination": "/products/mongodb/generate-mql-with-mognosh-and-openai/",
         "permanent": true
     },
     {
@@ -195,6 +185,16 @@
         "permanent": true
     },
     {
+        "source": "/article/how-netlify-backfilled-2-million-documents/",
+        "destination": "/products/mongodb/how-netlify-backfilled-2-million-documents/",
+        "permanent": true
+    },
+    {
+        "source": "/article/how-prisma-introspects-a-schema-from-a-mongodb-database/",
+        "destination": "/products/mongodb/how-prisma-introspects-a-schema-from-a-mongodb-database/",
+        "permanent": true
+    },
+    {
         "source": "/article/introducing-mongodb-analyzer-dotnet/",
         "destination": "/languages/csharp/introducing-mongodb-analyzer-dotnet/",
         "permanent": true
@@ -202,6 +202,11 @@
     {
         "source": "/article/introducing-realm-flutter-sdk/",
         "destination": "/products/realm/introducing-realm-flutter-sdk/",
+        "permanent": true
+    },
+    {
+        "source": "/article/introduction-to-modern-databases-mongodb-academia/",
+        "destination": "/products/mongodb/introduction-to-modern-databases-mongodb-academia/",
         "permanent": true
     },
     {
@@ -226,7 +231,7 @@
     },
     {
         "source": "/article/learn-mongodb-university-online-free-mooc/",
-        "destination": "https://university.mongodb.com",
+        "destination": "/products/mongodb/learn-mongodb-university-online-free-mooc/",
         "permanent": true
     },
     {
@@ -237,6 +242,11 @@
     {
         "source": "/article/live2020-keynote-summary/",
         "destination": "/products/mongodb/live2020-keynote-summary/",
+        "permanent": true
+    },
+    {
+        "source": "/article/locator-app-code-example/",
+        "destination": "/code-examples/javascript/locator-app-code-example/",
         "permanent": true
     },
     {
@@ -260,8 +270,18 @@
         "permanent": true
     },
     {
+        "source": "/article/mongodb-automation-index-autopilot/",
+        "destination": "/products/atlas/mongodb-automation-index-autopilot/",
+        "permanent": true
+    },
+    {
+        "source": "/article/mongodb-connectors-translators-interview/",
+        "destination": "/products/connectors/mongodb-connectors-translators-interview/",
+        "permanent": true
+    },
+    {
         "source": "/article/mongodb-podcast-doug-eck-google-brain/",
-        "destination": "/podcasts/ep--69-at-the-intersection-of-ai-ml-hci-with-doug-eck-of-google/",
+        "destination": "/products/mongodb/mongodb-podcast-doug-eck-google-brain/",
         "permanent": true
     },
     {
@@ -275,13 +295,63 @@
         "permanent": true
     },
     {
+        "source": "/article/multicloud-clusters-with-andrew-davidson/",
+        "destination": "/products/atlas/multicloud-clusters-with-andrew-davidson/",
+        "permanent": true
+    },
+    {
         "source": "/article/next-gen-webapps-remix-atlas-data-api/",
         "destination": "/languages/javascript/next-gen-webapps-remix-atlas-data-api/",
         "permanent": true
     },
     {
+        "source": "/article/Paginations_Time_Series_Collections_in_five_minutes/",
+        "destination": "/products/mongodb/paginations-time-series-collections-in-five-minutes/",
+        "permanent": true
+    },
+    {
+        "source": "/article/Paginations-Time-Series-Collections-in-five-minutes/",
+        "destination": "/products/mongodb/paginations-time-series-collections-in-five-minutes/",
+        "permanent": true
+    },
+    {
+        "source": "/article/Paginations-Why-Choose-MongoDB/",
+        "destination": "/products/mongodb/paginations-why-choose-mongodb/",
+        "permanent": true
+    },
+    {
+        "source": "/article/performance-tuning-tips/",
+        "destination": "/products/mongodb/performance-tuning-tips/",
+        "permanent": true
+    },
+    {
         "source": "/article/practical-mongodb-aggregations-book/",
         "destination": "/products/mongodb/practical-mongodb-aggregations-book/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm_kotlin_041_announcement/",
+        "destination": "/products/realm/realm-kotlin-041-announcement/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm_meetup_javascript_react_native/",
+        "destination": "/products/realm/realm-meetup-javascript-react-native/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm_meetup_jwt_authentication/",
+        "destination": "/products/realm/realm-meetup-jwt-authentication/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm_meetup_kotlin_multiplatfrom/",
+        "destination": "/products/realm/realm-meetup-kotlin-multiplatform/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm_meetup_swiftui_testing_and_realm_with_projections/",
+        "destination": "/products/realm/realm-meetup-swiftui-testing-and-realm-with-projections/",
         "permanent": true
     },
     {
@@ -315,13 +385,13 @@
         "permanent": true
     },
     {
-        "source": "/article/realm-flexible-sync/",
-        "destination": "/products/realm/realm-flexible-sync/",
+        "source": "/article/realm-flexible-sync-preview/",
+        "destination": "/products/realm/realm-flexible-sync-preview/",
         "permanent": true
     },
     {
-        "source": "/article/realm-flexible-sync-preview/",
-        "destination": "/products/realm/realm-flexible-sync-preview/",
+        "source": "/article/realm-flexible-sync/",
+        "destination": "/products/realm/realm-flexible-sync/",
         "permanent": true
     },
     {
@@ -341,12 +411,37 @@
     },
     {
         "source": "/article/realm-kotlin-0-6-0/",
-        "destination": "/languages/kotlin/realm-kotlin-0-6-0/",
+        "destination": "/products/realm/realm-kotlin-0-6-0/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm-kotlin-041-announcement/",
+        "destination": "/products/realm/realm-kotlin-041-announcement/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm-meetup-javascript-react-native/",
+        "destination": "/products/realm/realm-meetup-javascript-react-native/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm-meetup-jwt-authentication/",
+        "destination": "/products/realm/realm-meetup-jwt-authentication/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm-meetup-kotlin-multiplatfrom/",
+        "destination": "/products/realm/realm-meetup-kotlin-multiplatfrom/",
+        "permanent": true
+    },
+    {
+        "source": "/article/realm-meetup-swiftui-testing-and-realm-with-projections/",
+        "destination": "/products/realm/realm-meetup-swiftui-testing-and-realm-with-projections/",
         "permanent": true
     },
     {
         "source": "/article/realm-startactivityforresult-registerForActivityResult-deprecated-android-kotlin/",
-        "destination": "/products/realm/realm-startactivityforresult-registerforactivityresult-deprecated-android-kotlin/",
+        "destination": "/languages/kotlin/realm-startactivityforresult-registerforactivityresult-deprecated-android-kotlin/",
         "permanent": true
     },
     {
@@ -365,28 +460,13 @@
         "permanent": true
     },
     {
-        "source": "/article/realm_meetup_javascript_react_native/",
-        "destination": "/products/realm/realm_meetup_javascript_react_native/",
-        "permanent": true
-    },
-    {
-        "source": "/article/realm_meetup_jwt_authentication/",
-        "destination": "/products/realm/meetup-jwt-authentication/",
-        "permanent": true
-    },
-    {
-        "source": "/article/realm_meetup_kotlin_multiplatfrom/",
-        "destination": "/products/realm/meetup-kotlin-multiplatfrom/",
-        "permanent": true
-    },
-    {
-        "source": "/article/realm_meetup_swiftui_testing_and_realm_with_projections/",
-        "destination": "/products/realm/meetup-swiftui-testing-and-realm-with-projections/",
-        "permanent": true
-    },
-    {
         "source": "/article/resumable-initial-sync/",
         "destination": "/products/mongodb/resumable-initial-sync/",
+        "permanent": true
+    },
+    {
+        "source": "/article/scaling-gaming-mongodb-square-enix-gaspard-petit/",
+        "destination": "/products/mongodb/scaling-gaming-mongodb-square-enix-gaspard-petit/",
         "permanent": true
     },
     {
@@ -425,6 +505,11 @@
         "permanent": true
     },
     {
+        "source": "/article/schema-suggestions-julia-oppenheim/",
+        "destination": "/products/mongodb/schema-suggestions-julia-oppenheim/",
+        "permanent": true
+    },
+    {
         "source": "/article/securing-mongodb-with-tls/",
         "destination": "/products/mongodb/securing-mongodb-with-tls/",
         "permanent": true
@@ -440,6 +525,11 @@
         "permanent": true
     },
     {
+        "source": "/article/sizing-mongodb-with-jay-runkel/",
+        "destination": "/products/mongodb/sizing-mongodb-with-jay-runkel/",
+        "permanent": true
+    },
+    {
         "source": "/article/srv-connection-strings/",
         "destination": "/products/mongodb/srv-connection-strings/",
         "permanent": true
@@ -450,13 +540,18 @@
         "permanent": true
     },
     {
-        "source": "/article/time-series-candlestick/",
-        "destination": "/products/mongodb/time-series-candlestick/",
+        "source": "/article/swift-ui-meetup/",
+        "destination": "/products/realm/swift-ui-meetup/",
         "permanent": true
     },
     {
         "source": "/article/time-series-candlestick-sma-ema/",
         "destination": "/products/mongodb/time-series-candlestick-sma-ema/",
+        "permanent": true
+    },
+    {
+        "source": "/article/time-series-candlestick/",
+        "destination": "/products/mongodb/time-series-candlestick/",
         "permanent": true
     },
     {
@@ -476,12 +571,12 @@
     },
     {
         "source": "/article/triggers-tricks-data-driven-schedule/",
-        "destination": "/products/mongodb/triggers-tricks-preimage-cass/",
+        "destination": "/products/atlas/triggers-tricks-data-driven-schedule/",
         "permanent": true
     },
     {
         "source": "/article/triggers-tricks-preimage-cass/",
-        "destination": "/products/atlas/triggers-tricks-preimage-cass/",
+        "destination": "/products/mongodb/triggers-tricks-preimage-cass/",
         "permanent": true
     },
     {
@@ -505,43 +600,48 @@
         "permanent": true
     },
     {
-        "source": "/author/a--jesse-jiryu-davis/",
-        "destination": "/author/a.-jesse-jiryu-davis/",
+        "source": "/community/apply-to-speak/",
+        "destination": "/products/mongodb/news/",
         "permanent": true
     },
     {
-        "source": "/author/ken-w-alger/",
-        "destination": "/author/ken-w.-alger",
+        "source": "/community/art-of-creating-talk/",
+        "destination": "https://www.mongodb.com/blog/post/art-of-creating-talk",
         "permanent": true
     },
     {
-        "source": "/author/ken-w--alger/",
-        "destination": "/author/ken-w.-alger",
+        "source": "/community/community-speaker-grant/",
+        "destination": "/products/mongodb/news/",
+        "permanent": true
+    },
+    {
+        "source": "/community/creating-stunning-slides/",
+        "destination": "https://www.mongodb.com/blog",
+        "permanent": true
+    },
+    {
+        "source": "/community/speaker-program/",
+        "destination": "/products/mongodb/news/",
+        "permanent": true
+    },
+    {
+        "source": "/community/surviving-the-stage/",
+        "destination": "https://www.mongodb.com/blog/post/surviving-the-stage",
         "permanent": true
     },
     {
         "source": "/community/using-code-in-slides/",
-        "destination": "/article/using-code-in-slides/",
+        "destination": "https://www.mongodb.com/blog/",
         "permanent": true
     },
     {
-        "source": "/how-to/FARM-Stack-Authentication/",
-        "destination": "/languages/javascript/farm-stack-authentication/",
+        "source": "/community/virtual-presentation/",
+        "destination": "https://www.mongodb.com/blog/post/virtual-presentations",
         "permanent": true
     },
     {
-        "source": "/how-to/FARM-Stack-FastAPI-React-MongoDB/",
-        "destination": "/languages/javascript/farm-stack-fastapi-react-mongodb/",
-        "permanent": true
-    },
-    {
-        "source": "/how-to/Realm-AWS-Kinesis-Firehose-Destination/",
-        "destination": "/products/realm/realm-aws-kinesis-firehose-destination/",
-        "permanent": true
-    },
-    {
-        "source": "/how-to/SQL-to-Aggregation-Pipeline/",
-        "destination": "/products/mongodb/sql-to-aggregation-pipeline/",
+        "source": "/how-to/5-ways-reduce-costs-atlas/",
+        "destination": "/products/atlas/5-ways-reduce-costs-atlas/",
         "permanent": true
     },
     {
@@ -552,6 +652,11 @@
     {
         "source": "/how-to/adding-realm-as-dependency-ios-framework/",
         "destination": "/products/realm/adding-realm-as-dependency-ios-framework/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/atlas-data-api-and-fitbit/",
+        "destination": "/products/atlas/atlas-data-api-and-fitbit/",
         "permanent": true
     },
     {
@@ -572,11 +677,6 @@
     {
         "source": "/how-to/atlas-serverless-quick-start/",
         "destination": "/products/atlas/atlas-serverless-quick-start/",
-        "permanent": true
-    },
-    {
-        "source": "/how-to/atlas_data_api_and_fitbit/",
-        "destination": "/products/atlas/atlas_data_api_and_fitbit/",
         "permanent": true
     },
     {
@@ -640,13 +740,13 @@
         "permanent": true
     },
     {
-        "source": "/how-to/building-a-mobile-chat-app-using-realm/",
-        "destination": "/products/realm/building-a-mobile-chat-app-using-realm/",
+        "source": "/how-to/building-a-mobile-chat-app-using-realm-new-way/",
+        "destination": "/code-examples/swift/building-a-mobile-chat-app-using-realm-new-way/",
         "permanent": true
     },
     {
-        "source": "/how-to/building-a-mobile-chat-app-using-realm-new-way/",
-        "destination": "/code-examples/swift/building-a-mobile-chat-app-using-realm-new-way/",
+        "source": "/how-to/building-a-mobile-chat-app-using-realm/",
+        "destination": "/products/realm/building-a-mobile-chat-app-using-realm/",
         "permanent": true
     },
     {
@@ -661,7 +761,7 @@
     },
     {
         "source": "/how-to/capture-iot-data-stitch/",
-        "destination": "/products/realm/capture-iot-data-realm/",
+        "destination": "/products/mongodb/capture-iot-data-stitch/",
         "permanent": true
     },
     {
@@ -750,6 +850,16 @@
         "permanent": true
     },
     {
+        "source": "/how-to/FARM-Stack-Authentication/",
+        "destination": "/languages/python/farm-stack-authentication/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/FARM-Stack-FastAPI-React-MongoDB/",
+        "destination": "/languages/python/farm-stack-fastapi-react-mongodb/",
+        "permanent": true
+    },
+    {
         "source": "/how-to/field-level-encryption-fle-mongodb-golang/",
         "destination": "/languages/go/field-level-encryption-fle-mongodb-golang/",
         "permanent": true
@@ -821,7 +931,7 @@
     },
     {
         "source": "/how-to/graphql-support-atlas-stitch/",
-        "destination": "/products/realm/graphql-support-atlas-realm/",
+        "destination": "/products/atlas/graphql-support-atlas-stitch/",
         "permanent": true
     },
     {
@@ -852,6 +962,11 @@
     {
         "source": "/how-to/influence-search-result-ranking-function-scores-atlas-search/",
         "destination": "/products/atlas/influence-search-result-ranking-function-scores-atlas-search/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/integrating-mongodb-amazon-apache-kafka/",
+        "destination": "/languages/java/integrating-mongodb-amazon-apache-kafka/",
         "permanent": true
     },
     {
@@ -915,6 +1030,11 @@
         "permanent": true
     },
     {
+        "source": "/how-to/location-geofencing-stitch-mapbox/",
+        "destination": "/products/mongodb/location-geofencing-stitch-mapbox/",
+        "permanent": true
+    },
+    {
         "source": "/how-to/maintaining-geolocation-specific-game-leaderboard-phaser-mongodb/",
         "destination": "/languages/javascript/maintaining-geolocation-specific-game-leaderboard-phaser-mongodb/",
         "permanent": true
@@ -932,6 +1052,11 @@
     {
         "source": "/how-to/migrate-azure-cosmosdb-mongodb-atlas-apache-kafka/",
         "destination": "/products/atlas/migrate-azure-cosmosdb-mongodb-atlas-apache-kafka/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/mongo-socket-chat-example/",
+        "destination": "/products/mongodb/mongo-socket-chat-example/",
         "permanent": true
     },
     {
@@ -965,6 +1090,11 @@
         "permanent": true
     },
     {
+        "source": "/how-to/mongoimport-guide/",
+        "destination": "/products/mongodb/mongoimport-guide/",
+        "permanent": true
+    },
+    {
         "source": "/how-to/new-time-series-collections/",
         "destination": "/products/mongodb/new-time-series-collections/",
         "permanent": true
@@ -976,6 +1106,11 @@
     },
     {
         "source": "/how-to/nextjs-with-mongodb/",
+        "destination": "/languages/javascript/nextjs-with-mongodb/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/nextjs-with-mongodb//",
         "destination": "/languages/javascript/nextjs-with-mongodb/",
         "permanent": true
     },
@@ -1011,7 +1146,12 @@
     },
     {
         "source": "/how-to/preparing_tsdata_with_densify_and_fill/",
-        "destination": "/products/mongodb/preparing_tsdata_with_densify_and_fill/",
+        "destination": "/products/mongodb/preparing-tsdata-with-densify-and-fill/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/preparing-tsdata-with-densify-and-fill/",
+        "destination": "/products/mongodb/preparing-tsdata-with-densify-and-fill/",
         "permanent": true
     },
     {
@@ -1035,8 +1175,18 @@
         "permanent": true
     },
     {
+        "source": "/how-to/real-time-chat-phaser-game-mongodb-socketio/",
+        "destination": "/products/mongodb/real-time-chat-phaser-game-mongodb-socketio/",
+        "permanent": true
+    },
+    {
         "source": "/how-to/real-time-data-architectures-with-mongodb-cloud-manager-and-verizon-5g-edge/",
         "destination": "/products/mongodb/real-time-data-architectures-with-mongodb-cloud-manager-and-verizon-5g-edge/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/real-time-location-updates-stitch-change-streams-mapbox/",
+        "destination": "/products/realm/real-time-location-updates-stitch-change-streams-mapbox/",
         "permanent": true
     },
     {
@@ -1047,6 +1197,11 @@
     {
         "source": "/how-to/realm-asyncopen-autoopen/",
         "destination": "/products/realm/realm-asyncopen-autoopen/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/Realm-AWS-Kinesis-Firehose-Destination/",
+        "destination": "/products/realm/realm-aws-kinesis-firehose-destination/",
         "permanent": true
     },
     {
@@ -1095,6 +1250,11 @@
         "permanent": true
     },
     {
+        "source": "/how-to/realm-java-to-kotlin-sdk/",
+        "destination": "/products/realm/realm-java-to-kotlin-sdk/",
+        "permanent": true
+    },
+    {
         "source": "/how-to/realm-keypath-filtering/",
         "destination": "/products/realm/realm-keypath-filtering/",
         "permanent": true
@@ -1106,7 +1266,7 @@
     },
     {
         "source": "/how-to/realm-minesweeper/",
-        "destination": "/languages/swift/realm-minesweeper",
+        "destination": "/languages/swift/realm-minesweeper/",
         "permanent": true
     },
     {
@@ -1166,7 +1326,7 @@
     },
     {
         "source": "/how-to/saving-data-in-unity3d-using-binary-reader-writer/",
-        "destination": "/languages/csharp/saving-data-in-unity3d-using-binary-reader-writer/",
+        "destination": "/products/realm/saving-data-in-unity3d-using-binary-reader-writer/",
         "permanent": true
     },
     {
@@ -1187,6 +1347,11 @@
     {
         "source": "/how-to/search-engine-using-atlas-full-text-search/",
         "destination": "/products/atlas/search-engine-using-atlas-full-text-search/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/searching-nearby-points-interest-mapbox/",
+        "destination": "/products/mongodb/searching-nearby-points-interest-mapbox/",
         "permanent": true
     },
     {
@@ -1220,8 +1385,18 @@
         "permanent": true
     },
     {
+        "source": "/how-to/SQL-to-Aggregation-Pipeline/",
+        "destination": "/products/mongodb/sql-to-aggregation-pipeline/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/static-website-deployments-mongodb-stitch-hugo-git-travis-ci/",
+        "destination": "/products/atlas/static-website-deployments-mongodb-stitch-hugo-git-travis-ci/",
+        "permanent": true
+    },
+    {
         "source": "/how-to/stitch-aws-rekognition-images/",
-        "destination": "/products/realm/realm-aws-rekognition-images/",
+        "destination": "/products/mongodb/stitch-aws-rekognition-images/",
         "permanent": true
     },
     {
@@ -1237,6 +1412,11 @@
     {
         "source": "/how-to/strapi-headless-cms-with-atlas/",
         "destination": "/products/mongodb/strapi-headless-cms-with-atlas/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/streaming-data-apache-spark-mongodb/",
+        "destination": "/languages/python/streaming-data-apache-spark-mongodb/",
         "permanent": true
     },
     {
@@ -1260,6 +1440,11 @@
         "permanent": true
     },
     {
+        "source": "/how-to/transactions-csharp-dotnet/",
+        "destination": "/languages/csharp/transactions-csharp-dotnet/",
+        "permanent": true
+    },
+    {
         "source": "/how-to/tuning-mongodb-kafka-connector/",
         "destination": "/products/connectors/tuning-mongodb-kafka-connector/",
         "permanent": true
@@ -1267,6 +1452,11 @@
     {
         "source": "/how-to/type-projections/",
         "destination": "/products/realm/type-projections/",
+        "permanent": true
+    },
+    {
+        "source": "/how-to/type-safety-with-prisma-and-mongodb/",
+        "destination": "/languages/typescript/type-safety-with-prisma-and-mongodb/",
         "permanent": true
     },
     {
@@ -1282,11 +1472,6 @@
     {
         "source": "/how-to/upgrade-fearlessly-stable-api/",
         "destination": "/products/mongodb/upgrade-fearlessly-stable-api/",
-        "permanent": true
-    },
-    {
-        "source": "/how-to/upgrade-fearlessly-versioned-api/",
-        "destination": "/products/atlas/upgrade-fearlessly-versioned-api/",
         "permanent": true
     },
     {
@@ -1325,23 +1510,23 @@
         "permanent": true
     },
     {
-        "source": "/how-to/zap-tweet-repeat-how-to-use-zapier-mongodb/",
-        "destination": "/products/mongodb/zap-tweet-repeat-how-to-use-zapier-mongodb/",
-        "permanent": true
-    },
-    {
         "source": "/how-to/wordle-bash-data-api/",
         "destination": "/code-examples/bash/wordle-bash-data-api/",
         "permanent": true
     },
     {
-        "source": "/language/c/",
-        "destination": "/languages/csharp/",
+        "source": "/how-to/zap-tweet-repeat-how-to-use-zapier-mongodb/",
+        "destination": "/products/mongodb/zap-tweet-repeat-how-to-use-zapier-mongodb/",
         "permanent": true
     },
     {
         "source": "/language/c-/",
         "destination": "/languages/csharp/",
+        "permanent": true
+    },
+    {
+        "source": "/language/c/",
+        "destination": "/languages/cpp/",
         "permanent": true
     },
     {
@@ -1370,11 +1555,6 @@
         "permanent": true
     },
     {
-        "source": "/language/mql/",
-        "destination": "/products/mongodb/mql/",
-        "permanent": true
-    },
-    {
         "source": "/language/php/",
         "destination": "/languages/php/",
         "permanent": true
@@ -1395,23 +1575,18 @@
         "permanent": true
     },
     {
-        "source": "/news/apply-to-speak/",
-        "destination": "https://www.mongodb.com/blog",
+        "source": "/learn/",
+        "destination": "/developer/",
         "permanent": true
     },
     {
-        "source": "/news/speaker-program/",
-        "destination": "https://www.mongodb.com/blog",
+        "source": "/podcasts/welcome-to-the-mongodb-podcast/",
+        "destination": "https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624",
         "permanent": true
     },
     {
-        "source": "/news/welcome-to-the-mongodb-podcast/",
-        "destination": "https://podcasts.mongodb.com/",
-        "permanent": true
-    },
-    {
-        "source": "/podcasts/",
-        "destination": "https://podcasts.mongodb.com/",
+        "source": "/product/atlas-search/",
+        "destination": "/products/atlas/full-text-search/",
         "permanent": true
     },
     {
@@ -1420,8 +1595,8 @@
         "permanent": true
     },
     {
-        "source": "/product/atlas-search/",
-        "destination": "/products/atlas/full-text-search/",
+        "source": "/product/bi-connector/",
+        "destination": "/products/connectors/",
         "permanent": true
     },
     {
@@ -1431,7 +1606,7 @@
     },
     {
         "source": "/product/cloud-manager/",
-        "destination": "/products/mongodb/cloud-manager/",
+        "destination": "/products/cloud-manager/",
         "permanent": true
     },
     {
@@ -1445,13 +1620,8 @@
         "permanent": true
     },
     {
-        "source": "/project/myleg/",
-        "destination": "/code-examples/typescript/myleg/",
-        "permanent": true
-    },
-    {
         "source": "/product/mobile/",
-        "destination": "/products/realm/mobile/",
+        "destination": "/products/realm/",
         "permanent": true
     },
     {
@@ -1476,12 +1646,27 @@
     },
     {
         "source": "/product/realmstudio/",
-        "destination": "/products/realm/realmstudio/",
+        "destination": "/products/realm/studio/",
         "permanent": true
     },
     {
         "source": "/product/vs-code/",
-        "destination": "/products/vs-code-extension/vs-code/",
+        "destination": "/products/",
+        "permanent": true
+    },
+    {
+        "source": "/project/anonytexts/",
+        "destination": "/code-examples/javascript/anonytexts/",
+        "permanent": true
+    },
+    {
+        "source": "/project/chember/",
+        "destination": "/code-examples/javascript/chember-example-app/",
+        "permanent": true
+    },
+    {
+        "source": "/project/database-development-dcp/",
+        "destination": "/code-examples/python/dog-care-example-app/",
         "permanent": true
     },
     {
@@ -1495,43 +1680,33 @@
         "permanent": true
     },
     {
-        "source": "/project/anonytexts/",
-        "destination": "/languages/javascript/anonytexts/",
-        "permanent": true
-    },
-    {
-        "source": "/project/blogue/",
-        "destination": "/languages/javascript/blogue/",
-        "permanent": true
-    },
-    {
-        "source": "/project/chember/",
-        "destination": "/languages/javascript/chember/",
-        "permanent": true
-    },
-    {
         "source": "/project/go-fifa/",
-        "destination": "/languages/php/go-fifa/",
+        "destination": "/code-examples/php/fifa-php-app/",
         "permanent": true
     },
     {
         "source": "/project/groupus/",
-        "destination": "/languages/python/groupus/",
+        "destination": "/code-examples/python/groupus-app/",
         "permanent": true
     },
     {
         "source": "/project/hostels-kenya/",
-        "destination": "/languages/php/hostels-kenya/",
+        "destination": "/code-examples/javascript/kenya-hostels/",
         "permanent": true
     },
     {
         "source": "/project/magazine-management/",
-        "destination": "/code-examples/javascript/code-example-js-mongodb-magazinemanagement/",
+        "destination": "/javascript/code-example-js-mongodb-magazinemanagement/",
         "permanent": true
     },
     {
         "source": "/project/mergeurl/",
-        "destination": "/languages/python/mergeurl/",
+        "destination": "/code-examples/python/merge-url/",
+        "permanent": true
+    },
+    {
+        "source": "/project/myleg/",
+        "destination": "/code-examples/typescript/myleg/",
         "permanent": true
     },
     {
@@ -1556,7 +1731,7 @@
     },
     {
         "source": "/quickstart/atlas_data_api_google_sheets_apps_script/",
-        "destination": "/products/atlas/atlas-data-api-google-sheets-apps-script/",
+        "destination": "/products/atlas/atlas-data-api-google-apps-script/",
         "permanent": true
     },
     {
@@ -1591,7 +1766,7 @@
     },
     {
         "source": "/quickstart/csharp-crud-tutorial/",
-        "destination": "/products/",
+        "destination": "/quickstarts/",
         "permanent": true
     },
     {
@@ -1631,7 +1806,7 @@
     },
     {
         "source": "/quickstart/java-client-side-field-level-encryption/",
-        "destination": "/languages/java/java-client-side-field-level-encryption/",
+        "destination": "/products/mongodb/java-client-side-field-level-encryption/",
         "permanent": true
     },
     {
@@ -1650,18 +1825,13 @@
         "permanent": true
     },
     {
-        "source": "/quickstart/node-aggregation-framework/",
-        "destination": "/languages/javascript/node-aggregation-framework/",
-        "permanent": true
-    },
-    {
         "source": "/quickstart/node-aggregation-framework-3-3-2/",
         "destination": "/languages/javascript/node-aggregation-framework/",
         "permanent": true
     },
     {
-        "source": "/quickstart/node-crud-tutorial/",
-        "destination": "/languages/javascript/node-crud-tutorial/",
+        "source": "/quickstart/node-aggregation-framework/",
+        "destination": "/languages/javascript/node-aggregation-framework/",
         "permanent": true
     },
     {
@@ -1670,8 +1840,8 @@
         "permanent": true
     },
     {
-        "source": "/quickstart/node-transactions/",
-        "destination": "/languages/javascript/node-transactions/",
+        "source": "/quickstart/node-crud-tutorial/",
+        "destination": "/languages/javascript/node-crud-tutorial/",
         "permanent": true
     },
     {
@@ -1680,12 +1850,17 @@
         "permanent": true
     },
     {
-        "source": "/quickstart/nodejs-change-streams-triggers/",
-        "destination": "/languages/javascript/nodejs-change-streams-triggers/",
+        "source": "/quickstart/node-transactions/",
+        "destination": "/languages/javascript/node-transactions/",
         "permanent": true
     },
     {
         "source": "/quickstart/nodejs-change-streams-triggers-3-3-2/",
+        "destination": "/languages/javascript/nodejs-change-streams-triggers/",
+        "permanent": true
+    },
+    {
+        "source": "/quickstart/nodejs-change-streams-triggers/",
         "destination": "/languages/javascript/nodejs-change-streams-triggers/",
         "permanent": true
     },
@@ -1765,16 +1940,6 @@
         "permanent": true
     },
     {
-        "source": "/tag/aws/",
-        "destination": "/technologies/aws/",
-        "permanent": true
-    },
-    {
-        "source": "/tag/data-visualization/",
-        "destination": "/technologies/data-visualization/",
-        "permanent": true
-    },
-    {
         "source": "/tag/-net-core/",
         "destination": "/technologies/dotnet-framework/",
         "permanent": true
@@ -1786,7 +1951,7 @@
     },
     {
         "source": "/tag/analytics/",
-        "destination": "/products/mongodb/analytics/",
+        "destination": "/products/charts/",
         "permanent": true
     },
     {
@@ -1800,13 +1965,23 @@
         "permanent": true
     },
     {
+        "source": "/tag/aws/",
+        "destination": "/technologies/aws/",
+        "permanent": true
+    },
+    {
         "source": "/tag/bson/",
         "destination": "/products/mongodb/",
         "permanent": true
     },
     {
+        "source": "/tag/change-streams/",
+        "destination": "/products/mongodb/change-streams/",
+        "permanent": true
+    },
+    {
         "source": "/tag/cloud/",
-        "destination": "/products/atlas/multi-cloud/",
+        "destination": "/products/atlas/",
         "permanent": true
     },
     {
@@ -1815,18 +1990,38 @@
         "permanent": true
     },
     {
+        "source": "/tag/data-visualization/",
+        "destination": "/products/mongodb/data-visualization/",
+        "permanent": true
+    },
+    {
+        "source": "/tag/data/",
+        "destination": "/developer/",
+        "permanent": true
+    },
+    {
+        "source": "/tag/devops/",
+        "destination": "/developer/",
+        "permanent": true
+    },
+    {
         "source": "/tag/dotnet/",
-        "destination": "/technologies/dotnet-framework/dotnet/",
+        "destination": "/technologies/dotnet-framework/",
         "permanent": true
     },
     {
         "source": "/tag/field-level-encryption/",
-        "destination": "/products/mongodb/field-level-encryption/",
+        "destination": "/products/mongodb/security/",
         "permanent": true
     },
     {
         "source": "/tag/full-text-search/",
-        "destination": "/products/atlas/search/",
+        "destination": "/products/atlas/full-text-search/",
+        "permanent": true
+    },
+    {
+        "source": "/tag/game-development/",
+        "destination": "/technologies/unity/",
         "permanent": true
     },
     {
@@ -1851,7 +2046,12 @@
     },
     {
         "source": "/tag/mongodb-4-4/",
-        "destination": "/products/mongodb/4-4/",
+        "destination": "/products/mongodb/",
+        "permanent": true
+    },
+    {
+        "source": "/tag/multicloud/",
+        "destination": "/products/atlas/multi-cloud/",
         "permanent": true
     },
     {
@@ -1865,8 +2065,8 @@
         "permanent": true
     },
     {
-        "source": "/tag/speaker-program/",
-        "destination": "https://www.mongodb.com/community",
+        "source": "/tag/releases/",
+        "destination": "/products/mongodb/news/",
         "permanent": true
     },
     {
@@ -1881,22 +2081,22 @@
     },
     {
         "source": "/tag/soft-skills/",
-        "destination": "https://university.mongodb.com",
+        "destination": "https://university.mongodb.com/",
         "permanent": true
     },
     {
-        "source": "/tag/swift-ui",
-        "destination": "/languages/swift/",
+        "source": "/tag/speaker-program/",
+        "destination": "https://www.mongodb.com/community",
         "permanent": true
     },
     {
-        "source": "/languages/swift/ui",
+        "source": "/tag/swift-ui/",
         "destination": "/languages/swift/",
         "permanent": true
     },
     {
         "source": "/tag/technical/",
-        "destination": "/",
+        "destination": "/developer/",
         "permanent": true
     },
     {
@@ -1911,17 +2111,17 @@
     },
     {
         "source": "/tag/triggers/",
-        "destination": "/products/atlas/triggers/",
+        "destination": "/products/atlas/",
         "permanent": true
     },
     {
         "source": "/tag/unity/",
-        "destination": "/technologies/unity",
+        "destination": "/technologies/unity/",
         "permanent": true
     },
     {
         "source": "/tag/university/",
-        "destination": "https://university.mongodb.com",
+        "destination": "https://university.mongodb.com/",
         "permanent": true
     },
     {
@@ -1941,7 +2141,7 @@
     },
     {
         "source": "/type/podcast/",
-        "destination": "https://podcasts.mongodb.com/",
+        "destination": "https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624",
         "permanent": true
     },
     {
@@ -1950,8 +2150,63 @@
         "permanent": true
     },
     {
-        "source": "/products/atlas/use-atlas-on-heroku/configure-heroku-ip-address-in-atlas/",
-        "destination": "/products/atlas/use-atlas-on-heroku/",
+        "source": "/type/twitch-video/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/at-the-networks-edge-with-mongodb-and-verizon/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/getting-started-with-mongodb---gdelt---apac-emea-session/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/getting-started-with-mongodb---gdelt---session-2---us-session/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/hackathon-orientation-livestream-3---apac-emea/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/introduction-to-gdelt-for-the-mongodb-world-hackathon--22---session-1/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/learning-with-luce---let-s-get-quizzical---netlify-functions-and-mongodb-atlas-data-api/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/learning-with-luce--mongodb-and-unity/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/mongodb-hackathon--22---special-guest-event--announcing-kalev-leetaru--founder-of-gdelt-project/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/mongodb-world-2022-hackathon-introduction/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/mongodb-world-hackathon--22-on-boarding-session-2/",
+        "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/videos/twitch/parsing-gdelt-web-data---mongodb-world-hackathon-series/",
+        "destination": "/videos/",
         "permanent": true
     }
 ]
