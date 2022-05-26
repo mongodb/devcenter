@@ -110,9 +110,10 @@ const Card: React.FunctionComponent<CardProps> = ({
                                                 '/play-button.svg'
                                             ) as string
                                         }
+                                        loader={thumbnailLoader}
                                         width={60}
                                         height={60}
-                                    ></Image>
+                                    />
                                 </div>
                             )}
                         </div>
