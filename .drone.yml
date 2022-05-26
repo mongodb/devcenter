@@ -59,7 +59,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - ah/search-redirect-hotfix
   event:
     - push
 

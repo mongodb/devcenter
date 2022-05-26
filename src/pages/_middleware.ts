@@ -6,7 +6,15 @@ export async function middleware(req: NextRequest) {
 
     // Handles consistent navigation search as well as
     // redirect for /learn page.
-    if (pathname == '/learn/') {
+    console.log(req.nextUrl);
+    console.log(pathname);
+
+    if (
+        pathname == '/learn/' ||
+        pathname == '/learn' ||
+        pathname == '/developer/learn' ||
+        pathname == '/developer/learn/'
+    ) {
         const { searchParams } = req.nextUrl;
         const s = searchParams.get('text');
         if (s && s.length > 0) {
