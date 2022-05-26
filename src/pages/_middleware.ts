@@ -5,14 +5,10 @@ import getConfig from 'next/config';
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
     const { publicRuntimeConfig } = getConfig();
+    const basePath = publicRuntimeConfig.absoluteBasePath;
 
     // Handles consistent navigation search as well as
     // redirect for /learn page.
-    console.log(req.nextUrl);
-    console.log(pathname);
-
-    const basePath = publicRuntimeConfig.absoluteBasePath;
-
     if (pathname == '/learn/') {
         const { searchParams } = req.nextUrl;
         const s = searchParams.get('text');
