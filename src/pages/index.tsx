@@ -16,6 +16,7 @@ import {
     cardsTechnologiesData,
 } from '../data/homepage';
 import { getURLPath } from '../utils/format-url-path';
+import { useRouter } from 'next/router';
 
 const getImage = (imageString: string | EThirdPartyLogoVariant) =>
     Object.values(EThirdPartyLogoVariant).includes(
@@ -31,20 +32,13 @@ const getImage = (imageString: string | EThirdPartyLogoVariant) =>
     );
 
 const HomepageSearch: React.FunctionComponent = () => {
-    // const router = useRouter();
+    const router = useRouter();
 
-    // Do we want client-side routing?
     const [query, setQuery] = useState('');
     const handleSearch = () => {
-        if (window) {
-            const urlPath = getURLPath(
-                `/search?s=${encodeURIComponent(query)}`
-            );
-            if (urlPath) {
-                window.location.href = urlPath;
-            }
+        if (router.isReady) {
+            router.push({ pathname: '/search', query: { s: query } });
         }
-        // router.push({ pathname: '/search', query });
     };
 
     return (
@@ -57,6 +51,7 @@ const HomepageSearch: React.FunctionComponent = () => {
                 button: {
                     display: ['none', 'none', 'none', 'block'],
                 },
+                '& label': { width: 'min-content' },
             }}
             onKeyPress={e => {
                 if (e.key === 'Enter') {
@@ -130,10 +125,10 @@ const Home = () => {
                         variant="body1"
                         color="default"
                     >
-                        More than 100 open source projects, MongoDB tutorials,
-                        videos, and code examples. A global community of more
-                        than 7 million developers. Build something {`{big}`}{' '}
-                        with MongoDB.
+                        The latest MongoDB tutorials, videos and code examples
+                        with your languages and tools. A global community of
+                        more than 7 million developers. Build something{' '}
+                        {`{big}`} with MongoDB.
                     </TypographyScale>
                     <HomepageSearch />
                 </div>
