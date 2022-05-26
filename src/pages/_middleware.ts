@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
-import getConfig from 'next/config';
+
+const hostUrl = process.env.VERCEL_URL
+    ? process.env.VERCEL_URL
+    : process.env.HOST_URL;
+const httpProtocol = hostUrl == 'localhost:3000' ? 'http' : 'https';
+const basePath = '/developer';
+const absoluteBasePath = `${httpProtocol}://${hostUrl}${basePath}`;
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
-    const { publicRuntimeConfig } = getConfig();
-    const basePath = publicRuntimeConfig.absoluteBasePath;
 
     // Handles consistent navigation search as well as
     // redirect for /learn page.
@@ -13,7 +17,7 @@ export async function middleware(req: NextRequest) {
         const { searchParams } = req.nextUrl;
         const s = searchParams.get('text');
         if (s && s.length > 0) {
-            return NextResponse.redirect(`${basePath}/search?s=${s}`);
+            return NextResponse.redirect(`${absoluteBasePath}/search?s=${s}`);
         } else if (
             searchParams.get('products') === 'Mobile' ||
             searchParams.get('products') === 'Realm'
@@ -24,7 +28,7 @@ export async function middleware(req: NextRequest) {
             } else {
                 pathname = '/products/realm/';
             }
-            return NextResponse.redirect(`${basePath}${pathname}`);
+            return NextResponse.redirect(`${absoluteBasePath}${pathname}`);
         } else {
             req.nextUrl.pathname = '/';
             return NextResponse.redirect(req.nextUrl);
