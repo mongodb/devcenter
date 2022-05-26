@@ -2,6 +2,7 @@ import { EThirdPartyLogoVariant } from '@mdb/flora';
 
 export const languageToLogo: { [key: string]: EThirdPartyLogoVariant } = {
     BASH: EThirdPartyLogoVariant.BASH,
+    Bash: EThirdPartyLogoVariant.BASH,
     C: EThirdPartyLogoVariant.C,
     'C++': EThirdPartyLogoVariant.C_PLUS_PLUS,
     'C#': EThirdPartyLogoVariant.C_SHARP,

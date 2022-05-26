@@ -168,6 +168,7 @@ export const cardWrapperStyles = {
         cursor: 'pointer',
     },
     gap: ['inc40', null, null, 'inc50'],
+    bg: theme.colors.panels.card.bg,
 };
 
 export const descriptionStyles = (

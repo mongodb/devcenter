@@ -4,10 +4,7 @@ import { NextSeo } from 'next-seo';
 import ContentTypePage from '../page-templates/content-type';
 import { PillCategory } from '../types/pill-category';
 import { ContentTypePageProps } from '../page-templates/content-type/types';
-import {
-    getFeaturedLangProdTech,
-    getFilters,
-} from '../page-templates/content-type/utils';
+import { getFilters } from '../page-templates/content-type/utils';
 import { getAllContentItems } from '../service/get-all-content';
 
 const CodeExamplesPage: NextPage<ContentTypePageProps> = props => {
@@ -35,16 +32,12 @@ export const getStaticProps: GetStaticProps = async () => {
     const featured = codeExamples
         .sort((a, b) => b.contentDate.localeCompare(a.contentDate))
         .slice(0, 3);
-    const { featuredLanguages, featuredTechnologies, featuredProducts } =
-        getFeaturedLangProdTech(contentType, codeExamples);
+
     return {
         props: {
             contentType,
             ...filters,
             featured,
-            featuredLanguages,
-            featuredTechnologies,
-            featuredProducts,
         },
     };
 };

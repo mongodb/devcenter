@@ -27,11 +27,11 @@ import {
 import { searchBoxStyles } from '../components/search/styles';
 import FilterTag from '../page-templates/content-type/filter-tag';
 
-import { Tag } from '../interfaces/tag';
-import noResults from '../../public/no-results.png';
 import Results from '../components/search/results';
 import { useRouter } from 'next/router';
 import { itemInFilters } from '../page-templates/content-type/utils';
+import { getURLPath } from '../utils/format-url-path';
+import { thumbnailLoader } from '../components/card/utils';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -330,7 +330,13 @@ const Search: NextPage<SearchProps> = ({
             }}
         >
             <div>
-                <NextImage src={noResults}></NextImage>
+                <NextImage
+                    src={getURLPath('/no-results.png') as string}
+                    loader={thumbnailLoader}
+                    alt="No Results"
+                    height={500}
+                    width={500}
+                />
             </div>
             <Button
                 hasIcon={true}
@@ -450,7 +456,10 @@ const Search: NextPage<SearchProps> = ({
 
     return (
         <>
-            <NextSeo title={'Search | MongoDB'} />
+            <NextSeo
+                title={'Search | MongoDB'}
+                noindex={router.asPath === '/search/' ? false : true}
+            />
             <Hero name="Search" />
             <div sx={pageWrapper}>
                 <GridLayout

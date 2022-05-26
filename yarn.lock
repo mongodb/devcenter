@@ -1277,6 +1277,28 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha1-XxnSuFqY6VWANvajysyIGUIPBc8=
 
+"@types/react-dom@17.0.2":
+  version "17.0.2"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react-dom/-/react-dom-17.0.2.tgz#35654cf6c49ae162d5bc90843d5437dc38008d43"
+  integrity sha1-NWVM9sSa4WLVvJCEPVQ33DgAjUM=
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-truncate@2.3.4":
+  version "2.3.4"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react-truncate/-/react-truncate-2.3.4.tgz#1d5002e71e393b81b7877a147992a050f40075fa"
+  integrity sha1-HVAC5x45O4G3h3oUeZKgUPQAdfo=
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@17.0.2":
+  version "17.0.2"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react/-/react-17.0.2.tgz#3de24c4efef902dd9795a49c75f760cbe4f7a5a8"
+  integrity sha1-PeJMTv75At2XlaScdfdgy+T3pag=
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^3.0.2"
+
 "@types/react@17.0.38":
   version "17.0.38"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
@@ -2884,6 +2906,13 @@ fd-slicer@~1.1.0:
   integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
   dependencies:
     pend "~1.2.0"
+
+feed@4.2.2:
+  version "4.2.2"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/feed/-/feed-4.2.2.tgz#865783ef6ed12579e2c44bbef3c9113bc4956a7e"
+  integrity sha1-hleD727RJXnixEu+88kRO8SVan4=
+  dependencies:
+    xml-js "^1.6.11"
 
 figures@^3.2.0:
   version "3.2.0"
@@ -5186,6 +5215,11 @@ react-property@2.0.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/react-property/-/react-property-2.0.0.tgz#2156ba9d85fa4741faf1918b38efc1eae3c6a136"
   integrity sha1-IVa6nYX6R0H68ZGLOO/B6uPGoTY=
 
+react-truncate@2.4.0:
+  version "2.4.0"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/react-truncate/-/react-truncate-2.4.0.tgz#3cf5ff09ab86f93e3c078d359f4de6d75aa60510"
+  integrity sha1-PPX/CauG+T48B401n03m11qmBRA=
+
 react@17.0.2:
   version "17.0.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
@@ -5381,6 +5415,11 @@ sanitize-html@2.7.0:
     is-plain-object "^5.0.0"
     parse-srcset "^1.0.2"
     postcss "^8.3.11"
+
+sax@^1.2.4:
+  version "1.2.4"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
+  integrity sha1-KBYjTiN4vdxOU1T6tcqold9xANk=
 
 saxes@^5.0.1:
   version "5.0.1"
@@ -6241,6 +6280,13 @@ ws@^7.3.1, ws@^7.4.6:
   version "7.5.7"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/ws/-/ws-7.5.7.tgz#9e0ac77ee50af70d58326ecff7e85eb3fa375e67"
   integrity sha1-ngrHfuUK9w1YMm7P9+hes/o3Xmc=
+
+xml-js@^1.6.11:
+  version "1.6.11"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/xml-js/-/xml-js-1.6.11.tgz#927d2f6947f7f1c19a316dd8eea3614e8b18f8e9"
+  integrity sha1-kn0vaUf38cGaMW3Y7qNhTosY+Ok=
+  dependencies:
+    sax "^1.2.4"
 
 xml-name-validator@^3.0.0:
   version "3.0.0"

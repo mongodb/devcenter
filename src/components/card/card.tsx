@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { TypographyScale, Pill, HorizontalRule } from '@mdb/flora';
+import Truncate from 'react-truncate';
 
 import AuthorLockup from '../author-lockup';
 
@@ -38,7 +39,10 @@ const Card: React.FunctionComponent<CardProps> = ({
     thumbnail,
     variant,
     slug,
+    hideTagsOnMobile = true,
 }) => {
+    const truncatedDescription =
+        description && parse(description ? description : '');
     const displayDate = formatDateToDisplayDateFormat(new Date(contentDate));
     let secondaryTagElement = null;
     if (tags && pillCategory === 'Code Example') {
@@ -106,9 +110,10 @@ const Card: React.FunctionComponent<CardProps> = ({
                                                 '/play-button.svg'
                                             ) as string
                                         }
+                                        loader={thumbnailLoader}
                                         width={60}
                                         height={60}
-                                    ></Image>
+                                    />
                                 </div>
                             )}
                         </div>
@@ -131,13 +136,15 @@ const Card: React.FunctionComponent<CardProps> = ({
                             variant="body2"
                             sx={descriptionStyles(variant, pillCategory)}
                         >
-                            {parse(description ? description : '')}
+                            <Truncate lines={4} ellipsis={<span>...</span>}>
+                                {truncatedDescription}
+                            </Truncate>
                         </TypographyScale>
                     )}
                     {hasTags(variant) && tags && (
                         <TagSection
                             tags={tags}
-                            disappearOnMobile={true}
+                            disappearOnMobile={hideTagsOnMobile}
                             sx={{
                                 marginTop: variant === 'medium' ? 'inc30' : 0,
                             }}

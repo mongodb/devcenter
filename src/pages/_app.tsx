@@ -9,6 +9,8 @@ import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../lib/gtm';
 import Layout from '../components/layout';
 
+const CONTENT_ROUTE = '/[...slug]';
+
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
@@ -17,10 +19,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     let pageDescription = null;
     if (asPath in publicRuntimeConfig.pageDescriptions) {
         pageDescription = publicRuntimeConfig.pageDescriptions[asPath];
+    } else if (route !== CONTENT_ROUTE) {
+        // if no mapping found, set default meta description to that of the homepage
+        pageDescription = publicRuntimeConfig.pageDescriptions['/'];
     }
 
     let canonicalUrl = null;
-    if (route !== '/_error' && route !== '/[...slug]') {
+    if (route !== '/_error' && route !== CONTENT_ROUTE) {
         canonicalUrl = publicRuntimeConfig.absoluteBasePath + asPath;
     }
 

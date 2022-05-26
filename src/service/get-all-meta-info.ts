@@ -130,33 +130,33 @@ const getCTAs = (
     primary_cta: string | undefined,
     secondary_cta: string | undefined
 ): CTA[] => {
-    if (primary_cta && secondary_cta) {
-        return [
-            {
-                text: 'Primary CTA',
-                url: primary_cta,
-            },
-            {
-                text: 'Secondary CTA',
-                url: secondary_cta,
-            },
-        ];
-    }
+    // if (primary_cta && secondary_cta) {
+    //     return [
+    //         {
+    //             text: 'Download Now',
+    //             url: primary_cta,
+    //         },
+    //         {
+    //             text: 'Secondary CTA',
+    //             url: secondary_cta,
+    //         },
+    //     ];
+    // }
     if (primary_cta) {
         return [
             {
-                text: 'Primary CTA',
+                text: 'Download Now',
                 url: primary_cta,
             },
         ];
     }
-    if (secondary_cta) {
-        return [
-            {
-                text: 'Secondary CTA',
-                url: secondary_cta,
-            },
-        ];
-    }
+    // if (secondary_cta) {
+    //     return [
+    //         {
+    //             text: 'Secondary CTA',
+    //             url: secondary_cta,
+    //         },
+    //     ];
+    // }
     return [];
 };

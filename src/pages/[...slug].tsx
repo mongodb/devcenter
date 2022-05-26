@@ -116,6 +116,7 @@ const footerRatingStyles = {
 };
 
 const middleSectionStyles = {
+    maxWidth: '100%', // patches a Codemirror bug on FF https://github.com/codemirror/CodeMirror/issues/4142.
     gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
 };
 
@@ -132,11 +133,6 @@ const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
         ? '/developer/videos'
         : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
 };
-
-const parseDescription = (description: string, category: PillCategory) => {
-    return category === 'Podcast' ? parse(description) : description;
-};
-
 const determineVideoOrPodcast = (
     collectionType: CollectionType | undefined
 ) => {
@@ -237,6 +233,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         <>
             <div sx={middleSectionStyles}>
                 <TypographyScale
+                    customElement="h1"
                     variant="heading2"
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc30'],
@@ -337,10 +334,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                         whiteSpace: 'pre-wrap',
                     }}
                 >
-                    {parseDescription(
-                        parseUndefinedValue(description),
-                        category
-                    )}
+                    {parse(parseUndefinedValue(description))}
                 </TypographyScale>
             )}
             {vidOrPod && (
@@ -443,17 +437,18 @@ const ContentPage: NextPage<ContentPageProps> = ({
         handle: seo?.twitter_creator,
         site: seo?.twitter_site,
     };
-    let canonicalUrl = seo?.canonical_url
+    const canonicalUrl = seo?.canonical_url
         ? seo?.canonical_url
         : publicRuntimeConfig.absoluteBasePath + router.asPath;
+    const metaDescription = seo?.meta_description
+        ? seo.meta_description
+        : publicRuntimeConfig.pageDescriptions['/'];
 
     return (
         <>
             <NextSeo
                 title={`${title} | MongoDB`}
-                {...(seo?.meta_description && {
-                    description: seo.meta_description,
-                })}
+                description={metaDescription}
                 canonical={canonicalUrl}
                 openGraph={og}
                 twitter={twitter}

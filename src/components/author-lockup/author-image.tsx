@@ -5,6 +5,7 @@ import { avatarPlaceholder, profileImage } from './styles';
 import { getInitials } from './utils';
 import { AuthorImageProps } from './types';
 import { thumbnailLoader } from '../card/utils';
+import { getURLPath } from '../../utils/format-url-path';
 
 const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
     author,
@@ -38,7 +39,7 @@ const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
                 sx={profileImage(size)}
                 loader={thumbnailLoader}
                 layout="fill"
-                src={src}
+                src={getURLPath(src) as string}
                 alt={alt || ''}
             />
         </div>

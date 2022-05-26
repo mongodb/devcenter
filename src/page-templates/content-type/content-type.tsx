@@ -35,7 +35,6 @@ import {
 } from './styles';
 
 import { searchBoxStyles } from '../../components/search/styles';
-import noResults from '../../../public/no-results.png';
 
 import { FeaturedCardSection } from '../../components/card-section';
 
@@ -44,6 +43,8 @@ import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
 
 import { itemInFilters } from './utils';
+import { getURLPath } from '../../utils/format-url-path';
+import { thumbnailLoader } from '../../components/card/utils';
 let pluralize = require('pluralize');
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
@@ -173,7 +174,13 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             }}
         >
             <div>
-                <NextImage src={noResults}></NextImage>
+                <NextImage
+                    loader={thumbnailLoader}
+                    src={getURLPath('/no-results.png') as string}
+                    alt="No Results"
+                    height={500}
+                    width={500}
+                />
             </div>
             <Button
                 hasIcon={true}
@@ -314,7 +321,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         technologyItems={technologyItems}
                         contributedByItems={contributedByItems}
                         expertiseLevelItems={expertiseLevelItems}
-                        codeLevelItems={codeLevelItems}
+                        codeLevelItems={
+                            contentType === 'Code Example' ? codeLevelItems : []
+                        }
                     />
                     <div
                         sx={{
@@ -418,7 +427,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     technologyItems={technologyItems}
                     expertiseLevelItems={expertiseLevelItems}
                     contributedByItems={contributedByItems}
-                    codeLevelItems={codeLevelItems}
+                    codeLevelItems={
+                        contentType === 'Code Example' ? codeLevelItems : []
+                    }
                     closeModal={() => setMobileFiltersOpen(false)}
                 />
             )}

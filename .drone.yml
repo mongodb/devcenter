@@ -400,13 +400,5 @@ steps:
         from_secret: drone_token
 
 trigger:
-  branch:
-    - production
   event:
     - cron
-  cron:
-    include:
-    - daily
-    - hourly
-    - nightly
-    - weekly
