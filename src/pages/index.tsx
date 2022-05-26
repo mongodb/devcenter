@@ -130,10 +130,10 @@ const Home = () => {
                         variant="body1"
                         color="default"
                     >
-                        More than 100 open source projects, MongoDB tutorials,
-                        videos, and code examples. A global community of more
-                        than 7 million developers. Build something {`{big}`}{' '}
-                        with MongoDB.
+                        The latest MongoDB tutorials, videos and code examples
+                        with your languages and tools. A global community of
+                        more than 7 million developers. Build something{' '}
+                        {`{big}`} with MongoDB.
                     </TypographyScale>
                     <HomepageSearch />
                 </div>
