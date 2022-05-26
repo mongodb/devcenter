@@ -1948,5 +1948,10 @@
         "source": "/type/quickstart/",
         "destination": "/quickstarts/",
         "permanent": true
+    },
+    {
+        "source": "/products/atlas/use-atlas-on-heroku/configure-heroku-ip-address-in-atlas/",
+        "destination": "/products/atlas/use-atlas-on-heroku/",
+        "permanent": true
     }
 ]
