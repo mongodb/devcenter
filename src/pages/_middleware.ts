@@ -1,41 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
+import getConfig from 'next/config';
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
+    const { publicRuntimeConfig } = getConfig();
 
     // Handles consistent navigation search as well as
     // redirect for /learn page.
     console.log(req.nextUrl);
     console.log(pathname);
 
-    if (
-        pathname == '/learn/' ||
-        pathname == '/learn' ||
-        pathname == '/developer/learn' ||
-        pathname == '/developer/learn/'
-    ) {
+    const basePath = publicRuntimeConfig.absoluteBasePath;
+
+    if (pathname == '/learn/') {
         const { searchParams } = req.nextUrl;
         const s = searchParams.get('text');
         if (s && s.length > 0) {
-            const { href, search } = req.nextUrl;
-            req.nextUrl.href = href.replace(search, '');
-            req.nextUrl.pathname = '/search';
-            req.nextUrl.search = `?s=${s}`;
-            req.nextUrl.searchParams.delete('content');
-            req.nextUrl.searchParams.delete('text');
-
-            return NextResponse.redirect(req.nextUrl);
+            return NextResponse.redirect(`${basePath}/search?s=${s}`);
         } else if (
             searchParams.get('products') === 'Mobile' ||
             searchParams.get('products') === 'Realm'
         ) {
+            let pathname = '';
             if (searchParams.get('content') === 'articles') {
-                req.nextUrl.pathname = '/products/realm/articles/';
+                pathname = '/products/realm/articles/';
             } else {
-                req.nextUrl.pathname = '/products/realm/';
+                pathname = '/products/realm/';
             }
-            return NextResponse.redirect(req.nextUrl);
+            return NextResponse.redirect(`${basePath}${pathname}`);
         } else {
             req.nextUrl.pathname = '/';
             return NextResponse.redirect(req.nextUrl);
