@@ -1106,7 +1106,7 @@
     },
     {
         "source": "/how-to/realm-minesweeper/",
-        "destination": "/products/realm/minesweeper/",
+        "destination": "/languages/swift/realm-minesweeper",
         "permanent": true
     },
     {
@@ -1421,17 +1421,17 @@
     },
     {
         "source": "/product/atlas-search/",
-        "destination": "/products/atlas/atlas-search/",
+        "destination": "/products/atlas/full-text-search/",
         "permanent": true
     },
     {
         "source": "/product/charts/",
-        "destination": "/products/charts/",
+        "destination": "/products/atlas/charts/",
         "permanent": true
     },
     {
         "source": "/product/cloud-manager/",
-        "destination": "/products/cloud-manager/",
+        "destination": "/products/mongodb/cloud-manager/",
         "permanent": true
     },
     {
@@ -1631,7 +1631,7 @@
     },
     {
         "source": "/quickstart/java-client-side-field-level-encryption/",
-        "destination": "/products/mongodb/java-client-side-field-level-encryption/",
+        "destination": "/languages/java/java-client-side-field-level-encryption/",
         "permanent": true
     },
     {
@@ -1806,7 +1806,7 @@
     },
     {
         "source": "/tag/cloud/",
-        "destination": "/products/atlas/cloud/",
+        "destination": "/products/atlas/multi-cloud/",
         "permanent": true
     },
     {
@@ -1841,7 +1841,7 @@
     },
     {
         "source": "/tag/kafka/",
-        "destination": "/products/connectors/kafka/",
+        "destination": "/technologies/kafka/",
         "permanent": true
     },
     {
@@ -1871,7 +1871,7 @@
     },
     {
         "source": "/tag/schema-design/",
-        "destination": "/products/mongodb/schema-design/",
+        "destination": "/products/mongodb/schema/",
         "permanent": true
     },
     {
