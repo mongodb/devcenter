@@ -51,6 +51,7 @@ const HomepageSearch: React.FunctionComponent = () => {
                 button: {
                     display: ['none', 'none', 'none', 'block'],
                 },
+                '& label': { width: 'min-content' },
             }}
             onKeyPress={e => {
                 if (e.key === 'Enter') {
