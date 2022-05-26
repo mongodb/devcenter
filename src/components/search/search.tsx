@@ -118,7 +118,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
         contentType === 'Code Example' ? { marginBottom: 0 } : {};
 
     return (
-        <form role="search" className={className}>
+        <div role="search" className={className}>
             <div sx={titleStyles}>
                 <TypographyScale
                     variant="heading5"
@@ -200,7 +200,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
             ) : (
                 emptyState
             )}
-        </form>
+        </div>
     );
 };
 
