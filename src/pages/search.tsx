@@ -31,6 +31,7 @@ import Results from '../components/search/results';
 import { useRouter } from 'next/router';
 import { itemInFilters } from '../page-templates/content-type/utils';
 import { getURLPath } from '../utils/format-url-path';
+import { thumbnailLoader } from '../components/card/utils';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -331,9 +332,11 @@ const Search: NextPage<SearchProps> = ({
             <div>
                 <NextImage
                     src={getURLPath('/no-results.png') as string}
+                    loader={thumbnailLoader}
+                    alt="No Results"
                     height={500}
                     width={500}
-                ></NextImage>
+                />
             </div>
             <Button
                 hasIcon={true}

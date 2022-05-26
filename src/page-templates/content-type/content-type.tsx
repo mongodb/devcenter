@@ -44,6 +44,7 @@ import ProductsSection from './products-section';
 
 import { itemInFilters } from './utils';
 import { getURLPath } from '../../utils/format-url-path';
+import { thumbnailLoader } from '../../components/card/utils';
 let pluralize = require('pluralize');
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
@@ -174,10 +175,12 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         >
             <div>
                 <NextImage
+                    loader={thumbnailLoader}
                     src={getURLPath('/no-results.png') as string}
+                    alt="No Results"
                     height={500}
                     width={500}
-                ></NextImage>
+                />
             </div>
             <Button
                 hasIcon={true}

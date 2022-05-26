@@ -2907,6 +2907,13 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
+feed@4.2.2:
+  version "4.2.2"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/feed/-/feed-4.2.2.tgz#865783ef6ed12579e2c44bbef3c9113bc4956a7e"
+  integrity sha1-hleD727RJXnixEu+88kRO8SVan4=
+  dependencies:
+    xml-js "^1.6.11"
+
 figures@^3.2.0:
   version "3.2.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/figures/-/figures-3.2.0.tgz#625c18bd293c604dc4a8ddb2febf0c88341746af"
@@ -5409,6 +5416,11 @@ sanitize-html@2.7.0:
     parse-srcset "^1.0.2"
     postcss "^8.3.11"
 
+sax@^1.2.4:
+  version "1.2.4"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
+  integrity sha1-KBYjTiN4vdxOU1T6tcqold9xANk=
+
 saxes@^5.0.1:
   version "5.0.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/saxes/-/saxes-5.0.1.tgz#eebab953fa3b7608dbe94e5dadb15c888fa6696d"
@@ -6268,6 +6280,13 @@ ws@^7.3.1, ws@^7.4.6:
   version "7.5.7"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/ws/-/ws-7.5.7.tgz#9e0ac77ee50af70d58326ecff7e85eb3fa375e67"
   integrity sha1-ngrHfuUK9w1YMm7P9+hes/o3Xmc=
+
+xml-js@^1.6.11:
+  version "1.6.11"
+  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/xml-js/-/xml-js-1.6.11.tgz#927d2f6947f7f1c19a316dd8eea3614e8b18f8e9"
+  integrity sha1-kn0vaUf38cGaMW3Y7qNhTosY+Ok=
+  dependencies:
+    sax "^1.2.4"
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
