@@ -18,7 +18,10 @@ export async function middleware(req: NextRequest) {
             req.nextUrl.searchParams.delete('text');
 
             return NextResponse.redirect(req.nextUrl);
-        } else if (searchParams.get('products') === 'Mobile') {
+        } else if (
+            searchParams.get('products') === 'Mobile' ||
+            searchParams.get('products') === 'Realm'
+        ) {
             if (searchParams.get('content') === 'articles') {
                 req.nextUrl.pathname = '/products/realm/articles/';
             } else {
