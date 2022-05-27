@@ -22,7 +22,7 @@ autoscaling:
 
 probes:
   enabled: true
-  path: /developer/api/health
+  path: /developer/api/health/
   headers: {}
   liveness:
     httpGet: true
