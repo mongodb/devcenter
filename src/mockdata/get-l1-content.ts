@@ -10,6 +10,7 @@ const getL1Content = (slug: string = 'all'): L1Content => {
         {
             authors: [
                 {
+                    //
                     name: 'Farah Appleseed',
                     calculated_slug: '/author/farah-appleseed',
                 },
