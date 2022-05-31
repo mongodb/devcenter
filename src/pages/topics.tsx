@@ -4,7 +4,8 @@ import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { getURLPath } from '../utils/format-url-path';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
-import { GridLayout, TypographyScale } from '@mdb/flora';
+import { TypographyScale } from '@mdb/flora';
+import { pageWrapper } from '../styled/styles';
 
 interface Topic {
     title: string;
@@ -23,18 +24,18 @@ interface TopicsProps {
 const ULStyles = {
     listStyleType: 'none',
     padding: 0,
-    marginBottom: ['section20', 'section20', 'section20', 'section40'],
+    margin: 0,
     display: 'grid',
-    columnGap: 'inc70',
+    rowGap: ['inc30', 'inc30', 'inc30', 'inc40'],
+    columnGap: 'inc30',
     gridTemplateColumns: [
         'repeat(2, 1fr)',
-        'repeat(2, 1fr)',
+        null,
         'repeat(4, 1fr)',
-        'repeat(4, 1fr)',
+        null,
         'repeat(6, 1fr)',
     ],
     li: {
-        paddingBottom: ['inc30', 'inc30', 'inc30', 'inc40'],
         'a:hover': {
             textDecoration: 'underline !important',
         },
@@ -80,123 +81,132 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
         <>
             <NextSeo title={'All Topics | MongoDB'} />
             <Hero crumbs={crumbs} name="All Topics" />
-            <GridLayout
-                sx={{
-                    paddingLeft: [
-                        'inc40',
-                        'inc40',
-                        'inc50',
-                        'inc70',
-                        'inc70',
-                        0,
-                    ],
-                    paddingRight: [
-                        'inc40',
-                        'inc40',
-                        'inc50',
-                        'inc70',
-                        'inc70',
-                        0,
-                    ],
-                }}
-            >
+            <div sx={pageWrapper}>
                 <div
                     sx={{
-                        gridColumn: ['span 6', 'span 8', 'span 12', 'span 12'],
-                        marginTop: ['inc40', 'inc40', 'inc40', 'inc50'],
+                        maxWidth: '1416px', // Same as Flora's grid.
+                        margin: 'auto',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: ['section20', null, null, 'section50'],
                     }}
                 >
-                    <TypographyScale
-                        sx={{
-                            marginBottom: ['inc30', 'inc30', 'inc30', 'inc50'],
-                        }}
-                        variant="heading5"
-                    >
-                        Expertise Level
-                    </TypographyScale>
-                    <ul sx={ULStyles}>
-                        {getExpertiseLevels?.map(({ tagName, slug }) => (
-                            <li key={tagName}>
-                                <TypographyScale variant="body1">
-                                    <a href={getURLPath(slug)}>{tagName}</a>
-                                </TypographyScale>
-                            </li>
-                        ))}
-                    </ul>
-                    <TypographyScale
-                        sx={{
-                            marginBottom: ['inc30', 'inc30', 'inc30', 'inc50'],
-                        }}
-                        variant="heading5"
-                    >
-                        Languages
-                    </TypographyScale>
-                    <ul sx={ULStyles}>
-                        {getLanguages?.map(({ tagName, slug }) => (
-                            <li key={tagName}>
-                                <TypographyScale variant="body1">
-                                    <a href={getURLPath(slug)}>{tagName}</a>
-                                </TypographyScale>
-                            </li>
-                        ))}
-                    </ul>
-                    <TypographyScale
-                        sx={{
-                            marginBottom: ['inc30', 'inc30', 'inc30', 'inc50'],
-                        }}
-                        variant="heading5"
-                    >
-                        Technologies
-                    </TypographyScale>
-                    <ul sx={ULStyles}>
-                        {getTechnologies?.map(({ tagName, slug }) => (
-                            <li key={tagName}>
-                                <TypographyScale variant="body1">
-                                    <a href={getURLPath(slug)}>{tagName}</a>
-                                </TypographyScale>
-                            </li>
-                        ))}
-                    </ul>
-                    <TypographyScale
-                        sx={{ marginBottom: 0 }}
-                        variant="heading5"
-                    >
-                        Products
-                    </TypographyScale>
-                    {products.map(({ slug, tagName, topics }) => (
-                        <div key={tagName}>
-                            <TypographyScale
-                                sx={{
-                                    fontWeight: '700',
-                                    marginTop: 'inc50',
-                                    marginBottom: [
-                                        'inc30',
-                                        'inc30',
-                                        'inc30',
-                                        'inc30',
-                                    ],
-                                }}
-                                variant="heading6"
-                            >
-                                <a href={getURLPath(slug)}>{tagName}</a>
-                            </TypographyScale>
-                            {!!topics.length && (
-                                <ul sx={{ ...ULStyles, marginBottom: 'inc90' }}>
-                                    {topics.map(({ tagName, slug }) => (
-                                        <li key={tagName}>
-                                            <TypographyScale variant="body1">
-                                                <a href={getURLPath(slug)}>
-                                                    {tagName}
-                                                </a>
-                                            </TypographyScale>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
+                    <div>
+                        <TypographyScale
+                            sx={{
+                                marginBottom: ['inc30', null, null, 'inc50'],
+                            }}
+                            variant="heading5"
+                        >
+                            Expertise Level
+                        </TypographyScale>
+                        <ul sx={ULStyles}>
+                            {getExpertiseLevels?.map(({ tagName, slug }) => (
+                                <li key={tagName}>
+                                    <TypographyScale variant="body1">
+                                        <a href={getURLPath(slug)}>{tagName}</a>
+                                    </TypographyScale>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <TypographyScale
+                            sx={{
+                                marginBottom: ['inc30', null, null, 'inc50'],
+                            }}
+                            variant="heading5"
+                        >
+                            Languages
+                        </TypographyScale>
+                        <ul sx={ULStyles}>
+                            {getLanguages?.map(({ tagName, slug }) => (
+                                <li key={tagName}>
+                                    <TypographyScale variant="body1">
+                                        <a href={getURLPath(slug)}>{tagName}</a>
+                                    </TypographyScale>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <TypographyScale
+                            sx={{
+                                marginBottom: ['inc30', null, null, 'inc50'],
+                            }}
+                            variant="heading5"
+                        >
+                            Technologies
+                        </TypographyScale>
+                        <ul sx={ULStyles}>
+                            {getTechnologies?.map(({ tagName, slug }) => (
+                                <li key={tagName}>
+                                    <TypographyScale variant="body1">
+                                        <a href={getURLPath(slug)}>{tagName}</a>
+                                    </TypographyScale>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <TypographyScale
+                            sx={{
+                                marginBottom: ['inc30', null, null, 'inc50'],
+                            }}
+                            variant="heading5"
+                        >
+                            Products
+                        </TypographyScale>
+                        <div
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: ['inc70', null, null, 'inc90'],
+                            }}
+                        >
+                            {products.map(({ slug, tagName, topics }) => (
+                                <div key={tagName}>
+                                    <TypographyScale
+                                        sx={{
+                                            fontWeight: '700',
+                                            marginBottom: [
+                                                'inc20',
+                                                null,
+                                                null,
+                                                'inc30',
+                                            ],
+                                            'a:hover': {
+                                                textDecoration:
+                                                    'underline !important',
+                                            },
+                                        }}
+                                        variant="heading6"
+                                    >
+                                        <a href={getURLPath(slug)}>{tagName}</a>
+                                    </TypographyScale>
+                                    {!!topics.length && (
+                                        <ul sx={ULStyles}>
+                                            {topics.map(({ tagName, slug }) => (
+                                                <li key={tagName}>
+                                                    <TypographyScale variant="body1">
+                                                        <a
+                                                            href={getURLPath(
+                                                                slug
+                                                            )}
+                                                        >
+                                                            {tagName}
+                                                        </a>
+                                                    </TypographyScale>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
                 </div>
-            </GridLayout>
+            </div>
         </>
     );
 };

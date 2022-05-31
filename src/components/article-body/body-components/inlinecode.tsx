@@ -1,24 +1,18 @@
-import styled from '@emotion/styled';
 import { ComponentFactory } from '../component-factory';
 import { ArticleNode } from '../../../interfaces/article-body-node';
 import theme from '@mdb/flora/theme';
-import { screenSize } from '../../../styled/theme';
 
-const StyledLiteral = styled('code')`
-    background: ${theme.colors.purple10};
-    color: ${theme.colors.purple80};
-    border-radius: ${theme.radii.inc20};
-    padding: ${theme.space.inc10} ${theme.space.inc20};
-    font-family: ${theme.fonts.mono};
-    font-size: ${theme.fontSizes.inc40};
-    :hover {
-        border: 1px solid ${theme.colors.purple40};
-    }
-    @media ${screenSize.upToLarge} {
-        font-size: ${theme.fontSizes.inc30};
-        line-height: ${theme.lineHeights.inc10};
-    }
-`;
+const codeStyles = {
+    bg: 'purple10',
+    color: 'purple80',
+    borderRadius: 'inc20',
+    px: `calc(${theme.space.inc20} - 2px)`, // Subtract  2px to account for the border.
+    py: `calc(${theme.space.inc10} - 2px)`,
+    fontFamily: 'mono',
+    fontSize: ['inc30', null, null, 'inc40'],
+    border: `1px solid ${theme.colors.purple40}`,
+    lineHeight: ['inc30', null, null, '34px'], // To prevent vertical overlapping of code elements.
+};
 
 export const InlineCode = ({
     children,
@@ -29,13 +23,13 @@ export const InlineCode = ({
 }) => {
     // Value is the DevHub CMS representation
     if (value) {
-        return <StyledLiteral>{value}</StyledLiteral>;
+        return <code sx={codeStyles}>{value}</code>;
     }
     return (
-        <StyledLiteral>
+        <code sx={codeStyles}>
             {children.map((node: ArticleNode, i: number) => (
                 <ComponentFactory nodeData={node} key={i} />
             ))}
-        </StyledLiteral>
+        </code>
     );
 };
