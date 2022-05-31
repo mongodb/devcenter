@@ -190,6 +190,11 @@ const rewrites = [
         destination: `${process.env.DEVHUB_URL}/images/charts-sdk/:image*.png`,
         regex: '^/images/charts-sdk/(.+)\\.png$',
     },
+    {
+        source: '/images/:image*.(png|jpg|jpeg|gif)',
+        destination: `${process.env.DEVHUB_URL}/images/:image*.(png|jpg|jpeg|gif)`,
+        regex: '^/images/(.+)\\.(png|jpg|jpeg|gif)$',
+    },
 ];
 
 module.exports = {
