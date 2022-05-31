@@ -265,7 +265,7 @@ steps:
 
 trigger:
   branch:
-    - ah/devhub-1280
+    - main
   event:
     - custom
 
