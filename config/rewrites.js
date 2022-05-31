@@ -145,6 +145,21 @@ const rewrites = [
         destination: `${process.env.DEVHUB_URL}/images/atf-images/:image*.png`,
         regex: '^/images/atf-images/(.+)\\.png$',
     },
+    {
+        source: '/images/how-to/:image*.(png|jpg|jpeg|gif)',
+        destination: `${process.env.DEVHUB_URL}/images/how-to/:image*.(png|jpg|jpeg|gif)`,
+        regex: '^/images/how-to/(.+)\\.(png|jpg|jpeg|gif)$',
+    },
+    {
+        source: '/images/article/:image*.(png|jpg|jpeg|gif)',
+        destination: `${process.env.DEVHUB_URL}/images/article/:image*.(png|jpg|jpeg|gif)`,
+        regex: '^/images/article/(.+)\\.(png|jpg|jpeg|gif)$',
+    },
+    {
+        source: '/images/qs-badges/:image*.(png|jpg|jpeg|gif)',
+        destination: `${process.env.DEVHUB_URL}/images/qs-badges/:image*.(png|jpg|jpeg|gif)`,
+        regex: '^/images/qs-badges/(.+)\\.(png|jpg|jpeg|gif)$',
+    },
 ];
 
 module.exports = {

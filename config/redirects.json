@@ -1691,7 +1691,7 @@
     },
     {
         "source": "/project/magazine-management/",
-        "destination": "/javascript/code-example-js-mongodb-magazinemanagement/",
+        "destination": "/code-examples/javascript/code-example-js-mongodb-magazinemanagement/",
         "permanent": true
     },
     {
