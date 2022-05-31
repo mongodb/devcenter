@@ -604,5 +604,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         relatedContent,
     };
 
-    return { props: data };
+    return {
+        props: data,
+        revalidate: 10,
+    };
 };
