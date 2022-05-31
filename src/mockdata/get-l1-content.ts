@@ -5,6 +5,8 @@ interface L1Content {
     content: ContentItem[];
     featured: ContentItem[];
 }
+
+//
 const getL1Content = (slug: string = 'all'): L1Content => {
     const featured: ContentItem[] = [
         {
