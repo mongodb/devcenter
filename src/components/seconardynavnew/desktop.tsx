@@ -33,6 +33,7 @@ const StyledSecondaryLinks = {
             theme.space.inc90,
         ],
     },
+    whiteSpace: 'nowrap' as 'nowrap',
 };
 
 const hoverLinkStyles = (isActive: boolean) => ({
@@ -111,10 +112,11 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                     'solid 1px #000',
                     'solid 1px #000',
                 ],
+                px: ['inc40', null, 'inc50', 'inc70'],
             }}
         >
             <nav sx={StyledSecondaryNavContainer}>
-                <div sx={linkWrapperStyles}>
+                <div sx={{ ...linkWrapperStyles, whiteSpace: 'nowrap' }}>
                     <FloraLink
                         href={getURLPath('/')}
                         sx={{

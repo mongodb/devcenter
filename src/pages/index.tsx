@@ -76,8 +76,7 @@ const Home = () => {
             sx={{
                 overflow: 'hidden' as 'hidden',
                 position: 'relative' as 'relative',
-                paddingLeft: '25px',
-                paddingRight: '25px',
+                px: ['inc40', null, 'inc50', 'inc70'],
 
                 '> svg': {
                     position: 'absolute' as 'absolute',
@@ -103,15 +102,9 @@ const Home = () => {
             <GridLayout>
                 <div
                     sx={{
-                        gridColumn: [
-                            'span 6',
-                            'span 8',
-                            'span 8',
-                            '2 / span 10',
-                        ],
+                        gridColumn: ['span 6', 'span 8', 'span 8', 'span 12'],
                         textAlign: 'center',
                         marginTop: 'section40',
-                        marginBottom: 'section40',
                     }}
                 >
                     <TypographyScale
@@ -120,6 +113,19 @@ const Home = () => {
                     >
                         MongoDB Developer Center
                     </TypographyScale>
+                </div>
+                <div
+                    sx={{
+                        marginBottom: 'section40',
+                        gridColumn: [
+                            'span 6',
+                            'span 8',
+                            'span 8',
+                            '2 / span 10',
+                        ],
+                        textAlign: 'center',
+                    }}
+                >
                     <TypographyScale
                         customElement="h2"
                         variant="body1"
@@ -364,6 +370,7 @@ const Home = () => {
                                     sx={{
                                         backgroundColor: 'white',
                                         minHeight: '566px',
+                                        height: '100%',
                                     }}
                                     alignment="left"
                                     description={description}

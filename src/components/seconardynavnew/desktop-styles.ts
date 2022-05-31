@@ -1,8 +1,9 @@
 export const StyledSecondaryNavContainer = {
-    display: 'inline-flex' as 'inline-flex',
+    display: 'flex' as 'flex',
     boxSizing: 'border-box' as 'border-box',
-    marginLeft: 'inc70',
+    mx: 'auto',
     paddingTop: 'elementXSmall',
     paddingBottom: 'elementXSmall',
     position: 'relative' as 'relative',
+    maxWidth: '1416px',
 };
