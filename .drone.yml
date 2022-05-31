@@ -237,8 +237,6 @@ steps:
         from_secret: DEVHUB_URL
     settings:
       create_repository: true
-      enable_cache: false
-      snapshot_mode: full
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
