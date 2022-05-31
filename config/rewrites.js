@@ -145,6 +145,51 @@ const rewrites = [
         destination: `${process.env.DEVHUB_URL}/images/atf-images/:image*.png`,
         regex: '^/images/atf-images/(.+)\\.png$',
     },
+    {
+        source: '/images/how-to/:image*.(png|jpg|jpeg|gif)',
+        destination: `${process.env.DEVHUB_URL}/images/how-to/:image*.(png|jpg|jpeg|gif)`,
+        regex: '^/images/how-to/(.+)\\.(png|jpg|jpeg|gif)$',
+    },
+    {
+        source: '/images/article/:image*.(png|jpg|jpeg|gif)',
+        destination: `${process.env.DEVHUB_URL}/images/article/:image*.(png|jpg|jpeg|gif)`,
+        regex: '^/images/article/(.+)\\.(png|jpg|jpeg|gif)$',
+    },
+    {
+        source: '/images/qs-badges/:image*.(png|jpg|jpeg|gif)',
+        destination: `${process.env.DEVHUB_URL}/images/qs-badges/:image*.(png|jpg|jpeg|gif)`,
+        regex: '^/images/qs-badges/(.+)\\.(png|jpg|jpeg|gif)$',
+    },
+    {
+        source: '/images/starlette/:image*.png',
+        destination: `${process.env.DEVHUB_URL}/images/starlette/:image*.png`,
+        regex: '^/images/starlette/(.+)\\.png$',
+    },
+    {
+        source: '/images/heroku/:image*.png',
+        destination: `${process.env.DEVHUB_URL}/images/heroku/:image*.png`,
+        regex: '^/images/heroku/(.+)\\.png$',
+    },
+    {
+        source: '/images/aws-lambda/:image*.png',
+        destination: `${process.env.DEVHUB_URL}/images/aws-lambda/:image*.png`,
+        regex: '^/images/aws-lambda/(.+)\\.png$',
+    },
+    {
+        source: '/images/aws-cloudformation/:image*.(gif|png)',
+        destination: `${process.env.DEVHUB_URL}/images/aws-cloudformation/:image*.(gif|png)`,
+        regex: '^/images/aws-cloudformation/(.+)\\.(gif|png)$',
+    },
+    {
+        source: '/images/atlas-fts/:image*.png',
+        destination: `${process.env.DEVHUB_URL}/images/atlas-fts/:image*.png`,
+        regex: '^/images/atlas-fts/(.+)\\.png$',
+    },
+    {
+        source: '/images/charts-sdk/:image*.png',
+        destination: `${process.env.DEVHUB_URL}/images/charts-sdk/:image*.png`,
+        regex: '^/images/charts-sdk/(.+)\\.png$',
+    },
 ];
 
 module.exports = {
