@@ -18,7 +18,7 @@ steps:
       NPM_EMAIL:
         from_secret: NPM_EMAIL
       STRAPI_URL:
-        from_secret: STRAPI_URL_STAGING
+        from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
         from_secret: DEVHUB_URL
     settings:
@@ -232,7 +232,7 @@ steps:
       NPM_EMAIL:
         from_secret: NPM_EMAIL
       STRAPI_URL:
-        from_secret: STRAPI_URL_STAGING
+        from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
         from_secret: DEVHUB_URL
     settings:
