@@ -1,8 +1,6 @@
-import styled from '@emotion/styled';
 import { ComponentFactory } from '../component-factory';
 import { ArticleNode } from '../../../interfaces/article-body-node';
 import theme from '@mdb/flora/theme';
-import { screenSize } from '../../../styled/theme';
 
 const codeStyles = {
     bg: 'purple10',
