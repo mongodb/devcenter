@@ -6,6 +6,7 @@ export const container = {
 };
 
 export const profileImage = (size: 'small' | 'large') => ({
+    objectFit: 'cover' as 'cover',
     position: 'relative' as 'relative',
     borderRadius: '50%',
     width: size === 'small' ? '40px' : ['40px', null, null, '64px'], // This is how it is in flora, idk why they're not using theme vals.
