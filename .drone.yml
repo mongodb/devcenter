@@ -201,7 +201,7 @@ trigger:
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevRel, using the current SHA.
+name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
 
 steps:
   - name: publish-staging-from-cron
