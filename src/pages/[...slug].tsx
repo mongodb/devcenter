@@ -5,6 +5,7 @@ import getConfig from 'next/config';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import {
     Button,
@@ -65,6 +66,7 @@ import {
     addExternalIconToSideNav,
     appendDocumentationLinkToSideNav,
 } from '../utils/add-documentation-link-to-side-nav';
+import { IRating } from '../components/feedback-modal/types';
 let pluralize = require('pluralize');
 
 interface ContentPageProps {
@@ -148,6 +150,9 @@ const ratingSectionCondition = (category: PillCategory) => {
     );
 };
 
+const createFeedbackUrl =
+    'https://data.mongodb-api.com/app/devhub-api-ztlmp/endpoint/create_feedback';
+
 const ContentPage: NextPage<ContentPageProps> = ({
     crumbs,
     topicSlug,
@@ -179,6 +184,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
         seo,
     } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
+    const [feedbackId, setFeedbackId] = useState<string>('');
 
     const [feedbackModalStage, setFeedbackModalStage] =
         useState<feedbackModalStages>('closed');
@@ -210,6 +216,26 @@ const ContentPage: NextPage<ContentPageProps> = ({
         'documentation'
     );
 
+    const onRate = (stars: number) => {
+        const body: IRating = {
+            slug,
+            stars,
+            title,
+        };
+        axios
+            .post(createFeedbackUrl, body, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                },
+            })
+            .then(({ data }) => {
+                setFeedbackId(data._id);
+            });
+        setRatingStars(stars); // This should update both rating sections but it doesn't.
+        setFeedbackModalStage(stars === 3 ? 'text' : 'checkbox');
+    };
+
     const ratingSection = (
         <div
             sx={{
@@ -219,13 +245,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
             }}
         >
             <span>Rate this {category.toLowerCase()}</span>
-            <ContentRating
-                stars={ratingStars}
-                onRate={i => {
-                    setRatingStars(i); // This should update both rating sections but it doesn't.
-                    setFeedbackModalStage(i === 3 ? 'text' : 'checkbox');
-                }}
-            />
+            <ContentRating stars={ratingStars} onRate={onRate} />
         </div>
     );
 
@@ -515,8 +535,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
                 modalStage={feedbackModalStage}
                 stars={ratingStars}
                 contentCategory={category}
-                slug={slug}
-                title={title}
+                feedbackId={feedbackId}
             />
             <RequestContentModal
                 setModalStage={setRequestContentModalStage}
