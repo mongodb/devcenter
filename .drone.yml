@@ -204,15 +204,6 @@ type: kubernetes
 name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevRel, using the current SHA.
 
 steps:
-  - name: checkout-to-current-release
-    image: alpine/git
-    failure: ignore
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_staging
-    commands:
-    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest staging revision that was promoted successfully.
-
   - name: publish-staging-from-cron
     image: plugins/kaniko-ecr
     environment:
@@ -266,14 +257,6 @@ type: kubernetes
 name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using the current SHA.
 
 steps:
-  - name: checkout-to-current-release
-    image: alpine/git
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_production
-    commands:
-    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest production revision that was promoted successfully.
-
   - name: publish-prod-from-cron
     image: plugins/kaniko-ecr
     environment:
