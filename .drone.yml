@@ -249,6 +249,8 @@ steps:
 trigger:
   event:
     - cron
+  cron:
+    - rebuild-devcenter-staging-cron
 
 ---
 depends_on: null
@@ -302,3 +304,5 @@ steps:
 trigger:
   event:
     - cron
+  cron:
+    - rebuild-devcenter-prod-cron
