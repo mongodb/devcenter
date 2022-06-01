@@ -206,6 +206,7 @@ name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevR
 steps:
   - name: checkout-to-current-release
     image: alpine/git
+    failure: ignore
     environment:
       APP_RELEASE:
         from_secret: app_release_staging
