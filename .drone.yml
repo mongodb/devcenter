@@ -35,7 +35,7 @@ steps:
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
-        - latest
+        - latest-staging
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -78,7 +78,7 @@ steps:
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
-      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
+      values: image.tag=latest-staging,image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
@@ -143,7 +143,7 @@ steps:
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
-        - latest
+        - latest-prod
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -174,7 +174,7 @@ steps:
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
-      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.prod.corp.mongodb.com
+      values: image.tag=latest-prod,image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.prod.corp.mongodb.com
       api_server: https://api.prod.corp.mongodb.com
       kubernetes_token:
         from_secret: prod_kubernetes_token
@@ -248,6 +248,7 @@ steps:
         - APP_RELEASE
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
+        - latest-staging
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -319,6 +320,7 @@ steps:
         - APP_RELEASE
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
+        - latest-prod
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -381,6 +383,7 @@ steps:
         - APP_RELEASE
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
+        - latest-prod
       access_key:
         from_secret: ecr_access_key
       secret_key:
