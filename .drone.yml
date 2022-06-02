@@ -34,8 +34,8 @@ steps:
         - DEVHUB_URL
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
-        - git-${DRONE_COMMIT_SHA:0:7}
-        - latest
+        - devcenter-staging-build-${DRONE_BUILD_NUMBER}
+        - latest-staging
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -78,7 +78,7 @@ steps:
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
-      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
+      values: image.tag=devcenter-staging-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
@@ -142,8 +142,8 @@ steps:
         - DEVHUB_URL
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
-        - git-${DRONE_COMMIT_SHA:0:7}
-        - latest
+        - devcenter-prod-build-${DRONE_BUILD_NUMBER}
+        - latest-prod
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -174,7 +174,7 @@ steps:
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
-      values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.prod.corp.mongodb.com
+      values: image.tag=devcenter-prod-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend.devrel.prod.corp.mongodb.com
       api_server: https://api.prod.corp.mongodb.com
       kubernetes_token:
         from_secret: prod_kubernetes_token
@@ -201,28 +201,10 @@ trigger:
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: deploy-devcenter-stage-trigger
+name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevRel, using what's currently deployed in the main branch.
 
 steps:
-  - name: checkout-to-current-release
-    image: alpine/git
-    failure: ignore
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_staging
-    commands:
-    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest staging revision that was promoted successfully.
-
-  - name: check-environment
-    image: alpine
-    environment:
-      TOKEN:
-        from_secret: webhook_token
-    commands:
-    - if [[ "${APP_ENV}" != "staging" ]]; then exit 78; fi
-    - if [[ "${APP_WEBHOOK_TOKEN}" != "$${TOKEN}" ]]; then exit 78; fi
-
-  - name: publish-staging-from-trigger
+  - name: publish-staging-from-cron
     image: plugins/kaniko-ecr
     environment:
       APP_RELEASE:
@@ -248,13 +230,14 @@ steps:
         - APP_RELEASE
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
+        - latest-staging
       access_key:
         from_secret: ecr_access_key
       secret_key:
         from_secret: ecr_secret_key
       values_files: ["environments/staging.yaml"]
 
-  - name: deploy-staging-from-trigger
+  - name: deploy-staging-from-cron
     image: drone/cli:1.4.0-alpine
     commands:
     - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} staging
@@ -264,97 +247,18 @@ steps:
         from_secret: drone_token
 
 trigger:
-  branch:
-    - main
   event:
-    - custom
+    - cron
+  cron:
+    - rebuild-devcenter-staging-cron
 
 ---
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: deploy-devcenter-prod-trigger
+name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
 
 steps:
-  - name: checkout-to-current-release
-    image: alpine/git
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_production
-    commands:
-    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest production revision that was promoted successfully.
-
-  - name: check-environment
-    image: alpine
-    environment:
-      TOKEN:
-        from_secret: webhook_token
-    commands:
-    - if [[ "${APP_ENV}" != "production" ]]; then exit 78; fi
-    - if [[ "${APP_WEBHOOK_TOKEN}" != "$${TOKEN}" ]]; then exit 78; fi
-
-  - name: publish-prod-from-trigger
-    image: plugins/kaniko-ecr
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_production
-      NPM_AUTH:
-        from_secret: NPM_AUTH
-      NPM_EMAIL:
-        from_secret: NPM_EMAIL
-      STRAPI_URL:
-        from_secret: STRAPI_URL_PROD
-      DEVHUB_URL:
-        from_secret: DEVHUB_URL
-    settings:
-      create_repository: true
-      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
-      repo: devrel/${DRONE_REPO_NAME}
-      build_args:
-        - HOST_URL=www.mongodb.com
-        - NPM_AUTH
-        - NPM_EMAIL
-        - STRAPI_URL
-        - DEVHUB_URL
-        - APP_RELEASE
-      tags:
-        - devcenter-prod-build-${DRONE_BUILD_NUMBER}
-      access_key:
-        from_secret: ecr_access_key
-      secret_key:
-        from_secret: ecr_secret_key
-      values_files: ["environments/prod.yaml"]
-
-  - name: deploy-prod-from-trigger
-    image: drone/cli:1.4.0-alpine
-    commands:
-    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} production
-    environment:
-      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
-      DRONE_TOKEN:
-        from_secret: drone_token
-
-trigger:
-  branch:
-    - production
-  event:
-    - custom
-
----
-depends_on: null
-kind: pipeline
-type: kubernetes
-name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using the current SHA.
-
-steps:
-  - name: checkout-to-current-release
-    image: alpine/git
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_production
-    commands:
-    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest production revision that was promoted successfully.
-
   - name: publish-prod-from-cron
     image: plugins/kaniko-ecr
     environment:
@@ -381,6 +285,7 @@ steps:
         - APP_RELEASE
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
+        - latest-prod
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -399,3 +304,5 @@ steps:
 trigger:
   event:
     - cron
+  cron:
+    - rebuild-devcenter-prod-cron
