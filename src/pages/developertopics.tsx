@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 
 const DeveloperTopics: NextPage = () => (
     <>
-        <h1>Developer Topics</h1>
+        <h1>Developer Topics -</h1>
     </>
 );
 
