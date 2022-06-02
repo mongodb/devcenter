@@ -150,9 +150,6 @@ const ratingSectionCondition = (category: PillCategory) => {
     );
 };
 
-const createFeedbackUrl =
-    'https://data.mongodb-api.com/app/devhub-api-ztlmp/endpoint/create_feedback';
-
 const ContentPage: NextPage<ContentPageProps> = ({
     crumbs,
     topicSlug,
@@ -223,12 +220,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
             title,
         };
         axios
-            .post(createFeedbackUrl, body, {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                },
-            })
+            .post(getURLPath('/api/createFeedback') as string, body)
             .then(({ data }) => {
                 setFeedbackId(data._id);
             });

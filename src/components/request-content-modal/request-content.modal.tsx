@@ -4,6 +4,7 @@ import TextRequest from './dialogs/text-request';
 import ThankYou from './dialogs/thank-you';
 import { RequestContentModalProps, ContentRequest } from './types';
 import axios from 'axios';
+import { getURLPath } from '../../utils/format-url-path';
 
 const RequestContentModal: React.FunctionComponent<
     RequestContentModalProps
@@ -14,18 +15,8 @@ const RequestContentModal: React.FunctionComponent<
             description,
             email,
         };
-        const url =
-            'https://data.mongodb-api.com/app/devhub-api-ztlmp/endpoint/request_devhub_content';
-        axios
-            .post(url, contentRequest, {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                },
-            })
-            .then(({ data }) => {
-                console.log(data);
-            });
+
+        axios.post(getURLPath('/api/requestContent') as string, contentRequest);
     };
 
     return (

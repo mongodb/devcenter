@@ -5,17 +5,10 @@ import TextFeedback from './dialogs/text-feedback';
 import ThankYou from './dialogs/thank-you';
 import { FeedbackModalProps, ICheckboxFeedback, ITextFeedback } from './types';
 import axios from 'axios';
-
-const updateUrl =
-    'https://data.mongodb-api.com/app/devhub-api-ztlmp/endpoint/update_feedback';
+import { getURLPath } from '../../utils/format-url-path';
 
 const updateFeedback = (body: ITextFeedback | ICheckboxFeedback) =>
-    axios.put(updateUrl, body, {
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json;charset=UTF-8',
-        },
-    });
+    axios.put(getURLPath('/api/updateFeedback') as string, body);
 
 const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
     setModalStage,

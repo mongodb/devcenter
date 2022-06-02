@@ -4,9 +4,7 @@ import { ContentItem } from '../../interfaces/content-item';
 import { SearchItem } from './types';
 import { Image } from '../../interfaces/image';
 import { Author } from '../../interfaces/author';
-
-const searchEndpoint =
-    'https://data.mongodb-api.com/app/devhub-search-service-fldiy/endpoint/search_devcenter';
+import { getURLPath } from '../../utils/format-url-path';
 
 export const searchItemToContentItem = ({
     type,
@@ -48,7 +46,9 @@ export const searchItemToContentItem = ({
 };
 
 export const fetcher: Fetcher<ContentItem[], string> = queryString => {
-    return fetch(`${searchEndpoint}?${queryString}`).then(async response => {
+    return fetch(
+        (getURLPath('/api/search') as string) + '?' + queryString
+    ).then(async response => {
         const r_json: SearchItem[] = await response.json();
         return r_json.map(searchItemToContentItem);
     });

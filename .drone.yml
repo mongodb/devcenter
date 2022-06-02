@@ -17,6 +17,10 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL
       STRAPI_URL:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
@@ -30,6 +34,8 @@ steps:
         - HOST_URL=mongodbcom-cdn.website.staging.corp.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
+        - REALM_API_URL
+        - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
         - APP_RELEASE=${DRONE_COMMIT_SHA}
@@ -125,6 +131,10 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL
       STRAPI_URL:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
@@ -138,6 +148,8 @@ steps:
         - HOST_URL=www.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
+        - REALM_API_URL
+        - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
         - APP_RELEASE=${DRONE_COMMIT_SHA}
@@ -231,6 +243,10 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL
       STRAPI_URL:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
@@ -243,6 +259,8 @@ steps:
         - HOST_URL=mongodbcom-cdn.website.staging.corp.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
+        - REALM_API_URL
+        - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
         - APP_RELEASE
@@ -302,6 +320,10 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL
       STRAPI_URL:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
@@ -314,6 +336,8 @@ steps:
         - HOST_URL=www.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
+        - REALM_API_URL
+        - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
         - APP_RELEASE
@@ -364,6 +388,10 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL
       STRAPI_URL:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
@@ -376,6 +404,8 @@ steps:
         - HOST_URL=www.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
+        - REALM_API_URL
+        - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
         - APP_RELEASE
