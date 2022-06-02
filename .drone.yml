@@ -201,7 +201,7 @@ trigger:
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevRel, using the current SHA.
+name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevRel, using what's currently deployed in the main branch.
 
 steps:
   - name: publish-staging-from-cron
@@ -247,26 +247,18 @@ steps:
         from_secret: drone_token
 
 trigger:
-  branch:
-    - ah/fix-tags-preview
   event:
-    - push
+    - cron
+  cron:
+    - rebuild-devcenter-staging-cron
 
 ---
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using the current SHA.
+name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
 
 steps:
-  - name: checkout-to-current-release
-    image: alpine/git
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_production
-    commands:
-    - git checkout "$${APP_RELEASE}" # "$${APP_RELEASE}" is the latest production revision that was promoted successfully.
-
   - name: publish-prod-from-cron
     image: plugins/kaniko-ecr
     environment:
@@ -312,3 +304,5 @@ steps:
 trigger:
   event:
     - cron
+  cron:
+    - rebuild-devcenter-prod-cron
