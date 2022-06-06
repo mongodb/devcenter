@@ -24,13 +24,7 @@ export const getArticles = async (
     return data.articles;
 };
 
-export const getAllArticlesFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
-): Promise<Article[]> => {
-    const query = gql`
-        query Articles {
-            articles @rest(type: "Article", path: "/new-articles?_limit=-1") {
-                authors {
+const fields = `authors {
                     name
                     bio
                     image {
@@ -104,7 +98,31 @@ export const getAllArticlesFromAPI = async (
                     }
                     twitter_site
                     twitter_title
-                }
+                }`;
+
+export const getAllArticlesFromAPI = async (
+    client: UnderlyingClient<'ApolloREST'>
+): Promise<Article[]> => {
+    const query = gql`
+        query Articles {
+            articles @rest(type: "Article", path: "/new-articles?_limit=-1") {
+                   ${fields}
+            }
+        }
+    `;
+    const { data }: ApolloQueryResult<{ articles: Article[] }> =
+        await client.query({ query });
+
+    return data.articles;
+};
+
+export const getAllDraftArticlesFromAPI = async (
+    client: UnderlyingClient<'ApolloREST'>
+): Promise<Article[]> => {
+    const query = gql`
+        query Articles {
+            articles @rest(type: "Article", path: "/new-articles?_publicationState=preview&_limit=-1") {
+                   ${fields}
             }
         }
     `;
