@@ -37,6 +37,7 @@ export const getAllArticlesFromAPI = async (
                         url
                     }
                     calculated_slug
+                    twitter
                 }
                 description
                 content
