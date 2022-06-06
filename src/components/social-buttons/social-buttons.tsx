@@ -4,58 +4,31 @@ import { Author } from '../../interfaces/author';
 
 import { circleStyles } from './styles';
 import CopyLink from './copy-link';
+import { Tag } from '../../interfaces/tag';
+
+import { getTweetText } from './utils';
 
 interface SocialButtonsProps {
     heading: string;
     description: string;
     className?: string;
     authors?: Author[];
-    language?: string;
+    tags?: Tag[];
 }
 
 const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
     heading,
     description,
     className,
-    authors,
-    language,
+    authors = [],
+    tags = [],
 }) => {
-    console.log(authors);
     const [url, setUrl] = useState('');
     useEffect(() => {
         setUrl(window.location.href);
     }, []);
 
-    const twitterTextElements: string[] = [];
-
-    if (authors) {
-        const authorTags = authors
-            .filter(
-                ({ twitter }) =>
-                    twitter && !twitter.toLowerCase().endsWith('/mongodb')
-            )
-            .map(({ twitter }) => {
-                const splitUrl = twitter?.split('/') as string[];
-                const username = splitUrl[splitUrl?.length - 1];
-                return `@${username}`;
-            })
-            .join(' ');
-        twitterTextElements.push(authorTags);
-    }
-    if (language) {
-        let languageTag: string;
-        if (language === 'C++') {
-            languageTag = 'cplusplus';
-        } else if (language === 'C#') {
-            languageTag = 'csharp';
-        } else {
-            languageTag = language.toLowerCase().replace(' ', '_');
-        }
-        twitterTextElements.push(languageTag);
-    }
-
-    twitterTextElements.push(heading);
-    console.log(twitterTextElements);
+    const tweetText = getTweetText(authors, heading, tags);
 
     return (
         <div
@@ -84,9 +57,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                 sx={circleStyles}
                 target="_blank"
                 rel="noreferrer"
-                href={`https://twitter.com/intent/tweet?url=${url}&text=${encodeURIComponent(
-                    twitterTextElements.join(' ')
-                )}`}
+                href={`https://twitter.com/intent/tweet?url=${url}&text=${tweetText}`}
                 title="Share on Twitter"
             >
                 <img
