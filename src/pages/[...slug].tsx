@@ -279,6 +279,8 @@ const ContentPage: NextPage<ContentPageProps> = ({
                     <SocialButtons
                         description={parseUndefinedValue(description)}
                         heading={title}
+                        authors={authors}
+                        tags={tags}
                         sx={{
                             gridArea: 'social',
                             justifySelf: ['start', null, 'end'],
@@ -385,6 +387,8 @@ const ContentPage: NextPage<ContentPageProps> = ({
                     <SocialButtons
                         description={parseUndefinedValue(description)}
                         heading={title}
+                        authors={authors}
+                        tags={tags}
                     />
                     {!ratingSectionCondition(category) && ratingSection}
                 </div>

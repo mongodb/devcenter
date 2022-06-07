@@ -145,7 +145,7 @@ const getCTAs = (
     if (primary_cta) {
         return [
             {
-                text: 'Download Now',
+                text: 'Learn More',
                 url: primary_cta,
             },
         ];

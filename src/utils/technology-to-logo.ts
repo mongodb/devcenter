@@ -42,5 +42,6 @@ export const technologyToLogo: { [key: string]: EThirdPartyLogoVariant } = {
     TLS: EThirdPartyLogoVariant.TLS,
     Unity: EThirdPartyLogoVariant.UNITY,
     Vercel: EThirdPartyLogoVariant.VERCEL,
+    'VS Code': EThirdPartyLogoVariant.VS_CODE,
     Xamarin: EThirdPartyLogoVariant.XAMARIN,
 };
