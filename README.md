@@ -61,7 +61,9 @@ drone build promote mongodb/devcenter <DRONE_BUILD_VERSION> production
 
 ## Formatting
 
-We use [Prettier](https://prettier.io/) in order to keep consistent code styling. Run `yarn format:write` to format the code in the project with Prettier. Alternatively, if you use VS Code, download the Prettier extension and configure it as your default JS/TS formatter. You can then point it to use the rules set out in `.prettierrc` and format on save/type.
+We use [Prettier](https://prettier.io/) in order to keep consistent code styling. Run `yarn format:write` to format the code in the project with Prettier. Alternatively, if you use VS Code, download the Prettier extension and configure it as your default JS/TS formatter. You can then point it to use the rules set out in `.prettierrc` and format on save/type. 
+
+If you use a different editor or don't want this functionality, the pre-commit hook defined in `.linstagedrc.js` will automatically format on commit so that you don't have to worry about formatting if you don't want to.
 
 ## Bundle Analyzer
 
