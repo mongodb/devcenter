@@ -1,8 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import debounce from 'lodash.debounce';
-import NextImage from 'next/image';
-import useSWR from 'swr';
-
+import React from 'react';
 import {
     Button,
     TextInput,
@@ -13,11 +9,10 @@ import {
 
 import { titleStyles, searchBoxStyles, linkStyleOverride } from './styles';
 import { SearchProps } from './types';
-import { fetcher } from './utils';
 import Results from './results';
 import ExpandingLink from '../expanding-link';
-import { getURLPath } from '../../utils/format-url-path';
-import { thumbnailLoader } from '../card/utils';
+import useSearch from '../../hooks/search';
+import EmptyState from './empty-state';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     titleElement = 'h5',
@@ -29,89 +24,29 @@ const Search: React.FunctionComponent<SearchProps> = ({
     titleLink,
     placeholder,
 }) => {
-    const [searchString, setSearchString] = useState('');
-    const [resultsToShow, setResultsToShow] = useState(10);
+    const {
+        data,
+        error,
+        isValidating,
+        resultsToShow,
+        numberOfResults,
+        setResultsToShow,
+        allFilters,
+        setAllFilters,
+        onSearch,
+        searchString,
+        fullyLoaded,
+    } = useSearch(contentType, tagSlug);
 
-    const [codeLevelFilters, setCodeLevelFilters] = useState<string[]>([]);
-
-    const { data, error, isValidating } = useSWR(
-        () =>
-            `s=${encodeURIComponent(
-                searchString
-            )}&contentType=${encodeURIComponent(
-                contentType
-            )}&tagSlug=${encodeURIComponent(tagSlug)}`,
-        fetcher,
-        {
-            revalidateIfStale: false,
-            revalidateOnFocus: false,
-            revalidateOnReconnect: false,
-            shouldRetryOnError: false,
-        }
-    );
-
-    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setResultsToShow(10);
-        setSearchString(event.target.value);
-    };
-
-    const debouncedOnSearch = useMemo(
-        () => debounce(onSearch, 400), // Not sure what this value should be.
-        []
-    );
-    // Stop the invocation of the debounced function
-    // after unmounting
-    useEffect(() => {
-        return () => {
-            debouncedOnSearch.cancel();
-        };
-    }, []);
     const onCheckToggle = (checked: boolean, filter: string) => {
         if (checked) {
-            setCodeLevelFilters([...codeLevelFilters, filter]);
+            setAllFilters([
+                { name: filter, type: 'CodeLevel', count: 0, subItems: [] },
+            ]);
         } else {
-            setCodeLevelFilters(
-                codeLevelFilters.filter(filt => filt !== filter)
-            );
+            setAllFilters([]);
         }
     };
-
-    const resultsData = data || [];
-    const filteredResultsData =
-        contentType === 'Code Example' && !!codeLevelFilters.length
-            ? resultsData.filter(item =>
-                  item.tags.find(
-                      tag =>
-                          tag.type === 'CodeLevel' &&
-                          codeLevelFilters.includes(tag.name)
-                  )
-              )
-            : resultsData;
-    const numberOfResults = filteredResultsData.length;
-    const shownData = filteredResultsData.slice(0, resultsToShow);
-    const fullyLoaded = resultsToShow >= numberOfResults;
-
-    const emptyState = (
-        <div
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <div>
-                <NextImage
-                    src={getURLPath('/no-results.png') as string}
-                    loader={thumbnailLoader}
-                    alt="No Results"
-                    height={500}
-                    width={500}
-                />
-            </div>
-            <TypographyScale>No Results</TypographyScale>
-        </div>
-    );
 
     // To compensate for the Code Level filters.
     const extraSearchBoxStyles =
@@ -139,7 +74,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     label={placeholder}
                     iconName={ESystemIconNames.SEARCH}
                     value={searchString}
-                    onChange={debouncedOnSearch}
+                    onChange={onSearch}
                 />
             </div>
             {contentType === 'Code Example' && (
@@ -155,7 +90,9 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         name="Snippet"
                         label="Code Snippets"
                         onToggle={checked => onCheckToggle(checked, 'Snippet')}
-                        checked={codeLevelFilters.includes('Snippet')}
+                        checked={
+                            !!allFilters.find(filt => filt.name === 'Snippet')
+                        }
                     />
                     <Checkbox
                         name="Full Application"
@@ -163,7 +100,11 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         onToggle={checked =>
                             onCheckToggle(checked, 'Full Application')
                         }
-                        checked={codeLevelFilters.includes('Full Application')}
+                        checked={
+                            !!allFilters.find(
+                                filt => filt.name === 'Full Application'
+                            )
+                        }
                     />
                 </div>
             )}
@@ -171,7 +112,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
             {!!numberOfResults || isValidating || error ? (
                 <>
                     <Results
-                        data={shownData}
+                        data={data}
                         isLoading={isValidating}
                         hasError={error}
                         layout={resultsLayout}
@@ -198,7 +139,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     )}
                 </>
             ) : (
-                emptyState
+                <EmptyState />
             )}
         </div>
     );
