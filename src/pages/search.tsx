@@ -62,7 +62,7 @@ const Search: NextPage<SearchProps> = ({
         searchString,
         setSearchString,
         numberOfResults,
-    } = useSearch(undefined, undefined, router, {
+    } = useSearch(undefined, undefined, {
         l1Items,
         languageItems,
         technologyItems,

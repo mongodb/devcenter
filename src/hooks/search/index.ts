@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce';
 import useSWR from 'swr';
 import { FilterItem } from '../../components/search-filters';
 import { fetcher, itemInFilters, updateUrl } from './utils';
-import { NextRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 interface SearchFilterItems {
     l1Items: FilterItem[];
@@ -19,9 +19,9 @@ interface SearchFilterItems {
 const useSearch = (
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
-    router?: NextRouter, // Pass this if you want the URL to update on search/filter.
-    filterItems?: SearchFilterItems // This is also needed for URL updates.
+    filterItems?: SearchFilterItems // This is needed for URL filter/search updates.
 ) => {
+    const router = useRouter();
     const [searchString, setSearchString] = useState('');
     const [resultsToShow, setResultsToShow] = useState(10);
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
