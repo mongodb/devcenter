@@ -1,4 +1,4 @@
-import { ApolloQueryResult, gql } from '@apollo/client';
+import { ApolloQueryResult, gql, useQuery } from '@apollo/client';
 import { UnderlyingClient } from '../types/client-factory';
 import { Article } from '../interfaces/article';
 
@@ -24,7 +24,7 @@ export const getArticles = async (
     return data.articles;
 };
 
-const fields = `authors {
+export const fields = `authors {
                     name
                     bio
                     image {
@@ -117,15 +117,17 @@ export const getAllArticlesFromAPI = async (
 };
 
 export const getAllDraftArticlesFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
+    client: UnderlyingClient<'ApolloREST'>,
+    calculatedSlug: string
 ): Promise<Article[]> => {
+    calculatedSlug = '"' + calculatedSlug + '"';
     const query = gql`
         query Articles {
-            articles @rest(type: "Article", path: "/new-articles?_publicationState=preview&_limit=-1") {
-                   ${fields}
+            articles(_publicationState : "preview", calculated_slug : ${calculatedSlug})
+            @rest(type: "Article", path: "/new-articles?{args}") {
+                ${fields}
             }
-        }
-    `;
+        }`;
     const { data }: ApolloQueryResult<{ articles: Article[] }> =
         await client.query({ query });
 
