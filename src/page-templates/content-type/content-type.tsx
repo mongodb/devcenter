@@ -28,11 +28,8 @@ import {
 } from '../../components/search-filters';
 
 import { ContentTypePageProps } from './types';
-import {
-    pageWrapper,
-    desktopFiltersStyles,
-    resultsStringAndTagsStyles,
-} from './styles';
+import { desktopFiltersStyles, resultsStringAndTagsStyles } from './styles';
+import { pageWrapper } from '../../styled/layout';
 
 import { searchBoxStyles } from '../../components/search/styles';
 

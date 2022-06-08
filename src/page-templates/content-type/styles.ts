@@ -7,12 +7,6 @@ export const desktopFiltersStyles = {
     gap: 'inc50',
 };
 
-export const pageWrapper = {
-    paddingBottom: 'inc160',
-    px: ['inc40', null, 'inc50', 'inc70'],
-    paddingTop: ['inc40', null, 'inc50', 'inc70'],
-};
-
 export const resultsStringAndTagsStyles = {
     marginBottom: 'inc50',
     display: 'flex',
