@@ -290,8 +290,6 @@ export const updateUrl = (
     const expertiseLevel = filters
         .filter(filter => filter.type === 'ExpertiseLevel')
         .map(filter => filter.name);
-    console.log(language);
-    console.log(searchString);
     router.replace(
         {
             pathname: router.pathname,

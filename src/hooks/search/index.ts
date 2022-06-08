@@ -21,6 +21,8 @@ const useSearch = (
     tagSlug?: string, // Filter on backend by tag.
     filterItems?: SearchFilterItems // This is needed for URL filter/search updates.
 ) => {
+    const shouldUseQueryParams = !!filterItems;
+
     const router = useRouter();
     const [searchString, setSearchString] = useState('');
     const [resultsToShow, setResultsToShow] = useState(10);
@@ -46,7 +48,8 @@ const useSearch = (
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setResultsToShow(10);
         setSearchString(event.target.value);
-        if (router) {
+
+        if (shouldUseQueryParams) {
             updateUrl(router, allFilters, event.target.value);
         }
     };
@@ -54,7 +57,7 @@ const useSearch = (
     const onFilter = (filters: FilterItem[]) => {
         setResultsToShow(10);
         setAllFilters(filters);
-        if (router) {
+        if (shouldUseQueryParams) {
             updateUrl(router, filters, searchString);
         }
     };
@@ -72,7 +75,7 @@ const useSearch = (
 
     // Populate the search/filters with query params on page load/param change if we have a router and filters defined.
     useEffect(() => {
-        if (router?.isReady && filterItems) {
+        if (router?.isReady && shouldUseQueryParams) {
             const {
                 l1Items,
                 contentTypeItems,
