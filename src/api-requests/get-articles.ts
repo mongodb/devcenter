@@ -31,6 +31,7 @@ export const fields = `authors {
                         url
                     }
                     calculated_slug
+                    twitter
                 }
                 description
                 content
