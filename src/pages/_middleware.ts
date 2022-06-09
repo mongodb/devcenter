@@ -13,7 +13,11 @@ const limiter = rateLimit({
 const MAX_FEEDBACK_PER_PERIOD = 10; // 10 requests per 30 seconds per IP.
 
 export async function middleware(req: NextRequest) {
-    const { pathname } = req.nextUrl;
+    const { pathname, origin } = req.nextUrl;
+
+    const host = process.env.VERCEL_URL
+        ? process.env.VERCEL_URL
+        : process.env.HOST_URL;
 
     const checkRequest = // Only attempt to block POST or PUT API requests (feedback and request content).
         pathname.startsWith('/api/') && ['POST', 'PUT'].includes(req.method);
@@ -41,7 +45,7 @@ export async function middleware(req: NextRequest) {
         // Minimal bot detection by checking the user agent for real browser info.
         if (
             !req.ua?.browser?.name ||
-            req.nextUrl.origin !== process.env.HOST_URL
+            origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
         ) {
             return new NextResponse(
                 JSON.stringify({
