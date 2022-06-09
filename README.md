@@ -36,7 +36,7 @@ To create the container, run:
 
 Run `yarn test` to run all unit tests and integration tests.
 
-Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000/developer before running cypress tests.
+Run `yarn test:e2e` to run Playwright tests.
 
 ## Development and Deployment Workflow
 
