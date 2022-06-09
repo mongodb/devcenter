@@ -10,7 +10,7 @@ interface RateLimitOptions {
 const rateLimit = (options: RateLimitOptions) => {
     const ipCache = new LRU({
         max: options.max || 500,
-        ttl: options.ttl || 60000,
+        maxAge: options.ttl || 60000,
     });
 
     return {
