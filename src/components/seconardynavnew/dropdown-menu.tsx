@@ -41,6 +41,7 @@ const DropDownMenuList = styled.ul`
     list-style-type: none;
     padding: 0;
     white-space: nowrap;
+    font-weight: 500;
     @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
