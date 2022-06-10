@@ -121,7 +121,7 @@ const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
         ? '/developer/videos'
         : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
 };
-const determineVideoOrPodcast = (
+export const determineVideoOrPodcast = (
     collectionType: CollectionType | undefined
 ) => {
     return collectionType === 'Video' || collectionType === 'Podcast';
