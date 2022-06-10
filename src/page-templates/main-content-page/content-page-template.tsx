@@ -52,6 +52,8 @@ import { getURLPath } from '../../utils/format-url-path';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { TableOfContents } from '../../components/article-body/table-of-contents';
 
+let pluralize = require('pluralize');
+
 interface ContentPageProps {
     crumbs: Crumb[];
     topicSlug: string;
@@ -68,7 +70,7 @@ const imageStyles = {
     position: 'relative' as 'relative',
 };
 
-export const headerGridStyles = (vidOrPod: boolean) => ({
+const headerGridStyles = (vidOrPod: boolean) => ({
     display: 'grid',
     gridTemplateAreas: [
         `
@@ -92,7 +94,7 @@ export const headerGridStyles = (vidOrPod: boolean) => ({
     marginBottom: ['inc30', null, null, 'inc40'],
 });
 
-export const footerRatingStyles = {
+const footerRatingStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: ['start', null, 'center'],
@@ -101,7 +103,7 @@ export const footerRatingStyles = {
     marginTop: ['inc30', null, null, 'inc40'],
 };
 
-export const middleSectionStyles = {
+const middleSectionStyles = {
     maxWidth: '100%', // patches a Codemirror bug on FF https://github.com/codemirror/CodeMirror/issues/4142.
     gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
 };
@@ -119,8 +121,7 @@ const getCtaLinkForVideosOrPodcasts = (category: PillCategory) => {
         ? '/developer/videos'
         : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624';
 };
-
-export const determineVideoOrPodcast = (
+const determineVideoOrPodcast = (
     collectionType: CollectionType | undefined
 ) => {
     return collectionType === 'Video' || collectionType === 'Podcast';
@@ -268,6 +269,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         <SocialButtons
                             description={parseUndefinedValue(description)}
                             heading={title}
+                            authors={authors}
+                            tags={tags}
                             sx={{
                                 gridArea: 'social',
                                 justifySelf: ['start', null, 'end'],
@@ -378,6 +381,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         <SocialButtons
                             description={parseUndefinedValue(description)}
                             heading={title}
+                            authors={authors}
+                            tags={tags}
                         />
                         {!ratingSectionCondition(category) && ratingSection}
                     </div>
