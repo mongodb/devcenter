@@ -36,7 +36,9 @@ To create the container, run:
 
 Run `yarn test` to run all unit tests and integration tests.
 
-Run `yarn test:e2e` to run Playwright tests.
+Run `yarn test:e2e` to run Playwright tests. Make sure you either have a local server running, or you have already run `yarn build` with the code you want to test. Playwright will check if anything is running on port 3000, and if not will attempt to run `next start`. 
+
+Playwright has a useful code-generator that can help to write tests by performing actions on a page and generating Playwright scripts from them. To run it, do `npx playwright codegen <url>`. For example, if you want to write a test for the homepage, run `npx playwright codegen mongodb.com/developer`.
 
 ## Development and Deployment Workflow
 

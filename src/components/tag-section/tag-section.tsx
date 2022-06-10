@@ -9,7 +9,11 @@ const TagSection: React.FunctionComponent<TagSectionProps> = ({
     disappearOnMobile = false,
     className,
 }) => (
-    <div sx={tagWrapperStyles(disappearOnMobile)} className={className}>
+    <div
+        sx={tagWrapperStyles(disappearOnMobile)}
+        className={className}
+        data-testid="tag-section"
+    >
         {tags
             .filter(
                 tag =>

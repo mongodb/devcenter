@@ -15,7 +15,7 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
-        "types": ["cypress", "@testing-library/cypress", "sanitize-html"],
+        "types": ["sanitize-html"],
         "jsxImportSource": "theme-ui"
     },
     "rootDir": "src/",

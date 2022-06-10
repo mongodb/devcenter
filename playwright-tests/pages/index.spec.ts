@@ -1,5 +1,13 @@
 import { test, expect } from '@playwright/test';
 
+const allLinksHaveHref = async (links, href) => {
+    const linksCount = await links.count();
+    for (let i = 0; i < linksCount; i++) {
+        const el = await links.nth(i);
+        expect(await el.getAttribute('href')).toBe(href);
+    }
+};
+
 test('Homepage has correct titles', async ({ page }) => {
     await page.goto('/developer');
     const title = page.locator('h1');
@@ -7,9 +15,9 @@ test('Homepage has correct titles', async ({ page }) => {
 
     const sectionTitles = page.locator('h5');
     const text = await sectionTitles.allTextContents();
-    expect(text[0] === 'Develop in your language');
-    expect(text[1] === 'Integrate MongoDB with the technologies you use');
-    expect(text[2] === 'Start building with these MongoDB products');
+    expect(text[0]).toEqual('Develop in your language');
+    expect(text[1]).toEqual('Integrate MongoDB with the technologies you use');
+    expect(text[2]).toEqual('Start building with these MongoDB products');
 });
 
 test('Homepage search works', async ({ page }) => {
@@ -26,4 +34,15 @@ test('Homepage search works', async ({ page }) => {
             )
             .click(),
     ]);
+});
+
+test('Homepage links are correct', async ({ page }) => {
+    await page.goto('/developer');
+    const allLangLinks = page.locator('a:has-text("View All Languages")');
+    const allTechLinks = page.locator('a:has-text("View All Technologies")');
+    const allProductsLinks = page.locator('a:has-text("View All Products")');
+    // There are mobile and desktop links rendered, check both links
+    await allLinksHaveHref(allLangLinks, '/developer/languages/');
+    await allLinksHaveHref(allTechLinks, '/developer/technologies/');
+    await allLinksHaveHref(allProductsLinks, '/developer/products/');
 });
