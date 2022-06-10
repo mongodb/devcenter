@@ -224,31 +224,8 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    let paths: any[] = [];
-
-    const distinctTags = await getDistinctTags();
-
-    const distinctSlugs = distinctTags
-        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
-        .map(tag => tag.slug);
-
-    distinctSlugs.forEach(distinctSlug => {
-        const parsedSlug = distinctSlug.startsWith('/')
-            ? distinctSlug.substring(1)
-            : distinctSlug;
-        const category = parsedSlug.split('/')[0];
-        const slug = parsedSlug.split('/').slice(1);
-        paths = paths.concat({
-            params: { l1_l2: category, slug: slug },
-        });
-    });
-
-    return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { l1_l2, slug } = params as IParams;
+export const getServerSideProps = async (context: any) => {
+    const { l1_l2, slug } = context.params as IParams;
 
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
 
