@@ -130,7 +130,7 @@ export const getAllDraftArticlesFromAPI = async (
             }
         }`;
     const { data }: ApolloQueryResult<{ articles: Article[] }> =
-        await client.query({ query });
+        await client.query({ query, fetchPolicy: 'no-cache' });
 
     return data.articles;
 };

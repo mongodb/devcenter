@@ -14,7 +14,7 @@ import getRelatedContent from '../api-requests/get-related-content';
 import { appendDocumentationLinkToSideNav } from '../utils/add-documentation-link-to-side-nav';
 import ContentPageTemplate, {
     determineVideoOrPodcast,
-} from '../components/main-content-page/content-page-template';
+} from '../page-templates/main-content-page/content-page-template';
 
 let pluralize = require('pluralize');
 

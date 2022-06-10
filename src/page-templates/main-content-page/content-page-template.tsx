@@ -1,22 +1,24 @@
-import { Crumb } from '../breadcrumbs/types';
+import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
-import { TertiaryNavItem } from '../tertiary-nav/types';
+import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import { PillCategory } from '../../types/pill-category';
 import { CollectionType } from '../../types/collection-type';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import React, { useState } from 'react';
-import FeedbackModal, { feedbackModalStages } from '../feedback-modal';
+import FeedbackModal, {
+    feedbackModalStages,
+} from '../../components/feedback-modal';
 import RequestContentModal, {
     requestContentModalStages,
-} from '../request-content-modal';
+} from '../../components/request-content-modal';
 import { constructDateDisplay } from '../../utils/format-date';
 import { parseMarkdownToAST } from '../../utils/markdown-parser/parse-markdown-to-ast';
 import { getTableOfContents } from '../../utils/markdown-parser/get-table-of-contents';
 import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
-import ContentRating from '../content-rating';
+import ContentRating from '../../components/content-rating';
 import {
     Button,
     ESystemIconNames,
@@ -25,27 +27,30 @@ import {
     SideNav,
     TypographyScale,
 } from '@mdb/flora';
-import AuthorLockup from '../author-lockup';
-import TagSection from '../tag-section';
-import SecondaryTag from '../card/secondary-tag';
+import AuthorLockup from '../../components/author-lockup';
+import TagSection from '../../components/tag-section';
+import SecondaryTag from '../../components/card/secondary-tag';
 import { CodeLevel } from '../../types/tag-type';
-import SocialButtons from '../social-buttons';
-import PodcastPlayer from '../podcast-player/podcast-player';
-import { VideoEmbed } from '../article-body/body-components/video-embed';
+import SocialButtons from '../../components/social-buttons';
+import PodcastPlayer from '../../components/podcast-player/podcast-player';
+import { VideoEmbed } from '../../components/article-body/body-components/video-embed';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import Image from 'next/image';
-import { getCardProps, thumbnailLoader } from '../card/utils';
+import { getCardProps, thumbnailLoader } from '../../components/card/utils';
 import parse from 'html-react-parser';
-import CTALink from '../hero/CTALink';
-import { DocumentBody } from '../article-body/document-body';
-import SeriesCard from '../series-card';
+import CTALink from '../../components/hero/CTALink';
+import { DocumentBody } from '../../components/article-body/document-body';
+import SeriesCard from '../../components/series-card';
 import { Grid } from 'theme-ui';
-import Card from '../card';
+import Card from '../../components/card';
 import { NextSeo } from 'next-seo';
-import { sideNavStyles, sideNavTitleStyles } from '../tertiary-nav/styles';
+import {
+    sideNavStyles,
+    sideNavTitleStyles,
+} from '../../components/tertiary-nav/styles';
 import { getURLPath } from '../../utils/format-url-path';
-import Breadcrumbs from '../breadcrumbs';
-import { TableOfContents } from '../article-body/table-of-contents';
+import Breadcrumbs from '../../components/breadcrumbs';
+import { TableOfContents } from '../../components/article-body/table-of-contents';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -54,6 +59,7 @@ interface ContentPageProps {
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
     relatedContent: ContentItem[];
+    previewMode?: boolean;
 }
 
 const imageStyles = {
@@ -136,6 +142,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     contentItem,
     tertiaryNavItems,
     relatedContent,
+    previewMode,
 }) => {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
@@ -257,14 +264,16 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     {codeType && (
                         <SecondaryTag codeLevel={codeType as CodeLevel} />
                     )}
-                    <SocialButtons
-                        description={parseUndefinedValue(description)}
-                        heading={title}
-                        sx={{
-                            gridArea: 'social',
-                            justifySelf: ['start', null, 'end'],
-                        }}
-                    />
+                    {!previewMode && (
+                        <SocialButtons
+                            description={parseUndefinedValue(description)}
+                            heading={title}
+                            sx={{
+                                gridArea: 'social',
+                                justifySelf: ['start', null, 'end'],
+                            }}
+                        />
+                    )}
                 </div>
             </div>
 
@@ -295,7 +304,9 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         />
                     )}
                 </div>
-                {!ratingSectionCondition(category) && ratingSection}
+                {!previewMode &&
+                    !ratingSectionCondition(category) &&
+                    ratingSection}
             </div>
         </>
     );
@@ -362,13 +373,15 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         >
             <div>
                 <HorizontalRule />
-                <div sx={footerRatingStyles}>
-                    <SocialButtons
-                        description={parseUndefinedValue(description)}
-                        heading={title}
-                    />
-                    {!ratingSectionCondition(category) && ratingSection}
-                </div>
+                {!previewMode && (
+                    <div sx={footerRatingStyles}>
+                        <SocialButtons
+                            description={parseUndefinedValue(description)}
+                            heading={title}
+                        />
+                        {!ratingSectionCondition(category) && ratingSection}
+                    </div>
+                )}
             </div>
             {series && (
                 <SeriesCard
@@ -394,14 +407,16 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     ))}
                 </Grid>
             </div>
-            <div sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button
-                    onClick={() => setRequestContentModalStage('text')}
-                    variant="secondary"
-                >
-                    {requestButtonText}
-                </Button>
-            </div>
+            {!previewMode && (
+                <div sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button
+                        onClick={() => setRequestContentModalStage('text')}
+                        variant="secondary"
+                    >
+                        {requestButtonText}
+                    </Button>
+                </div>
+            )}
         </div>
     );
 

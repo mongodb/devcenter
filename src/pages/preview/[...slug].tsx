@@ -1,12 +1,15 @@
-import type { GetStaticProps, GetStaticPropsContext, NextPage } from 'next';
+import type {
+    GetServerSidePropsContext,
+    GetStaticProps,
+    GetStaticPropsContext,
+    NextPage,
+} from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
-import ContentPageTemplate, {
-    determineVideoOrPodcast,
-} from '../../components/main-content-page/content-page-template';
+import ContentPageTemplate from '../../page-templates/main-content-page/content-page-template';
 import { getPreviewContent } from '../../service/get-preview-content';
 
 let pluralize = require('pluralize');
@@ -18,6 +21,7 @@ interface ContentPageProps {
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
     relatedContent: ContentItem[];
+    previewMode?: boolean;
 }
 
 const ContentPage: NextPage<ContentPageProps> = ({
@@ -27,6 +31,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
     contentItem,
     tertiaryNavItems,
     relatedContent,
+    previewMode,
 }) => {
     return (
         <ContentPageTemplate
@@ -36,6 +41,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
             contentItem={contentItem}
             tertiaryNavItems={tertiaryNavItems}
             relatedContent={relatedContent}
+            previewMode={previewMode}
         />
     );
 };
@@ -43,13 +49,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
 export default ContentPage;
 
 export const getServerSideProps = async (context: any) => {
-    context.res.setHeader(
-        'Cache-Control',
-        'no-cache',
-        'no-store',
-        'max-age=0',
-        'must-revalidate'
-    );
     const { slug } = context.query;
     const slugString = slug.join('/');
     const contents: ContentItem[] = await getPreviewContent('/' + slugString);
@@ -61,6 +60,7 @@ export const getServerSideProps = async (context: any) => {
         topicSlug: '',
         topicName: '',
         relatedContent: [],
+        previewMode: true,
     };
 
     return { props: result };
