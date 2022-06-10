@@ -239,44 +239,9 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    let paths: any[] = [];
-
-    const distinctTags = await getDistinctTags();
-
-    const distinctSlugs = distinctTags
-        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
-        .map(tag => tag.slug);
-
-    //distinct slugs = ["/product/atlas", "product/atlas/full-text-search", "language/java"]
-    for (const distinctSlug of distinctSlugs) {
-        const tertiaryNavItems = await getSideNav(distinctSlug);
-
-        tertiaryNavItems.forEach((item: TertiaryNavItem) => {
-            const parsedItemUrl = item.url.startsWith('/')
-                ? item.url.substring(1)
-                : item.url;
-
-            /*
-            eg: tertiary nav item url /product/atlas/article
-            /product/atlas/video etc
-             */
-            const category = parsedItemUrl.split('/')[0];
-            const topic = parsedItemUrl.split('/')[1];
-            const restOfSlug = parsedItemUrl.split('/').slice(2);
-
-            paths = paths.concat({
-                params: { l1_l2: category, topic: topic, slug: restOfSlug },
-            });
-        });
-    }
-
-    return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { l1_l2, topic, slug } = params as IParams;
-
+export const getServerSideProps = async (context: any) => {
+    const { l1_l2, topic, slug } = context.params;
+    console.log(l1_l2, topic, slug);
     /*
     eg:
     pathComponents = ['product','atlas','article']
@@ -348,12 +313,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         tertiaryNavItems: tertiaryNavItems,
         topicName: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
         topicSlug: topicSlug,
-        contentTypeSlug: contentTypeSlug,
-        contentTypeAggregateSlug: contentTypeAggregateSlug,
+        contentTypeSlug: contentTypeSlug ? contentTypeSlug : null,
+        contentTypeAggregateSlug: contentTypeAggregateSlug
+            ? contentTypeAggregateSlug
+            : null,
         description: metaInfoForContentType?.description
             ? metaInfoForContentType.description
             : '',
         subTopics: subTopicsWithContentType,
     };
+
+    console.log('data', data);
+
     return { props: data };
 };

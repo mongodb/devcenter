@@ -258,27 +258,8 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getStaticPaths = async () => {
-    let paths: any[] = [];
-
-    const authors: Author[] = await getAllAuthors();
-
-    for (const author of authors) {
-        const parsedSlug = author.calculated_slug.startsWith('/')
-            ? author.calculated_slug.substring(1).split('/')
-            : author.calculated_slug.split('/');
-        const authorPath = parsedSlug[parsedSlug.length - 1];
-        paths = paths.concat({
-            params: { slug: [authorPath] },
-        });
-    }
-
-    return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { slug } = params as IParams;
-
+export const getServerSideProps = async (context: any) => {
+    const { slug } = context.params as IParams;
     const slugString = '/author/' + slug[0];
 
     const authors: Author[] = await getAllAuthors();
@@ -291,7 +272,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         ? author.articles.map(articles => articles.name)
         : [];
 
-    const allContent: ContentItem[] = await getAllContentItems();
+    const allContent: ContentItem[] = await getAllContentItems(); // TODO: Refactor
 
     const filteredContent = allContent.filter(a =>
         articlesByAuthor.includes(a.title)
