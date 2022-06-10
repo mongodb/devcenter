@@ -42,7 +42,7 @@ Playwright has a useful code-generator that can help to write tests by performin
 
 ## Development and Deployment Workflow
 
-Create a new branch from `main` that will contain the changes for the feature or bug fix. When ready to merge, create a pull request (PR) on GitHub, with the name of the ticket in the title (e.g. [DEVHUB-1234] - [Title]). The title can be a short description of what is about to be merged. Once the PR is opened, tests will be run via Github Actions, including Cypress tests, formatting checks and Lighthouse tests.
+Create a new branch from `main` that will contain the changes for the feature or bug fix. When ready to merge, create a pull request (PR) on GitHub, with the name of the ticket in the title (e.g. [DEVHUB-1234] - [Title]). The title can be a short description of what is about to be merged. Once the PR is opened, tests will be run via Github Actions, including Playwright tests, formatting checks and Lighthouse tests.
 
 You can also create a draft PR in GitHub. A draft PR will run all of our tests against your PR, which can't be done without opening a PR, and lets other team members know that the PR isn't ready for review yet. When you are ready, you can mark the draft PR as ready for review and add reviewers.
 

@@ -10,7 +10,7 @@
         "format:write": "prettier --write .",
         "format:check": "prettier --check .",
         "test": "jest --watch",
-        "test:e2e": "npx playwright install && npx playwright test"
+        "test:e2e": "npx playwright install --with-deps && npx playwright test"
     },
     "husky": {
         "hooks": {
