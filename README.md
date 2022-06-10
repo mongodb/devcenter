@@ -14,7 +14,7 @@ We use Artifactory (MongoDB's internal package repository) as our primary source
 
 The data for this project is fetched from a Strapi CMS. In order to get actual data, we have to configure the Strapi URL we want to use in development. To do this, create a file in the top level of this project called `.env.local` (this will be ignored by git).
 
-Currently the only variable we need to set in this file is `STRAPI_URL`. See [this DevHub wiki page](https://wiki.corp.mongodb.com/display/DEVREL/DevHub+Front-End+Guide#DevHubFrontEndGuide-InstallationandSetup) and copy the value for `STRAPI_URL` shown there (or ask a teammate). Alternatively, you can use the production Strapi URL in order to pull in real data for local testing. Staging data isn't very up to date, so it's best to use the production URL for many cases. Ask a temmate for this c
+Currently the only variable we need to set in this file is `STRAPI_URL`. See [this DevHub wiki page](https://wiki.corp.mongodb.com/display/DEVREL/DevHub+Front-End+Guide#DevHubFrontEndGuide-InstallationandSetup) and copy the value for `STRAPI_URL` shown there (or ask a teammate). Alternatively, you can use the production Strapi URL in order to pull in real data for local testing. Staging data isn't very up to date, so it's best to use the production URL for many cases. Ask a temmate for this URL.
 
 ## Running Locally
 
