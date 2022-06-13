@@ -18,7 +18,11 @@ const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
 }) => {
     const crumbLength = crumbs.length;
     return (
-        <div sx={breadcrumbsContainerStyles} className={className}>
+        <div
+            sx={breadcrumbsContainerStyles}
+            className={className}
+            data-testid="breadcrumbs"
+        >
             {crumbs.map(({ text, url }, i) => (
                 <div key={text} sx={breadcrumbStyles}>
                     <Link navItem={true} href={getURLPath(url)} sx={linkStyles}>

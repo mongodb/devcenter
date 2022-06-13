@@ -45,11 +45,13 @@ Run `yarn test` to run unit tests.
 
 We use cypress for our E2E tests. Each file in `cypress/e2e` represents a test suite.
 
-Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000/developer before running cypress tests.
+Run `yarn test:e2e` to run Playwright tests. Make sure you either have a local server running, or you have already run `yarn build` with the code you want to test. Playwright will check if anything is running on port 3000, and if not will attempt to run `next start`. 
+
+Playwright has a useful code-generator that can help to write tests by performing actions on a page and generating Playwright scripts from them. To run it, do `npx playwright codegen <url>`. For example, if you want to write a test for the homepage, run `npx playwright codegen mongodb.com/developer`.
 
 ## Development and Deployment Workflow
 
-Create a new branch from `main` that will contain the changes for the feature or bug fix. When ready to merge, create a pull request (PR) on GitHub, with the name of the ticket in the title (e.g. [DEVHUB-1234] - [Title]). The title can be a short description of what is about to be merged. Once the PR is opened, tests will be run via Github Actions, including Cypress tests, formatting checks and Lighthouse tests.
+Create a new branch from `main` that will contain the changes for the feature or bug fix. When ready to merge, create a pull request (PR) on GitHub, with the name of the ticket in the title (e.g. [DEVHUB-1234] - [Title]). The title can be a short description of what is about to be merged. Once the PR is opened, tests will be run via Github Actions, including Playwright tests, formatting checks and Lighthouse tests.
 
 You can also create a draft PR in GitHub. A draft PR will run all of our tests against your PR, which can't be done without opening a PR, and lets other team members know that the PR isn't ready for review yet. When you are ready, you can mark the draft PR as ready for review and add reviewers.
 
