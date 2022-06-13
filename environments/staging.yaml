@@ -10,6 +10,7 @@ envSecrets:
   NPM_AUTH: devcenter-secrets
   STRAPI_URL: devcenter-secrets
   DEVHUB_URL: devcenter-secrets
+  PREVIEW_SECRET_KEY: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
