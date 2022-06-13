@@ -59,6 +59,12 @@ jobs:
               run: yarn build
             - name: Run Playwright
               run: yarn test:e2e
+            - name: Upload test results
+              if: ${{ failure() }}
+              uses: actions/upload-artifact@v2
+              with:
+                  name: playwright-artifacts
+                  path: playwright-artifacts
     jest-tests:
         runs-on: ubuntu-latest
         steps:
