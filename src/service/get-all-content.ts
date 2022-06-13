@@ -121,8 +121,9 @@ export const mapArticlesToContentItems = (
     /*
     very important - filter out articles that have no calculated slug
      */
-    const filteredArticles = allArticles;
-
+    const filteredArticles = allArticles.filter(
+        a => a['calculatedSlug'] != null
+    );
     filteredArticles.forEach((a: Article) => {
         const item: ContentItem = {
             collectionType: 'Article',
