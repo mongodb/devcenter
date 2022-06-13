@@ -2,8 +2,11 @@ import { test, expect } from '@playwright/test';
 
 test.describe.configure({ mode: 'parallel' });
 
+const PAGE_URL =
+    '/developer/products/atlas/building-e-commerce-content-catalog-atlas-search/';
+
 test('Content page has all components on tutorial', async ({ page }) => {
-    await page.goto('/developer/products/atlas/mongoose-versus-nodejs-driver/');
+    await page.goto(PAGE_URL);
 
     // TertiaryNav
     const tertiaryNavTitle = page.locator(
@@ -21,13 +24,13 @@ test('Content page has all components on tutorial', async ({ page }) => {
     // Title
     const title = page.locator('h1');
     expect(title).toHaveText(
-        'Do You Need Mongoose When Developing Node.js and MongoDB Applications?'
+        'Building an E-commerce Content Catalog with Atlas Search'
     );
 
     // Author Lockup
-    const authorName = page.locator('"Ado Kukic"');
+    const authorName = page.locator('"Joel Lord"');
     expect(await authorName.getAttribute('href')).toBe(
-        '/developer/author/ado-kukic/'
+        '/developer/author/joel-lord/'
     );
 
     // Social Buttons, top and bottom
@@ -36,19 +39,15 @@ test('Content page has all components on tutorial', async ({ page }) => {
     // Tags
     expect(
         await page
-            .locator('div[data-testid="tag-section"] a:text("Aggregations")')
+            .locator('div[data-testid="tag-section"] a:text("JavaScript")')
             .count()
     ).toEqual(1);
 
     // TOC
     expect(await page.locator('"Table of Contents"').count()).toEqual(1);
-    const firstTOCLink = page.locator(
-        'a:has-text("Object Data Modeling in MongoDB")'
-    );
+    const firstTOCLink = page.locator('a:has-text("Getting started")');
     expect(await firstTOCLink.count()).toEqual(1);
-    expect(await firstTOCLink.getAttribute('href')).toBe(
-        '#object-data-modeling-in-mongodb'
-    );
+    expect(await firstTOCLink.getAttribute('href')).toBe('#getting-started');
 
     // Rating, top and bottom
     expect(
@@ -57,10 +56,8 @@ test('Content page has all components on tutorial', async ({ page }) => {
     expect(await page.locator('div[aria-label="One Star"]').count()).toEqual(2);
 
     // First section title
-    const sectionAnchor = page.locator('div#object-data-modeling-in-mongodb');
-    const sectionTitle = sectionAnchor.locator(
-        'h4:text("Object Data Modeling in MongoDB")'
-    );
+    const sectionAnchor = page.locator('div#getting-started');
+    const sectionTitle = sectionAnchor.locator('h4:text("Getting started")');
     expect(await sectionTitle.count()).toEqual(1);
 
     // Related Section
@@ -76,7 +73,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
 });
 
 test('request content flow on content page works', async ({ page }) => {
-    await page.goto('/developer/products/atlas/mongoose-versus-nodejs-driver/');
+    await page.goto(PAGE_URL);
     // Mock the actual request
     await page.route('**/*ontent', route => {
         route.fulfill();
@@ -92,7 +89,7 @@ test('request content flow on content page works', async ({ page }) => {
 });
 
 test('1 star rating flow on content page', async ({ page }) => {
-    await page.goto('/developer/products/atlas/mongoose-versus-nodejs-driver/');
+    await page.goto(PAGE_URL);
     page.setDefaultTimeout(5000);
     // Mock the actual request
     await page.route('**/*eedback', route => {
@@ -144,7 +141,7 @@ test('1 star rating flow on content page', async ({ page }) => {
 });
 
 test('3 star rating flow on content page', async ({ page }) => {
-    await page.goto('/developer/products/atlas/mongoose-versus-nodejs-driver/');
+    await page.goto(PAGE_URL);
     page.setDefaultTimeout(5000);
     // Mock the actual request
     await page.route('**/*eedback', route => {
@@ -182,7 +179,7 @@ test('3 star rating flow on content page', async ({ page }) => {
 });
 
 test('5 star rating flow on content page', async ({ page }) => {
-    await page.goto('/developer/products/atlas/mongoose-versus-nodejs-driver/');
+    await page.goto(PAGE_URL);
     page.setDefaultTimeout(5000);
     // Mock the actual request
     await page.route('**/*eedback', route => {
