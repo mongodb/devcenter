@@ -7,10 +7,7 @@
 
 # testing
 /coverage
-# Test information
-cypress/videos
-cypress/screenshots
-
+/playwright-artifacts
 
 # next.js
 /.next/
