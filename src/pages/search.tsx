@@ -15,7 +15,7 @@ import useSWR from 'swr';
 
 import Hero from '../components/hero';
 import { DesktopFilters, MobileFilters } from '../components/search-filters';
-import { pageWrapper } from '../styled/styles';
+import { pageWrapper } from '../styled/layout';
 
 import { FilterItem } from '../components/search-filters';
 import { fetcher } from '../components/search/utils';

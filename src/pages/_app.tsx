@@ -6,7 +6,7 @@ import Head from 'next/head';
 import getConfig from 'next/config';
 import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
-import { GTM_ID, pageView } from '../lib/gtm';
+import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
 
 const CONTENT_ROUTE = '/[...slug]';
