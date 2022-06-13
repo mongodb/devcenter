@@ -1,18 +1,15 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
-import debounce from 'lodash.debounce';
-import useSWR from 'swr';
+
 import {
     GridLayout,
     TypographyScale,
     TextInput,
     ESystemIconNames,
-    Link,
     Button,
 } from '@mdb/flora';
 
-import { fetcher } from '../../components/search/utils';
 import Results from '../../components/search/results';
 import Hero from '../../components/hero';
 import RequestContentModal, {
@@ -20,7 +17,6 @@ import RequestContentModal, {
 } from '../../components/request-content-modal';
 import { CTAContainerStyles } from '../../components/hero/styles';
 
-import FilterTag from './filter-tag';
 import {
     FilterItem,
     DesktopFilters,
@@ -39,9 +35,10 @@ import LanguagesSection from './languages-section';
 import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
 
-import { itemInFilters } from './utils';
 import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
+import useSearch from '../../hooks/search';
+import FilterTagSection from '../../components/search-filters/filter-tag-section';
 let pluralize = require('pluralize');
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
@@ -61,24 +58,24 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     ///////////////////////////////////////
     // HOOKS
     ///////////////////////////////////////
-    const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
-    const [searchString, setSearchString] = useState<string>('');
-    const [resultstoShow, setResultsToShow] = useState<number>(10);
+    const {
+        data,
+        error,
+        isValidating,
+        fullyLoaded,
+        setResultsToShow,
+        resultsToShow,
+        allFilters,
+        setAllFilters,
+        onSearch,
+        searchString,
+        setSearchString,
+        numberOfResults,
+    } = useSearch(contentType);
+
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
-    const { data, error, isValidating } = useSWR(
-        () =>
-            `s=${encodeURIComponent(
-                searchString
-            )}&contentType=${encodeURIComponent(contentType)}`,
-        fetcher,
-        {
-            revalidateIfStale: false,
-            revalidateOnFocus: false,
-            revalidateOnReconnect: false,
-            shouldRetryOnError: false,
-        }
-    );
+
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
@@ -90,51 +87,17 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setAllFilters([]);
     };
 
-    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setResultsToShow(10);
-        setSearchString(event.target.value);
-    };
-
-    const debouncedOnSearch = useMemo(
-        () => debounce(onSearch, 400), // Not sure what this value should be.
-        [allFilters]
-    );
-    // Stop the invocation of the debounced function
-    // after unmounting
-    useEffect(() => {
-        return () => {
-            debouncedOnSearch.cancel();
-        };
-    }, []);
-
     const onFilter = (filters: FilterItem[]) => {
         setResultsToShow(10);
         setAllFilters(filters);
     };
 
-    const onFilterTabClose = (filterTag: FilterItem) => {
+    const onFilterTagClose = (filterTag: FilterItem) => {
         setAllFilters(allFilters.filter(filter => filter !== filterTag));
     };
 
     const hasFiltersSet = !!allFilters.length;
 
-    const filteredData = (() => {
-        if (!data) {
-            return [];
-        } else if (!hasFiltersSet) {
-            return data.filter(({ category }) => category === contentType);
-        } else {
-            return data.filter(
-                item =>
-                    item.category === contentType &&
-                    itemInFilters(item, allFilters)
-            );
-        }
-    })();
-
-    const numberOfResults = filteredData.length;
-    const shownData = filteredData.slice(0, resultstoShow);
-    const fullyLoaded = resultstoShow >= numberOfResults;
     const hasExtraSections =
         !!featuredLanguages && !!featuredTechnologies && !!featuredProducts;
 
@@ -193,68 +156,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         </div>
     );
 
-    const filterTags = (
-        <div
-            sx={{
-                gap: 'inc30',
-                flexWrap: 'wrap',
-                display: ['none', null, null, 'flex'],
-            }}
-        >
-            {allFilters.length > 5 ? (
-                filterTagsExpanded ? (
-                    <>
-                        {allFilters.map(filter => (
-                            <FilterTag
-                                key={`${filter.name} ${filter.type}`}
-                                filter={filter}
-                                closeIcon={true}
-                                onClick={onFilterTabClose}
-                            />
-                        ))}
-                        <FilterTag
-                            filter={{
-                                name: 'Show less',
-                                count: 0,
-                                subItems: [],
-                            }}
-                            onClick={() => setFilterTagsExpanded(false)}
-                        />
-                    </>
-                ) : (
-                    <>
-                        {allFilters.slice(0, 5).map(filter => (
-                            <FilterTag
-                                key={`${filter.name} ${filter.type}`}
-                                filter={filter}
-                                closeIcon={true}
-                                onClick={onFilterTabClose}
-                            />
-                        ))}
-                        <FilterTag
-                            filter={{
-                                name: `+${allFilters.length - 5}`,
-                                count: 0,
-                                subItems: [],
-                            }}
-                            onClick={() => setFilterTagsExpanded(true)}
-                        />
-                    </>
-                )
-            ) : (
-                allFilters.map(filter => (
-                    <FilterTag
-                        key={`${filter.name} ${filter.type}`}
-                        filter={filter}
-                        closeIcon={true}
-                        onClick={onFilterTabClose}
-                    />
-                ))
-            )}
-            <Link onClick={clearFilters}>Clear all filters</Link>
-        </div>
-    );
-
     const resultsStringAndTags = (
         <div sx={resultsStringAndTagsStyles}>
             {(data || isValidating) && (
@@ -271,7 +172,15 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         : ''}
                 </TypographyScale>
             )}
-            {hasFiltersSet && filterTags}
+            {hasFiltersSet && (
+                <FilterTagSection
+                    allFilters={allFilters}
+                    filterTagsExpanded={filterTagsExpanded}
+                    setFilterTagsExpanded={setFilterTagsExpanded}
+                    onFilterTagClose={onFilterTagClose}
+                    clearFilters={clearFilters}
+                />
+            )}
             <div
                 sx={{
                     display: ['block', null, null, 'none'],
@@ -333,7 +242,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                 label={`Search ${contentType}s`}
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
-                                onChange={debouncedOnSearch}
+                                onChange={onSearch}
                             />
                         </div>
                         {!searchString && !hasFiltersSet && (
@@ -374,10 +283,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             </>
                         )}
                         {resultsStringAndTags}
-                        {!!filteredData.length || isValidating || error ? (
+                        {!!data.length || isValidating || error ? (
                             <>
                                 <Results
-                                    data={shownData}
+                                    data={data}
                                     isLoading={isValidating}
                                     hasError={error}
                                 />
@@ -393,7 +302,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             <Button
                                                 onClick={() =>
                                                     setResultsToShow(
-                                                        resultstoShow + 10
+                                                        resultsToShow + 10
                                                     )
                                                 }
                                                 variant="secondary"
