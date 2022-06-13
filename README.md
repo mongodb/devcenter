@@ -35,13 +35,47 @@ To create the container, run:
 
 ## Testing
 
-Run `yarn test` to run all unit tests and integration tests.
 
-Run `yarn test:e2e` to open Cypress WEB-UI and execute e2e tests in cypress folder from web-ui. Make sure application is up and running on http://localhost:3000/developer before running cypress tests.
+### Unit tests
+
+We use Jest to unit test our components. In the `src/components` directory, each component should have its own directory containing a file ending in `.test.tsx` that contains all test cases for that component.
+
+Run `yarn test` to run unit tests.
+
+### End-to-end tests
+
+We use cypress for our E2E tests. Each file in `cypress/e2e` represents a test suite.
+
+Run `yarn test:e2e` to run Playwright tests. Make sure you either have a local server running, or you have already run `yarn build` with the code you want to test. Playwright will check if anything is running on port 3000, and if not will attempt to run `next start`. 
+
+Playwright has a useful code-generator that can help to write tests by performing actions on a page and generating Playwright scripts from them. To run it, do `npx playwright codegen <url>`. For example, if you want to write a test for the homepage, run `npx playwright codegen mongodb.com/developer`.
+
+## Development and Deployment Workflow
+
+Create a new branch from `main` that will contain the changes for the feature or bug fix. When ready to merge, create a pull request (PR) on GitHub, with the name of the ticket in the title (e.g. [DEVHUB-1234] - [Title]). The title can be a short description of what is about to be merged. Once the PR is opened, tests will be run via Github Actions, including Playwright tests, formatting checks and Lighthouse tests.
+
+You can also create a draft PR in GitHub. A draft PR will run all of our tests against your PR, which can't be done without opening a PR, and lets other team members know that the PR isn't ready for review yet. When you are ready, you can mark the draft PR as ready for review and add reviewers.
+
+When your PR is approved, you can merge it using GitHub's UI. You can choose either the "Merge pull request" button to merge the entire branch into the main branch, or use the "Squash and merge" option so that all changes are put into a single commit before merging. Don't use the "Rebase and merge" option since our team prefers merge over rebase.
+
+### Staging Release
+
+DevCenter is deployed on the Kanopy platform, and when a PR is merged into `main`, the changes will be released through our [drone](https://drone.corp.mongodb.com/mongodb/devcenter/) pipeline. Once the build is completed, the changes are promoted into staging automatically (https://mongodbcom-cdn.website.staging.corp.mongodb.com/developer/). At times, your browser cache will need to be cleared to see the changes immediately.
+
+### Production Release
+
+Once the changes are tested and ready to go to production, a new PR will need to be created that will merge the `main` branch into the `production` branch. Due to the fact that the application is static (using SSG on Next.js), the content is created at build time. As such, a separate build needs to be created for production. By merging the PR from `main` into `production`, a new [drone](https://drone.corp.mongodb.com/mongodb/devcenter/) build will be started. In order to complete the production deployment, that build will need to be promoted either from the Drone UI or CLI. To do this via the UI, navigate to the repository in Drone and select the latest production build. On the build page, click on the ellipsis at the top right and click "Promote" from the menu. The target name is "production." Alternatively, the build can be promoted with CLI:
+
+```sh
+drone build promote mongodb/devcenter <DRONE_BUILD_VERSION> production
+```
+
 
 ## Formatting
 
-We use [Prettier](https://prettier.io/) in order to keep consistent code styling. Run `yarn format:write` to format the code in the project with Prettier. Alternatively, if you use VS Code, download the Prettier extension and configure it as your default JS/TS formatter. You can then point it to use the rules set out in `.prettierrc` and format on save/type.
+We use [Prettier](https://prettier.io/) in order to keep consistent code styling. Run `yarn format:write` to format the code in the project with Prettier. Alternatively, if you use VS Code, download the Prettier extension and configure it as your default JS/TS formatter. You can then point it to use the rules set out in `.prettierrc` and format on save/type. 
+
+If you use a different editor or don't want this functionality, the pre-commit hook defined in `.linstagedrc.js` will automatically format on commit so that you don't have to worry about formatting if you don't want to.
 
 ## Bundle Analyzer
 

@@ -4,7 +4,7 @@ import ContentTypePage from '../page-templates/content-type';
 import { PillCategory } from '../types/pill-category';
 
 import { ContentTypePageProps } from '../page-templates/content-type/types';
-import { getFilters } from '../page-templates/content-type/utils';
+import { getFilters } from '../hooks/search/utils';
 import { getAllContentItems } from '../service/get-all-content';
 
 const QuickstartsPage: NextPage<ContentTypePageProps> = props => {

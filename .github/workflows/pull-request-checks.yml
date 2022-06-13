@@ -34,7 +34,7 @@ jobs:
               run: yarn format:check
             - name: Lint
               run: yarn lint
-    cypress-tests:
+    playwright-tests:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout target branch
@@ -54,23 +54,19 @@ jobs:
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
               run: yarn install --frozen-lockfile
-            - name: Install Cypress
+            - name: Install Playwright
               if: steps.cache.outputs.cache-hit == 'true'
-              run: ./node_modules/.bin/cypress install
+              run: ./node_modules/.bin/playwright install
             - name: Build
               run: yarn build
-            - name: Run Cypress
-              uses: cypress-io/github-action@v2
-              with:
-                  install: false
-                  start: yarn start
-                  wait-on: 'http://localhost:3000/developer'
-            - name: Generate artifacts on failure
-              uses: actions/upload-artifact@v2
+            - name: Run Playwright
+              run: yarn test:e2e
+            - name: Upload test results
               if: ${{ failure() }}
+              uses: actions/upload-artifact@v2
               with:
-                  name: cypress-screenshots
-                  path: cypress/screenshots
+                  name: playwright-artifacts
+                  path: playwright-artifacts
     jest-tests:
         runs-on: ubuntu-latest
         steps:

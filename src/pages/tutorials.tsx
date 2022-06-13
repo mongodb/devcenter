@@ -4,10 +4,8 @@ import { NextSeo } from 'next-seo';
 import ContentTypePage from '../page-templates/content-type';
 import { PillCategory } from '../types/pill-category';
 import { ContentTypePageProps } from '../page-templates/content-type/types';
-import {
-    getFeaturedLangProdTech,
-    getFilters,
-} from '../page-templates/content-type/utils';
+import { getFeaturedLangProdTech } from '../page-templates/content-type/utils';
+import { getFilters } from '../hooks/search/utils';
 import { getAllContentItems } from '../service/get-all-content';
 
 const TutorialsPage: NextPage<ContentTypePageProps> = props => {

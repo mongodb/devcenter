@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import theme from '@mdb/flora/theme';
 
-const globalStyles = css`
+export const globalStyles = css`
     body {
         font-family: ${theme.fonts['euclid-circular-a']};
         margin: 0;
@@ -23,7 +23,7 @@ const globalStyles = css`
     }
 `;
 
-const Main = styled('main')`
+export const Main = styled('main')`
     /* ensure content takes up full space between header & footer*/
     margin: 0;
 
@@ -37,4 +37,8 @@ const Main = styled('main')`
     width: 100%;
 `;
 
-export { globalStyles, Main };
+export const pageWrapper = {
+    paddingBottom: 'inc160',
+    px: ['inc40', null, 'inc50', 'inc70'],
+    paddingTop: ['inc40', null, 'inc50', 'inc70'],
+};
