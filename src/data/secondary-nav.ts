@@ -47,7 +47,7 @@ export const secondaryNavData = [
                     },
                     {
                         name: 'Atlas Search',
-                        slug: '/products/atlas/full-text-search',
+                        slug: '/products/atlas/search',
                         dropDownItems: [],
                     },
                     {
