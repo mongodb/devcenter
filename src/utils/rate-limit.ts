@@ -32,8 +32,14 @@ const rateLimit = (options: RateLimitOptions) => {
                 headers['X-RateLimit-Remaining'] = isRateLimited
                     ? '0'
                     : (limit - currentUsage).toString();
-
-                return isRateLimited ? reject() : resolve(null);
+                if (isRateLimited) {
+                    console.log(`IP (${ip}) blocked for too many requests.`);
+                    return reject();
+                }
+                console.log(
+                    `IP (${ip}) at ${currentUsage}/${limit} write requests this period.`
+                );
+                return resolve(null);
             }),
     };
 };
