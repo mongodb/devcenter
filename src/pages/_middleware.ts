@@ -47,6 +47,9 @@ export async function middleware(req: NextRequest) {
             !req.ua?.browser?.name ||
             origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
         ) {
+            console.log(
+                `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
+            );
             return new NextResponse(
                 JSON.stringify({
                     error: { message: 'Something went wrong' },
