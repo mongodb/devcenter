@@ -5,6 +5,8 @@ on:
 env:
     NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
     NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
+    REALM_API_URL: ${{ secrets.REALM_API_URL }}
+    REALM_SEARCH_URL: ${{ secrets.REALM_SEARCH_URL }}
     STRAPI_URL: ${{ secrets.STRAPI_DEV_URL }}
     DEVHUB_URL: ${{ secrets.DEVHUB_URL }}
 jobs:
@@ -32,7 +34,7 @@ jobs:
               run: yarn format:check
             - name: Lint
               run: yarn lint
-    cypress-tests:
+    playwright-tests:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout target branch
@@ -52,23 +54,19 @@ jobs:
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
               run: yarn install --frozen-lockfile
-            - name: Install Cypress
+            - name: Install Playwright
               if: steps.cache.outputs.cache-hit == 'true'
-              run: ./node_modules/.bin/cypress install
+              run: ./node_modules/.bin/playwright install
             - name: Build
               run: yarn build
-            - name: Run Cypress
-              uses: cypress-io/github-action@v2
-              with:
-                  install: false
-                  start: yarn start
-                  wait-on: 'http://localhost:3000/developer'
-            - name: Generate artifacts on failure
-              uses: actions/upload-artifact@v2
+            - name: Run Playwright
+              run: yarn test:e2e
+            - name: Upload test results
               if: ${{ failure() }}
+              uses: actions/upload-artifact@v2
               with:
-                  name: cypress-screenshots
-                  path: cypress/screenshots
+                  name: playwright-artifacts
+                  path: playwright-artifacts
     jest-tests:
         runs-on: ubuntu-latest
         steps:
@@ -140,5 +138,5 @@ jobs:
                   vercel-token: ${{secrets.VERCEL_TOKEN}}
                   vercel-org-id: ${{secrets.VERCEL_ORG_ID}}
                   vercel-project-id: ${{secrets.VERCEL_PROJECT_ID}}
-                  vercel-args: '--build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }} --build-env STRAPI_URL=${{ secrets.STRAPI_DEV_URL }} --build-env DEVHUB_URL=${{ secrets.DEVHUB_URL }}'
+                  vercel-args: '--build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }} --build-env STRAPI_URL=${{ secrets.STRAPI_DEV_URL }} --build-env DEVHUB_URL=${{ secrets.DEVHUB_URL }} --build-env REALM_API_URL=${{ secrets.REALM_API_URL }} --build-env REALM_SEARCH_URL=${{ secrets.REALM_SEARCH_URL }}'
                   scope: ${{secrets.VERCEL_ORG_ID}}

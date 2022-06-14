@@ -18,9 +18,9 @@ async function buildRssFeed(baseUrl) {
         },
     });
 
-    const searchEndpoint =
-        'https://data.mongodb-api.com/app/devhub-search-service-fldiy/endpoint/search_devcenter?s=';
-    const posts = await axios.get(searchEndpoint);
+    const posts = await axios.get(
+        `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`
+    );
 
     posts.data.forEach(post => {
         const url = `${baseUrl}${post.slug}`;

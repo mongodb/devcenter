@@ -6,6 +6,6 @@ README.md
 build
 .vscode
 .next
-.dockerignore
 Dockerfile
 .drone.yml
+.*ignore

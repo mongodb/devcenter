@@ -5,7 +5,7 @@ import { getURLPath } from '../utils/format-url-path';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 import { TypographyScale } from '@mdb/flora';
-import { pageWrapper } from '../styled/styles';
+import { pageWrapper } from '../styled/layout';
 
 interface Topic {
     title: string;

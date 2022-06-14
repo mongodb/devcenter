@@ -1581,7 +1581,7 @@
     },
     {
         "source": "/product/atlas-search/",
-        "destination": "/products/atlas/full-text-search/",
+        "destination": "/products/atlas/search/",
         "permanent": true
     },
     {
@@ -2011,7 +2011,7 @@
     },
     {
         "source": "/tag/full-text-search/",
-        "destination": "/products/atlas/full-text-search/",
+        "destination": "/products/atlas/search/",
         "permanent": true
     },
     {

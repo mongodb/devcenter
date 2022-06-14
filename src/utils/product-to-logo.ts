@@ -1,6 +1,7 @@
 export const productToLogo: { [key: string]: string } = {
     Atlas: 'atlas_product_family',
     MongoDB: 'mdb_database',
+    Realm: 'realm_product_family',
     'Realm (Mobile)': 'realm_product_family',
     Compass: 'mdb_compass',
     'Cloud Manager': 'atlas_cloud_manager',
@@ -10,7 +11,7 @@ export const productToLogo: { [key: string]: string } = {
     'Data API': 'atlas_dataapi',
     Monitoring: 'general_features_realtime',
     'Online Archive': 'atlas_online_archive',
-    'Full Text Search': 'atlas_full_text_search',
+    Search: 'atlas_full_text_search',
     Charts: 'atlas_charts',
     Triggers: 'atlas_triggers',
     'Data Lake': 'atlas_data_lake',

@@ -1,50 +1,46 @@
-import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import {
+    BrandedIcon,
+    Button,
+    GridLayout,
+    HorizontalRule,
+    SideNav,
+    TypographyScale,
+} from '@mdb/flora';
+import type { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
-import { TertiaryNavItem } from '../../../components/tertiary-nav/types';
-import { getSideNav } from '../../../service/get-side-nav';
 import { useState } from 'react';
-import {
-    SideNav,
-    GridLayout,
-    Eyebrow,
-    TypographyScale,
-    Button,
-    HorizontalRule,
-    BrandedIcon,
-} from '@mdb/flora';
-import { getDistinctTags } from '../../../service/get-distinct-tags';
+import Breadcrumbs from '../../../components/breadcrumbs';
+import { Crumb } from '../../../components/breadcrumbs/types';
+import { getBreadcrumbsFromSlug } from '../../../components/breadcrumbs/utils';
 import { CTAContainerStyles } from '../../../components/hero/styles';
 import RequestContentModal, {
     requestContentModalStages,
 } from '../../../components/request-content-modal';
 import Search from '../../../components/search';
-import { TopicCardsContainer } from '../../../components/topic-card';
-import { ITopicCard } from '../../../components/topic-card/types';
-import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
-import { getAllContentTypes } from '../../../service/get-all-content-types';
-import { ContentTypeTag } from '../../../interfaces/tag-type-response';
-import { L1L2_TOPIC_PAGE_TYPES } from '../../../data/constants';
 import {
-    sideNavTitleStyles,
     sideNavStyles,
+    sideNavTitleStyles,
 } from '../../../components/tertiary-nav/styles';
-
+import { TertiaryNavItem } from '../../../components/tertiary-nav/types';
+import { TopicCardsContainer } from '../../../components/topic-card';
 import { iconStyles } from '../../../components/topic-card/styles';
-import {
-    getURLPath,
-    setURLPathForNavItems,
-} from '../../../utils/format-url-path';
-import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
+import { ITopicCard } from '../../../components/topic-card/types';
+import { ContentTypeTag } from '../../../interfaces/tag-type-response';
 import { getAllContentItems } from '../../../service/get-all-content';
-import { productToLogo } from '../../../utils/product-to-logo';
-import { getBreadcrumbsFromSlug } from '../../../components/breadcrumbs/utils';
-import { Crumb } from '../../../components/breadcrumbs/types';
-import Breadcrumbs from '../../../components/breadcrumbs';
+import { getAllContentTypes } from '../../../service/get-all-content-types';
+import { getMetaInfoForTopic } from '../../../service/get-meta-info-for-topic';
+import { getSideNav } from '../../../service/get-side-nav';
+import { PillCategory, pillCategoryToSlug } from '../../../types/pill-category';
 import {
     addExternalIconToSideNav,
     appendDocumentationLinkToSideNav,
 } from '../../../utils/add-documentation-link-to-side-nav';
+import {
+    getURLPath,
+    setURLPathForNavItems,
+} from '../../../utils/format-url-path';
+import { productToLogo } from '../../../utils/product-to-logo';
 
 const spanAllColumns = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
@@ -241,11 +237,11 @@ interface IParams extends ParsedUrlQuery {
 
 export const getServerSideProps = async (context: any) => {
     const { l1_l2, topic, slug } = context.params;
-    console.log(l1_l2, topic, slug);
+
     /*
     eg:
     pathComponents = ['product','atlas','article']
-    pathComponents = ['product','atlas','full-text-search','article'] etc
+    pathComponents = ['product','atlas','search','article'] etc
     */
 
     const pathComponents = [l1_l2, topic].concat(slug);
@@ -322,8 +318,6 @@ export const getServerSideProps = async (context: any) => {
             : '',
         subTopics: subTopicsWithContentType,
     };
-
-    console.log('data', data);
 
     return { props: data };
 };

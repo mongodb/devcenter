@@ -212,7 +212,7 @@ export const cardsProductsData = [
             },
             {
                 text: 'Full Text Search',
-                url: '/products/atlas/full-text-search',
+                url: '/products/atlas/search',
             },
             {
                 text: 'GraphQL Integration',
