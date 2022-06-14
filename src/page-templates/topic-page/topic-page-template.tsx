@@ -1,4 +1,5 @@
 import { BrandedIcon, GridLayout, SideNav } from '@mdb/flora';
+import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { Crumb } from '../../components/breadcrumbs/types';
 import CardSection, {
@@ -39,7 +40,7 @@ export interface TopicContentTypeProps {
 
 let pluralize = require('pluralize');
 
-interface TopicProps {
+interface TopicPageProps {
     crumbs: Crumb[];
     name: string;
     slug: string;
@@ -54,7 +55,7 @@ interface TopicProps {
     tertiaryNavItems: TertiaryNavItem[];
 }
 
-const Topic: React.FunctionComponent<TopicProps> = ({
+const TopicPageTemplate: NextPage<TopicPageProps> = ({
     crumbs,
     name,
     slug,
@@ -215,4 +216,4 @@ const Topic: React.FunctionComponent<TopicProps> = ({
     );
 };
 
-export default Topic;
+export default TopicPageTemplate;

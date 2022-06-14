@@ -6,6 +6,7 @@ import {
     SideNav,
     TypographyScale,
 } from '@mdb/flora';
+import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import Breadcrumbs from '../../components/breadcrumbs';
@@ -28,7 +29,7 @@ import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-
 import { getURLPath, setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
 
-export interface TopicContentTypeProps {
+export interface TopicContentTypePageProps {
     crumbs: Crumb[];
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
@@ -65,8 +66,8 @@ const getSearchTitleLink = (
 
 let pluralize = require('pluralize');
 
-export const TopicContentType: React.FunctionComponent<
-    TopicContentTypeProps
+export const TopicContentTypePageTemplate: NextPage<
+    TopicContentTypePageProps
 > = ({
     crumbs,
     contentType,
@@ -215,4 +216,4 @@ export const TopicContentType: React.FunctionComponent<
     );
 };
 
-export default TopicContentType;
+export default TopicContentTypePageTemplate;
