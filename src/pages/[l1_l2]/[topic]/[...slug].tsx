@@ -248,7 +248,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
         .map(tag => tag.slug);
 
-    //distinct slugs = ["/product/atlas", "product/atlas/full-text-search", "language/java"]
+    //distinct slugs = ["/product/atlas", "product/atlas/search", "language/java"]
     for (const distinctSlug of distinctSlugs) {
         const tertiaryNavItems = await getSideNav(distinctSlug);
 
@@ -280,7 +280,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     /*
     eg:
     pathComponents = ['product','atlas','article']
-    pathComponents = ['product','atlas','full-text-search','article'] etc
+    pathComponents = ['product','atlas','search','article'] etc
     */
 
     const pathComponents = [l1_l2, topic].concat(slug);
