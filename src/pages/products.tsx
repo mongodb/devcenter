@@ -237,7 +237,7 @@ export const getStaticProps: GetStaticProps = async () => {
     )[0];
     const realm = products.filter(({ slug }) => slug === '/products/realm')[0];
     const search = atlas.l2s.filter(
-        ({ slug }) => slug === '/products/atlas/full-text-search'
+        ({ slug }) => slug === '/products/atlas/search'
     )[0];
     const featured = [atlas, mongodb, realm, search].filter(prod => !!prod);
 
