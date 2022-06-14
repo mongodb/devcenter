@@ -1,8 +1,68 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
+import rateLimit from '../utils/rate-limit';
+
+// https://github.com/vercel/next.js/tree/canary/examples/api-routes-rate-limit
+// Modified version of this ^^^
+
+const limiter = rateLimit({
+    max: 600, // cache limit of 600 per 30 second period.
+    ttl: 30 * 1000,
+});
+
+const MAX_FEEDBACK_PER_PERIOD = 10; // 10 requests per 30 seconds per IP.
 
 export async function middleware(req: NextRequest) {
-    const { pathname } = req.nextUrl;
+    const { pathname, origin } = req.nextUrl;
+
+    const host = process.env.VERCEL_URL
+        ? process.env.VERCEL_URL
+        : process.env.HOST_URL;
+
+    const checkRequest = // Only attempt to block POST or PUT API requests (feedback and request content).
+        pathname.startsWith('/api/') && ['POST', 'PUT'].includes(req.method);
+
+    if (checkRequest) {
+        let headers: { [key: string]: string } = {
+            'Content-Type': 'application/json',
+        };
+
+        // Rate limit
+        try {
+            await limiter.check(headers, MAX_FEEDBACK_PER_PERIOD, req.ip || '');
+        } catch {
+            return new NextResponse(
+                JSON.stringify({
+                    error: { message: 'Something went wrong' },
+                }),
+                {
+                    status: 500,
+                    headers,
+                }
+            );
+        }
+
+        // Minimal bot detection by checking the user agent for real browser info.
+        if (
+            !req.ua?.browser?.name ||
+            origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
+        ) {
+            return new NextResponse(
+                JSON.stringify({
+                    error: { message: 'Something went wrong' },
+                }),
+                {
+                    status: 500,
+                    headers,
+                }
+            );
+        }
+        const res = NextResponse.next();
+        for (const key in headers) {
+            res.headers.set(key, headers[key]);
+        }
+        return res;
+    }
 
     // Handles consistent navigation search as well as
     // redirect for /learn page.

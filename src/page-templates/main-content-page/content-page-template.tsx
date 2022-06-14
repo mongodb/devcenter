@@ -7,6 +7,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import React, { useState } from 'react';
+import axios from 'axios';
 import FeedbackModal, {
     feedbackModalStages,
 } from '../../components/feedback-modal';
@@ -51,7 +52,7 @@ import {
 import { getURLPath } from '../../utils/format-url-path';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { TableOfContents } from '../../components/article-body/table-of-contents';
-
+import { IRating } from '../../components/feedback-modal/types';
 let pluralize = require('pluralize');
 
 interface ContentPageProps {
@@ -168,6 +169,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         seo,
     } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
+    const [feedbackId, setFeedbackId] = useState<string>('');
 
     const [feedbackModalStage, setFeedbackModalStage] =
         useState<feedbackModalStages>('closed');
@@ -199,6 +201,21 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         'documentation'
     );
 
+    const onRate = (stars: number) => {
+        const body: IRating = {
+            slug,
+            stars,
+            title,
+        };
+        axios
+            .post(getURLPath('/api/createFeedback') as string, body)
+            .then(({ data }) => {
+                setFeedbackId(data._id);
+            });
+        setRatingStars(stars); // This should update both rating sections but it doesn't.
+        setFeedbackModalStage(stars === 3 ? 'text' : 'checkbox');
+    };
+
     const ratingSection = (
         <div
             sx={{
@@ -208,13 +225,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             }}
         >
             <span>Rate this {category.toLowerCase()}</span>
-            <ContentRating
-                stars={ratingStars}
-                onRate={i => {
-                    setRatingStars(i); // This should update both rating sections but it doesn't.
-                    setFeedbackModalStage(i === 3 ? 'text' : 'checkbox');
-                }}
-            />
+            <ContentRating stars={ratingStars} onRate={onRate} />
         </div>
     );
 
@@ -516,8 +527,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 modalStage={feedbackModalStage}
                 stars={ratingStars}
                 contentCategory={category}
-                slug={slug}
-                title={title}
+                feedbackId={feedbackId}
             />
             <RequestContentModal
                 setModalStage={setRequestContentModalStage}

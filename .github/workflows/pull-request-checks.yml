@@ -5,6 +5,8 @@ on:
 env:
     NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
     NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
+    REALM_API_URL: ${{ secrets.REALM_API_URL }}
+    REALM_SEARCH_URL: ${{ secrets.REALM_SEARCH_URL }}
     STRAPI_URL: ${{ secrets.STRAPI_DEV_URL }}
     DEVHUB_URL: ${{ secrets.DEVHUB_URL }}
 jobs:
@@ -136,5 +138,5 @@ jobs:
                   vercel-token: ${{secrets.VERCEL_TOKEN}}
                   vercel-org-id: ${{secrets.VERCEL_ORG_ID}}
                   vercel-project-id: ${{secrets.VERCEL_PROJECT_ID}}
-                  vercel-args: '--build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }} --build-env STRAPI_URL=${{ secrets.STRAPI_DEV_URL }} --build-env DEVHUB_URL=${{ secrets.DEVHUB_URL }}'
+                  vercel-args: '--build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }} --build-env STRAPI_URL=${{ secrets.STRAPI_DEV_URL }} --build-env DEVHUB_URL=${{ secrets.DEVHUB_URL }} --build-env REALM_API_URL=${{ secrets.REALM_API_URL }} --build-env REALM_SEARCH_URL=${{ secrets.REALM_SEARCH_URL }}'
                   scope: ${{secrets.VERCEL_ORG_ID}}

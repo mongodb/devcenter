@@ -9,6 +9,7 @@ import { Tag } from '../../interfaces/tag';
 import { ContentItem } from '../../interfaces/content-item';
 import { Image } from '../../interfaces/image';
 import { Author } from '../../interfaces/author';
+import { getURLPath } from '../../utils/format-url-path';
 
 const searchItemToContentItem = ({
     type,
@@ -48,9 +49,6 @@ const searchItemToContentItem = ({
         featured: false,
     };
 };
-
-const searchEndpoint =
-    'https://data.mongodb-api.com/app/devhub-search-service-fldiy/endpoint/search_devcenter';
 
 export const getFilters = async (contentType?: PillCategory) => {
     const allFilters = contentType === undefined;
@@ -255,7 +253,9 @@ export const itemInFilters = (
 };
 
 export const fetcher: Fetcher<ContentItem[], string> = queryString => {
-    return fetch(`${searchEndpoint}?${queryString}`).then(async response => {
+    return fetch(
+        (getURLPath('/api/search') as string) + '?' + queryString
+    ).then(async response => {
         const r_json: SearchItem[] = await response.json();
         return r_json.map(searchItemToContentItem);
     });
