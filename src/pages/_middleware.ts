@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
 import rateLimit from '../utils/rate-limit';
+import logger from '../utils/logger';
 
 // https://github.com/vercel/next.js/tree/canary/examples/api-routes-rate-limit
 // Modified version of this ^^^
@@ -11,6 +12,14 @@ const limiter = rateLimit({
 });
 
 const MAX_FEEDBACK_PER_PERIOD = 10; // 10 requests per 30 seconds per IP.
+
+function getLogData(req: NextRequest, res: NextResponse) {
+    return {
+        url: req.nextUrl.pathname,
+        method: req.method,
+        statusCode: res.status,
+    };
+}
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
@@ -32,7 +41,7 @@ export async function middleware(req: NextRequest) {
         try {
             await limiter.check(headers, MAX_FEEDBACK_PER_PERIOD, req.ip || '');
         } catch {
-            return new NextResponse(
+            const res = new NextResponse(
                 JSON.stringify({
                     error: { message: 'Something went wrong' },
                 }),
@@ -41,6 +50,10 @@ export async function middleware(req: NextRequest) {
                     headers,
                 }
             );
+
+            logger.error(getLogData(req, res));
+
+            return res;
         }
 
         // Minimal bot detection by checking the user agent for real browser info.
@@ -51,7 +64,7 @@ export async function middleware(req: NextRequest) {
             console.log(
                 `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
             );
-            return new NextResponse(
+            const res = new NextResponse(
                 JSON.stringify({
                     error: { message: 'Something went wrong' },
                 }),
@@ -60,11 +73,16 @@ export async function middleware(req: NextRequest) {
                     headers,
                 }
             );
+
+            logger.error(getLogData(req, res));
+            return res;
         }
         const res = NextResponse.next();
         for (const key in headers) {
             res.headers.set(key, headers[key]);
         }
+
+        logger.info(getLogData(req, res));
         return res;
     }
 
@@ -81,7 +99,9 @@ export async function middleware(req: NextRequest) {
             req.nextUrl.searchParams.delete('content');
             req.nextUrl.searchParams.delete('text');
 
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logger.info(getLogData(req, res));
+            return res;
         } else if (
             searchParams.get('products') === 'Mobile' ||
             searchParams.get('products') === 'Realm'
@@ -91,10 +111,14 @@ export async function middleware(req: NextRequest) {
             } else {
                 req.nextUrl.pathname = '/products/realm/';
             }
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logger.info(getLogData(req, res));
+            return res;
         } else {
             req.nextUrl.pathname = '/';
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logger.info(getLogData(req, res));
+            return res;
         }
     }
 
@@ -115,8 +139,14 @@ export async function middleware(req: NextRequest) {
             destination = rewrite.destination;
         }
 
-        if (destination) return NextResponse.rewrite(destination);
+        if (destination) {
+            const res = NextResponse.rewrite(destination);
+            logger.info(getLogData(req, res));
+            return res;
+        }
     }
 
-    return NextResponse.next();
+    const res = NextResponse.next();
+    logger.info(getLogData(req, res));
+    return res;
 }
