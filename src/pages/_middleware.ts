@@ -13,7 +13,8 @@ const limiter = rateLimit({
 const MAX_FEEDBACK_PER_PERIOD = 10; // 10 requests per 30 seconds per IP.
 
 export async function middleware(req: NextRequest) {
-    const { pathname, origin } = req.nextUrl;
+    const { pathname } = req.nextUrl;
+    const origin = req.headers.get('Origin') || '';
 
     const host = process.env.VERCEL_URL
         ? process.env.VERCEL_URL

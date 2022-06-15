@@ -16,7 +16,13 @@ const RequestContentModal: React.FunctionComponent<
             email,
         };
 
-        axios.post(getURLPath('/api/requestContent') as string, contentRequest);
+        axios.post(
+            getURLPath('/api/requestContent') as string,
+            contentRequest,
+            {
+                headers: { Origin: origin },
+            }
+        );
     };
 
     return (
