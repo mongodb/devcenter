@@ -1,4 +1,8 @@
-import type { GetStaticProps, GetStaticPropsContext, NextPage } from 'next';
+import type {
+    GetServerSideProps,
+    GetServerSidePropsContext,
+    NextPage,
+} from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 import { ContentItem } from '../interfaces/content-item';
@@ -53,17 +57,10 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getStaticPaths = async () => {
-    const contents: ContentItem[] = await getAllContentItems();
-
-    const paths = contents.map((content: ContentItem) => ({
-        params: { slug: content.slug.split('/') },
-    }));
-    return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { slug } = params as IParams;
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
+    const { slug } = context.params as IParams;
     const contents: ContentItem[] = await getAllContentItems();
 
     const contentItem = contents.filter(
