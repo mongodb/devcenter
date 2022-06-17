@@ -1,11 +1,37 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
+import logger, { logDataFromNextAPIReqAndRes } from '../../utils/logger';
+
+import rateLimit from '../../utils/rate-limit';
+
+const limiter = rateLimit({
+    max: 600, // cache limit of 600 per 30 second period.
+    ttl: 30 * 1000,
+});
+
+const MAX_FEEDBACK_PER_PERIOD = 10;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+        await limiter.check(
+            res,
+            MAX_FEEDBACK_PER_PERIOD,
+            req.socket.remoteAddress || ''
+        );
+    } catch {
+        res = res.status(500);
+        logger.error(logDataFromNextAPIReqAndRes(req, res));
+
+        return res.json({
+            error: { message: 'Something went wrong' },
+        });
+    }
+
     if (req.method !== 'PUT') {
-        return res
-            .status(405)
-            .json({ message: 'This is a PUT-only endpoint.' });
+        res = res.status(405);
+        logger.warn(logDataFromNextAPIReqAndRes(req, res));
+
+        return res.json({ message: 'This is a PUT-only endpoint.' });
     }
     try {
         const response = await axios.put(
@@ -18,9 +44,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 },
             }
         );
-        return res.status(200).json(response.data);
+        res = res.status(200);
+        logger.info(logDataFromNextAPIReqAndRes(req, res));
+
+        return res.json(response.data);
     } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: 'Something went wrong' });
+        res = res.status(500);
+        logger.error(logDataFromNextAPIReqAndRes(req, res));
+        return res.json({ message: 'Something went wrong' });
     }
 };
