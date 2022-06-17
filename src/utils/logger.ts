@@ -1,11 +1,18 @@
 import pino, { stdTimeFunctions } from 'pino';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
-type ExtraLogData = {
-    url: string | undefined;
-    method: string | undefined;
-    statusCode: number;
-};
+/*
+ * Example usage: ([mergedObject], [message], [interpolatedValues])
+ * logger.info({b: "hello"}, "empire %s %s", "strikes", "back")
+ * output: {"level":30,"time":2022-06-15T22:24:44.918Z,"msg":"empire strikes back", "b": "hello"}
+ *
+ * For full documentation, please see https://getpino.io/#/docs/api
+ *
+ * Environemntal variable PINO_LOG_LEVEL can be set to filter different logs.
+ * By default, info is set so levels below info (e.g., debug and trace) are suppressed and not shown
+ *
+ * Note that there is a issue of using pino in middleware, so the below configuration is used.
+ * For more, please see https://github.com/vercel/next.js/discussions/33898
+ */
 
 // configuration for pino, a logger library
 const logger = pino({
@@ -21,37 +28,33 @@ const logger = pino({
     timestamp: stdTimeFunctions.isoTime, // built-in ISO 8601-formatted time in UTC
 });
 
-export function logDataFromNextAPIReqAndRes(
-    req: NextApiRequest,
-    res: NextApiResponse
-): ExtraLogData {
-    return {
-        url: req.url,
-        method: req.method,
-        statusCode: res.statusCode,
+export function logRequestData(
+    url: string | undefined,
+    method: string | undefined,
+    statusCode: number,
+    level?: pino.Level
+): void {
+    const logData = {
+        url: url,
+        method: method,
+        statusCode: statusCode,
     };
+
+    if (level === undefined) {
+        if (statusCode >= 500 && statusCode <= 599) {
+            level = 'error';
+        } else if (statusCode >= 400 && statusCode <= 499) {
+            level = 'warn';
+        } else {
+            level = 'info';
+        }
+    }
+
+    try {
+        logger[level](logData);
+    } catch (err) {
+        logger.error('Unknown logger method used.');
+    }
 }
 
 export default logger;
-
-/*
- * Example usage: ([mergedObject], [message], [interpolatedValues])
- * logger.info({b: "hello"}, "empire %s %s", "strikes", "back")
- * output: {"level":30,"time":2022-06-15T22:24:44.918Z,"msg":"empire strikes back", "b": "hello"}
- *
- * logger.error("terrible world")
- * output: {"level":50,"time":2022-06-15T22:24:44.918Z,"msg":"terrible world"}
- *
- * For full documentation, please see https://getpino.io/#/docs/api
- *
- * Note that different methods (e.g., fatal, error, warn, info, debug, trace) are available and can result in different levels
- * fatal=60, error=50, warn=40, info=30, debug=20, trace=10
- *
- * In the configuration above, we can set environemntal variable PINO_LOG_LEVEL to filter different logs.
- * By default, info is set so levels below info (e.g., debug and trace) are suppressed and not shown
- *
- * levels can be further customized if needed. For more, see https://getpino.io/#/docs/api?id=levels
- *
- * Also note that there is a issue of using pino in middleware, so the above configuration is used.
- * For more, please see https://github.com/vercel/next.js/discussions/33898
- */

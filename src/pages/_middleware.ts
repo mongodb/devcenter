@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
-import logger from '../utils/logger';
-
-export function logDataFromNextReqAndRes(req: NextRequest, res: NextResponse) {
-    return {
-        url: req.nextUrl.pathname,
-        method: req.method,
-        statusCode: res.status,
-    };
-}
+import { logRequestData } from '../utils/logger';
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
@@ -42,7 +34,7 @@ export async function middleware(req: NextRequest) {
                 }
             );
 
-            logger.error(logDataFromNextReqAndRes(req, res));
+            logRequestData(pathname, req.method, res.status);
             return res;
         }
         const res = NextResponse.next();
@@ -50,7 +42,7 @@ export async function middleware(req: NextRequest) {
             res.headers.set(key, headers[key]);
         }
 
-        logger.info(logDataFromNextReqAndRes(req, res));
+        logRequestData(pathname, req.method, res.status);
         return res;
     }
 
@@ -68,7 +60,7 @@ export async function middleware(req: NextRequest) {
             req.nextUrl.searchParams.delete('text');
 
             const res = NextResponse.redirect(req.nextUrl);
-            logger.info(logDataFromNextReqAndRes(req, res));
+            logRequestData(pathname, req.method, res.status);
             return res;
         } else if (
             searchParams.get('products') === 'Mobile' ||
@@ -80,12 +72,12 @@ export async function middleware(req: NextRequest) {
                 req.nextUrl.pathname = '/products/realm/';
             }
             const res = NextResponse.redirect(req.nextUrl);
-            logger.info(logDataFromNextReqAndRes(req, res));
+            logRequestData(pathname, req.method, res.status);
             return res;
         } else {
             req.nextUrl.pathname = '/';
             const res = NextResponse.redirect(req.nextUrl);
-            logger.info(logDataFromNextReqAndRes(req, res));
+            logRequestData(pathname, req.method, res.status);
             return res;
         }
     }
@@ -109,12 +101,12 @@ export async function middleware(req: NextRequest) {
 
         if (destination) {
             const res = NextResponse.rewrite(destination);
-            logger.info(logDataFromNextReqAndRes(req, res));
+            logRequestData(pathname, req.method, res.status);
             return res;
         }
     }
 
     const res = NextResponse.next();
-    logger.info(logDataFromNextReqAndRes(req, res));
+    logRequestData(pathname, req.method, res.status);
     return res;
 }

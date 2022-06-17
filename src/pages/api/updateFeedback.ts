@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
-import logger, { logDataFromNextAPIReqAndRes } from '../../utils/logger';
+import { logRequestData } from '../../utils/logger';
 
 import rateLimit from '../../utils/rate-limit';
 
@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         );
     } catch {
         res = res.status(500);
-        logger.error(logDataFromNextAPIReqAndRes(req, res));
+        logRequestData(req.url, req.method, res.statusCode);
 
         return res.json({
             error: { message: 'Something went wrong' },
@@ -29,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method !== 'PUT') {
         res = res.status(405);
-        logger.warn(logDataFromNextAPIReqAndRes(req, res));
+        logRequestData(req.url, req.method, res.statusCode);
 
         return res.json({ message: 'This is a PUT-only endpoint.' });
     }
@@ -45,12 +45,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             }
         );
         res = res.status(200);
-        logger.info(logDataFromNextAPIReqAndRes(req, res));
+        logRequestData(req.url, req.method, res.statusCode);
 
         return res.json(response.data);
     } catch (err) {
         res = res.status(500);
-        logger.error(logDataFromNextAPIReqAndRes(req, res));
+        logRequestData(req.url, req.method, res.statusCode);
         return res.json({ message: 'Something went wrong' });
     }
 };
