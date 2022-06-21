@@ -34,8 +34,6 @@ export const getContentItemFromSlug: (
         content = await getVideoBySlug(slug);
         contentType = 'Video';
     } else {
-        content = await getArticleBySlugFromAPI(STRAPI_CLIENT, slug);
-        contentType = 'Article';
         if (!content) {
             content = await getVideoBySlug(slug);
             contentType = 'Video';
@@ -43,6 +41,10 @@ export const getContentItemFromSlug: (
         if (!content) {
             content = await getPodcastBySlug(slug);
             contentType = 'Podcast';
+        }
+        if (!content) {
+            content = await getArticleBySlugFromAPI(STRAPI_CLIENT, slug);
+            contentType = 'Article';
         }
     }
 
