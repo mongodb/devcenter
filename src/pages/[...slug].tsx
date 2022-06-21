@@ -4,9 +4,8 @@ import type {
     NextPage,
 } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import React from 'react';
 import { ContentItem } from '../interfaces/content-item';
-import { getAllContentItems } from '../service/get-all-content';
+import { getContentItemFromSlug } from '../service/get-content-by-slug';
 import { pillCategoryToSlug } from '../types/pill-category';
 import { getSideNav } from '../service/get-side-nav';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
@@ -61,11 +60,16 @@ export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
 ) => {
     const { slug } = context.params as IParams;
-    const contents: ContentItem[] = await getAllContentItems();
+    const slugStr = slug.join('/');
 
-    const contentItem = contents.filter(
-        content => content.slug === slug.join('/')
-    )[0];
+    const contentItem: ContentItem | null = await getContentItemFromSlug(
+        slugStr
+    );
+    if (!contentItem) {
+        return {
+            props: { errorCode: 404 },
+        };
+    }
 
     const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
@@ -108,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const relatedContent = getRelatedContent(
         sideNavFilterSlug,
-        contents,
+        [contentItem],
         contentItem.slug
     );
 

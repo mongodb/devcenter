@@ -4,7 +4,7 @@ import getAllVideosFromAPI from '../api-requests/get-videos';
 import { getVideosBySlugFromAPI } from '../api-requests/get-videos';
 import { ContentTypeTag } from '../interfaces/tag-type-response';
 
-const buildVideosWithTags = (videos: Video[]) => {
+const setVideoTags = (videos: Video[]) => {
     const contentType: ContentTypeTag = {
         contentType: 'Video',
         calculatedSlug: '/videos',
@@ -37,11 +37,11 @@ const buildVideosWithTags = (videos: Video[]) => {
 
 export const getAllVideos = async (): Promise<Video[]> => {
     const videos = await getAllVideosFromAPI(STRAPI_CLIENT);
-    return buildVideosWithTags(videos);
+    return setVideoTags(videos);
 };
 
 export const getVideoBySlug = async (slug: string): Promise<Video | null> => {
     const videos = await getVideosBySlugFromAPI(STRAPI_CLIENT, slug);
-    const modifiedVideos = buildVideosWithTags(videos);
+    const modifiedVideos = setVideoTags(videos);
     return modifiedVideos.length > 0 ? modifiedVideos[0] : null;
 };
