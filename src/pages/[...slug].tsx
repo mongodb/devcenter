@@ -5,7 +5,10 @@ import type {
 } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { ContentItem } from '../interfaces/content-item';
-import { getContentItemFromSlug } from '../service/get-content-by-slug';
+import {
+    getContentItemFromSlug,
+    getRelatedContentForSlug,
+} from '../service/get-content-by-slug';
 import { pillCategoryToSlug } from '../types/pill-category';
 import { getSideNav } from '../service/get-side-nav';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
@@ -13,7 +16,6 @@ import { setURLPathForNavItems } from '../utils/format-url-path';
 import { getMetaInfoForTopic } from '../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
 import { Crumb } from '../components/breadcrumbs/types';
-import getRelatedContent from '../api-requests/get-related-content';
 import { appendDocumentationLinkToSideNav } from '../utils/add-documentation-link-to-side-nav';
 import ContentPageTemplate, {
     determineVideoOrPodcast,
@@ -110,9 +112,8 @@ export const getServerSideProps: GetServerSideProps = async (
     const topicSlug = sideNavFilterSlug;
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
 
-    const relatedContent = getRelatedContent(
+    const relatedContent = await getRelatedContentForSlug(
         sideNavFilterSlug,
-        [contentItem],
         contentItem.slug
     );
 

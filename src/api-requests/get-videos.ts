@@ -3,7 +3,7 @@ import { ApolloQueryResult, gql } from '@apollo/client';
 import { UnderlyingClient } from '../types/client-factory';
 import { Video } from '../interfaces/video';
 
-const videoFields = `
+export const videoFields = `
     description
     publishDate: originalPublishDate
     title

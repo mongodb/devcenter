@@ -3,7 +3,7 @@ import { ApolloQueryResult, gql } from '@apollo/client';
 import { UnderlyingClient } from '../types/client-factory';
 import { Podcast } from '../interfaces/podcast';
 
-const podcastFields = `
+export const podcastFields = `
     description
     publishDate: originalPublishDate
     title

@@ -24,7 +24,7 @@ export const getArticles = async (
     return data.articles;
 };
 
-export const fields = `authors {
+export const articleFields = `authors {
                     name
                     bio
                     image {
@@ -107,7 +107,7 @@ export const getAllArticlesFromAPI = async (
     const query = gql`
         query Articles {
             articles @rest(type: "Article", path: "/new-articles?_limit=-1") {
-                   ${fields}
+                   ${articleFields}
             }
         }
     `;
@@ -126,7 +126,7 @@ export const getAllDraftArticlesFromAPI = async (
         query Articles {
             articles(_publicationState : "preview", calculated_slug : ${calculatedSlug})
             @rest(type: "Article", path: "/new-articles?{args}") {
-                ${fields}
+                ${articleFields}
             }
         }`;
     const { data }: ApolloQueryResult<{ articles: Article[] }> =
@@ -142,7 +142,7 @@ export const getArticleBySlugFromAPI = async (
     const query = gql`
         query Articles {
             articles @rest(type: "Article", path: "/new-articles?calculated_slug_eq=${calculatedSlug}") {
-                ${fields}
+                ${articleFields}
             }
         }
     `;
