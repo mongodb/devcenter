@@ -62,11 +62,11 @@ export const mapRelatedContentToContentItems = (relatedContent: {
         items.push(item);
     });
     relatedContent.videos.forEach((a: Video) => {
-        const item = mapRelatedContentToContentItem(a, 'Article');
+        const item = mapRelatedContentToContentItem(a, 'Video');
         items.push(item);
     });
     relatedContent.podcasts.forEach((a: Podcast) => {
-        const item = mapRelatedContentToContentItem(a, 'Article');
+        const item = mapRelatedContentToContentItem(a, 'Podcast');
         items.push(item);
     });
 

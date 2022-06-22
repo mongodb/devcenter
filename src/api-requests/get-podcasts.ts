@@ -82,21 +82,4 @@ const getAllPodcastsFromAPI = async (
     return data.podcasts;
 };
 
-export const getPodcastsBySlugFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>,
-    slug: string
-): Promise<Podcast[]> => {
-    const query = gql`
-        query Podcasts {
-            podcasts @rest(type: "Podcast", path: "/podcasts?slug_eq=${slug}") {
-                ${podcastFields}
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
-        await client.query({ query });
-
-    return data.podcasts;
-};
-
 export default getAllPodcastsFromAPI;

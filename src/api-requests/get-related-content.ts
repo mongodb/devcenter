@@ -41,17 +41,6 @@ export const getRelatedContentForSlugFromAPI = async (
     const queryStr = qs.stringify({
         _where: [
             {
-                _or: [
-                    { 'other_tags.technology.calculated_slug': slug },
-                    { 'other_tags.programming_language.calculated_slug': slug },
-                    { 'other_tags.author_type.calculated_slug': slug },
-                    { 'other_tags.content_type.calculated_slug': slug },
-                    { 'other_tags.l_1_product.calculated_slug': slug },
-                    { 'other_tags.expertise_level.calculated_slug': slug },
-                    { 'other_tags.spoken_language.calculated_slug': slug },
-                ],
-            },
-            {
                 slug_ne: currentSlug,
             },
         ],

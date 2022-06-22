@@ -134,20 +134,3 @@ export const getAllDraftArticlesFromAPI = async (
 
     return data.articles;
 };
-
-export const getArticleBySlugFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>,
-    calculatedSlug: string
-): Promise<Article | null> => {
-    const query = gql`
-        query Articles {
-            articles @rest(type: "Article", path: "/new-articles?calculated_slug_eq=${calculatedSlug}") {
-                ${articleFields}
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ articles: Article[] }> =
-        await client.query({ query });
-
-    return data.articles.length > 0 ? data.articles[0] : null;
-};

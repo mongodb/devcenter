@@ -5,10 +5,7 @@ import type {
 } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { ContentItem } from '../interfaces/content-item';
-import {
-    getContentItemFromSlug,
-    getRelatedContentForSlug,
-} from '../service/get-content-by-slug';
+import { getContentForSlug } from '../service/get-content-by-slug';
 import { pillCategoryToSlug } from '../types/pill-category';
 import { getSideNav } from '../service/get-side-nav';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
@@ -64,9 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (
     const { slug } = context.params as IParams;
     const slugStr = slug.join('/');
 
-    const contentItem: ContentItem | null = await getContentItemFromSlug(
-        slugStr
-    );
+    const contentItem: ContentItem | null = await getContentForSlug(slugStr);
     if (!contentItem) {
         return {
             props: { errorCode: 404 },
@@ -112,10 +107,7 @@ export const getServerSideProps: GetServerSideProps = async (
     const topicSlug = sideNavFilterSlug;
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
 
-    const relatedContent = await getRelatedContentForSlug(
-        sideNavFilterSlug,
-        contentItem.slug
-    );
+    const relatedContent: ContentItem[] = [];
 
     const data = {
         crumbs,
