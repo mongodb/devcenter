@@ -1,5 +1,7 @@
 // https://github.com/vercel/next.js/blob/canary/examples/api-routes-rate-limit/utils/rate-limit.js
 
+import { NextApiResponse } from 'next';
+
 const LRU = require('lru-cache');
 
 interface RateLimitOptions {
@@ -14,11 +16,7 @@ const rateLimit = (options: RateLimitOptions) => {
     });
 
     return {
-        check: (
-            headers: { [key: string]: string },
-            limit: number,
-            ip: string
-        ) =>
+        check: (res: NextApiResponse, limit: number, ip: string) =>
             new Promise((resolve, reject) => {
                 const ipCount = ipCache.get(ip) || [0];
                 if (ipCount[0] === 0) {
@@ -28,12 +26,19 @@ const rateLimit = (options: RateLimitOptions) => {
 
                 const currentUsage = ipCount[0];
                 const isRateLimited = currentUsage >= limit;
-                headers['X-RateLimit-Limit'] = limit.toString();
-                headers['X-RateLimit-Remaining'] = isRateLimited
-                    ? '0'
-                    : (limit - currentUsage).toString();
-
-                return isRateLimited ? reject() : resolve(null);
+                res.setHeader('X-RateLimit-Limit', limit.toString());
+                res.setHeader(
+                    'X-RateLimit-Remaining',
+                    isRateLimited ? '0' : (limit - currentUsage).toString()
+                );
+                if (isRateLimited) {
+                    console.log(`IP (${ip}) blocked for too many requests.`);
+                    return reject();
+                }
+                console.log(
+                    `IP (${ip}) at ${currentUsage}/${limit} write requests this period.`
+                );
+                return resolve(null);
             }),
     };
 };

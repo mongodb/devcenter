@@ -1,19 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
-import rateLimit from '../utils/rate-limit';
-
-// https://github.com/vercel/next.js/tree/canary/examples/api-routes-rate-limit
-// Modified version of this ^^^
-
-const limiter = rateLimit({
-    max: 600, // cache limit of 600 per 30 second period.
-    ttl: 30 * 1000,
-});
-
-const MAX_FEEDBACK_PER_PERIOD = 10; // 10 requests per 30 seconds per IP.
+import { logRequestData } from '../utils/logger';
 
 export async function middleware(req: NextRequest) {
-    const { pathname, origin } = req.nextUrl;
+    const { pathname } = req.nextUrl;
+    const origin = req.headers.get('Origin') || '';
 
     const host = process.env.VERCEL_URL
         ? process.env.VERCEL_URL
@@ -27,27 +18,13 @@ export async function middleware(req: NextRequest) {
             'Content-Type': 'application/json',
         };
 
-        // Rate limit
-        try {
-            await limiter.check(headers, MAX_FEEDBACK_PER_PERIOD, req.ip || '');
-        } catch {
-            return new NextResponse(
-                JSON.stringify({
-                    error: { message: 'Something went wrong' },
-                }),
-                {
-                    status: 500,
-                    headers,
-                }
-            );
-        }
-
-        // Minimal bot detection by checking the user agent for real browser info.
         if (
-            !req.ua?.browser?.name ||
             origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
         ) {
-            return new NextResponse(
+            console.log(
+                `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
+            );
+            const res = new NextResponse(
                 JSON.stringify({
                     error: { message: 'Something went wrong' },
                 }),
@@ -56,11 +33,16 @@ export async function middleware(req: NextRequest) {
                     headers,
                 }
             );
+
+            logRequestData(pathname, req.method, res.status);
+            return res;
         }
         const res = NextResponse.next();
         for (const key in headers) {
             res.headers.set(key, headers[key]);
         }
+
+        logRequestData(pathname, req.method, res.status);
         return res;
     }
 
@@ -77,7 +59,9 @@ export async function middleware(req: NextRequest) {
             req.nextUrl.searchParams.delete('content');
             req.nextUrl.searchParams.delete('text');
 
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         } else if (
             searchParams.get('products') === 'Mobile' ||
             searchParams.get('products') === 'Realm'
@@ -87,10 +71,14 @@ export async function middleware(req: NextRequest) {
             } else {
                 req.nextUrl.pathname = '/products/realm/';
             }
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         } else {
             req.nextUrl.pathname = '/';
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         }
     }
 
@@ -111,8 +99,14 @@ export async function middleware(req: NextRequest) {
             destination = rewrite.destination;
         }
 
-        if (destination) return NextResponse.rewrite(destination);
+        if (destination) {
+            const res = NextResponse.rewrite(destination);
+            logRequestData(pathname, req.method, res.status);
+            return res;
+        }
     }
 
-    return NextResponse.next();
+    const res = NextResponse.next();
+    logRequestData(pathname, req.method, res.status);
+    return res;
 }

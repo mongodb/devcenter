@@ -8,7 +8,9 @@ import axios from 'axios';
 import { getURLPath } from '../../utils/format-url-path';
 
 const updateFeedback = (body: ITextFeedback | ICheckboxFeedback) =>
-    axios.put(getURLPath('/api/updateFeedback') as string, body);
+    axios.put(getURLPath('/api/updateFeedback') as string, body, {
+        headers: { Origin: origin },
+    });
 
 const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
     setModalStage,
