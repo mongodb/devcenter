@@ -11,68 +11,6 @@ import { addSeriesToItem } from './add-series-to-item';
 import { CollectionType } from '../types/collection-type';
 import { OtherTags } from '../interfaces/other-tags';
 
-export const mapRelatedContentToContentItem = (
-    content: any,
-    collectionType: CollectionType
-) => {
-    const item: ContentItem = {
-        collectionType: collectionType,
-        category: collectionType,
-        contentDate: content.publishDate,
-        slug: content.slug.startsWith('/')
-            ? content.slug.substring(1)
-            : content.slug,
-        tags: flattenTags([content.otherTags as OtherTags]),
-        title: content.title,
-    };
-    if (content.authors) {
-        item.authors = content.authors;
-    }
-    if (content.description) {
-        item.description = content.description;
-    }
-
-    if (collectionType === 'Podcast') {
-        item.image = { url: content.thumbnailUrl, alt: 'randomAlt' };
-    } else if (collectionType === 'Video') {
-        item.image = {
-            url: getPlaceHolderImage(content.thumbnailUrl),
-            alt: 'randomAlt',
-        };
-    } else if (content.image) {
-        item.image = {
-            url: content.image.url,
-            alt: content.image.alt || 'random alt',
-        };
-    }
-
-    if (collectionType !== 'Article') setPrimaryTag(item, content);
-    return item;
-};
-
-export const mapRelatedContentToContentItems = (relatedContent: {
-    articles: Article[];
-    videos: Video[];
-    podcasts: Podcast[];
-}) => {
-    const items: ContentItem[] = [];
-
-    relatedContent.articles.forEach((a: Article) => {
-        const item = mapRelatedContentToContentItem(a, 'Article');
-        items.push(item);
-    });
-    relatedContent.videos.forEach((a: Video) => {
-        const item = mapRelatedContentToContentItem(a, 'Video');
-        items.push(item);
-    });
-    relatedContent.podcasts.forEach((a: Podcast) => {
-        const item = mapRelatedContentToContentItem(a, 'Podcast');
-        items.push(item);
-    });
-
-    return items;
-};
-
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
     podcastSeries: Series[],

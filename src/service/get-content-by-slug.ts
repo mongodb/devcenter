@@ -2,7 +2,6 @@ import { STRAPI_CLIENT } from '../config/api-client';
 import { ContentItem } from '../interfaces/content-item';
 import { getAllFeatured } from './get-all-featured';
 import { getContentBySlugFromAPI } from '../api-requests/get-content-by-slug';
-import { getRelatedContentForSlugFromAPI } from '../api-requests/get-related-content';
 import { getAllArticleSeries } from './get-all-article-series';
 import { getAllVideoSeries } from './get-all-video-series';
 import { getAllPodcastSeries } from './get-all-podcast-series';
@@ -10,7 +9,6 @@ import {
     mapPodcastsToContentItems,
     mapVideosToContentItems,
     mapArticlesToContentItems,
-    mapRelatedContentToContentItems,
 } from './build-content-items';
 
 export const getContentForSlug: (
@@ -48,18 +46,4 @@ export const getContentForSlug: (
     }
 
     return null;
-};
-
-export const getRelatedContentForSlug: (
-    slug: string,
-    currentSlug: string
-) => Promise<ContentItem[]> = async (slug: string, currentSlug: string) => {
-    const relatedContent = await getRelatedContentForSlugFromAPI(
-        STRAPI_CLIENT,
-        slug,
-        currentSlug
-    );
-    const mappedRelatedContent =
-        mapRelatedContentToContentItems(relatedContent);
-    return mappedRelatedContent;
 };
