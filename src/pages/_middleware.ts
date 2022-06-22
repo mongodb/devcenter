@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
+import { logRequestData } from '../utils/logger';
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
@@ -23,7 +24,7 @@ export async function middleware(req: NextRequest) {
             console.log(
                 `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
             );
-            return new NextResponse(
+            const res = new NextResponse(
                 JSON.stringify({
                     error: { message: 'Something went wrong' },
                 }),
@@ -32,11 +33,16 @@ export async function middleware(req: NextRequest) {
                     headers,
                 }
             );
+
+            logRequestData(pathname, req.method, res.status);
+            return res;
         }
         const res = NextResponse.next();
         for (const key in headers) {
             res.headers.set(key, headers[key]);
         }
+
+        logRequestData(pathname, req.method, res.status);
         return res;
     }
 
@@ -53,7 +59,9 @@ export async function middleware(req: NextRequest) {
             req.nextUrl.searchParams.delete('content');
             req.nextUrl.searchParams.delete('text');
 
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         } else if (
             searchParams.get('products') === 'Mobile' ||
             searchParams.get('products') === 'Realm'
@@ -63,10 +71,14 @@ export async function middleware(req: NextRequest) {
             } else {
                 req.nextUrl.pathname = '/products/realm/';
             }
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         } else {
             req.nextUrl.pathname = '/';
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         }
     }
 
@@ -87,8 +99,14 @@ export async function middleware(req: NextRequest) {
             destination = rewrite.destination;
         }
 
-        if (destination) return NextResponse.rewrite(destination);
+        if (destination) {
+            const res = NextResponse.rewrite(destination);
+            logRequestData(pathname, req.method, res.status);
+            return res;
+        }
     }
 
-    return NextResponse.next();
+    const res = NextResponse.next();
+    logRequestData(pathname, req.method, res.status);
+    return res;
 }
