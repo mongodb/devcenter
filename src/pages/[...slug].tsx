@@ -17,6 +17,8 @@ import { appendDocumentationLinkToSideNav } from '../utils/add-documentation-lin
 import ContentPageTemplate, {
     determineVideoOrPodcast,
 } from '../page-templates/main-content-page/content-page-template';
+import { getRelatedContent } from '../utils/get-related-content';
+import allContentData from '../service/related-content.preval';
 
 let pluralize = require('pluralize');
 
@@ -26,7 +28,8 @@ interface ContentPageProps {
     topicName: string;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
-    relatedContent: ContentItem[];
+    contentItemSlug: string;
+    sideNavFilterSlug: string;
 }
 
 const ContentPage: NextPage<ContentPageProps> = ({
@@ -35,8 +38,15 @@ const ContentPage: NextPage<ContentPageProps> = ({
     topicName,
     contentItem,
     tertiaryNavItems,
-    relatedContent,
+    contentItemSlug,
+    sideNavFilterSlug,
 }) => {
+    const relatedContent = getRelatedContent(
+        sideNavFilterSlug,
+        allContentData,
+        contentItemSlug
+    );
+
     return (
         <ContentPageTemplate
             crumbs={crumbs}
@@ -107,15 +117,14 @@ export const getServerSideProps: GetServerSideProps = async (
     const topicSlug = sideNavFilterSlug;
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
 
-    const relatedContent: ContentItem[] = [];
-
     const data = {
         crumbs,
         contentItem,
         tertiaryNavItems,
         topicSlug,
         topicName,
-        relatedContent,
+        sideNavFilterSlug,
+        contentItemSlug: contentItem.slug,
     };
 
     return { props: data };

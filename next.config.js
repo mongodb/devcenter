@@ -1,3 +1,5 @@
+const createNextPluginPreval = require('next-plugin-preval/config');
+const withNextPluginPreval = createNextPluginPreval();
 const { redirects } = require('./config/redirects');
 const pageDescriptions = require('./config/seo/descriptions.json');
 const { buildRssFeed } = require('./src/scripts/build-rss-feed.js');
@@ -54,7 +56,7 @@ if (process.env.ANALYZE === 'true') {
     const withBundleAnalyzer = require('@next/bundle-analyzer')({
         enabled: true,
     });
-    module.exports = withBundleAnalyzer(configVals);
+    module.exports = withNextPluginPreval(withBundleAnalyzer(configVals));
 } else {
-    module.exports = configVals;
+    module.exports = withNextPluginPreval(configVals);
 }
