@@ -16,6 +16,12 @@ const configVals = {
     images: {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
+    compiler: {
+        styledComponents: true,
+    },
+    experimental: {
+        emotion: true,
+    },
     async headers() {
         return [
             {
