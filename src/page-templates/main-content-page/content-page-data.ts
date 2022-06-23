@@ -6,9 +6,10 @@ import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { Crumb } from '../../components/breadcrumbs/types';
-import getRelatedContent from '../../api-requests/get-related-content';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { determineVideoOrPodcast } from './content-page-template';
+import { getRelatedContent } from '../../utils/get-related-content';
+import allContentData from '../../service/related-content.preval';
 
 let pluralize = require('pluralize');
 

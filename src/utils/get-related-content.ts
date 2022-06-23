@@ -1,6 +1,6 @@
 import { ContentItem } from '../interfaces/content-item';
 
-const getRelatedContent = (
+export const getRelatedContent = (
     slug: string,
     allContents: ContentItem[],
     currentSlug: string
@@ -22,4 +22,3 @@ const getRelatedContent = (
     // Get sub-array of first n elements after shuffled
     return relatedContent.slice(0, 4);
 };
-export default getRelatedContent;
