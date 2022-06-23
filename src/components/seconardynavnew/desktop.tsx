@@ -159,7 +159,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                                     <div sx={linkWrapperStyles}>
                                         <FloraLink
                                             sx={FloraLinkStyles(
-                                                activePath === slug
+                                                activePath === slug + '/'
                                                     ? true
                                                     : false
                                             )}
@@ -209,7 +209,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                                             <FloraLink
                                                 href={getURLPath(slug)}
                                                 sx={FloraLinkStyles(
-                                                    activePath === slug
+                                                    activePath === slug + '/'
                                                         ? true
                                                         : false
                                                 )}

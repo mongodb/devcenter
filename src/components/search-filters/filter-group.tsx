@@ -6,7 +6,6 @@ import {
     Checkbox,
     Link,
 } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
 
 import { FilterGroupProps, FilterItem } from './types';
 import { titleStyles, itemsStyles } from './styles';
