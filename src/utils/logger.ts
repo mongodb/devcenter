@@ -30,14 +30,6 @@ const logger = pino({
 
 const URL_NOT_TO_LOG = new Set<string | undefined>(['/api/health/']);
 
-function should_not_log<T>(data: T, to_exclude: Set<T>): boolean {
-    if (data === undefined) {
-        return true;
-    }
-
-    return to_exclude.has(data);
-}
-
 export function logRequestData(
     url: string | undefined,
     method: string | undefined,
@@ -49,6 +41,14 @@ export function logRequestData(
         method: method,
         statusCode: statusCode,
     };
+
+    function should_not_log<T>(data: T, to_exclude: Set<T>): boolean {
+        if (data === undefined) {
+            return true;
+        }
+
+        return to_exclude.has(data);
+    }
 
     if (should_not_log(logData.url, URL_NOT_TO_LOG)) {
         return;
