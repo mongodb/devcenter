@@ -93,7 +93,7 @@ jobs:
               run: yarn install --frozen-lockfile
             - name: Run Jest tests with coverage report
               with:
-                  package-manager: yarn
+                  skip-step: install
               uses: ArtiomTr/jest-coverage-report-action@v2
     lighthouse:
         name: Lighthouse
