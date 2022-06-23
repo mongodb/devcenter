@@ -53,7 +53,8 @@ import { getURLPath } from '../../utils/format-url-path';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { TableOfContents } from '../../components/article-body/table-of-contents';
 import { IRating } from '../../components/feedback-modal/types';
-let pluralize = require('pluralize');
+import { getRelatedContent } from '../../utils/get-related-content';
+import allContentData from '../../service/related-content.preval';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -61,7 +62,8 @@ interface ContentPageProps {
     topicName: string;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
-    relatedContent: ContentItem[];
+    contentItemSlug?: string;
+    sideNavFilterSlug?: string;
     previewMode?: boolean;
 }
 
@@ -143,7 +145,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     topicName,
     contentItem,
     tertiaryNavItems,
-    relatedContent,
+    contentItemSlug,
+    sideNavFilterSlug,
     previewMode,
 }) => {
     const router = useRouter();
@@ -168,6 +171,14 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         codeType,
         seo,
     } = contentItem;
+    const relatedContent =
+        sideNavFilterSlug && contentItemSlug
+            ? getRelatedContent(
+                  sideNavFilterSlug,
+                  allContentData,
+                  contentItemSlug
+              )
+            : [];
     const [ratingStars, setRatingStars] = useState(0);
     const [feedbackId, setFeedbackId] = useState<string>('');
 

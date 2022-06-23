@@ -3,6 +3,7 @@ import type {
     GetServerSidePropsContext,
     GetStaticPaths,
     GetStaticProps,
+    GetStaticPropsContext,
     NextPage,
 } from 'next';
 import { ParsedUrlQuery } from 'querystring';
@@ -19,14 +20,9 @@ import TopicContentTypePageTemplate from '../page-templates/topic-content-type-p
 import { getTopicContentTypePageData } from '../page-templates/topic-content-type-page/topic-content-type-page-data';
 import TopicPageTemplate from '../page-templates/topic-page/topic-page-template';
 import { getTopicPageData } from '../page-templates/topic-page/topic-page-data';
-import { getRelatedContent } from '../utils/get-related-content';
-import allContentData from '../service/related-content.preval';
-
-enum PageType {
-    Content = 1,
-    Topic = 2,
-    TopicContentType = 3,
-}
+import { getContentForSlug } from '../service/get-content-by-slug';
+import staticPathsData from '../service/static-paths.preval';
+import { PageType } from '../types/page-type';
 
 interface ContentPageProps {
     pageType: any;
@@ -38,6 +34,7 @@ const DynamicContentPage: NextPage<ContentPageProps> = ({
     pageData,
 }) => {
     // TODO: Cleanup, more refactoring, etc
+    console.log('pageType', pageType);
     console.log('pageData', pageData);
     if (pageType === PageType.Topic) {
         return <TopicPageTemplate {...pageData} />;
@@ -51,10 +48,55 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-// TODO: ISR
-// export const getStaticPaths = async () => {
-//     return { paths: [], fallback: 'blocking' };
-// };
+export const getStaticPaths: GetStaticPaths = async () => {
+    let paths: any[] = [];
+
+    // const conflictingPaths = ['articles', 'code-examples', 'podcasts', 'quickstarts', 'tutorials', 'videos'];
+    const distinctTags = await getDistinctTags();
+
+    const distinctSlugs = distinctTags
+        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
+        .map(tag => tag.slug);
+
+    for (const distinctSlug of distinctSlugs) {
+        // For routes with [l1_l2]/[...slug].tsx structure.
+        const parsedSlug = distinctSlug.startsWith('/')
+            ? distinctSlug.substring(1)
+            : distinctSlug;
+
+        console.log('distinctSlug', distinctSlug);
+        console.log('parsedSlug', parsedSlug);
+
+        const slug = parsedSlug.split('/');
+        paths = paths.concat({
+            params: { slug: slug },
+        });
+
+        const tertiaryNavItems = await getSideNav(distinctSlug);
+        // For routes with [l1_l2]/[topic]/[...slug].tsx structure.
+        // Distinct slugs = ["/product/atlas", "product/atlas/search", "language/java"]
+        tertiaryNavItems.forEach((item: TertiaryNavItem) => {
+            const parsedItemUrl = item.url.startsWith('/')
+                ? item.url.substring(1)
+                : item.url;
+            console.log('parsedItemUrl', parsedItemUrl);
+            /*
+            eg: tertiary nav item url /product/atlas/article
+            /product/atlas/video etc
+             */
+            const slug = parsedItemUrl.split('/');
+            paths = paths.concat({
+                params: { slug: slug },
+            });
+        });
+    }
+
+    console.log(paths);
+
+    // All article pages ([...slug.tsx]) are not generated at build time, so they are not included
+    // in "paths"
+    return { paths: paths, fallback: 'blocking' };
+};
 
 // export const getStaticProps: GetStaticProps = async ({ params }) => {
 //     const { slug } = params as IParams;
@@ -119,10 +161,62 @@ interface IParams extends ParsedUrlQuery {
 //     return { props: data, revalidate: 20 };
 // };
 
-export const getServerSideProps: GetServerSideProps = async (
-    context: GetServerSidePropsContext
-) => {
-    const { slug } = context.params as IParams;
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//     const { slug } = params as IParams;
+
+//     const slugStr = slug.join('/');
+//     console.log('slugStr', slugStr);
+//     if(slugStr in staticPathsData){
+//         console.log('slugStr is in static paths');
+//         const pathData = staticPathsData[slugStr];
+//         const { pageType, l1_l2, topic, restOfSlug } = pathData;
+//         console.log(pageType, l1_l2, topic, restOfSlug);
+//         if(pageType === PageType.Topic && l1_l2){
+//             // Static page only -- no revalidate.
+//             const data = await getTopicPageData(l1_l2, restOfSlug);
+//             return {
+//                 props: {
+//                     pageData: data,
+//                     pageType: pageType,
+//                 },
+//                 revalidate: 20
+//             };
+//         } else if(pageType === PageType.TopicContentType && l1_l2 && topic){
+//             // Static page only -- no revalidate.
+//             const data = await getTopicContentTypePageData(l1_l2, topic, restOfSlug);
+//             return {
+//                 props: {
+//                     pageData: data,
+//                     pageType: pageType,
+//                 },
+//                 revalidate: 20
+//             };
+//         }
+//     }
+
+//     const contentItem: ContentItem | null = await getContentForSlug(slugStr);
+
+//     console.log('contentItem', contentItem);
+
+//     const data = await getContentPageData(slug);
+//     console.log(data);
+//     if (!data) {
+//         return {
+//             props: { errorCode: 404 },
+//         };
+//     }
+
+//     return {
+//         props: {
+//             pageData: data,
+//             pageType: PageType.Content,
+//         },
+//         revalidate: 20
+//     };
+// };
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const { slug } = params as IParams;
     const slugStr = slug.join('/');
 
     // TODO: Avoid pulling all content for each call to getServerSideProps
@@ -130,7 +224,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const contentPaths = contents.map((content: ContentItem) => content.slug);
 
-    let data = {};
+    let data: any | null = {};
     let pageType = null;
 
     // TODO: Avoid pulling all paths and tags for each call to getServerSideProps
@@ -194,6 +288,7 @@ export const getServerSideProps: GetServerSideProps = async (
             pageData: data,
             pageType: pageType,
         },
+        revalidate: 20,
     };
 };
 

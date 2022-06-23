@@ -1,5 +1,4 @@
 import { ContentItem } from '../../interfaces/content-item';
-import { getAllContentItems } from '../../service/get-all-content';
 import { pillCategoryToSlug } from '../../types/pill-category';
 import { getSideNav } from '../../service/get-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
@@ -8,17 +7,16 @@ import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { determineVideoOrPodcast } from './content-page-template';
-import { getRelatedContent } from '../../utils/get-related-content';
-import allContentData from '../../service/related-content.preval';
+import { getContentForSlug } from '../../service/get-content-by-slug';
 
 let pluralize = require('pluralize');
 
 export const getContentPageData = async (slug: string[]) => {
-    const contents: ContentItem[] = await getAllContentItems(); // TODO: Refactor
-
-    const contentItem = contents.filter(
-        content => content.slug === slug.join('/')
-    )[0];
+    console.log('getContentPageData');
+    const slugStr = slug.join('/');
+    const contentItem: ContentItem | null = await getContentForSlug(slugStr);
+    console.log(contentItem);
+    if (!contentItem) return null;
 
     const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
@@ -59,19 +57,14 @@ export const getContentPageData = async (slug: string[]) => {
     const topicSlug = sideNavFilterSlug;
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
 
-    const relatedContent = getRelatedContent(
-        sideNavFilterSlug,
-        contents,
-        contentItem.slug
-    );
-
     const data = {
         crumbs,
         contentItem,
         tertiaryNavItems,
         topicSlug,
         topicName,
-        relatedContent,
+        sideNavFilterSlug,
+        contentItemSlug: contentItem.slug,
     };
 
     return data;

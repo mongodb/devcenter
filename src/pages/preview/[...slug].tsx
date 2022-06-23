@@ -20,7 +20,6 @@ interface ContentPageProps {
     topicName: string;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
-    relatedContent: ContentItem[];
     previewMode?: boolean;
 }
 
@@ -30,7 +29,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
     topicName,
     contentItem,
     tertiaryNavItems,
-    relatedContent,
     previewMode,
 }) => {
     return (
@@ -40,7 +38,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
             topicName={topicName}
             contentItem={contentItem}
             tertiaryNavItems={tertiaryNavItems}
-            relatedContent={relatedContent}
             previewMode={previewMode}
         />
     );
@@ -59,7 +56,6 @@ export const getServerSideProps = async (context: any) => {
         tertiaryNavItems: [],
         topicSlug: '',
         topicName: '',
-        relatedContent: [],
         previewMode: true,
     };
 
