@@ -20,13 +20,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         );
     } catch {
         res = res.status(500);
-        logRequestData(req.url, req.method, res.statusCode);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
         return res.json({ error: { message: 'Something went wrong' } });
     }
 
     if (req.method !== 'POST') {
         res = res.status(405);
-        logRequestData(req.url, req.method, res.statusCode);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
         return res.json({ message: 'This is a POST-only endpoint.' });
     }
     try {
@@ -41,11 +41,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             }
         );
         res = res.status(200);
-        logRequestData(req.url, req.method, res.statusCode);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
         return res.status(200).json(response.data);
     } catch (err) {
         res = res.status(500);
-        logRequestData(req.url, req.method, res.statusCode);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
         return res.json({ message: 'Something went wrong' });
     }
 };

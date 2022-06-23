@@ -1,3 +1,4 @@
+import { IncomingHttpHeaders } from 'http';
 import pino, { stdTimeFunctions } from 'pino';
 
 /*
@@ -34,12 +35,14 @@ export function logRequestData(
     url: string | undefined,
     method: string | undefined,
     statusCode: number,
+    headers?: IncomingHttpHeaders,
     level?: pino.Level
 ): void {
     const logData = {
-        url: url,
-        method: method,
-        statusCode: statusCode,
+        url,
+        method,
+        statusCode,
+        headers,
     };
 
     function should_not_log<T>(data: T, to_exclude: Set<T>): boolean {
