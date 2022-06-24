@@ -4,7 +4,7 @@ import { getSideNav } from '../../service/get-side-nav';
 import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-featured';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
-import { getAllMetaInfo } from '../../service/get-all-meta-info';
+import allMetaInfo from '../../service/get-all-meta-info.preval';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 
 export const getTopicPageData = async (l1_l2: string, slug: string[]) => {
@@ -31,8 +31,7 @@ export const getTopicPageData = async (l1_l2: string, slug: string[]) => {
     let relatedTopics: TopicCardProps[] = [];
     if (variant === 'light') {
         // Per Product, we are just putting all technologies as related.
-        const allTags = await getAllMetaInfo();
-        const related = allTags.filter(
+        const related = allMetaInfo.filter(
             ({ category }) => category === 'Technology'
         );
         relatedTopics = related.map(({ tagName, slug }) => ({

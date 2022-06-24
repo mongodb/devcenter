@@ -82,10 +82,10 @@ const getAllPodcastsFromAPI = async (
     return data.podcasts;
 };
 
-export const getPodcastsBySlugFromAPI = async (
+export const getPodcastBySlugFromAPI = async (
     client: UnderlyingClient<'ApolloREST'>,
     slug: string
-): Promise<Podcast[]> => {
+): Promise<Podcast | null> => {
     const query = gql`
         query Podcasts {
             podcasts @rest(type: "Podcast", path: "/podcasts?slug_eq=${slug}") {
@@ -96,7 +96,7 @@ export const getPodcastsBySlugFromAPI = async (
     const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
         await client.query({ query });
 
-    return data.podcasts;
+    return data.podcasts.length > 0 ? data.podcasts[0] : null;
 };
 
 export default getAllPodcastsFromAPI;

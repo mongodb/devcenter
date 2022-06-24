@@ -1,9 +1,9 @@
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { ITopicCard } from '../../components/topic-card/types';
 import { ContentTypeTag } from '../../interfaces/tag-type-response';
-import { getAllContentItems } from '../../service/get-all-content';
-import { getAllContentTypes } from '../../service/get-all-content-types';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
+import allContent from '../../service/get-all-content.preval';
+import allContentTypes from '../../service/get-all-content-types.preval';
 import { getSideNav } from '../../service/get-side-nav';
 import { PillCategory, pillCategoryToSlug } from '../../types/pill-category';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
@@ -27,9 +27,7 @@ export const getTopicContentTypePageData = async (
     const topicSlug =
         '/' + pathComponents.slice(0, pathComponents.length - 1).join('/');
 
-    const allContentTypesInStrapi = await getAllContentTypes();
-
-    const contentType: PillCategory = allContentTypesInStrapi
+    const contentType: PillCategory = allContentTypes
         .filter((contentTypeTag: ContentTypeTag) => {
             return (
                 contentTypeSlug.toLowerCase() ===
@@ -55,7 +53,6 @@ export const getTopicContentTypePageData = async (
     let subTopicsWithContentType: ITopicCard[] = [];
     // This is super annoying, but we need to only show the subtopics that have the content type we are looking at.
     if (subTopics) {
-        const allContent = await getAllContentItems();
         const allRelevantContent = allContent.filter(
             item =>
                 item.tags.find(
