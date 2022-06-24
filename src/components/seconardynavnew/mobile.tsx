@@ -206,15 +206,14 @@ const DropDownMenu = ({ items }: { items: DropDownItem[] }) => {
         <div sx={StylesDropDownWrapper}>
             <ul sx={StylesDropDownMenuList}>
                 {items.map(({ name, slug, all, path, dropDownItems }: any) => (
-                    <>
-                        <SubNavLink
-                            name={name}
-                            slug={slug}
-                            all={all}
-                            path={path}
-                            dropDownItems={dropDownItems}
-                        />
-                    </>
+                    <SubNavLink
+                        key={`${name} (${slug})`}
+                        name={name}
+                        slug={slug}
+                        all={all}
+                        path={path}
+                        dropDownItems={dropDownItems}
+                    />
                 ))}
                 <li key="all topics">
                     <a href={getURLPath('topics')} sx={aLinkStyles}>

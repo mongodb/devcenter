@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         );
     } catch {
         res = res.status(500);
-        logRequestData(req.url, req.method, res.statusCode);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
 
         return res.json({
             error: { message: 'Something went wrong' },
@@ -29,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method !== 'PUT') {
         res = res.status(405);
-        logRequestData(req.url, req.method, res.statusCode);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
 
         return res.json({ message: 'This is a PUT-only endpoint.' });
     }
@@ -45,12 +45,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             }
         );
         res = res.status(200);
-        logRequestData(req.url, req.method, res.statusCode);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
 
         return res.json(response.data);
     } catch (err) {
         res = res.status(500);
-        logRequestData(req.url, req.method, res.statusCode);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
         return res.json({ message: 'Something went wrong' });
     }
 };

@@ -69,6 +69,10 @@ jobs:
                   path: playwright-artifacts
     jest-tests:
         runs-on: ubuntu-latest
+        permissions:
+            checks: write
+            pull-requests: write
+            contents: read
         steps:
             - name: Checkout target branch
               uses: actions/checkout@v2
@@ -87,8 +91,10 @@ jobs:
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
               run: yarn install --frozen-lockfile
-            - name: Run Jest tests
-              run: yarn jest
+            - name: Run Jest tests with coverage report
+              with:
+                  skip-step: install
+              uses: ArtiomTr/jest-coverage-report-action@v2
     lighthouse:
         name: Lighthouse
         runs-on: ubuntu-latest

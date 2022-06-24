@@ -19,6 +19,7 @@ export const productToLogo: { [key: string]: string } = {
     'Data Modeling': 'mdb_document_model',
     'Change Streams': 'mdb_change_streams',
     'Aggregation-Framework': 'mdb_aggregation_pipelines',
+    'Aggregation Framework': 'mdb_aggregation_pipelines',
     CRUD: 'mdb_document_model',
     Transactions: 'general_features_transactions',
     'Time series': 'mdb_time_series',

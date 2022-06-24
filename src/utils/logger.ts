@@ -1,3 +1,4 @@
+import { IncomingHttpHeaders } from 'http';
 import pino, { stdTimeFunctions } from 'pino';
 
 /*
@@ -28,17 +29,33 @@ const logger = pino({
     timestamp: stdTimeFunctions.isoTime, // built-in ISO 8601-formatted time in UTC
 });
 
+const URL_NOT_TO_LOG = new Set<string | undefined>(['/api/health/']);
+
 export function logRequestData(
     url: string | undefined,
     method: string | undefined,
     statusCode: number,
+    headers?: IncomingHttpHeaders,
     level?: pino.Level
 ): void {
     const logData = {
-        url: url,
-        method: method,
-        statusCode: statusCode,
+        url,
+        method,
+        statusCode,
+        headers,
     };
+
+    function should_not_log<T>(data: T, to_exclude: Set<T>): boolean {
+        if (data === undefined) {
+            return true;
+        }
+
+        return to_exclude.has(data);
+    }
+
+    if (should_not_log(logData.url, URL_NOT_TO_LOG)) {
+        return;
+    }
 
     if (level === undefined) {
         if (statusCode >= 500 && statusCode <= 599) {

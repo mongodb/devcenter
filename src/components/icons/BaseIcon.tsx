@@ -19,6 +19,7 @@ const BaseIcon: React.FunctionComponent<BaseIconProps> = ({
                 strokeWidth: '2px',
             }}
             className={className}
+            data-testid="base-icon"
         >
             {children}
         </svg>
