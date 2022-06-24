@@ -54,7 +54,7 @@ import Breadcrumbs from '../../components/breadcrumbs';
 import { TableOfContents } from '../../components/article-body/table-of-contents';
 import { IRating } from '../../components/feedback-modal/types';
 import { getRelatedContent } from '../../utils/get-related-content';
-import allContentData from '../../service/related-content.preval';
+import allContentData from '../../service/get-all-content.preval';
 
 interface ContentPageProps {
     crumbs: Crumb[];
