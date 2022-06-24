@@ -15,7 +15,10 @@ const clientFactory = <T extends ClientType>(
     switch (clientType) {
         case 'ApolloREST':
             return new ApolloClient({
-                cache: new InMemoryCache(),
+                cache: new InMemoryCache({
+                    resultCaching: false,
+                    dataIdFromObject: () => undefined,
+                }),
 
                 //link: new RestLink({ uri }),
                 link: ApolloLink.from([
