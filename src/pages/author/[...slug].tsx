@@ -1,12 +1,15 @@
-import type { NextPage, GetStaticProps } from 'next';
+import type {
+    NextPage,
+    GetServerSideProps,
+    GetServerSidePropsContext,
+} from 'next';
 import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
-import { getAllAuthors } from '../../service/get-all-authors';
+import { getAuthor } from '../../service/get-all-authors';
 import { Author, Image } from '../../interfaces/author';
+import { flattenTags } from '../../utils/flatten-tags';
 import { Button, GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
-import React, { useState } from 'react';
 import Card, { getCardProps } from '../../components/card';
-import { getAllContentItems } from '../../service/get-all-content';
 import { ContentItem } from '../../interfaces/content-item';
 import { Grid } from 'theme-ui';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
@@ -258,25 +261,41 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
     const { slug } = context.params as IParams;
     const slugString = '/author/' + slug[0];
 
-    const authors: Author[] = await getAllAuthors();
+    const author: Author | null = await getAuthor(slugString);
+    if (!author) {
+        return {
+            notFound: true,
+        };
+    }
 
-    const author = authors.filter(
-        a => a.calculated_slug.toLowerCase() === slugString.toLowerCase()
-    )[0];
-
-    const articlesByAuthor = author.articles
-        ? author.articles.map(articles => articles.name)
-        : [];
-
-    const allContent: ContentItem[] = await getAllContentItems(); // TODO: Refactor
-
-    const filteredContent = allContent.filter(a =>
-        articlesByAuthor.includes(a.title)
-    );
+    let authorContentItems: any[] = [];
+    for (const article of author.articles as any) {
+        const item: ContentItem = {
+            collectionType: 'Article',
+            authors: article.authors,
+            category: article.otherTags[0].contentType.contentType,
+            contentDate: article.originalPublishDate || article.publishDate,
+            description: article.description,
+            slug: article.calculatedSlug.startsWith('/')
+                ? article.calculatedSlug.substring(1)
+                : article.calculatedSlug,
+            tags: flattenTags(article.otherTags),
+            title: article.title,
+        };
+        if (article.image) {
+            item.image = {
+                url: article.image.url,
+                alt: article.image.alt || 'random alt',
+            };
+        }
+        authorContentItems.push(item);
+    }
 
     const data = {
         name: author.name,
@@ -288,7 +307,7 @@ export const getServerSideProps = async (context: any) => {
         facebook: author.facebook,
         twitter: author.twitter,
         youtube: author.youtube,
-        articles: filteredContent ? filteredContent : [],
+        articles: authorContentItems,
         calculated_slug: author.calculated_slug,
     };
 
