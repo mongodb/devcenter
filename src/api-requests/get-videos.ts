@@ -82,4 +82,26 @@ const getAllVideosFromAPI = async (
     return data.videos;
 };
 
+/**
+ * Returns a list of all videos.
+ * @param client -  The Apollo REST client that will be used to make the request.
+ */
+export const getVideoBySlugFromAPI = async (
+    client: UnderlyingClient<'ApolloREST'>,
+    slug: string
+): Promise<Video | null> => {
+    const query = gql`
+        query Videos {
+            videos @rest(type: "Video", path: "/new-videos?slug_eq=${slug}") {
+                ${videoFields}
+            }
+        }
+    `;
+    const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
+        { query }
+    );
+
+    return data.videos.length > 0 ? data.videos[0] : null;
+};
+
 export default getAllVideosFromAPI;
