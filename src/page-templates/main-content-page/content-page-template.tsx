@@ -196,6 +196,9 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
     const authorsToDisplay = parseAuthorsToAuthorLockup(authors);
 
+    const hasRequestContentFlow =
+        !previewMode && category !== 'News & Announcements';
+
     tertiaryNavItems = addExternalIconToSideNav(
         tertiaryNavItems,
         'documentation'
@@ -423,7 +426,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     ))}
                 </Grid>
             </div>
-            {!previewMode && (
+            {hasRequestContentFlow && (
                 <div sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button
                         onClick={() => setRequestContentModalStage('text')}
@@ -529,11 +532,13 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 contentCategory={category}
                 feedbackId={feedbackId}
             />
-            <RequestContentModal
-                setModalStage={setRequestContentModalStage}
-                modalStage={requestContentModalStage}
-                contentCategory={category}
-            />
+            {hasRequestContentFlow && (
+                <RequestContentModal
+                    setModalStage={setRequestContentModalStage}
+                    modalStage={requestContentModalStage}
+                    contentCategory={category}
+                />
+            )}
         </>
     );
 };
