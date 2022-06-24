@@ -13,10 +13,20 @@ const MAX_CONTENT_REQUEST_PER_PERIOD = 10;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+        console.log('header', req.headers['x-forwarded-for']);
+        let ip = req.headers['x-forwarded-for'] || '';
+        console.log('IP', ip);
+        let realIp: string;
+        if (ip?.length) {
+            realIp = ip[0];
+        } else {
+            realIp = (ip as string).split(',')[0];
+        }
+        console.log('Real IP', realIp);
         await limiter.check(
             res,
             MAX_CONTENT_REQUEST_PER_PERIOD,
-            req.socket.remoteAddress || ''
+            realIp.trim() || ''
         );
     } catch {
         res = res.status(500);

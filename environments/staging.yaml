@@ -15,8 +15,8 @@ envSecrets:
   PREVIEW_SECRET_KEY: devcenter-secrets
 
 autoscaling:
-  minReplicas: 2
-  maxReplicas: 4
+  minReplicas: 1
+  maxReplicas: 1
   metrics:
     - type: Resource
       resource:
@@ -46,4 +46,4 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
+  hosts: ["devcenter-frontend-ip-limiting.devrel.staging.corp.mongodb.com"]
