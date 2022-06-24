@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         let ip = req.headers['x-forwarded-for'] || '';
         console.log('IP', ip);
         let realIp: string;
-        if (ip?.length) {
+        if (Array.isArray(ip)) {
             realIp = ip[0];
         } else {
             realIp = (ip as string).split(',')[0];
