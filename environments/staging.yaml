@@ -43,7 +43,7 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-ingress:
-  enabled: true
-  path: /developer
-  hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
+# ingress:
+#   enabled: true
+#   path: /developer
+#   hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]

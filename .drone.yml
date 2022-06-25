@@ -65,7 +65,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - ah/ssg-preview-env
   event:
     - push
 
@@ -83,8 +83,8 @@ steps:
       chart_version: 4.7.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
-      release: devcenter-frontend
-      values: image.tag=devcenter-staging-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
+      release: devcenter-frontend-ssr
+      values: image.tag=devcenter-staging-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend-ssr.devrel.staging.corp.mongodb.com
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
