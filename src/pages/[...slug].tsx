@@ -1,4 +1,4 @@
-import type { GetServerSidePropsContext, NextPage } from 'next';
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import ContentPageTemplate from '../page-templates/main-content-page/content-page-template';
 import { getContentPageData } from '../page-templates/main-content-page/content-page-data';
@@ -28,14 +28,35 @@ const DynamicContentPage: NextPage<ContentPageProps> = ({
 
 export default DynamicContentPage;
 
+export const getStaticPaths: GetStaticPaths = async () => {
+    let paths: any[] = [];
+    const { topicPaths, topicContentTypePaths } =
+        await getTopicPagePathMappings();
+
+    // Topic pages (e.g. /products/mongodb, /languages/python) are pre-built.
+    for (const k of Object.keys(topicPaths)) {
+        paths = paths.concat({
+            params: { slug: topicPaths[k].fullSlug },
+        });
+    }
+    // Topic content pages (e.g. /products/mongodb/quickstarts, /languages/python/code-examples) are pre-built.
+    for (const k of Object.keys(topicContentTypePaths)) {
+        paths = paths.concat({
+            params: { slug: topicContentTypePaths[k].fullSlug },
+        });
+    }
+
+    // All article pages ([...slug.tsx]) are not generated at build time, so they are not included
+    // in "paths"
+    return { paths: paths, fallback: 'blocking' };
+};
+
 interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getServerSideProps = async (
-    context: GetServerSidePropsContext
-) => {
-    const { slug } = context.params as IParams;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const { slug } = params as IParams;
     const slugStr = slug.join('/');
 
     let data: any | null = {};
@@ -68,5 +89,6 @@ export const getServerSideProps = async (
             pageData: data,
             pageType: pageType,
         },
+        revalidate: 60,
     };
 };

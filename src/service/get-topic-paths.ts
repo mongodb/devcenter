@@ -15,9 +15,15 @@ export const getTopicPagePathMappings = async () => {
         const parsedSlug = distinctSlug.startsWith('/')
             ? distinctSlug.substring(1)
             : distinctSlug;
-        const category = parsedSlug.split('/')[0];
-        const slug = parsedSlug.split('/').slice(1);
-        topicPaths[parsedSlug] = { l1_l2: category, slug: slug };
+
+        const fullSlug = parsedSlug.split('/');
+        const category = fullSlug[0];
+        const slug = fullSlug.slice(1);
+        topicPaths[parsedSlug] = {
+            l1_l2: category,
+            slug: slug,
+            fullSlug: fullSlug,
+        };
 
         const tertiaryNavItems = await getSideNav(distinctSlug);
 
@@ -30,14 +36,16 @@ export const getTopicPagePathMappings = async () => {
             eg: tertiary nav item url /product/atlas/article
             /product/atlas/video etc
                 */
-            const category = parsedItemUrl.split('/')[0];
-            const topic = parsedItemUrl.split('/')[1];
-            const restOfSlug = parsedItemUrl.split('/').slice(2);
+            const slug = parsedItemUrl.split('/');
+            const category = slug[0];
+            const topic = slug[1];
+            const restOfSlug = slug.slice(2);
 
             topicContentTypePaths[parsedItemUrl] = {
                 l1_l2: category,
                 topic: topic,
                 slug: restOfSlug,
+                fullSlug: slug,
             };
         });
     }

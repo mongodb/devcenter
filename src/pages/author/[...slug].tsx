@@ -1,8 +1,4 @@
-import type {
-    NextPage,
-    GetServerSideProps,
-    GetServerSidePropsContext,
-} from 'next';
+import type { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
 import { getAuthor } from '../../service/get-all-authors';
@@ -261,10 +257,13 @@ interface IParams extends ParsedUrlQuery {
     slug: string[];
 } // Need this to avoid TS errors.
 
-export const getServerSideProps: GetServerSideProps = async (
-    context: GetServerSidePropsContext
-) => {
-    const { slug } = context.params as IParams;
+export const getStaticPaths: GetStaticPaths = async () => {
+    // All author pages ([...slug.tsx]) are not generated at build time.
+    return { paths: [], fallback: 'blocking' };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const { slug } = params as IParams;
     const slugString = '/author/' + slug[0];
 
     const author: Author | null = await getAuthor(slugString);
@@ -311,5 +310,5 @@ export const getServerSideProps: GetServerSideProps = async (
         calculated_slug: author.calculated_slug,
     };
 
-    return { props: data };
+    return { props: data, revalidate: 60 };
 };
