@@ -4,20 +4,20 @@ import { CardProps, CardVariant } from './types';
 import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
 
-export const getLatestDate = (contentDate: string, updateDate?: string) => {
+export const getLatestDate = (contentDate: string, updatedDate?: string) => {
     let latestDate = new Date(contentDate);
 
-    if (updateDate === undefined) {
+    if (!updatedDate) {
         return latestDate;
     }
 
-    const _updateDate = new Date(updateDate);
+    const _updatedDate = new Date(updatedDate);
 
-    if (_updateDate > latestDate) {
-        latestDate = _updateDate;
+    if (_updatedDate > latestDate) {
+        latestDate = _updatedDate;
     }
 
-    return _updateDate;
+    return latestDate;
 };
 
 export const thumbnailLoader = ({ src, width, quality }: ImageLoaderProps) => {

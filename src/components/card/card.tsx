@@ -32,7 +32,7 @@ import { CodeLevel } from '../../types/tag-type';
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
     contentDate,
-    updateDate,
+    updateDate: updatedDate,
     className,
     description,
     title,
@@ -46,7 +46,7 @@ const Card: React.FunctionComponent<CardProps> = ({
     const truncatedDescription =
         description && parse(description ? description : '');
     const displayDate = formatDateToDisplayDateFormat(
-        getLatestDate(contentDate, updateDate)
+        getLatestDate(contentDate, updatedDate)
     );
     let secondaryTagElement = null;
     if (tags && pillCategory === 'Code Example') {
