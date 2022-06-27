@@ -29,7 +29,12 @@ export const getStaticProps: GetStaticProps = async () => {
         .slice(0, 3);
 
     return {
-        props: { contentType, ...filters, featured },
+        props: {
+            contentType,
+            ...filters,
+            featured,
+        },
+        revalidate: 300,
     };
 };
 

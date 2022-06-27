@@ -201,5 +201,8 @@ export const getStaticProps: GetStaticProps<{
     )[0];
     const featured = [js, java, csharp, c, python].filter(lang => !!lang);
 
-    return { props: { languages, featured } };
+    return {
+        props: { languages, featured },
+        revalidate: 300,
+    };
 };

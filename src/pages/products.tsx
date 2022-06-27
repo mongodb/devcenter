@@ -241,5 +241,8 @@ export const getStaticProps: GetStaticProps = async () => {
     )[0];
     const featured = [atlas, mongodb, realm, search].filter(prod => !!prod);
 
-    return { props: { products, featured } };
+    return {
+        props: { products, featured },
+        revalidate: 300,
+    };
 };

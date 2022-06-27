@@ -80,7 +80,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         pageType = PageType.Content;
     }
 
-    if (!pageType || Object.keys(data).length === 0) {
+    if (!pageType || !data || Object.keys(data).length === 0) {
         return { notFound: true };
     }
 

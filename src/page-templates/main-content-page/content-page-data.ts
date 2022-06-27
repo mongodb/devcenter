@@ -3,6 +3,7 @@ import { pillCategoryToSlug } from '../../types/pill-category';
 import { getSideNav } from '../../service/get-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
+import { getRelatedContent } from '../../utils/get-related-content';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
@@ -56,6 +57,10 @@ export const getContentPageData = async (slug: string[]) => {
     );
     const topicSlug = sideNavFilterSlug;
     const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
+    const relatedContent = getRelatedContent(
+        sideNavFilterSlug,
+        contentItem.slug
+    );
 
     const data = {
         crumbs,
@@ -63,8 +68,7 @@ export const getContentPageData = async (slug: string[]) => {
         tertiaryNavItems,
         topicSlug,
         topicName,
-        sideNavFilterSlug,
-        contentItemSlug: contentItem.slug,
+        relatedContent,
     };
 
     return data;

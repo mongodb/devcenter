@@ -39,6 +39,7 @@ export const getStaticProps: GetStaticProps = async () => {
             ...filters,
             featured,
         },
+        revalidate: 300,
     };
 };
 
