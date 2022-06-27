@@ -1,44 +1,41 @@
-import { useState } from 'react';
-
 import { Lightbox } from '@mdb/flora';
 
 import CheckboxFeedback from './dialogs/checkbox-feedback';
 import TextFeedback from './dialogs/text-feedback';
 import ThankYou from './dialogs/thank-you';
-import { FeedbackModalProps, Feedback } from './types';
+import { FeedbackModalProps, ICheckboxFeedback, ITextFeedback } from './types';
 import axios from 'axios';
+import { getURLPath } from '../../utils/format-url-path';
+
+const updateFeedback = (body: ITextFeedback | ICheckboxFeedback) =>
+    axios.put(getURLPath('/api/updateFeedback') as string, body, {
+        headers: { Origin: origin },
+    });
 
 const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
     setModalStage,
     modalStage,
     stars,
     contentCategory,
-    slug,
-    title,
+    feedbackId,
 }) => {
-    const [checkboxComments, setCheckboxComments] = useState<string[]>([]);
-
-    const onSubmit = (comment: string, email: string) => {
-        const feedbackContent: Feedback = {
-            checkboxComments,
+    const onTextSubmit = (comment: string, email: string) => {
+        const body: ITextFeedback = {
+            _id: feedbackId,
             comment,
             email,
-            slug,
-            stars,
-            title,
         };
-        const url =
-            'https://data.mongodb-api.com/app/devhub-api-ztlmp/endpoint/devhub_content_feedback';
-        axios
-            .post(url, feedbackContent, {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                },
-            })
-            .then(({ data }) => {
-                console.log(data);
-            });
+        updateFeedback(body);
+        setModalStage('thanks');
+    };
+
+    const onCheckboxSubmit = (checkboxComments: string[]) => {
+        const body: ICheckboxFeedback = {
+            _id: feedbackId,
+            checkboxComments,
+        };
+        updateFeedback(body);
+        setModalStage('text');
     };
 
     return (
@@ -51,19 +48,13 @@ const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
                 {modalStage === 'checkbox' ? (
                     <CheckboxFeedback
                         stars={stars}
-                        onContinue={comments => {
-                            setModalStage('text'),
-                                setCheckboxComments(comments);
-                        }}
+                        onContinue={onCheckboxSubmit}
                         contentCategory={contentCategory}
                     />
                 ) : modalStage === 'text' ? (
                     <TextFeedback
                         stars={stars}
-                        onContinue={(comment, email) => {
-                            setModalStage('thanks');
-                            onSubmit(comment, email);
-                        }}
+                        onContinue={onTextSubmit}
                         contentCategory={contentCategory}
                     />
                 ) : modalStage === 'thanks' ? (

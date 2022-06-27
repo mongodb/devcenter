@@ -1,8 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
+import { logRequestData } from '../utils/logger';
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
+    const origin = req.headers.get('Origin') || '';
+
+    const host = process.env.VERCEL_URL
+        ? process.env.VERCEL_URL
+        : process.env.HOST_URL;
+
+    const checkRequest = // Only attempt to block POST or PUT API requests (feedback and request content).
+        pathname.startsWith('/api/') && ['POST', 'PUT'].includes(req.method);
+
+    if (checkRequest) {
+        let headers: { [key: string]: string } = {
+            'Content-Type': 'application/json',
+        };
+
+        if (
+            origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
+        ) {
+            console.log(
+                `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
+            );
+            const res = new NextResponse(
+                JSON.stringify({
+                    error: { message: 'Something went wrong' },
+                }),
+                {
+                    status: 500,
+                    headers,
+                }
+            );
+
+            logRequestData(pathname, req.method, res.status);
+            return res;
+        }
+        const res = NextResponse.next();
+        for (const key in headers) {
+            res.headers.set(key, headers[key]);
+        }
+
+        logRequestData(pathname, req.method, res.status);
+        return res;
+    }
 
     // Handles consistent navigation search as well as
     // redirect for /learn page.
@@ -17,7 +59,9 @@ export async function middleware(req: NextRequest) {
             req.nextUrl.searchParams.delete('content');
             req.nextUrl.searchParams.delete('text');
 
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         } else if (
             searchParams.get('products') === 'Mobile' ||
             searchParams.get('products') === 'Realm'
@@ -27,10 +71,14 @@ export async function middleware(req: NextRequest) {
             } else {
                 req.nextUrl.pathname = '/products/realm/';
             }
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         } else {
             req.nextUrl.pathname = '/';
-            return NextResponse.redirect(req.nextUrl);
+            const res = NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         }
     }
 
@@ -51,8 +99,14 @@ export async function middleware(req: NextRequest) {
             destination = rewrite.destination;
         }
 
-        if (destination) return NextResponse.rewrite(destination);
+        if (destination) {
+            const res = NextResponse.rewrite(destination);
+            logRequestData(pathname, req.method, res.status);
+            return res;
+        }
     }
 
-    return NextResponse.next();
+    const res = NextResponse.next();
+    logRequestData(pathname, req.method, res.status);
+    return res;
 }

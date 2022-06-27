@@ -15,13 +15,21 @@ export interface TextFeedbackProps extends FeedbackDialogProps {
     onContinue: (comment: string, email: string) => void;
 }
 
-export interface Feedback {
+export interface IRating {
     stars: number;
-    checkboxComments: string[];
-    comment: string;
-    email: string;
     slug: string;
     title?: string;
+}
+
+export interface ITextFeedback {
+    _id: string;
+    comment: string;
+    email: string;
+}
+
+export interface ICheckboxFeedback {
+    _id: string;
+    checkboxComments: string[];
 }
 
 export interface FeedbackModalProps {
@@ -29,6 +37,5 @@ export interface FeedbackModalProps {
     modalStage: modalStages;
     stars: number;
     contentCategory: PillCategory;
-    slug: string;
-    title?: string;
+    feedbackId: string;
 }
