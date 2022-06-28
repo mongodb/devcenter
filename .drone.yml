@@ -177,14 +177,11 @@ steps:
       values_files: ["environments/preview.yaml"]
 
 trigger:
-  branch:
-    - main
-    - production
   event:
     - pull_request
   action:
     - opened
-    - synchronize
+    - synchronized
 ---
 depends_on: null
 kind: pipeline
@@ -208,9 +205,6 @@ steps:
       KUBE_TOKEN:
         from_secret: staging_kubernetes_token
 trigger:
-  branch:
-    - main
-    - production
   event:
     - pull_request
   action:
