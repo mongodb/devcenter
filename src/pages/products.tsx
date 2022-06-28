@@ -243,6 +243,5 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: { products, featured },
-        revalidate: 300,
     };
 };

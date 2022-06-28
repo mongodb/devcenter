@@ -91,6 +91,5 @@ export const getStaticProps: GetStaticProps<{
 
     return {
         props: { technologies },
-        revalidate: 300,
     };
 };
