@@ -184,6 +184,7 @@ trigger:
     - pull_request
   action:
     - opened
+    - synchronize
 ---
 depends_on: null
 kind: pipeline
