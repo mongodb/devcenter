@@ -164,10 +164,9 @@ steps:
 
 trigger:
   event:
-    - pull_request
-  action:
-    - opened
-    - synchronized
+    - push
+  branch:
+    - preview-envrionment
 ---
 depends_on: null
 kind: pipeline
