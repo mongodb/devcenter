@@ -180,7 +180,7 @@ resources:
     memory: 4GiB
 
 steps:
-   - name: deploy-preview
+  - name: deploy-preview
     image: quay.io/mongodb/drone-helm:v3 
     settings:
       chart: mongodb/web-app
