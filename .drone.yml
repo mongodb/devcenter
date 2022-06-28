@@ -166,7 +166,9 @@ trigger:
   event:
     - push
   branch:
-    - preview-envrionment
+    exclude:
+      - main
+      - production
 ---
 depends_on: null
 kind: pipeline
