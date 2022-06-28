@@ -139,6 +139,7 @@ steps:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
         from_secret: DEVHUB_URL
+      HOST_URL: devcenter-frontend-preview-${DRONE_PULL_REQUEST}.devrel.staging.corp.mongodb.com
     settings:
       create_repository: true
       enable_cache: true

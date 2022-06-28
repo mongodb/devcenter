@@ -2,9 +2,6 @@ service:
   type: ClusterIP
   targetPort: 3000
 
-env:
-  HOST_URL: devcenter-frontend-preview.devrel.staging.corp.mongodb.com
-
 envSecrets:
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
