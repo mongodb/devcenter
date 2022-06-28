@@ -145,7 +145,7 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       build_args:
-        - HOST_URL=devcenter-frontend-preview.devrel.staging.corp.mongodb.com
+        - HOST_URL=devcenter-frontend-preview-${DRONE_PULL_REQUEST}.devrel.staging.corp.mongodb.com
         - NPM_AUTH
         - NPM_EMAIL
         - REALM_API_URL
@@ -154,7 +154,7 @@ steps:
         - DEVHUB_URL
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
-        - devcenter-preview-build-${DRONE_BUILD_NUMBER}
+        - devcenter-preview-build-${DRONE_PULL_REQUEST}
         - latest-preview
       access_key:
         from_secret: ecr_access_key
@@ -166,23 +166,57 @@ steps:
         - push
 
   - name: deploy-preview
-    image: drone/cli:1.4.0-alpine
-    commands:
-    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} preview
-    environment:
-      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
-      DRONE_TOKEN:
-        from_secret: drone_token
-    when:
-      event:
-      - push
+    image: quay.io/mongodb/drone-helm:v3 
+    settings:
+      chart: mongodb/web-app
+      chart_version: 4.7.3
+      add_repos: [mongodb=https://10gen.github.io/helm-charts]
+      namespace: devrel
+      release: devcenter-frontend-preview-${DRONE_PULL_REQUEST}
+      values: image.tag=devcenter-preview-build-${DRONE_PULL_REQUEST},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.hosts[0]=devcenter-frontend-preview-{$DRONE_PULL_REQUEST}.devrel.staging.corp.mongodb.com
+      api_server: https://api.staging.corp.mongodb.com
+      kubernetes_token:
+        from_secret: staging_kubernetes_token
+      values_files: ["environments/preview.yaml"]
 
 trigger:
   branch:
-    - headers-to-request-logs
+    - main
+    - production
   event:
-    - push
+    - pull_request
+  action:
+    - opened
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: uninstall-devcenter-preview
 
+resources:
+  requests:
+    cpu: 8
+    memory: 4GiB
+
+steps:
+  - name: uninstall-preview
+    image: pelotech/drone-helm3
+    settings:
+      mode: uninstall
+      namespace: devrel
+      release: devcenter-frontend-preview-${DRONE_PULL_REQUEST}
+    environment: 
+      KUBE_API_SERVER: https://api.staging.corp.mongodb.com
+      KUBE_TOKEN:
+        from_secret: staging_kubernetes_token
+trigger:
+  branch:
+    - main
+    - production
+  event:
+    - pull_request
+  action:
+    - closed
 ---
 depends_on: null
 kind: pipeline
@@ -197,8 +231,8 @@ steps:
       chart_version: 4.7.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
-      release: devcenter-frontend-preview
-      values: image.tag=devcenter-preview-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
+      release: devcenter-frontend-preview-${DRONE_BUILD_PARENT}
+      values: image.tag=devcenter-preview-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.hosts[0]=devcenter-frontend-preview-{$}.devrel.staging.corp.mongodb.com
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
