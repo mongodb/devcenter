@@ -30,7 +30,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: { contentType, ...filters, featured },
-        revalidate: 300,
     };
 };
 

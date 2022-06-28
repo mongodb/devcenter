@@ -217,6 +217,5 @@ export const getStaticProps: GetStaticProps = async ({}) => {
     const metaInfo = await getAllMetaInfo();
     return {
         props: { topics: metaInfo },
-        revalidate: 300,
     };
 };

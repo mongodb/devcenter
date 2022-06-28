@@ -40,7 +40,6 @@ export const getStaticProps: GetStaticProps = async () => {
             featuredTechnologies,
             featuredProducts,
         },
-        revalidate: 300,
     };
 };
 

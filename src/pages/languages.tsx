@@ -203,6 +203,5 @@ export const getStaticProps: GetStaticProps<{
 
     return {
         props: { languages, featured },
-        revalidate: 300,
     };
 };
