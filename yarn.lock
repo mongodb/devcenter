@@ -5481,7 +5481,7 @@ neo-async@^2.6.2:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha1-tKr7k+OustgXTKU88WOrfXMIMF8=
 
-next-plugin-preval@^1.2.4:
+next-plugin-preval@1.2.4:
   version "1.2.4"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/next-plugin-preval/-/next-plugin-preval-1.2.4.tgz#abbd1304d60ba2bcb9f575aff1b2dcf9f939da5a"
   integrity sha1-q70TBNYLory59XWv8bLc+fk52lo=
