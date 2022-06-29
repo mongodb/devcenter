@@ -27,7 +27,7 @@ Ensure you have the necessary environment variables set in your terminal session
 
 To build the Docker image, run the following:
 
-`docker build -t nextjs-docker --no-cache --build-arg NPM_AUTH --build-arg NPM_EMAIL --build-arg STRAPI_URL --build-arg HOST_URL .`
+`docker build -t nextjs-docker --no-cache --build-arg NPM_AUTH --build-arg NPM_EMAIL --build-arg STRAPI_URL --build-arg HOST_URL --build-arg REALM_API_URL --build-arg REALM_SEARCH_URL .`
 
 To create the container, run:
 
