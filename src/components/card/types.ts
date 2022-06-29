@@ -8,6 +8,7 @@ export type CardVariant = 'small' | 'medium' | 'large' | 'list' | 'related';
 export interface CardProps {
     authors?: Author[];
     contentDate: string;
+    updateDate?: string;
     className?: string;
     description?: string;
     title: string;

@@ -4,6 +4,22 @@ import { CardProps, CardVariant } from './types';
 import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
 
+export const getLatestDate = (contentDate: string, updatedDate?: string) => {
+    let latestDate = new Date(contentDate);
+
+    if (!updatedDate) {
+        return latestDate;
+    }
+
+    const _updatedDate = new Date(updatedDate);
+
+    if (_updatedDate > latestDate) {
+        latestDate = _updatedDate;
+    }
+
+    return latestDate;
+};
+
 export const thumbnailLoader = ({ src, width, quality }: ImageLoaderProps) => {
     return `${src}?w=${width}&q=${quality || 90}`;
 };
@@ -31,6 +47,7 @@ export const getCardProps = (
         authors,
         category,
         contentDate,
+        updateDate,
         description,
         tags,
         title,
@@ -42,6 +59,7 @@ export const getCardProps = (
     const cardProps: CardProps = {
         authors,
         contentDate,
+        updateDate,
         description,
         title,
         pillCategory: category,
