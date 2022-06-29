@@ -44,7 +44,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     switch (pageType) {
         case PageType.Content:
-            console.log('is content');
             data = await getContentPageData(slug);
             break;
         case PageType.Topic:
