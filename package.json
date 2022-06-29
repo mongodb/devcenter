@@ -34,7 +34,6 @@
         "html-react-parser": "1.4.11",
         "lodash.debounce": "4.0.8",
         "lru-cache": "7.10.1",
-        "next": "12.1.0",
         "next-auth": "^4.7.0",
         "next-plugin-preval": "1.2.4",
         "next-seo": "5.4.0",

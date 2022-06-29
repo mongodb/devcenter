@@ -19,6 +19,7 @@ RUN yarn build
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
+RUN chown -R nextjs /devcenter
 USER nextjs
 
 ENV APP_RELEASE $APP_RELEASE

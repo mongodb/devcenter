@@ -7,17 +7,17 @@ import { ContentTypePageProps } from '../page-templates/content-type/types';
 import { getFilters } from '../hooks/search/utils';
 import { getAllContentItems } from '../service/get-all-content';
 
-const QuickstartsPage: NextPage<ContentTypePageProps> = props => {
+const PodcastsPage: NextPage<ContentTypePageProps> = props => {
     return (
         <>
-            <NextSeo title={'Quickstarts | MongoDB'} />
+            <NextSeo title={'Podcasts | MongoDB'} />
             <ContentTypePage {...props} />
         </>
     );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    const contentType: PillCategory = 'Quickstart';
+    const contentType: PillCategory = 'Podcast';
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
     const { contentTypeItems, ...filters } = await getFilters(contentType);
 
@@ -29,12 +29,8 @@ export const getStaticProps: GetStaticProps = async () => {
         .slice(0, 3);
 
     return {
-        props: {
-            contentType,
-            ...filters,
-            featured,
-        },
+        props: { contentType, ...filters, featured },
     };
 };
 
-export default QuickstartsPage;
+export default PodcastsPage;
