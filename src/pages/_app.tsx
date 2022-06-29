@@ -12,7 +12,7 @@ import { SessionProvider } from 'next-auth/react';
 
 const CONTENT_ROUTE = '/[...slug]';
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { asPath, route } = router;
@@ -40,31 +40,34 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
     return (
         <>
-            <Head>
-                <title>MongoDB Developer Center</title>
-                {pageDescription && (
-                    <meta name="description" content={pageDescription} />
-                )}
-                <link rel="icon" href="/developer/favicon.ico" />
-                {canonicalUrl && (
-                    <link rel="canonical" href={`${canonicalUrl}`} />
-                )}
-            </Head>
-            {/* Google Tag Manager - Global base code */}
-            <Script
-                id="gtag-base"
-                strategy="afterInteractive"
-                dangerouslySetInnerHTML={{
-                    __html: `
+            <SessionProvider
+                session={pageProps.session}
+                basePath="/developer/api/auth"
+            >
+                <Head>
+                    <title>MongoDB Developer Center</title>
+                    {pageDescription && (
+                        <meta name="description" content={pageDescription} />
+                    )}
+                    <link rel="icon" href="/developer/favicon.ico" />
+                    {canonicalUrl && (
+                        <link rel="canonical" href={`${canonicalUrl}`} />
+                    )}
+                </Head>
+                {/* Google Tag Manager - Global base code */}
+                <Script
+                    id="gtag-base"
+                    strategy="afterInteractive"
+                    dangerouslySetInnerHTML={{
+                        __html: `
                 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                 })(window,document,'script','dataLayer', '${GTM_ID}');
                 `,
-                }}
-            />
-            <SessionProvider session={session}>
+                    }}
+                />
                 <ThemeProvider theme={theme}>
                     <Layout>
                         <Component {...pageProps} />

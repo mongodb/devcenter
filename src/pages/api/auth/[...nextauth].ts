@@ -8,4 +8,14 @@ export default NextAuth({
             clientSecret: process.env.CLIENT_SECRET,
         }),
     ],
+    secret: process.env.NEXTAUTH_SECRET,
+    callbacks: {
+        jwt: async ({ token, account, profile }) => {
+            token.name = profile?.name;
+            return token;
+        },
+        session: async ({ session, token }) => {
+            return session;
+        },
+    },
 });

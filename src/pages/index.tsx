@@ -17,6 +17,7 @@ import {
 } from '../data/homepage';
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 const getImage = (imageString: string | EThirdPartyLogoVariant) =>
     Object.values(EThirdPartyLogoVariant).includes(
@@ -33,14 +34,13 @@ const getImage = (imageString: string | EThirdPartyLogoVariant) =>
 
 const HomepageSearch: React.FunctionComponent = () => {
     const router = useRouter();
-
+    const { data: session, status } = useSession();
     const [query, setQuery] = useState('');
     const handleSearch = () => {
         if (router.isReady) {
             router.push({ pathname: '/search', query: { s: query } });
         }
     };
-
     return (
         <div
             sx={{

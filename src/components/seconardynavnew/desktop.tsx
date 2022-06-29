@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import theme from '@mdb/flora/theme';
-import { useSession, signIn, signOut } from 'next-auth/react';
-
 import {
     ESystemIconNames,
     Link as FloraLink,
@@ -75,7 +73,6 @@ const FloraLinkStyles = (isActive: boolean) => ({
 });
 
 const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
-    //const {data: session} = useSession();
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(isOpen => !isOpen);
@@ -225,8 +222,6 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                         </SecondaryLinksList>
                     ))}
                 </ul>
-                {/*{!session && (<button onClick={() => signIn() }>Sign In</button>)}*/}
-                {/*{session && (<button onClick={() => signOut() }>Sign Out</button>)}*/}
             </nav>
         </div>
     );
