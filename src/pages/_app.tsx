@@ -8,10 +8,11 @@ import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
+import { SessionProvider } from 'next-auth/react';
 
 const CONTENT_ROUTE = '/[...slug]';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { asPath, route } = router;
@@ -63,11 +64,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
                 }}
             />
-            <ThemeProvider theme={theme}>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </ThemeProvider>
+            <SessionProvider session={session}>
+                <ThemeProvider theme={theme}>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </ThemeProvider>
+            </SessionProvider>
         </>
     );
 }
