@@ -72,7 +72,9 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
                     {titleLink.text}
                 </Link>
             )}
-            {!!description && <TypographyScale>{description}</TypographyScale>}
+            {!!description && (
+                <TypographyScale variant="body3">{description}</TypographyScale>
+            )}
             {!!links && (
                 <div>
                     {links.map(link => (
