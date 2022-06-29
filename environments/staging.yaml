@@ -10,7 +10,7 @@ envSecrets:
   NPM_AUTH: devcenter-secrets
   REALM_API_URL: devcenter-secrets
   REALM_SEARCH_URL: devcenter-secrets
-  STRAPI_URL: devcenter-secrets
+  STRAPI_URL: devcenter-secrets-test
   DEVHUB_URL: devcenter-secrets
   PREVIEW_SECRET_KEY: devcenter-secrets
 
