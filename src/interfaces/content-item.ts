@@ -23,7 +23,7 @@ export interface ContentItem {
     podcastFileUrl?: string;
     videoId?: string;
     series?: Series;
-    featured: boolean;
+    featured?: boolean;
     primaryTag?: PrimaryTag;
     codeType?: CodeLevel;
     githubUrl?: string;

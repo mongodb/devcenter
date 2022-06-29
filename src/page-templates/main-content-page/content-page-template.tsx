@@ -53,7 +53,6 @@ import { getURLPath } from '../../utils/format-url-path';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { TableOfContents } from '../../components/article-body/table-of-contents';
 import { IRating } from '../../components/feedback-modal/types';
-let pluralize = require('pluralize');
 
 interface ContentPageProps {
     crumbs: Crumb[];
