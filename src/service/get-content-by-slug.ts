@@ -6,7 +6,6 @@ import { getPodcastBySlug } from '../service/get-all-podcasts';
 import allArticleSeries from './get-all-article-series.preval';
 import allVideoSeries from './get-all-video-series.preval';
 import allPodcastSeries from './get-all-podcast-series.preval';
-import allFeatured from './get-all-featured.preval';
 import { CollectionType } from '../types/collection-type';
 import {
     mapPodcastsToContentItems,
@@ -42,22 +41,19 @@ export const getContentItemFromSlug: (
     if (contentType === 'Article') {
         const mappedArticles = mapArticlesToContentItems(
             [content as Article],
-            allArticleSeries,
-            allFeatured.articles
+            allArticleSeries
         );
         return mappedArticles[0];
     } else if (contentType === 'Podcast') {
         const mappedPodcasts = mapPodcastsToContentItems(
             [content as Podcast],
-            allPodcastSeries,
-            allFeatured.podcasts
+            allPodcastSeries
         );
         return mappedPodcasts[0];
     } else if (contentType === 'Video') {
         const mappedVideos = mapVideosToContentItems(
             [content as Video],
-            allVideoSeries,
-            allFeatured.videos
+            allVideoSeries
         );
         return mappedVideos[0];
     }
