@@ -8,9 +8,9 @@ export const getAllFeatured = async (): Promise<Featured> => {
     let featuredPodcasts: FeaturedItem[] = [];
     let featuredVideos: FeaturedItem[] = [];
     allFeatured.forEach(topic => {
-        featuredArticles = featuredArticles.concat(topic.articles);
-        featuredPodcasts = featuredPodcasts.concat(topic.podcasts);
-        featuredVideos = featuredVideos.concat(topic.videos);
+        featuredArticles = featuredArticles.concat(topic.articles || []);
+        featuredPodcasts = featuredPodcasts.concat(topic.podcasts || []);
+        featuredVideos = featuredVideos.concat(topic.videos || []);
     });
     const featured = {
         articles: featuredArticles.map(({ title }) => title),
