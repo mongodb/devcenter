@@ -1,11 +1,11 @@
 import { ContentItem } from '../interfaces/content-item';
+import allContentData from '../service/get-all-content.preval';
 
-const getRelatedContent = (
+export const getRelatedContent = (
     slug: string,
-    allContents: ContentItem[],
     currentSlug: string
 ): ContentItem[] => {
-    const relatedContent = allContents.filter(c => {
+    const relatedContent = allContentData.filter(c => {
         if (
             c.collectionType !== 'Video' &&
             c.collectionType !== 'Podcast' &&
@@ -22,4 +22,3 @@ const getRelatedContent = (
     // Get sub-array of first n elements after shuffled
     return relatedContent.slice(0, 4);
 };
-export default getRelatedContent;

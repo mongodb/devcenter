@@ -1,16 +1,13 @@
 import { ContentItem } from '../interfaces/content-item';
-import { getAllContentItems } from './get-all-content';
+import allContent from './get-all-content.preval';
 
 export const getL1L2Content = async (
     inputSlug: string
 ): Promise<ContentItem[]> => {
-    const contents: ContentItem[] = await getAllContentItems();
-
     /*
     filter the ones which have tags having slug matching input slug
      */
-
-    const filteredContents = contents.filter(c => {
+    const filteredContents = allContent.filter(c => {
         const slugsInTags = c.tags.map(tag => tag.slug);
         return slugsInTags.includes(inputSlug);
     });

@@ -1,10 +1,11 @@
 import { STRAPI_CLIENT } from '../config/api-client';
 import { Podcast } from '../interfaces/podcast';
-import getAllPodcastsFromAPI from '../api-requests/get-all-podcasts';
+import getAllPodcastsFromAPI, {
+    getPodcastBySlugFromAPI,
+} from '../api-requests/get-podcasts';
 import { ContentTypeTag } from '../interfaces/tag-type-response';
 
-export const getAllPodcasts = async (): Promise<Podcast[]> => {
-    const podcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
+const setPodcastTags = (podcasts: Podcast[]) => {
     const contentType: ContentTypeTag = {
         contentType: 'Podcast',
         calculatedSlug: '/podcasts',
@@ -32,4 +33,18 @@ export const getAllPodcasts = async (): Promise<Podcast[]> => {
     });
 
     return modifiedPodcasts;
+};
+
+export const getAllPodcasts = async (): Promise<Podcast[]> => {
+    const podcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
+    return setPodcastTags(podcasts);
+};
+
+export const getPodcastBySlug = async (
+    slug: string
+): Promise<Podcast | null> => {
+    const podcast = await getPodcastBySlugFromAPI(STRAPI_CLIENT, slug);
+    if (!podcast) return null;
+    const modifiedPodcasts = setPodcastTags([podcast]);
+    return modifiedPodcasts.length > 0 ? modifiedPodcasts[0] : null;
 };

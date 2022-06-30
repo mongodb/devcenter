@@ -19,8 +19,8 @@ interface ContentPageProps {
     topicSlug: string;
     topicName: string;
     contentItem: ContentItem;
-    tertiaryNavItems: TertiaryNavItem[];
     relatedContent: ContentItem[];
+    tertiaryNavItems: TertiaryNavItem[];
     previewMode?: boolean;
 }
 

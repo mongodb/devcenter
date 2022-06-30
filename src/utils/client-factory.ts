@@ -1,4 +1,9 @@
-import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import {
+    ApolloClient,
+    ApolloLink,
+    InMemoryCache,
+    DefaultOptions,
+} from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
 import { ClientType, UnderlyingClient } from '../types/client-factory';
 import { RetryLink } from '@apollo/client/link/retry';
@@ -12,11 +17,22 @@ const clientFactory = <T extends ClientType>(
     clientType: T,
     uri: string | undefined
 ): UnderlyingClient<T> => {
+    const defaultOptions: DefaultOptions = {
+        watchQuery: {
+            fetchPolicy: 'no-cache',
+            errorPolicy: 'ignore',
+        },
+        query: {
+            fetchPolicy: 'no-cache',
+            errorPolicy: 'all',
+        },
+    };
+
     switch (clientType) {
         case 'ApolloREST':
             return new ApolloClient({
                 cache: new InMemoryCache(),
-
+                defaultOptions: defaultOptions,
                 //link: new RestLink({ uri }),
                 link: ApolloLink.from([
                     // ordering is important

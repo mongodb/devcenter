@@ -1,13 +1,12 @@
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
-import { getAllContentItems } from './get-all-content';
+import allContent from './get-all-content.preval';
 import { ContentItem } from '../interfaces/content-item';
-import { setURLPathForNavItems } from '../utils/format-url-path';
 
 export const getSideNav = async (
     inputSlug: string
 ): Promise<TertiaryNavItem[]> => {
     const tertiaryNavItems: TertiaryNavItem[] = [];
-    const contents: ContentItem[] = await getAllContentItems();
+    const contents: ContentItem[] = allContent;
     const filteredContents = contents.filter(c => {
         const slugsInTags = c.tags.map(tag => tag.slug);
         return slugsInTags.includes(inputSlug);

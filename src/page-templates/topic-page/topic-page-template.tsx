@@ -1,47 +1,46 @@
-import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { BrandedIcon, GridLayout, SideNav } from '@mdb/flora';
+import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
-import { ParsedUrlQuery } from 'querystring';
-import { GridLayout, SideNav, BrandedIcon } from '@mdb/flora';
-
-import Hero from '../../components/hero';
-import Search from '../../components/search';
-import { TopicCardsContainer } from '../../components/topic-card';
-import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
-import { CTA } from '../../components/hero/types';
+import { Crumb } from '../../components/breadcrumbs/types';
 import CardSection, {
     FeaturedCardSection,
 } from '../../components/card-section';
-import { TertiaryNavItem } from '../../components/tertiary-nav/types';
+import Hero from '../../components/hero';
+import { CTA } from '../../components/hero/types';
+import { createTopicPageCTAS } from '../../components/hero/utils';
+import Search from '../../components/search';
+import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
+import { TertiaryNavItem } from '../../components/tertiary-nav/types';
+import { TopicCardsContainer } from '../../components/topic-card';
+import { iconStyles } from '../../components/topic-card/styles';
+import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
 import { ContentItem } from '../../interfaces/content-item';
-import { getL1L2Content } from '../../service/get-l1-l2-content';
+import { topicWithIcon } from '../../page-templates/content-type/technologies-section';
 import {
+    PillCategory,
     pillCategoryToSlug,
     PillCategoryValues,
 } from '../../types/pill-category';
-import { getSideNav } from '../../service/get-side-nav';
-import TertiaryNav from '../../components/tertiary-nav';
-import { getDistinctTags } from '../../service/get-distinct-tags';
-import { createTopicPageCTAS } from '../../components/hero/utils';
-
-import { iconStyles } from '../../components/topic-card/styles';
+import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
-
-import { L1L2_TOPIC_PAGE_TYPES } from '../../data/constants';
-import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-featured';
-import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
-import { Crumb } from '../../components/breadcrumbs/types';
-import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getAllMetaInfo } from '../../service/get-all-meta-info';
-import { topicWithIcon } from '../../page-templates/content-type/technologies-section';
-import {
-    addExternalIconToSideNav,
-    appendDocumentationLinkToSideNav,
-} from '../../utils/add-documentation-link-to-side-nav';
+
+export interface TopicContentTypeProps {
+    crumbs: Crumb[];
+    contentType: PillCategory;
+    tertiaryNavItems: TertiaryNavItem[];
+    topicName: string;
+    topicSlug: string;
+    contentTypeSlug: string;
+    contentTypeAggregateSlug: string;
+    description: string;
+    subTopics: ITopicCard[];
+}
+
 let pluralize = require('pluralize');
 
-interface TopicProps {
+interface TopicPageProps {
     crumbs: Crumb[];
     name: string;
     slug: string;
@@ -56,7 +55,7 @@ interface TopicProps {
     tertiaryNavItems: TertiaryNavItem[];
 }
 
-const Topic: NextPage<TopicProps> = ({
+const TopicPageTemplate: NextPage<TopicPageProps> = ({
     crumbs,
     name,
     slug,
@@ -217,92 +216,4 @@ const Topic: NextPage<TopicProps> = ({
     );
 };
 
-export default Topic;
-
-interface IParams extends ParsedUrlQuery {
-    l1_l2: string;
-    slug: string[];
-} // Need this to avoid TS errors.
-
-export const getStaticPaths: GetStaticPaths = async () => {
-    let paths: any[] = [];
-
-    const distinctTags = await getDistinctTags();
-
-    const distinctSlugs = distinctTags
-        .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
-        .map(tag => tag.slug);
-
-    distinctSlugs.forEach(distinctSlug => {
-        const parsedSlug = distinctSlug.startsWith('/')
-            ? distinctSlug.substring(1)
-            : distinctSlug;
-        const category = parsedSlug.split('/')[0];
-        const slug = parsedSlug.split('/').slice(1);
-        paths = paths.concat({
-            params: { l1_l2: category, slug: slug },
-        });
-    });
-
-    return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { l1_l2, slug } = params as IParams;
-
-    const slugString = '/' + l1_l2 + '/' + slug.join('/');
-
-    const metaInfoForTopic = await getMetaInfoForTopic(slugString);
-
-    let tertiaryNavItems = await getSideNav(slugString);
-
-    tertiaryNavItems = appendDocumentationLinkToSideNav(
-        tertiaryNavItems,
-        metaInfoForTopic
-    );
-
-    const content = await getL1L2Content(slugString);
-
-    const variant: 'light' | 'medium' | 'heavy' =
-        content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
-
-    const featured = parseContentToGetFeatured(content);
-
-    const crumbs = await getBreadcrumbsFromSlug(slugString);
-
-    let relatedTopics: TopicCardProps[] = [];
-    if (variant === 'light') {
-        // Per Product, we are just putting all technologies as related.
-        const allTags = await getAllMetaInfo();
-        const related = allTags.filter(
-            ({ category }) => category === 'Technology'
-        );
-        relatedTopics = related.map(({ tagName, slug }) => ({
-            title: tagName,
-            href: slug,
-            icon: null,
-        }));
-        relatedTopics = relatedTopics
-            .filter(({ title }) => title !== metaInfoForTopic?.tagName)
-            .slice(0, 12);
-    }
-
-    const data = {
-        crumbs,
-        name: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
-        slug: slugString,
-        content,
-        contentType: l1_l2,
-        variant,
-        tertiaryNavItems: tertiaryNavItems,
-        featured: featured,
-        description: metaInfoForTopic?.description
-            ? metaInfoForTopic.description
-            : '',
-        ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
-        topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
-        relatedTopics,
-    };
-
-    return { props: data };
-};
+export default TopicPageTemplate;

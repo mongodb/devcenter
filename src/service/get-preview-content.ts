@@ -1,12 +1,7 @@
 import { ContentItem } from '../interfaces/content-item';
 import { getAllDraftArticlesFromAPI } from '../api-requests/get-articles';
 import { STRAPI_CLIENT } from '../config/api-client';
-import { mapArticlesToContentItems } from './get-all-content';
-import { Article } from '../interfaces/article';
-import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
-import { RetryLink } from '@apollo/client/link/retry';
-import { RestLink } from 'apollo-link-rest';
-import { UnderlyingClient } from '../types/client-factory';
+import { mapArticlesToContentItems } from './build-content-items';
 
 export const getPreviewContent: (
     calculatedSlug: string

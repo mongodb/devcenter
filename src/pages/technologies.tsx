@@ -89,5 +89,7 @@ export const getStaticProps: GetStaticProps<{
     const tags = await getAllMetaInfo();
     const technologies = tags.filter(tag => tag.category === 'Technology');
 
-    return { props: { technologies } };
+    return {
+        props: { technologies },
+    };
 };
