@@ -87,7 +87,11 @@ export const getStaticProps: GetStaticProps<{
     technologies: MetaInfo[];
 }> = async () => {
     const tags = await getAllMetaInfo();
-    const technologies = tags.filter(tag => tag.category === 'Technology');
+    const technologies = tags
+        .filter(tag => tag.category === 'Technology')
+        .sort((prev, next) =>
+            prev.tagName.toLowerCase().localeCompare(next.tagName.toLowerCase())
+        );
 
     return {
         props: { technologies },
