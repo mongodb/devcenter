@@ -10,7 +10,7 @@ import {
     DropDownStyles,
     MainLinkStyles,
     plusOrMinusStylesForDropDowns,
-    SecondaryLinks,
+    secondaryLinkStyles,
     StylesDropDownMenuList,
     StylesDropDownWrapper,
     StylesFloraLink,
@@ -354,7 +354,7 @@ const MobileView = () => {
                     }}
                 ></div>
             </div>
-            <SecondaryLinks isOpen={mobileMenuIsOpen}>
+            <ul sx={secondaryLinkStyles(mobileMenuIsOpen)}>
                 {secondaryNavData.map(({ name, slug, dropDownItems }) => (
                     <SecondaryLinksList key={name}>
                         {dropDownItems?.length ? (
@@ -393,7 +393,7 @@ const MobileView = () => {
                         )}
                     </SecondaryLinksList>
                 ))}
-            </SecondaryLinks>
+            </ul>
         </div>
     );
 };
