@@ -8,13 +8,10 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
 import { PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
-import { CollectionType } from '../types/collection-type';
-import { OtherTags } from '../interfaces/other-tags';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
-    podcastSeries: Series[],
-    featured: string[]
+    podcastSeries: Series[]
 ) => {
     const items: ContentItem[] = [];
     allPodcasts.forEach((p: Podcast) => {
@@ -25,7 +22,6 @@ export const mapPodcastsToContentItems = (
             slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
             tags: flattenTags([p.otherTags]),
             title: p.title,
-            featured: featured.includes(p.title),
             seo: p.seo,
         };
         if (p.description) {
@@ -44,8 +40,7 @@ export const mapPodcastsToContentItems = (
 
 export const mapVideosToContentItems = (
     allVideos: Video[],
-    videoSeries: Series[],
-    featured: string[]
+    videoSeries: Series[]
 ) => {
     const items: ContentItem[] = [];
     allVideos.forEach((v: Video) => {
@@ -56,7 +51,6 @@ export const mapVideosToContentItems = (
             slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
             tags: flattenTags([v.otherTags]),
             title: v.title,
-            featured: featured.includes(v.title),
             seo: v.seo,
         };
         if (v.description) {
@@ -78,8 +72,7 @@ export const mapVideosToContentItems = (
 
 export const mapArticlesToContentItems = (
     allArticles: Article[],
-    articleSeries: Series[],
-    featured: string[]
+    articleSeries: Series[]
 ) => {
     const items: ContentItem[] = [];
     /*
@@ -102,7 +95,6 @@ export const mapArticlesToContentItems = (
                 : a.calculatedSlug,
             tags: flattenTags(a.otherTags),
             title: a.title,
-            featured: featured.includes(a.title),
             codeType: a.otherTags[0].codeType,
             githubUrl: a.otherTags[0].githubUrl,
             liveSiteUrl: a.otherTags[0].liveSiteUrl,
