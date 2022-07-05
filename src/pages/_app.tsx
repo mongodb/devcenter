@@ -50,7 +50,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 )}
             </Head>
             {/* Google Tag Manager - Global base code */}
-            <Script
+            {/* <Script
                 id="gtag-base"
                 strategy="afterInteractive"
                 dangerouslySetInnerHTML={{
@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 })(window,document,'script','dataLayer', '${GTM_ID}');
                 `,
                 }}
-            />
+            /> */}
             <ThemeProvider theme={theme}>
                 <Layout>
                     <Component {...pageProps} />
