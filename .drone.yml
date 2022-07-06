@@ -341,7 +341,8 @@ steps:
   - name: check-if-build-event
     image: alpine
     commands: 
-      - if [ $action != reopened ]; then exit 0; fi
+      - echo $action
+      - if [ $action != reopened ]; then exit 1; fi
   - name: build-preview
     image: alpine
     commands:  
