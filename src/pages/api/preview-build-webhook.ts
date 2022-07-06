@@ -11,8 +11,8 @@ const triggerWebhook = async (body: any) => {
         const headers = {
             Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
         };
-        const resp = axios.post(droneEndpoint, {}, { headers });
-        console.log(resp);
+        const resp = await axios.post(droneEndpoint, {}, { headers });
+        console.log(resp.data);
     }
 };
 
