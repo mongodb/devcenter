@@ -319,7 +319,6 @@ const MobileView = () => {
                 sx={{
                     display: 'grid',
                     gridTemplateColumns: '240px 1fr',
-                    border: 'none',
                     borderBottom: '2px solid #00684A',
                     ...(mobileMenuIsOpen && {
                         borderImage:
