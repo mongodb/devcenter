@@ -16,8 +16,6 @@ import {
     StylesFloraLink,
     StylesFloraLinkChevronRight,
     StylesSubLinks,
-    MobileMenuActiveBorder,
-    MobileMenuDefaultBorder,
 } from './mobile-styles';
 import { DropDownItem, DropDownItem2 } from './dropdown-menu';
 import { getURLPath } from '../../utils/format-url-path';
@@ -321,21 +319,12 @@ const MobileView = () => {
                 sx={{
                     display: 'grid',
                     gridTemplateColumns: '240px 1fr',
-                    position: 'relative',
-                    borderBottom: '2px solid',
-                    borderBottomColor: mobileMenuIsOpen
-                        ? MobileMenuActiveBorder
-                        : MobileMenuDefaultBorder,
-                    // [DEVHUB-1220]: using pseudo el to prevent gap in sibling element bottom-borders in mobile browser
-                    '&:after': {
-                        position: 'absolute',
-                        background: MobileMenuDefaultBorder,
-                        height: '2px',
-                        content: '""',
-                        width: '100%',
-                        bottom: '-2px',
-                        left: '240px',
-                    },
+                    border: 'none',
+                    borderBottom: '2px solid #00684A',
+                    ...(mobileMenuIsOpen && {
+                        borderImage:
+                            'linear-gradient(to right, #00ED64 240px, #00684A 0) 1',
+                    }),
                 }}
             >
                 <FloraLink sx={{ ...MainLinkStyles }} onClick={openMobileMenu}>

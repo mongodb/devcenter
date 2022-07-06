@@ -1,8 +1,5 @@
 import { ThemeUIStyleObject } from 'theme-ui';
 
-export const MobileMenuActiveBorder = '#00ED64';
-export const MobileMenuDefaultBorder = '#00684A';
-
 export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
     margin: 0,
     display: isOpen ? 'block' : 'none',
