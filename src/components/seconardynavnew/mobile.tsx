@@ -16,6 +16,8 @@ import {
     StylesFloraLink,
     StylesFloraLinkChevronRight,
     StylesSubLinks,
+    MobileMenuActiveBorder,
+    MobileMenuDefaultBorder,
 } from './mobile-styles';
 import { DropDownItem, DropDownItem2 } from './dropdown-menu';
 import { getURLPath } from '../../utils/format-url-path';
@@ -315,16 +317,28 @@ const MobileView = () => {
                 zIndex: '10',
             }}
         >
-            <div sx={{ display: 'grid', gridTemplateColumns: '240px 1fr' }}>
-                <FloraLink
-                    sx={{
-                        ...MainLinkStyles,
-                        ...(mobileMenuIsOpen && {
-                            borderBottom: 'solid #00ED64 2px',
-                        }),
-                    }}
-                    onClick={openMobileMenu}
-                >
+            <div
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: '240px 1fr',
+                    position: 'relative',
+                    borderBottom: '2px solid',
+                    borderBottomColor: mobileMenuIsOpen
+                        ? MobileMenuActiveBorder
+                        : MobileMenuDefaultBorder,
+                    // [DEVHUB-1220]: using pseudo el to prevent gap in sibling element bottom-borders in mobile browser
+                    '&:after': {
+                        position: 'absolute',
+                        background: MobileMenuDefaultBorder,
+                        height: '2px',
+                        content: '""',
+                        width: '100%',
+                        bottom: '-2px',
+                        left: '240px',
+                    },
+                }}
+            >
+                <FloraLink sx={{ ...MainLinkStyles }} onClick={openMobileMenu}>
                     <TypographyScale variant="body1">
                         MongoDB Developer
                     </TypographyScale>
@@ -334,6 +348,7 @@ const MobileView = () => {
                             className="chevron-icon"
                             name={ESystemIconNames.CHEVRON_DOWN}
                             size="small"
+                            strokeWeight="large"
                         />
                     )}
                     {mobileMenuIsOpen && (
@@ -350,7 +365,6 @@ const MobileView = () => {
                     sx={{
                         height: '68px',
                         width: '100%',
-                        borderBottom: 'solid 2px #00684A',
                     }}
                 ></div>
             </div>
