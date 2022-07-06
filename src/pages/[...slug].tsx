@@ -2,7 +2,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { getContentPageData } from '../page-templates/main-content-page/content-page-data';
 import { getTopicContentTypePageData } from '../page-templates/topic-content-type-page/topic-content-type-page-data';
 import DynamicContentTemplate, {
-    getTopicPaths,
+    getDynamicPaths,
 } from '../page-templates/dynamic-content-page/dynamic-content-page-template';
 import { getTopicPageData } from '../page-templates/topic-page/topic-page-data';
 import { PageParams } from '../interfaces/page-params';
@@ -25,11 +25,9 @@ const DynamicContentPage: NextPage<ContentPageProps> = ({
 export default DynamicContentPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    let paths: any[] = await getTopicPaths();
+    let paths: any[] = await getDynamicPaths();
 
-    // All article pages ([...slug.tsx]) are not generated at build time, so they are not included
-    // in "paths"
-    return { paths: paths, fallback: 'blocking' };
+    return { paths: paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -73,6 +71,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             pageData: data,
             pageType: pageType,
         },
-        revalidate: 60,
     };
 };
