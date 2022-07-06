@@ -345,7 +345,7 @@ steps:
   - name: build-preview
     image: alpine
     commands:  
-      - echo closed
+      - echo opened
 
 trigger:
   event:
