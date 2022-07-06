@@ -4,35 +4,35 @@ import logger from '../../utils/logger';
 import { verifyPayloadSigntaure } from '../../utils/verify-payload-signature';
 
 const triggerWebhook = async (body: any): Promise<string> => {
-    if (['opened', 'reopened', 'synchronize'].includes(body.action)) {
-        const branch = body['pull_request'].head.ref;
-        const droneEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?branch=${branch}&number=${body.number}`;
-        console.log('ENDPOINT', droneEndpoint);
-        const headers = {
-            Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
-        };
-        await axios.post(droneEndpoint, {}, { headers });
+    // Would be great to have some sort of alert in here if we can't find the build to close.
+    const pr = body['pull_request'];
+    const headers = {
+        Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
+    };
+    const shouldBuild =
+        ['opened', 'reopened'].includes(body.action) ||
+        (body.action === 'synchronize' && pr.state === 'open');
+    if (shouldBuild) {
+        const branch = pr.head.ref;
+        const buildEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?branch=${branch}&number=${body.number}`;
+        await axios.post(buildEndpoint, {}, { headers });
         return 'Successfully triggered preview build';
     } else if (body.action === 'closed') {
         const allBuildsEndpoint =
-            'https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds';
+            'https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?per_page=100';
         const allBuildsResponse = await axios.get(allBuildsEndpoint);
         const allBuilds = allBuildsResponse.data;
-        console.log(allBuilds.length);
 
-        const branch = body['pull_request'].head.ref;
+        const branch = pr.head.ref;
         const build = allBuilds.find((b: any) => b.source === branch);
-        console.log(build);
 
-        const droneEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds/${build}/promote?target=preview-graveyard&number=${body.number}`;
-        console.log('ENDPOINT', droneEndpoint);
-        const headers = {
-            Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
-        };
-        await axios.post(droneEndpoint, {}, { headers });
+        const promoteEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds/${build.number}/promote?target=preview-graveyard&number=${body.number}`;
+        console.log('PROMOTE ENDPOINT', promoteEndpoint);
+
+        await axios.post(promoteEndpoint, {}, { headers });
         return 'Successfully triggered preview cleanup';
     }
-    return `Did nothing for action "${body.action}"`;
+    return `Did nothing for PR action "${body.action} with state "${pr.state}""`;
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -57,5 +57,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(400).send('Bad Signature');
     }
     const responseMessage = await triggerWebhook(req.body);
+    console.log(responseMessage);
     return res.status(200).send(responseMessage);
 };

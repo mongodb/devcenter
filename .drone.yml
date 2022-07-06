@@ -338,16 +338,29 @@ type: kubernetes
 name: build-preview
 
 steps:
-  - name: check-if-build-event
-    image: alpine
-    commands: 
-      - echo $action
-      - if [ $action != reopened ]; then exit 1; fi
   - name: build-preview
     image: alpine
     commands:  
-      - echo opened
+      - echo "built preview"
 
 trigger:
   event:
     - custom
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: build-preview
+
+steps:
+  - name: clean-up-preview
+    image: alpine
+    commands:  
+      - echo "cleaned up preview"
+
+trigger:
+  event:
+    - promote
+  target:
+    - preview-graveyard
