@@ -5,14 +5,13 @@ import { verifyPayloadSigntaure } from '../../utils/verify-payload-signature';
 
 const triggerWebhook = async (body: any) => {
     if (['closed', 'reopened'].includes(body.action)) {
-        const commit = body['pull_request'].head.sha;
-        const droneEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?commit=${commit}&number=${body.number}&action=${body.action}`;
+        const branch = body['pull_request'].head.ref;
+        const droneEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?branch=${branch}&number=${body.number}&action=${body.action}`;
         console.log('ENDPOINT', droneEndpoint);
         const headers = {
             Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
         };
         const resp = await axios.post(droneEndpoint, {}, { headers });
-        console.log(commit);
         console.log(resp.data);
     }
 };
