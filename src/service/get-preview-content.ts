@@ -13,5 +13,5 @@ export const getPreviewContent: (
         calculatedSlug
     );
 
-    return mapArticlesToContentItems(allArticles, [], []);
+    return mapArticlesToContentItems(allArticles, []);
 };

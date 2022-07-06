@@ -1,11 +1,11 @@
 import { TopicCardProps } from '../../components/topic-card/types';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
 import { getSideNav } from '../../service/get-side-nav';
-import { parseContentToGetFeatured } from '../../utils/parse-content-to-get-featured';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import allMetaInfo from '../../service/get-all-meta-info.preval';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
+import { getFeaturedForContent } from '../../service/get-featured-for-content';
 
 export const getTopicPageData = async (l1_l2: string, slug: string[]) => {
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
@@ -24,7 +24,7 @@ export const getTopicPageData = async (l1_l2: string, slug: string[]) => {
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
 
-    const featured = parseContentToGetFeatured(content);
+    const featured = await getFeaturedForContent(content, slugString);
 
     const crumbs = await getBreadcrumbsFromSlug(slugString);
 

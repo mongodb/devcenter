@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
+import { NextSeo } from 'next-seo';
 
 import {
     GridLayout,
@@ -206,6 +207,13 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     return (
         <>
+            <NextSeo
+                title={`${pluralize(contentType)} | MongoDB`}
+                {...(['Article', 'Code Example'].includes(contentType) &&
+                    description && {
+                        description,
+                    })}
+            />
             <Hero
                 crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
                 name={pluralize(contentType)}
