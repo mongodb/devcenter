@@ -339,9 +339,11 @@ name: build-preview
 
 steps:
   - name: check-if-build-event
+    image: alpine
     commands: 
-      - if [ $action = reopened ]; then exit 0; fi
+      - if [ $action != reopened ]; then exit 0; fi
   - name: build-preview
+    image: alpine
     commands:  
       - echo closed
 
