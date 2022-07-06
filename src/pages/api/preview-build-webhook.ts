@@ -3,17 +3,36 @@ import axios from 'axios';
 import logger from '../../utils/logger';
 import { verifyPayloadSigntaure } from '../../utils/verify-payload-signature';
 
-const triggerWebhook = async (body: any) => {
-    if (['closed', 'reopened'].includes(body.action)) {
+const triggerWebhook = async (body: any): Promise<string> => {
+    if (['opened', 'reopened', 'synchronize'].includes(body.action)) {
         const branch = body['pull_request'].head.ref;
-        const droneEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?branch=${branch}&number=${body.number}&action=${body.action}`;
+        const droneEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?branch=${branch}&number=${body.number}`;
         console.log('ENDPOINT', droneEndpoint);
         const headers = {
             Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
         };
-        const resp = await axios.post(droneEndpoint, {}, { headers });
-        console.log(resp.data);
+        await axios.post(droneEndpoint, {}, { headers });
+        return 'Successfully triggered preview build';
+    } else if (body.action === 'closed') {
+        const allBuildsEndpoint =
+            'https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds';
+        const allBuildsResponse = await axios.get(allBuildsEndpoint);
+        const allBuilds = allBuildsResponse.data;
+        console.log(allBuilds.length);
+
+        const branch = body['pull_request'].head.ref;
+        const build = allBuilds.find((b: any) => b.source === branch);
+        console.log(build);
+
+        const droneEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds/${build}/promote?target=preview-graveyard&number=${body.number}`;
+        console.log('ENDPOINT', droneEndpoint);
+        const headers = {
+            Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
+        };
+        await axios.post(droneEndpoint, {}, { headers });
+        return 'Successfully triggered preview cleanup';
     }
+    return `Did nothing for action "${body.action}"`;
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -22,7 +41,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const event = req.headers['x-github-event'];
-    // if (!event || Array.isArray(event) || event !== 'ping') {
     if (!event || Array.isArray(event) || event !== 'pull_request') {
         return res.status(400).send('Event must be pull-requst');
     }
@@ -38,7 +56,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         logger.error(err.message);
         return res.status(400).send('Bad Signature');
     }
-
-    await triggerWebhook(req.body);
-    return res.status(200).send('Successfully triggered preview build.');
+    const responseMessage = await triggerWebhook(req.body);
+    return res.status(200).send(responseMessage);
 };
