@@ -330,3 +330,21 @@ trigger:
     - cron
   cron:
     - rebuild-devcenter-prod-cron
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: build-preview
+
+steps:
+  - name: check-if-build-event
+    commands: 
+      - if [ $action = reopened ]; then exit 0; fi
+  - name: build-preview
+    commands:  
+      - echo closed
+
+trigger:
+  event:
+    - custom
