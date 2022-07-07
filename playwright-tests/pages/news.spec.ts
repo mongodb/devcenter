@@ -7,6 +7,12 @@ test('All News & Announcements Page has correct titles', async ({ page }) => {
 
     const sectionTitles = page.locator('h5');
     const text = await sectionTitles.allTextContents();
-    expect(text[0]).toEqual('Featured News & Announcements');
-    expect(text[1]).toEqual('All News & Announcements');
+
+    const expected = [
+        'Featured News & Announcements',
+        'All News & Announcements',
+    ];
+
+    // https://jestjs.io/docs/expect#expectarraycontainingarray
+    expect(text).toEqual(expect.arrayContaining(expected));
 });
