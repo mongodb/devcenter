@@ -142,12 +142,6 @@ export const TopicContentTypePageTemplate: NextPage<
         </GridLayout>
     );
 
-    console.log('PRINT');
-    console.log(contentType);
-    console.log(contentTypeAggregateSlug);
-    console.log(getSearchTitleLink(contentType, contentTypeAggregateSlug));
-    console.log('PRINT');
-
     return (
         <>
             <NextSeo title={pageTitle} />
