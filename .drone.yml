@@ -387,6 +387,7 @@ steps:
   - name: deploy-preview
     image: quay.io/mongodb/drone-helm:v3
     settings:
+      mode: upgrade
       chart: mongodb/web-app
       chart_version: 4.7.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
@@ -410,9 +411,9 @@ name: clean-up-preview
 
 steps:
   - name: uninstall-preview
-    image: pelotech/drone-helm3
+    image: quay.io/mongodb/drone-helm:v3
     settings:
-      helm_command: uninstall
+      mode: uninstall
       release: devcenter-preview-${number}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
