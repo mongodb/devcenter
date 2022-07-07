@@ -405,13 +405,13 @@ name: clean-up-preview
 
 steps:
   - name: uninstall-preview
-  image: pelotech/drone-helm3
-  settings:
-    helm_command: uninstall
-    release: devcenter-preview-${number}
-    api_server: https://api.staging.corp.mongodb.com
-    kubernetes_token:
-      from_secret: staging_kubernetes_token
+    image: pelotech/drone-helm3
+    settings:
+      helm_command: uninstall
+      release: devcenter-preview-${number}
+      api_server: https://api.staging.corp.mongodb.com
+      kubernetes_token:
+        from_secret: staging_kubernetes_token
   
 
 trigger:
