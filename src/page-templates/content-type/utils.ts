@@ -5,6 +5,7 @@ import { languageToLogo } from '../../utils/language-to-logo';
 import { technologyToLogo } from '../../utils/technology-to-logo';
 import { productToLogo } from '../../utils/product-to-logo';
 import { ITopicCard } from '../../components/topic-card/types';
+import { PillCategory } from '../../types/pill-category';
 
 // Temporary until we find a logo to include in Flora.
 const serverlessLogo =
@@ -119,3 +120,10 @@ export const getFeaturedLangProdTech = (
     });
     return { featuredLanguages, featuredTechnologies, featuredProducts };
 };
+
+export function shouldRenderRequestButton(contentType: PillCategory): boolean {
+    const shouldNotRenderSet: Set<PillCategory> = new Set([
+        'News & Announcements',
+    ]);
+    return !shouldNotRenderSet.has(contentType);
+}

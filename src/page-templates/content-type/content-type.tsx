@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ContextType, useState } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
 import { NextSeo } from 'next-seo';
@@ -40,6 +40,9 @@ import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
+
+import { shouldRenderRequestButton } from './utils';
+
 let pluralize = require('pluralize');
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
@@ -162,7 +165,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             {(data || isValidating) && (
                 <TypographyScale variant="heading5">
                     {!allFilters.length && !searchString
-                        ? `All ${contentType}s`
+                        ? `All ${pluralize(contentType)}`
                         : isValidating
                         ? ''
                         : numberOfResults === 1
@@ -218,7 +221,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                 crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
                 name={pluralize(contentType)}
                 description={description}
-                ctas={CTAElement}
+                ctas={
+                    shouldRenderRequestButton(contentType) ? CTAElement : null
+                }
             />
             <div sx={pageWrapper}>
                 <GridLayout
@@ -247,7 +252,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         <div sx={searchBoxStyles}>
                             <TextInput
                                 name="search-text-input"
-                                label={`Search ${contentType}s`}
+                                label={`Search ${pluralize(contentType)}`}
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
                                 onChange={onSearch}
@@ -264,7 +269,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             'section50',
                                         ],
                                     }}
-                                    title={`Featured ${contentType}s`}
+                                    title={`Featured ${pluralize(contentType)}`}
                                 />
                                 {hasExtraSections && (
                                     <>
