@@ -20,10 +20,8 @@ const triggerWebhook = async (body: any): Promise<string> => {
         return 'Did nothing because we are still testing this';
     }
 
-    // Only build on opened, reopened, or synchronized (when the pr is open).
-    const shouldBuild =
-        ['opened', 'reopened'].includes(body.action) ||
-        (body.action === 'synchronize' && pr.state === 'open');
+    // Only build on opened, reopened, or synchronized.
+    const shouldBuild = ['opened', 'synchronize'].includes(body.action);
 
     if (shouldBuild) {
         // Trigger our custom event in our drone pieline.
