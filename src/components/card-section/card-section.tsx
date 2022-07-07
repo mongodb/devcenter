@@ -56,6 +56,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
         ),
         [content]
     );
+
     return (
         <div
             data-testid={`${title
