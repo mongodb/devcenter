@@ -127,15 +127,6 @@ export const determineVideoOrPodcast = (
     return collectionType === 'Video' || collectionType === 'Podcast';
 };
 
-const ratingSectionCondition = (category: PillCategory) => {
-    return (
-        category === 'Video' ||
-        category === 'Podcast' ||
-        category === 'News & Announcements' ||
-        category === 'Code Example'
-    );
-};
-
 const ContentPageTemplate: NextPage<ContentPageProps> = ({
     crumbs,
     topicSlug,
@@ -320,9 +311,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         />
                     )}
                 </div>
-                {!previewMode &&
-                    !ratingSectionCondition(category) &&
-                    ratingSection}
+                {!previewMode && ratingSection}
             </div>
         </>
     );
