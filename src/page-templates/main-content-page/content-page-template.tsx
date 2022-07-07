@@ -386,7 +386,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             authors={authors}
                             tags={tags}
                         />
-                        {!ratingSectionCondition(category) && ratingSection}
+                        {ratingSection}
                     </div>
                 )}
             </div>
