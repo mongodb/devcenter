@@ -338,10 +338,60 @@ type: kubernetes
 name: build-preview
 
 steps:
-  - name: build-preview
-    image: alpine
-    commands:  
-      - echo "built preview"
+  - name: publish-preview
+    image: plugins/kaniko-ecr
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL
+      STRAPI_URL:
+        from_secret: STRAPI_URL_PROD
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
+      PREVIEW_WEBHOOK_TOKEN:
+        from_secret: PREVIEW_WEBHOOK_TOKEN
+      DRONE_TOKEN:
+        from_secret: DRONE_TOKEN
+    settings:
+      create_repository: true
+      enable_cache: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: devrel/${DRONE_REPO_NAME}
+      build_args:
+        - HOST_URL=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
+        - NPM_AUTH
+        - NPM_EMAIL
+        - REALM_API_URL
+        - REALM_SEARCH_URL
+        - STRAPI_URL
+        - DEVHUB_URL
+      tags:
+        - devcenter-preview-build-${number}
+        - latest-staging
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+      values_files: ["environments/preview.yaml"]
+
+  - name: deploy-staging
+    image: quay.io/mongodb/drone-helm:v3
+    settings:
+      chart: mongodb/web-app
+      chart_version: 4.7.3
+      add_repos: [mongodb=https://10gen.github.io/helm-charts]
+      namespace: devrel
+      release: devcenter-preview-${number}
+      values: image.tag=devcenter-preview-build-${number},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.hosts[0]=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
+      api_server: https://api.staging.corp.mongodb.com
+      kubernetes_token:
+        from_secret: staging_kubernetes_token
+      values_files: ["environments/preview.yaml"]
 
 trigger:
   event:
@@ -354,10 +404,15 @@ type: kubernetes
 name: clean-up-preview
 
 steps:
-  - name: clean-up-preview
-    image: alpine
-    commands:  
-      - echo "cleaned up preview"
+  - name: uninstall-preview
+  image: pelotech/drone-helm3
+  settings:
+    helm_command: uninstall
+    release: devcenter-preview-${number}
+    api_server: https://api.staging.corp.mongodb.com
+    kubernetes_token:
+      from_secret: staging_kubernetes_token
+  
 
 trigger:
   event:

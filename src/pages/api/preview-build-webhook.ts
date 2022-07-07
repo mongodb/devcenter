@@ -9,12 +9,16 @@ const triggerWebhook = async (body: any): Promise<string> => {
     const baseBranch = pr.base.ref;
     // Only trigger on PRs to main.
     if (baseBranch !== 'main') {
-        return `Did nothing for PR action "${body.action} because it is not a PR to main`;
+        return `Did nothing for PR action "${body.action}" because it is not a PR to main`;
     }
     const headers = {
         Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
     };
     const headBranch = pr.head.ref;
+
+    if (headBranch !== 'DEVHUB-1317') {
+        return 'Did nothing because we are still testing this';
+    }
 
     // Only build on opened, reopened, or synchronized (when the pr is open).
     const shouldBuild =
@@ -41,7 +45,7 @@ const triggerWebhook = async (body: any): Promise<string> => {
         await axios.post(promoteEndpoint, {}, { headers });
         return 'Successfully triggered preview cleanup';
     }
-    return `Did nothing for PR action "${body.action} with state "${pr.state}"`;
+    return `Did nothing for PR action "${body.action}" with state "${pr.state}"`;
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
