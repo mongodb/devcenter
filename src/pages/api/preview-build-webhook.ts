@@ -53,6 +53,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(405).send('This is a POST-only endpoint.');
     }
 
+    // If we don't have this header or if the event is not a PR somehow, don't trigger.
     const event = req.headers['x-github-event'];
     if (!event || Array.isArray(event) || event !== 'pull_request') {
         return res.status(400).send('Event must be pull-requst');
