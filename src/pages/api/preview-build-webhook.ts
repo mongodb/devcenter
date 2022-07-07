@@ -59,6 +59,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(400).send('Event must be pull-requst');
     }
 
+    // Verify signature of payload.
     const headerSignature = req.headers['x-hub-signature-256'];
     if (!headerSignature || Array.isArray(headerSignature)) {
         return res.status(400).send('Bad Signature');
