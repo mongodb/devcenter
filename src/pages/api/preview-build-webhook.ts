@@ -6,15 +6,21 @@ import { verifyPayloadSigntaure } from '../../utils/verify-payload-signature';
 const triggerWebhook = async (body: any): Promise<string> => {
     // Would be great to have some sort of alert in here if we can't find the build to close.
     const pr = body['pull_request'];
+    const baseBranch = pr.base.ref;
+    if (baseBranch !== 'main') {
+        return `Did nothing for PR action "${body.action} because it is not a PR to main`;
+    }
     const headers = {
         Authorization: `Bearer ${process.env['DRONE_TOKEN']}`,
     };
+    const headBranch = pr.head.ref;
+
     const shouldBuild =
         ['opened', 'reopened'].includes(body.action) ||
         (body.action === 'synchronize' && pr.state === 'open');
+
     if (shouldBuild) {
-        const branch = pr.head.ref;
-        const buildEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?branch=${branch}&number=${body.number}`;
+        const buildEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?branch=${headBranch}&number=${body.number}`;
         await axios.post(buildEndpoint, {}, { headers });
         return 'Successfully triggered preview build';
     } else if (body.action === 'closed') {
@@ -23,8 +29,7 @@ const triggerWebhook = async (body: any): Promise<string> => {
         const allBuildsResponse = await axios.get(allBuildsEndpoint);
         const allBuilds = allBuildsResponse.data;
 
-        const branch = pr.head.ref;
-        const build = allBuilds.find((b: any) => b.source === branch);
+        const build = allBuilds.find((b: any) => b.source === headBranch);
 
         const promoteEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds/${build.number}/promote?target=preview-graveyard&number=${body.number}`;
         console.log('PROMOTE ENDPOINT', promoteEndpoint);
@@ -32,7 +37,7 @@ const triggerWebhook = async (body: any): Promise<string> => {
         await axios.post(promoteEndpoint, {}, { headers });
         return 'Successfully triggered preview cleanup';
     }
-    return `Did nothing for PR action "${body.action} with state "${pr.state}""`;
+    return `Did nothing for PR action "${body.action} with state "${pr.state}"`;
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
