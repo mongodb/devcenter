@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
-import { getAuthor } from '../../service/get-all-authors';
+import { getAuthor, getAllAuthors } from '../../service/get-all-authors';
 import { Author, Image } from '../../interfaces/author';
 import { flattenTags } from '../../utils/flatten-tags';
 import { Button, GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
@@ -258,8 +258,21 @@ interface IParams extends ParsedUrlQuery {
 } // Need this to avoid TS errors.
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // All author pages ([...slug.tsx]) are not generated at build time.
-    return { paths: [], fallback: 'blocking' };
+    let paths: any[] = [];
+
+    const authors: Author[] = await getAllAuthors();
+
+    for (const author of authors) {
+        const parsedSlug = author.calculated_slug.startsWith('/')
+            ? author.calculated_slug.substring(1).split('/')
+            : author.calculated_slug.split('/');
+        const authorPath = parsedSlug[parsedSlug.length - 1];
+        paths = paths.concat({
+            params: { slug: [authorPath] },
+        });
+    }
+
+    return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -310,5 +323,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         calculated_slug: author.calculated_slug,
     };
 
-    return { props: data, revalidate: 60 };
+    return { props: data };
 };
