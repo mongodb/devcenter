@@ -414,6 +414,7 @@ steps:
     image: quay.io/mongodb/drone-helm:v3
     settings:
       mode: uninstall
+      namespace: devrel
       release: devcenter-preview-${number}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
