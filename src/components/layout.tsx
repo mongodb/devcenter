@@ -17,6 +17,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
                 property={{ name: 'DEVHUB', searchParams: [] }}
                 hideTryFree={!!session}
                 hideSignIn={!!session}
+                signInUrl="https://auth-qa.mongodb.com"
             />
             <SecondaryNav />
             <Main>{children}</Main>
