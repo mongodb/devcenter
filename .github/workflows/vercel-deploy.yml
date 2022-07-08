@@ -18,8 +18,8 @@ jobs:
             - name: Deploy to prod
               uses: amondnet/vercel-action@v20
               with:
-                  vercel-token: ${{secrets.VERCEL_TOKEN}}
-                  vercel-org-id: ${{secrets.VERCEL_ORG_ID}}
-                  vercel-project-id: ${{secrets.VERCEL_PROJECT_ID}}
+                  vercel-token: ${{secrets.VERCEL_TOKEN_NEW}}
+                  vercel-org-id: ${{secrets.VERCEL_ORG_ID_NEW}}
+                  vercel-project-id: ${{secrets.VERCEL_PROJECT_ID_NEW}}
                   vercel-args: '--prod --build-env NPM_AUTH=${{ secrets.ARTIFACTORY_NPM_AUTH }} --build-env NPM_EMAIL=${{ secrets.ARTIFACTORY_NPM_EMAIL }} --build-env STRAPI_URL=${{ secrets.STRAPI_DEV_URL }} --build-env REALM_API_URL=${{ secrets.REALM_API_URL }} --build-env REALM_SEARCH_URL=${{ secrets.REALM_SEARCH_URL }}'
-                  scope: ${{secrets.VERCEL_ORG_ID}}
+                  scope: ${{secrets.VERCEL_ORG_ID_NEW}}
