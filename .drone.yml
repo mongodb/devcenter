@@ -343,69 +343,61 @@ resources:
     memory: 4GiB
 
 steps:
-  # - name: publish-preview
-  #   image: plugins/kaniko-ecr
-  #   environment:
-  #     NPM_AUTH:
-  #       from_secret: NPM_AUTH
-  #     NPM_EMAIL:
-  #       from_secret: NPM_EMAIL
-  #     REALM_API_URL:
-  #       from_secret: REALM_API_URL
-  #     REALM_SEARCH_URL:
-  #       from_secret: REALM_SEARCH_URL
-  #     STRAPI_URL:
-  #       from_secret: STRAPI_URL_PROD
-  #     DEVHUB_URL:
-  #       from_secret: DEVHUB_URL
-  #     PREVIEW_WEBHOOK_TOKEN:
-  #       from_secret: PREVIEW_WEBHOOK_TOKEN
-  #     DRONE_TOKEN:
-  #       from_secret: DRONE_TOKEN
-  #   settings:
-  #     create_repository: true
-  #     enable_cache: true
-  #     registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
-  #     repo: devrel/${DRONE_REPO_NAME}
-  #     build_args:
-  #       - HOST_URL=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
-  #       - NPM_AUTH
-  #       - NPM_EMAIL
-  #       - REALM_API_URL
-  #       - REALM_SEARCH_URL
-  #       - STRAPI_URL
-  #       - DEVHUB_URL
-  #       - APP_RELEASE
-  #     tags:
-  #       - devcenter-preview-build-${number}
-  #     access_key:
-  #       from_secret: ecr_access_key
-  #     secret_key:
-  #       from_secret: ecr_secret_key
-  #     values_files: ["environments/preview.yaml"]
+  - name: publish-preview
+    image: plugins/kaniko-ecr
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL
+      STRAPI_URL:
+        from_secret: STRAPI_URL_PROD
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
+      PREVIEW_WEBHOOK_TOKEN:
+        from_secret: PREVIEW_WEBHOOK_TOKEN
+      DRONE_TOKEN:
+        from_secret: DRONE_TOKEN
+    settings:
+      create_repository: true
+      enable_cache: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: devrel/${DRONE_REPO_NAME}
+      build_args:
+        - HOST_URL=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
+        - NPM_AUTH
+        - NPM_EMAIL
+        - REALM_API_URL
+        - REALM_SEARCH_URL
+        - STRAPI_URL
+        - DEVHUB_URL
+        - APP_RELEASE
+      tags:
+        - devcenter-preview-build-${number}
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+      values_files: ["environments/preview.yaml"]
 
-  # - name: deploy-preview
-  #   image: quay.io/mongodb/drone-helm:v3
-  #   settings:
-  #     mode: upgrade # Not sure why we have to set this only here, but we do.
-  #     chart: mongodb/web-app
-  #     chart_version: 4.7.3
-  #     add_repos: [mongodb=https://10gen.github.io/helm-charts]
-  #     namespace: devrel
-  #     release: devcenter-preview-${number}
-  #     values: image.tag=devcenter-preview-build-${number},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
-  #     api_server: https://api.staging.corp.mongodb.com
-  #     kubernetes_token:
-  #       from_secret: staging_kubernetes_token
-  #     values_files: ["environments/preview.yaml"]
-
-  - name: github-comment
-    image: alpine:latest
-    commands:
-    - apk update
-    - apk upgrade 
-    - apk add curl
-    - curl https://www.google.com
+  - name: deploy-preview
+    image: quay.io/mongodb/drone-helm:v3
+    settings:
+      mode: upgrade # Not sure why we have to set this only here, but we do.
+      chart: mongodb/web-app
+      chart_version: 4.7.3
+      add_repos: [mongodb=https://10gen.github.io/helm-charts]
+      namespace: devrel
+      release: devcenter-preview-${number}
+      values: image.tag=devcenter-preview-build-${number},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
+      api_server: https://api.staging.corp.mongodb.com
+      kubernetes_token:
+        from_secret: staging_kubernetes_token
+      values_files: ["environments/preview.yaml"]
 
 trigger:
   event:
