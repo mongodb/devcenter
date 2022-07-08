@@ -22,7 +22,6 @@ export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
     },
 });
 export const MainLinkStyles = {
-    borderBottom: 'solid #00684A 2px',
     fontSize: 'inc30',
     fontWeight: 500,
     paddingLeft: 'inc50',
