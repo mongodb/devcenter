@@ -400,9 +400,12 @@ steps:
   #     values_files: ["environments/preview.yaml"]
 
   - name: github-comment
-    image: debian:latest
+    image: alpine:latest
     commands:
-    - echo "hello world"
+    - apk update
+    - apk upgrade 
+    - apk add curl
+    - curl https://www.google.com
 
 trigger:
   event:
