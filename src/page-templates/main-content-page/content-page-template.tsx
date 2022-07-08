@@ -54,6 +54,8 @@ import Breadcrumbs from '../../components/breadcrumbs';
 import { TableOfContents } from '../../components/article-body/table-of-contents';
 import { IRating } from '../../components/feedback-modal/types';
 
+import { normalizeCategory } from './util';
+
 interface ContentPageProps {
     crumbs: Crumb[];
     topicSlug: string;
@@ -217,7 +219,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 alignItems: 'center',
             }}
         >
-            <span>Rate this {category.toLowerCase()}</span>
+            <span>Rate this {normalizeCategory(category)}</span>
             <ContentRating stars={ratingStars} onRate={onRate} />
         </div>
     );
