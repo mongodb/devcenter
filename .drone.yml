@@ -377,7 +377,7 @@ steps:
         - DEVHUB_URL
         - APP_RELEASE
       tags:
-        - devcenter-preview-build-${number}
+        - devcenter-frontend-preview-build-${number}
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -392,8 +392,8 @@ steps:
       chart_version: 4.7.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
-      release: devcenter-preview-${number}
-      values: image.tag=devcenter-preview-build-${number},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
+      release: devcenter-frontend-preview-${number}
+      values: image.tag=devcenter-frontend-preview-build-${number},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
@@ -415,7 +415,7 @@ steps:
     settings:
       mode: uninstall
       namespace: devrel
-      release: devcenter-preview-${number}
+      release: devcenter-frontend-preview-${number}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
