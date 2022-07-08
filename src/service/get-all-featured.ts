@@ -1,16 +1,21 @@
 import { STRAPI_CLIENT } from '../config/api-client';
-import { Featured } from '../interfaces/featured';
+import { Featured, FeaturedItem } from '../interfaces/featured';
 import { getAllFeaturedFromAPI } from '../api-requests/get-all-featured';
 
 export const getAllFeatured = async (): Promise<Featured> => {
     const allFeatured = await getAllFeaturedFromAPI(STRAPI_CLIENT);
-    const featuredArticles = allFeatured?.articles.map(a => a.title);
-    const featuredPodcasts = allFeatured?.podcasts.map(p => p.title);
-    const featuredVideos = allFeatured?.videos.map(v => v.title);
+    let featuredArticles: FeaturedItem[] = [];
+    let featuredPodcasts: FeaturedItem[] = [];
+    let featuredVideos: FeaturedItem[] = [];
+    allFeatured.forEach(topic => {
+        featuredArticles = featuredArticles.concat(topic.articles || []);
+        featuredPodcasts = featuredPodcasts.concat(topic.podcasts || []);
+        featuredVideos = featuredVideos.concat(topic.videos || []);
+    });
     const featured = {
-        articles: featuredArticles ? featuredArticles : [],
-        podcasts: featuredPodcasts ? featuredPodcasts : [],
-        videos: featuredVideos ? featuredVideos : [],
+        articles: featuredArticles.map(({ title }) => title),
+        podcasts: featuredPodcasts.map(({ title }) => title),
+        videos: featuredVideos.map(({ title }) => title),
     };
     return featured;
 };

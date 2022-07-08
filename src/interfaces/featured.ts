@@ -1,4 +1,4 @@
-interface FeaturedItem {
+export interface FeaturedItem {
     title: string;
 }
 
@@ -9,7 +9,7 @@ export interface Featured {
 }
 
 export interface FeaturedResponse {
-    articles: FeaturedItem[];
-    podcasts: FeaturedItem[];
-    videos: FeaturedItem[];
+    articles: FeaturedItem[] | null;
+    podcasts: FeaturedItem[] | null;
+    videos: FeaturedItem[] | null;
 }
