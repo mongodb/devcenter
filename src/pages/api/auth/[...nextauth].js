@@ -15,6 +15,7 @@ const options = {
             return token;
         },
         session: async ({ session, user, token }) => {
+            console.log(session);
             return session;
         },
         redirect: async ({ url, baseUrl }) => {

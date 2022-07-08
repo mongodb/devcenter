@@ -8,7 +8,7 @@ import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
-import { getSession, SessionProvider, useSession } from 'next-auth/react';
+import { getSession, SessionProvider } from 'next-auth/react';
 import App from 'next/app';
 import { Session } from 'next-auth';
 
@@ -80,12 +80,12 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     );
 }
 
-MyApp.getInitialProps = async (
-    appContext: AppContext
-): Promise<AppInitialProps & CustomProps> => {
-    const appProps = await App.getInitialProps(appContext);
-    const session = (await getSession(appContext.ctx)) as Session;
-    return { ...appProps, session };
-};
+// MyApp.getInitialProps = async (
+//     appContext: AppContext
+// ): Promise<AppInitialProps & CustomProps> => {
+//     const appProps = await App.getInitialProps(appContext);
+//     const session = (await getSession(appContext.ctx)) as Session;
+//     return { ...appProps, session };
+// };
 
 export default MyApp;
