@@ -134,19 +134,12 @@ const Card: React.FunctionComponent<CardProps> = ({
                         variant={variant === 'large' ? 'heading5' : 'heading6'}
                         sx={{
                             ...(variant === 'large' && {
-                                fontSize: [
-                                    null,
-                                    'inc30',
-                                    'inc50',
-                                    'inc80',
-                                    null,
-                                ],
+                                fontSize: ['inc30', 'inc30', 'inc50', 'inc80'],
                                 lineHeight: [
-                                    null,
+                                    'inc20',
                                     'inc20',
                                     'inc30',
                                     'inc50',
-                                    null,
                                 ],
                             }),
                         }}
