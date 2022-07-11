@@ -10,3 +10,4 @@ Dockerfile
 .drone.yml
 .*ignore
 coverage/
+*.sh

@@ -80,3 +80,14 @@ If you use a different editor or don't want this functionality, the pre-commit h
 ## Bundle Analyzer
 
 This project uses `@next/bundle-analyzer` to analyze our webpack bundles. If you want to analyze while building, build with the `yarn build:analyze` command. This will allow the build to generate html files that show a bundle analysis. See [the `webpack-bundle-analyzer` repo](https://github.com/webpack-contrib/webpack-bundle-analyzer) for more info on the underlying tool.
+
+## Refreshing Staging DB data from Production data
+
+We want to keep our staging data relatively up-to-date with our production data for testing purposes. The long-term goal is to have a separate staging project in Atlas on its own cluster, and have an Atlas trigger that will restore the production backups to the staging cluster. However, since this requires a lot of work and refactoring of our data structure, we can manually use [mongodump](https://www.mongodb.com/docs/database-tools/mongodump/#options) and [mongorestore](https://www.mongodb.com/docs/database-tools/mongorestore/) to copy data from our production db to our staging db:
+
+1. Make sure you have installed [the MongoDB Database Tools](https://www.mongodb.com/docs/database-tools/installation/installation/)
+
+2. From the root directory of the repo, run `src/scripts/refresh-staging-db.sh`. You will be prompted for a password twice. if you don't have this password, ask a teammate, or check the AWS Systems Manager Parameter Store. This script does 3 things:
+    - Runs `mongodump` to dump the `cms` database to your local filesytem.
+    - Runs `mongorestore` to push these files to the `cms-test` database.
+    - Cleans up the db that was dumped locally
