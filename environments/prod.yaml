@@ -53,7 +53,7 @@ prometheusRules:
     expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app"}) == 0
     for: 0m
     labels:
-      email_to: ajhenri@mongodb.com
+      email_to: devhubplatform@mongodb.com
       severity: critical
     annotations:
       summary: "Service is down"
@@ -62,7 +62,7 @@ prometheusRules:
     expr: kube_pod_container_status_ready{namespace="devrel", container=~"devcenter-frontend"} == 0
     for: 5m
     labels:
-      email_to: ajhenri@mongodb.com
+      email_to: devhubplatform@mongodb.com
       severity: critical
     annotations:
       summary: "Container readiness check failed"
