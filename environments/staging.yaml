@@ -43,32 +43,32 @@ resources:
     cpu: 500m
     memory: 2Gi
 
-ingress:
-  enabled: true
-  path: /developer
-  hosts: ["mongodbcom-cdn.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
+# ingress:
+#   enabled: true
+#   path: /developer
+#   hosts: ["mongodbcom-cdn.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
 
 metrics:
   enabled: true
   interval: 30s
   path: /developer/api/metrics
 
-prometheusRules:
-  - alert: ServiceDown
-    expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app-.*"}) == 0
-    for: 0m
-    labels:
-      email_to: ajhenri@mongodb.com
-      severity: critical
-    annotations:
-      summary: "Service is down"
-      description: "All instances of job {{ $labels.job }} are down"
-  - alert: PodContainerNotReady
-    expr: kube_pod_container_status_ready{namespace="devrel", container=~"devcenter-frontend-.*"} == 0
-    for: 5m
-    labels:
-      email_to: ajhenri@mongodb.com
-      severity: critical
-    annotations:
-      summary: "Container readiness check failed"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} container has not been ready for 5 minutes"
+# prometheusRules:
+#   - alert: ServiceDown
+#     expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app-.*"}) == 0
+#     for: 0m
+#     labels:
+#       email_to: ajhenri@mongodb.com
+#       severity: critical
+#     annotations:
+#       summary: "Service is down"
+#       description: "All instances of job {{ $labels.job }} are down"
+#   - alert: PodContainerNotReady
+#     expr: kube_pod_container_status_ready{namespace="devrel", container=~"devcenter-frontend-.*"} == 0
+#     for: 5m
+#     labels:
+#       email_to: ajhenri@mongodb.com
+#       severity: critical
+#     annotations:
+#       summary: "Container readiness check failed"
+#       description: "{{ $labels.instance }} of job {{ $labels.job }} container has not been ready for 5 minutes"
