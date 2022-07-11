@@ -1,9 +1,7 @@
 import { Counter, Registry, collectDefaultMetrics } from 'prom-client';
 
-type NullableRegistry = Registry | null;
-
 class Prometheus {
-    register: NullableRegistry = null;
+    register: Registry | null = null;
     counters: any = {};
 
     initCounters(register: Registry) {
