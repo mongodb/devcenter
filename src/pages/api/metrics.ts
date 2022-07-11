@@ -1,9 +1,10 @@
 import { NextApiResponse } from 'next';
-import { register, collectDefaultMetrics } from 'prom-client';
+import { prometheus } from '../../config/prometheus';
 
-collectDefaultMetrics({});
-
-export default async (_: any, res: NextApiResponse) => {
+const metricsApi = async (_: any, res: NextApiResponse) => {
+    const register = prometheus.getRegistry();
     res.setHeader('Content-type', register.contentType);
     res.send(await register.metrics());
 };
+
+export default metricsApi;
