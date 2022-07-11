@@ -50,7 +50,7 @@ metrics:
 
 prometheusRules:
   - alert: ServiceDown
-    expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app-.*"}) == 0
+    expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app"}) == 0
     for: 0m
     labels:
       email_to: ajhenri@mongodb.com
@@ -59,7 +59,7 @@ prometheusRules:
       summary: "Service is down"
       description: "All instances of job {{ $labels.job }} are down"
   - alert: PodContainerNotReady
-    expr: kube_pod_container_status_ready{namespace="devrel", container=~"devcenter-frontend-.*"} == 0
+    expr: kube_pod_container_status_ready{namespace="devrel", container=~"devcenter-frontend"} == 0
     for: 5m
     labels:
       email_to: ajhenri@mongodb.com
