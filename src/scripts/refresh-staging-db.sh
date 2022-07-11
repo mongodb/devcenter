@@ -8,7 +8,7 @@ mongodump --uri="mongodb+srv://devcenterAdmin@devhub-cluster.sewho.mongodb.net/c
 echo "Pushing dumped files to staging db..."
 mongorestore --drop --uri="mongodb+srv://devcenterAdmin@devhub-cluster.sewho.mongodb.net/cms-test" /tmp/db-dump/cms/
 
-echo "Removing dunmped files..."
+echo "Removing dumped files..."
 rm -R /tmp/db-dump
 
 echo 'Done!'
