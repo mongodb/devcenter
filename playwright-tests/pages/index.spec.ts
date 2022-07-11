@@ -1,12 +1,5 @@
 import { test, expect } from '@playwright/test';
-
-const allLinksHaveHref = async (links, href) => {
-    const linksCount = await links.count();
-    for (let i = 0; i < linksCount; i++) {
-        const el = await links.nth(i);
-        expect(await el.getAttribute('href')).toBe(href);
-    }
-};
+import { allLinksHaveHref } from '../utils';
 
 test('Homepage has correct titles', async ({ page }) => {
     await page.goto('/developer');

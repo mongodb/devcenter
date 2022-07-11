@@ -4,6 +4,7 @@ import TopicContentTypePageTemplate from '../../page-templates/topic-content-typ
 import TopicPageTemplate from '../../page-templates/topic-page/topic-page-template';
 import { getTopicPagePathMappings } from '../../service/get-topic-paths';
 import { PageType } from '../../types/page-type';
+import allContent from '../../service/get-all-content.preval';
 
 interface ContentPageProps {
     pageType: any;
@@ -26,7 +27,7 @@ const DynamicContentTemplate: NextPage<ContentPageProps> = ({
     }
 };
 
-export const getTopicPaths = async () => {
+export const getDynamicPaths = async () => {
     let paths: any[] = [];
     const { topicPaths, topicContentTypePaths } =
         await getTopicPagePathMappings();
@@ -41,6 +42,12 @@ export const getTopicPaths = async () => {
     for (const k of Object.keys(topicContentTypePaths)) {
         paths = paths.concat({
             params: { slug: topicContentTypePaths[k].fullSlug },
+        });
+    }
+
+    for (const content of allContent) {
+        paths = paths.concat({
+            params: { slug: content.slug.split('/') },
         });
     }
 
