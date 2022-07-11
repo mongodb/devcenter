@@ -51,7 +51,7 @@ ingress:
 metrics:
   enabled: true
   interval: 30s
-  path: /developer/api/metrics
+  path: /developer/api/metrics/
 
 prometheusRules:
   - alert: ServiceDown
