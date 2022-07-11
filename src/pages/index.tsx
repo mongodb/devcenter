@@ -183,7 +183,10 @@ const Home = () => {
                         >
                             <ShowcaseCard
                                 defaultLink
-                                sx={{ backgroundColor: 'white' }}
+                                sx={{
+                                    backgroundColor: 'white',
+                                    height: '100%',
+                                }}
                                 alignment="left"
                                 titleLink={titleLink}
                                 image={

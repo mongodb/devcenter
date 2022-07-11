@@ -132,6 +132,17 @@ const Card: React.FunctionComponent<CardProps> = ({
                     {secondaryTagElement}
                     <TypographyScale
                         variant={variant === 'large' ? 'heading5' : 'heading6'}
+                        sx={{
+                            ...(variant === 'large' && {
+                                fontSize: ['inc30', 'inc30', 'inc50', 'inc80'],
+                                lineHeight: [
+                                    'inc20',
+                                    'inc20',
+                                    'inc30',
+                                    'inc50',
+                                ],
+                            }),
+                        }}
                     >
                         {title}
                     </TypographyScale>

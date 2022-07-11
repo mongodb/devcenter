@@ -1,35 +1,27 @@
-import theme from '@mdb/flora/theme';
-import styled from '@emotion/styled';
+import { ThemeUIStyleObject } from 'theme-ui';
 
-type SecondaryMenuListProps = {
-    isOpen: boolean;
-};
+export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
+    margin: 0,
+    display: isOpen ? 'block' : 'none',
+    px: 'inc40',
+    height: 'calc(100vh - 126px)', // Height of both navsbars.
+    zIndex: 998,
+    overflowY: 'scroll',
 
-// Do we need this in sx since it uses props?
-export const SecondaryLinks = styled.ul`
-    overflow-y: auto;
-    height: ${(props: SecondaryMenuListProps) =>
-        props.isOpen ? '100vh' : '0'};
-    padding-left: ${theme.space.inc40};
-    padding-right: ${theme.space.inc40};
-    margin: 0;
-    /* L1 */
-    > li {
-        padding-top: ${theme.space.inc30};
-        padding-bottom: ${theme.space.inc30};
-        position: relative;
+    '& > li': {
+        py: 'inc30',
+        position: 'relative' as 'relative',
 
-        &:first-of-type {
-            min-height: 30px;
-            padding-top: ${theme.space.inc40};
-        }
-        &:not(:last-child) {
-            border-bottom: solid #e7eeec 1px;
-        }
-    }
-`;
+        '&:first-of-type': {
+            minHeight: '30px',
+            paddingTop: 'inc40',
+        },
+        '&:not(:last-child)': {
+            borderBottom: 'solid #e7eeec 1px',
+        },
+    },
+});
 export const MainLinkStyles = {
-    borderBottom: 'solid #00684A 2px',
     fontSize: 'inc30',
     fontWeight: 500,
     paddingLeft: 'inc50',

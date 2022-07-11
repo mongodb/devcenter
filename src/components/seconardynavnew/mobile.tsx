@@ -10,7 +10,7 @@ import {
     DropDownStyles,
     MainLinkStyles,
     plusOrMinusStylesForDropDowns,
-    SecondaryLinks,
+    secondaryLinkStyles,
     StylesDropDownMenuList,
     StylesDropDownWrapper,
     StylesFloraLink,
@@ -315,16 +315,18 @@ const MobileView = () => {
                 zIndex: '10',
             }}
         >
-            <div sx={{ display: 'grid', gridTemplateColumns: '240px 1fr' }}>
-                <FloraLink
-                    sx={{
-                        ...MainLinkStyles,
-                        ...(mobileMenuIsOpen && {
-                            borderBottom: 'solid #00ED64 2px',
-                        }),
-                    }}
-                    onClick={openMobileMenu}
-                >
+            <div
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: '240px 1fr',
+                    borderBottom: '2px solid #00684A',
+                    ...(mobileMenuIsOpen && {
+                        borderImage:
+                            'linear-gradient(to right, #00ED64 240px, #00684A 0) 1',
+                    }),
+                }}
+            >
+                <FloraLink sx={{ ...MainLinkStyles }} onClick={openMobileMenu}>
                     <TypographyScale variant="body1">
                         MongoDB Developer
                     </TypographyScale>
@@ -334,6 +336,7 @@ const MobileView = () => {
                             className="chevron-icon"
                             name={ESystemIconNames.CHEVRON_DOWN}
                             size="small"
+                            strokeWeight="large"
                         />
                     )}
                     {mobileMenuIsOpen && (
@@ -350,11 +353,10 @@ const MobileView = () => {
                     sx={{
                         height: '68px',
                         width: '100%',
-                        borderBottom: 'solid 2px #00684A',
                     }}
                 ></div>
             </div>
-            <SecondaryLinks isOpen={mobileMenuIsOpen}>
+            <ul sx={secondaryLinkStyles(mobileMenuIsOpen)}>
                 {secondaryNavData.map(({ name, slug, dropDownItems }) => (
                     <SecondaryLinksList key={name}>
                         {dropDownItems?.length ? (
@@ -393,7 +395,7 @@ const MobileView = () => {
                         )}
                     </SecondaryLinksList>
                 ))}
-            </SecondaryLinks>
+            </ul>
         </div>
     );
 };
