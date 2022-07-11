@@ -13,6 +13,8 @@ envSecrets:
   STRAPI_URL: devcenter-secrets
   DEVHUB_URL: devcenter-secrets
   PREVIEW_SECRET_KEY: devcenter-secrets
+  PROMETHEUS_AUTH_USER: devcenter-secrets
+  PROMETHEUS_AUTH_PASS: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
@@ -52,6 +54,13 @@ metrics:
   enabled: true
   interval: 30s
   path: /developer/api/metrics/
+  basicAuth:
+    username:
+      key: PROMETHEUS_AUTH_USER
+      name: devcenter-secrets
+    password:
+      key: PROMETHEUS_AUTH_PASS
+      name: devcenter-secrets
 
 prometheusRules:
   - alert: ServiceDown
