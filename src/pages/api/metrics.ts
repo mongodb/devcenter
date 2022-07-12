@@ -4,7 +4,7 @@ import { prometheus } from '../../config/prometheus';
 
 const metricsApi = async (req: NextApiRequest, res: NextApiResponse) => {
     const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(400).send('Bad Request');
+    if (!authHeader) return res.status(401).send('Forbidden');
 
     const authValue = authHeader.split(' ')[1];
     const [username, password] = Buffer.from(authValue, 'base64')
