@@ -10,8 +10,6 @@ envSecrets:
   STRAPI_URL: devcenter-secrets
   DEVHUB_URL: devcenter-secrets
   PREVIEW_SECRET_KEY: devcenter-secrets
-  PREVIEW_WEBHOOK_TOKEN: devcenter-secrets
-  DRONE_TOKEN: devcenter-secrets
 
 
 autoscaling:
