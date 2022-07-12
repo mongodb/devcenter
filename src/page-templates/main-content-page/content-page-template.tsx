@@ -54,6 +54,8 @@ import Breadcrumbs from '../../components/breadcrumbs';
 import { TableOfContents } from '../../components/article-body/table-of-contents';
 import { IRating } from '../../components/feedback-modal/types';
 
+import { normalizeCategory } from './util';
+
 interface ContentPageProps {
     crumbs: Crumb[];
     topicSlug: string;
@@ -125,15 +127,6 @@ export const determineVideoOrPodcast = (
     collectionType: CollectionType | undefined
 ) => {
     return collectionType === 'Video' || collectionType === 'Podcast';
-};
-
-const ratingSectionCondition = (category: PillCategory) => {
-    return (
-        category === 'Video' ||
-        category === 'Podcast' ||
-        category === 'News & Announcements' ||
-        category === 'Code Example'
-    );
 };
 
 const ContentPageTemplate: NextPage<ContentPageProps> = ({
@@ -226,7 +219,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 alignItems: 'center',
             }}
         >
-            <span>Rate this {category.toLowerCase()}</span>
+            <span>Rate this {normalizeCategory(category)}</span>
             <ContentRating stars={ratingStars} onRate={onRate} />
         </div>
     );
@@ -320,9 +313,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         />
                     )}
                 </div>
-                {!previewMode &&
-                    !ratingSectionCondition(category) &&
-                    ratingSection}
+                {!previewMode && ratingSection}
             </div>
         </>
     );
@@ -397,7 +388,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             authors={authors}
                             tags={tags}
                         />
-                        {!ratingSectionCondition(category) && ratingSection}
+                        {ratingSection}
                     </div>
                 )}
             </div>

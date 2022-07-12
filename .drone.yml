@@ -80,7 +80,7 @@ steps:
     image: quay.io/mongodb/drone-helm:v3
     settings:
       chart: mongodb/web-app
-      chart_version: 4.7.3
+      chart_version: 4.11.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
@@ -182,7 +182,7 @@ steps:
     image: quay.io/mongodb/drone-helm:v3
     settings:
       chart: mongodb/web-app
-      chart_version: 4.7.3
+      chart_version: 4.11.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
