@@ -4,8 +4,6 @@
 
 Link to jira ticket [DEVHUB-1111]
 
-Example: [DEVHUB-1316](https://jira.mongodb.org/browse/DEVHUB-1316)
-
 ## Description:
 
 Describe your changes in detail so for example expected behavior, actual behavior, steps tp reproduce the behavior
