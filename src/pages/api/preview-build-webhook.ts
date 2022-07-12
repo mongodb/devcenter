@@ -3,6 +3,10 @@ import axios from 'axios';
 import logger from '../../utils/logger';
 import { verifyPayloadSigntaure } from '../../utils/verify-payload-signature';
 
+const DRONE_API_URL = 'https://drone.corp.mongodb.com/api';
+const GIT_REPO = 'mongodb/devcenter';
+const API_BASE = `${DRONE_API_URL}/repos/${GIT_REPO}`;
+
 const triggerWebhook = async (body: any): Promise<string> => {
     // Would be great to have some sort of alert in here if we can't find the build to close.
     const pr = body['pull_request'];
@@ -25,20 +29,19 @@ const triggerWebhook = async (body: any): Promise<string> => {
 
     if (shouldBuild) {
         // Trigger our custom event in our drone pieline.
-        const buildEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?branch=${headBranch}&number=${body.number}`;
+        const buildEndpoint = `${API_BASE}/builds?branch=${headBranch}&number=${body.number}`;
         await axios.post(buildEndpoint, {}, { headers });
         return 'Successfully triggered preview build';
     } else if (body.action === 'closed') {
         // Find the 100 most recent builds (that's as high as I can go in 1 request, the API does paginate though so we can do more if needed),
         // And find the build that matches the head branch of the PR. Then promote it to "preview-graveyard", which will uninstall the deployment.
-        const allBuildsEndpoint =
-            'https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds?per_page=100';
+        const allBuildsEndpoint = `${API_BASE}/builds?per_page=100`;
         const allBuildsResponse = await axios.get(allBuildsEndpoint);
         const allBuilds = allBuildsResponse.data;
 
         const build = allBuilds.find((b: any) => b.source === headBranch);
 
-        const promoteEndpoint = `https://drone.corp.mongodb.com/api/repos/mongodb/devcenter/builds/${build.number}/promote?target=preview-graveyard&number=${body.number}`;
+        const promoteEndpoint = `${API_BASE}/builds/${build.number}/promote?target=preview-graveyard&number=${body.number}`;
 
         await axios.post(promoteEndpoint, {}, { headers });
         return 'Successfully triggered preview cleanup';
@@ -54,7 +57,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // If we don't have this header or if the event is not a PR somehow, don't trigger.
     const event = req.headers['x-github-event'];
     if (!event || Array.isArray(event) || event !== 'pull_request') {
-        return res.status(400).send('Event must be pull-requst');
+        return res.status(400).send('Event must be pull_request');
     }
 
     // Verify signature of payload.
@@ -70,6 +73,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(400).send('Bad Signature');
     }
     const responseMessage = await triggerWebhook(req.body);
-    console.log(responseMessage);
+    logger.info(`Preview webhook response: ${responseMessage}`);
     return res.status(200).send(responseMessage);
 };
