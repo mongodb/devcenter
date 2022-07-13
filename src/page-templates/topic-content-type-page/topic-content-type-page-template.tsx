@@ -49,9 +49,6 @@ const getSearchTitleLink = (
     contentType: PillCategory,
     contentTypeAggregateSlug: string
 ) => {
-    if (contentType === 'News & Announcements') {
-        return undefined;
-    }
     if (contentType === 'Podcast') {
         return {
             href: 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624',
