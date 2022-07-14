@@ -22,7 +22,7 @@ steps:
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
       STRAPI_URL:
-        from_secret: STRAPI_URL_PROD
+        from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
     settings:
@@ -230,7 +230,7 @@ steps:
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
       STRAPI_URL:
-        from_secret: STRAPI_URL_PROD
+        from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
     settings:
@@ -355,7 +355,7 @@ steps:
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
       STRAPI_URL:
-        from_secret: STRAPI_URL_PROD
+        from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
     settings:
