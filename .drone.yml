@@ -401,7 +401,7 @@ trigger:
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: clean-up-preview
+name: clean-up-preview 
 
 clone:
   disable: true
