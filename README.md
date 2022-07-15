@@ -33,6 +33,10 @@ To create the container, run:
 
 `docker run -p 3000:3000 --env-file ./.env.local nextjs-docker`
 
+## Branch Naming Conventions
+
+Try to name your branch for the corresponding Jira ticket you are working on. For example, if you are working on Jira ticket DEVHUB-1001, your branch name should be `DEVHUB-1001`. If you have to name it something different, **PLEASE DO NOT INCLUDE "/" IN THE BRANCH NAME**. I know this is a common practice, but it will break the Drone preview environment because Drone doesn't decode the `branch` URL paramter when using its API to trigger events.
+
 ## Testing
 
 
@@ -80,3 +84,9 @@ If you use a different editor or don't want this functionality, the pre-commit h
 ## Bundle Analyzer
 
 This project uses `@next/bundle-analyzer` to analyze our webpack bundles. If you want to analyze while building, build with the `yarn build:analyze` command. This will allow the build to generate html files that show a bundle analysis. See [the `webpack-bundle-analyzer` repo](https://github.com/webpack-contrib/webpack-bundle-analyzer) for more info on the underlying tool.
+
+## Preview Environment
+
+When a PR is opened or update, a preview environment on Kanopy will be deployed. The URL for this environment will be available in the logs for the preview build step of the PR checks (maybe we can add functionality to have this URL in a comment on the PR, but that's actuaslly kinda difficult). It may take a minute or 2 for the preview enviornment to fully deploy after it has been built.
+
+This environment should then be deleted when the PR is closed/merged. In the case that it does not get deleted, use `helm` to manually uninstall that deployment.

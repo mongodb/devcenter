@@ -11,7 +11,9 @@ export async function middleware(req: NextRequest) {
         : process.env.HOST_URL;
 
     const checkRequest = // Only attempt to block POST or PUT API requests (feedback and request content).
-        pathname.startsWith('/api/') && ['POST', 'PUT'].includes(req.method);
+        pathname.startsWith('/api/') &&
+        !pathname.includes('webhook') &&
+        ['POST', 'PUT'].includes(req.method);
 
     if (checkRequest) {
         let headers: { [key: string]: string } = {
