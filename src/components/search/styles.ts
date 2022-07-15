@@ -12,7 +12,9 @@ export const titleStyles = {
 export const searchBoxSortBarWrapperStyles = {
     display: 'grid',
     gridTemplateColumns: '',
-    marginBottom: ['inc30', null, 'inc70'],
+    marginBottom: ['inc40', null, 'inc70'],
+    columnGap: 'inc40',
+    rowGap: 'inc30',
 };
 
 export const searchBoxStyles = {
