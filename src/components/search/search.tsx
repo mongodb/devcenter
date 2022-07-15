@@ -45,6 +45,8 @@ const Search: React.FunctionComponent<SearchProps> = ({
         onSearch,
         searchString,
         fullyLoaded,
+        onSort,
+        sortBy,
     } = useSearch(contentType, tagSlug);
 
     const onCheckToggle = (checked: boolean, filter: string) => {
@@ -100,8 +102,8 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     label="Sort by"
                     name="sort-by-dropdown"
                     options={Object.keys(sortByOptions)}
-                    // value={sortByOptions[sortBy]}
-                    // onSelect={onSort}
+                    value={sortBy}
+                    onSelect={onSort}
                     width="100%"
                     height="84px"
                 />

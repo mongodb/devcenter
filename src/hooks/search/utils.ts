@@ -10,6 +10,8 @@ import { ContentItem } from '../../interfaces/content-item';
 import { Image } from '../../interfaces/image';
 import { Author } from '../../interfaces/author';
 import { getURLPath } from '../../utils/format-url-path';
+import { SortByType } from '../../components/search/types';
+import { sortByOptions } from '../../components/search/utils';
 
 const searchItemToContentItem = ({
     type,
@@ -264,7 +266,8 @@ export const fetcher: Fetcher<ContentItem[], string> = queryString => {
 export const updateUrl = (
     router: NextRouter,
     filters: FilterItem[],
-    searchString: string
+    searchString: string,
+    sortBy?: SortByType
 ) => {
     // Have to preserve the filters here as well.
     const product = filters
@@ -301,6 +304,7 @@ export const updateUrl = (
                 contentType,
                 contributedBy,
                 expertiseLevel,
+                sortMode: sortByOptions[sortBy as string],
             },
         },
         undefined,

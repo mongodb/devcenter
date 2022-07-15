@@ -4,7 +4,8 @@ import useSWR from 'swr';
 import { FilterItem } from '../../components/search-filters';
 import { fetcher, itemInFilters, updateUrl } from './utils';
 import { useRouter } from 'next/router';
-
+import { sortByOptions } from '../../components/search/utils';
+import { SortByType } from '../../components/search/types';
 interface SearchFilterItems {
     l1Items: FilterItem[];
     contentTypeItems: FilterItem[];
@@ -27,15 +28,24 @@ const useSearch = (
     const [searchString, setSearchString] = useState('');
     const [resultsToShow, setResultsToShow] = useState(10);
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
+    const [sortBy, setSortBy] = useState<SortByType>('Most Recent');
 
     // Constructing the URL we send to search endpoint, which is also the cache key for SWR.
-    const keyParts = [`s=${encodeURIComponent(searchString)}`];
+    const keyParts = [
+        `s=${encodeURIComponent(searchString)}`,
+        `sortMode=${sortByOptions[sortBy]}`,
+    ];
     if (contentType) {
         keyParts.push(`contentType=${encodeURIComponent(contentType)}`);
     }
     if (tagSlug) {
         keyParts.push(`tagSlug=${encodeURIComponent(tagSlug)}`);
     }
+
+    if (tagSlug) {
+        keyParts.push(`tagSlug=${encodeURIComponent(tagSlug)}`);
+    }
+
     const key = keyParts.join('&');
 
     const { data, error, isValidating } = useSWR(key, fetcher, {
@@ -59,6 +69,21 @@ const useSearch = (
         setAllFilters(filters);
         if (shouldUseQueryParams) {
             updateUrl(router, filters, searchString);
+        }
+    };
+
+    const onSort = (sortByValue: string) => {
+        setResultsToShow(10);
+        setSortBy(sortByValue as SortByType);
+        console.log(sortByValue);
+
+        if (shouldUseQueryParams) {
+            updateUrl(
+                router,
+                allFilters,
+                searchString,
+                sortByValue as SortByType
+            );
         }
     };
 
@@ -227,6 +252,8 @@ const useSearch = (
         setSearchString,
         fullyLoaded,
         numberOfResults,
+        onSort,
+        sortBy,
     };
 };
 
