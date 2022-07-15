@@ -330,3 +330,96 @@ trigger:
     - cron
   cron:
     - rebuild-devcenter-prod-cron
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: build-preview
+
+resources:
+  requests:
+    cpu: 8
+    memory: 4GiB
+
+steps:
+  - name: publish-preview # The ${number} var comes from the webhook query parameters.
+    image: plugins/kaniko-ecr
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      DEVHUB_URL:
+        from_secret: DEVHUB_URL
+    settings:
+      create_repository: true
+      enable_cache: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: devrel/${DRONE_REPO_NAME}
+      build_args:
+        - HOST_URL=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
+        - NPM_AUTH
+        - NPM_EMAIL
+        - REALM_API_URL
+        - REALM_SEARCH_URL
+        - STRAPI_URL
+        - DEVHUB_URL
+      tags:
+        - devcenter-frontend-preview-build-${number}
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+
+  - name: deploy-preview
+    image: quay.io/mongodb/drone-helm:v3
+    settings:
+      mode: upgrade # Not sure why we have to set this only here, but we do.
+      chart: mongodb/web-app
+      chart_version: 4.7.3
+      add_repos: [mongodb=https://10gen.github.io/helm-charts]
+      namespace: devrel
+      release: devcenter-frontend-preview-${number}
+      values: image.tag=devcenter-frontend-preview-build-${number},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
+      api_server: https://api.staging.corp.mongodb.com
+      kubernetes_token:
+        from_secret: staging_kubernetes_token
+      values_files: ["environments/preview.yaml"]
+
+trigger:
+  event:
+    - custom
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: clean-up-preview
+
+clone:
+  disable: true
+
+steps:
+  - name: uninstall-preview
+    image: quay.io/mongodb/drone-helm:v3
+    settings:
+      mode: uninstall
+      namespace: devrel
+      release: devcenter-frontend-preview-${number}
+      api_server: https://api.staging.corp.mongodb.com
+      kubernetes_token:
+        from_secret: staging_kubernetes_token
+  
+
+trigger:
+  event:
+    - promote
+  target:
+    - preview-graveyard
