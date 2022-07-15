@@ -105,7 +105,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     value={sortBy}
                     onSelect={onSort}
                     width="100%"
-                    height="84px"
+                    height="100%"
                 />
             </Grid>
 
