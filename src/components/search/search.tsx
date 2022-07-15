@@ -5,14 +5,23 @@ import {
     ESystemIconNames,
     TypographyScale,
     Checkbox,
+    Select,
 } from '@mdb/flora';
 
-import { titleStyles, searchBoxStyles, linkStyleOverride } from './styles';
+import {
+    titleStyles,
+    searchBoxStyles,
+    linkStyleOverride,
+    sortBoxStyles,
+    searchBoxSortBarWrapperStyles,
+} from './styles';
 import { SearchProps } from './types';
 import Results from './results';
 import ExpandingLink from '../expanding-link';
 import useSearch from '../../hooks/search';
 import EmptyState from './empty-state';
+import { sortByOptions } from './utils';
+import { Grid } from 'theme-ui';
 
 const Search: React.FunctionComponent<SearchProps> = ({
     titleElement = 'h5',
@@ -68,15 +77,36 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     />
                 )}
             </div>
-            <div sx={{ ...searchBoxStyles, ...extraSearchBoxStyles }}>
-                <TextInput
-                    name="search-text-input"
-                    label={placeholder}
-                    iconName={ESystemIconNames.SEARCH}
-                    value={searchString}
-                    onChange={onSearch}
+            <Grid
+                columns={[1, null, 8, 3]}
+                sx={{ ...searchBoxSortBarWrapperStyles }}
+            >
+                <div
+                    sx={{
+                        ...searchBoxStyles,
+                        ...extraSearchBoxStyles,
+                    }}
+                >
+                    <TextInput
+                        name="search-text-input"
+                        label={placeholder}
+                        iconName={ESystemIconNames.SEARCH}
+                        value={searchString}
+                        onChange={onSearch}
+                    />
+                </div>
+                <Select
+                    sx={sortBoxStyles}
+                    label="Sort by"
+                    name="sort-by-dropdown"
+                    options={Object.keys(sortByOptions)}
+                    // value={sortByOptions[sortBy]}
+                    // onSelect={onSort}
+                    width="100%"
+                    height="84px"
                 />
-            </div>
+            </Grid>
+
             {contentType === 'Code Example' && (
                 <div
                     sx={{
