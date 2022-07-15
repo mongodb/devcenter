@@ -20,10 +20,6 @@ const triggerWebhook = async (body: any): Promise<string> => {
     };
     const headBranch = pr.head.ref;
 
-    if (headBranch !== 'DEVHUB-1317') {
-        return 'Did nothing because we are still testing this';
-    }
-
     // Only build on opened, reopened, or synchronized.
     const shouldBuild = ['opened', 'synchronize'].includes(body.action);
 
