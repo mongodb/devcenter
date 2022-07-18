@@ -1,5 +1,7 @@
 const createNextPluginPreval = require('next-plugin-preval/config');
 const withNextPluginPreval = createNextPluginPreval();
+const { withSentryConfig } = require('@sentry/nextjs');
+
 const { redirects } = require('./config/redirects');
 const pageDescriptions = require('./config/seo/descriptions.json');
 const { buildRssFeed } = require('./src/scripts/build-rss-feed.js');
@@ -64,5 +66,5 @@ if (process.env.ANALYZE === 'true') {
     });
     module.exports = withNextPluginPreval(withBundleAnalyzer(configVals));
 } else {
-    module.exports = withNextPluginPreval(configVals);
+    module.exports = withNextPluginPreval(withSentryConfig(configVals));
 }
