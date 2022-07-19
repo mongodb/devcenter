@@ -2,14 +2,14 @@ import * as Sentry from '@sentry/nextjs';
 import NextErrorComponent, { ErrorProps as NextErrorProps } from 'next/error';
 import { NextPageContext } from 'next';
 
-export type ErrorPageProps = {
+type ErrorPageProps = {
     err: Error;
     statusCode: number;
     hasGetInitialPropsRun: boolean;
     children?: React.ReactElement;
 };
 
-export type ErrorProps = {
+type ErrorProps = {
     hasGetInitialPropsRun: boolean;
 } & NextErrorProps;
 
@@ -40,6 +40,7 @@ ErrorPage.getInitialProps = async (
     // getInitialProps has run
     errorInitialProps.hasGetInitialPropsRun = true;
 
+    if (errorInitialProps.statusCode === 404) return errorInitialProps;
     // Running on the server, the response object (`res`) is available.
     //
     // Next.js will pass an err on the server if a page's data fetching methods
