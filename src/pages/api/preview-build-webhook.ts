@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { withSentry } from '@sentry/nextjs';
 import axios from 'axios';
 import logger from '../../utils/logger';
 import { verifyPayloadSigntaure } from '../../utils/verify-payload-signature';
@@ -45,7 +46,10 @@ const triggerWebhook = async (body: any): Promise<string> => {
     return `Did nothing for PR action "${body.action}" with state "${pr.state}"`;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const previewWebhookHandler = async (
+    req: NextApiRequest,
+    res: NextApiResponse
+) => {
     if (req.method !== 'POST') {
         return res.status(405).send('This is a POST-only endpoint.');
     }
@@ -72,3 +76,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     logger.info(`Preview webhook response: ${responseMessage}`);
     return res.status(200).send(responseMessage);
 };
+
+export default withSentry(previewWebhookHandler);
