@@ -25,6 +25,11 @@ steps:
         from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
+      #TODO: Move away from build args
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
     settings:
       create_repository: true
       enable_cache: true
@@ -38,6 +43,9 @@ steps:
         - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
+        - SENTRY_AUTH_TOKEN
+        - SENTRY_DSN
+        - APP_ENV=staging
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
@@ -139,6 +147,11 @@ steps:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
         from_secret: DEVHUB_URL
+      #TODO: Move away from build args
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
     settings:
       create_repository: true
       enable_cache: true
@@ -152,6 +165,9 @@ steps:
         - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
+        - SENTRY_AUTH_TOKEN
+        - SENTRY_DSN
+        - APP_ENV=production
         - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
@@ -233,6 +249,11 @@ steps:
         from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
+      #TODO: Move away from build args
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
@@ -245,6 +266,9 @@ steps:
         - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
+        - SENTRY_AUTH_TOKEN
+        - SENTRY_DSN
+        - APP_ENV=staging
         - APP_RELEASE
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
@@ -294,6 +318,11 @@ steps:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
         from_secret: DEVHUB_URL
+      #TODO: Move away from build args
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
@@ -306,6 +335,9 @@ steps:
         - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
+        - SENTRY_AUTH_TOKEN
+        - SENTRY_DSN
+        - APP_ENV=staging
         - APP_RELEASE
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
@@ -358,6 +390,11 @@ steps:
         from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
+      #TODO: Move away from build args
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
     settings:
       create_repository: true
       enable_cache: true
@@ -371,6 +408,8 @@ steps:
         - REALM_SEARCH_URL
         - STRAPI_URL
         - DEVHUB_URL
+        - SENTRY_AUTH_TOKEN
+        - SENTRY_DSN
       tags:
         - devcenter-frontend-preview-build-${number}
       access_key:
