@@ -50,6 +50,7 @@ const configVals = {
         absoluteBasePath: `${httpProtocol}://${hostUrl}${basePath}`,
         pageDescriptions: pageDescriptions, //TODO: Move to CMS
     },
+    staticPageGenerationTimeout: 180,
     trailingSlash: true,
     webpack: (config, { isServer, dev }) => {
         if (isServer && !dev) {
