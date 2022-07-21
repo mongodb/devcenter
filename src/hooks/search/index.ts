@@ -42,10 +42,6 @@ const useSearch = (
         keyParts.push(`tagSlug=${encodeURIComponent(tagSlug)}`);
     }
 
-    if (tagSlug) {
-        keyParts.push(`tagSlug=${encodeURIComponent(tagSlug)}`);
-    }
-
     const key = keyParts.join('&');
 
     const { data, error, isValidating } = useSWR(key, fetcher, {
