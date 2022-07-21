@@ -403,6 +403,9 @@ kind: pipeline
 type: kubernetes
 name: clean-up-preview
 
+clone:
+  disable: true
+
 steps:
   - name: uninstall-preview
     image: quay.io/mongodb/drone-helm:v3
