@@ -6,9 +6,7 @@ const { redirects } = require('./config/redirects');
 const pageDescriptions = require('./config/seo/descriptions.json');
 const { buildRssFeed } = require('./src/scripts/build-rss-feed.js');
 
-const hostUrl = process.env.VERCEL_URL
-    ? process.env.VERCEL_URL
-    : process.env.HOST_URL;
+const hostUrl = process.env.HOST_URL;
 const httpProtocol = hostUrl == 'localhost:3000' ? 'http' : 'https';
 const basePath = '/developer';
 
@@ -67,5 +65,11 @@ if (process.env.ANALYZE === 'true') {
     });
     module.exports = withNextPluginPreval(withBundleAnalyzer(configVals));
 } else {
-    module.exports = withNextPluginPreval(withSentryConfig(configVals));
+    const enableSentry =
+        process.env.APP_ENV === 'dev' ||
+        process.env.APP_ENV === 'staging' ||
+        process.env.APP_ENV === 'production';
+    module.exports = withNextPluginPreval(
+        enableSentry ? withSentryConfig(configVals) : configVals
+    );
 }

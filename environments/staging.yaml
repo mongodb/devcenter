@@ -48,7 +48,7 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["devcenter-frontend-ah.devrel.staging.corp.mongodb.com"]
+  hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
 
 metrics:
   enabled: true
