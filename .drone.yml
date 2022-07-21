@@ -4,11 +4,6 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter-staging
 
-resources:
-  requests:
-    cpu: 8
-    memory: 4GiB
-
 steps:
   - name: build
     image: node:16.15.0-slim
@@ -23,7 +18,6 @@ steps:
       HOST_URL: mongodbcom-cdn.website.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
-      NPM_CONFIG_ALWAYS_AUTH: true
       NPM_EMAIL:
         from_secret: NPM_EMAIL
       REALM_API_URL:
@@ -73,7 +67,7 @@ steps:
 
 trigger:
   branch:
-    - devhub-1356
+    - main
   event:
     - push
 
@@ -126,15 +120,18 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter-prod
 
-resources:
-  requests:
-    cpu: 8
-    memory: 4GiB
-
 steps:
-  - name: publish-production
-    image: plugins/kaniko-ecr
+  - name: build-production
+    image: node:16.15.0-slim
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates
+    - yarn install --frozen-lockfile
+    - yarn build
     environment:
+      APP_ENV: production
+      APP_RELEASE: ${DRONE_COMMIT_SHA}
+      HOST_URL: www.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -147,28 +144,19 @@ steps:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
         from_secret: DEVHUB_URL
-      #TODO: Move away from build args
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      DEBIAN_FRONTEND: noninteractive
+
+  - name: publish-production
+    image: plugins/kaniko-ecr
     settings:
       create_repository: true
       enable_cache: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
-      build_args:
-        - HOST_URL=www.mongodb.com
-        - NPM_AUTH
-        - NPM_EMAIL
-        - REALM_API_URL
-        - REALM_SEARCH_URL
-        - STRAPI_URL
-        - DEVHUB_URL
-        - SENTRY_AUTH_TOKEN
-        - SENTRY_DSN
-        - APP_ENV=production
-        - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
         - latest-prod
@@ -232,11 +220,17 @@ type: kubernetes
 name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevRel, using what's currently deployed in the main branch.
 
 steps:
-  - name: publish-staging-from-cron
-    image: plugins/kaniko-ecr
+  - name: build-staging-from-cron
+    image: node:16.15.0-slim
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates
+    - yarn install --frozen-lockfile
+    - yarn build
     environment:
-      APP_RELEASE:
-        from_secret: app_release_staging
+      APP_ENV: staging
+      APP_RELEASE: ${DRONE_COMMIT_SHA}
+      HOST_URL: mongodbcom-cdn.website.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -249,27 +243,18 @@ steps:
         from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
-      #TODO: Move away from build args
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      DEBIAN_FRONTEND: noninteractive
+
+  - name: publish-staging-from-cron
+    image: plugins/kaniko-ecr
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
-      build_args:
-        - HOST_URL=mongodbcom-cdn.website.staging.corp.mongodb.com
-        - NPM_AUTH
-        - NPM_EMAIL
-        - REALM_API_URL
-        - REALM_SEARCH_URL
-        - STRAPI_URL
-        - DEVHUB_URL
-        - SENTRY_AUTH_TOKEN
-        - SENTRY_DSN
-        - APP_ENV=staging
-        - APP_RELEASE
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
         - latest-staging
@@ -301,11 +286,17 @@ type: kubernetes
 name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
 
 steps:
-  - name: publish-prod-from-cron
-    image: plugins/kaniko-ecr
+  - name: build-production
+    image: node:16.15.0-slim
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates
+    - yarn install --frozen-lockfile
+    - yarn build
     environment:
-      APP_RELEASE:
-        from_secret: app_release_production
+      APP_ENV: production
+      APP_RELEASE: ${DRONE_COMMIT_SHA}
+      HOST_URL: www.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -318,27 +309,18 @@ steps:
         from_secret: STRAPI_URL_PROD
       DEVHUB_URL:
         from_secret: DEVHUB_URL
-      #TODO: Move away from build args
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      DEBIAN_FRONTEND: noninteractive
+
+  - name: publish-prod-from-cron
+    image: plugins/kaniko-ecr
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
-      build_args:
-        - HOST_URL=www.mongodb.com
-        - NPM_AUTH
-        - NPM_EMAIL
-        - REALM_API_URL
-        - REALM_SEARCH_URL
-        - STRAPI_URL
-        - DEVHUB_URL
-        - SENTRY_AUTH_TOKEN
-        - SENTRY_DSN
-        - APP_ENV=staging
-        - APP_RELEASE
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
         - latest-prod
@@ -369,15 +351,18 @@ kind: pipeline
 type: kubernetes
 name: build-preview
 
-resources:
-  requests:
-    cpu: 8
-    memory: 4GiB
-
 steps:
-  - name: publish-preview # The ${number} var comes from the webhook query parameters.
-    image: plugins/kaniko-ecr
+  - name: build-preview # The ${number} var comes from the webhook query parameters.
+    image: node:16.15.0-slim
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates
+    - yarn install --frozen-lockfile
+    - yarn build
     environment:
+      APP_ENV: dev
+      APP_RELEASE: ${DRONE_COMMIT_SHA}
+      HOST_URL: devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -390,26 +375,19 @@ steps:
         from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
-      #TODO: Move away from build args
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      DEBIAN_FRONTEND: noninteractive
+
+  - name: publish-preview
+    image: plugins/kaniko-ecr
     settings:
       create_repository: true
       enable_cache: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
-      build_args:
-        - HOST_URL=devcenter-frontend-preview-${number}.devrel.staging.corp.mongodb.com
-        - NPM_AUTH
-        - NPM_EMAIL
-        - REALM_API_URL
-        - REALM_SEARCH_URL
-        - STRAPI_URL
-        - DEVHUB_URL
-        - SENTRY_AUTH_TOKEN
-        - SENTRY_DSN
       tags:
         - devcenter-frontend-preview-build-${number}
       access_key:
