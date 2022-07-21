@@ -20,7 +20,10 @@ import {
     resultsStringAndTagsStyles,
     desktopFiltersStyles,
 } from '../page-templates/content-type/styles';
-import { searchBoxStyles } from '../components/search/styles';
+import {
+    searchBoxStyles,
+    searchBoxSortBarWrapperStyles,
+} from '../components/search/styles';
 
 import Results from '../components/search/results';
 import { useRouter } from 'next/router';
@@ -201,17 +204,19 @@ const Search: NextPage<SearchProps> = ({
                             gridColumn: ['span 6', null, 'span 8', 'span 9'],
                         }}
                     >
-                        <div sx={searchBoxStyles}>
-                            <TextInput
-                                // The key prop will force it to rerender on external searchString changes.
-                                key={searchString}
-                                name="search-text-input"
-                                label="Search All"
-                                iconName={ESystemIconNames.SEARCH}
-                                value={searchString}
-                                onChange={onSearch}
-                                autoFocus={true}
-                            />
+                        <div sx={searchBoxSortBarWrapperStyles}>
+                            <div sx={searchBoxStyles}>
+                                <TextInput
+                                    // The key prop will force it to rerender on external searchString changes.
+                                    key={searchString}
+                                    name="search-text-input"
+                                    label="Search All"
+                                    iconName={ESystemIconNames.SEARCH}
+                                    value={searchString}
+                                    onChange={onSearch}
+                                    autoFocus={true}
+                                />
+                            </div>
                         </div>
                         {resultsStringAndTags}
                         {!!data.length || isValidating || error ? (
