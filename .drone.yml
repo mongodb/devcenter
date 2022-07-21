@@ -10,11 +10,21 @@ resources:
     memory: 4GiB
 
 steps:
-  - name: publish-staging
-    image: plugins/kaniko-ecr
+  - name: build
+    image: node:16-alpine
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates
+    - yarn install --frozen-lockfile
+    - yarn build
+    - npm prune --production
     environment:
+      APP_ENV: staging
+      APP_RELEASE: ${DRONE_COMMIT_SHA}
+      HOST_URL: mongodbcom-cdn.website.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
+      NPM_CONFIG_ALWAYS_AUTH: true
       NPM_EMAIL:
         from_secret: NPM_EMAIL
       REALM_API_URL:
@@ -25,28 +35,19 @@ steps:
         from_secret: STRAPI_URL_STAGING
       DEVHUB_URL:
         from_secret: DEVHUB_URL
-      #TODO: Move away from build args
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      DEBIAN_FRONTEND: noninteractive
+
+  - name: publish-staging
+    image: plugins/kaniko-ecr
     settings:
       create_repository: true
       enable_cache: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
-      build_args:
-        - HOST_URL=mongodbcom-cdn.website.staging.corp.mongodb.com
-        - NPM_AUTH
-        - NPM_EMAIL
-        - REALM_API_URL
-        - REALM_SEARCH_URL
-        - STRAPI_URL
-        - DEVHUB_URL
-        - SENTRY_AUTH_TOKEN
-        - SENTRY_DSN
-        - APP_ENV=staging
-        - APP_RELEASE=${DRONE_COMMIT_SHA}
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
         - latest-staging
@@ -73,7 +74,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - devhub-1356
   event:
     - push
 
