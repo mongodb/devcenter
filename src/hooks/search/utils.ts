@@ -304,7 +304,7 @@ export const updateUrl = (
                 contentType,
                 contributedBy,
                 expertiseLevel,
-                sortMode: sortByOptions[sortBy as string],
+                sortMode: sortByOptions[sortBy as SortByType],
             },
         },
         undefined,
