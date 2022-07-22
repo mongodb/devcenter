@@ -71,7 +71,6 @@ const useSearch = (
     const onSort = (sortByValue: string) => {
         setResultsToShow(10);
         setSortBy(sortByValue as SortByType);
-        console.log(sortByValue);
 
         if (shouldUseQueryParams) {
             updateUrl(
