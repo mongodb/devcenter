@@ -8,6 +8,7 @@ import {
     ESystemIconNames,
     Button,
     TypographyScale,
+    Select,
 } from '@mdb/flora';
 
 import Hero from '../components/hero';
@@ -23,7 +24,10 @@ import {
 import {
     searchBoxStyles,
     searchBoxSortBarWrapperStyles,
+    sortBoxStyles,
 } from '../components/search/styles';
+import { sortByOptions } from '../components/search/utils';
+import { Grid } from 'theme-ui';
 
 import Results from '../components/search/results';
 import { useRouter } from 'next/router';
@@ -65,6 +69,8 @@ const Search: NextPage<SearchProps> = ({
         searchString,
         setSearchString,
         numberOfResults,
+        onSort,
+        sortBy,
     } = useSearch(undefined, undefined, {
         l1Items,
         languageItems,
@@ -204,7 +210,10 @@ const Search: NextPage<SearchProps> = ({
                             gridColumn: ['span 6', null, 'span 8', 'span 9'],
                         }}
                     >
-                        <div sx={searchBoxSortBarWrapperStyles}>
+                        <Grid
+                            columns={[1, null, 8, 3]}
+                            sx={searchBoxSortBarWrapperStyles}
+                        >
                             <div sx={searchBoxStyles}>
                                 <TextInput
                                     // The key prop will force it to rerender on external searchString changes.
@@ -217,7 +226,17 @@ const Search: NextPage<SearchProps> = ({
                                     autoFocus={true}
                                 />
                             </div>
-                        </div>
+                            <Select
+                                sx={sortBoxStyles}
+                                label="Sort by"
+                                name="sort-by-dropdown"
+                                options={Object.keys(sortByOptions)}
+                                value={sortBy}
+                                onSelect={onSort}
+                                width="100%"
+                                height="100%"
+                            />
+                        </Grid>
                         {resultsStringAndTags}
                         {!!data.length || isValidating || error ? (
                             <>
