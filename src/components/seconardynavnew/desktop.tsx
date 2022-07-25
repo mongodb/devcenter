@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import theme from '@mdb/flora/theme';
-
 import {
     ESystemIconNames,
     Link as FloraLink,
@@ -13,6 +12,8 @@ import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
 import { StyledSecondaryNavContainer } from './desktop-styles';
 import { getURLPath } from '../../utils/format-url-path';
+import { UserMenu } from '@leafygreen-ui/mongo-nav';
+import { useSession } from 'next-auth/react';
 
 const linkWrapperStyles = {
     position: 'relative' as 'relative',
@@ -74,6 +75,15 @@ const FloraLinkStyles = (isActive: boolean) => ({
 });
 
 const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
+    const { data: session, status } = useSession();
+    const account = session
+        ? {
+              firstName: session?.user?.name || '',
+              lastName: session?.user?.name || '',
+              email: session?.user?.email || '',
+          }
+        : null;
+
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(isOpen => !isOpen);
@@ -222,10 +232,13 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             )}
                         </SecondaryLinksList>
                     ))}
+                    {account && <UserMenu account={account} />}
                 </ul>
             </nav>
         </div>
     );
 };
+
+//const onOrganizationChange = ({value: string, setData: Function, event: React.ChangeEvent}) => {};
 
 export default DesktopView;

@@ -1,21 +1,27 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
-import type { AppProps } from 'next/app';
+import type { AppContext, AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import getConfig from 'next/config';
 import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
+import { getSession, SessionProvider } from 'next-auth/react';
+import App from 'next/app';
+import { Session } from 'next-auth';
 
 const CONTENT_ROUTE = '/[...slug]';
 
-function MyApp({ Component, pageProps }: AppProps) {
+interface CustomProps {
+    session: Session;
+}
+
+function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { asPath, route } = router;
-
     let pageDescription = null;
     if (asPath in publicRuntimeConfig.pageDescriptions) {
         pageDescription = publicRuntimeConfig.pageDescriptions[asPath];
@@ -68,13 +74,23 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
                 }}
             />
-            <ThemeProvider theme={theme}>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </ThemeProvider>
+            <SessionProvider session={session} refetchInterval={0}>
+                <ThemeProvider theme={theme}>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </ThemeProvider>
+            </SessionProvider>
         </>
     );
 }
+
+// MyApp.getInitialProps = async (
+//     appContext: AppContext
+// ): Promise<AppInitialProps & CustomProps> => {
+//     const appProps = await App.getInitialProps(appContext);
+//     const session = (await getSession(appContext.ctx)) as Session;
+//     return { ...appProps, session };
+// };
 
 export default MyApp;
