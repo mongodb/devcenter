@@ -3,6 +3,7 @@ service:
   targetPort: 3000
 
 env:
+  APP_ENV: production
   HOST_URL: www.mongodb.com
 
 envSecrets:
