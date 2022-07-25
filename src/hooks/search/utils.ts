@@ -269,6 +269,9 @@ export const updateUrl = (
     searchString: string,
     sortBy?: SortByType
 ) => {
+    if (!sortBy) {
+        sortBy = 'Most Recent';
+    }
     // Have to preserve the filters here as well.
     const product = filters
         .filter(
