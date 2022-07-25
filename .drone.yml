@@ -6,7 +6,7 @@ name: build-devcenter-staging
 
 steps:
   - name: build
-    image: node:16.15.0-slim
+    image: node:16.16.0-slim
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
@@ -15,7 +15,7 @@ steps:
     environment:
       APP_ENV: staging
       APP_RELEASE: ${DRONE_COMMIT_SHA}
-      HOST_URL: mongodbcom-cdn.website.staging.corp.mongodb.com
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -122,7 +122,7 @@ name: build-devcenter-prod
 
 steps:
   - name: build-production
-    image: node:16.15.0-slim
+    image: node:16.16.0-slim
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
@@ -221,7 +221,7 @@ name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevR
 
 steps:
   - name: build-staging-from-cron
-    image: node:16.15.0-slim
+    image: node:16.16.0-slim
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
@@ -229,8 +229,9 @@ steps:
     - yarn build
     environment:
       APP_ENV: staging
-      APP_RELEASE: ${DRONE_COMMIT_SHA}
-      HOST_URL: mongodbcom-cdn.website.staging.corp.mongodb.com
+      APP_RELEASE:
+        from_secret: app_release_staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
@@ -287,7 +288,7 @@ name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel,
 
 steps:
   - name: build-production
-    image: node:16.15.0-slim
+    image: node:16.16.0-slim
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
@@ -295,7 +296,8 @@ steps:
     - yarn build
     environment:
       APP_ENV: production
-      APP_RELEASE: ${DRONE_COMMIT_SHA}
+      APP_RELEASE:
+        from_secret: app_release_production
       HOST_URL: www.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
@@ -353,7 +355,7 @@ name: build-preview
 
 steps:
   - name: build-preview # The ${number} var comes from the webhook query parameters.
-    image: node:16.15.0-slim
+    image: node:16.16.0-slim
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
