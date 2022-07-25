@@ -12,6 +12,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    - npm prune --production
     environment:
       APP_ENV: staging
       HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
@@ -129,6 +130,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    - npm prune --production
     environment:
       APP_ENV: production
       HOST_URL: www.mongodb.com
@@ -229,6 +231,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    - npm prune --production
     environment:
       APP_ENV: staging
       HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
@@ -299,6 +302,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    - npm prune --production
     environment:
       APP_ENV: production
       HOST_URL: www.mongodb.com
@@ -369,6 +373,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    - npm prune --production
     environment:
       APP_ENV: dev
       APP_RELEASE: ${DRONE_COMMIT_SHA}

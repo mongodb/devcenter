@@ -1,5 +1,8 @@
 FROM node:16.16.0-slim
 
+ARG APP_ENV=$APP_ENV
+ARG APP_RELEASE=$APP_RELEASE
+
 WORKDIR /devcenter
 
 COPY package.json yarn.lock .eslintrc.json next-env.d.ts next.config.js tsconfig.json sentry.server.config.ts sentry.client.config.ts ./
