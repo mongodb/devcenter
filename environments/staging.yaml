@@ -3,7 +3,7 @@ service:
   targetPort: 3000
 
 env:
-  HOST_URL: mongodbcom-cdn.website.staging.corp.mongodb.com
+  HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
 
 envSecrets:
   NPM_EMAIL: devcenter-secrets
@@ -48,7 +48,7 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
+  hosts: ["devcenter-frontend.devrel.staging.corp.mongodb.com"]
 
 metrics:
   enabled: true

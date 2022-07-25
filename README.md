@@ -64,7 +64,7 @@ When your PR is approved, you can merge it using GitHub's UI. You can choose eit
 
 ### Staging Release
 
-DevCenter is deployed on the Kanopy platform, and when a PR is merged into `main`, the changes will be released through our [drone](https://drone.corp.mongodb.com/mongodb/devcenter/) pipeline. Once the build is completed, the changes are promoted into staging automatically (https://mongodbcom-cdn.website.staging.corp.mongodb.com/developer/). At times, your browser cache will need to be cleared to see the changes immediately.
+DevCenter is deployed on the Kanopy platform, and when a PR is merged into `main`, the changes will be released through our [drone](https://drone.corp.mongodb.com/mongodb/devcenter/) pipeline. Once the build is completed, the changes are promoted into staging automatically (https://mongodbcom-cdn.staging.corp.mongodb.com/developer/). At times, your browser cache will need to be cleared to see the changes immediately.
 
 ### Production Release
 
