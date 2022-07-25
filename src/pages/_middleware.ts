@@ -10,41 +10,43 @@ export async function middleware(req: NextRequest) {
         ? process.env.VERCEL_URL
         : process.env.HOST_URL;
 
-    // const checkRequest = // Only attempt to block POST or PUT API requests (feedback and request content).
-    //     pathname.startsWith('/api/') && ['POST', 'PUT'].includes(req.method) ;
-    //
-    // if (checkRequest) {
-    //     let headers: { [key: string]: string } = {
-    //         'Content-Type': 'application/json',
-    //     };
-    //
-    //     if (
-    //         origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
-    //     ) {
-    //         console.log(
-    //             `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
-    //         );
-    //         const res = new NextResponse(
-    //             JSON.stringify({
-    //                 error: { message: 'Something went wrong' },
-    //             }),
-    //             {
-    //                 status: 500,
-    //                 headers,
-    //             }
-    //         );
-    //
-    //         logRequestData(pathname, req.method, res.status);
-    //         return res;
-    //     }
-    //     const res = NextResponse.next();
-    //     for (const key in headers) {
-    //         res.headers.set(key, headers[key]);
-    //     }
-    //
-    //     logRequestData(pathname, req.method, res.status);
-    //     return res;
-    // }
+    const checkRequest = // Only attempt to block POST or PUT API requests (feedback and request content).
+        pathname.startsWith('/api/') &&
+        !pathname.includes('webhook') &&
+        ['POST', 'PUT'].includes(req.method);
+
+    if (checkRequest) {
+        let headers: { [key: string]: string } = {
+            'Content-Type': 'application/json',
+        };
+
+        if (
+            origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
+        ) {
+            console.log(
+                `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
+            );
+            const res = new NextResponse(
+                JSON.stringify({
+                    error: { message: 'Something went wrong' },
+                }),
+                {
+                    status: 500,
+                    headers,
+                }
+            );
+
+            logRequestData(pathname, req.method, res.status);
+            return res;
+        }
+        const res = NextResponse.next();
+        for (const key in headers) {
+            res.headers.set(key, headers[key]);
+        }
+
+        logRequestData(pathname, req.method, res.status);
+        return res;
+    }
 
     // Handles consistent navigation search as well as
     // redirect for /learn page.
