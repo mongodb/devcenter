@@ -3,6 +3,7 @@ service:
   targetPort: 3000
 
 env:
+  APP_ENV: staging
   HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
 
 envSecrets:
@@ -15,6 +16,8 @@ envSecrets:
   PREVIEW_SECRET_KEY: devcenter-secrets
   PROMETHEUS_AUTH_USER: devcenter-secrets
   PROMETHEUS_AUTH_PASS: devcenter-secrets
+  SENTRY_AUTH_TOKEN: devcenter-secrets
+  SENTRY_DSN: devcenter-secrets
 
 autoscaling:
   minReplicas: 2

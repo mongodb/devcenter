@@ -1,27 +1,23 @@
-FROM node:16-alpine AS builder
+FROM node:16.16.0-slim
 
-# Install deps
-ARG NPM_AUTH=$NPM_AUTH
-ARG NPM_EMAIL=$NPM_EMAIL
-ARG HOST_URL=$HOST_URL
-ARG STRAPI_URL=$STRAPI_URL
-ARG DEVHUB_URL=$DEVHUB_URL
+ARG APP_ENV=$APP_ENV
 ARG APP_RELEASE=$APP_RELEASE
-ARG REALM_API_URL=$REALM_API_URL
-ARG REALM_SEARCH_URL=$REALM_SEARCH_URL
-WORKDIR /devcenter
-COPY package.json yarn.lock .npmrc ./
-RUN yarn install --frozen-lockfile
 
-# Build
-COPY . .
-RUN yarn build
+WORKDIR /devcenter
+
+COPY package.json yarn.lock .eslintrc.json next-env.d.ts next.config.js tsconfig.json sentry.server.config.ts sentry.client.config.ts ./
+COPY src ./src
+COPY public ./public
+COPY config ./config
+COPY node_modules ./node_modules
+COPY .next ./.next
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 RUN chown -R nextjs /devcenter
 USER nextjs
 
+ENV APP_ENV $APP_ENV
 ENV APP_RELEASE $APP_RELEASE
 ENV NODE_ENV production
 ENV PORT 3000

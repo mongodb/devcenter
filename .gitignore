@@ -16,7 +16,6 @@
 # production
 /build
 
-
 # misc
 .DS_Store
 *.pem
@@ -46,3 +45,6 @@ yarn-error.log*
 
 # RSS feed generated at build time.
 rss.xml
+
+# Sentry
+.sentryclirc
