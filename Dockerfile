@@ -17,7 +17,6 @@ RUN adduser --system --uid 1001 nextjs
 RUN chown -R nextjs /devcenter
 USER nextjs
 
-ENV APP_ENV $APP_ENV
 ENV APP_RELEASE $APP_RELEASE
 ENV NODE_ENV production
 ENV PORT 3000

@@ -82,6 +82,10 @@ if (process.env.ANALYZE === 'true') {
         process.env.APP_ENV === 'dev' ||
         process.env.APP_ENV === 'staging' ||
         process.env.APP_ENV === 'production';
+
+    console.log('process.env.APP_ENV', process.env.APP_ENV);
+    console.log('enableSentry', enableSentry);
+
     module.exports = withNextPluginPreval(
         enableSentry
             ? withSentryConfig(configVals, sentryWebpackPluginOptions)
