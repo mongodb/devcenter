@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { withSentry } from '@sentry/nextjs';
 import axios from 'axios';
 import { logRequestData } from '../../utils/logger';
 
@@ -11,7 +12,10 @@ const limiter = rateLimit({
 
 const MAX_FEEDBACK_PER_PERIOD = 10;
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const updateFeedbackHandler = async (
+    req: NextApiRequest,
+    res: NextApiResponse
+) => {
     try {
         await limiter.check(
             res,
@@ -54,3 +58,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.json({ message: 'Something went wrong' });
     }
 };
+
+export default withSentry(updateFeedbackHandler);
