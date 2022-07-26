@@ -17,6 +17,8 @@ envSecrets:
   PREVIEW_WEBHOOK_TOKEN: devcenter-secrets # Only production needs to have this.
   PROMETHEUS_AUTH_USER: devcenter-secrets
   PROMETHEUS_AUTH_PASS: devcenter-secrets
+  SENTRY_AUTH_TOKEN: devcenter-secrets
+  SENTRY_DSN: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
