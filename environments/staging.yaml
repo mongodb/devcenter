@@ -3,6 +3,7 @@ service:
   targetPort: 3000
 
 env:
+  APP_ENV: staging
   HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
 
 envSecrets:

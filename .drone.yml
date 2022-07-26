@@ -14,7 +14,6 @@ steps:
     - yarn build
     environment:
       APP_ENV: staging
-      APP_RELEASE: ${DRONE_COMMIT_SHA}
       HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
@@ -44,6 +43,8 @@ steps:
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
         - latest-staging
+      build_args:
+      - APP_RELEASE=${DRONE_COMMIT_SHA}
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -130,7 +131,6 @@ steps:
     - yarn build
     environment:
       APP_ENV: production
-      APP_RELEASE: ${DRONE_COMMIT_SHA}
       HOST_URL: www.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
@@ -160,6 +160,8 @@ steps:
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
         - latest-prod
+      build_args:
+      - APP_RELEASE=${DRONE_COMMIT_SHA}
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -229,8 +231,6 @@ steps:
     - yarn build
     environment:
       APP_ENV: staging
-      APP_RELEASE:
-        from_secret: app_release_staging
       HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
@@ -252,6 +252,9 @@ steps:
 
   - name: publish-staging-from-cron
     image: plugins/kaniko-ecr
+    environment:
+      APP_RELEASE:
+        from_secret: app_release_staging
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
@@ -259,6 +262,8 @@ steps:
       tags:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
         - latest-staging
+      build_args:
+      - APP_RELEASE
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -296,8 +301,6 @@ steps:
     - yarn build
     environment:
       APP_ENV: production
-      APP_RELEASE:
-        from_secret: app_release_production
       HOST_URL: www.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
@@ -319,6 +322,9 @@ steps:
 
   - name: publish-prod-from-cron
     image: plugins/kaniko-ecr
+    environment:
+      APP_RELEASE:
+        from_secret: app_release_production
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
@@ -326,6 +332,8 @@ steps:
       tags:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
         - latest-prod
+      build_args:
+      - APP_RELEASE
       access_key:
         from_secret: ecr_access_key
       secret_key:
