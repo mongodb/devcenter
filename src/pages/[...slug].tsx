@@ -1,4 +1,5 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+// import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import type { GetServerSidePropsContext, NextPage } from 'next';
 import { getContentPageData } from '../page-templates/main-content-page/content-page-data';
 import { getTopicContentTypePageData } from '../page-templates/topic-content-type-page/topic-content-type-page-data';
 import DynamicContentTemplate, {
@@ -24,14 +25,16 @@ const DynamicContentPage: NextPage<ContentPageProps> = ({
 
 export default DynamicContentPage;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    let paths: any[] = await getDynamicPaths();
+// export const getStaticPaths: GetStaticPaths = async () => {
+//     let paths: any[] = await getDynamicPaths();
 
-    return { paths: paths, fallback: false };
-};
+//     return { paths: paths, fallback: false };
+// };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { slug } = params as PageParams;
+export const getServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
+    const { slug } = context.params as PageParams;
 
     const dynamicPageType: DynamicPageType = await pageTypeFactory(slug);
     const {

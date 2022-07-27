@@ -25,6 +25,8 @@ steps:
         from_secret: REALM_SEARCH_URL_STAGING
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
+      STRAPI_URL_TEST:
+        from_secret: STRAPI_URL_TEST
       DEVHUB_URL:
         from_secret: DEVHUB_URL
       SENTRY_AUTH_TOKEN:
@@ -68,7 +70,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - reinstate-isr
   event:
     - push
 
@@ -86,7 +88,7 @@ steps:
       chart_version: 4.11.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
-      release: devcenter-frontend
+      release: devcenter-frontend-ah
       values: image.tag=devcenter-staging-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:

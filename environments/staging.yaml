@@ -12,6 +12,7 @@ envSecrets:
   REALM_API_URL: devcenter-secrets
   REALM_SEARCH_URL: devcenter-secrets
   STRAPI_URL: devcenter-secrets
+  STRAPI_URL_TEST: devcenter-secrets
   DEVHUB_URL: devcenter-secrets
   PREVIEW_SECRET_KEY: devcenter-secrets
   PROMETHEUS_AUTH_USER: devcenter-secrets
@@ -51,7 +52,7 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["devcenter-frontend.devrel.staging.corp.mongodb.com"]
+  hosts: ["devcenter-frontend-ah.devrel.staging.corp.mongodb.com"]
 
 metrics:
   enabled: true

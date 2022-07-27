@@ -6,7 +6,7 @@ import { mapArticlesToContentItems } from './build-content-items';
 export const getPreviewContent: (
     calculatedSlug: string
 ) => Promise<ContentItem[]> = async calculatedSlug => {
-    const uri = process.env.STRAPI_URL;
+    const uri = process.env.STRAPI_URL_TEST;
 
     const allArticles = await getAllDraftArticlesFromAPI(
         STRAPI_CLIENT,
