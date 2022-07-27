@@ -27,6 +27,8 @@ steps:
         from_secret: STRAPI_URL_STAGING
       STRAPI_URL_TEST:
         from_secret: STRAPI_URL_TEST
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
       DEVHUB_URL:
         from_secret: DEVHUB_URL
       SENTRY_AUTH_TOKEN:
