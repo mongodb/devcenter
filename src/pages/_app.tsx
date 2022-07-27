@@ -8,6 +8,7 @@ import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
+import ErrorBoundary from '../components/error-boundary';
 
 const CONTENT_ROUTE = '/[...slug]';
 
@@ -70,7 +71,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             />
             <ThemeProvider theme={theme}>
                 <Layout>
-                    <Component {...pageProps} />
+                    <ErrorBoundary>
+                        <Component {...pageProps} />
+                    </ErrorBoundary>
                 </Layout>
             </ThemeProvider>
         </>

@@ -9,16 +9,23 @@ export const titleStyles = {
     gap: 'inc30',
 };
 
+export const searchBoxSortBarWrapperStyles = {
+    display: 'grid',
+    marginBottom: ['inc40', null, 'inc70'],
+    columnGap: 'inc40',
+    rowGap: 'inc30',
+};
+
 export const searchBoxStyles = {
     '& > div': {
         width: '100%',
         maxWidth: 'unset',
     },
-    marginBottom: ['inc30', null, 'inc70'],
+    gridColumn: ['span 1', null, 'span 5', 'span 2'],
 };
 
 export const sortBoxStyles = {
-    marginBottom: ['inc40', null, 'inc70'],
+    gridColumn: ['span 1', null, 'span 3', 'span 1'],
 };
 
 export const dataStyles = (layout: 'list' | 'grid') =>

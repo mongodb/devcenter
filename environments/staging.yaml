@@ -3,7 +3,8 @@ service:
   targetPort: 3000
 
 env:
-  HOST_URL: mongodbcom-cdn.website.staging.corp.mongodb.com
+  APP_ENV: staging
+  HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
 
 envSecrets:
   NPM_EMAIL: devcenter-secrets
@@ -15,6 +16,8 @@ envSecrets:
   PREVIEW_SECRET_KEY: devcenter-secrets
   PROMETHEUS_AUTH_USER: devcenter-secrets
   PROMETHEUS_AUTH_PASS: devcenter-secrets
+  SENTRY_AUTH_TOKEN: devcenter-secrets
+  SENTRY_DSN: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
@@ -48,7 +51,7 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
+  hosts: ["devcenter-frontend.devrel.staging.corp.mongodb.com"]
 
 metrics:
   enabled: true

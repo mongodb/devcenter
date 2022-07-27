@@ -1,12 +1,12 @@
 const createNextPluginPreval = require('next-plugin-preval/config');
 const withNextPluginPreval = createNextPluginPreval();
+const { withSentryConfig } = require('@sentry/nextjs');
+
 const { redirects } = require('./config/redirects');
 const pageDescriptions = require('./config/seo/descriptions.json');
 const { buildRssFeed } = require('./src/scripts/build-rss-feed.js');
 
-const hostUrl = process.env.VERCEL_URL
-    ? process.env.VERCEL_URL
-    : process.env.HOST_URL;
+const hostUrl = process.env.HOST_URL;
 const httpProtocol = hostUrl == 'localhost:3000' ? 'http' : 'https';
 const basePath = '/developer';
 
@@ -48,6 +48,7 @@ const configVals = {
         absoluteBasePath: `${httpProtocol}://${hostUrl}${basePath}`,
         pageDescriptions: pageDescriptions, //TODO: Move to CMS
     },
+    staticPageGenerationTimeout: 180,
     trailingSlash: true,
     webpack: (config, { isServer, dev }) => {
         if (isServer && !dev) {
@@ -58,11 +59,32 @@ const configVals = {
         return config;
     },
 };
+
+const sentryWebpackPluginOptions = {
+    // Additional config options for the Sentry Webpack plugin. Keep in mind that
+    // the following options are set automatically, and overriding them is not
+    // recommended:
+    //   release, url, org, project, authToken, configFile, stripPrefix,
+    //   urlPrefix, include, ignore
+
+    silent: true, // Suppresses all logs
+    // For all available options, see:
+    // https://github.com/getsentry/sentry-webpack-plugin#options.
+};
+
 if (process.env.ANALYZE === 'true') {
     const withBundleAnalyzer = require('@next/bundle-analyzer')({
         enabled: true,
     });
     module.exports = withNextPluginPreval(withBundleAnalyzer(configVals));
 } else {
-    module.exports = withNextPluginPreval(configVals);
+    const enableSentry =
+        process.env.APP_ENV === 'dev' ||
+        process.env.APP_ENV === 'staging' ||
+        process.env.APP_ENV === 'production';
+    module.exports = withNextPluginPreval(
+        enableSentry
+            ? withSentryConfig(configVals, sentryWebpackPluginOptions)
+            : configVals
+    );
 }

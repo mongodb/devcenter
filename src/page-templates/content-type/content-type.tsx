@@ -249,7 +249,12 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             gridColumn: ['span 6', null, 'span 8', 'span 9'],
                         }}
                     >
-                        <div sx={searchBoxStyles}>
+                        <div
+                            sx={{
+                                ...searchBoxStyles,
+                                marginBottom: ['inc40', null, 'inc70'],
+                            }}
+                        >
                             <TextInput
                                 name="search-text-input"
                                 label={`Search ${pluralize(contentType)}`}
