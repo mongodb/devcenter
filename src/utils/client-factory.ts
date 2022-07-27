@@ -28,6 +28,12 @@ const clientFactory = <T extends ClientType>(
         },
     };
 
+    const defaultHeaders = new Headers();
+    defaultHeaders.append(
+        'Strapi-Token',
+        process.env.STRAPI_API_TOKEN as string
+    );
+
     switch (clientType) {
         case 'ApolloREST':
             return new ApolloClient({
@@ -37,7 +43,7 @@ const clientFactory = <T extends ClientType>(
                 link: ApolloLink.from([
                     // ordering is important
                     new RetryLink(),
-                    new RestLink({ uri }),
+                    new RestLink({ uri, headers: defaultHeaders }),
                 ]),
             }) as UnderlyingClient<T>;
 
