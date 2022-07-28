@@ -50,9 +50,6 @@ steps:
       secret_key:
         from_secret: ecr_secret_key
       values_files: ["environments/staging.yaml"]
-    when:
-      event:
-        - push
 
   - name: deploy-staging
     image: drone/cli:1.4.0-alpine
@@ -62,9 +59,6 @@ steps:
       DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
       DRONE_TOKEN:
         from_secret: drone_token
-    when:
-      event:
-      - push
 
 trigger:
   branch:
@@ -92,21 +86,6 @@ steps:
       kubernetes_token:
         from_secret: staging_kubernetes_token
       values_files: ["environments/staging.yaml"]
-
-  - name: set-release-sha
-    image: drone/cli:1.4.0-alpine
-    commands:
-    # Since drone doesn't have a way of setting and getting environment variables between steps,
-    # the usage of "secret" here is not to obfuscate the commit sha, but rather to set it when
-    # deployments are made. The secret will represent the current "release" of the application,
-    # which is the latest git sha that the live application is using. This will allow the re-build
-    # trigger to re-build based upon the last deployed git sha (which will cover rollback cases).
-    # See https://community.harness.io/t/can-you-set-env-vars-via-a-pipeline-step/11739/6
-    - drone secret update --name app_release_staging --data ${DRONE_COMMIT_SHA} mongodb/devcenter
-    environment:
-      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
-      DRONE_TOKEN:
-        from_secret: drone_token
 
 trigger:
   event:
@@ -167,9 +146,6 @@ steps:
       secret_key:
         from_secret: ecr_secret_key
       values_files: ["environments/prod.yaml"]
-    when:
-      event:
-        - push
 
 trigger:
   branch:
@@ -197,16 +173,6 @@ steps:
       kubernetes_token:
         from_secret: prod_kubernetes_token
       values_files: ["environments/prod.yaml"]
-
-  - name: set-release-sha
-    image: drone/cli:1.4.0-alpine
-    commands:
-    # See comment to similar line above regarding usage.
-    - drone secret update --name app_release_production --data ${DRONE_COMMIT_SHA} mongodb/devcenter
-    environment:
-      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
-      DRONE_TOKEN:
-        from_secret: drone_token
 
 trigger:
   event:
@@ -252,9 +218,6 @@ steps:
 
   - name: publish-staging-from-cron
     image: plugins/kaniko-ecr
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_staging
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
@@ -263,7 +226,7 @@ steps:
         - devcenter-staging-build-${DRONE_BUILD_NUMBER}
         - latest-staging
       build_args:
-      - APP_RELEASE
+      - APP_RELEASE=${DRONE_COMMIT_SHA}
       access_key:
         from_secret: ecr_access_key
       secret_key:
@@ -322,9 +285,6 @@ steps:
 
   - name: publish-prod-from-cron
     image: plugins/kaniko-ecr
-    environment:
-      APP_RELEASE:
-        from_secret: app_release_production
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
@@ -333,7 +293,7 @@ steps:
         - devcenter-prod-build-${DRONE_BUILD_NUMBER}
         - latest-prod
       build_args:
-      - APP_RELEASE
+      - APP_RELEASE=${DRONE_COMMIT_SHA}
       access_key:
         from_secret: ecr_access_key
       secret_key:
