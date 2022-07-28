@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import { ContentItem } from '../../interfaces/content-item';
 import { pillCategoryToSlug } from '../../types/pill-category';
 import { getSideNav } from '../../service/get-side-nav';
@@ -9,14 +10,21 @@ import { Crumb } from '../../components/breadcrumbs/types';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { determineVideoOrPodcast } from './content-page-template';
 import { getContentItemFromSlug } from '../../service/get-content-by-slug';
+import allContent from '../../service/get-all-content.preval';
 
 let pluralize = require('pluralize');
 
 export const getContentPageData = async (slug: string[]) => {
     const slugStr = slug.join('/');
-    const contentItem: ContentItem | null = await getContentItemFromSlug(
-        slugStr
-    );
+    let contentItem: ContentItem | null;
+
+    try {
+        contentItem = await getContentItemFromSlug(slugStr);
+    } catch (e) {
+        Sentry.captureException(e);
+        // Fallback - Pull from pre-evaluated data.
+        contentItem = allContent.filter(content => content.slug === slugStr)[0];
+    }
     if (!contentItem) return null;
 
     const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
