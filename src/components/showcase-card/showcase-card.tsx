@@ -78,7 +78,11 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
             {!!links && (
                 <div>
                     {links.map(link => (
-                        <Link key={link.text} href={getURLPath(link.url)}>
+                        <Link
+                            key={link.text}
+                            href={getURLPath(link.url)}
+                            sx={{ display: 'block' }}
+                        >
                             {link.text}
                         </Link>
                     ))}
