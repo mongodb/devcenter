@@ -8,6 +8,7 @@ env:
     REALM_API_URL: ${{ secrets.REALM_API_URL }}
     REALM_SEARCH_URL: ${{ secrets.REALM_SEARCH_URL }}
     STRAPI_URL: ${{ secrets.STRAPI_DEV_URL }}
+    STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
     DEVHUB_URL: ${{ secrets.DEVHUB_URL }}
 jobs:
     check-formatting-and-lint:
