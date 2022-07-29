@@ -12,6 +12,7 @@ envSecrets:
   REALM_API_URL: devcenter-secrets
   REALM_SEARCH_URL: devcenter-secrets
   STRAPI_URL: devcenter-secrets
+  STRAPI_API_TOKEN: devcenter-secrets
   DEVHUB_URL: devcenter-secrets
   PREVIEW_SECRET_KEY: devcenter-secrets
   PREVIEW_WEBHOOK_TOKEN: devcenter-secrets # Only production needs to have this.
