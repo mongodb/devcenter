@@ -207,6 +207,7 @@ export const descriptionStyles = (
         WebkitLineClamp: 4,
         WebkitBoxOrient: 'vertical',
         overflow: 'hidden',
+        lineBreak: 'anywhere',
     };
 };
 
