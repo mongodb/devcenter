@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { withSentry } from '@sentry/nextjs';
 import axios from 'axios';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const searchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'GET') {
         return res
             .status(405)
@@ -13,3 +14,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
     return res.status(200).json(response.data);
 };
+
+export default withSentry(searchHandler);

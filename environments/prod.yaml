@@ -3,6 +3,7 @@ service:
   targetPort: 3000
 
 env:
+  APP_ENV: production
   HOST_URL: www.mongodb.com
 
 envSecrets:
@@ -11,11 +12,14 @@ envSecrets:
   REALM_API_URL: devcenter-secrets
   REALM_SEARCH_URL: devcenter-secrets
   STRAPI_URL: devcenter-secrets
+  STRAPI_API_TOKEN: devcenter-secrets
   DEVHUB_URL: devcenter-secrets
   PREVIEW_SECRET_KEY: devcenter-secrets
   PREVIEW_WEBHOOK_TOKEN: devcenter-secrets # Only production needs to have this.
   PROMETHEUS_AUTH_USER: devcenter-secrets
   PROMETHEUS_AUTH_PASS: devcenter-secrets
+  SENTRY_AUTH_TOKEN: devcenter-secrets
+  SENTRY_DSN: devcenter-secrets
 
 autoscaling:
   minReplicas: 2

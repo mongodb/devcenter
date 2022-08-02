@@ -44,3 +44,7 @@ export interface SearchItem {
     date: string;
     tags: Tag[];
 }
+
+// add back when Most Popular is implemented
+// export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
+export type SortByType = 'Most Recent' | 'Highest Rated';

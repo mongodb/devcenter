@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
+import { getSession, SessionProvider } from 'next-auth/react';
+import App from 'next/app';
+import { Session } from 'next-auth';
 import type { AppContext, AppInitialProps, AppProps } from 'next/app';
 import Head from 'next/head';
 import getConfig from 'next/config';
@@ -8,9 +11,7 @@ import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
-import { getSession, SessionProvider } from 'next-auth/react';
-import App from 'next/app';
-import { Session } from 'next-auth';
+import ErrorBoundary from '../components/error-boundary';
 
 const CONTENT_ROUTE = '/[...slug]';
 
@@ -77,7 +78,9 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
             <SessionProvider session={session} refetchInterval={0}>
                 <ThemeProvider theme={theme}>
                     <Layout>
-                        <Component {...pageProps} />
+                        <ErrorBoundary>
+                            <Component {...pageProps} />
+                        </ErrorBoundary>
                     </Layout>
                 </ThemeProvider>
             </SessionProvider>
