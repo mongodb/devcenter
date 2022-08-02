@@ -1,4 +1,6 @@
+import * as Sentry from '@sentry/nextjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import getDynamicPaths from '../../service/get-dynamic-paths';
 
 const revalidateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { body } = req;
@@ -7,12 +9,19 @@ const revalidateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (token !== process.env.REVALIDATE_TOKEN) return res.status(401);
 
     try {
-        // this should be the actual path not a rewritten path
-        // e.g. for "/blog/[slug]" this should be "/blog/post-1"
-        await res.revalidate(body.slug);
+        if (body.slug) {
+            await res.unstable_revalidate(`/developer${body.slug}`);
+        } else if (body.all) {
+            const dynamicPaths = await getDynamicPaths();
+            for (const path of dynamicPaths) {
+                const { params } = path;
+                const slug = params.slug.join('/');
+                await res.unstable_revalidate(`/developer/${slug}`);
+            }
+        }
         return res.json({ revalidated: true });
     } catch (err) {
-        console.log(err);
+        Sentry.captureException(err);
         // If there was an error, Next.js will continue
         // to show the last successfully generated page
         return res.status(500).send('Error revalidating');
