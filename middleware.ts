@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { rewrites } from '../../config/rewrites';
-import { logRequestData } from '../utils/logger';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { rewrites } from './config/rewrites';
+import { logRequestData } from './src/utils/logger';
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
@@ -23,8 +24,9 @@ export async function middleware(req: NextRequest) {
         if (
             origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
         ) {
+            const userAgent: any = req.ua;
             console.log(
-                `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
+                `${req.ip} blocked because of bad user agent (${userAgent?.browser?.name}) or origin (${origin})`
             );
             const res = new NextResponse(
                 JSON.stringify({
@@ -88,7 +90,7 @@ export async function middleware(req: NextRequest) {
     // existing issue with SSG and dynamic routing
     // when using built-in rewrites configuration.
     for (const rewrite of rewrites) {
-        let destination = null;
+        let destination: string | null = null;
 
         if (rewrite.regex) {
             const regex = new RegExp(rewrite.regex);
