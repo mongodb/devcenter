@@ -15,13 +15,13 @@ const revalidateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
         if (body.slug) {
-            await res.unstable_revalidate(`/developer${body.slug}`);
+            await res.revalidate(`/developer${body.slug}`);
         } else if (body.all) {
             const dynamicPaths = await getDynamicPaths();
             for (const path of dynamicPaths) {
                 const { params } = path;
                 const slug = params.slug.join('/');
-                await res.unstable_revalidate(`/developer/${slug}`);
+                await res.revalidate(`/developer/${slug}`);
             }
         }
         return res.json({ revalidated: true });
