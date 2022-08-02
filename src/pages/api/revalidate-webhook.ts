@@ -3,10 +3,15 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import getDynamicPaths from '../../service/get-dynamic-paths';
 
 const revalidateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+    if (req.method !== 'POST') {
+        return res.status(405).send('Method not allowed');
+    }
+
     const { body } = req;
-    if (!req.headers.authorization) return res.status(401);
+    if (!req.headers.authorization) return res.status(401).send('Unauthorized');
     const token = req.headers.authorization.replace('Bearer ', '').trim();
-    if (token !== process.env.REVALIDATE_TOKEN) return res.status(401);
+    if (token !== process.env.REVALIDATE_TOKEN)
+        return res.status(401).send('Unauthorized');
 
     try {
         if (body.slug) {
