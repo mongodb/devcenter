@@ -42,7 +42,7 @@ const revalidateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         const baseUrl = '/developer';
         const slug = body.slug.endsWith('/') ? body.slug : body.slug + '/';
 
-        logger.info('Revalidating ', slug);
+        logger.info(`Revalidating ${slug}`);
 
         await res.revalidate(`${baseUrl}${slug}`);
         return res.json({ revalidated: true });
