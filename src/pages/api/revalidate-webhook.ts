@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import logger from '../../utils/logger';
 import rateLimit from '../../utils/rate-limit';
 
 const limiter = rateLimit({
@@ -38,7 +39,12 @@ const revalidateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     try {
-        await res.revalidate(`/developer${body.slug}`);
+        const baseUrl = '/developer';
+        const slug = body.slug.endsWith('/') ? body.slug : body.slug + '/';
+
+        logger.info('Revalidating ', slug);
+
+        await res.revalidate(`${baseUrl}${slug}`);
         return res.json({ revalidated: true });
     } catch (err) {
         Sentry.captureException(err);
