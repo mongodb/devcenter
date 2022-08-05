@@ -1,9 +1,9 @@
 import preval from 'next-plugin-preval';
-import { Featured } from '../interfaces/featured';
-import { getAllFeatured } from './get-all-featured';
+import { STRAPI_CLIENT } from '../config/api-client';
+import { getAllFeaturedInfoFromAPI } from '../api-requests/get-all-featured';
 
-export const getData = async (): Promise<Featured> => {
-    const data = await getAllFeatured();
+export const getData = async (): Promise<any> => {
+    const data = await getAllFeaturedInfoFromAPI(STRAPI_CLIENT);
     return data;
 };
 

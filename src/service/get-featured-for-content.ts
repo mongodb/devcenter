@@ -3,9 +3,10 @@ import { getFeaturedForTopic } from './get-featured-for-topic';
 
 export const getFeaturedForContent = async (
     content: ContentItem[],
-    topicSlug: string
+    topicSlug: string,
+    fromStatic?: boolean
 ) => {
-    const allFeatured = await getFeaturedForTopic(topicSlug);
+    const allFeatured = await getFeaturedForTopic(topicSlug, fromStatic);
     const flattenedAllFeatured = Object.values(allFeatured).flat();
     let featured = content
         .filter(item =>

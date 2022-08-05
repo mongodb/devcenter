@@ -258,21 +258,8 @@ interface IParams extends ParsedUrlQuery {
 } // Need this to avoid TS errors.
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    let paths: any[] = [];
-
-    const authors: Author[] = await getAllAuthors();
-
-    for (const author of authors) {
-        const parsedSlug = author.calculated_slug.startsWith('/')
-            ? author.calculated_slug.substring(1).split('/')
-            : author.calculated_slug.split('/');
-        const authorPath = parsedSlug[parsedSlug.length - 1];
-        paths = paths.concat({
-            params: { slug: [authorPath] },
-        });
-    }
-
-    return { paths, fallback: false };
+    // All author pages ([...slug.tsx]) are not generated at build time.
+    return { paths: [], fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -323,5 +310,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         calculated_slug: author.calculated_slug,
     };
 
-    return { props: data };
+    return { props: data, revalidate: 300 };
 };

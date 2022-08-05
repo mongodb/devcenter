@@ -1,9 +1,9 @@
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
-import allContent from './get-all-content.preval';
 import { ContentItem } from '../interfaces/content-item';
 
 export const getSideNav = async (
-    inputSlug: string
+    inputSlug: string,
+    allContent: ContentItem[]
 ): Promise<TertiaryNavItem[]> => {
     const tertiaryNavItems: TertiaryNavItem[] = [];
     const contents: ContentItem[] = allContent;

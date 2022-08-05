@@ -1,4 +1,5 @@
 import { Crumb } from './types';
+import { MetaInfo } from '../../interfaces/meta-info';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 
 const categoryToCrumb: { [key: string]: Crumb } = {
@@ -8,7 +9,8 @@ const categoryToCrumb: { [key: string]: Crumb } = {
 };
 
 export const getBreadcrumbsFromSlug = async (
-    slug: string
+    slug: string,
+    allMetaInfoResponse?: MetaInfo | null
 ): Promise<Crumb[]> => {
     const crumbs: Crumb[] = [
         { text: 'MongoDB Developer Center', url: '/' },
@@ -25,7 +27,9 @@ export const getBreadcrumbsFromSlug = async (
 
     for (let i = 2; i < slugList.length; i++) {
         const crumbSlug = '/' + slugList.slice(0, i).join('/');
-        const metaInfoForTopic = await getMetaInfoForTopic(crumbSlug);
+        const metaInfoForTopic = allMetaInfoResponse
+            ? allMetaInfoResponse
+            : await getMetaInfoForTopic(crumbSlug);
         if (metaInfoForTopic?.tagName) {
             crumbs.push({ text: metaInfoForTopic.tagName, url: crumbSlug });
         }

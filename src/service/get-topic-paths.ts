@@ -1,4 +1,6 @@
 import distinctTags from '../service/get-distinct-tags.preval';
+import allContentPreval from '../service/get-all-content.preval';
+
 import { getSideNav } from '../service/get-side-nav';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import { L1L2_TOPIC_PAGE_TYPES } from '../data/constants';
@@ -25,7 +27,10 @@ export const getTopicPagePathMappings = async () => {
             fullSlug: fullSlug,
         };
 
-        const tertiaryNavItems = await getSideNav(distinctSlug);
+        const tertiaryNavItems = await getSideNav(
+            distinctSlug,
+            allContentPreval
+        );
 
         tertiaryNavItems.forEach((item: TertiaryNavItem) => {
             const parsedItemUrl = item.url.startsWith('/')
