@@ -18,6 +18,9 @@ async function buildRssFeed(baseUrl) {
         },
     });
 
+    // We don't use axios here due to a bug in axios where
+    // it cannot always handle responses with long content lengths.
+    // Issue referenced in https://github.com/axios/axios/issues/4806.
     https
         .get(
             `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`,
