@@ -1,10 +1,12 @@
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
+import * as Sentry from '@sentry/nextjs';
 import { ParsedUrlQuery } from 'querystring';
-import { getAuthor, getAllAuthors } from '../../service/get-all-authors';
+import { getAuthor } from '../../service/get-all-authors';
+import allAuthorsPreval from '../../service/get-all-authors.preval';
 import { Author, Image } from '../../interfaces/author';
 import { flattenTags } from '../../utils/flatten-tags';
-import { Button, GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
+import { GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
 import Card, { getCardProps } from '../../components/card';
 import { ContentItem } from '../../interfaces/content-item';
 import { Grid } from 'theme-ui';
@@ -258,28 +260,24 @@ interface IParams extends ParsedUrlQuery {
 } // Need this to avoid TS errors.
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    let paths: any[] = [];
-
-    const authors: Author[] = await getAllAuthors();
-
-    for (const author of authors) {
-        const parsedSlug = author.calculated_slug.startsWith('/')
-            ? author.calculated_slug.substring(1).split('/')
-            : author.calculated_slug.split('/');
-        const authorPath = parsedSlug[parsedSlug.length - 1];
-        paths = paths.concat({
-            params: { slug: [authorPath] },
-        });
-    }
-
-    return { paths, fallback: false };
+    // All author pages ([...slug.tsx]) are not generated at build time.
+    return { paths: [], fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params as IParams;
     const slugString = '/author/' + slug[0];
 
-    const author: Author | null = await getAuthor(slugString);
+    let author: Author | null;
+    try {
+        author = await getAuthor(slugString);
+    } catch (e) {
+        Sentry.captureException(e);
+        author = allAuthorsPreval.filter(
+            a => a.calculated_slug === slugString
+        )[0];
+    }
+
     if (!author) {
         return {
             notFound: true,
@@ -323,5 +321,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         calculated_slug: author.calculated_slug,
     };
 
-    return { props: data };
+    return { props: data, revalidate: 900 };
 };

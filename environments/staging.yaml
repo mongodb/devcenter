@@ -19,6 +19,7 @@ envSecrets:
   PROMETHEUS_AUTH_PASS: devcenter-secrets
   SENTRY_AUTH_TOKEN: devcenter-secrets
   SENTRY_DSN: devcenter-secrets
+  REVALIDATE_TOKEN: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
