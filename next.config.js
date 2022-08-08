@@ -7,8 +7,14 @@ const pageDescriptions = require('./config/seo/descriptions.json');
 const { buildRssFeed } = require('./src/scripts/build-rss-feed.js');
 
 const hostUrl = process.env.HOST_URL;
-const httpProtocol = hostUrl == 'localhost:3000' ? 'http' : 'https';
+const httpProtocol = [
+    'localhost:3000',
+    'devcenter-local.mongodb.com:3000',
+].includes(hostUrl)
+    ? 'http'
+    : 'https';
 const basePath = '/developer';
+const accountPortalUrl = process.env.ACCOUNT_PORTAL;
 
 const configVals = {
     basePath: basePath,
@@ -18,8 +24,6 @@ const configVals = {
     },
     compiler: {
         styledComponents: true,
-    },
-    experimental: {
         emotion: true,
     },
     async headers() {
@@ -46,6 +50,7 @@ const configVals = {
     redirects: redirects,
     publicRuntimeConfig: {
         absoluteBasePath: `${httpProtocol}://${hostUrl}${basePath}`,
+        accountPortalUrl: accountPortalUrl,
         pageDescriptions: pageDescriptions, //TODO: Move to CMS
     },
     staticPageGenerationTimeout: 180,
