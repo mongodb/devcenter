@@ -1,7 +1,6 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { rewrites } from '../config/rewrites';
-import { logRequestData } from './utils/logger';
+import { NextRequest, NextResponse } from 'next/server';
+import { rewrites } from '../../config/rewrites';
+import { logRequestData } from '../utils/logger';
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
@@ -29,11 +28,18 @@ export async function middleware(req: NextRequest) {
             console.log(
                 `${req.ip} blocked because of bad user agent (${userAgent?.browser?.name}) or origin (${origin})`
             );
+            const res = new NextResponse(
+                JSON.stringify({
+                    error: { message: 'Something went wrong' },
+                }),
+                {
+                    status: 500,
+                    headers,
+                }
+            );
 
-            // See https://nextjs.org/docs/messages/returning-response-body-in-middleware
-            req.nextUrl.pathname = '/_error/';
-            logRequestData(pathname, req.method, 500);
-            return NextResponse.redirect(req.nextUrl);
+            logRequestData(pathname, req.method, res.status);
+            return res;
         }
         const res = NextResponse.next();
         for (const key in headers) {
