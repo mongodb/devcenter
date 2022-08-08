@@ -29,18 +29,11 @@ export async function middleware(req: NextRequest) {
             console.log(
                 `${req.ip} blocked because of bad user agent (${userAgent?.browser?.name}) or origin (${origin})`
             );
-            const res = new NextResponse(
-                JSON.stringify({
-                    error: { message: 'Something went wrong' },
-                }),
-                {
-                    status: 500,
-                    headers,
-                }
-            );
 
-            logRequestData(pathname, req.method, res.status);
-            return res;
+            // See https://nextjs.org/docs/messages/returning-response-body-in-middleware
+            req.nextUrl.pathname = '/_error/';
+            logRequestData(pathname, req.method, 500);
+            return NextResponse.redirect(req.nextUrl);
         }
         const res = NextResponse.next();
         for (const key in headers) {
