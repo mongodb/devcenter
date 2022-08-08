@@ -19,7 +19,11 @@ async function buildRssFeed(baseUrl) {
     });
 
     const posts = await axios.get(
-        `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`
+        `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`,
+        {
+            maxContentLength: 1104857600,
+            maxBodyLength: 1104857600,
+        }
     );
 
     posts.data.forEach(post => {
