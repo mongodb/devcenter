@@ -6,7 +6,11 @@ interface Props {
 }
 
 const Home: NextPage<Props> = props => {
-    return <>This is home</>;
+    const { session } = props;
+    if (session && session.user) {
+        return <>Welcome {session.user.name}!</>;
+    }
+    return <>Logged Out Home</>;
 };
 
 export default Home;

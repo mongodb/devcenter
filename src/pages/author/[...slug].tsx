@@ -1,10 +1,10 @@
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 import { ParsedUrlQuery } from 'querystring';
-import { getAuthor, getAllAuthors } from '../../service/get-all-authors';
+import { getAuthor } from '../../service/get-all-authors';
 import { Author, Image } from '../../interfaces/author';
 import { flattenTags } from '../../utils/flatten-tags';
-import { Button, GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
+import { GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
 import Card, { getCardProps } from '../../components/card';
 import { ContentItem } from '../../interfaces/content-item';
 import { Grid } from 'theme-ui';
@@ -30,10 +30,6 @@ interface AuthorPageProps {
 
 const middleSectionStyles = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', '3 /span 9'],
-};
-const eyebrowStyles = {
-    gridColumn: ['span 6', null, 'span 8', 'span 12'],
-    marginBottom: ['inc70', null, null, 'inc100'],
 };
 
 const contentStyles = {

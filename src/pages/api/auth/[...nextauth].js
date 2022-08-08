@@ -1,7 +1,9 @@
 import OktaProvider from 'next-auth/providers/okta';
+// import type { NextAuthOptions } from "next-auth";
+// import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 
-const options = {
+export const nextAuthOptions = {
     providers: [
         OktaProvider({
             clientId: process.env.OKTA_CLIENT_ID,
@@ -12,22 +14,38 @@ const options = {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         jwt: async ({ token, account, profile, session }) => {
+            console.log('jwt');
+            console.log(token, account, profile, session);
             return token;
         },
         session: async ({ session, user, token }) => {
-            console.log(session);
+            console.log('session');
+            console.log(session, user, token);
             return session;
         },
-        redirect: async ({ url, baseUrl }) => {
-            const basePath = '/developer';
-            if (url.endsWith('/developer')) {
-                return url;
+        signIn: async ({ user, account, profile, email, credentials }) => {
+            console.log(
+                'signInCallback',
+                user,
+                account,
+                profile,
+                email,
+                credentials
+            );
+            const isAllowedToSignIn = true;
+            if (isAllowedToSignIn) {
+                console.log('isAllowedToSignIn');
+                return true;
+            } else {
+                // Return false to display a default error message
+                return false;
+                // Or you can return a URL to redirect to:
+                // return '/unauthorized'
             }
-            return `${url}${basePath}`;
         },
     },
 };
 
-export default async function handler(req, res) {
-    await NextAuth(req, res, options);
+export default async function nextAuthHandler(req, res) {
+    await NextAuth(req, res, nextAuthOptions);
 }

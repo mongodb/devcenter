@@ -75,15 +75,19 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 `,
                 }}
             />
-            <SessionProvider session={session} refetchInterval={0}>
-                <ThemeProvider theme={theme}>
-                    <Layout>
+            <ThemeProvider theme={theme}>
+                <SessionProvider
+                    session={session}
+                    basePath="/developer/api/auth/"
+                    refetchInterval={0}
+                >
+                    <Layout pagePath={asPath}>
                         <ErrorBoundary>
                             <Component {...pageProps} />
                         </ErrorBoundary>
                     </Layout>
-                </ThemeProvider>
-            </SessionProvider>
+                </SessionProvider>
+            </ThemeProvider>
         </>
     );
 }
