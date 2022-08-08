@@ -17,8 +17,10 @@ const configVals = {
         domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
     },
     compiler: {
-        emotion: true,
         styledComponents: true,
+    },
+    experimental: {
+        emotion: true,
     },
     async headers() {
         return [
