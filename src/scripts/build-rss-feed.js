@@ -21,8 +21,8 @@ async function buildRssFeed(baseUrl) {
     const posts = await axios.get(
         `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`,
         {
-            maxContentLength: Infinity,
-            maxBodyLength: Infinity,
+            maxContentLength: 104857600,
+            maxBodyLength: 104857600,
         }
     );
 
