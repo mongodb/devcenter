@@ -2,6 +2,7 @@ import React from 'react';
 
 interface IProps {
     children: React.ReactNode;
+    linkClassName: string;
 }
 const StyledList = {
     paddingLeft: 0,
@@ -10,8 +11,15 @@ const StyledList = {
     minHeight: [null, null, null, null, '37px'],
 };
 
-const SecondaryLinksList: React.FunctionComponent<IProps> = ({ children }) => {
-    return <li sx={StyledList}>{children}</li>;
+const SecondaryLinksList: React.FunctionComponent<IProps> = ({
+    children,
+    linkClassName,
+}) => {
+    return (
+        <li className={linkClassName} sx={StyledList}>
+            {children}
+        </li>
+    );
 };
 
 export default SecondaryLinksList;
