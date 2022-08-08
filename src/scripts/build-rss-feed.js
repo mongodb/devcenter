@@ -18,24 +18,23 @@ async function buildRssFeed(baseUrl) {
         },
     });
 
-    const posts = await axios.get(
-        `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`,
-        {
-            maxContentLength: Infinity,
-            maxBodyLength: Infinity,
-        }
-    );
-
-    posts.data.forEach(post => {
-        const url = `${baseUrl}${post.slug}`;
-        feed.addItem({
-            title: post.name,
-            id: url,
-            link: url,
-            description: post.description,
-            date: new Date(post.date),
+    axios
+        .get(`${process.env.REALM_SEARCH_URL}/search_devcenter?s=`)
+        .then(res => {
+            res.data.forEach(post => {
+                const url = `${baseUrl}${post.slug}`;
+                feed.addItem({
+                    title: post.name,
+                    id: url,
+                    link: url,
+                    description: post.description,
+                    date: new Date(post.date),
+                });
+            });
+        })
+        .catch(error => {
+            console.error(error);
         });
-    });
 
     fs.writeFileSync('public/rss.xml', feed.rss2());
 }
