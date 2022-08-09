@@ -1,9 +1,8 @@
 import OktaProvider from 'next-auth/providers/okta';
 import type { NextAuthOptions } from 'next-auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { BASE_PATH } from '../../../utils/format-url-path';
 import NextAuth from 'next-auth';
-
-const PROFILE_URL = `${process.env.OKTA_ISSUER}/api/v1/users/me`;
 
 export const nextAuthOptions: NextAuthOptions = {
     providers: [
@@ -31,13 +30,28 @@ export const nextAuthOptions: NextAuthOptions = {
             return token;
         },
         session: async ({ session, user, token }) => {
-            // Send properties to the client, like an access_token from a provider.
-            // session.accessToken = token.accessToken;
             session.firstName = token.firstName;
             session.lastName = token.lastName;
             session.email = token.email;
             return session;
         },
+        redirect: async ({ url, baseUrl }) => {
+            if (url == '/logout') {
+                // Redirect to account portal.
+                return `${process.env.ACCOUNT_PORTAL}?signedOut=true`;
+            }
+
+            // Allows relative callback URLs, automatically adding basePath where needed.
+            if (url.startsWith(BASE_PATH)) {
+                return `${baseUrl}${url}`;
+            } else if (url.startsWith('/')) {
+                return `${baseUrl}${BASE_PATH}${url}`;
+            }
+            // Allows callback URLs on the same origin
+            else if (new URL(url).origin === baseUrl) return url;
+            return baseUrl;
+        },
+        // #TODO: rate limit?
         // signIn: async ({ user, account, profile, email, credentials }) => {
         //     console.log(
         //         'signInCallback',

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
@@ -301,16 +301,17 @@ const MobileViewL1ProductLinks = ({
 };
 
 const MobileView = () => {
-    const { data: session, status } = useSession();
-    console.log('MobileView', session);
+    const { data: session } = useSession();
+    const account = session
+        ? {
+              firstName: session.firstName,
+              lastName: session.lastName,
+              email: session.email,
+          }
+        : null;
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
     const openMobileMenu = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);
-    };
-    const account = {
-        firstName: 'Amanda',
-        lastName: 'Henri',
-        email: 'ajhenri@mongodb.com',
     };
     return (
         <div
@@ -411,15 +412,21 @@ const MobileView = () => {
                     </SecondaryLinksList>
                 ))}
             </ul>
-            <div sx={userMenuStyles} className="secondary-nav-user-menu-mobile">
-                {account && (
+            {account && (
+                <div
+                    sx={userMenuStyles}
+                    className="secondary-nav-user-menu-mobile"
+                >
                     <UserMenu
                         account={account}
                         activePlatform="devHub"
-                        onLogout={() => (window.location.href = '/logout')}
+                        onLogout={e => {
+                            e.preventDefault();
+                            signOut({ callbackUrl: '/logout' });
+                        }}
                     />
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };

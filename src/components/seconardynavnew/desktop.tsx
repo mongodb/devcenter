@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
 import { ThemeUIStyleObject } from 'theme-ui';
@@ -82,13 +82,14 @@ const FloraLinkStyles = (isActive: boolean) => ({
 });
 
 const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
-    const { data: session, status } = useSession();
-    console.log('DesktopView', session);
-    const account = {
-        firstName: 'Amanda',
-        lastName: 'Henri',
-        email: 'ajhenri@mongodb.com',
-    };
+    const { data: session } = useSession();
+    const account = session
+        ? {
+              firstName: session.firstName,
+              lastName: session.lastName,
+              email: session.email,
+          }
+        : null;
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(isOpen => !isOpen);
@@ -240,20 +241,21 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             )}
                         </SecondaryLinksList>
                     ))}
-                    <SecondaryLinksList
-                        linkClassName="secondary-nav-user-menu"
-                        key="userMenu"
-                    >
-                        {account && (
+                    {account && (
+                        <SecondaryLinksList
+                            linkClassName="secondary-nav-user-menu"
+                            key="userMenu"
+                        >
                             <UserMenu
                                 account={account}
                                 activePlatform="devHub"
-                                onLogout={() =>
-                                    (window.location.href = '/logout')
-                                }
+                                onLogout={e => {
+                                    e.preventDefault();
+                                    signOut({ callbackUrl: '/logout' });
+                                }}
                             />
-                        )}
-                    </SecondaryLinksList>
+                        </SecondaryLinksList>
+                    )}
                 </ul>
             </nav>
         </div>
