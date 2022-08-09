@@ -67,6 +67,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             pageData: data,
             pageType: pageType,
         },
-        revalidate: 300,
+        revalidate: 900,
     };
 };

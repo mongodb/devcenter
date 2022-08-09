@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { rewrites } from './config/rewrites';
-import { logRequestData } from './src/utils/logger';
+import { NextRequest, NextResponse } from 'next/server';
+import { rewrites } from '../../config/rewrites';
+import { logRequestData } from '../utils/logger';
 
 export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
+
     const origin = req.headers.get('Origin') || '';
 
     const host = process.env.VERCEL_URL
