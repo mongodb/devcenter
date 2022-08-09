@@ -299,7 +299,7 @@ const MobileViewL1ProductLinks = ({
     );
 };
 
-const MobileView = () => {
+const MobileView = ({ session }: { session: any }) => {
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
     const openMobileMenu = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);

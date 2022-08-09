@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
-import type { AppProps } from 'next/app';
+import App from 'next/app';
+import type { AppProps, AppContext, AppInitialProps } from 'next/app';
 import Head from 'next/head';
 import getConfig from 'next/config';
+import { Session } from 'next-auth';
+import { SessionProvider, getSession } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
@@ -12,7 +15,15 @@ import ErrorBoundary from '../components/error-boundary';
 
 const CONTENT_ROUTE = '/[...slug]';
 
-function MyApp({ Component, pageProps }: AppProps) {
+interface CustomProps {
+    session: Session;
+}
+
+function MyApp({
+    Component,
+    pageProps: { session, ...pageProps },
+}: AppProps & CustomProps) {
+    console.log('MyApp', session);
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { asPath, route } = router;
@@ -69,15 +80,29 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
                 }}
             />
-            <ThemeProvider theme={theme}>
-                <Layout>
-                    <ErrorBoundary>
-                        <Component {...pageProps} />
-                    </ErrorBoundary>
-                </Layout>
-            </ThemeProvider>
+            <SessionProvider
+                session={session}
+                basePath="/developer/api/auth/"
+                refetchInterval={0}
+            >
+                <ThemeProvider theme={theme}>
+                    <Layout>
+                        <ErrorBoundary>
+                            <Component {...pageProps} />
+                        </ErrorBoundary>
+                    </Layout>
+                </ThemeProvider>
+            </SessionProvider>
         </>
     );
 }
+
+MyApp.getInitialProps = async (
+    appContext: AppContext
+): Promise<AppInitialProps & CustomProps> => {
+    const appProps = await App.getInitialProps(appContext);
+    const session = (await getSession(appContext.ctx)) as Session;
+    return { ...appProps, session };
+};
 
 export default MyApp;
