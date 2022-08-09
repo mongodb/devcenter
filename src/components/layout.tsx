@@ -1,14 +1,14 @@
 import React from 'react';
 import { Global } from '@emotion/react';
 import getConfig from 'next/config';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { UnifiedFooter } from '@mdb/consistent-nav';
 import { globalStyles, Main } from '../styled/layout';
 import { UnifiedNavCustom } from '../styled/consistent-nav';
 import SecondaryNav from './seconardynavnew/';
 
 interface LayoutProps {
-    pagePath?: string;
+    pagePath?: string | null;
 }
 
 const Layout: React.FunctionComponent<LayoutProps> = ({

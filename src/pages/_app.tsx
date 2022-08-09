@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const { publicRuntimeConfig } = getConfig();
     const { asPath, route } = router;
 
+    let pagePath = route === '/_error' ? null : asPath;
     let pageDescription = null;
     if (asPath in publicRuntimeConfig.pageDescriptions) {
         pageDescription = publicRuntimeConfig.pageDescriptions[asPath];
@@ -82,7 +83,7 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 refetchInterval={0}
             >
                 <ThemeProvider theme={theme}>
-                    <Layout>
+                    <Layout pagePath={pagePath}>
                         <ErrorBoundary>
                             <Component {...pageProps} />
                         </ErrorBoundary>

@@ -1,22 +1,42 @@
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { signIn, useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { getURLPath } from '../../utils/format-url-path';
+import { thumbnailLoader } from '../../components/card/utils';
 
 export default function Signin() {
     const router = useRouter();
     const { query } = router;
     const { status } = useSession();
 
-    console.log(query);
+    const callbackUrl = getURLPath(
+        query.fromPagePath && typeof query.fromPagePath == 'string'
+            ? query.fromPagePath
+            : '/'
+    );
 
     useEffect(() => {
-        console.log('status', status);
         if (status === 'unauthenticated') {
-            signIn('okta');
+            signIn('okta', { callbackUrl: callbackUrl });
         } else if (status === 'authenticated') {
-            router.push('/test');
+            router.push(callbackUrl as string);
         }
-    }, [router, status]);
+    }, [callbackUrl, router, status]);
 
-    return <div>Signing in... {status}</div>;
+    const isLoading = status !== 'authenticated';
+    return (
+        <div>
+            Signing in... {status}
+            {isLoading && (
+                <Image
+                    loader={thumbnailLoader}
+                    alt="Loading..."
+                    width={116}
+                    height={116}
+                    src={getURLPath('/loading-animation.gif') as string}
+                />
+            )}
+        </div>
+    );
 }
