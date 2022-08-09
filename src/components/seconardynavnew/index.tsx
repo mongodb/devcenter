@@ -3,7 +3,7 @@ import DesktopView from './desktop';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-const SecondaryNav = ({ session }: { session: any }) => {
+const SecondaryNav = () => {
     const [activePath, setActivePath] = useState<string>();
     const { isReady, asPath } = useRouter();
     useEffect(() => {
@@ -14,8 +14,8 @@ const SecondaryNav = ({ session }: { session: any }) => {
 
     return (
         <>
-            <MobileView session={session} />
-            <DesktopView session={session} activePath={activePath} />
+            <MobileView />
+            <DesktopView activePath={activePath} />
         </>
     );
 };

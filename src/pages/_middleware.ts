@@ -1,8 +1,9 @@
+import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
 import { logRequestData } from '../utils/logger';
 
-export async function middleware(req: NextRequest) {
+const middleware = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;
 
     const origin = req.headers.get('Origin') || '';
@@ -113,4 +114,16 @@ export async function middleware(req: NextRequest) {
     const res = NextResponse.next();
     logRequestData(pathname, req.method, res.status);
     return res;
-}
+};
+
+export default withAuth(middleware, {
+    pages: {
+        signIn: '/auth/signin',
+    },
+    callbacks: {
+        authorized: ({ token }) => {
+            console.log('withAuth', token);
+            return true;
+        },
+    },
+});

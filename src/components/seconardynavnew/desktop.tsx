@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
 import { ThemeUIStyleObject } from 'theme-ui';
@@ -80,15 +81,9 @@ const FloraLinkStyles = (isActive: boolean) => ({
     },
 });
 
-const DesktopView = ({
-    activePath,
-    session,
-}: {
-    activePath: string | undefined;
-    session: any;
-}) => {
-    console.log('DesktopView session', session);
-
+const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
+    const { data: session, status } = useSession();
+    console.log('DesktopView', session);
     const account = {
         firstName: 'Amanda',
         lastName: 'Henri',

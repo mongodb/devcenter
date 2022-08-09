@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
@@ -299,7 +300,9 @@ const MobileViewL1ProductLinks = ({
     );
 };
 
-const MobileView = ({ session }: { session: any }) => {
+const MobileView = () => {
+    const { data: session, status } = useSession();
+    console.log('MobileView', session);
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
     const openMobileMenu = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);

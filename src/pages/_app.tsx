@@ -19,11 +19,7 @@ interface CustomProps {
     session: Session;
 }
 
-function MyApp({
-    Component,
-    pageProps: { session, ...pageProps },
-}: AppProps & CustomProps) {
-    console.log('MyApp', session);
+function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { asPath, route } = router;

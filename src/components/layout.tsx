@@ -1,7 +1,7 @@
 import React from 'react';
 import { Global } from '@emotion/react';
 import getConfig from 'next/config';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { UnifiedFooter } from '@mdb/consistent-nav';
 import { globalStyles, Main } from '../styled/layout';
 import { UnifiedNavCustom } from '../styled/consistent-nav';
@@ -16,7 +16,8 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     pagePath,
 }) => {
     const { data: session, status } = useSession();
-    console.log('Layout', session);
+    console.log('Layout');
+    console.log(session);
     console.log(status);
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath, accountPortalUrl } = publicRuntimeConfig;
@@ -43,7 +44,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
                 hideSignIn={!!session}
                 signInUrl={signInUrl}
             />
-            <SecondaryNav session={session} />
+            <SecondaryNav />
             <Main>{children}</Main>
             <UnifiedFooter hideLocale />
         </>

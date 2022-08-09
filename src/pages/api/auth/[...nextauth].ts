@@ -13,22 +13,29 @@ export const nextAuthOptions: NextAuthOptions = {
             issuer: process.env.OKTA_ISSUER,
         }),
     ],
+    session: {
+        strategy: 'jwt',
+    },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         jwt: async ({ token, account, profile }) => {
-            console.log('jwt');
-            console.log(token, account, profile);
             // Persist the OAuth access_token to the token right after signin
             if (account) {
                 token.accessToken = account.access_token;
             }
+            if (profile) {
+                token.firstName = profile.firstName;
+                token.lastName = profile.lastName;
+                token.email = profile.email;
+            }
             return token;
         },
         session: async ({ session, user, token }) => {
-            console.log('session');
-            console.log(session, user, token);
             // Send properties to the client, like an access_token from a provider.
-            session.accessToken = token.accessToken;
+            // session.accessToken = token.accessToken;
+            session.firstName = token.firstName;
+            session.lastName = token.lastName;
+            session.email = token.email;
             return session;
         },
         // signIn: async ({ user, account, profile, email, credentials }) => {
