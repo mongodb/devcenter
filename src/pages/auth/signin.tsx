@@ -26,8 +26,12 @@ export default function Signin() {
 
     const isLoading = status !== 'authenticated';
     return (
-        <div>
-            Signing in... {status}
+        <div
+            style={{
+                textAlign: 'center',
+                padding: '5%',
+            }}
+        >
             {isLoading && (
                 <Image
                     loader={thumbnailLoader}
@@ -37,6 +41,7 @@ export default function Signin() {
                     src={getURLPath('/loading-animation.gif') as string}
                 />
             )}
+            <div>Signing in...</div>
         </div>
     );
 }
