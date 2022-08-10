@@ -15,10 +15,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     children,
     pagePath,
 }) => {
-    const { data: session, status } = useSession();
-    console.log('Layout');
-    console.log(session);
-    console.log(status);
+    const { data: session } = useSession();
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath, accountPortalUrl } = publicRuntimeConfig;
 

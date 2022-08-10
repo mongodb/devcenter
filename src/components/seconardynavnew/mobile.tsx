@@ -422,7 +422,7 @@ const MobileView = () => {
                         activePlatform="devHub"
                         onLogout={e => {
                             e.preventDefault();
-                            signOut({ callbackUrl: '/logout' });
+                            signOut({ callbackUrl: '/developer/api/logout/' });
                         }}
                     />
                 </div>
