@@ -5,7 +5,7 @@ service:
 env:
   ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
   APP_ENV: staging
-  HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+  HOST_URL: devcenter-frontend-sso.devrel.staging.corp.mongodb.com
   NEXTAUTH_URL: https://devcenter-frontend-sso.devrel.staging.corp.mongodb.com/developer/api/auth/
 
 envSecrets:
