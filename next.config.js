@@ -46,6 +46,16 @@ const configVals = {
                     },
                 ],
             },
+            {
+                //https://github.com/nextauthjs/next-auth/issues/2408
+                source: '/api/auth/:slug',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'no-store, max-age=0',
+                    },
+                ],
+            },
         ];
     },
     redirects: redirects,

@@ -95,21 +95,4 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     );
 }
 
-MyApp.getInitialProps = async (
-    appContext: AppContext
-): Promise<AppInitialProps & CustomProps> => {
-    const appProps = await App.getInitialProps(appContext);
-
-    // We can't access the session without a server side fetch.
-    // next-auth does not work with ISR and SSG without the following
-    // workaround (since ISR caches pages).
-    // https://github.com/vercel/next.js/issues/34316#issuecomment-1039037314
-    // https://github.com/nextauthjs/next-auth/discussions/704#discussioncomment-392064
-    if (typeof window !== 'undefined') {
-        const session = (await getSession(appContext.ctx)) as Session;
-        return { ...appProps, session };
-    }
-    return { ...appProps, session: undefined };
-};
-
 export default MyApp;
