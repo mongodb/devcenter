@@ -5,11 +5,10 @@ import { useEffect } from 'react';
 import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 
-export default async function Signin() {
+export default function Signin() {
     const router = useRouter();
     const { query } = router;
     const { status } = useSession();
-    const session = await getSession();
 
     const callbackUrl = getURLPath(
         query.fromPagePath && typeof query.fromPagePath == 'string'

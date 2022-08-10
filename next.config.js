@@ -14,7 +14,8 @@ const httpProtocol = [
     ? 'http'
     : 'https';
 const basePath = '/developer';
-const accountPortalUrl = process.env.ACCOUNT_PORTAL;
+
+const accountPortalUrl = `${process.env.ACCOUNT_PORTAL_URL}/account/login`;
 
 const configVals = {
     basePath: basePath,

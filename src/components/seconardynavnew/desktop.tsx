@@ -39,7 +39,6 @@ const StyledSecondaryLinks: ThemeUIStyleObject | undefined = {
     'li.secondary-nav-user-menu': {
         position: 'relative',
         zIndex: 10,
-        top: '5px',
     },
     whiteSpace: 'nowrap' as 'nowrap',
 };

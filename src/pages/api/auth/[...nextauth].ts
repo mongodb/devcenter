@@ -38,7 +38,7 @@ export const nextAuthOptions: NextAuthOptions = {
         redirect: async ({ url, baseUrl }) => {
             if (url == '/logout') {
                 // Redirect to account portal.
-                return `${process.env.ACCOUNT_PORTAL}?signedOut=true`;
+                return `${process.env.ACCOUNT_URL}/account/login?signedOut=true`;
             }
 
             // Allows relative callback URLs, automatically adding basePath where needed.
