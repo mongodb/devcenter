@@ -1,5 +1,6 @@
 import React from 'react';
 import { Global } from '@emotion/react';
+import useSWR from 'swr';
 import getConfig from 'next/config';
 import { useSession } from 'next-auth/react';
 import { UnifiedFooter } from '@mdb/consistent-nav';
@@ -15,6 +16,14 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     children,
     pagePath,
 }) => {
+    const { data, error } = useSWR('/api/auth/session', async url => {
+        const res = await fetch(url);
+        if (!res.ok) {
+            throw new Error('Failed to load session.');
+        }
+        return res.json();
+    });
+
     const { data: session } = useSession();
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath, accountPortalUrl } = publicRuntimeConfig;
