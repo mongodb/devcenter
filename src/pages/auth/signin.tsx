@@ -1,11 +1,19 @@
+import type { GetServerSidePropsContext, NextPage } from 'next';
+import { Session } from 'next-auth';
+import { unstable_getServerSession } from 'next-auth/next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { signIn, useSession, getSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useEffect } from 'react';
+import { nextAuthOptions } from '../api/auth/[...nextauth]';
 import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 
-export default function Signin() {
+interface SigninProps {
+    session: Session;
+}
+
+const SigninPage: NextPage<SigninProps> = ({ session }) => {
     const router = useRouter();
     const { query } = router;
     const { status } = useSession();
@@ -25,11 +33,11 @@ export default function Signin() {
             // https://github.com/nextauthjs/next-auth/issues/45
             // Note: next-auth currently has no way of doing a server side signIn()
             signIn('okta', { callbackUrl: callbackUrl });
-        } else if (status === 'authenticated') {
+        } else if (status === 'authenticated' || session) {
             // Redirect to prior page if already authenticated.
             router.push(callbackUrl as string);
         }
-    }, [callbackUrl, router, status]);
+    }, [callbackUrl, router, session, status]);
 
     const isLoading = status !== 'authenticated';
     return (
@@ -51,4 +59,15 @@ export default function Signin() {
             <div>Signing in...</div>
         </div>
     );
+};
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const session = await unstable_getServerSession(
+        context.req,
+        context.res,
+        nextAuthOptions
+    );
+    return { props: { session: JSON.parse(JSON.stringify(session)) } };
 }
+
+export default SigninPage;

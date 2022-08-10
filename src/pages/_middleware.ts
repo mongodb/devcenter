@@ -113,6 +113,17 @@ const middleware = async (req: NextRequest) => {
 
     const res = NextResponse.next();
     logRequestData(pathname, req.method, res.status);
+
+    // @ts-ignore
+    if (req.nextauth && req.nextauth.token) {
+        console.log('req.nextauth && req.nextauth.token');
+        // @ts-ignore
+        console.log(req.nextauth.token);
+        return res.cookie('devcenterAuthenticated', '1');
+    } else {
+        res.clearCookie('devcenterAuthenticated');
+    }
+
     return res;
 };
 
@@ -122,7 +133,6 @@ export default withAuth(middleware, {
     },
     callbacks: {
         authorized: ({ token }) => {
-            console.log('withAuth', token);
             return true;
         },
     },

@@ -80,6 +80,7 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
             <SessionProvider
                 session={session}
                 basePath="/developer/api/auth/"
+                refetchOnWindowFocus={true}
                 refetchInterval={0}
             >
                 <ThemeProvider theme={theme}>

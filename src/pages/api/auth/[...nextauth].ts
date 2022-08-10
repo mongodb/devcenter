@@ -1,7 +1,6 @@
 import OktaProvider from 'next-auth/providers/okta';
 import type { NextAuthOptions } from 'next-auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { BASE_PATH } from '../../../utils/format-url-path';
 import NextAuth from 'next-auth';
 
 export const nextAuthOptions: NextAuthOptions = {
@@ -35,43 +34,6 @@ export const nextAuthOptions: NextAuthOptions = {
             session.email = token.email;
             return session;
         },
-        redirect: async ({ url, baseUrl }) => {
-            if (url == '/logout') {
-                // Redirect to account portal.
-                return `${process.env.ACCOUNT_URL}/account/login?signedOut=true`;
-            }
-
-            // Allows relative callback URLs, automatically adding basePath where needed.
-            if (url.startsWith(BASE_PATH)) {
-                return `${baseUrl}${url}`;
-            } else if (url.startsWith('/')) {
-                return `${baseUrl}${BASE_PATH}${url}`;
-            }
-            // Allows callback URLs on the same origin
-            else if (new URL(url).origin === baseUrl) return url;
-            return baseUrl;
-        },
-        // #TODO: rate limit?
-        // signIn: async ({ user, account, profile, email, credentials }) => {
-        //     console.log(
-        //         'signInCallback',
-        //         user,
-        //         account,
-        //         profile,
-        //         email,
-        //         credentials
-        //     );
-        //     const isAllowedToSignIn = true;
-        //     if (isAllowedToSignIn) {
-        //         console.log('isAllowedToSignIn');
-        //         return true;
-        //     } else {
-        //         // Return false to display a default error message
-        //         return false;
-        //         // Or you can return a URL to redirect to:
-        //         // return '/unauthorized'
-        //     }
-        // },
     },
 };
 
