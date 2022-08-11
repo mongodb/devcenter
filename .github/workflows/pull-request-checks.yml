@@ -10,6 +10,8 @@ env:
     STRAPI_URL: ${{ secrets.STRAPI_DEV_URL }}
     STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
     DEVHUB_URL: ${{ secrets.DEVHUB_URL }}
+    NEXTAUTH_URL: http://localhost:3000/developer/api/auth/
+    NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 jobs:
     check-formatting-and-lint:
         runs-on: ubuntu-latest
