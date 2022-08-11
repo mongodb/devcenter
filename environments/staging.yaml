@@ -5,8 +5,8 @@ service:
 env:
   ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
   APP_ENV: staging
-  HOST_URL: devcenter-frontend-sso.devrel.staging.corp.mongodb.com
-  NEXTAUTH_URL: https://devcenter-frontend-sso.devrel.staging.corp.mongodb.com/developer/api/auth/
+  HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+  NEXTAUTH_URL: https://mongodbcom-cdn.staging.corp.mongodb.com/developer/api/auth/
 
 envSecrets:
   DEVHUB_URL: devcenter-secrets
@@ -59,7 +59,7 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["devcenter-frontend-sso.devrel.staging.corp.mongodb.com"]
+  hosts: ["devcenter-frontend.devrel.staging.corp.mongodb.com"]
 
 metrics:
   enabled: true
