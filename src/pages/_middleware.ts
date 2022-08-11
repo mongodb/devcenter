@@ -116,9 +116,6 @@ const middleware = async (req: NextRequest) => {
 
     // @ts-ignore
     if (req.nextauth && req.nextauth.token) {
-        console.log('req.nextauth && req.nextauth.token');
-        // @ts-ignore
-        console.log(req.nextauth.token);
         return res.cookie('devcenterAuthenticated', '1');
     } else {
         res.clearCookie('devcenterAuthenticated');

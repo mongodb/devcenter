@@ -112,6 +112,7 @@ steps:
     - yarn install --frozen-lockfile
     - yarn build
     environment:
+      ACCOUNT_PORTAL_URL: https://account.mongodb.com
       APP_ENV: production
       HOST_URL: www.mongodb.com
       NPM_AUTH:
@@ -201,7 +202,7 @@ steps:
     - yarn install --frozen-lockfile
     - yarn build
     environment:
-      ACCOUNT_PORTAL_URL: https://account.mongodb.com
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
       HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
       NPM_AUTH:
@@ -271,6 +272,7 @@ steps:
     - yarn install --frozen-lockfile
     - yarn build
     environment:
+      ACCOUNT_PORTAL_URL: https://account.mongodb.com
       APP_ENV: production
       HOST_URL: www.mongodb.com
       NPM_AUTH:
