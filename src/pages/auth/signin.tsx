@@ -17,12 +17,10 @@ const SigninPage: NextPage<SigninProps> = ({ session }) => {
     const router = useRouter();
     const { query } = router;
     const { status } = useSession();
-
-    const callbackUrl = getURLPath(
+    const fromPagePath =
         query.fromPagePath && typeof query.fromPagePath == 'string'
             ? query.fromPagePath
-            : '/'
-    );
+            : '/';
 
     // The sign in has to be done client-side since next-auth does not
     // support a way to log in server side. This page will "render"
@@ -30,14 +28,15 @@ const SigninPage: NextPage<SigninProps> = ({ session }) => {
     // account portal or the previously visited page (if already logged in).
     useEffect(() => {
         if (status === 'unauthenticated') {
+            const callbackUrl = getURLPath(fromPagePath);
             // https://github.com/nextauthjs/next-auth/issues/45
             // Note: next-auth currently has no way of doing a server side signIn()
             signIn('okta', { callbackUrl: callbackUrl });
         } else if (status === 'authenticated' || session) {
             // Redirect to prior page if already authenticated.
-            router.push(callbackUrl as string);
+            router.push(fromPagePath as string);
         }
-    }, [callbackUrl, router, session, status]);
+    }, [fromPagePath, router, session, status]);
 
     const isLoading = status !== 'authenticated';
     return (
