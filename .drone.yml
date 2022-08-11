@@ -15,7 +15,7 @@ steps:
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
-      HOST_URL: devcenter-frontend.devrel.staging.corp.mongodb.com
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
       NPM_AUTH:
         from_secret: NPM_AUTH
       NPM_EMAIL:
