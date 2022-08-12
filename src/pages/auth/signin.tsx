@@ -31,7 +31,7 @@ const SigninPage: NextPage<SigninProps> = ({ session }) => {
             const callbackUrl = getURLPath(fromPagePath);
             // https://github.com/nextauthjs/next-auth/issues/45
             // Note: next-auth currently has no way of doing a server side signIn()
-            signIn('okta', { callbackUrl: callbackUrl });
+            signIn('okta', { callbackUrl });
         } else if (status === 'authenticated' || session) {
             // Redirect to prior page if already authenticated.
             router.push(fromPagePath as string);
