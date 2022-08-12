@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
-import App from 'next/app';
-import type { AppProps, AppContext, AppInitialProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import getConfig from 'next/config';
 import { Session } from 'next-auth';
-import { SessionProvider, getSession } from 'next-auth/react';
+import { SessionProvider } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';

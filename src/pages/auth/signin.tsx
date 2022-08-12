@@ -55,7 +55,13 @@ const SigninPage: NextPage<SigninProps> = ({ session }) => {
                     src={getURLPath('/loading-animation.gif') as string}
                 />
             )}
-            <div>Signing in...</div>
+            <div
+                style={{
+                    fontSize: 'inc20',
+                }}
+            >
+                Signing in...
+            </div>
         </div>
     );
 };
