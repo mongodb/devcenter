@@ -16,14 +16,6 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     children,
     pagePath,
 }) => {
-    const { data, error } = useSWR('/api/auth/session', async url => {
-        const res = await fetch(url);
-        if (!res.ok) {
-            throw new Error('Failed to load session.');
-        }
-        return res.json();
-    });
-
     const { data: session } = useSession();
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath, accountPortalUrl } = publicRuntimeConfig;

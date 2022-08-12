@@ -14,12 +14,10 @@ const StyledList = {
 const SecondaryLinksList: React.FunctionComponent<IProps> = ({
     children,
     linkClassName,
-}) => {
-    return (
-        <li className={linkClassName} sx={StyledList}>
-            {children}
-        </li>
-    );
-};
+}) => (
+    <li className={linkClassName} sx={StyledList}>
+        {children}
+    </li>
+);
 
 export default SecondaryLinksList;

@@ -342,15 +342,13 @@ const MobileView = () => {
                         MongoDB Developer
                     </TypographyScale>
                     {!mobileMenuIsOpen && (
-                        <>
-                            <SystemIcon
-                                sx={chevronStylesForMainLink(!!account)}
-                                className="chevron-icon"
-                                name={ESystemIconNames.CHEVRON_DOWN}
-                                size="small"
-                                strokeWeight="large"
-                            />
-                        </>
+                        <SystemIcon
+                            sx={chevronStylesForMainLink(!!account)}
+                            className="chevron-icon"
+                            name={ESystemIconNames.CHEVRON_DOWN}
+                            size="small"
+                            strokeWeight="large"
+                        />
                     )}
                     {mobileMenuIsOpen && (
                         <SystemIcon
