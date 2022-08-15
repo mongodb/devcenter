@@ -101,7 +101,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
         };
     }, [isOpen]);
 
-    const isHomePage = (activePath as string) in ['/', ''];
+    const isHomePage = ['/', ''].includes(activePath as string);
 
     return (
         <div
