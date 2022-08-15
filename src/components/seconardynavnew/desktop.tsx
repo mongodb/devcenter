@@ -101,8 +101,6 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
         };
     }, [isOpen]);
 
-    const isHomePage = ['/', ''].includes(activePath as string);
-
     return (
         <div
             sx={{
@@ -121,7 +119,9 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                     <FloraLink
                         href={getURLPath('/')}
                         sx={{
-                            ...MainLinkStyles(isHomePage ? true : false),
+                            ...MainLinkStyles(
+                                activePath === '/' ? true : false
+                            ),
                             marginRight: [
                                 null,
                                 null,
