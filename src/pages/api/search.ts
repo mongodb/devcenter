@@ -9,7 +9,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             .json({ message: 'This is a GET-only endpoint.' });
     }
     const response = await axios.get(
-        process.env.REALM_SEARCH_URL + '/search_devcenter',
+        process.env.REALM_SEARCH_URL + '/search_devcenter_stage',
         { params: req.query }
     );
     return res.status(200).json(response.data);

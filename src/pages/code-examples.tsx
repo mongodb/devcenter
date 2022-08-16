@@ -1,4 +1,8 @@
-import type { NextPage, GetStaticProps } from 'next';
+import type {
+    NextPage,
+    GetServerSideProps,
+    GetServerSidePropsContext,
+} from 'next';
 
 import ContentTypePage from '../page-templates/content-type';
 import { ContentTypePageProps } from '../page-templates/content-type/types';
@@ -8,7 +12,9 @@ const CodeExamplesPage: NextPage<ContentTypePageProps> = props => {
     return <ContentTypePage {...props} />;
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
     const data = await getContentTypePageData('Code Example');
     return {
         props: data,

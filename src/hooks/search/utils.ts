@@ -1,8 +1,8 @@
 import { Fetcher } from 'swr';
 import { NextRouter } from 'next/router';
 
-import { PillCategory } from '../../types/pill-category';
 import getAllSearchContent from '../../api-requests/get-all-search-content';
+import { PillCategory } from '../../types/pill-category';
 import { SearchItem } from '../../components/search/types';
 import { FilterItem } from '../../components/search-filters';
 import { Tag } from '../../interfaces/tag';
@@ -13,7 +13,7 @@ import { getURLPath } from '../../utils/format-url-path';
 import { SortByType } from '../../components/search/types';
 import { sortByOptions } from '../../components/search/utils';
 
-const searchItemToContentItem = ({
+export const searchItemToContentItem = ({
     type,
     authors,
     name,
@@ -52,10 +52,14 @@ const searchItemToContentItem = ({
     };
 };
 
-export const getFilters = async (contentType?: PillCategory) => {
+export const getFilters = async (
+    contentType?: PillCategory,
+    allSearchContent?: SearchItem[]
+) => {
     const allFilters = contentType === undefined;
-    const allContent: SearchItem[] = await getAllSearchContent();
-
+    const allContent: SearchItem[] = allSearchContent
+        ? allSearchContent
+        : await getAllSearchContent();
     const filterItems: FilterItem[] = [];
 
     allContent.forEach(({ tags, type }) => {
@@ -267,6 +271,7 @@ export const updateUrl = (
     router: NextRouter,
     filters: FilterItem[],
     searchString: string,
+    pageNumber?: number,
     sortBy?: SortByType
 ) => {
     if (!sortBy) {
@@ -296,11 +301,13 @@ export const updateUrl = (
     const expertiseLevel = filters
         .filter(filter => filter.type === 'ExpertiseLevel')
         .map(filter => filter.name);
+
     router.replace(
         {
             pathname: router.pathname,
             query: {
                 s: searchString,
+                pageNumber,
                 product,
                 language,
                 technology,

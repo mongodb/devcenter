@@ -2,6 +2,7 @@ import { ContextType, useState } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 
 import {
     GridLayout,
@@ -40,10 +41,21 @@ import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
+import { searchItemToContentItem } from '../../hooks/search/utils';
 
 import { shouldRenderRequestButton } from './utils';
+import { SearchItem } from '../../components/search/types';
+import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 
 let pluralize = require('pluralize');
+
+const setupInitialSearchData = (
+    initialSearchContent: SearchItem[],
+    pageNumber: number
+) => {
+    const initialSearchData = initialSearchContent.map(searchItemToContentItem);
+    return initialSearchData.slice(0, pageNumber * DEFAULT_PAGE_SIZE);
+};
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     description,
@@ -58,7 +70,19 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     featuredLanguages,
     featuredTechnologies,
     featuredProducts,
+    initialSearchContent,
+    pageNumber,
+    slug,
 }) => {
+    const router = useRouter();
+    const totalResults = initialSearchContent
+        ? initialSearchContent.length
+        : DEFAULT_PAGE_SIZE;
+    const maxPage = Math.ceil(totalResults / DEFAULT_PAGE_SIZE);
+    const [currentPage, setCurrentPage] = useState(
+        pageNumber && pageNumber > maxPage ? maxPage : pageNumber
+    );
+
     ///////////////////////////////////////
     // HOOKS
     ///////////////////////////////////////
@@ -75,13 +99,19 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         searchString,
         setSearchString,
         numberOfResults,
-    } = useSearch(contentType);
+    } = useSearch(contentType, undefined, currentPage);
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+    const [initialSearchData, setInitialSearchData] = useState(
+        setupInitialSearchData(
+            initialSearchContent as SearchItem[],
+            currentPage
+        )
+    );
 
     ///////////////////////////////////////
     // HANDLERS
@@ -92,7 +122,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     };
 
     const onFilter = (filters: FilterItem[]) => {
-        setResultsToShow(10);
+        setResultsToShow(currentPage ? currentPage * 10 : 10);
         setAllFilters(filters);
     };
 
@@ -304,8 +334,14 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         {!!data.length || isValidating || error ? (
                             <>
                                 <Results
-                                    data={data}
-                                    isLoading={isValidating}
+                                    data={
+                                        initialSearchData
+                                            ? initialSearchData
+                                            : data
+                                    }
+                                    isLoading={
+                                        initialSearchData ? false : isValidating
+                                    }
                                     hasError={error}
                                 />
                                 {!fullyLoaded && (
@@ -316,17 +352,46 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!isValidating && data && (
-                                            <Button
-                                                onClick={() =>
+                                        {((!isValidating && data) ||
+                                            initialSearchData) && (
+                                            <a
+                                                href={`/developer${slug}?page=${
+                                                    currentPage + 1
+                                                }`}
+                                                onClick={e => {
+                                                    e.preventDefault(); // If JS is enabled, do not follow href.
+
+                                                    const nextPage =
+                                                        currentPage + 1;
+
+                                                    setCurrentPage(nextPage);
+                                                    router.replace(
+                                                        {
+                                                            pathname:
+                                                                router.pathname,
+                                                            query: {
+                                                                page: nextPage,
+                                                            },
+                                                        },
+                                                        undefined,
+                                                        {
+                                                            scroll: false,
+                                                            shallow: true,
+                                                        }
+                                                    );
+
+                                                    setInitialSearchData(
+                                                        undefined
+                                                    );
                                                     setResultsToShow(
                                                         resultsToShow + 10
-                                                    )
-                                                }
-                                                variant="secondary"
+                                                    );
+                                                }}
                                             >
-                                                Load more
-                                            </Button>
+                                                <Button variant="secondary">
+                                                    Load more
+                                                </Button>
+                                            </a>
                                         )}
                                     </div>
                                 )}
