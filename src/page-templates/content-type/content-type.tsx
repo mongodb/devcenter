@@ -266,6 +266,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         </div>
     );
 
+    const showLoadMoreButton = !fullyLoaded || currentPage < maxPage;
+
     return (
         <>
             <NextSeo
@@ -372,7 +374,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                     }
                                     hasError={error}
                                 />
-                                {!fullyLoaded && (
+                                {showLoadMoreButton && (
                                     <div
                                         sx={{
                                             display: 'flex',
@@ -380,19 +382,16 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {((!isValidating && data) ||
-                                            initialSearchData) && (
-                                            <a
-                                                href={`/developer${slug}?page=${
-                                                    currentPage + 1
-                                                }`}
-                                                onClick={onLoadMore}
-                                            >
-                                                <Button variant="secondary">
-                                                    Load more
-                                                </Button>
-                                            </a>
-                                        )}
+                                        <a
+                                            href={`/developer${slug}?page=${
+                                                currentPage + 1
+                                            }`}
+                                            onClick={onLoadMore}
+                                        >
+                                            <Button variant="secondary">
+                                                Load more
+                                            </Button>
+                                        </a>
                                     </div>
                                 )}
                             </>
