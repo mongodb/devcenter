@@ -103,17 +103,22 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         searchString,
         setSearchString,
         numberOfResults,
-    } = useSearch(contentType, undefined, currentPage);
+    } = useSearch(contentType, undefined);
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+    // Initial search data is the search content for initial page load (provided
+    // via SSR based on the query parameters). This data is used for both faster
+    // initial results and SEO crawlability. It must be cleared whenever any client
+    // side re-rendering is needed, such as "load more", filtering or search.
     const [initialSearchData, setInitialSearchData] = useState(
         setupInitialSearchData(
             initialSearchContent as SearchItem[],
-            currentPage
+            currentPage // page provided by query parameters
         )
     );
 
@@ -125,27 +130,13 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setAllFilters([]);
     };
 
-    const onFilter = (filters: FilterItem[]) => {
-        setResultsToShow(currentPage ? currentPage * 10 : 10);
-        setAllFilters(filters);
-    };
-
-    const onFilterTagClose = (filterTag: FilterItem) => {
-        setAllFilters(allFilters.filter(filter => filter !== filterTag));
-    };
-
-    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault(); // If JS is enabled, do not follow href.
-
-        const nextPage = currentPage + 1;
-
-        setCurrentPage(nextPage);
+    const clearPagination = () => {
+        setInitialSearchData(undefined);
+        setCurrentPage(1);
         router.replace(
             {
                 pathname: router.pathname,
-                query: {
-                    page: nextPage,
-                },
+                query: {},
             },
             undefined,
             {
@@ -153,7 +144,42 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                 shallow: true,
             }
         );
+    };
 
+    const onFilter = (filters: FilterItem[]) => {
+        clearPagination();
+        setResultsToShow(10);
+        setAllFilters(filters);
+    };
+
+    const onFilterTagClose = (filterTag: FilterItem) => {
+        setInitialSearchData(undefined);
+        setAllFilters(allFilters.filter(filter => filter !== filterTag));
+    };
+
+    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault(); // If JS is enabled, do not follow href.
+
+        // If search query and filters are empty, then assume
+        // we are traversing all content with pagination.
+        if ((!searchString || searchString == '') && allFilters.length == 0) {
+            const nextPage = currentPage + 1;
+
+            setCurrentPage(nextPage);
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: {
+                        page: nextPage,
+                    },
+                },
+                undefined,
+                {
+                    scroll: false,
+                    shallow: true,
+                }
+            );
+        }
         setInitialSearchData(undefined);
         setResultsToShow(resultsToShow + 10);
     };
@@ -266,7 +292,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         </div>
     );
 
-    const showLoadMoreButton = !fullyLoaded || currentPage < maxPage;
+    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const showLoadMoreButton =
+        !fullyLoaded || (currentPage < maxPage && hasInitialData);
+    const isLoading = !hasInitialData ? isValidating : false;
 
     return (
         <>
@@ -320,7 +349,12 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                 label={`Search ${pluralize(contentType)}`}
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
-                                onChange={onSearch}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                    clearPagination();
+                                    onSearch(e);
+                                }}
                             />
                         </div>
                         {!searchString && !hasFiltersSet && (
@@ -369,9 +403,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             ? initialSearchData
                                             : data
                                     }
-                                    isLoading={
-                                        initialSearchData ? false : isValidating
-                                    }
+                                    isLoading={isLoading}
                                     hasError={error}
                                 />
                                 {showLoadMoreButton && (
@@ -382,16 +414,18 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        <a
-                                            href={`/developer${slug}?page=${
-                                                currentPage + 1
-                                            }`}
-                                            onClick={onLoadMore}
-                                        >
-                                            <Button variant="secondary">
-                                                Load more
-                                            </Button>
-                                        </a>
+                                        {!isValidating && data && (
+                                            <a
+                                                href={`/developer${slug}?page=${
+                                                    currentPage + 1
+                                                }`}
+                                                onClick={onLoadMore}
+                                            >
+                                                <Button variant="secondary">
+                                                    Load more
+                                                </Button>
+                                            </a>
+                                        )}
                                     </div>
                                 )}
                             </>

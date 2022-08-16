@@ -71,7 +71,7 @@ const Search: NextPage<SearchProps> = ({
         numberOfResults,
         onSort,
         sortBy,
-    } = useSearch(undefined, undefined, undefined, {
+    } = useSearch(undefined, undefined, {
         l1Items,
         languageItems,
         technologyItems,

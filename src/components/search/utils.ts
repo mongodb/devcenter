@@ -13,8 +13,6 @@ export interface SearchQueryParams {
     contentType?: string;
     tagSlug?: string;
     sortBy: SortByType;
-    pageNumber?: number;
-    pageSize?: number;
 }
 
 export const buildSearchQuery = (queryParams: SearchQueryParams) => {
@@ -30,18 +28,5 @@ export const buildSearchQuery = (queryParams: SearchQueryParams) => {
     if (queryParams.tagSlug) {
         uriParts.push(`tagSlug=${encodeURIComponent(queryParams.tagSlug)}`);
     }
-    if (queryParams.pageNumber) {
-        uriParts.push(
-            `pageNumber=${encodeURIComponent(queryParams.pageNumber)}`
-        );
-        if (queryParams.pageSize) {
-            uriParts.push(
-                `pageSize=${encodeURIComponent(queryParams.pageSize)}`
-            );
-        } else {
-            uriParts.push(`pageSize=${encodeURIComponent(DEFAULT_PAGE_SIZE)}`);
-        }
-    }
-
     return uriParts.join('&');
 };

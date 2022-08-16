@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import {
     buildSearchQuery,
     SearchQueryParams,
-    sortByOptions,
     DEFAULT_PAGE_SIZE,
 } from '../../components/search/utils';
 import { SortByType } from '../../components/search/types';
@@ -26,39 +25,21 @@ interface SearchFilterItems {
 const useSearch = (
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
-    pageNumber?: number,
     filterItems?: SearchFilterItems // This is needed for URL filter/search updates.
 ) => {
-    const hasFilterItems = !!filterItems;
-    const shouldUseQueryParams = hasFilterItems || !!pageNumber;
+    const shouldUseQueryParams = !!filterItems;
 
     const router = useRouter();
     const [searchString, setSearchString] = useState('');
-    const [resultsToShow, setResultsToShow] = useState(
-        pageNumber ? pageNumber * DEFAULT_PAGE_SIZE : DEFAULT_PAGE_SIZE
-    );
+    const [resultsToShow, setResultsToShow] = useState(DEFAULT_PAGE_SIZE);
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
     const [sortBy, setSortBy] = useState<SortByType>('Most Recent');
-
-    // Constructing the URL we send to search endpoint, which is also the cache key for SWR.
-    const keyParts = [
-        `s=${encodeURIComponent(searchString)}`,
-        `sortMode=${sortByOptions[sortBy]}`,
-    ];
-    if (contentType) {
-        keyParts.push(`contentType=${encodeURIComponent(contentType)}`);
-    }
-    if (tagSlug) {
-        keyParts.push(`tagSlug=${encodeURIComponent(tagSlug)}`);
-    }
 
     const queryParams: SearchQueryParams = {
         searchString,
         contentType,
         tagSlug,
         sortBy,
-        pageNumber: 1,
-        pageSize: DEFAULT_PAGE_SIZE,
     };
 
     const key = buildSearchQuery(queryParams);
@@ -70,13 +51,8 @@ const useSearch = (
         shouldRetryOnError: false,
     });
 
-    const onSearch = (
-        event: React.ChangeEvent<HTMLInputElement>,
-        pageNumber?: number
-    ) => {
-        setResultsToShow(
-            pageNumber ? pageNumber * DEFAULT_PAGE_SIZE : DEFAULT_PAGE_SIZE
-        );
+    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setResultsToShow(DEFAULT_PAGE_SIZE);
         setSearchString(event.target.value);
 
         if (shouldUseQueryParams) {
@@ -85,9 +61,7 @@ const useSearch = (
     };
 
     const onFilter = (filters: FilterItem[]) => {
-        setResultsToShow(
-            pageNumber ? pageNumber * DEFAULT_PAGE_SIZE : DEFAULT_PAGE_SIZE
-        );
+        setResultsToShow(DEFAULT_PAGE_SIZE);
         setAllFilters(filters);
         if (shouldUseQueryParams) {
             updateUrl(router, filters, searchString);
@@ -95,9 +69,7 @@ const useSearch = (
     };
 
     const onSort = (sortByValue: string) => {
-        setResultsToShow(
-            pageNumber ? pageNumber * DEFAULT_PAGE_SIZE : DEFAULT_PAGE_SIZE
-        );
+        setResultsToShow(DEFAULT_PAGE_SIZE);
         setSortBy(sortByValue as SortByType);
 
         if (shouldUseQueryParams) {
@@ -105,7 +77,7 @@ const useSearch = (
                 router,
                 allFilters,
                 searchString,
-                pageNumber,
+                undefined,
                 sortByValue as SortByType
             );
         }
@@ -240,7 +212,7 @@ const useSearch = (
         if (router?.isReady) {
             const { s } = router.query;
 
-            if (hasFilterItems) {
+            if (!!filterItems) {
                 const allNewFilters = getFiltersFromQueryStr();
                 setAllFilters(allNewFilters);
             }
