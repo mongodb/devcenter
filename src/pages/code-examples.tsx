@@ -7,6 +7,7 @@ import type {
 import ContentTypePage from '../page-templates/content-type';
 import { ContentTypePageProps } from '../page-templates/content-type/types';
 import { getContentTypePageData } from '../page-templates/content-type/content-type-data';
+import { parsePageNumber } from '../utils/page-type-factory';
 
 const CodeExamplesPage: NextPage<ContentTypePageProps> = props => {
     return <ContentTypePage {...props} />;
@@ -15,7 +16,10 @@ const CodeExamplesPage: NextPage<ContentTypePageProps> = props => {
 export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
 ) => {
-    const data = await getContentTypePageData('Code Example');
+    const { query } = context;
+
+    const pageNumber = parsePageNumber(query.page);
+    const data = await getContentTypePageData('Code Example', pageNumber);
     return {
         props: data,
     };

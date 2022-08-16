@@ -1,4 +1,4 @@
-import { ContextType, useState } from 'react';
+import React, { ContextType, useState } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
 import { NextSeo } from 'next-seo';
@@ -50,11 +50,15 @@ import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 let pluralize = require('pluralize');
 
 const setupInitialSearchData = (
-    initialSearchContent: SearchItem[],
+    initialSearchContent: SearchItem[] | undefined,
     pageNumber: number
 ) => {
-    const initialSearchData = initialSearchContent.map(searchItemToContentItem);
-    return initialSearchData.slice(0, pageNumber * DEFAULT_PAGE_SIZE);
+    if (initialSearchContent) {
+        const initialSearchData = initialSearchContent.map(
+            searchItemToContentItem
+        );
+        return initialSearchData.slice(0, pageNumber * DEFAULT_PAGE_SIZE);
+    }
 };
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
@@ -128,6 +132,30 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     const onFilterTagClose = (filterTag: FilterItem) => {
         setAllFilters(allFilters.filter(filter => filter !== filterTag));
+    };
+
+    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault(); // If JS is enabled, do not follow href.
+
+        const nextPage = currentPage + 1;
+
+        setCurrentPage(nextPage);
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: {
+                    page: nextPage,
+                },
+            },
+            undefined,
+            {
+                scroll: false,
+                shallow: true,
+            }
+        );
+
+        setInitialSearchData(undefined);
+        setResultsToShow(resultsToShow + 10);
     };
 
     const hasFiltersSet = !!allFilters.length;
@@ -358,35 +386,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                                 href={`/developer${slug}?page=${
                                                     currentPage + 1
                                                 }`}
-                                                onClick={e => {
-                                                    e.preventDefault(); // If JS is enabled, do not follow href.
-
-                                                    const nextPage =
-                                                        currentPage + 1;
-
-                                                    setCurrentPage(nextPage);
-                                                    router.replace(
-                                                        {
-                                                            pathname:
-                                                                router.pathname,
-                                                            query: {
-                                                                page: nextPage,
-                                                            },
-                                                        },
-                                                        undefined,
-                                                        {
-                                                            scroll: false,
-                                                            shallow: true,
-                                                        }
-                                                    );
-
-                                                    setInitialSearchData(
-                                                        undefined
-                                                    );
-                                                    setResultsToShow(
-                                                        resultsToShow + 10
-                                                    );
-                                                }}
+                                                onClick={onLoadMore}
                                             >
                                                 <Button variant="secondary">
                                                     Load more

@@ -105,6 +105,7 @@ const useSearch = (
                 router,
                 allFilters,
                 searchString,
+                pageNumber,
                 sortByValue as SortByType
             );
         }
