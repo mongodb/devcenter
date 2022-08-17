@@ -11,7 +11,22 @@ import { Image } from '../../interfaces/image';
 import { Author } from '../../interfaces/author';
 import { getURLPath } from '../../utils/format-url-path';
 import { SortByType } from '../../components/search/types';
-import { sortByOptions } from '../../components/search/utils';
+import {
+    sortByOptions,
+    DEFAULT_PAGE_SIZE,
+} from '../../components/search/utils';
+
+export const createInitialSearchData = (
+    initialSearchContent: SearchItem[] | undefined,
+    pageNumber: number
+) => {
+    if (initialSearchContent) {
+        const initialSearchData = initialSearchContent.map(
+            searchItemToContentItem
+        );
+        return initialSearchData.slice(0, pageNumber * DEFAULT_PAGE_SIZE);
+    }
+};
 
 export const searchItemToContentItem = ({
     type,

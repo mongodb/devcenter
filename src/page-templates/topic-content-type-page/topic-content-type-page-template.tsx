@@ -16,6 +16,7 @@ import RequestContentModal, {
     requestContentModalStages,
 } from '../../components/request-content-modal';
 import Search from '../../components/search';
+import { SearchItem } from '../../components/search/types';
 import {
     sideNavStyles,
     sideNavTitleStyles,
@@ -39,6 +40,8 @@ export interface TopicContentTypePageProps {
     contentTypeAggregateSlug: string;
     description: string;
     subTopics: ITopicCard[];
+    pageNumber: number;
+    initialSearchContent: SearchItem[];
 }
 
 const spanAllColumns = {
@@ -75,6 +78,8 @@ export const TopicContentTypePageTemplate: NextPage<
     contentTypeAggregateSlug,
     description,
     subTopics,
+    initialSearchContent,
+    pageNumber,
 }) => {
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
@@ -193,6 +198,9 @@ export const TopicContentTypePageTemplate: NextPage<
                         )}`}
                         tagSlug={topicSlug}
                         contentType={contentType}
+                        pageNumber={pageNumber}
+                        pageSlug={(contentTypeSlug + topicSlug).split('/')}
+                        initialSearchContent={initialSearchContent}
                         resultsLayout="grid"
                         titleLink={getSearchTitleLink(
                             contentType,

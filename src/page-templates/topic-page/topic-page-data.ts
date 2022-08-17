@@ -1,7 +1,9 @@
 import * as Sentry from '@sentry/nextjs';
 import { TopicCardProps } from '../../components/topic-card/types';
 import { ContentItem } from '../../interfaces/content-item';
+import { SearchItem } from '../../components/search/types';
 import { getSideNav } from '../../service/get-side-nav';
+import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
@@ -10,13 +12,23 @@ import { getL1L2Content } from '../../service/get-l1-l2-content';
 import allContentPreval from '../../service/get-all-content.preval';
 import allMetaInfoPreval from '../../service/get-all-meta-info.preval';
 
-export const getTopicPageData = async (l1_l2: string, slug: string[]) => {
+export const getTopicPageData = async (
+    l1_l2: string,
+    slug: string[],
+    pageNumber: number
+) => {
     const slugString = '/' + l1_l2 + '/' + slug.join('/');
 
     const metaInfoForTopic = await getMetaInfoForTopic(
         slugString,
         allMetaInfoPreval
     );
+
+    const initialSearchContent: SearchItem[] = await getSearchContent({
+        searchString: '',
+        tagSlug: slugString,
+        sortBy: 'Most Recent',
+    });
 
     let tertiaryNavItems = await getSideNav(slugString, allContentPreval);
 
@@ -71,6 +83,8 @@ export const getTopicPageData = async (l1_l2: string, slug: string[]) => {
         ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
         topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
         relatedTopics,
+        initialSearchContent,
+        pageNumber,
     };
 
     return data;

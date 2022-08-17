@@ -19,6 +19,11 @@ export const getSearchContent = async (
     queryParams: SearchQueryParams
 ): Promise<SearchItem[]> => {
     const query = buildSearchQuery(queryParams);
+
+    console.log(
+        `${process.env.REALM_SEARCH_URL}/search_devcenter_stage?${query}`
+    );
+
     return axios
         .get(
             `

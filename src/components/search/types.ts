@@ -32,6 +32,9 @@ export interface SearchProps {
         href: string;
     };
     placeholder: string;
+    pageNumber: number; // current page number
+    pageSlug?: string[];
+    initialSearchContent?: SearchItem[]; // search content received from initial render
 }
 
 export interface SearchItem {

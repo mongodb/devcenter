@@ -1,4 +1,4 @@
-import React, { ContextType, useState } from 'react';
+import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
 import { NextSeo } from 'next-seo';
@@ -41,25 +41,13 @@ import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
-import { searchItemToContentItem } from '../../hooks/search/utils';
+import { createInitialSearchData } from '../../hooks/search/utils';
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
 import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 
 let pluralize = require('pluralize');
-
-const setupInitialSearchData = (
-    initialSearchContent: SearchItem[] | undefined,
-    pageNumber: number
-) => {
-    if (initialSearchContent) {
-        const initialSearchData = initialSearchContent.map(
-            searchItemToContentItem
-        );
-        return initialSearchData.slice(0, pageNumber * DEFAULT_PAGE_SIZE);
-    }
-};
 
 const ContentTypePage: NextPage<ContentTypePageProps> = ({
     description,
@@ -116,7 +104,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     // initial results and SEO crawlability. It must be cleared whenever any client
     // side re-rendering is needed, such as "load more", filtering or search.
     const [initialSearchData, setInitialSearchData] = useState(
-        setupInitialSearchData(
+        createInitialSearchData(
             initialSearchContent as SearchItem[],
             currentPage // page provided by query parameters
         )

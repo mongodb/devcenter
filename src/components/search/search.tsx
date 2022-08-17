@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
     Button,
     TextInput,
@@ -19,8 +20,10 @@ import { SearchProps } from './types';
 import Results from './results';
 import ExpandingLink from '../expanding-link';
 import useSearch from '../../hooks/search';
+import { createInitialSearchData } from '../../hooks/search/utils';
 import EmptyState from './empty-state';
-import { sortByOptions } from './utils';
+import { sortByOptions, DEFAULT_PAGE_SIZE } from './utils';
+import { SearchItem } from './types';
 import { Grid } from 'theme-ui';
 
 const Search: React.FunctionComponent<SearchProps> = ({
@@ -32,6 +35,9 @@ const Search: React.FunctionComponent<SearchProps> = ({
     resultsLayout = 'list',
     titleLink,
     placeholder,
+    pageNumber,
+    pageSlug,
+    initialSearchContent,
 }) => {
     const {
         data,
@@ -49,7 +55,46 @@ const Search: React.FunctionComponent<SearchProps> = ({
         sortBy,
     } = useSearch(contentType, tagSlug);
 
+    const router = useRouter();
+    const totalInitialResults = initialSearchContent
+        ? initialSearchContent.length
+        : DEFAULT_PAGE_SIZE;
+    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
+    const [currentPage, setCurrentPage] = useState(
+        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
+    );
+
+    const [initialSearchData, setInitialSearchData] = useState(
+        createInitialSearchData(
+            initialSearchContent as SearchItem[],
+            currentPage // page provided by query parameters
+        )
+    );
+
+    const clearPagination = () => {
+        setInitialSearchData(undefined);
+        setCurrentPage(1);
+
+        const query = pageSlug
+            ? {
+                  slug: pageSlug.slice(1),
+              }
+            : {};
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: query,
+            },
+            undefined,
+            {
+                scroll: false,
+                shallow: true,
+            }
+        );
+    };
+
     const onCheckToggle = (checked: boolean, filter: string) => {
+        clearPagination();
         if (checked) {
             setAllFilters([
                 { name: filter, type: 'CodeLevel', count: 0, subItems: [] },
@@ -59,9 +104,51 @@ const Search: React.FunctionComponent<SearchProps> = ({
         }
     };
 
+    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault(); // If JS is enabled, do not follow href.
+
+        // If search query and filters are empty, then assume
+        // we are traversing all content with pagination.
+        if ((!searchString || searchString == '') && allFilters.length == 0) {
+            const nextPage = currentPage + 1;
+
+            setCurrentPage(nextPage);
+
+            // Need to pass slug for dynamic pages.
+            // https://github.com/vercel/next.js/discussions/8207
+            const query = pageSlug
+                ? {
+                      slug: pageSlug.slice(1),
+                      page: nextPage,
+                  }
+                : { page: nextPage };
+
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: query,
+                },
+                undefined,
+                {
+                    scroll: false,
+                    shallow: true,
+                }
+            );
+        }
+        setInitialSearchData(undefined);
+        setResultsToShow(resultsToShow + 10);
+    };
+
+    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const showLoadMoreButton =
+        !fullyLoaded || (currentPage < initialMaxPage && hasInitialData);
+    const isLoading = !hasInitialData ? isValidating : false;
+
     // To compensate for the Code Level filters.
     const extraSearchBoxStyles =
         contentType === 'Code Example' ? { marginBottom: 0 } : {};
+
+    const path = pageSlug?.join('/');
 
     return (
         <div role="search" className={className}>
@@ -94,7 +181,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         label={placeholder}
                         iconName={ESystemIconNames.SEARCH}
                         value={searchString}
-                        onChange={onSearch}
+                        onChange={e => {
+                            clearPagination();
+                            onSearch(e);
+                        }}
                     />
                 </div>
                 <Select
@@ -103,7 +193,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     name="sort-by-dropdown"
                     options={Object.keys(sortByOptions)}
                     value={sortBy}
-                    onSelect={onSort}
+                    onSelect={e => {
+                        clearPagination();
+                        onSort(e);
+                    }}
                     width="100%"
                     height="100%"
                 />
@@ -144,12 +237,12 @@ const Search: React.FunctionComponent<SearchProps> = ({
             {!!numberOfResults || isValidating || error ? (
                 <>
                     <Results
-                        data={data}
-                        isLoading={isValidating}
+                        data={initialSearchData ? initialSearchData : data}
+                        isLoading={isLoading}
                         hasError={error}
                         layout={resultsLayout}
                     />
-                    {!fullyLoaded && (
+                    {showLoadMoreButton && (
                         <div
                             sx={{
                                 display: 'flex',
@@ -158,14 +251,16 @@ const Search: React.FunctionComponent<SearchProps> = ({
                             }}
                         >
                             {!isValidating && data && (
-                                <Button
-                                    onClick={() =>
-                                        setResultsToShow(resultsToShow + 10)
-                                    }
-                                    variant="secondary"
+                                <a
+                                    href={`/developer${path}?page=${
+                                        currentPage + 1
+                                    }`}
+                                    onClick={onLoadMore}
                                 >
-                                    Load more
-                                </Button>
+                                    <Button variant="secondary">
+                                        Load more
+                                    </Button>
+                                </a>
                             )}
                         </div>
                     )}

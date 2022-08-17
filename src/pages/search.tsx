@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { NextSeo } from 'next-seo';
-import type { NextPage, GetStaticProps } from 'next';
+import type {
+    NextPage,
+    GetServerSideProps,
+    GetServerSidePropsContext,
+} from 'next';
 import NextImage from 'next/image';
 import {
     GridLayout,
@@ -11,10 +15,12 @@ import {
     Select,
 } from '@mdb/flora';
 
+import { getSearchContent } from '../api-requests/get-all-search-content';
 import Hero from '../components/hero';
 import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { pageWrapper } from '../styled/layout';
 
+import { SearchItem } from '../components/search/types';
 import { FilterItem } from '../components/search-filters';
 import { getFilters } from '../hooks/search/utils';
 import {
@@ -26,14 +32,17 @@ import {
     searchBoxSortBarWrapperStyles,
     sortBoxStyles,
 } from '../components/search/styles';
-import { sortByOptions } from '../components/search/utils';
+import { sortByOptions, DEFAULT_PAGE_SIZE } from '../components/search/utils';
+
 import { Grid } from 'theme-ui';
 
 import Results from '../components/search/results';
 import { useRouter } from 'next/router';
 import { getURLPath } from '../utils/format-url-path';
+import { parsePageNumber } from '../utils/page-type-factory';
 import { thumbnailLoader } from '../components/card/utils';
 import useSearch from '../hooks/search';
+import { createInitialSearchData } from '../hooks/search/utils';
 import FilterTagSection from '../components/search-filters/filter-tag-section';
 
 export interface SearchProps {
@@ -43,6 +52,8 @@ export interface SearchProps {
     contributedByItems: FilterItem[];
     contentTypeItems: FilterItem[];
     expertiseLevelItems: FilterItem[];
+    initialSearchContent: SearchItem[];
+    pageNumber: number;
 }
 
 const Search: NextPage<SearchProps> = ({
@@ -52,8 +63,19 @@ const Search: NextPage<SearchProps> = ({
     contributedByItems,
     contentTypeItems,
     expertiseLevelItems,
+    initialSearchContent,
+    pageNumber,
 }) => {
     const router = useRouter();
+
+    // Used for initial "all content" page.
+    const totalInitialResults = initialSearchContent
+        ? initialSearchContent.length
+        : DEFAULT_PAGE_SIZE;
+    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
+    const [currentPage, setCurrentPage] = useState(
+        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
+    );
 
     const {
         data,
@@ -88,9 +110,65 @@ const Search: NextPage<SearchProps> = ({
     };
 
     const onFilterTagClose = (filterTag: FilterItem) => {
+        clearPagination();
         const newFilters = allFilters.filter(filter => filter !== filterTag);
         onFilter(newFilters);
     };
+
+    const [initialSearchData, setInitialSearchData] = useState(
+        createInitialSearchData(
+            initialSearchContent as SearchItem[],
+            currentPage // page provided by query parameters
+        )
+    );
+
+    const clearPagination = () => {
+        setInitialSearchData(undefined);
+        setCurrentPage(1);
+
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: {},
+            },
+            undefined,
+            {
+                scroll: false,
+                shallow: true,
+            }
+        );
+    };
+
+    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault(); // If JS is enabled, do not follow href.
+
+        // If search query and filters are empty, then assume
+        // we are traversing all content with pagination.
+        if ((!searchString || searchString == '') && allFilters.length == 0) {
+            const nextPage = currentPage + 1;
+
+            setCurrentPage(nextPage);
+
+            const query = router.replace(
+                {
+                    pathname: router.pathname,
+                    query: { page: nextPage },
+                },
+                undefined,
+                {
+                    scroll: false,
+                    shallow: true,
+                }
+            );
+        }
+        setInitialSearchData(undefined);
+        setResultsToShow(resultsToShow + 10);
+    };
+
+    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const showLoadMoreButton =
+        !fullyLoaded || (currentPage < initialMaxPage && hasInitialData);
+    const isLoading = !hasInitialData ? isValidating : false;
 
     const hasFiltersSet = !!allFilters.length;
 
@@ -232,7 +310,10 @@ const Search: NextPage<SearchProps> = ({
                                 name="sort-by-dropdown"
                                 options={Object.keys(sortByOptions)}
                                 value={sortBy}
-                                onSelect={onSort}
+                                onSelect={e => {
+                                    clearPagination();
+                                    onSort(e);
+                                }}
                                 width="100%"
                                 height="100%"
                             />
@@ -241,11 +322,15 @@ const Search: NextPage<SearchProps> = ({
                         {!!data.length || isValidating || error ? (
                             <>
                                 <Results
-                                    data={data}
-                                    isLoading={isValidating}
+                                    data={
+                                        initialSearchData
+                                            ? initialSearchData
+                                            : data
+                                    }
+                                    isLoading={isLoading}
                                     hasError={error}
                                 />
-                                {!fullyLoaded && (
+                                {showLoadMoreButton && (
                                     <div
                                         sx={{
                                             display: 'flex',
@@ -254,16 +339,16 @@ const Search: NextPage<SearchProps> = ({
                                         }}
                                     >
                                         {!isValidating && data && (
-                                            <Button
-                                                onClick={() =>
-                                                    setResultsToShow(
-                                                        resultsToShow + 10
-                                                    )
-                                                }
-                                                variant="secondary"
+                                            <a
+                                                href={`/developer/search/?page=${
+                                                    currentPage + 1
+                                                }`}
+                                                onClick={onLoadMore}
                                             >
-                                                Load more
-                                            </Button>
+                                                <Button variant="secondary">
+                                                    Load more
+                                                </Button>
+                                            </a>
                                         )}
                                     </div>
                                 )}
@@ -291,12 +376,27 @@ const Search: NextPage<SearchProps> = ({
     );
 };
 
-export const getStaticProps: GetStaticProps<SearchProps> = async () => {
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
+    const { query } = context;
+
+    const pageNumber = parsePageNumber(query.page);
+    // Used for "load more" crawling
+    const initialSearchContent: SearchItem[] = await getSearchContent({
+        searchString: '',
+        sortBy: 'Most Recent',
+    });
+
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
     const filters = await getFilters();
 
     return {
-        props: filters,
+        props: {
+            ...filters,
+            pageNumber,
+            initialSearchContent,
+        },
     };
 };
 

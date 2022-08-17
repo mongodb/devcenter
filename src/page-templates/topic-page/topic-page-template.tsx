@@ -9,6 +9,7 @@ import Hero from '../../components/hero';
 import { CTA } from '../../components/hero/types';
 import { createTopicPageCTAS } from '../../components/hero/utils';
 import Search from '../../components/search';
+import { SearchItem } from '../../components/search/types';
 import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
@@ -53,6 +54,8 @@ interface TopicPageProps {
     contentType: string;
     variant: 'light' | 'medium' | 'heavy';
     tertiaryNavItems: TertiaryNavItem[];
+    initialSearchContent?: SearchItem[];
+    pageNumber: number;
 }
 
 const TopicPageTemplate: NextPage<TopicPageProps> = ({
@@ -68,6 +71,8 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     contentType,
     variant,
     tertiaryNavItems,
+    initialSearchContent,
+    pageNumber,
 }) => {
     const contentRows =
         variant === 'heavy'
@@ -193,6 +198,9 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         title={`All ${name} Content`}
                         placeholder={`Search ${name} Content`}
                         tagSlug={slug}
+                        pageNumber={pageNumber}
+                        pageSlug={slug.split('/')}
+                        initialSearchContent={initialSearchContent}
                         sx={{
                             gridColumn: [
                                 'span 6',
