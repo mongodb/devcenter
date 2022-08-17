@@ -77,6 +77,17 @@ const Search: NextPage<SearchProps> = ({
         pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
     );
 
+    // Initial search data is the search content for initial page load (provided
+    // via SSR based on the query parameters). This data is used for both faster
+    // initial results and SEO crawlability. It must be cleared whenever any client
+    // side re-rendering is needed, such as "load more", filtering or search.
+    const [initialSearchData, setInitialSearchData] = useState(
+        createInitialSearchData(
+            initialSearchContent as SearchItem[],
+            currentPage // page provided by query parameters
+        )
+    );
+
     const {
         data,
         error,
@@ -93,14 +104,22 @@ const Search: NextPage<SearchProps> = ({
         numberOfResults,
         onSort,
         sortBy,
-    } = useSearch(undefined, undefined, {
-        l1Items,
-        languageItems,
-        technologyItems,
-        contributedByItems,
-        contentTypeItems,
-        expertiseLevelItems,
-    });
+    } = useSearch(
+        undefined,
+        undefined,
+        {
+            l1Items,
+            languageItems,
+            technologyItems,
+            contributedByItems,
+            contentTypeItems,
+            expertiseLevelItems,
+        },
+        initialSearchData ? pageNumber : undefined
+    );
+    const [isClearState, setClearState] = useState(
+        (!searchString || searchString == '') && allFilters.length == 0
+    );
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -115,16 +134,10 @@ const Search: NextPage<SearchProps> = ({
         onFilter(newFilters);
     };
 
-    const [initialSearchData, setInitialSearchData] = useState(
-        createInitialSearchData(
-            initialSearchContent as SearchItem[],
-            currentPage // page provided by query parameters
-        )
-    );
-
     const clearPagination = () => {
         setInitialSearchData(undefined);
         setCurrentPage(1);
+        setClearState(true);
 
         router.replace(
             {
@@ -160,14 +173,17 @@ const Search: NextPage<SearchProps> = ({
                     shallow: true,
                 }
             );
+            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
+        } else {
+            setResultsToShow(resultsToShow + 10);
         }
         setInitialSearchData(undefined);
-        setResultsToShow(resultsToShow + 10);
     };
 
     const hasInitialData = typeof initialSearchData !== 'undefined';
-    const showLoadMoreButton =
-        !fullyLoaded || (currentPage < initialMaxPage && hasInitialData);
+    const showLoadMoreButton = hasInitialData
+        ? currentPage < initialMaxPage
+        : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 
     const hasFiltersSet = !!allFilters.length;
@@ -340,9 +356,13 @@ const Search: NextPage<SearchProps> = ({
                                     >
                                         {!isValidating && data && (
                                             <a
-                                                href={`/developer/search/?page=${
-                                                    currentPage + 1
-                                                }`}
+                                                href={
+                                                    isClearState
+                                                        ? `/developer/search/?page=${
+                                                              currentPage + 1
+                                                          }`
+                                                        : '#'
+                                                }
                                                 onClick={onLoadMore}
                                             >
                                                 <Button variant="secondary">

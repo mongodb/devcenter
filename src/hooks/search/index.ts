@@ -25,7 +25,8 @@ interface SearchFilterItems {
 const useSearch = (
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
-    filterItems?: SearchFilterItems // This is needed for URL filter/search updates.
+    filterItems?: SearchFilterItems, // This is needed for URL filter/search updates.
+    pageNumber?: number
 ) => {
     const shouldUseQueryParams = !!filterItems;
 
@@ -52,7 +53,11 @@ const useSearch = (
     });
 
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setResultsToShow(DEFAULT_PAGE_SIZE);
+        setResultsToShow(
+            pageNumber && event.target.value === ''
+                ? pageNumber * DEFAULT_PAGE_SIZE
+                : DEFAULT_PAGE_SIZE
+        );
         setSearchString(event.target.value);
 
         if (shouldUseQueryParams) {
@@ -77,7 +82,6 @@ const useSearch = (
                 router,
                 allFilters,
                 searchString,
-                undefined,
                 sortByValue as SortByType
             );
         }

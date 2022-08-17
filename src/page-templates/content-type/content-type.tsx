@@ -75,6 +75,17 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         pageNumber && pageNumber > maxPage ? maxPage : pageNumber
     );
 
+    // Initial search data is the search content for initial page load (provided
+    // via SSR based on the query parameters). This data is used for both faster
+    // initial results and SEO crawlability. It must be cleared whenever any client
+    // side re-rendering is needed, such as "load more", filtering or search.
+    const [initialSearchData, setInitialSearchData] = useState(
+        createInitialSearchData(
+            initialSearchContent as SearchItem[],
+            currentPage // page provided by query parameters
+        )
+    );
+
     ///////////////////////////////////////
     // HOOKS
     ///////////////////////////////////////
@@ -91,24 +102,21 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         searchString,
         setSearchString,
         numberOfResults,
-    } = useSearch(contentType, undefined);
+    } = useSearch(
+        contentType,
+        undefined,
+        undefined,
+        initialSearchData ? pageNumber : undefined
+    );
+    const [isClearState, setClearState] = useState(
+        (!searchString || searchString == '') && allFilters.length == 0
+    );
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-
-    // Initial search data is the search content for initial page load (provided
-    // via SSR based on the query parameters). This data is used for both faster
-    // initial results and SEO crawlability. It must be cleared whenever any client
-    // side re-rendering is needed, such as "load more", filtering or search.
-    const [initialSearchData, setInitialSearchData] = useState(
-        createInitialSearchData(
-            initialSearchContent as SearchItem[],
-            currentPage // page provided by query parameters
-        )
-    );
 
     ///////////////////////////////////////
     // HANDLERS
@@ -121,6 +129,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const clearPagination = () => {
         setInitialSearchData(undefined);
         setCurrentPage(1);
+        setClearState(true);
+
         router.replace(
             {
                 pathname: router.pathname,
@@ -167,9 +177,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     shallow: true,
                 }
             );
+            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
+        } else {
+            setResultsToShow(resultsToShow + 10);
         }
         setInitialSearchData(undefined);
-        setResultsToShow(resultsToShow + 10);
     };
 
     const hasFiltersSet = !!allFilters.length;
@@ -281,8 +293,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     );
 
     const hasInitialData = typeof initialSearchData !== 'undefined';
-    const showLoadMoreButton =
-        !fullyLoaded || (currentPage < maxPage && hasInitialData);
+    const showLoadMoreButton = hasInitialData
+        ? currentPage < maxPage
+        : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 
     return (
@@ -404,9 +417,13 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                     >
                                         {!isValidating && data && (
                                             <a
-                                                href={`/developer${slug}?page=${
-                                                    currentPage + 1
-                                                }`}
+                                                href={
+                                                    isClearState
+                                                        ? `/developer${slug}?page=${
+                                                              currentPage + 1
+                                                          }`
+                                                        : '#'
+                                                }
                                                 onClick={onLoadMore}
                                             >
                                                 <Button variant="secondary">

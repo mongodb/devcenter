@@ -199,7 +199,7 @@ export const TopicContentTypePageTemplate: NextPage<
                         tagSlug={topicSlug}
                         contentType={contentType}
                         pageNumber={pageNumber}
-                        pageSlug={(contentTypeSlug + topicSlug).split('/')}
+                        pageSlug={(topicSlug + contentTypeSlug).split('/')}
                         initialSearchContent={initialSearchContent}
                         resultsLayout="grid"
                         titleLink={getSearchTitleLink(

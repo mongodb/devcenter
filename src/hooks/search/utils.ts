@@ -286,7 +286,6 @@ export const updateUrl = (
     router: NextRouter,
     filters: FilterItem[],
     searchString: string,
-    pageNumber?: number,
     sortBy?: SortByType
 ) => {
     if (!sortBy) {
@@ -322,7 +321,6 @@ export const updateUrl = (
             pathname: router.pathname,
             query: {
                 s: searchString,
-                pageNumber,
                 product,
                 language,
                 technology,

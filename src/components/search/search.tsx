@@ -39,22 +39,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
     pageSlug,
     initialSearchContent,
 }) => {
-    const {
-        data,
-        error,
-        isValidating,
-        resultsToShow,
-        numberOfResults,
-        setResultsToShow,
-        allFilters,
-        setAllFilters,
-        onSearch,
-        searchString,
-        fullyLoaded,
-        onSort,
-        sortBy,
-    } = useSearch(contentType, tagSlug);
-
     const router = useRouter();
     const totalInitialResults = initialSearchContent
         ? initialSearchContent.length
@@ -71,9 +55,34 @@ const Search: React.FunctionComponent<SearchProps> = ({
         )
     );
 
+    const {
+        data,
+        error,
+        isValidating,
+        resultsToShow,
+        numberOfResults,
+        setResultsToShow,
+        allFilters,
+        setAllFilters,
+        onSearch,
+        searchString,
+        fullyLoaded,
+        onSort,
+        sortBy,
+    } = useSearch(
+        contentType,
+        tagSlug,
+        undefined,
+        initialSearchData ? pageNumber : undefined
+    );
+    const [isClearState, setClearState] = useState(
+        (!searchString || searchString == '') && allFilters.length == 0
+    );
+
     const clearPagination = () => {
         setInitialSearchData(undefined);
         setCurrentPage(1);
+        setClearState(true);
 
         const query = pageSlug
             ? {
@@ -134,14 +143,17 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     shallow: true,
                 }
             );
+            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
+        } else {
+            setResultsToShow(resultsToShow + 10);
         }
         setInitialSearchData(undefined);
-        setResultsToShow(resultsToShow + 10);
     };
 
     const hasInitialData = typeof initialSearchData !== 'undefined';
-    const showLoadMoreButton =
-        !fullyLoaded || (currentPage < initialMaxPage && hasInitialData);
+    const showLoadMoreButton = hasInitialData
+        ? currentPage < initialMaxPage
+        : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 
     // To compensate for the Code Level filters.
@@ -252,9 +264,13 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         >
                             {!isValidating && data && (
                                 <a
-                                    href={`/developer${path}?page=${
-                                        currentPage + 1
-                                    }`}
+                                    href={
+                                        isClearState
+                                            ? `/developer${path}?page=${
+                                                  currentPage + 1
+                                              }`
+                                            : '#'
+                                    }
                                     onClick={onLoadMore}
                                 >
                                     <Button variant="secondary">
