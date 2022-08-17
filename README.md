@@ -74,6 +74,22 @@ Once the changes are tested and ready to go to production, a new PR will need to
 drone build promote mongodb/devcenter <DRONE_BUILD_VERSION> production
 ```
 
+### Production Rollback
+
+When a build needs to be rolled back, we need to do the following:
+1. Remove the rebuild cron by visiting https://drone.corp.mongodb.com/mongodb/devcenter/settings/cron and clicking the deletion icon. Alternatively, you can run `drone cron rm mongodb/devcenter rebuild-devcenter-prod-cron` from the command line.
+2. Find the release that you want to rollback to. You can do this by going to Github and checking the PRs that were merged to `production`. Within a release PR, you can find the last Drone **build** that was run by clicking "View Details" on the PR and then checking which build "continuous-integration/drone Build is passing" is referencing. Once you find the build or build number, you can go to that build with the drone UI (e.g. https://drone.corp.mongodb.com/mongodb/devcenter/4438, where 4438 is the build number) and click promote -> rollback (branch: production). Alternatively, you can run `drone build promote mongodb/devcenter <rollback build number> production` which just rolls back to the specified build number.
+
+#### Hotfixes
+
+Hotfixes can be pushed either directly to the `production` branch or to `main` for future release (main -> production merges). If there is a large feature in staging (`main`) that should not be pushed, pushing a hotfix directly to the `production` branch is allowed.
+
+If there is a feature that was rolled back and needs to be reverted since a hotfix is not possible, any reverted changes will also have to take a affect in `production`. This means any changes made to `main` (including reverts) will need to be merged into `production` by creating a PR for `main` -> `production`.
+
+### Enabling Drone Crons
+
+To enable or re-enable the rebuild cron, run the following command with the drone CLI:
+`drone cron add "mongodb/devcenter" "rebuild-devcenter-prod-cron" @hourly --branch "production"`
 
 ## Formatting
 
