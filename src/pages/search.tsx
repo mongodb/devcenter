@@ -149,7 +149,7 @@ const Search: NextPage<SearchProps> = ({
 
             setCurrentPage(nextPage);
 
-            const query = router.replace(
+            router.replace(
                 {
                     pathname: router.pathname,
                     query: { page: nextPage },
