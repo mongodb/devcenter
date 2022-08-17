@@ -1,3 +1,8 @@
+import type {
+    NextPage,
+    GetServerSideProps,
+    GetServerSidePropsContext,
+} from 'next';
 import {
     BrandedIcon,
     EThirdPartyLogoVariant,
@@ -70,7 +75,7 @@ const HomepageSearch: React.FunctionComponent = () => {
     );
 };
 
-const Home = () => {
+const Home: NextPage<{}> = props => {
     return (
         <main
             sx={{
@@ -404,6 +409,14 @@ const Home = () => {
             </div>
         </main>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
+    return {
+        props: {},
+    };
 };
 
 export default Home;
