@@ -1,9 +1,13 @@
 module.exports = {
     ci: {
         collect: {
-            staticDistDir: './.next',
-            numberOfRuns: 2,
-            url: ['http://localhost:3000/server/pages/index.html'],
+            // staticDistDir: './.next',
+            numberOfRuns: 3,
+            url: [
+                'http://localhost:3000/developer/',
+                'http://localhost:3000/developer/articles/',
+                'http://localhost:3000/developer/tutorials/',
+            ],
         },
         upload: {
             target: 'temporary-public-storage',
