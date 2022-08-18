@@ -5,6 +5,7 @@ import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from './nav-item';
 import {
+    navWrapperStyles,
     aLinkStyles,
     chevronStylesForMainLink,
     DropDownStyles,
@@ -303,18 +304,7 @@ const MobileView = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);
     };
     return (
-        <div
-            sx={{
-                boxSizing: 'border-box',
-                background: '#fff',
-                backgroundColor: 'white',
-                display: ['block', 'block', 'block', 'none'],
-                position: 'fixed',
-                overflowY: 'auto',
-                width: '100%',
-                zIndex: '10',
-            }}
-        >
+        <div sx={navWrapperStyles}>
             <div
                 sx={{
                     display: 'grid',

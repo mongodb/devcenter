@@ -11,7 +11,7 @@ import { secondaryNavData } from '../../data/secondary-nav';
 
 import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
-import { StyledSecondaryNavContainer } from './desktop-styles';
+import { navWrapperStyles, navContainerStyles } from './desktop-styles';
 import { getURLPath } from '../../utils/format-url-path';
 
 const linkWrapperStyles = {
@@ -102,19 +102,8 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
     }, [isOpen]);
 
     return (
-        <div
-            sx={{
-                display: ['none', 'none', 'none', 'block'],
-                borderBottom: [
-                    null,
-                    null,
-                    null,
-                    `solid 1px ${theme.colors.black30}`,
-                ],
-                px: ['inc40', null, 'inc50', 'inc70'],
-            }}
-        >
-            <nav sx={StyledSecondaryNavContainer}>
+        <div sx={navWrapperStyles}>
+            <nav sx={navContainerStyles}>
                 <div sx={{ ...linkWrapperStyles, whiteSpace: 'nowrap' }}>
                     <FloraLink
                         href={getURLPath('/')}

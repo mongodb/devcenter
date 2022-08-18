@@ -1,11 +1,23 @@
 import { ThemeUIStyleObject } from 'theme-ui';
 
+export const navWrapperStyles: ThemeUIStyleObject = {
+    boxSizing: 'border-box',
+    background: '#fff',
+    backgroundColor: 'white',
+    display: ['block', 'block', 'block', 'none'],
+    position: 'sticky',
+    top: 0,
+    overflowY: 'auto',
+    width: '100%',
+    zIndex: 21,
+};
+
 export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
     margin: 0,
     display: isOpen ? 'block' : 'none',
     px: 'inc40',
-    height: 'calc(100vh - 126px)', // Height of both navsbars.
-    zIndex: 998,
+    zIndex: 21,
+    height: 'calc(100vh - 68px)', // Height of secondary nav.
     overflowY: 'scroll',
 
     '& > li': {

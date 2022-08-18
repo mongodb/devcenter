@@ -10,7 +10,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
         <>
             <Global styles={globalStyles} />
             <UnifiedNavCustom
-                position="sticky"
+                position="static"
                 floraTheme="default"
                 property={{ name: 'DEVHUB', searchParams: [] }}
             />
