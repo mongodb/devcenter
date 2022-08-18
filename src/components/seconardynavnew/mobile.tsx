@@ -307,9 +307,13 @@ const MobileView = () => {
         setHasOverlay(!mobileMenuIsOpen);
     };
     return (
-        <div sx={navWrapperStyles}>
+        <div sx={navWrapperStyles(mobileMenuIsOpen)}>
             <div
                 sx={{
+                    position: 'sticky',
+                    zIndex: 1002,
+                    bg: '#ffffff',
+                    top: 0,
                     display: 'grid',
                     gridTemplateColumns: '240px 1fr',
                     borderBottom: '2px solid #00684A',
