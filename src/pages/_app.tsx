@@ -9,6 +9,7 @@ import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
+import { OverlayProvider } from '../contexts/overlay';
 
 const CONTENT_ROUTE = '/[...slug]';
 
@@ -70,11 +71,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                 }}
             />
             <ThemeProvider theme={theme}>
-                <Layout>
-                    <ErrorBoundary>
-                        <Component {...pageProps} />
-                    </ErrorBoundary>
-                </Layout>
+                <OverlayProvider>
+                    <Layout>
+                        <ErrorBoundary>
+                            <Component {...pageProps} />
+                        </ErrorBoundary>
+                    </Layout>
+                </OverlayProvider>
             </ThemeProvider>
         </>
     );

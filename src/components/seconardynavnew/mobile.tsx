@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 
@@ -20,6 +20,7 @@ import {
 } from './mobile-styles';
 import { DropDownItem, DropDownItem2 } from './dropdown-menu';
 import { getURLPath } from '../../utils/format-url-path';
+import { OverlayContext } from '../../contexts/overlay';
 
 const DropDownButton = ({
     text,
@@ -300,8 +301,10 @@ const MobileViewL1ProductLinks = ({
 
 const MobileView = () => {
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
+    const { setHasOverlay } = useContext(OverlayContext);
     const openMobileMenu = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);
+        setHasOverlay(!mobileMenuIsOpen);
     };
     return (
         <div sx={navWrapperStyles}>

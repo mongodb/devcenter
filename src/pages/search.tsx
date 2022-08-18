@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import type { NextPage, GetStaticProps } from 'next';
 import NextImage from 'next/image';
@@ -35,6 +35,7 @@ import { getURLPath } from '../utils/format-url-path';
 import { thumbnailLoader } from '../components/card/utils';
 import useSearch from '../hooks/search';
 import FilterTagSection from '../components/search-filters/filter-tag-section';
+import { OverlayContext } from '../contexts/overlay';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -54,6 +55,8 @@ const Search: NextPage<SearchProps> = ({
     expertiseLevelItems,
 }) => {
     const router = useRouter();
+
+    const { setHasOverlay } = useContext(OverlayContext);
 
     const {
         data,
@@ -173,7 +176,10 @@ const Search: NextPage<SearchProps> = ({
                     iconStrokeWeight="medium"
                     hasIcon={true}
                     iconPosition="right"
-                    onClick={() => setMobileFiltersOpen(true)}
+                    onClick={() => {
+                        setMobileFiltersOpen(true);
+                        setHasOverlay(true);
+                    }}
                 >
                     Filter{!!allFilters.length && ` (${allFilters.length})`}
                 </Button>
@@ -284,7 +290,10 @@ const Search: NextPage<SearchProps> = ({
                     contributedByItems={contributedByItems}
                     contentTypeItems={contentTypeItems}
                     expertiseLevelItems={expertiseLevelItems}
-                    closeModal={() => setMobileFiltersOpen(false)}
+                    closeModal={() => {
+                        setMobileFiltersOpen(false);
+                        setHasOverlay(false);
+                    }}
                 />
             )}
         </>

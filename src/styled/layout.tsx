@@ -1,27 +1,22 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import theme from '@mdb/flora/theme';
 
-export const globalStyles = css`
-    body {
-        font-family: ${theme.fonts['euclid-circular-a']};
-        margin: 0;
-    }
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-weight: normal;
-        font-style: normal;
-    }
-`;
+export const globalStyles = (hasOverlay: boolean) => ({
+    body: {
+        fontFamily: theme.fonts['euclid-circular-a'],
+        margin: 0,
+        overflow: hasOverlay ? 'hidden' : 'visible',
+    },
+    a: {
+        textDecoration: 'none',
+        color: 'inherit',
+    },
+    'h1,h2,h3,h4,h5,h6': {
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+    },
+});
 
 export const Main = styled('main')`
     /* ensure content takes up full space between header & footer*/
