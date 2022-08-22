@@ -4,7 +4,7 @@ service:
 
 env:
   APP_ENV: staging
-  HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+  HOST_URL: devcenter-frontend-seo.devrel.staging.corp.mongodb.com
 
 envSecrets:
   NPM_EMAIL: devcenter-secrets
@@ -22,8 +22,8 @@ envSecrets:
   REVALIDATE_TOKEN: devcenter-secrets
 
 autoscaling:
-  minReplicas: 2
-  maxReplicas: 4
+  minReplicas: 1
+  maxReplicas: 1
   metrics:
     - type: Resource
       resource:
@@ -53,7 +53,7 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["devcenter-frontend.devrel.staging.corp.mongodb.com"]
+  hosts: ["devcenter-frontend-seo.devrel.staging.corp.mongodb.com"]
 
 metrics:
   enabled: true
