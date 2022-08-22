@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { NextSeo } from 'next-seo';
 import type {
     NextPage,
@@ -76,6 +76,11 @@ const Search: NextPage<SearchProps> = ({
     const [currentPage, setCurrentPage] = useState(
         pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
     );
+    const [pageTitle, setPageTitle] = useState(
+        pageNumber > 1
+            ? `Search - Page ${pageNumber} | MongoDB`
+            : `Search | MongoDB`
+    );
 
     // Initial search data is the search content for initial page load (provided
     // via SSR based on the query parameters). This data is used for both faster
@@ -117,9 +122,14 @@ const Search: NextPage<SearchProps> = ({
         },
         initialSearchData ? pageNumber : undefined
     );
-    const [isClearState, setClearState] = useState(
-        (!searchString || searchString == '') && allFilters.length == 0
-    );
+
+    const getResultData = () => {
+        return initialSearchData ? initialSearchData : data;
+    };
+
+    const getResultIsValidating = () => {
+        return initialSearchData ? false : isValidating;
+    };
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -137,7 +147,7 @@ const Search: NextPage<SearchProps> = ({
     const clearPagination = () => {
         setInitialSearchData(undefined);
         setCurrentPage(1);
-        setClearState(true);
+        setPageTitle(`Search | MongoDB`);
 
         router.replace(
             {
@@ -161,6 +171,9 @@ const Search: NextPage<SearchProps> = ({
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
+            if (nextPage > 1) {
+                setPageTitle(`Search - Page ${nextPage} | MongoDB`);
+            }
 
             router.replace(
                 {
@@ -220,6 +233,7 @@ const Search: NextPage<SearchProps> = ({
                 onClick={() => {
                     setAllFilters([]);
                     setSearchString('');
+                    clearPagination();
                 }}
             >
                 Back to all content
@@ -278,7 +292,7 @@ const Search: NextPage<SearchProps> = ({
     return (
         <>
             <NextSeo
-                title={'Search | MongoDB'}
+                title={pageTitle}
                 noindex={router.asPath === '/search/' ? false : true}
             />
             <Hero name="Search" />
@@ -290,7 +304,10 @@ const Search: NextPage<SearchProps> = ({
                 >
                     <DesktopFilters
                         sx={desktopFiltersStyles}
-                        onFilter={onFilter}
+                        onFilter={filters => {
+                            clearPagination();
+                            onFilter(filters);
+                        }}
                         allFilters={allFilters}
                         l1Items={l1Items}
                         languageItems={languageItems}
@@ -316,7 +333,10 @@ const Search: NextPage<SearchProps> = ({
                                     label="Search All"
                                     iconName={ESystemIconNames.SEARCH}
                                     value={searchString}
-                                    onChange={onSearch}
+                                    onChange={(e: React.ChangeEvent<any>) => {
+                                        clearPagination();
+                                        onSearch(e);
+                                    }}
                                     autoFocus={true}
                                 />
                             </div>
@@ -335,14 +355,12 @@ const Search: NextPage<SearchProps> = ({
                             />
                         </Grid>
                         {resultsStringAndTags}
-                        {!!data.length || isValidating || error ? (
+                        {!!getResultData().length ||
+                        getResultIsValidating() ||
+                        error ? (
                             <>
                                 <Results
-                                    data={
-                                        initialSearchData
-                                            ? initialSearchData
-                                            : data
-                                    }
+                                    data={getResultData()}
                                     isLoading={isLoading}
                                     hasError={error}
                                 />
@@ -354,22 +372,27 @@ const Search: NextPage<SearchProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!isValidating && data && (
-                                            <a
-                                                href={
-                                                    isClearState
-                                                        ? `/developer/search/?page=${
-                                                              currentPage + 1
-                                                          }`
-                                                        : '#'
-                                                }
-                                                onClick={onLoadMore}
-                                            >
-                                                <Button variant="secondary">
-                                                    Load more
-                                                </Button>
-                                            </a>
-                                        )}
+                                        {!getResultIsValidating() &&
+                                            getResultData() && (
+                                                <a
+                                                    href={
+                                                        (!searchString ||
+                                                            searchString ==
+                                                                '') &&
+                                                        allFilters.length == 0
+                                                            ? `/developer/search/?page=${
+                                                                  currentPage +
+                                                                  1
+                                                              }`
+                                                            : '#'
+                                                    }
+                                                    onClick={onLoadMore}
+                                                >
+                                                    <Button variant="secondary">
+                                                        Load more
+                                                    </Button>
+                                                </a>
+                                            )}
                                     </div>
                                 )}
                             </>
@@ -381,7 +404,10 @@ const Search: NextPage<SearchProps> = ({
             </div>
             {mobileFiltersOpen && (
                 <MobileFilters
-                    onFilter={onFilter}
+                    onFilter={filters => {
+                        clearPagination();
+                        onFilter(filters);
+                    }}
                     allFilters={allFilters}
                     l1Items={l1Items}
                     languageItems={languageItems}

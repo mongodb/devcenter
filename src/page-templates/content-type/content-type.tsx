@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
 import { NextSeo } from 'next-seo';
@@ -108,9 +108,14 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         undefined,
         initialSearchData ? pageNumber : undefined
     );
-    const [isClearState, setClearState] = useState(
-        (!searchString || searchString == '') && allFilters.length == 0
-    );
+
+    const getResultData = () => {
+        return initialSearchData ? initialSearchData : data;
+    };
+
+    const getResultIsValidating = () => {
+        return initialSearchData ? false : isValidating;
+    };
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
@@ -122,6 +127,15 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     // HANDLERS
     ///////////////////////////////////////
 
+    const buildPageTitle = useCallback(
+        (pageNumber: number) => {
+            const titlePageNo = pageNumber > 1 ? `- Page ${pageNumber}` : '';
+            return `${pluralize(contentType)} ${titlePageNo} | MongoDB`;
+        },
+        [contentType]
+    );
+    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+
     const clearFilters = () => {
         setAllFilters([]);
     };
@@ -129,7 +143,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const clearPagination = () => {
         setInitialSearchData(undefined);
         setCurrentPage(1);
-        setClearState(true);
+        setPageTitle(buildPageTitle(1));
 
         router.replace(
             {
@@ -164,6 +178,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
+            setPageTitle(buildPageTitle(nextPage));
             router.replace(
                 {
                     pathname: router.pathname,
@@ -237,6 +252,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                 onClick={() => {
                     setAllFilters([]);
                     setSearchString('');
+                    clearPagination();
                 }}
             >
                 Back to all {contentType.toLowerCase()}s
@@ -301,7 +317,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     return (
         <>
             <NextSeo
-                title={`${pluralize(contentType)} | MongoDB`}
+                title={pageTitle}
                 {...(['Article', 'Code Example'].includes(contentType) &&
                     description && {
                         description,
@@ -323,7 +339,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                 >
                     <DesktopFilters
                         sx={desktopFiltersStyles}
-                        onFilter={onFilter}
+                        onFilter={filters => {
+                            onFilter(filters);
+                            clearPagination();
+                        }}
                         allFilters={allFilters}
                         l1Items={l1Items}
                         languageItems={languageItems}
@@ -396,14 +415,12 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             </>
                         )}
                         {resultsStringAndTags}
-                        {!!data.length || isValidating || error ? (
+                        {!!getResultData().length ||
+                        getResultIsValidating() ||
+                        error ? (
                             <>
                                 <Results
-                                    data={
-                                        initialSearchData
-                                            ? initialSearchData
-                                            : data
-                                    }
+                                    data={getResultData()}
                                     isLoading={isLoading}
                                     hasError={error}
                                 />
@@ -415,22 +432,27 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!isValidating && data && (
-                                            <a
-                                                href={
-                                                    isClearState
-                                                        ? `/developer${slug}?page=${
-                                                              currentPage + 1
-                                                          }`
-                                                        : '#'
-                                                }
-                                                onClick={onLoadMore}
-                                            >
-                                                <Button variant="secondary">
-                                                    Load more
-                                                </Button>
-                                            </a>
-                                        )}
+                                        {!getResultIsValidating() &&
+                                            getResultData() && (
+                                                <a
+                                                    href={
+                                                        (!searchString ||
+                                                            searchString ==
+                                                                '') &&
+                                                        allFilters.length == 0
+                                                            ? `/developer${slug}?page=${
+                                                                  currentPage +
+                                                                  1
+                                                              }`
+                                                            : '#'
+                                                    }
+                                                    onClick={onLoadMore}
+                                                >
+                                                    <Button variant="secondary">
+                                                        Load more
+                                                    </Button>
+                                                </a>
+                                            )}
                                     </div>
                                 )}
                             </>
@@ -447,7 +469,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             />
             {mobileFiltersOpen && (
                 <MobileFilters
-                    onFilter={onFilter}
+                    onFilter={filters => {
+                        clearPagination();
+                        onFilter(filters);
+                    }}
                     allFilters={allFilters}
                     l1Items={l1Items}
                     languageItems={languageItems}

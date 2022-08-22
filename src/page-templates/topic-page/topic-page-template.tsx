@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import { BrandedIcon, GridLayout, SideNav } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
@@ -91,6 +92,34 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         );
     });
 
+    const buildPageTitle = useCallback(
+        (pageNumber: number) => {
+            const titlePageNo = pageNumber > 1 ? ` - Page ${pageNumber} ` : '';
+            let pageTitle = `${name} ${titlePageNo} | MongoDB`;
+            if (contentType === 'languages' || contentType === 'technologies') {
+                pageTitle = `${name} and MongoDB ${titlePageNo}`;
+            } else if (contentType === 'products') {
+                if (name.toLowerCase() === 'mongodb') {
+                    pageTitle = `Product ${titlePageNo} | MongoDB`;
+                } else {
+                    pageTitle = `MongoDB ${name} ${titlePageNo}`;
+                }
+            }
+            return pageTitle;
+        },
+        [contentType, name]
+    );
+
+    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+
+    const updatePageTitle = useCallback(
+        pageNumber => {
+            const pageTitle = buildPageTitle(pageNumber);
+            setPageTitle(pageTitle);
+        },
+        [buildPageTitle]
+    );
+
     const topicsRow = topics.length > 0 ? 1 : 0;
     const featuredRow = variant === 'light' ? 0 : 1;
     const relatedTopicsRow = variant === 'light' ? 1 : 0;
@@ -118,17 +147,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     const realtedTopicsWithIcons = relatedTopics.map(topicWithIcon);
 
     setURLPathForNavItems(tertiaryNavItems);
-
-    let pageTitle = `${name} | MongoDB`;
-    if (contentType === 'languages' || contentType === 'technologies') {
-        pageTitle = `${name} and MongoDB`;
-    } else if (contentType === 'products') {
-        if (name.toLowerCase() === 'mongodb') {
-            pageTitle = `Products | MongoDB`;
-        } else {
-            pageTitle = `MongoDB ${name}`;
-        }
-    }
 
     tertiaryNavItems = addExternalIconToSideNav(
         tertiaryNavItems,
@@ -200,6 +218,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         tagSlug={slug}
                         pageNumber={pageNumber}
                         pageSlug={slug.split('/')}
+                        updatePageTitle={updatePageTitle}
                         initialSearchContent={initialSearchContent}
                         sx={{
                             gridColumn: [

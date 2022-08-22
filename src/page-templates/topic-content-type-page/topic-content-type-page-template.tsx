@@ -8,7 +8,7 @@ import {
 } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
@@ -85,7 +85,25 @@ export const TopicContentTypePageTemplate: NextPage<
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
 
-    const pageTitle = `${topicName} ${pluralize(contentType)} | MongoDB`;
+    const buildPageTitle = useCallback(
+        (pageNumber: number) => {
+            const titlePageNo = pageNumber > 1 ? `- Page ${pageNumber}` : '';
+            return `${topicName} ${pluralize(
+                contentType
+            )} ${titlePageNo} | MongoDB`;
+        },
+        [contentType, topicName]
+    );
+
+    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+
+    const updatePageTitle = useCallback(
+        pageNumber => {
+            const pageTitle = buildPageTitle(pageNumber);
+            setPageTitle(pageTitle);
+        },
+        [buildPageTitle]
+    );
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
@@ -200,6 +218,7 @@ export const TopicContentTypePageTemplate: NextPage<
                         contentType={contentType}
                         pageNumber={pageNumber}
                         pageSlug={(topicSlug + contentTypeSlug).split('/')}
+                        updatePageTitle={updatePageTitle}
                         initialSearchContent={initialSearchContent}
                         resultsLayout="grid"
                         titleLink={getSearchTitleLink(

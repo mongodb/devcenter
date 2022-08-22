@@ -42,6 +42,7 @@ export const getTopicContentTypePageData = async (
     const initialSearchContent: SearchItem[] = await getSearchContent({
         searchString: '',
         tagSlug: topicSlug,
+        contentType: contentType,
         sortBy: 'Most Recent',
     });
 

@@ -37,6 +37,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
     placeholder,
     pageNumber,
     pageSlug,
+    updatePageTitle,
     initialSearchContent,
 }) => {
     const router = useRouter();
@@ -75,14 +76,19 @@ const Search: React.FunctionComponent<SearchProps> = ({
         undefined,
         initialSearchData ? pageNumber : undefined
     );
-    const [isClearState, setClearState] = useState(
-        (!searchString || searchString == '') && allFilters.length == 0
-    );
+
+    const getResultData = () => {
+        return initialSearchData ? initialSearchData : data;
+    };
+
+    const getResultIsValidating = () => {
+        return initialSearchData ? false : isValidating;
+    };
 
     const clearPagination = () => {
         setInitialSearchData(undefined);
         setCurrentPage(1);
-        setClearState(true);
+        updatePageTitle(1);
 
         const query = pageSlug
             ? {
@@ -122,6 +128,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
+            updatePageTitle(nextPage);
 
             // Need to pass slug for dynamic pages.
             // https://github.com/vercel/next.js/discussions/8207
@@ -246,10 +253,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                 </div>
             )}
             <div sx={{}}></div>
-            {!!numberOfResults || isValidating || error ? (
+            {!!getResultData().length || getResultIsValidating() || error ? (
                 <>
                     <Results
-                        data={initialSearchData ? initialSearchData : data}
+                        data={getResultData()}
                         isLoading={isLoading}
                         hasError={error}
                         layout={resultsLayout}
@@ -262,10 +269,11 @@ const Search: React.FunctionComponent<SearchProps> = ({
                                 marginTop: ['inc70', null, 'inc90'],
                             }}
                         >
-                            {!isValidating && data && (
+                            {!getResultIsValidating() && getResultData() && (
                                 <a
                                     href={
-                                        isClearState
+                                        (!searchString || searchString == '') &&
+                                        allFilters.length == 0
                                             ? `/developer${path}?page=${
                                                   currentPage + 1
                                               }`
