@@ -1,16 +1,33 @@
 import { ThemeUIStyleObject } from 'theme-ui';
 
-export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => ({
-    boxSizing: 'border-box',
-    bg: '#ffffff',
-    display: ['block', null, null, 'none'],
-    position: isOpen ? 'fixed' : 'sticky', // ignore the consistent nav when opened.
-    top: 0,
-    overflowY: 'auto',
-    width: '100%',
-    zIndex: 1000,
-    height: isOpen ? '100vh' : 'auto',
-});
+export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
+    let height = 'auto';
+    const NAVBAR_HEIGHT = 56;
+
+    if (isOpen) {
+        // Calculate the total height that the dropdown and secondary nav should be.
+        // Since the consistent nav is not sticky, this height will vary based on the viewport's vertical offset.
+        let topOffset = window?.visualViewport?.pageTop || 0;
+        if (topOffset > NAVBAR_HEIGHT) {
+            topOffset = NAVBAR_HEIGHT; // Only want to compensate up to the navbar's height.
+        }
+        const navBarShowing = NAVBAR_HEIGHT - topOffset;
+
+        height = `calc(100vh - ${navBarShowing}px)`;
+    }
+
+    return {
+        boxSizing: 'border-box',
+        bg: '#ffffff',
+        display: ['block', null, null, 'none'],
+        position: 'sticky',
+        top: 0,
+        overflowY: 'auto',
+        width: '100%',
+        zIndex: 998,
+        height,
+    };
+};
 
 export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
     margin: 0,

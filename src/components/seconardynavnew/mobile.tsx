@@ -311,7 +311,7 @@ const MobileView = () => {
             <div
                 sx={{
                     position: 'sticky',
-                    zIndex: 1002,
+                    zIndex: 998,
                     bg: '#ffffff',
                     top: 0,
                     display: 'grid',
