@@ -1,6 +1,6 @@
 import { Tag } from '../../interfaces/tag';
 
-export type Label = 'Products' | 'Technologies' | 'Languages' | '';
+type Label = 'Products' | 'Technologies' | 'Languages' | '';
 
 interface TagsWithLabel {
     label: Label;
