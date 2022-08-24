@@ -45,7 +45,7 @@ export const TableOfContents = ({
     className?: string;
 }) => {
     return (
-        <div sx={{ paddingLeft: 'inc70' }} className={className}>
+        <div className={className}>
             <TypographyScale variant="heading6">
                 Table of Contents
             </TypographyScale>
