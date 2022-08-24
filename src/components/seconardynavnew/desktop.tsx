@@ -30,7 +30,7 @@ const StyledSecondaryLinks = {
             null,
             theme.space.inc40,
             theme.space.inc50,
-            theme.space.inc90,
+            theme.space.inc60,
         ],
     },
     whiteSpace: 'nowrap' as 'nowrap',
