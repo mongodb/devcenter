@@ -30,7 +30,7 @@ const StyledSecondaryLinks = {
             null,
             theme.space.inc40,
             theme.space.inc50,
-            theme.space.inc90,
+            theme.space.inc60,
         ],
     },
     whiteSpace: 'nowrap' as 'nowrap',
@@ -50,7 +50,6 @@ const MainLinkStyles = (isActive: boolean) => ({
     float: 'left' as 'left',
     marginRight: ['inc60', 'inc60', 'inc60', 'inc90', 'inc90', 'inc90'],
     fontWeight: 500,
-
     'span.textlink-default-text-class': {
         ...hoverLinkStyles(isActive),
         color: theme.colors.text.default,
