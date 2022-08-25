@@ -27,20 +27,21 @@ const findNextInSeries = (
 
 const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
     series,
-    currentSlug,
     currentTitle,
     className,
 }) => {
     const nextInSeries = findNextInSeries(series.seriesEntry, currentTitle);
 
-    const listItems = series.seriesEntry.map(({ title, calculatedSlug }) => ({
-        text: title,
-        url: calculatedSlug,
-    }));
+    const listItems = series.seriesEntry
+        .filter(({ title }) => title !== currentTitle)
+        .map(({ title, calculatedSlug }) => ({
+            text: title,
+            url: calculatedSlug,
+        }));
 
     return (
         <div sx={seriesCardStyles} className={className}>
-            <Eyebrow sx={{ marginBottom: 'inc20' }}>
+            <Eyebrow sx={{ marginBottom: 'inc20', fontWeight: '500' }}>
                 This is part of a series
             </Eyebrow>
             <TypographyScale
