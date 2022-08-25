@@ -40,7 +40,6 @@ import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import Image from 'next/image';
 import { getCardProps, thumbnailLoader } from '../../components/card/utils';
 import parse from 'html-react-parser';
-import CTALink from '../../components/hero/CTALink';
 import { DocumentBody } from '../../components/article-body/document-body';
 import SeriesCard from '../../components/series-card';
 import { Grid, ThemeUICSSObject } from 'theme-ui';
@@ -361,7 +360,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     )}
                 </div>
                 {!previewMode && ratingSection}
-                {(githubUrl || liveSiteUrl) &&
+                {isCodeExample &&
+                    (githubUrl || liveSiteUrl) &&
                     renderExternalExamples({
                         marginTop: 'inc50',
                         marginBottom: ['', null, null, '-inc40'], // negates marginTop from contentBody since externalExamples might not always be present
@@ -389,16 +389,20 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 </TypographyScale>
             )}
             {vidOrPod && (
-                <CTALink
-                    customCSS={{
+                <Link
+                    linkIcon="arrow"
+                    href={getCtaLinkForVideosOrPodcasts(category)}
+                    sx={{
+                        display: 'inline-block',
                         marginTop: 'inc40',
                     }}
-                    text={getCtaTextForVideosOrPodcasts(category)}
-                    url={getCtaLinkForVideosOrPodcasts(category)}
-                />
+                >
+                    {getCtaTextForVideosOrPodcasts(category)}
+                </Link>
             )}
             {!vidOrPod && <DocumentBody content={contentAst} />}
-            {(githubUrl || liveSiteUrl) &&
+            {isCodeExample &&
+                (githubUrl || liveSiteUrl) &&
                 renderExternalExamples({ marginTop: 'inc40' })}
         </div>
     );
