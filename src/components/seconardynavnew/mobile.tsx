@@ -20,47 +20,6 @@ import {
 import { DropDownItem, DropDownItem2 } from './dropdown-menu';
 import { getURLPath } from '../../utils/format-url-path';
 
-const DropDownButton = ({
-    text,
-    dropDownItems,
-}: {
-    text: string;
-    dropDownItems: DropDownItem[];
-}) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const onClickShowMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
-    return (
-        <>
-            <div sx={DropDownStyles}>
-                {/* Level 1 */}
-                <div onClick={onClickShowMenu}>
-                    {text}
-                    {!isOpen && (
-                        <SystemIcon
-                            sx={plusOrMinusStylesForDropDowns}
-                            name={ESystemIconNames.PLUS}
-                            size="small"
-                            color="success"
-                        />
-                    )}
-                    {isOpen && (
-                        <SystemIcon
-                            sx={plusOrMinusStylesForDropDowns}
-                            name={ESystemIconNames.MINUS}
-                            size="small"
-                            color="success"
-                        />
-                    )}
-                </div>
-            </div>
-            {isOpen && <DropDownMenu items={dropDownItems} />}
-        </>
-    );
-};
-
 const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
@@ -360,10 +319,14 @@ const MobileView = () => {
                 {secondaryNavData.map(({ name, slug, dropDownItems }) => (
                     <SecondaryLinksList key={name}>
                         {dropDownItems?.length ? (
-                            <DropDownButton
-                                text={name}
-                                dropDownItems={dropDownItems}
-                            />
+                            <>
+                                {' '}
+                                {/* Level 1 */}
+                                <div sx={DropDownStyles}>
+                                    <div>{name}</div>
+                                </div>
+                                <DropDownMenu items={dropDownItems} />
+                            </>
                         ) : (
                             <>
                                 <div sx={DropDownStyles}>
