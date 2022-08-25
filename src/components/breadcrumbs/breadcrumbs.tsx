@@ -29,7 +29,7 @@ const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
                         {/* The negative margin is to offset the added 3px from the letter-spacing on the last character that Flora adds.*/}
                         <Eyebrow
                             customElement="span"
-                            sx={{ marginRight: '-3px' }}
+                            sx={{ marginRight: '-3px', fontWeight: 'normal' }}
                         >
                             {text}
                         </Eyebrow>

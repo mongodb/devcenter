@@ -22,6 +22,7 @@ export const pillStyles = (pillCategory: PillCategory) => ({
     px: ['inc30', null, null, 'inc40'],
     py: ['inc10', null, null, 'inc20'],
     fontSize: ['9px', null, null, 'inc00'],
+    fontWeight: 'normal',
     letterSpacing: ['2.5px', null, null, '3px'],
 });
 
