@@ -36,7 +36,7 @@ export const VideoEmbed = ({
 }: {
     argument: Argument[];
     name: string;
-    thumbnail: string;
+    thumbnail?: string;
 }) => {
     const videoId = argument[0].value;
     const value = getVideoUrl(provider, videoId);

@@ -297,7 +297,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         <VideoEmbed
                             argument={[{ value: parseUndefinedValue(videoId) }]}
                             name="youtube"
-                            thumbnail={getPlaceHolderImage(image?.url)}
                         />
                     )}
                     {!vidOrPod && (
