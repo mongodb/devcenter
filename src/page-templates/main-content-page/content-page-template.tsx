@@ -392,13 +392,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     </div>
                 )}
             </div>
-            {series && (
-                <SeriesCard
-                    series={series}
-                    currentSlug={slug}
-                    currentTitle={title}
-                />
-            )}
+            {series && <SeriesCard series={series} currentTitle={title} />}
             <div>
                 <TypographyScale
                     variant="heading5"
