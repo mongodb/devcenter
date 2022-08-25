@@ -393,7 +393,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     linkIcon="arrow"
                     href={getCtaLinkForVideosOrPodcasts(category)}
                     sx={{
-                        display: 'inline-block',
+                        display: 'block',
                         marginTop: 'inc40',
                     }}
                 >
