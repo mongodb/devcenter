@@ -440,7 +440,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                                             searchString ==
                                                                 '') &&
                                                         allFilters.length == 0
-                                                            ? `/developer${slug}?page=${
+                                                            ? `/developer${slug}/?page=${
                                                                   currentPage +
                                                                   1
                                                               }`

@@ -274,7 +274,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                                     href={
                                         (!searchString || searchString == '') &&
                                         allFilters.length == 0
-                                            ? `/developer${path}?page=${
+                                            ? `/developer${path}/?page=${
                                                   currentPage + 1
                                               }`
                                             : '#'
