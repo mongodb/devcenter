@@ -23,9 +23,6 @@ test('renders mobile dropdown', () => {
         '/developer/articles/'
     );
 
-    const topics = screen.getByText('Topics');
-    topics.click();
-
     const allTopics = screen.getByText('All Topics');
     expect(
         allTopics.parentElement?.parentElement?.parentElement
