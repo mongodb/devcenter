@@ -34,7 +34,11 @@ const configVals = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'max-age=3600',
+                        value: 'public, max-age=3600',
+                    },
+                    {
+                        key: 'Pragma',
+                        value: 'public',
                     },
                     {
                         key: 'Strict-Transport-Security',

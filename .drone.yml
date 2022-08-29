@@ -65,7 +65,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - devhub-1247
   event:
     - push
 
