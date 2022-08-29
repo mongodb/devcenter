@@ -33,7 +33,7 @@ const StyledSecondaryLinks: ThemeUIStyleObject | undefined = {
             null,
             theme.space.inc40,
             theme.space.inc50,
-            theme.space.inc90,
+            theme.space.inc60,
         ],
     },
     'li.secondary-nav-user-menu': {
