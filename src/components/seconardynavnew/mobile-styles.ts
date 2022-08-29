@@ -116,11 +116,19 @@ export const aLinkStyles = {
     },
 };
 
-export const chevronStylesForMainLink = {
+export const chevronStylesForMainLink = (
+    hasUserMenu: boolean
+): ThemeUIStyleObject => ({
     display: 'inline',
     position: 'absolute' as 'absolute',
-    right: 'inc40',
+    right: hasUserMenu ? '90px' : 'inc40',
     stroke: 'icon.system.success',
+});
+
+export const userMenuStyles: ThemeUIStyleObject = {
+    position: 'absolute',
+    right: '10px',
+    top: '15px',
 };
 
 export const DropDownStyles = {

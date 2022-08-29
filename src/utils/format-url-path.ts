@@ -3,12 +3,15 @@
  * @param url - any URL
  * @returns the URL corrected with /developer, if applicable
  */
+
+export const BASE_PATH: string = '/developer';
+
 export const getURLPath = (url: string | undefined) => {
     if (typeof url !== 'string') return url;
     if (url.startsWith('#')) return url;
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0)
         return url;
-    const basePath = '/developer';
+    const basePath = BASE_PATH;
 
     let urlPath = url;
     if (!url.startsWith(basePath)) {

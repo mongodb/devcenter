@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import getConfig from 'next/config';
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
@@ -13,11 +15,16 @@ import { OverlayProvider } from '../contexts/overlay';
 
 const CONTENT_ROUTE = '/[...slug]';
 
-function MyApp({ Component, pageProps }: AppProps) {
+interface CustomProps {
+    session?: Session;
+}
+
+function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { asPath, route } = router;
 
+    let pagePath = route === '/_error' ? null : asPath;
     let pageDescription = null;
     if (asPath in publicRuntimeConfig.pageDescriptions) {
         pageDescription = publicRuntimeConfig.pageDescriptions[asPath];
@@ -70,15 +77,22 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
                 }}
             />
-            <ThemeProvider theme={theme}>
-                <OverlayProvider>
-                    <Layout>
-                        <ErrorBoundary>
-                            <Component {...pageProps} />
-                        </ErrorBoundary>
-                    </Layout>
-                </OverlayProvider>
-            </ThemeProvider>
+            <SessionProvider
+                session={session}
+                basePath="/developer/api/auth/"
+                refetchOnWindowFocus={true}
+                refetchInterval={0}
+            >
+                <ThemeProvider theme={theme}>
+                    <OverlayProvider>
+                        <Layout pagePath={pagePath}>
+                            <ErrorBoundary>
+                                <Component {...pageProps} />
+                            </ErrorBoundary>
+                        </Layout>
+                    </OverlayProvider>
+                </ThemeProvider>
+            </SessionProvider>
         </>
     );
 }

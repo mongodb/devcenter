@@ -3,24 +3,30 @@ service:
   targetPort: 3000
 
 env:
+  ACCOUNT_PORTAL_URL: https://account.mongodb.com
   APP_ENV: production
   HOST_URL: www.mongodb.com
+  NEXTAUTH_URL: https://www.mongodb.com/developer/api/auth/
 
 envSecrets:
+  DEVHUB_URL: devcenter-secrets
+  NEXTAUTH_SECRET: devcenter-secrets
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
-  REALM_API_URL: devcenter-secrets
-  REALM_SEARCH_URL: devcenter-secrets
-  STRAPI_URL: devcenter-secrets
-  STRAPI_API_TOKEN: devcenter-secrets
-  DEVHUB_URL: devcenter-secrets
+  OKTA_ISSUER: devcenter-secrets
+  OKTA_CLIENT_ID: devcenter-secrets
+  OKTA_CLIENT_SECRET: devcenter-secrets
   PREVIEW_SECRET_KEY: devcenter-secrets
   PREVIEW_WEBHOOK_TOKEN: devcenter-secrets # Only production needs to have this.
   PROMETHEUS_AUTH_USER: devcenter-secrets
   PROMETHEUS_AUTH_PASS: devcenter-secrets
+  REALM_API_URL: devcenter-secrets
+  REALM_SEARCH_URL: devcenter-secrets
+  REVALIDATE_TOKEN: devcenter-secrets
   SENTRY_AUTH_TOKEN: devcenter-secrets
   SENTRY_DSN: devcenter-secrets
-  REVALIDATE_TOKEN: devcenter-secrets
+  STRAPI_URL: devcenter-secrets
+  STRAPI_API_TOKEN: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
