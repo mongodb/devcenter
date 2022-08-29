@@ -24,7 +24,9 @@ export const createInitialSearchData = (
         const initialSearchData = initialSearchContent.map(
             searchItemToContentItem
         );
-        return initialSearchData.slice(0, pageNumber * DEFAULT_PAGE_SIZE);
+
+        const start = pageNumber > 1 ? (pageNumber - 1) * DEFAULT_PAGE_SIZE : 0;
+        return initialSearchData.slice(start, pageNumber * DEFAULT_PAGE_SIZE);
     }
 };
 

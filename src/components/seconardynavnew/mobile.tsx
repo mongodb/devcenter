@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink, TypographyScale } from '@mdb/flora';
+import { UserMenu } from '@leafygreen-ui/mongo-nav';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from './nav-item';
 import {
     aLinkStyles,
     chevronStylesForMainLink,
+    userMenuStyles,
     DropDownStyles,
     MainLinkStyles,
     plusOrMinusStylesForDropDowns,
@@ -298,6 +301,14 @@ const MobileViewL1ProductLinks = ({
 };
 
 const MobileView = () => {
+    const { data: session } = useSession();
+    const account = session
+        ? {
+              firstName: session.firstName,
+              lastName: session.lastName,
+              email: session.email,
+          }
+        : null;
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
     const openMobileMenu = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);
@@ -310,7 +321,7 @@ const MobileView = () => {
                 backgroundColor: 'white',
                 display: ['block', 'block', 'block', 'none'],
                 position: 'fixed',
-                overflowY: 'auto',
+                overflowY: 'visible',
                 width: '100%',
                 zIndex: '10',
             }}
@@ -332,7 +343,7 @@ const MobileView = () => {
                     </TypographyScale>
                     {!mobileMenuIsOpen && (
                         <SystemIcon
-                            sx={chevronStylesForMainLink}
+                            sx={chevronStylesForMainLink(!!account)}
                             className="chevron-icon"
                             name={ESystemIconNames.CHEVRON_DOWN}
                             size="small"
@@ -341,7 +352,7 @@ const MobileView = () => {
                     )}
                     {mobileMenuIsOpen && (
                         <SystemIcon
-                            sx={chevronStylesForMainLink}
+                            sx={chevronStylesForMainLink(!!account)}
                             className="chevron-icon"
                             name={ESystemIconNames.CHEVRON_UP}
                             size="small"
@@ -358,7 +369,10 @@ const MobileView = () => {
             </div>
             <ul sx={secondaryLinkStyles(mobileMenuIsOpen)}>
                 {secondaryNavData.map(({ name, slug, dropDownItems }) => (
-                    <SecondaryLinksList key={name}>
+                    <SecondaryLinksList
+                        linkClassName="secondary-nav-link"
+                        key={name}
+                    >
                         {dropDownItems?.length ? (
                             <DropDownButton
                                 text={name}
@@ -396,6 +410,21 @@ const MobileView = () => {
                     </SecondaryLinksList>
                 ))}
             </ul>
+            {account && (
+                <div
+                    sx={userMenuStyles}
+                    className="secondary-nav-user-menu-mobile"
+                >
+                    <UserMenu
+                        account={account}
+                        activePlatform="devHub"
+                        onLogout={e => {
+                            e.preventDefault();
+                            signOut({ callbackUrl: '/developer/api/logout/' });
+                        }}
+                    />
+                </div>
+            )}
         </div>
     );
 };

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import { BrandedIcon, GridLayout, SideNav } from '@mdb/flora';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import getConfig from 'next/config';
 import { NextSeo } from 'next-seo';
 import { Crumb } from '../../components/breadcrumbs/types';
 import CardSection, {
@@ -75,6 +77,8 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     initialSearchContent,
     pageNumber,
 }) => {
+    const router = useRouter();
+    const { publicRuntimeConfig } = getConfig();
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -153,9 +157,11 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         'documentation'
     );
 
+    const canonicalUrl = publicRuntimeConfig.absoluteBasePath + router.asPath;
+
     return (
         <>
-            <NextSeo title={pageTitle} />
+            <NextSeo title={pageTitle} canonical={canonicalUrl} />
             <Hero
                 crumbs={crumbs}
                 name={name}
