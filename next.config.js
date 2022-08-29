@@ -43,7 +43,7 @@ const configVals = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'no-cache, no-store, max-age=0, must-revalidate',
+                        value: 'public, max-age=3600',
                     },
                     {
                         key: 'Pragma',
