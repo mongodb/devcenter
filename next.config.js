@@ -30,11 +30,20 @@ const configVals = {
     async headers() {
         return [
             {
+                source: '/_next/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=3600, immutable',
+                    },
+                ],
+            },
+            {
                 source: '/(.*)', // all pages
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'public, max-age=3600',
+                        value: 'no-cache, no-store, max-age=0, must-revalidate',
                     },
                     {
                         key: 'Pragma',
