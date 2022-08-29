@@ -17,6 +17,11 @@ The data for this project is fetched from a Strapi CMS. In order to get actual d
 `STRAPI_URL`. See [this DevHub wiki page](https://wiki.corp.mongodb.com/display/DEVREL/DevHub+Front-End+Guide#DevHubFrontEndGuide-InstallationandSetup) and copy the value for `STRAPI_URL` shown there (or ask a teammate).
 `REALM_SEARCH_URL` and `REALM_API_URL` are needed for feedback and search functionality. Ask a teammate for these values.
 
+For Okta SSO to work, the hostname must be a subdomain of mongodb.com. To test SSO locally, create an entry in /etc/hosts:
+`127.0.0.1       devcenter-local.mongodb.com`
+
+DevCenter will then be accessible at: http://devcenter-local.mongodb.com:3000/developer/
+
 ## Running Locally
 
 Run `yarn` to install dependencies. Run `yarn dev` to start the server locally in development mode. It then should be accessible at http://localhost:3000/developer.

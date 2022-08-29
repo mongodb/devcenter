@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
+import { UserMenu } from '@leafygreen-ui/mongo-nav';
+import { ThemeUIStyleObject } from 'theme-ui';
 
 import {
     ESystemIconNames,
@@ -19,11 +22,11 @@ const linkWrapperStyles = {
     padding: 0,
 };
 
-const StyledSecondaryLinks = {
+const StyledSecondaryLinks: ThemeUIStyleObject | undefined = {
     padding: 0,
     margin: 0,
     overflow: 'visible',
-    'li:not(:last-child)': {
+    'li.secondary-nav-link:not(:last-child)': {
         marginRight: [
             null,
             null,
@@ -32,6 +35,10 @@ const StyledSecondaryLinks = {
             theme.space.inc50,
             theme.space.inc60,
         ],
+    },
+    'li.secondary-nav-user-menu': {
+        position: 'relative',
+        zIndex: 10,
     },
     whiteSpace: 'nowrap' as 'nowrap',
 };
@@ -74,6 +81,14 @@ const FloraLinkStyles = (isActive: boolean) => ({
 });
 
 const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
+    const { data: session } = useSession();
+    const account = session
+        ? {
+              firstName: session.firstName,
+              lastName: session.lastName,
+              email: session.email,
+          }
+        : null;
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(isOpen => !isOpen);
@@ -153,7 +168,10 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
 
                 <ul sx={StyledSecondaryLinks}>
                     {secondaryNavData.map(({ name, slug, dropDownItems }) => (
-                        <SecondaryLinksList key={name}>
+                        <SecondaryLinksList
+                            linkClassName="secondary-nav-link"
+                            key={name}
+                        >
                             {dropDownItems?.length ? (
                                 <>
                                     <div sx={linkWrapperStyles}>
@@ -222,6 +240,23 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             )}
                         </SecondaryLinksList>
                     ))}
+                    {account && (
+                        <SecondaryLinksList
+                            linkClassName="secondary-nav-user-menu"
+                            key="userMenu"
+                        >
+                            <UserMenu
+                                account={account}
+                                activePlatform="devHub"
+                                onLogout={e => {
+                                    e.preventDefault();
+                                    signOut({
+                                        callbackUrl: '/developer/api/logout',
+                                    });
+                                }}
+                            />
+                        </SecondaryLinksList>
+                    )}
                 </ul>
             </nav>
         </div>
