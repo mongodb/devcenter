@@ -320,7 +320,6 @@ const MobileView = () => {
                     <SecondaryLinksList key={name}>
                         {dropDownItems?.length ? (
                             <>
-                                {' '}
                                 {/* Level 1 */}
                                 <div sx={DropDownStyles}>
                                     <div>{name}</div>
