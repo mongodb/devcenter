@@ -1,8 +1,4 @@
-import type {
-    NextPage,
-    GetServerSideProps,
-    GetServerSidePropsContext,
-} from 'next';
+import type { NextPage } from 'next';
 import {
     BrandedIcon,
     EThirdPartyLogoVariant,
@@ -409,14 +405,6 @@ const Home: NextPage<{}> = props => {
             </div>
         </main>
     );
-};
-
-export const getServerSideProps: GetServerSideProps = async (
-    context: GetServerSidePropsContext
-) => {
-    return {
-        props: {},
-    };
 };
 
 export default Home;
