@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
     buildSearchQuery,
     SearchQueryParams,
@@ -7,10 +6,19 @@ import { SearchItem } from '../components/search/types';
 
 // Should find a way to cache this response. Only use it in a few places for search filters but still.
 export const getAllSearchContent = async (): Promise<SearchItem[]> => {
-    return axios
-        .get(`${process.env.REALM_SEARCH_URL}/search_devcenter_stage?s=`)
-        .then(async response => {
-            const r_json: SearchItem[] = response.data;
+    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter_stage?s=`;
+    const options = {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetch(url, options)
+        .then(async response => response.json())
+        .then(async data => {
+            const r_json: SearchItem[] = data;
             return r_json;
         });
 };
@@ -24,14 +32,19 @@ export const getSearchContent = async (
         `${process.env.REALM_SEARCH_URL}/search_devcenter_stage?${query}`
     );
 
-    return axios
-        .get(
-            `
-            ${process.env.REALM_SEARCH_URL}/search_devcenter_stage?${query}
-        `
-        )
-        .then(async response => {
-            const r_json: SearchItem[] = response.data;
+    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter_stage?${query}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetch(url, options)
+        .then(async response => response.json())
+        .then(async data => {
+            const r_json: SearchItem[] = data;
             return r_json;
         });
 };
