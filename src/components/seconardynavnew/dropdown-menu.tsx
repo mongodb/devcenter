@@ -171,6 +171,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                     href={getURLPath('topics')}
                     sx={{
                         marginTop: '25px',
+                        padding: '16px 48px',
                         '&:hover': {
                             color: 'initial!important',
                         },
