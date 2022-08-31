@@ -23,7 +23,7 @@ async function buildRssFeed(baseUrl) {
     // Issue referenced in https://github.com/axios/axios/issues/4806.
     https
         .get(
-            `${process.env.REALM_SEARCH_URL}/search_devcenter_stage?s=`,
+            `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`,
             response => {
                 let data = '';
                 response.on('data', chunk => {

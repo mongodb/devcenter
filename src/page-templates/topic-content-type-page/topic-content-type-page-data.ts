@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { ITopicCard } from '../../components/topic-card/types';
 import { SearchItem } from '../../components/search/types';
@@ -39,12 +40,17 @@ export const getTopicContentTypePageData = async (
         })
         .map((contentTypeTag: ContentTypeTag) => contentTypeTag.contentType)[0];
 
-    const initialSearchContent: SearchItem[] = await getSearchContent({
-        searchString: '',
-        tagSlug: topicSlug,
-        contentType: contentType,
-        sortBy: 'Most Recent',
-    });
+    let initialSearchContent: SearchItem[] | null = null;
+    try {
+        initialSearchContent = await getSearchContent({
+            searchString: '',
+            tagSlug: topicSlug,
+            contentType: contentType,
+            sortBy: 'Most Recent',
+        });
+    } catch (e) {
+        Sentry.captureException(e);
+    }
 
     let tertiaryNavItems = await getSideNav(topicSlug, allContentPreval);
 

@@ -45,6 +45,7 @@ const useSearch = (
 
     const key = buildSearchQuery(queryParams);
 
+    // TODO: Refactor to useSWRInfinite and implement client-side pagination.
     const { data, error, isValidating } = useSWR(key, fetcher, {
         revalidateIfStale: false,
         revalidateOnFocus: false,
