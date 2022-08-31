@@ -6,7 +6,7 @@ import { SearchItem } from '../components/search/types';
 
 // Should find a way to cache this response. Only use it in a few places for search filters but still.
 export const getAllSearchContent = async (): Promise<SearchItem[]> => {
-    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter_stage?s=`;
+    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter_dev?s=`;
     const options = {
         method: 'GET',
         headers: {
@@ -29,10 +29,10 @@ export const getSearchContent = async (
     const query = buildSearchQuery(queryParams);
 
     console.log(
-        `${process.env.REALM_SEARCH_URL}/search_devcenter_stage?${query}`
+        `${process.env.REALM_SEARCH_URL}/search_devcenter_dev?${query}`
     );
 
-    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter_stage?${query}`;
+    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter_dev?${query}`;
     const options = {
         method: 'GET',
         headers: {

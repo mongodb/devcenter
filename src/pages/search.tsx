@@ -102,6 +102,8 @@ const Search: NextPage<SearchProps> = ({
         resultsToShow,
         allFilters,
         setAllFilters,
+        setSize,
+        size,
         onSearch,
         onFilter,
         searchString,
@@ -109,26 +111,21 @@ const Search: NextPage<SearchProps> = ({
         numberOfResults,
         onSort,
         sortBy,
-    } = useSearch(
-        undefined,
-        undefined,
-        {
-            l1Items,
-            languageItems,
-            technologyItems,
-            contributedByItems,
-            contentTypeItems,
-            expertiseLevelItems,
-        },
-        initialSearchData ? pageNumber : undefined
-    );
+    } = useSearch(pageNumber, undefined, undefined, {
+        l1Items,
+        languageItems,
+        technologyItems,
+        contributedByItems,
+        contentTypeItems,
+        expertiseLevelItems,
+    });
 
     const getResultData = () => {
-        return initialSearchData ? initialSearchData : data;
+        return initialSearchData && !searchString ? initialSearchData : data;
     };
 
     const getResultIsValidating = () => {
-        return initialSearchData ? false : isValidating;
+        return initialSearchData && !searchString ? false : isValidating;
     };
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
@@ -186,10 +183,8 @@ const Search: NextPage<SearchProps> = ({
                     shallow: true,
                 }
             );
-            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
-        } else {
-            setResultsToShow(resultsToShow + 10);
         }
+        setSize(size + 1);
         setInitialSearchData(undefined);
     };
 

@@ -275,12 +275,22 @@ export const itemInFilters = (
     );
 };
 
-export const fetcher: Fetcher<ContentItem[], string> = queryString => {
+export const fetcher: Fetcher<
+    { results: ContentItem[]; numberOfPages: number; numberOfResults: number },
+    string
+> = queryString => {
+    console.log('fetcher', queryString);
+
     return fetch(
         (getURLPath('/api/search') as string) + '?' + queryString
     ).then(async response => {
-        const r_json: SearchItem[] = await response.json();
-        return r_json.map(searchItemToContentItem);
+        const responseJson = await response.json();
+        const searchResults: SearchItem[] = responseJson.results;
+        return {
+            results: searchResults.map(searchItemToContentItem),
+            numberOfPages: responseJson.numberOfPages,
+            numberOfResults: responseJson.numberOfResults,
+        };
     });
 };
 

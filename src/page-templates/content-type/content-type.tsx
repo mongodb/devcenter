@@ -98,16 +98,13 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         resultsToShow,
         allFilters,
         setAllFilters,
+        size,
+        setSize,
         onSearch,
         searchString,
         setSearchString,
         numberOfResults,
-    } = useSearch(
-        contentType,
-        undefined,
-        undefined,
-        initialSearchData ? pageNumber : undefined
-    );
+    } = useSearch(pageNumber, contentType, undefined, undefined);
 
     const getResultData = () => {
         return initialSearchData ? initialSearchData : data;
@@ -192,10 +189,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     shallow: true,
                 }
             );
-            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
-        } else {
-            setResultsToShow(resultsToShow + 10);
         }
+        setSize(size + 1);
         setInitialSearchData(undefined);
     };
 

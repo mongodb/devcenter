@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import debounce from 'lodash.debounce';
-import useSWR from 'swr';
+import useSWRInfinite from 'swr/infinite';
 import { FilterItem } from '../../components/search-filters';
 import { fetcher, itemInFilters, updateUrl } from './utils';
 import { useRouter } from 'next/router';
@@ -10,6 +10,7 @@ import {
     DEFAULT_PAGE_SIZE,
 } from '../../components/search/utils';
 import { SortByType } from '../../components/search/types';
+import { ContentItem } from '../../interfaces/content-item';
 
 interface SearchFilterItems {
     l1Items: FilterItem[];
@@ -20,13 +21,22 @@ interface SearchFilterItems {
     expertiseLevelItems: FilterItem[];
 }
 
+const SWR_HOOK_DEFAULT_OPTIONS = {
+    revalidateFirstPage: false,
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    shouldRetryOnError: true,
+    persistSize: true, // e.g. if page is set to 4, only load page 4 and onward
+};
+
 // Hook that contains the majority of the logic for our search functionality across the site.
 
 const useSearch = (
+    initialPageNumber: number,
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
-    filterItems?: SearchFilterItems, // This is needed for URL filter/search updates.
-    pageNumber?: number
+    filterItems?: SearchFilterItems // This is needed for URL filter/search updates.
 ) => {
     const shouldUseQueryParams = !!filterItems;
 
@@ -36,26 +46,42 @@ const useSearch = (
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
     const [sortBy, setSortBy] = useState<SortByType>('Most Recent');
 
-    const queryParams: SearchQueryParams = {
-        searchString,
-        contentType,
-        tagSlug,
-        sortBy,
+    const getKey = (pageIndex: number, previousPageData: any) => {
+        const queryParams: SearchQueryParams = {
+            searchString,
+            contentType,
+            tagSlug,
+            sortBy,
+            pageNumber: pageIndex + 1,
+            pageSize: DEFAULT_PAGE_SIZE,
+        };
+
+        console.log(
+            'getKey ',
+            'pageIndex ',
+            pageIndex,
+            ' query ',
+            buildSearchQuery(queryParams)
+        );
+
+        return buildSearchQuery(queryParams);
     };
 
-    const key = buildSearchQuery(queryParams);
+    const { data, error, isValidating, size, setSize } = useSWRInfinite(
+        getKey,
+        fetcher,
+        {
+            ...SWR_HOOK_DEFAULT_OPTIONS,
+            initialSize: initialPageNumber,
+        }
+    );
 
-    const { data, error, isValidating } = useSWR(key, fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-        shouldRetryOnError: false,
-    });
+    console.log('useSWRInfinite', data);
 
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setResultsToShow(
-            pageNumber && event.target.value === ''
-                ? pageNumber * DEFAULT_PAGE_SIZE
+            initialPageNumber && event.target.value === ''
+                ? initialPageNumber * DEFAULT_PAGE_SIZE
                 : DEFAULT_PAGE_SIZE
         );
         setSearchString(event.target.value);
@@ -229,29 +255,38 @@ const useSearch = (
 
     const hasFiltersSet = !!allFilters.length;
     const filteredData = (() => {
-        if (!data) {
+        const results =
+            data && data.length > 0 ? data.map(item => item.results) : null;
+        if (!results) {
             return [];
         } else if (!hasFiltersSet) {
-            return data;
+            return ([] as ContentItem[]).concat(...results);
         } else {
-            return data.filter(item => {
+            const flattenedData: ContentItem[] = ([] as ContentItem[]).concat(
+                ...results
+            );
+            return flattenedData.filter(item => {
                 return itemInFilters(item, allFilters);
             });
         }
     })();
 
-    const numberOfResults = filteredData.length;
-    const shownData = filteredData.slice(0, resultsToShow);
-    const fullyLoaded = resultsToShow >= numberOfResults;
+    const numberOfPages =
+        data && data.length > 0 ? data[0].numberOfPages : null;
+    const numberOfResults =
+        data && data.length > 0 ? data[0].numberOfResults : null;
+    const fullyLoaded = numberOfPages ? size >= numberOfPages : false;
 
     return {
-        data: shownData,
+        data: filteredData,
         error,
         isValidating,
         resultsToShow,
         setResultsToShow,
         allFilters,
         setAllFilters,
+        setSize,
+        size,
         onSearch: debouncedOnSearch,
         onFilter,
         searchString,

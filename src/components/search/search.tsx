@@ -63,6 +63,8 @@ const Search: React.FunctionComponent<SearchProps> = ({
         resultsToShow,
         numberOfResults,
         setResultsToShow,
+        size,
+        setSize,
         allFilters,
         setAllFilters,
         onSearch,
@@ -70,12 +72,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
         fullyLoaded,
         onSort,
         sortBy,
-    } = useSearch(
-        contentType,
-        tagSlug,
-        undefined,
-        initialSearchData ? pageNumber : undefined
-    );
+    } = useSearch(pageNumber, contentType, tagSlug, undefined);
 
     const getResultData = () => {
         return initialSearchData ? initialSearchData : data;
@@ -150,10 +147,8 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     shallow: true,
                 }
             );
-            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
-        } else {
-            setResultsToShow(resultsToShow + 10);
         }
+        setSize(size + 1);
         setInitialSearchData(undefined);
     };
 
