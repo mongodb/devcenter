@@ -106,12 +106,20 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         numberOfResults,
     } = useSearch(pageNumber, contentType, undefined, undefined);
 
+    const hasEmptyFilterAndQuery = () => {
+        return (!searchString || searchString == '') && allFilters.length == 0;
+    };
+
     const getResultData = () => {
-        return initialSearchData ? initialSearchData : data;
+        return initialSearchData && hasEmptyFilterAndQuery()
+            ? initialSearchData
+            : data;
     };
 
     const getResultIsValidating = () => {
-        return initialSearchData ? false : isValidating;
+        return initialSearchData && hasEmptyFilterAndQuery()
+            ? false
+            : isValidating;
     };
 
     const [requestContentModalStage, setRequestContentModalStage] =
@@ -171,7 +179,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if ((!searchString || searchString == '') && allFilters.length == 0) {
+        if (hasEmptyFilterAndQuery()) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -431,10 +439,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             getResultData() && (
                                                 <a
                                                     href={
-                                                        (!searchString ||
-                                                            searchString ==
-                                                                '') &&
-                                                        allFilters.length == 0
+                                                        hasEmptyFilterAndQuery()
                                                             ? `/developer${slug}/?page=${
                                                                   currentPage +
                                                                   1

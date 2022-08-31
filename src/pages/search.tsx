@@ -111,21 +111,34 @@ const Search: NextPage<SearchProps> = ({
         numberOfResults,
         onSort,
         sortBy,
-    } = useSearch(pageNumber, undefined, undefined, {
-        l1Items,
-        languageItems,
-        technologyItems,
-        contributedByItems,
-        contentTypeItems,
-        expertiseLevelItems,
-    });
+    } = useSearch(
+        undefined,
+        undefined,
+        {
+            l1Items,
+            languageItems,
+            technologyItems,
+            contributedByItems,
+            contentTypeItems,
+            expertiseLevelItems,
+        },
+        initialSearchData ? pageNumber : undefined
+    );
+
+    const hasEmptyFilterAndQuery = () => {
+        return (!searchString || searchString == '') && allFilters.length == 0;
+    };
 
     const getResultData = () => {
-        return initialSearchData && !searchString ? initialSearchData : data;
+        return initialSearchData && hasEmptyFilterAndQuery()
+            ? initialSearchData
+            : data;
     };
 
     const getResultIsValidating = () => {
-        return initialSearchData && !searchString ? false : isValidating;
+        return initialSearchData && hasEmptyFilterAndQuery()
+            ? false
+            : isValidating;
     };
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
@@ -164,7 +177,7 @@ const Search: NextPage<SearchProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if ((!searchString || searchString == '') && allFilters.length == 0) {
+        if (hasEmptyFilterAndQuery()) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -371,10 +384,7 @@ const Search: NextPage<SearchProps> = ({
                                             getResultData() && (
                                                 <a
                                                     href={
-                                                        (!searchString ||
-                                                            searchString ==
-                                                                '') &&
-                                                        allFilters.length == 0
+                                                        hasEmptyFilterAndQuery()
                                                             ? `/developer/search/?page=${
                                                                   currentPage +
                                                                   1
