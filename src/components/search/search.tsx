@@ -77,12 +77,20 @@ const Search: React.FunctionComponent<SearchProps> = ({
         initialSearchData ? pageNumber : undefined
     );
 
+    const hasEmptyFilterAndQuery = () => {
+        return (!searchString || searchString == '') && allFilters.length == 0;
+    };
+
     const getResultData = () => {
-        return initialSearchData ? initialSearchData : data;
+        return initialSearchData && hasEmptyFilterAndQuery()
+            ? initialSearchData
+            : data;
     };
 
     const getResultIsValidating = () => {
-        return initialSearchData ? false : isValidating;
+        return initialSearchData && hasEmptyFilterAndQuery()
+            ? false
+            : isValidating;
     };
 
     const clearPagination = () => {
@@ -124,7 +132,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if ((!searchString || searchString == '') && allFilters.length == 0) {
+        if (hasEmptyFilterAndQuery()) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -272,8 +280,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                             {!getResultIsValidating() && getResultData() && (
                                 <a
                                     href={
-                                        (!searchString || searchString == '') &&
-                                        allFilters.length == 0
+                                        hasEmptyFilterAndQuery()
                                             ? `/developer${path}/?page=${
                                                   currentPage + 1
                                               }`
