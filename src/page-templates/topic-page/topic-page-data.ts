@@ -24,11 +24,16 @@ export const getTopicPageData = async (
         allMetaInfoPreval
     );
 
-    const initialSearchContent: SearchItem[] = await getSearchContent({
-        searchString: '',
-        tagSlug: slugString,
-        sortBy: 'Most Recent',
-    });
+    let initialSearchContent: SearchItem[] | null = null;
+    try {
+        initialSearchContent = await getSearchContent({
+            searchString: '',
+            tagSlug: slugString,
+            sortBy: 'Most Recent',
+        });
+    } catch (e) {
+        Sentry.captureException(e);
+    }
 
     let tertiaryNavItems = await getSideNav(slugString, allContentPreval);
 

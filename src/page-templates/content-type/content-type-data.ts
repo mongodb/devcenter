@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import { PillCategory, pillCategoryToSlug } from '../../types/pill-category';
 import { getFilters } from '../../hooks/search/utils';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
@@ -17,11 +18,16 @@ export const getContentTypePageData = async (
         throw Error(`Could not find slug for ${contentType}`);
     }
 
-    const initialSearchContent: SearchItem[] = await getSearchContent({
-        searchString: '',
-        contentType: contentType,
-        sortBy: 'Most Recent',
-    });
+    let initialSearchContent: SearchItem[] | null = null;
+    try {
+        initialSearchContent = await getSearchContent({
+            searchString: '',
+            contentType: contentType,
+            sortBy: 'Most Recent',
+        });
+    } catch (e) {
+        Sentry.captureException(e);
+    }
 
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
     const { contentTypeItems, ...filters } = await getFilters(
