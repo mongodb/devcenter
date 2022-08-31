@@ -123,12 +123,20 @@ const Search: NextPage<SearchProps> = ({
         initialSearchData ? pageNumber : undefined
     );
 
+    const hasEmptyFilterAndQuery = () => {
+        return (!searchString || searchString == '') && allFilters.length == 0;
+    };
+
     const getResultData = () => {
-        return initialSearchData ? initialSearchData : data;
+        return initialSearchData && hasEmptyFilterAndQuery()
+            ? initialSearchData
+            : data;
     };
 
     const getResultIsValidating = () => {
-        return initialSearchData ? false : isValidating;
+        return initialSearchData && hasEmptyFilterAndQuery()
+            ? false
+            : isValidating;
     };
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
@@ -167,7 +175,7 @@ const Search: NextPage<SearchProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if ((!searchString || searchString == '') && allFilters.length == 0) {
+        if (hasEmptyFilterAndQuery()) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -376,10 +384,7 @@ const Search: NextPage<SearchProps> = ({
                                             getResultData() && (
                                                 <a
                                                     href={
-                                                        (!searchString ||
-                                                            searchString ==
-                                                                '') &&
-                                                        allFilters.length == 0
+                                                        hasEmptyFilterAndQuery()
                                                             ? `/developer/search/?page=${
                                                                   currentPage +
                                                                   1
