@@ -4,12 +4,18 @@ import getConfig from 'next/config';
 import { useSession } from 'next-auth/react';
 import { UnifiedFooter } from '@mdb/consistent-nav';
 import { globalStyles, Main } from '../styled/layout';
-import { UnifiedNavCustom } from '../styled/consistent-nav';
+import { UnifiedNav } from '@mdb/consistent-nav';
 import SecondaryNav from './seconardynavnew/';
 import { OverlayContext } from '../contexts/overlay';
+import { layers } from '../styled/layout';
 
 const navStyles = {
-    '*': { zIndex: '999!important' }, // Give every element in the consistent nav the same z-index.
+    'nav > div > div': {
+        zIndex: `${layers.desktopConsistentNavDropdown}!important`,
+    }, // Need this so it can display over our secondary nav
+    'div[role=menu-wrapper]': {
+        zIndex: `${layers.mobileNavMenu}!important`,
+    },
 };
 interface LayoutProps {
     pagePath?: string | null;
@@ -39,7 +45,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
         <>
             <Global styles={globalStyles(!!hasOverlay)} />
             <div sx={navStyles}>
-                <UnifiedNavCustom
+                <UnifiedNav
                     position="static"
                     floraTheme="default"
                     property={{ name: 'DEVHUB', searchParams: [] }}

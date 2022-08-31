@@ -25,7 +25,6 @@ const CopyLink: React.FunctionComponent<{ url: string }> = ({ url }) => {
             {tooltipShown && (
                 <div
                     sx={{
-                        zIndex: 999,
                         position: 'absolute',
                         top: 28,
                         bottom: 0,

@@ -1,5 +1,6 @@
 import theme from '@mdb/flora/theme';
 import { ThemeUICSSObject } from 'theme-ui';
+import { layers } from '../../styled/layout';
 
 export const navContainerStyles: ThemeUICSSObject = {
     display: 'flex',
@@ -18,5 +19,5 @@ export const navWrapperStyles: ThemeUICSSObject = {
     position: 'sticky',
     top: 0,
     bg: '#ffffff',
-    zIndex: 21,
+    zIndex: layers.secondaryNav,
 };

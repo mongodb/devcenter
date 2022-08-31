@@ -1,3 +1,5 @@
+import { layers } from '../../../styled/layout';
+
 export const filtersModal = {
     position: 'fixed' as 'fixed',
     top: 0,
@@ -5,7 +7,7 @@ export const filtersModal = {
     width: '100%',
     minHeight: '100vh',
     height: '100%',
-    zIndex: 1000, // Consistent nav is at zIndex 999
+    zIndex: layers.modal,
     bg: 'black00',
 
     boxSizing: 'border-box' as 'border-box',
@@ -31,7 +33,6 @@ export const buttonSection = {
     left: 0,
     justifyContent: 'center',
     py: 'inc50',
-    zIndex: 1001,
     bg: 'black00',
     marginTop: 'auto',
 };

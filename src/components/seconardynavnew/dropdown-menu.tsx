@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import theme from '@mdb/flora/theme';
 import { Link as FloraLink, TypographyScale, Button } from '@mdb/flora';
 import { getURLPath } from '../../utils/format-url-path';
+import { layers } from '../../styled/layout';
 
 export interface DropDownItem {
     name: string;
@@ -215,7 +216,7 @@ const StylesDropDownWrapper = {
     paddingBottom: [null, null, null, theme.space.inc70],
     paddingRight: [null, null, null, theme.space.inc90],
     paddingLeft: ['inc50', 'inc50', 'inc50', theme.space.inc90],
-    zIndex: [null, null, null, 2],
+    zIndex: [null, null, null, layers.secondaryNav],
 };
 
 const DropDownMenu = ({ items }: { items: DropDownItem[] }) => {

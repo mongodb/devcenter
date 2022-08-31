@@ -18,6 +18,20 @@ export const globalStyles = (hasOverlay: boolean) => ({
     },
 });
 
+export const layers = {
+    backdrop: -1,
+    base: 0,
+    desktopConsistentNav: 1, // From ConsistentNav
+    navSearch: 2, // From ConsistentNav
+    textArea: 10, // From Flora
+    secondaryNav: 11,
+    desktopConsistentNavDropdown: 12,
+    mobileOverlay: 13,
+    mobileConsistentNav: 999, // From ConsistentNav
+    mobileNavMenu: 1000, // From ConsistentNav
+    modal: 9999, // From Flora (Lightbox)
+};
+
 export const Main = styled('main')`
     /* ensure content takes up full space between header & footer*/
     margin: 0;
