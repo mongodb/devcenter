@@ -50,4 +50,5 @@ export const getServerSideProps: GetServerSideProps = async context => {
     ]);
 };
 
-export default function SitemapDynamic() {}
+const Sitemap = () => {};
+export default Sitemap;
