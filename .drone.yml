@@ -65,7 +65,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - ah/devhub-1247-cdn
   event:
     - push
 
