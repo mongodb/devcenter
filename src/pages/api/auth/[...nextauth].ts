@@ -3,7 +3,28 @@ import type { NextAuthOptions } from 'next-auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 
+const cookiePrefix = 'mdbdc_';
+const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
+
 export const nextAuthOptions: NextAuthOptions = {
+    cookies: {
+        pkceCodeVerifier: {
+            name: `${cookiePrefix}next-auth.pkce.code_verifier`,
+            options: {
+                sameSite: 'lax',
+                path: '/',
+                secure: useSecureCookies,
+            },
+        },
+        state: {
+            name: `${cookiePrefix}next-auth.state`,
+            options: {
+                sameSite: 'lax',
+                path: '/',
+                secure: useSecureCookies,
+            },
+        },
+    },
     providers: [
         OktaProvider({
             clientId: process.env.OKTA_CLIENT_ID as string,
