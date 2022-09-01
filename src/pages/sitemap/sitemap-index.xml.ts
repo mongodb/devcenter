@@ -5,7 +5,8 @@ import { GetServerSideProps } from 'next';
 import { getAllContentItems } from '../../service/get-all-content';
 import { getTopicPagePathMappings } from '../../service/get-topic-paths';
 
-const SITE_URL = process.env.SITE_URL || 'https://mongodb.com/developer';
+const DEVCENTER_URL =
+    process.env.DEVCENTER_URL || 'https://mongodb.com/developer';
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const curDate = new Date().toISOString();
@@ -23,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
                 !dirent.name.includes('index')
         )
         .map(dirent => ({
-            loc: `${SITE_URL}/${path.parse(dirent.name).name}`,
+            loc: `${DEVCENTER_URL}/${path.parse(dirent.name).name}`,
             lastmod: curDate,
             priority: 1.0,
         }));
@@ -32,13 +33,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
         ...Object.keys(topicContentTypePaths),
         ...Object.keys(topicPaths),
     ].map(path => ({
-        loc: `${SITE_URL}/${path}`,
+        loc: `${DEVCENTER_URL}/${path}`,
         lastmod: curDate,
         priority: 0.7,
     }));
 
     const contentPages = allContent.map(({ slug, contentDate }) => ({
-        loc: `${SITE_URL}/${slug}`,
+        loc: `${DEVCENTER_URL}/${slug}`,
         lastmod: contentDate || curDate,
         priority: 0.5,
     }));
