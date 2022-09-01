@@ -4,7 +4,6 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "postbuild": "next-sitemap --config next-sitemap.config.js",
         "build:analyze": "ANALYZE=true next build",
         "start": "next start",
         "lint": "next lint",
