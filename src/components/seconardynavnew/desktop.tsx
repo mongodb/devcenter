@@ -27,7 +27,7 @@ const StyledSecondaryLinks: ThemeUIStyleObject | undefined = {
     padding: 0,
     margin: 0,
     overflow: 'visible',
-    'li.secondary-nav-link:not(:last-child)': {
+    '> li:not(:last-child)': {
         marginRight: [null, null, null, 'inc30', '40px'],
     },
     whiteSpace: 'nowrap' as 'nowrap',
