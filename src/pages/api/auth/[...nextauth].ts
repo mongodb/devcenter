@@ -8,16 +8,6 @@ const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
 
 export const nextAuthOptions: NextAuthOptions = {
     cookies: {
-        csrfToken: {
-            name: useSecureCookies
-                ? '__Host-nocache-next-auth.csrf-token'
-                : 'nocache-next-auth.csrf-token',
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: useSecureCookies,
-            },
-        },
         pkceCodeVerifier: {
             name: `${cookiePrefix}next-auth.pkce.code_verifier`,
             options: {
