@@ -3,8 +3,8 @@ import type { NextAuthOptions } from 'next-auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 
-const cookiePrefix = 'mdbdc_';
 const useSecureCookies = process.env.NEXTAUTH_URL?.startsWith('https://');
+const cookiePrefix = useSecureCookies ? '__Secure-mdbdc_' : 'mdbdc_';
 
 export const nextAuthOptions: NextAuthOptions = {
     cookies: {
