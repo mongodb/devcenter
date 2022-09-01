@@ -16,6 +16,7 @@ import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
 import { navWrapperStyles, navContainerStyles } from './desktop-styles';
 import { getURLPath } from '../../utils/format-url-path';
+import { layers } from '../../styled/layout';
 
 const linkWrapperStyles = {
     position: 'relative' as 'relative',
@@ -27,18 +28,7 @@ const StyledSecondaryLinks: ThemeUIStyleObject | undefined = {
     margin: 0,
     overflow: 'visible',
     'li.secondary-nav-link:not(:last-child)': {
-        marginRight: [
-            null,
-            null,
-            null,
-            theme.space.inc40,
-            theme.space.inc50,
-            theme.space.inc60,
-        ],
-    },
-    'li.secondary-nav-user-menu': {
-        position: 'relative',
-        zIndex: 10,
+        marginRight: [null, null, null, 'inc30', '40px'],
     },
     whiteSpace: 'nowrap' as 'nowrap',
 };
@@ -55,7 +45,7 @@ const hoverLinkStyles = (isActive: boolean) => ({
 
 const MainLinkStyles = (isActive: boolean) => ({
     float: 'left' as 'left',
-    marginRight: ['inc60', 'inc60', 'inc60', 'inc90', 'inc90', 'inc90'],
+    marginRight: [null, null, null, 'inc40', 'inc90'],
     fontWeight: 500,
 
     'span.textlink-default-text-class': {
@@ -74,7 +64,7 @@ const FloraLinkStyles = (isActive: boolean) => ({
     display: 'inline-block',
     'span.textlink-default-text-class': {
         ...hoverLinkStyles(isActive),
-        fontSize: [null, null, 'inc10', 'inc20'],
+        fontSize: [null, null, null, 'inc10', 'inc20'],
         fontFamily: 'body',
         fontWeight: '300',
     },
@@ -126,28 +116,12 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             ...MainLinkStyles(
                                 activePath === '/' ? true : false
                             ),
-                            marginRight: [
-                                null,
-                                null,
-                                null,
-                                'inc40',
-                                'inc70',
-                                'inc90',
-                            ],
                         }}
                     >
                         <TypographyScale
                             variant="body1"
                             sx={{
-                                fontSize: [
-                                    '16px',
-                                    '16px',
-                                    '16px',
-                                    '16px',
-                                    '20px',
-                                    '20px',
-                                    '20px',
-                                ],
+                                fontSize: [null, null, null, '16px', '20px'],
                             }}
                         >
                             MongoDB Developer
@@ -229,24 +203,29 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             )}
                         </SecondaryLinksList>
                     ))}
-                    {account && (
-                        <SecondaryLinksList
-                            linkClassName="secondary-nav-user-menu"
-                            key="userMenu"
-                        >
-                            <UserMenu
-                                account={account}
-                                activePlatform="devHub"
-                                onLogout={e => {
-                                    e.preventDefault();
-                                    signOut({
-                                        callbackUrl: '/developer/api/logout',
-                                    });
-                                }}
-                            />
-                        </SecondaryLinksList>
-                    )}
                 </ul>
+                {account && (
+                    <div
+                        sx={{
+                            marginLeft: 'auto',
+                            zIndex: layers.secondaryNav,
+                            justifySelf: 'end',
+                            px: [null, null, null, 'inc30', '40px'],
+                            minWidth: 'inc80',
+                        }}
+                    >
+                        <UserMenu
+                            account={account}
+                            activePlatform="devHub"
+                            onLogout={e => {
+                                e.preventDefault();
+                                signOut({
+                                    callbackUrl: '/developer/api/logout',
+                                });
+                            }}
+                        />
+                    </div>
+                )}
             </nav>
         </div>
     );

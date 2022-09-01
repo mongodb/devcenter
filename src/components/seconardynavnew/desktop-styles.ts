@@ -10,6 +10,7 @@ export const navContainerStyles: ThemeUICSSObject = {
     paddingBottom: 'elementXSmall',
     position: 'relative',
     maxWidth: '1416px',
+    alignItems: 'center',
 };
 
 export const navWrapperStyles: ThemeUICSSObject = {
@@ -20,4 +21,6 @@ export const navWrapperStyles: ThemeUICSSObject = {
     top: 0,
     bg: '#ffffff',
     zIndex: layers.secondaryNav,
+    overflowX: 'clip',
+    overflowY: 'visible',
 };

@@ -1,4 +1,5 @@
 import { ThemeUIStyleObject } from 'theme-ui';
+import { layers } from '../../styled/layout';
 
 export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
     let height = 'auto';
@@ -22,9 +23,9 @@ export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
         display: ['block', null, null, 'none'],
         position: 'sticky',
         top: 0,
-        overflowY: 'auto',
+        overflowY: isOpen ? 'auto' : 'visible', // Need the user menu to be visible when not open.
         width: '100%',
-        zIndex: 998,
+        zIndex: layers.secondaryNav,
         height,
     };
 };
@@ -33,7 +34,6 @@ export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
     margin: 0,
     display: isOpen ? 'block' : 'none',
     px: 'inc40',
-    zIndex: 21,
     overflowY: 'scroll',
 
     '& > li': {
@@ -49,12 +49,12 @@ export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
         },
     },
 });
-export const MainLinkStyles = {
+export const MainLinkStyles: ThemeUIStyleObject = {
+    width: '100%',
     fontSize: 'inc30',
     fontWeight: 500,
-    paddingLeft: 'inc50',
-    paddingTop: 'inc30',
-    paddingBottom: 'inc30',
+    py: 'inc30',
+
     'span.textlink-default-text-class': {
         color: '#000!important',
         fontSize: '18px!important',
@@ -116,19 +116,13 @@ export const aLinkStyles = {
     },
 };
 
-export const chevronStylesForMainLink = (
-    hasUserMenu: boolean
-): ThemeUIStyleObject => ({
+export const chevronStylesForMainLink: ThemeUIStyleObject = {
     display: 'inline',
-    position: 'absolute' as 'absolute',
-    right: hasUserMenu ? '90px' : 'inc40',
     stroke: 'icon.system.success',
-});
+};
 
 export const userMenuStyles: ThemeUIStyleObject = {
-    position: 'absolute',
-    right: '10px',
-    top: '15px',
+    minWidth: 'inc60',
 };
 
 export const DropDownStyles = {
