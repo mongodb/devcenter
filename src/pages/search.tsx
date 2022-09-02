@@ -5,6 +5,7 @@ import type {
     GetServerSideProps,
     GetServerSidePropsContext,
 } from 'next';
+import * as Sentry from '@sentry/nextjs';
 import NextImage from 'next/image';
 import {
     GridLayout,
@@ -15,7 +16,8 @@ import {
     Select,
 } from '@mdb/flora';
 
-import { getSearchContent } from '../api-requests/get-all-search-content';
+import { getAllSearchContent } from '../api-requests/get-all-search-content';
+import allSearchContentPreval from '../service/get-all-search-content.preval';
 import Hero from '../components/hero';
 import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { pageWrapper } from '../styled/layout';
@@ -439,14 +441,22 @@ export const getServerSideProps: GetServerSideProps = async (
     const { query } = context;
 
     const pageNumber = parsePageNumber(query.page);
-    // Used for "load more" crawling
-    const initialSearchContent: SearchItem[] = await getSearchContent({
-        searchString: '',
-        sortBy: 'Most Recent',
-    });
+
+    let initialSearchContent: SearchItem[] | undefined;
+    try {
+        // Used for "load more" crawling
+        initialSearchContent = await getAllSearchContent();
+    } catch (e) {
+        Sentry.captureException(e);
+    }
 
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
-    const filters = await getFilters();
+    const filters = await getFilters(
+        undefined,
+        !!initialSearchContent && Array.isArray(initialSearchContent)
+            ? initialSearchContent
+            : allSearchContentPreval
+    );
 
     return {
         props: {
