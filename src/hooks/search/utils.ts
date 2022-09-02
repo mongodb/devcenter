@@ -238,6 +238,13 @@ const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
     );
 };
 
+export const hasEmptyFilterAndQuery = (
+    searchString: string,
+    allFilters: FilterItem[]
+) => {
+    return (!searchString || searchString == '') && allFilters.length == 0;
+};
+
 export const itemInFilters = (
     { tags }: ContentItem,
     allFilters: FilterItem[]

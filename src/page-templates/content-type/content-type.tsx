@@ -40,6 +40,7 @@ import ProductsSection from './products-section';
 import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
+import { hasEmptyFilterAndQuery } from '../../hooks/search/utils';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
 import { createInitialSearchData } from '../../hooks/search/utils';
 
@@ -109,18 +110,16 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         initialSearchData ? pageNumber : undefined
     );
 
-    const hasEmptyFilterAndQuery = () => {
-        return (!searchString || searchString == '') && allFilters.length == 0;
-    };
-
     const getResultData = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
+        return initialSearchData &&
+            hasEmptyFilterAndQuery(searchString, allFilters)
             ? initialSearchData
             : data;
     };
 
     const getResultIsValidating = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
+        return initialSearchData &&
+            hasEmptyFilterAndQuery(searchString, allFilters)
             ? false
             : isValidating;
     };
@@ -182,7 +181,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if (hasEmptyFilterAndQuery()) {
+        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -444,7 +443,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                         {!resultIsValidating && resultData && (
                                             <a
                                                 href={
-                                                    hasEmptyFilterAndQuery()
+                                                    hasEmptyFilterAndQuery(
+                                                        searchString,
+                                                        allFilters
+                                                    )
                                                         ? `/developer${slug}/?page=${
                                                               currentPage + 1
                                                           }`

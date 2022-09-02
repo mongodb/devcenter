@@ -22,7 +22,7 @@ import { pageWrapper } from '../styled/layout';
 
 import { SearchItem } from '../components/search/types';
 import { FilterItem } from '../components/search-filters';
-import { getFilters } from '../hooks/search/utils';
+import { getFilters, hasEmptyFilterAndQuery } from '../hooks/search/utils';
 import {
     resultsStringAndTagsStyles,
     desktopFiltersStyles,
@@ -123,18 +123,16 @@ const Search: NextPage<SearchProps> = ({
         initialSearchData ? pageNumber : undefined
     );
 
-    const hasEmptyFilterAndQuery = () => {
-        return (!searchString || searchString == '') && allFilters.length == 0;
-    };
-
     const getResultData = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
+        return initialSearchData &&
+            hasEmptyFilterAndQuery(searchString, allFilters)
             ? initialSearchData
             : data;
     };
 
     const getResultIsValidating = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
+        return initialSearchData &&
+            hasEmptyFilterAndQuery(searchString, allFilters)
             ? false
             : isValidating;
     };
@@ -175,7 +173,7 @@ const Search: NextPage<SearchProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if (hasEmptyFilterAndQuery()) {
+        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -384,7 +382,10 @@ const Search: NextPage<SearchProps> = ({
                                         {!resultIsValidating && resultData && (
                                             <a
                                                 href={
-                                                    hasEmptyFilterAndQuery()
+                                                    hasEmptyFilterAndQuery(
+                                                        searchString,
+                                                        allFilters
+                                                    )
                                                         ? `/developer/search/?page=${
                                                               currentPage + 1
                                                           }`

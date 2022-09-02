@@ -20,7 +20,10 @@ import { SearchProps } from './types';
 import Results from './results';
 import ExpandingLink from '../expanding-link';
 import useSearch from '../../hooks/search';
-import { createInitialSearchData } from '../../hooks/search/utils';
+import {
+    createInitialSearchData,
+    hasEmptyFilterAndQuery,
+} from '../../hooks/search/utils';
 import EmptyState from './empty-state';
 import { sortByOptions, DEFAULT_PAGE_SIZE } from './utils';
 import { SearchItem } from './types';
@@ -77,20 +80,16 @@ const Search: React.FunctionComponent<SearchProps> = ({
         initialSearchData ? pageNumber : undefined
     );
 
-    const hasEmptyFilterAndQuery = () => {
-        return (
-            (!searchString || searchString === '') && allFilters.length === 0
-        );
-    };
-
     const getResultData = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
+        return initialSearchData &&
+            hasEmptyFilterAndQuery(searchString, allFilters)
             ? initialSearchData
             : data;
     };
 
     const getResultIsValidating = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
+        return initialSearchData &&
+            hasEmptyFilterAndQuery(searchString, allFilters)
             ? false
             : isValidating;
     };
@@ -134,7 +133,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if (hasEmptyFilterAndQuery()) {
+        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -285,7 +284,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                             {!resultIsValidating && resultData && (
                                 <a
                                     href={
-                                        hasEmptyFilterAndQuery()
+                                        hasEmptyFilterAndQuery(
+                                            searchString,
+                                            allFilters
+                                        )
                                             ? `/developer${path}/?page=${
                                                   currentPage + 1
                                               }`
