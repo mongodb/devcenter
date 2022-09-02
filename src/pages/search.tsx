@@ -302,9 +302,11 @@ const Search: NextPage<SearchProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        searchString,
         isValidating
     );
+    const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
+        ? `/developer/search/?page=${currentPage + 1}`
+        : '#';
 
     return (
         <>
@@ -389,16 +391,7 @@ const Search: NextPage<SearchProps> = ({
                                     >
                                         {!resultIsValidating && resultData && (
                                             <a
-                                                href={
-                                                    hasEmptyFilterAndQuery(
-                                                        searchString,
-                                                        allFilters
-                                                    )
-                                                        ? `/developer/search/?page=${
-                                                              currentPage + 1
-                                                          }`
-                                                        : '#'
-                                                }
+                                                href={loadMoreHref}
                                                 onClick={onLoadMore}
                                             >
                                                 <Button variant="secondary">

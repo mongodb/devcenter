@@ -175,9 +175,11 @@ const Search: React.FunctionComponent<SearchProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        searchString,
         isValidating
     );
+    const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
+        ? `/developer${path}/?page=${currentPage + 1}`
+        : '#';
 
     return (
         <div role="search" className={className}>
@@ -280,19 +282,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                             }}
                         >
                             {!resultIsValidating && resultData && (
-                                <a
-                                    href={
-                                        hasEmptyFilterAndQuery(
-                                            searchString,
-                                            allFilters
-                                        )
-                                            ? `/developer${path}/?page=${
-                                                  currentPage + 1
-                                              }`
-                                            : '#'
-                                    }
-                                    onClick={onLoadMore}
-                                >
+                                <a href={loadMoreHref} onClick={onLoadMore}>
                                     <Button variant="secondary">
                                         Load more
                                     </Button>

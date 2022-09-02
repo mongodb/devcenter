@@ -320,9 +320,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        searchString,
         isValidating
     );
+    const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
+        ? `/developer${slug}/?page=${currentPage + 1}`
+        : '#';
 
     return (
         <>
@@ -442,16 +444,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                     >
                                         {!resultIsValidating && resultData && (
                                             <a
-                                                href={
-                                                    hasEmptyFilterAndQuery(
-                                                        searchString,
-                                                        allFilters
-                                                    )
-                                                        ? `/developer${slug}/?page=${
-                                                              currentPage + 1
-                                                          }`
-                                                        : '#'
-                                                }
+                                                href={loadMoreHref}
                                                 onClick={onLoadMore}
                                             >
                                                 <Button variant="secondary">
