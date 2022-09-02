@@ -40,8 +40,13 @@ import ProductsSection from './products-section';
 import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
+import { hasEmptyFilterAndQuery } from '../../hooks/search/utils';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
-import { createInitialSearchData } from '../../hooks/search/utils';
+import {
+    createInitialSearchData,
+    getResultData,
+    getResultIsValidating,
+} from '../../hooks/search/utils';
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
@@ -85,6 +90,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             currentPage // page provided by query parameters
         )
     );
+    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
 
     ///////////////////////////////////////
     // HOOKS
@@ -105,22 +111,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setSearchString,
         numberOfResults,
     } = useSearch(pageNumber, contentType, undefined, undefined);
-
-    const hasEmptyFilterAndQuery = () => {
-        return (!searchString || searchString == '') && allFilters.length == 0;
-    };
-
-    const getResultData = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
-            ? initialSearchData
-            : data;
-    };
-
-    const getResultIsValidating = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
-            ? false
-            : isValidating;
-    };
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
@@ -146,6 +136,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     };
 
     const clearPagination = () => {
+        setInitialPageResetFlag(true);
         setInitialSearchData(undefined);
         setCurrentPage(1);
         setPageTitle(buildPageTitle(1));
@@ -179,7 +170,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if (hasEmptyFilterAndQuery()) {
+        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -317,6 +308,22 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber,
+        initialPageResetFlag
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        searchString,
+        isValidating
+    );
+
     return (
         <>
             <NextSeo
@@ -418,12 +425,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             </>
                         )}
                         {resultsStringAndTags}
-                        {!!getResultData().length ||
-                        getResultIsValidating() ||
-                        error ? (
+                        {!!resultData.length || resultIsValidating || error ? (
                             <>
                                 <Results
-                                    data={getResultData()}
+                                    data={resultData}
                                     isLoading={isLoading}
                                     hasError={error}
                                 />
@@ -435,24 +440,25 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!getResultIsValidating() &&
-                                            getResultData() && (
-                                                <a
-                                                    href={
-                                                        hasEmptyFilterAndQuery()
-                                                            ? `/developer${slug}/?page=${
-                                                                  currentPage +
-                                                                  1
-                                                              }`
-                                                            : '#'
-                                                    }
-                                                    onClick={onLoadMore}
-                                                >
-                                                    <Button variant="secondary">
-                                                        Load more
-                                                    </Button>
-                                                </a>
-                                            )}
+                                        {!resultIsValidating && resultData && (
+                                            <a
+                                                href={
+                                                    hasEmptyFilterAndQuery(
+                                                        searchString,
+                                                        allFilters
+                                                    )
+                                                        ? `/developer${slug}/?page=${
+                                                              currentPage + 1
+                                                          }`
+                                                        : '#'
+                                                }
+                                                onClick={onLoadMore}
+                                            >
+                                                <Button variant="secondary">
+                                                    Load more
+                                                </Button>
+                                            </a>
+                                        )}
                                     </div>
                                 )}
                             </>

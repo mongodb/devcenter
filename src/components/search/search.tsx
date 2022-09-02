@@ -20,7 +20,12 @@ import { SearchProps } from './types';
 import Results from './results';
 import ExpandingLink from '../expanding-link';
 import useSearch from '../../hooks/search';
-import { createInitialSearchData } from '../../hooks/search/utils';
+import {
+    createInitialSearchData,
+    hasEmptyFilterAndQuery,
+    getResultData,
+    getResultIsValidating,
+} from '../../hooks/search/utils';
 import EmptyState from './empty-state';
 import { sortByOptions, DEFAULT_PAGE_SIZE } from './utils';
 import { SearchItem } from './types';
@@ -55,6 +60,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
             currentPage // page provided by query parameters
         )
     );
+    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
 
     const {
         data,
@@ -74,23 +80,8 @@ const Search: React.FunctionComponent<SearchProps> = ({
         sortBy,
     } = useSearch(pageNumber, contentType, tagSlug, undefined);
 
-    const hasEmptyFilterAndQuery = () => {
-        return (!searchString || searchString == '') && allFilters.length == 0;
-    };
-
-    const getResultData = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
-            ? initialSearchData
-            : data;
-    };
-
-    const getResultIsValidating = () => {
-        return initialSearchData && hasEmptyFilterAndQuery()
-            ? false
-            : isValidating;
-    };
-
     const clearPagination = () => {
+        setInitialPageResetFlag(true);
         setInitialSearchData(undefined);
         setCurrentPage(1);
         updatePageTitle(1);
@@ -129,7 +120,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if (hasEmptyFilterAndQuery()) {
+        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
@@ -171,6 +162,22 @@ const Search: React.FunctionComponent<SearchProps> = ({
         contentType === 'Code Example' ? { marginBottom: 0 } : {};
 
     const path = pageSlug?.join('/');
+
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber,
+        initialPageResetFlag
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        searchString,
+        isValidating
+    );
 
     return (
         <div role="search" className={className}>
@@ -256,10 +263,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                 </div>
             )}
             <div sx={{}}></div>
-            {!!getResultData().length || getResultIsValidating() || error ? (
+            {!!resultData.length || resultIsValidating || error ? (
                 <>
                     <Results
-                        data={getResultData()}
+                        data={resultData}
                         isLoading={isLoading}
                         hasError={error}
                         layout={resultsLayout}
@@ -272,10 +279,13 @@ const Search: React.FunctionComponent<SearchProps> = ({
                                 marginTop: ['inc70', null, 'inc90'],
                             }}
                         >
-                            {!getResultIsValidating() && getResultData() && (
+                            {!resultIsValidating && resultData && (
                                 <a
                                     href={
-                                        hasEmptyFilterAndQuery()
+                                        hasEmptyFilterAndQuery(
+                                            searchString,
+                                            allFilters
+                                        )
                                             ? `/developer${path}/?page=${
                                                   currentPage + 1
                                               }`

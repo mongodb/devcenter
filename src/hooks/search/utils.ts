@@ -74,9 +74,8 @@ export const getFilters = async (
     allSearchContent?: SearchItem[]
 ) => {
     const allFilters = contentType === undefined;
-    const allContent: SearchItem[] = allSearchContent
-        ? allSearchContent
-        : await getAllSearchContent();
+    const allContent: SearchItem[] =
+        allSearchContent || (await getAllSearchContent());
     const filterItems: FilterItem[] = [];
 
     allContent.forEach(({ tags, type }) => {
@@ -237,6 +236,43 @@ const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
             filter => filter.name === tag.name && filter.type === tag.type
         )
     );
+};
+
+export const hasEmptyFilterAndQuery = (
+    searchString: string,
+    allFilters: FilterItem[]
+) => {
+    return (!searchString || searchString == '') && allFilters.length == 0;
+};
+
+// TODO: Refactor.
+export const getResultData = (
+    data: ContentItem[],
+    initialSearchData: ContentItem[] | undefined,
+    searchString: string,
+    allFilters: FilterItem[],
+    initialPageNumber: number,
+    initialPageResetFlag: boolean
+) => {
+    return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
+        ? initialSearchData
+        : data.slice(
+              !initialPageResetFlag && initialPageNumber > 1
+                  ? (initialPageNumber - 1) * DEFAULT_PAGE_SIZE
+                  : 0
+          );
+};
+
+export const getResultIsValidating = (
+    initialSearchData: ContentItem[] | undefined,
+    searchString: string,
+    allFilters: FilterItem[],
+    earchString: string,
+    isValidating: boolean
+) => {
+    return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
+        ? false
+        : isValidating;
 };
 
 export const itemInFilters = (

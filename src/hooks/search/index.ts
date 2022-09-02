@@ -142,57 +142,47 @@ const useSearch = (
             expertiseLevel,
         } = router.query;
 
-        let allNewFilters: FilterItem[] = [];
-        if (product) {
-            // Gotta look for L1s and L2s that match.
-            const products = typeof product === 'object' ? product : [product];
-            let productFilters: FilterItem[] = [];
+        const buildFilters = (
+            filterType: string | string[],
+            filterTypeItems: FilterItem[]
+        ) => {
+            const items =
+                typeof filterType === 'object' ? filterType : [filterType];
+            let filtersList: FilterItem[] = [];
 
-            products.forEach(prod => {
-                const filterProduct = l1Items.find(
+            // Gotta look for L1s and L2s that match.
+            items.forEach(item => {
+                const filterProduct = filterTypeItems.find(
                     l1 =>
-                        l1.name === prod ||
-                        l1.subItems.find(l2 => l2.name === prod)
+                        l1.name === item ||
+                        l1.subItems.find(l2 => l2.name === item)
                 );
                 if (filterProduct) {
-                    if (filterProduct.name !== prod) {
+                    if (filterProduct.name !== item) {
                         // This means it's an L2 match.
-                        productFilters.push(
+                        filtersList.push(
                             filterProduct.subItems.find(
-                                l2 => l2.name === prod
+                                l2 => l2.name === item
                             ) as FilterItem
                         );
                     } else {
-                        productFilters.push(filterProduct);
+                        filtersList.push(filterProduct);
                     }
                 }
             });
+            return filtersList;
+        };
+
+        let allNewFilters: FilterItem[] = [];
+        if (product) {
+            const productFilters: FilterItem[] = buildFilters(product, l1Items);
             allNewFilters = allNewFilters.concat(productFilters);
         }
         if (contentType) {
-            // Gotta look for content types and dig down into the subcategories of Code Examples.
-            const contentTypes =
-                typeof contentType === 'object' ? contentType : [contentType];
-            let contentTypeFilters: FilterItem[] = [];
-
-            contentTypes.forEach(ct => {
-                const filterContentType = contentTypeItems.find(
-                    l1 =>
-                        l1.name === ct || l1.subItems.find(l2 => l2.name === ct)
-                );
-                if (filterContentType) {
-                    if (filterContentType.name !== ct) {
-                        // This means it's an L2 match.
-                        contentTypeFilters.push(
-                            filterContentType.subItems.find(
-                                l2 => l2.name === ct
-                            ) as FilterItem
-                        );
-                    } else {
-                        contentTypeFilters.push(filterContentType);
-                    }
-                }
-            });
+            const contentTypeFilters: FilterItem[] = buildFilters(
+                contentType,
+                contentTypeItems
+            );
             allNewFilters = allNewFilters.concat(contentTypeFilters);
         }
         // For the rest, just map it to the corresponding item.
