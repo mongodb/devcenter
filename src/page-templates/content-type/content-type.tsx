@@ -90,6 +90,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             currentPage // page provided by query parameters
         )
     );
+    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
 
     ///////////////////////////////////////
     // HOOKS
@@ -138,6 +139,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     };
 
     const clearPagination = () => {
+        setInitialPageResetFlag(true);
         setInitialSearchData(undefined);
         setCurrentPage(1);
         setPageTitle(buildPageTitle(1));
@@ -316,7 +318,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        pageNumber
+        pageNumber,
+        initialPageResetFlag
     );
     const resultIsValidating = getResultIsValidating(
         initialSearchData,

@@ -60,6 +60,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
             currentPage // page provided by query parameters
         )
     );
+    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
 
     const {
         data,
@@ -83,6 +84,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
     );
 
     const clearPagination = () => {
+        setInitialPageResetFlag(true);
         setInitialSearchData(undefined);
         setCurrentPage(1);
         updatePageTitle(1);
@@ -171,7 +173,8 @@ const Search: React.FunctionComponent<SearchProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        pageNumber
+        pageNumber,
+        initialPageResetFlag
     );
     const resultIsValidating = getResultIsValidating(
         initialSearchData,

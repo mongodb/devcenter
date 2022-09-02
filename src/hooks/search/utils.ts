@@ -251,13 +251,14 @@ export const getResultData = (
     initialSearchData: ContentItem[] | undefined,
     searchString: string,
     allFilters: FilterItem[],
-    pageNumber: number
+    initialPageNumber: number,
+    initialPageResetFlag: boolean
 ) => {
     return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
         ? initialSearchData
         : data.slice(
-              initialSearchData && pageNumber > 1
-                  ? (pageNumber - 1) * DEFAULT_PAGE_SIZE
+              !initialPageResetFlag && initialPageNumber > 1
+                  ? (initialPageNumber - 1) * DEFAULT_PAGE_SIZE
                   : 0
           );
 };

@@ -97,6 +97,7 @@ const Search: NextPage<SearchProps> = ({
             currentPage // page provided by query parameters
         )
     );
+    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
 
     const {
         data,
@@ -142,6 +143,7 @@ const Search: NextPage<SearchProps> = ({
     };
 
     const clearPagination = () => {
+        setInitialPageResetFlag(true);
         setInitialSearchData(undefined);
         setCurrentPage(1);
         setPageTitle(`Search | MongoDB`);
@@ -291,7 +293,8 @@ const Search: NextPage<SearchProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        pageNumber
+        pageNumber,
+        initialPageResetFlag
     );
     const resultIsValidating = getResultIsValidating(
         initialSearchData,
