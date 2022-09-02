@@ -1,6 +1,9 @@
+import * as Sentry from '@sentry/nextjs';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { ITopicCard } from '../../components/topic-card/types';
+import { SearchItem } from '../../components/search/types';
 import { ContentTypeTag } from '../../interfaces/tag-type-response';
+import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import allMetaInfoPreval from '../../service/get-all-meta-info.preval';
 import allContentPreval from '../../service/get-all-content.preval';
@@ -12,7 +15,8 @@ import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-
 export const getTopicContentTypePageData = async (
     l1_l2: string,
     topic: string,
-    slug: string[]
+    slug: string[],
+    pageNumber: number
 ) => {
     /*
     eg:
@@ -35,6 +39,18 @@ export const getTopicContentTypePageData = async (
             );
         })
         .map((contentTypeTag: ContentTypeTag) => contentTypeTag.contentType)[0];
+
+    let initialSearchContent: SearchItem[] | null = null;
+    try {
+        initialSearchContent = await getSearchContent({
+            searchString: '',
+            tagSlug: topicSlug,
+            contentType: contentType,
+            sortBy: 'Most Recent',
+        });
+    } catch (e) {
+        Sentry.captureException(e);
+    }
 
     let tertiaryNavItems = await getSideNav(topicSlug, allContentPreval);
 
@@ -90,6 +106,8 @@ export const getTopicContentTypePageData = async (
             ? metaInfoForTopic.description
             : '',
         subTopics: subTopicsWithContentType,
+        initialSearchContent,
+        pageNumber,
     };
 
     return data;
