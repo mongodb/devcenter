@@ -20,7 +20,7 @@ export const createInitialSearchData = (
     initialSearchContent: SearchItem[] | undefined,
     pageNumber: number
 ) => {
-    if (initialSearchContent) {
+    if (!!initialSearchContent && Array.isArray(initialSearchContent)) {
         const initialSearchData = initialSearchContent.map(
             searchItemToContentItem
         );
