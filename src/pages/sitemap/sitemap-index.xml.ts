@@ -2,18 +2,16 @@ import fs from 'fs';
 import path from 'path';
 import { getServerSideSitemap } from 'next-sitemap';
 import { GetServerSideProps } from 'next';
-import { getAllContentItems } from '../../service/get-all-content';
+import allContentPreval from '../../service/get-all-content.preval';
 import { getTopicPagePathMappings } from '../../service/get-topic-paths';
 
-const DEVCENTER_URL =
-    process.env.DEVCENTER_URL || 'https://mongodb.com/developer';
+const DEVCENTER_URL = 'https://mongodb.com/developer';
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const curDate = new Date().toISOString();
 
     const { topicContentTypePaths, topicPaths } =
         await getTopicPagePathMappings();
-    const allContent = await getAllContentItems();
 
     const staticPages = fs
         .readdirSync('src/pages', { withFileTypes: true })
@@ -38,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
         priority: 0.7,
     }));
 
-    const contentPages = allContent.map(({ slug, contentDate }) => ({
+    const contentPages = allContentPreval.map(({ slug, contentDate }) => ({
         loc: `${DEVCENTER_URL}/${slug}`,
         lastmod: contentDate || curDate,
         priority: 0.5,

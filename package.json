@@ -41,7 +41,7 @@
         "next-auth": "4.10.3",
         "next-plugin-preval": "1.2.4",
         "next-seo": "5.4.0",
-        "next-sitemap": "^3.1.21",
+        "next-sitemap": "3.1.21",
         "pino": "8.0.0",
         "pluralize": "8.0.0",
         "prom-client": "14.0.1",
