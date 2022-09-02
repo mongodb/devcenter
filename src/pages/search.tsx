@@ -1,6 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { NextSeo } from 'next-seo';
-import type { NextPage, GetStaticProps } from 'next';
+import type {
+    NextPage,
+    GetServerSideProps,
+    GetServerSidePropsContext,
+} from 'next';
+import * as Sentry from '@sentry/nextjs';
 import NextImage from 'next/image';
 import {
     GridLayout,
@@ -11,12 +16,14 @@ import {
     Select,
 } from '@mdb/flora';
 
+import { getAllSearchContent } from '../api-requests/get-all-search-content';
+import allSearchContentPreval from '../service/get-all-search-content.preval';
 import Hero from '../components/hero';
 import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { pageWrapper } from '../styled/layout';
 
+import { SearchItem } from '../components/search/types';
 import { FilterItem } from '../components/search-filters';
-import { getFilters } from '../hooks/search/utils';
 import {
     resultsStringAndTagsStyles,
     desktopFiltersStyles,
@@ -26,14 +33,23 @@ import {
     searchBoxSortBarWrapperStyles,
     sortBoxStyles,
 } from '../components/search/styles';
-import { sortByOptions } from '../components/search/utils';
+import { sortByOptions, DEFAULT_PAGE_SIZE } from '../components/search/utils';
+
 import { Grid } from 'theme-ui';
 
 import Results from '../components/search/results';
 import { useRouter } from 'next/router';
 import { getURLPath } from '../utils/format-url-path';
+import { parsePageNumber } from '../utils/page-type-factory';
 import { thumbnailLoader } from '../components/card/utils';
 import useSearch from '../hooks/search';
+import {
+    createInitialSearchData,
+    hasEmptyFilterAndQuery,
+    getFilters,
+    getResultData,
+    getResultIsValidating,
+} from '../hooks/search/utils';
 import FilterTagSection from '../components/search-filters/filter-tag-section';
 
 export interface SearchProps {
@@ -43,6 +59,8 @@ export interface SearchProps {
     contributedByItems: FilterItem[];
     contentTypeItems: FilterItem[];
     expertiseLevelItems: FilterItem[];
+    initialSearchContent: SearchItem[];
+    pageNumber: number;
 }
 
 const Search: NextPage<SearchProps> = ({
@@ -52,8 +70,36 @@ const Search: NextPage<SearchProps> = ({
     contributedByItems,
     contentTypeItems,
     expertiseLevelItems,
+    initialSearchContent,
+    pageNumber,
 }) => {
     const router = useRouter();
+
+    // Used for initial "all content" page.
+    const totalInitialResults = initialSearchContent
+        ? initialSearchContent.length
+        : DEFAULT_PAGE_SIZE;
+    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
+    const [currentPage, setCurrentPage] = useState(
+        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
+    );
+    const [pageTitle, setPageTitle] = useState(
+        pageNumber > 1
+            ? `Search - Page ${pageNumber} | MongoDB`
+            : `Search | MongoDB`
+    );
+
+    // Initial search data is the search content for initial page load (provided
+    // via SSR based on the query parameters). This data is used for both faster
+    // initial results and SEO crawlability. It must be cleared whenever any client
+    // side re-rendering is needed, such as "load more", filtering or search.
+    const [initialSearchData, setInitialSearchData] = useState(
+        createInitialSearchData(
+            initialSearchContent as SearchItem[],
+            currentPage // page provided by query parameters
+        )
+    );
+    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
 
     const {
         data,
@@ -71,14 +117,19 @@ const Search: NextPage<SearchProps> = ({
         numberOfResults,
         onSort,
         sortBy,
-    } = useSearch(undefined, undefined, {
-        l1Items,
-        languageItems,
-        technologyItems,
-        contributedByItems,
-        contentTypeItems,
-        expertiseLevelItems,
-    });
+    } = useSearch(
+        undefined,
+        undefined,
+        {
+            l1Items,
+            languageItems,
+            technologyItems,
+            contributedByItems,
+            contentTypeItems,
+            expertiseLevelItems,
+        },
+        initialSearchData ? pageNumber : undefined
+    );
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -88,9 +139,66 @@ const Search: NextPage<SearchProps> = ({
     };
 
     const onFilterTagClose = (filterTag: FilterItem) => {
+        clearPagination();
         const newFilters = allFilters.filter(filter => filter !== filterTag);
         onFilter(newFilters);
     };
+
+    const clearPagination = () => {
+        setInitialPageResetFlag(true);
+        setInitialSearchData(undefined);
+        setCurrentPage(1);
+        setPageTitle(`Search | MongoDB`);
+
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: {},
+            },
+            undefined,
+            {
+                scroll: false,
+                shallow: true,
+            }
+        );
+    };
+
+    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault(); // If JS is enabled, do not follow href.
+
+        // If search query and filters are empty, then assume
+        // we are traversing all content with pagination.
+        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
+            const nextPage = currentPage + 1;
+
+            setCurrentPage(nextPage);
+            if (nextPage > 1) {
+                setPageTitle(`Search - Page ${nextPage} | MongoDB`);
+            }
+
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: { page: nextPage },
+                },
+                undefined,
+                {
+                    scroll: false,
+                    shallow: true,
+                }
+            );
+            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
+        } else {
+            setResultsToShow(resultsToShow + 10);
+        }
+        setInitialSearchData(undefined);
+    };
+
+    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const showLoadMoreButton = hasInitialData
+        ? currentPage < initialMaxPage
+        : !fullyLoaded;
+    const isLoading = !hasInitialData ? isValidating : false;
 
     const hasFiltersSet = !!allFilters.length;
 
@@ -126,6 +234,7 @@ const Search: NextPage<SearchProps> = ({
                 onClick={() => {
                     setAllFilters([]);
                     setSearchString('');
+                    clearPagination();
                 }}
             >
                 Back to all content
@@ -181,10 +290,28 @@ const Search: NextPage<SearchProps> = ({
         </div>
     );
 
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber,
+        initialPageResetFlag
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        isValidating
+    );
+    const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
+        ? `/developer/search/?page=${currentPage + 1}`
+        : '#';
+
     return (
         <>
             <NextSeo
-                title={'Search | MongoDB'}
+                title={pageTitle}
                 noindex={router.asPath === '/search/' ? false : true}
             />
             <Hero name="Search" />
@@ -196,7 +323,10 @@ const Search: NextPage<SearchProps> = ({
                 >
                     <DesktopFilters
                         sx={desktopFiltersStyles}
-                        onFilter={onFilter}
+                        onFilter={filters => {
+                            clearPagination();
+                            onFilter(filters);
+                        }}
                         allFilters={allFilters}
                         l1Items={l1Items}
                         languageItems={languageItems}
@@ -222,7 +352,10 @@ const Search: NextPage<SearchProps> = ({
                                     label="Search All"
                                     iconName={ESystemIconNames.SEARCH}
                                     value={searchString}
-                                    onChange={onSearch}
+                                    onChange={(e: React.ChangeEvent<any>) => {
+                                        clearPagination();
+                                        onSearch(e);
+                                    }}
                                     autoFocus={true}
                                 />
                             </div>
@@ -232,20 +365,23 @@ const Search: NextPage<SearchProps> = ({
                                 name="sort-by-dropdown"
                                 options={Object.keys(sortByOptions)}
                                 value={sortBy}
-                                onSelect={onSort}
+                                onSelect={e => {
+                                    clearPagination();
+                                    onSort(e);
+                                }}
                                 width="100%"
                                 height="100%"
                             />
                         </Grid>
                         {resultsStringAndTags}
-                        {!!data.length || isValidating || error ? (
+                        {!!resultData.length || resultIsValidating || error ? (
                             <>
                                 <Results
-                                    data={data}
-                                    isLoading={isValidating}
+                                    data={resultData}
+                                    isLoading={isLoading}
                                     hasError={error}
                                 />
-                                {!fullyLoaded && (
+                                {showLoadMoreButton && (
                                     <div
                                         sx={{
                                             display: 'flex',
@@ -253,17 +389,15 @@ const Search: NextPage<SearchProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!isValidating && data && (
-                                            <Button
-                                                onClick={() =>
-                                                    setResultsToShow(
-                                                        resultsToShow + 10
-                                                    )
-                                                }
-                                                variant="secondary"
+                                        {!resultIsValidating && resultData && (
+                                            <a
+                                                href={loadMoreHref}
+                                                onClick={onLoadMore}
                                             >
-                                                Load more
-                                            </Button>
+                                                <Button variant="secondary">
+                                                    Load more
+                                                </Button>
+                                            </a>
                                         )}
                                     </div>
                                 )}
@@ -276,7 +410,10 @@ const Search: NextPage<SearchProps> = ({
             </div>
             {mobileFiltersOpen && (
                 <MobileFilters
-                    onFilter={onFilter}
+                    onFilter={filters => {
+                        clearPagination();
+                        onFilter(filters);
+                    }}
                     allFilters={allFilters}
                     l1Items={l1Items}
                     languageItems={languageItems}
@@ -291,12 +428,35 @@ const Search: NextPage<SearchProps> = ({
     );
 };
 
-export const getStaticProps: GetStaticProps<SearchProps> = async () => {
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
+    const { query } = context;
+
+    const pageNumber = parsePageNumber(query.page);
+
+    let initialSearchContent: SearchItem[] | undefined;
+    try {
+        // Used for "load more" crawling
+        initialSearchContent = await getAllSearchContent();
+    } catch (e) {
+        Sentry.captureException(e);
+    }
+
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
-    const filters = await getFilters();
+    const filters = await getFilters(
+        undefined,
+        !!initialSearchContent && Array.isArray(initialSearchContent)
+            ? initialSearchContent
+            : allSearchContentPreval
+    );
 
     return {
-        props: filters,
+        props: {
+            ...filters,
+            pageNumber,
+            initialSearchContent,
+        },
     };
 };
 

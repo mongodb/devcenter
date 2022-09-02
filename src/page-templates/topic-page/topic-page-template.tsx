@@ -1,5 +1,8 @@
+import { useState, useCallback } from 'react';
 import { BrandedIcon, GridLayout, SideNav } from '@mdb/flora';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import getConfig from 'next/config';
 import { NextSeo } from 'next-seo';
 import { Crumb } from '../../components/breadcrumbs/types';
 import CardSection, {
@@ -9,6 +12,7 @@ import Hero from '../../components/hero';
 import { CTA } from '../../components/hero/types';
 import { createTopicPageCTAS } from '../../components/hero/utils';
 import Search from '../../components/search';
+import { SearchItem } from '../../components/search/types';
 import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
@@ -53,6 +57,8 @@ interface TopicPageProps {
     contentType: string;
     variant: 'light' | 'medium' | 'heavy';
     tertiaryNavItems: TertiaryNavItem[];
+    initialSearchContent?: SearchItem[];
+    pageNumber: number;
 }
 
 const TopicPageTemplate: NextPage<TopicPageProps> = ({
@@ -68,7 +74,11 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     contentType,
     variant,
     tertiaryNavItems,
+    initialSearchContent,
+    pageNumber,
 }) => {
+    const router = useRouter();
+    const { publicRuntimeConfig } = getConfig();
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -85,6 +95,34 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             )
         );
     });
+
+    const buildPageTitle = useCallback(
+        (pageNumber: number) => {
+            const titlePageNo = pageNumber > 1 ? ` - Page ${pageNumber} ` : '';
+            let pageTitle = `${name} ${titlePageNo} | MongoDB`;
+            if (contentType === 'languages' || contentType === 'technologies') {
+                pageTitle = `${name} and MongoDB ${titlePageNo}`;
+            } else if (contentType === 'products') {
+                if (name.toLowerCase() === 'mongodb') {
+                    pageTitle = `Product ${titlePageNo} | MongoDB`;
+                } else {
+                    pageTitle = `MongoDB ${name} ${titlePageNo}`;
+                }
+            }
+            return pageTitle;
+        },
+        [contentType, name]
+    );
+
+    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+
+    const updatePageTitle = useCallback(
+        pageNumber => {
+            const pageTitle = buildPageTitle(pageNumber);
+            setPageTitle(pageTitle);
+        },
+        [buildPageTitle]
+    );
 
     const topicsRow = topics.length > 0 ? 1 : 0;
     const featuredRow = variant === 'light' ? 0 : 1;
@@ -114,25 +152,16 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 
     setURLPathForNavItems(tertiaryNavItems);
 
-    let pageTitle = `${name} | MongoDB`;
-    if (contentType === 'languages' || contentType === 'technologies') {
-        pageTitle = `${name} and MongoDB`;
-    } else if (contentType === 'products') {
-        if (name.toLowerCase() === 'mongodb') {
-            pageTitle = `Products | MongoDB`;
-        } else {
-            pageTitle = `MongoDB ${name}`;
-        }
-    }
-
     tertiaryNavItems = addExternalIconToSideNav(
         tertiaryNavItems,
         'documentation'
     );
 
+    const canonicalUrl = publicRuntimeConfig.absoluteBasePath + router.asPath;
+
     return (
         <>
-            <NextSeo title={pageTitle} />
+            <NextSeo title={pageTitle} canonical={canonicalUrl} />
             <Hero
                 crumbs={crumbs}
                 name={name}
@@ -193,6 +222,10 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         title={`All ${name} Content`}
                         placeholder={`Search ${name} Content`}
                         tagSlug={slug}
+                        pageNumber={pageNumber}
+                        pageSlug={slug.split('/')}
+                        updatePageTitle={updatePageTitle}
+                        initialSearchContent={initialSearchContent}
                         sx={{
                             gridColumn: [
                                 'span 6',

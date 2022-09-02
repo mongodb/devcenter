@@ -1,3 +1,4 @@
+import type { NextPage } from 'next';
 import {
     BrandedIcon,
     EThirdPartyLogoVariant,
@@ -70,7 +71,7 @@ const HomepageSearch: React.FunctionComponent = () => {
     );
 };
 
-const Home = () => {
+const Home: NextPage<{}> = props => {
     return (
         <main
             sx={{
