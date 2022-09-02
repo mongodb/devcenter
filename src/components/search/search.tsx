@@ -23,6 +23,8 @@ import useSearch from '../../hooks/search';
 import {
     createInitialSearchData,
     hasEmptyFilterAndQuery,
+    getResultData,
+    getResultIsValidating,
 } from '../../hooks/search/utils';
 import EmptyState from './empty-state';
 import { sortByOptions, DEFAULT_PAGE_SIZE } from './utils';
@@ -79,20 +81,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
         undefined,
         initialSearchData ? pageNumber : undefined
     );
-
-    const getResultData = () => {
-        return initialSearchData &&
-            hasEmptyFilterAndQuery(searchString, allFilters)
-            ? initialSearchData
-            : data;
-    };
-
-    const getResultIsValidating = () => {
-        return initialSearchData &&
-            hasEmptyFilterAndQuery(searchString, allFilters)
-            ? false
-            : isValidating;
-    };
 
     const clearPagination = () => {
         setInitialSearchData(undefined);
@@ -178,8 +166,20 @@ const Search: React.FunctionComponent<SearchProps> = ({
 
     const path = pageSlug?.join('/');
 
-    const resultData = getResultData();
-    const resultIsValidating = getResultIsValidating();
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        searchString,
+        isValidating
+    );
 
     return (
         <div role="search" className={className}>

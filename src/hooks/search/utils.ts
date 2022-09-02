@@ -245,6 +245,35 @@ export const hasEmptyFilterAndQuery = (
     return (!searchString || searchString == '') && allFilters.length == 0;
 };
 
+// TODO: Refactor.
+export const getResultData = (
+    data: ContentItem[],
+    initialSearchData: ContentItem[] | undefined,
+    searchString: string,
+    allFilters: FilterItem[],
+    pageNumber: number
+) => {
+    return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
+        ? initialSearchData
+        : data.slice(
+              initialSearchData && pageNumber > 1
+                  ? (pageNumber - 1) * DEFAULT_PAGE_SIZE
+                  : 0
+          );
+};
+
+export const getResultIsValidating = (
+    initialSearchData: ContentItem[] | undefined,
+    searchString: string,
+    allFilters: FilterItem[],
+    earchString: string,
+    isValidating: boolean
+) => {
+    return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
+        ? false
+        : isValidating;
+};
+
 export const itemInFilters = (
     { tags }: ContentItem,
     allFilters: FilterItem[]

@@ -22,7 +22,6 @@ import { pageWrapper } from '../styled/layout';
 
 import { SearchItem } from '../components/search/types';
 import { FilterItem } from '../components/search-filters';
-import { getFilters, hasEmptyFilterAndQuery } from '../hooks/search/utils';
 import {
     resultsStringAndTagsStyles,
     desktopFiltersStyles,
@@ -42,7 +41,13 @@ import { getURLPath } from '../utils/format-url-path';
 import { parsePageNumber } from '../utils/page-type-factory';
 import { thumbnailLoader } from '../components/card/utils';
 import useSearch from '../hooks/search';
-import { createInitialSearchData } from '../hooks/search/utils';
+import {
+    createInitialSearchData,
+    hasEmptyFilterAndQuery,
+    getFilters,
+    getResultData,
+    getResultIsValidating,
+} from '../hooks/search/utils';
 import FilterTagSection from '../components/search-filters/filter-tag-section';
 
 export interface SearchProps {
@@ -122,20 +127,6 @@ const Search: NextPage<SearchProps> = ({
         },
         initialSearchData ? pageNumber : undefined
     );
-
-    const getResultData = () => {
-        return initialSearchData &&
-            hasEmptyFilterAndQuery(searchString, allFilters)
-            ? initialSearchData
-            : data;
-    };
-
-    const getResultIsValidating = () => {
-        return initialSearchData &&
-            hasEmptyFilterAndQuery(searchString, allFilters)
-            ? false
-            : isValidating;
-    };
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -295,8 +286,20 @@ const Search: NextPage<SearchProps> = ({
         </div>
     );
 
-    const resultData = getResultData();
-    const resultIsValidating = getResultIsValidating();
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        searchString,
+        isValidating
+    );
 
     return (
         <>

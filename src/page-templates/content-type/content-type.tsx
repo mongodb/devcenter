@@ -42,7 +42,11 @@ import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
 import { hasEmptyFilterAndQuery } from '../../hooks/search/utils';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
-import { createInitialSearchData } from '../../hooks/search/utils';
+import {
+    createInitialSearchData,
+    getResultData,
+    getResultIsValidating,
+} from '../../hooks/search/utils';
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
@@ -109,20 +113,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         undefined,
         initialSearchData ? pageNumber : undefined
     );
-
-    const getResultData = () => {
-        return initialSearchData &&
-            hasEmptyFilterAndQuery(searchString, allFilters)
-            ? initialSearchData
-            : data;
-    };
-
-    const getResultIsValidating = () => {
-        return initialSearchData &&
-            hasEmptyFilterAndQuery(searchString, allFilters)
-            ? false
-            : isValidating;
-    };
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
@@ -321,8 +311,20 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 
-    const resultData = getResultData();
-    const resultIsValidating = getResultIsValidating();
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        searchString,
+        isValidating
+    );
 
     return (
         <>
