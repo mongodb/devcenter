@@ -74,9 +74,8 @@ export const getFilters = async (
     allSearchContent?: SearchItem[]
 ) => {
     const allFilters = contentType === undefined;
-    const allContent: SearchItem[] = allSearchContent
-        ? allSearchContent
-        : await getAllSearchContent();
+    const allContent: SearchItem[] =
+        allSearchContent || (await getAllSearchContent());
     const filterItems: FilterItem[] = [];
 
     allContent.forEach(({ tags, type }) => {

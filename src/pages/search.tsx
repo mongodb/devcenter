@@ -297,6 +297,9 @@ const Search: NextPage<SearchProps> = ({
         </div>
     );
 
+    const resultData = getResultData();
+    const resultIsValidating = getResultIsValidating();
+
     return (
         <>
             <NextSeo
@@ -363,12 +366,10 @@ const Search: NextPage<SearchProps> = ({
                             />
                         </Grid>
                         {resultsStringAndTags}
-                        {!!getResultData().length ||
-                        getResultIsValidating() ||
-                        error ? (
+                        {!!resultData.length || resultIsValidating || error ? (
                             <>
                                 <Results
-                                    data={getResultData()}
+                                    data={resultData}
                                     isLoading={isLoading}
                                     hasError={error}
                                 />
@@ -380,24 +381,22 @@ const Search: NextPage<SearchProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!getResultIsValidating() &&
-                                            getResultData() && (
-                                                <a
-                                                    href={
-                                                        hasEmptyFilterAndQuery()
-                                                            ? `/developer/search/?page=${
-                                                                  currentPage +
-                                                                  1
-                                                              }`
-                                                            : '#'
-                                                    }
-                                                    onClick={onLoadMore}
-                                                >
-                                                    <Button variant="secondary">
-                                                        Load more
-                                                    </Button>
-                                                </a>
-                                            )}
+                                        {!resultIsValidating && resultData && (
+                                            <a
+                                                href={
+                                                    hasEmptyFilterAndQuery()
+                                                        ? `/developer/search/?page=${
+                                                              currentPage + 1
+                                                          }`
+                                                        : '#'
+                                                }
+                                                onClick={onLoadMore}
+                                            >
+                                                <Button variant="secondary">
+                                                    Load more
+                                                </Button>
+                                            </a>
+                                        )}
                                     </div>
                                 )}
                             </>

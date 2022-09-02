@@ -78,7 +78,9 @@ const Search: React.FunctionComponent<SearchProps> = ({
     );
 
     const hasEmptyFilterAndQuery = () => {
-        return (!searchString || searchString == '') && allFilters.length == 0;
+        return (
+            (!searchString || searchString === '') && allFilters.length === 0
+        );
     };
 
     const getResultData = () => {
@@ -177,6 +179,9 @@ const Search: React.FunctionComponent<SearchProps> = ({
 
     const path = pageSlug?.join('/');
 
+    const resultData = getResultData();
+    const resultIsValidating = getResultIsValidating();
+
     return (
         <div role="search" className={className}>
             <div sx={titleStyles}>
@@ -261,10 +266,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                 </div>
             )}
             <div sx={{}}></div>
-            {!!getResultData().length || getResultIsValidating() || error ? (
+            {!!resultData.length || resultIsValidating || error ? (
                 <>
                     <Results
-                        data={getResultData()}
+                        data={resultData}
                         isLoading={isLoading}
                         hasError={error}
                         layout={resultsLayout}
@@ -277,7 +282,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
                                 marginTop: ['inc70', null, 'inc90'],
                             }}
                         >
-                            {!getResultIsValidating() && getResultData() && (
+                            {!resultIsValidating && resultData && (
                                 <a
                                     href={
                                         hasEmptyFilterAndQuery()

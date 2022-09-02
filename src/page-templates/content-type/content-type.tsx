@@ -322,6 +322,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 
+    const resultData = getResultData();
+    const resultIsValidating = getResultIsValidating();
+
     return (
         <>
             <NextSeo
@@ -423,12 +426,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             </>
                         )}
                         {resultsStringAndTags}
-                        {!!getResultData().length ||
-                        getResultIsValidating() ||
-                        error ? (
+                        {!!resultData.length || resultIsValidating || error ? (
                             <>
                                 <Results
-                                    data={getResultData()}
+                                    data={resultData}
                                     isLoading={isLoading}
                                     hasError={error}
                                 />
@@ -440,24 +441,22 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!getResultIsValidating() &&
-                                            getResultData() && (
-                                                <a
-                                                    href={
-                                                        hasEmptyFilterAndQuery()
-                                                            ? `/developer${slug}/?page=${
-                                                                  currentPage +
-                                                                  1
-                                                              }`
-                                                            : '#'
-                                                    }
-                                                    onClick={onLoadMore}
-                                                >
-                                                    <Button variant="secondary">
-                                                        Load more
-                                                    </Button>
-                                                </a>
-                                            )}
+                                        {!resultIsValidating && resultData && (
+                                            <a
+                                                href={
+                                                    hasEmptyFilterAndQuery()
+                                                        ? `/developer${slug}/?page=${
+                                                              currentPage + 1
+                                                          }`
+                                                        : '#'
+                                                }
+                                                onClick={onLoadMore}
+                                            >
+                                                <Button variant="secondary">
+                                                    Load more
+                                                </Button>
+                                            </a>
+                                        )}
                                     </div>
                                 )}
                             </>

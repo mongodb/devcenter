@@ -1,27 +1,9 @@
+import * as Sentry from '@sentry/nextjs';
 import {
     buildSearchQuery,
     SearchQueryParams,
 } from '../components/search/utils';
 import { SearchItem } from '../components/search/types';
-
-// Should find a way to cache this response. Only use it in a few places for search filters but still.
-export const getAllSearchContent = async (): Promise<SearchItem[]> => {
-    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`;
-    const options = {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    };
-
-    return fetch(url, options)
-        .then(async response => response.json())
-        .then(async data => {
-            const r_json: SearchItem[] = data;
-            return r_json;
-        });
-};
 
 export const getSearchContent = async (
     queryParams: SearchQueryParams
@@ -37,12 +19,23 @@ export const getSearchContent = async (
         },
     };
 
-    return fetch(url, options)
-        .then(async response => response.json())
-        .then(async data => {
-            const r_json: SearchItem[] = data;
-            return r_json;
-        });
+    try {
+        const req = await fetch(url, options);
+        const data: SearchItem[] = await req.json();
+        return data;
+    } catch (e) {
+        Sentry.captureException(e);
+        throw new Error('Failed to fetch search data.');
+    }
+};
+
+// Used in get-all-search-content.preval for building search filters.
+export const getAllSearchContent = async (): Promise<SearchItem[]> => {
+    const queryParams: SearchQueryParams = {
+        searchString: '',
+        sortBy: 'Most Recent',
+    };
+    return await getSearchContent(queryParams);
 };
 
 export default getAllSearchContent;
