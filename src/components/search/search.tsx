@@ -180,7 +180,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        searchString,
         isValidating
     );
 

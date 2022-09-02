@@ -302,7 +302,6 @@ const Search: NextPage<SearchProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        searchString,
         isValidating
     );
 

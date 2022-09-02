@@ -267,7 +267,6 @@ export const getResultIsValidating = (
     initialSearchData: ContentItem[] | undefined,
     searchString: string,
     allFilters: FilterItem[],
-    earchString: string,
     isValidating: boolean
 ) => {
     return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)

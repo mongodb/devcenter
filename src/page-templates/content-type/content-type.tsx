@@ -325,7 +325,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         initialSearchData,
         searchString,
         allFilters,
-        searchString,
         isValidating
     );
 
