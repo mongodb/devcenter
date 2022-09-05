@@ -29,8 +29,8 @@ envSecrets:
   STRAPI_API_TOKEN: devcenter-secrets
 
 autoscaling:
-  minReplicas: 2
-  maxReplicas: 4
+  minReplicas: 4
+  maxReplicas: 8
   metrics:
     - type: Resource
       resource:
@@ -50,9 +50,6 @@ probes:
     failureThreshold: 3
 
 resources:
-  limits:
-    cpu: 2
-    memory: 6Gi
   requests:
     cpu: 2
     memory: 6Gi
