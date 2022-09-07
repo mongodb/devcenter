@@ -24,7 +24,7 @@ export const createTopicPageCTAS = (ctas: CTA[]) => {
                               );
                           }
                           if (i === 1) {
-                              return <CTALink {...cta} key={cta.url} />;
+                              return <CTALink {...cta} key={cta.url} />; // TODO: can this be replaced with Flora Link component and we can remove <CTALink /> all together?
                           }
                       })
                     : null}

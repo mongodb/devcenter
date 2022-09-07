@@ -7,14 +7,6 @@ need to be modified before setting the rewrites attribute in the next.config.js.
 
 const rewrites = [
     {
-        source: '/academia/',
-        destination: `${process.env.DEVHUB_URL}/academia/`,
-    },
-    {
-        source: '/academia/educators/',
-        destination: `${process.env.DEVHUB_URL}/academia/educators/`,
-    },
-    {
         source: '/article/10-tips-making-remote-work-actually-work/',
         destination: `${process.env.DEVHUB_URL}/article/10-tips-making-remote-work-actually-work/`,
     },

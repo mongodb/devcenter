@@ -1,8 +1,8 @@
 import { Fetcher } from 'swr';
 import { NextRouter } from 'next/router';
 
-import { PillCategory } from '../../types/pill-category';
 import getAllSearchContent from '../../api-requests/get-all-search-content';
+import { PillCategory } from '../../types/pill-category';
 import { SearchItem } from '../../components/search/types';
 import { FilterItem } from '../../components/search-filters';
 import { Tag } from '../../interfaces/tag';
@@ -10,8 +10,27 @@ import { ContentItem } from '../../interfaces/content-item';
 import { Image } from '../../interfaces/image';
 import { Author } from '../../interfaces/author';
 import { getURLPath } from '../../utils/format-url-path';
+import { SortByType } from '../../components/search/types';
+import {
+    sortByOptions,
+    DEFAULT_PAGE_SIZE,
+} from '../../components/search/utils';
 
-const searchItemToContentItem = ({
+export const createInitialSearchData = (
+    initialSearchContent: SearchItem[] | undefined,
+    pageNumber: number
+) => {
+    if (!!initialSearchContent && Array.isArray(initialSearchContent)) {
+        const initialSearchData = initialSearchContent.map(
+            searchItemToContentItem
+        );
+
+        const start = pageNumber > 1 ? (pageNumber - 1) * DEFAULT_PAGE_SIZE : 0;
+        return initialSearchData.slice(start, pageNumber * DEFAULT_PAGE_SIZE);
+    }
+};
+
+export const searchItemToContentItem = ({
     type,
     authors,
     name,
@@ -50,10 +69,13 @@ const searchItemToContentItem = ({
     };
 };
 
-export const getFilters = async (contentType?: PillCategory) => {
+export const getFilters = async (
+    contentType?: PillCategory,
+    allSearchContent?: SearchItem[]
+) => {
     const allFilters = contentType === undefined;
-    const allContent: SearchItem[] = await getAllSearchContent();
-
+    const allContent: SearchItem[] =
+        allSearchContent || (await getAllSearchContent());
     const filterItems: FilterItem[] = [];
 
     allContent.forEach(({ tags, type }) => {
@@ -216,6 +238,42 @@ const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
     );
 };
 
+export const hasEmptyFilterAndQuery = (
+    searchString: string,
+    allFilters: FilterItem[]
+) => {
+    return (!searchString || searchString == '') && allFilters.length == 0;
+};
+
+// TODO: Refactor.
+export const getResultData = (
+    data: ContentItem[],
+    initialSearchData: ContentItem[] | undefined,
+    searchString: string,
+    allFilters: FilterItem[],
+    initialPageNumber: number,
+    initialPageResetFlag: boolean
+) => {
+    return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
+        ? initialSearchData
+        : data.slice(
+              !initialPageResetFlag && initialPageNumber > 1
+                  ? (initialPageNumber - 1) * DEFAULT_PAGE_SIZE
+                  : 0
+          );
+};
+
+export const getResultIsValidating = (
+    initialSearchData: ContentItem[] | undefined,
+    searchString: string,
+    allFilters: FilterItem[],
+    isValidating: boolean
+) => {
+    return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
+        ? false
+        : isValidating;
+};
+
 export const itemInFilters = (
     { tags }: ContentItem,
     allFilters: FilterItem[]
@@ -264,8 +322,12 @@ export const fetcher: Fetcher<ContentItem[], string> = queryString => {
 export const updateUrl = (
     router: NextRouter,
     filters: FilterItem[],
-    searchString: string
+    searchString: string,
+    sortBy?: SortByType
 ) => {
+    if (!sortBy) {
+        sortBy = 'Most Recent';
+    }
     // Have to preserve the filters here as well.
     const product = filters
         .filter(
@@ -290,6 +352,7 @@ export const updateUrl = (
     const expertiseLevel = filters
         .filter(filter => filter.type === 'ExpertiseLevel')
         .map(filter => filter.name);
+
     router.replace(
         {
             pathname: router.pathname,
@@ -301,6 +364,7 @@ export const updateUrl = (
                 contentType,
                 contributedBy,
                 expertiseLevel,
+                sortMode: sortByOptions[sortBy as SortByType],
             },
         },
         undefined,

@@ -1,14 +1,16 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import type {
+    NextPage,
+    GetServerSideProps,
+    GetServerSidePropsContext,
+} from 'next';
 import { getContentPageData } from '../page-templates/main-content-page/content-page-data';
 import { getTopicContentTypePageData } from '../page-templates/topic-content-type-page/topic-content-type-page-data';
-import DynamicContentTemplate, {
-    getDynamicPaths,
-} from '../page-templates/dynamic-content-page/dynamic-content-page-template';
+import DynamicContentTemplate from '../page-templates/dynamic-content-page/dynamic-content-page-template';
 import { getTopicPageData } from '../page-templates/topic-page/topic-page-data';
 import { PageParams } from '../interfaces/page-params';
 import { PageType } from '../types/page-type';
 import { DynamicPageType } from '../types/page-type-factory';
-import { pageTypeFactory } from '../utils/page-type-factory';
+import { pageTypeFactory, parsePageNumber } from '../utils/page-type-factory';
 
 interface ContentPageProps {
     pageType: PageType;
@@ -24,14 +26,11 @@ const DynamicContentPage: NextPage<ContentPageProps> = ({
 
 export default DynamicContentPage;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    let paths: any[] = await getDynamicPaths();
-
-    return { paths: paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { slug } = params as PageParams;
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext
+) => {
+    const { query } = context;
+    const { slug } = query as PageParams;
 
     const dynamicPageType: DynamicPageType = await pageTypeFactory(slug);
     const {
@@ -40,21 +39,26 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }: { pageType: PageType; pageParams: PageParams } = dynamicPageType;
     let data: any | null = {};
 
+    let pageNumber: number;
     switch (pageType) {
         case PageType.Content:
             data = await getContentPageData(slug);
             break;
         case PageType.Topic:
+            pageNumber = parsePageNumber(query.page);
             data = await getTopicPageData(
                 pageParams.l1_l2 as string,
-                pageParams.slug
+                pageParams.slug,
+                pageNumber
             );
             break;
         case PageType.TopicContentType:
+            pageNumber = parsePageNumber(query.page);
             data = await getTopicContentTypePageData(
                 pageParams.l1_l2 as string,
                 pageParams.topic as string,
-                pageParams.slug
+                pageParams.slug,
+                pageNumber
             );
             break;
         default:

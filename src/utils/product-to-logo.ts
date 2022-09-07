@@ -15,6 +15,7 @@ export const productToLogo: { [key: string]: string } = {
     Charts: 'atlas_charts',
     Triggers: 'atlas_triggers',
     'Data Lake': 'atlas_data_lake',
+    'Data Federation': 'atlas_data_federation',
     API: 'general_features_api',
     'Data Modeling': 'mdb_document_model',
     'Change Streams': 'mdb_change_streams',

@@ -1,9 +1,11 @@
+import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 import { rewrites } from '../../config/rewrites';
 import { logRequestData } from '../utils/logger';
 
-export async function middleware(req: NextRequest) {
+const middleware = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;
+
     const origin = req.headers.get('Origin') || '';
 
     const host = process.env.VERCEL_URL
@@ -11,7 +13,9 @@ export async function middleware(req: NextRequest) {
         : process.env.HOST_URL;
 
     const checkRequest = // Only attempt to block POST or PUT API requests (feedback and request content).
-        pathname.startsWith('/api/') && ['POST', 'PUT'].includes(req.method);
+        pathname.startsWith('/api/') &&
+        !pathname.includes('webhook') &&
+        ['POST', 'PUT'].includes(req.method);
 
     if (checkRequest) {
         let headers: { [key: string]: string } = {
@@ -21,8 +25,9 @@ export async function middleware(req: NextRequest) {
         if (
             origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
         ) {
+            const userAgent: any = req.ua;
             console.log(
-                `${req.ip} blocked because of bad user agent (${req.ua?.browser?.name}) or origin (${origin})`
+                `${req.ip} blocked because of bad user agent (${userAgent?.browser?.name}) or origin (${origin})`
             );
             const res = new NextResponse(
                 JSON.stringify({
@@ -86,7 +91,7 @@ export async function middleware(req: NextRequest) {
     // existing issue with SSG and dynamic routing
     // when using built-in rewrites configuration.
     for (const rewrite of rewrites) {
-        let destination = null;
+        let destination: string | null = null;
 
         if (rewrite.regex) {
             const regex = new RegExp(rewrite.regex);
@@ -108,5 +113,17 @@ export async function middleware(req: NextRequest) {
 
     const res = NextResponse.next();
     logRequestData(pathname, req.method, res.status);
+
     return res;
-}
+};
+
+export default withAuth(middleware, {
+    pages: {
+        signIn: '/auth/signin',
+    },
+    callbacks: {
+        authorized: ({ token }) => {
+            return true;
+        },
+    },
+});

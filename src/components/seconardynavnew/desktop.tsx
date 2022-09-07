@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
+import { UserMenu } from '@leafygreen-ui/mongo-nav';
+import { ThemeUIStyleObject } from 'theme-ui';
 
 import {
     ESystemIconNames,
@@ -11,27 +14,21 @@ import { secondaryNavData } from '../../data/secondary-nav';
 
 import SecondaryLinksList from './nav-item';
 import DropDownMenu from './dropdown-menu';
-import { StyledSecondaryNavContainer } from './desktop-styles';
+import { navWrapperStyles, navContainerStyles } from './desktop-styles';
 import { getURLPath } from '../../utils/format-url-path';
+import { layers } from '../../styled/layout';
 
 const linkWrapperStyles = {
     position: 'relative' as 'relative',
     padding: 0,
 };
 
-const StyledSecondaryLinks = {
+const StyledSecondaryLinks: ThemeUIStyleObject | undefined = {
     padding: 0,
     margin: 0,
     overflow: 'visible',
-    'li:not(:last-child)': {
-        marginRight: [
-            null,
-            null,
-            null,
-            theme.space.inc40,
-            theme.space.inc50,
-            theme.space.inc90,
-        ],
+    '> li:not(:last-child)': {
+        marginRight: [null, null, null, 'inc30', '40px'],
     },
     whiteSpace: 'nowrap' as 'nowrap',
 };
@@ -48,7 +45,7 @@ const hoverLinkStyles = (isActive: boolean) => ({
 
 const MainLinkStyles = (isActive: boolean) => ({
     float: 'left' as 'left',
-    marginRight: ['inc60', 'inc60', 'inc60', 'inc90', 'inc90', 'inc90'],
+    marginRight: [null, null, null, 'inc40', 'inc90'],
     fontWeight: 500,
 
     'span.textlink-default-text-class': {
@@ -67,13 +64,21 @@ const FloraLinkStyles = (isActive: boolean) => ({
     display: 'inline-block',
     'span.textlink-default-text-class': {
         ...hoverLinkStyles(isActive),
-        fontSize: [null, null, 'inc10', 'inc20'],
+        fontSize: [null, null, null, 'inc10', 'inc20'],
         fontFamily: 'body',
         fontWeight: '300',
     },
 });
 
 const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
+    const { data: session } = useSession();
+    const account = session
+        ? {
+              firstName: session.firstName,
+              lastName: session.lastName,
+              email: session.email,
+          }
+        : null;
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
         setIsOpen(isOpen => !isOpen);
@@ -102,19 +107,8 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
     }, [isOpen]);
 
     return (
-        <div
-            sx={{
-                display: ['none', 'none', 'none', 'block'],
-                borderBottom: [
-                    null,
-                    null,
-                    null,
-                    `solid 1px ${theme.colors.black30}`,
-                ],
-                px: ['inc40', null, 'inc50', 'inc70'],
-            }}
-        >
-            <nav sx={StyledSecondaryNavContainer}>
+        <div sx={navWrapperStyles}>
+            <nav sx={navContainerStyles}>
                 <div sx={{ ...linkWrapperStyles, whiteSpace: 'nowrap' }}>
                     <FloraLink
                         href={getURLPath('/')}
@@ -122,28 +116,12 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                             ...MainLinkStyles(
                                 activePath === '/' ? true : false
                             ),
-                            marginRight: [
-                                null,
-                                null,
-                                null,
-                                'inc40',
-                                'inc70',
-                                'inc90',
-                            ],
                         }}
                     >
                         <TypographyScale
                             variant="body1"
                             sx={{
-                                fontSize: [
-                                    '16px',
-                                    '16px',
-                                    '16px',
-                                    '16px',
-                                    '20px',
-                                    '20px',
-                                    '20px',
-                                ],
+                                fontSize: [null, null, null, '16px', '20px'],
                             }}
                         >
                             MongoDB Developer
@@ -153,7 +131,10 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
 
                 <ul sx={StyledSecondaryLinks}>
                     {secondaryNavData.map(({ name, slug, dropDownItems }) => (
-                        <SecondaryLinksList key={name}>
+                        <SecondaryLinksList
+                            linkClassName="secondary-nav-link"
+                            key={name}
+                        >
                             {dropDownItems?.length ? (
                                 <>
                                     <div sx={linkWrapperStyles}>
@@ -223,6 +204,28 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                         </SecondaryLinksList>
                     ))}
                 </ul>
+                {account && (
+                    <div
+                        sx={{
+                            marginLeft: 'auto',
+                            zIndex: layers.secondaryNav,
+                            justifySelf: 'end',
+                            px: [null, null, null, 'inc30', '40px'],
+                            minWidth: 'inc80',
+                        }}
+                    >
+                        <UserMenu
+                            account={account}
+                            activePlatform="devHub"
+                            onLogout={e => {
+                                e.preventDefault();
+                                signOut({
+                                    callbackUrl: '/developer/api/logout',
+                                });
+                            }}
+                        />
+                    </div>
+                )}
             </nav>
         </div>
     );

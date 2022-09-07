@@ -4,18 +4,27 @@ import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import getConfig from 'next/config';
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
+import ErrorBoundary from '../components/error-boundary';
+import { OverlayProvider } from '../contexts/overlay';
 
 const CONTENT_ROUTE = '/[...slug]';
 
-function MyApp({ Component, pageProps }: AppProps) {
+interface CustomProps {
+    session?: Session;
+}
+
+function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { asPath, route } = router;
 
+    let pagePath = route === '/_error' ? null : asPath;
     let pageDescription = null;
     if (asPath in publicRuntimeConfig.pageDescriptions) {
         pageDescription = publicRuntimeConfig.pageDescriptions[asPath];
@@ -49,6 +58,11 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <link rel="canonical" href={`${canonicalUrl}`} />
                 )}
             </Head>
+            <Script
+                id="optimizely"
+                strategy="beforeInteractive"
+                src="https://cdn.optimizely.com/js/15508090763.js"
+            />
             {/* Google Tag Manager - Global base code */}
             <Script
                 id="gtag-base"
@@ -63,11 +77,22 @@ function MyApp({ Component, pageProps }: AppProps) {
                 `,
                 }}
             />
-            <ThemeProvider theme={theme}>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </ThemeProvider>
+            <SessionProvider
+                session={session}
+                basePath="/developer/api/auth/"
+                refetchOnWindowFocus={true}
+                refetchInterval={0}
+            >
+                <ThemeProvider theme={theme}>
+                    <OverlayProvider>
+                        <Layout pagePath={pagePath}>
+                            <ErrorBoundary>
+                                <Component {...pageProps} />
+                            </ErrorBoundary>
+                        </Layout>
+                    </OverlayProvider>
+                </ThemeProvider>
+            </SessionProvider>
         </>
     );
 }

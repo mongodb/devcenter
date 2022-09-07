@@ -1,1 +1,3 @@
-node_modules/
+.drone.yml
+environments
+playwright-tests

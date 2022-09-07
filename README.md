@@ -17,6 +17,25 @@ The data for this project is fetched from a Strapi CMS. In order to get actual d
 `STRAPI_URL`. See [this DevHub wiki page](https://wiki.corp.mongodb.com/display/DEVREL/DevHub+Front-End+Guide#DevHubFrontEndGuide-InstallationandSetup) and copy the value for `STRAPI_URL` shown there (or ask a teammate).
 `REALM_SEARCH_URL` and `REALM_API_URL` are needed for feedback and search functionality. Ask a teammate for these values.
 
+#### Logging in with SSO Locally
+
+For Okta SSO to work, the hostname must be a subdomain of mongodb.com. To test SSO locally, create an entry in /etc/hosts:
+`127.0.0.1       devcenter-local.mongodb.com`
+
+Also, ensure the following environment variables are set:
+```
+HOST_URL=devcenter-local.mongodb.com:3000
+NEXTAUTH_URL=http://devcenter-local.mongodb.com:3000/developer/api/auth/
+NEXTAUTH_SECRET=<secret>
+OKTA_CLIENT_ID=<secret>
+OKTA_CLIENT_SECRET=<secret>
+OKTA_ISSUER=<secret>
+```
+
+For access to secrets, you can ask a teammate or review the existing secrets in the staging Kanopy cluster.
+
+DevCenter will then be accessible at http://devcenter-local.mongodb.com:3000/developer/ and with the above environment variables, Okta SSO should work.
+
 ## Running Locally
 
 Run `yarn` to install dependencies. Run `yarn dev` to start the server locally in development mode. It then should be accessible at http://localhost:3000/developer.
@@ -32,6 +51,10 @@ To build the Docker image, run the following:
 To create the container, run:
 
 `docker run -p 3000:3000 --env-file ./.env.local nextjs-docker`
+
+## Branch Naming Conventions
+
+Try to name your branch for the corresponding Jira ticket you are working on. For example, if you are working on Jira ticket DEVHUB-1001, your branch name should be `DEVHUB-1001`. If you have to name it something different, **PLEASE DO NOT INCLUDE "/" IN THE BRANCH NAME**. I know this is a common practice, but it will break the Drone preview environment because Drone doesn't decode the `branch` URL paramter when using its API to trigger events.
 
 ## Testing
 
@@ -60,16 +83,32 @@ When your PR is approved, you can merge it using GitHub's UI. You can choose eit
 
 ### Staging Release
 
-DevCenter is deployed on the Kanopy platform, and when a PR is merged into `main`, the changes will be released through our [drone](https://drone.corp.mongodb.com/mongodb/devcenter/) pipeline. Once the build is completed, the changes are promoted into staging automatically (https://mongodbcom-cdn.website.staging.corp.mongodb.com/developer/). At times, your browser cache will need to be cleared to see the changes immediately.
+DevCenter is deployed on the Kanopy platform, and when a PR is merged into `main`, the changes will be released through our [drone](https://drone.corp.mongodb.com/mongodb/devcenter/) pipeline. Once the build is completed, the changes are promoted into staging automatically (https://mongodbcom-cdn.staging.corp.mongodb.com/developer/). At times, your browser cache will need to be cleared to see the changes immediately.
 
 ### Production Release
 
-Once the changes are tested and ready to go to production, a new PR will need to be created that will merge the `main` branch into the `production` branch. Due to the fact that the application is static (using SSG on Next.js), the content is created at build time. As such, a separate build needs to be created for production. By merging the PR from `main` into `production`, a new [drone](https://drone.corp.mongodb.com/mongodb/devcenter/) build will be started. In order to complete the production deployment, that build will need to be promoted either from the Drone UI or CLI. To do this via the UI, navigate to the repository in Drone and select the latest production build. On the build page, click on the ellipsis at the top right and click "Promote" from the menu. The target name is "production." Alternatively, the build can be promoted with CLI:
+Once the changes are tested and ready to go to production, a new PR will need to be created that will merge the `main` branch into the `production` branch. Due to the fact that the application is static (using SSG on Next.js), the content is created at build time. As such, a separate build needs to be created for production. Merge the `main` -> `production PR by selecting "Merge pull request" in the Github dropdown. By merging the PR from `main` into `production`, a new [drone](https://drone.corp.mongodb.com/mongodb/devcenter/) build will be started. In order to complete the production deployment, that build will need to be promoted either from the Drone UI or CLI. To do this via the UI, navigate to the repository in Drone and select the latest production build. On the build page, click on the ellipsis at the top right and click "Promote" from the menu. The target name is "production." Alternatively, the build can be promoted with CLI:
 
 ```sh
 drone build promote mongodb/devcenter <DRONE_BUILD_VERSION> production
 ```
 
+### Production Rollback
+
+When a build needs to be rolled back, we need to do the following:
+1. Remove the rebuild cron by visiting https://drone.corp.mongodb.com/mongodb/devcenter/settings/cron and clicking the deletion icon. Alternatively, you can run `drone cron rm mongodb/devcenter rebuild-devcenter-prod-cron` from the command line.
+2. Find the release that you want to rollback to. You can do this by going to Github and checking the PRs that were merged to `production`. Within a release PR, you can find the last Drone **build** that was run by clicking "View Details" on the PR and then checking which build "continuous-integration/drone Build is passing" is referencing. Once you find the build or build number, you can go to that build with the drone UI (e.g. https://drone.corp.mongodb.com/mongodb/devcenter/4438, where 4438 is the build number) and click promote -> rollback (branch: production). Alternatively, you can run `drone build promote mongodb/devcenter <rollback build number> production` which just rolls back to the specified build number.
+
+#### Hotfixes
+
+Hotfixes can be pushed either directly to the `production` branch or to `main` for future release (main -> production merges). If there is a large feature in staging (`main`) that should not be pushed, pushing a hotfix directly to the `production` branch is allowed.
+
+If there is a feature that was rolled back and needs to be reverted since a hotfix is not possible, any reverted changes will also have to take a affect in `production`. This means any changes made to `main` (including reverts) will need to be merged into `production` by creating a PR for `main` -> `production`.
+
+### Enabling Drone Crons
+
+To enable or re-enable the rebuild cron, run the following command with the drone CLI:
+`drone cron add "mongodb/devcenter" "rebuild-devcenter-prod-cron" @hourly --branch "production"`
 
 ## Formatting
 
@@ -80,3 +119,9 @@ If you use a different editor or don't want this functionality, the pre-commit h
 ## Bundle Analyzer
 
 This project uses `@next/bundle-analyzer` to analyze our webpack bundles. If you want to analyze while building, build with the `yarn build:analyze` command. This will allow the build to generate html files that show a bundle analysis. See [the `webpack-bundle-analyzer` repo](https://github.com/webpack-contrib/webpack-bundle-analyzer) for more info on the underlying tool.
+
+## Preview Environment
+
+When a PR is opened or update, a preview environment on Kanopy will be deployed. The URL for this environment will be available in the logs for the preview build step of the PR checks (maybe we can add functionality to have this URL in a comment on the PR, but that's actuaslly kinda difficult). It may take a minute or 2 for the preview enviornment to fully deploy after it has been built.
+
+This environment should then be deleted when the PR is closed/merged. In the case that it does not get deleted, use `helm` to manually uninstall that deployment.

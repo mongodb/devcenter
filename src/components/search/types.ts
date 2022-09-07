@@ -32,6 +32,10 @@ export interface SearchProps {
         href: string;
     };
     placeholder: string;
+    pageNumber: number; // current page number
+    pageSlug?: string[];
+    updatePageTitle: (pageNumber: number) => void;
+    initialSearchContent?: SearchItem[]; // search content received from initial render
 }
 
 export interface SearchItem {
@@ -44,3 +48,7 @@ export interface SearchItem {
     date: string;
     tags: Tag[];
 }
+
+// add back when Most Popular is implemented
+// export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
+export type SortByType = 'Most Recent' | 'Highest Rated';

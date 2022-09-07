@@ -1,8 +1,12 @@
+import * as Sentry from '@sentry/nextjs';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { ITopicCard } from '../../components/topic-card/types';
+import { SearchItem } from '../../components/search/types';
 import { ContentTypeTag } from '../../interfaces/tag-type-response';
+import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
-import allContent from '../../service/get-all-content.preval';
+import allMetaInfoPreval from '../../service/get-all-meta-info.preval';
+import allContentPreval from '../../service/get-all-content.preval';
 import allContentTypes from '../../service/get-all-content-types.preval';
 import { getSideNav } from '../../service/get-side-nav';
 import { PillCategory, pillCategoryToSlug } from '../../types/pill-category';
@@ -11,7 +15,8 @@ import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-
 export const getTopicContentTypePageData = async (
     l1_l2: string,
     topic: string,
-    slug: string[]
+    slug: string[],
+    pageNumber: number
 ) => {
     /*
     eg:
@@ -20,7 +25,6 @@ export const getTopicContentTypePageData = async (
     */
 
     const pathComponents = [l1_l2, topic].concat(slug);
-
     const crumbs = await getBreadcrumbsFromSlug(pathComponents.join('/'));
 
     const contentTypeSlug = '/' + pathComponents[pathComponents.length - 1];
@@ -36,16 +40,29 @@ export const getTopicContentTypePageData = async (
         })
         .map((contentTypeTag: ContentTypeTag) => contentTypeTag.contentType)[0];
 
-    let tertiaryNavItems = await getSideNav(topicSlug);
+    let initialSearchContent: SearchItem[] | null = null;
+    try {
+        initialSearchContent = await getSearchContent({
+            searchString: '',
+            tagSlug: topicSlug,
+            contentType: contentType,
+            sortBy: 'Most Recent',
+        });
+    } catch (e) {
+        Sentry.captureException(e);
+    }
 
-    const metaInfoForTopic = await getMetaInfoForTopic(topicSlug);
+    let tertiaryNavItems = await getSideNav(topicSlug, allContentPreval);
+
+    const metaInfoForTopic = await getMetaInfoForTopic(
+        topicSlug,
+        allMetaInfoPreval
+    );
 
     tertiaryNavItems = appendDocumentationLinkToSideNav(
         tertiaryNavItems,
         metaInfoForTopic
     );
-
-    const metaInfoForContentType = await getMetaInfoForTopic(contentTypeSlug);
 
     const contentTypeAggregateSlug = pillCategoryToSlug.get(contentType);
 
@@ -53,7 +70,7 @@ export const getTopicContentTypePageData = async (
     let subTopicsWithContentType: ITopicCard[] = [];
     // This is super annoying, but we need to only show the subtopics that have the content type we are looking at.
     if (subTopics) {
-        const allRelevantContent = allContent.filter(
+        const allRelevantContent = allContentPreval.filter(
             item =>
                 item.tags.find(
                     tag =>
@@ -85,10 +102,12 @@ export const getTopicContentTypePageData = async (
         contentTypeAggregateSlug: contentTypeAggregateSlug
             ? contentTypeAggregateSlug
             : null,
-        description: metaInfoForContentType?.description
-            ? metaInfoForContentType.description
+        description: metaInfoForTopic?.description
+            ? metaInfoForTopic.description
             : '',
         subTopics: subTopicsWithContentType,
+        initialSearchContent,
+        pageNumber,
     };
 
     return data;

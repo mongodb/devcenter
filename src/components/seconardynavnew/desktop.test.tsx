@@ -4,6 +4,17 @@ import '@testing-library/jest-dom';
 import Desktop from './desktop';
 import { Tag } from '../../interfaces/tag';
 
+jest.mock('next-auth/react', () => {
+    const nextAuthModule = jest.requireActual('next-auth/react');
+    return {
+        __esModule: true,
+        ...nextAuthModule,
+        useSession: jest.fn(() => {
+            return { data: undefined, status: 'unauthenticated' };
+        }),
+    };
+});
+
 const tags: Tag[] = [
     { name: 'Python', type: 'ProgrammingLanguage', slug: '/languages/python/' },
     { name: 'Atlas', type: 'L1Product', slug: '/products/atlas/' },

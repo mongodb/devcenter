@@ -3,16 +3,29 @@ service:
   targetPort: 3000
 
 env:
-  HOST_URL: mongodbcom-cdn.website.staging.corp.mongodb.com
+  ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+  APP_ENV: staging
+  HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+  NEXTAUTH_URL: https://mongodbcom-cdn.staging.corp.mongodb.com/developer/api/auth/
 
 envSecrets:
+  DEVHUB_URL: devcenter-secrets
+  NEXTAUTH_SECRET: devcenter-secrets
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
+  OKTA_ISSUER: devcenter-secrets
+  OKTA_CLIENT_ID: devcenter-secrets
+  OKTA_CLIENT_SECRET: devcenter-secrets
+  PREVIEW_SECRET_KEY: devcenter-secrets
+  PROMETHEUS_AUTH_USER: devcenter-secrets
+  PROMETHEUS_AUTH_PASS: devcenter-secrets
   REALM_API_URL: devcenter-secrets
   REALM_SEARCH_URL: devcenter-secrets
+  REVALIDATE_TOKEN: devcenter-secrets
+  SENTRY_AUTH_TOKEN: devcenter-secrets
+  SENTRY_DSN: devcenter-secrets
   STRAPI_URL: devcenter-secrets
-  DEVHUB_URL: devcenter-secrets
-  PREVIEW_SECRET_KEY: devcenter-secrets
+  STRAPI_API_TOKEN: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
@@ -36,9 +49,6 @@ probes:
     failureThreshold: 3
 
 resources:
-  limits:
-    cpu: 500m
-    memory: 2Gi
   requests:
     cpu: 500m
     memory: 2Gi
@@ -46,4 +56,36 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["mongodbcom-cdn.website.staging.corp.mongodb.com","devcenter-frontend.devrel.staging.corp.mongodb.com"]
+  hosts: ["devcenter-frontend.devrel.staging.corp.mongodb.com"]
+
+metrics:
+  enabled: true
+  interval: 30s
+  path: /developer/api/metrics/
+  basicAuth:
+    username:
+      key: PROMETHEUS_AUTH_USER
+      name: devcenter-secrets
+    password:
+      key: PROMETHEUS_AUTH_PASS
+      name: devcenter-secrets
+
+prometheusRules:
+  - alert: ServiceDown
+    expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app"}) == 0
+    for: 0m
+    labels:
+      email_to: devhubplatform@mongodb.com
+      severity: critical
+    annotations:
+      summary: "Service is down"
+      description: "All instances of job {{ $labels.job }} are down"
+  - alert: PodContainerNotReady
+    expr: kube_pod_container_status_ready{namespace="devrel", container=~"devcenter-frontend"} == 0
+    for: 5m
+    labels:
+      email_to: devhubplatform@mongodb.com
+      severity: critical
+    annotations:
+      summary: "Container readiness check failed"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} container has not been ready for 5 minutes"

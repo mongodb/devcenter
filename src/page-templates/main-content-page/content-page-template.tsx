@@ -6,7 +6,7 @@ import { CollectionType } from '../../types/collection-type';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import FeedbackModal, {
     feedbackModalStages,
@@ -25,6 +25,7 @@ import {
     ESystemIconNames,
     GridLayout,
     HorizontalRule,
+    Link,
     SideNav,
     TypographyScale,
 } from '@mdb/flora';
@@ -39,10 +40,9 @@ import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import Image from 'next/image';
 import { getCardProps, thumbnailLoader } from '../../components/card/utils';
 import parse from 'html-react-parser';
-import CTALink from '../../components/hero/CTALink';
 import { DocumentBody } from '../../components/article-body/document-body';
 import SeriesCard from '../../components/series-card';
-import { Grid } from 'theme-ui';
+import { Grid, ThemeUICSSObject } from 'theme-ui';
 import Card from '../../components/card';
 import { NextSeo } from 'next-seo';
 import {
@@ -186,6 +186,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         -1
     );
 
+    const isCodeExample = category === 'Code Example';
+
     const authorsToDisplay = parseAuthorsToAuthorLockup(authors);
 
     const hasRequestContentFlow =
@@ -221,6 +223,44 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         >
             <span>Rate this {normalizeCategory(category)}</span>
             <ContentRating stars={ratingStars} onRate={onRate} />
+        </div>
+    );
+
+    const renderExternalExamples = (styles: ThemeUICSSObject = {}) => (
+        <div
+            sx={{
+                display: 'flex',
+                columnGap: [0, 'inc70'],
+                flexDirection: ['column', 'row'],
+                alignItems: ['start', 'center'],
+                ...styles,
+            }}
+        >
+            {githubUrl && (
+                <Button
+                    hasIcon
+                    href={githubUrl}
+                    target="_blank"
+                    variant="secondary"
+                    iconName={ESystemIconNames.EXTERNAL}
+                    sx={{
+                        width: 'auto',
+                    }}
+                >
+                    View Code
+                </Button>
+            )}
+            {liveSiteUrl && (
+                <Link
+                    linkIcon="arrow"
+                    href={liveSiteUrl}
+                    sx={{
+                        marginTop: ['inc30', 0],
+                    }}
+                >
+                    Try it
+                </Link>
+            )}
         </div>
     );
 
@@ -265,7 +305,14 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             </TypographyScale>
                         )}
                     </div>
-                    <div sx={{ gridArea: 'tags' }}>
+                    <div
+                        sx={{
+                            gridArea: 'tags',
+                            ...(isCodeExample && {
+                                display: ['flex', null, null, null, 'none'],
+                            }),
+                        }}
+                    >
                         {tags && <TagSection tags={tags} />}
                     </div>
                     {codeType && (
@@ -285,7 +332,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     )}
                 </div>
             </div>
-
             <div sx={middleSectionStyles}>
                 <div sx={imageStyles}>
                     {category === 'Podcast' && (
@@ -297,7 +343,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         <VideoEmbed
                             argument={[{ value: parseUndefinedValue(videoId) }]}
                             name="youtube"
-                            thumbnail={getPlaceHolderImage(image?.url)}
                         />
                     )}
                     {!vidOrPod && (
@@ -314,6 +359,12 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     )}
                 </div>
                 {!previewMode && ratingSection}
+                {isCodeExample &&
+                    (githubUrl || liveSiteUrl) &&
+                    renderExternalExamples({
+                        marginTop: 'inc50',
+                        marginBottom: ['', null, null, '-inc40'], // negates marginTop from contentBody since externalExamples might not always be present
+                    })}
             </div>
         </>
     );
@@ -337,35 +388,21 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 </TypographyScale>
             )}
             {vidOrPod && (
-                <CTALink
-                    customCSS={{
+                <Link
+                    linkIcon="arrow"
+                    href={getCtaLinkForVideosOrPodcasts(category)}
+                    sx={{
+                        display: 'block',
                         marginTop: 'inc40',
                     }}
-                    text={getCtaTextForVideosOrPodcasts(category)}
-                    url={getCtaLinkForVideosOrPodcasts(category)}
-                />
+                >
+                    {getCtaTextForVideosOrPodcasts(category)}
+                </Link>
             )}
             {!vidOrPod && <DocumentBody content={contentAst} />}
-            <div
-                sx={{
-                    display: [null, 'flex'],
-                    columnGap: [0, 'inc70'],
-                    marginTop: ['inc40'],
-                }}
-            >
-                {githubUrl && (
-                    <Button
-                        href={githubUrl}
-                        target="_blank"
-                        variant="secondary"
-                        hasIcon
-                        iconName={ESystemIconNames.HAMBURGER}
-                    >
-                        View Code
-                    </Button>
-                )}
-                {liveSiteUrl && <CTALink text="Try it" url={liveSiteUrl} />}
-            </div>
+            {isCodeExample &&
+                (githubUrl || liveSiteUrl) &&
+                renderExternalExamples({ marginTop: 'inc40' })}
         </div>
     );
 
@@ -392,13 +429,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     </div>
                 )}
             </div>
-            {series && (
-                <SeriesCard
-                    series={series}
-                    currentSlug={slug}
-                    currentTitle={title}
-                />
-            )}
+            {series && <SeriesCard series={series} currentTitle={title} />}
             <div>
                 <TypographyScale
                     variant="heading5"
@@ -442,12 +473,11 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         handle: seo?.twitter_creator,
         site: seo?.twitter_site,
     };
-    const canonicalUrl = seo?.canonical_url
-        ? seo?.canonical_url
-        : publicRuntimeConfig.absoluteBasePath + router.asPath;
-    const metaDescription = seo?.meta_description
-        ? seo.meta_description
-        : publicRuntimeConfig.pageDescriptions['/'];
+    const canonicalUrl =
+        seo?.canonical_url ||
+        publicRuntimeConfig.absoluteBasePath + router.asPath;
+    const metaDescription =
+        seo?.meta_description || publicRuntimeConfig.pageDescriptions['/'];
 
     return (
         <>
@@ -503,8 +533,20 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                 display: ['none', null, null, null, 'block'],
                                 gridColumn: '10 /span 3',
                                 gridRow: '3 / 5',
+                                paddingLeft: 'inc70',
                             }}
                         >
+                            {isCodeExample && tags && (
+                                <div sx={{ marginBottom: 'inc90' }}>
+                                    <TypographyScale
+                                        variant="heading6"
+                                        sx={{ marginBottom: 'inc30' }}
+                                    >
+                                        Technologies Used
+                                    </TypographyScale>
+                                    <TagSection withLabels tags={tags} />
+                                </div>
+                            )}
                             {headingNodes.length > 0 && (
                                 <TableOfContents
                                     headingNodes={headingNodes}

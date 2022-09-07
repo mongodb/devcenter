@@ -1,7 +1,8 @@
-import { ContextType, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 
 import {
     GridLayout,
@@ -39,9 +40,17 @@ import ProductsSection from './products-section';
 import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
+import { hasEmptyFilterAndQuery } from '../../hooks/search/utils';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
+import {
+    createInitialSearchData,
+    getResultData,
+    getResultIsValidating,
+} from '../../hooks/search/utils';
 
 import { shouldRenderRequestButton } from './utils';
+import { SearchItem } from '../../components/search/types';
+import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 
 let pluralize = require('pluralize');
 
@@ -58,7 +67,31 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     featuredLanguages,
     featuredTechnologies,
     featuredProducts,
+    initialSearchContent,
+    pageNumber,
+    slug,
 }) => {
+    const router = useRouter();
+    const totalResults = initialSearchContent
+        ? initialSearchContent.length
+        : DEFAULT_PAGE_SIZE;
+    const maxPage = Math.ceil(totalResults / DEFAULT_PAGE_SIZE);
+    const [currentPage, setCurrentPage] = useState(
+        pageNumber && pageNumber > maxPage ? maxPage : pageNumber
+    );
+
+    // Initial search data is the search content for initial page load (provided
+    // via SSR based on the query parameters). This data is used for both faster
+    // initial results and SEO crawlability. It must be cleared whenever any client
+    // side re-rendering is needed, such as "load more", filtering or search.
+    const [initialSearchData, setInitialSearchData] = useState(
+        createInitialSearchData(
+            initialSearchContent as SearchItem[],
+            currentPage // page provided by query parameters
+        )
+    );
+    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
+
     ///////////////////////////////////////
     // HOOKS
     ///////////////////////////////////////
@@ -75,7 +108,12 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         searchString,
         setSearchString,
         numberOfResults,
-    } = useSearch(contentType);
+    } = useSearch(
+        contentType,
+        undefined,
+        undefined,
+        initialSearchData ? pageNumber : undefined
+    );
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
@@ -87,17 +125,77 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     // HANDLERS
     ///////////////////////////////////////
 
+    const buildPageTitle = useCallback(
+        (pageNumber: number) => {
+            const titlePageNo = pageNumber > 1 ? `- Page ${pageNumber}` : '';
+            return `${pluralize(contentType)} ${titlePageNo} | MongoDB`;
+        },
+        [contentType]
+    );
+    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+
     const clearFilters = () => {
         setAllFilters([]);
     };
 
+    const clearPagination = () => {
+        setInitialPageResetFlag(true);
+        setInitialSearchData(undefined);
+        setCurrentPage(1);
+        setPageTitle(buildPageTitle(1));
+
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: {},
+            },
+            undefined,
+            {
+                scroll: false,
+                shallow: true,
+            }
+        );
+    };
+
     const onFilter = (filters: FilterItem[]) => {
+        clearPagination();
         setResultsToShow(10);
         setAllFilters(filters);
     };
 
     const onFilterTagClose = (filterTag: FilterItem) => {
+        setInitialSearchData(undefined);
         setAllFilters(allFilters.filter(filter => filter !== filterTag));
+    };
+
+    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault(); // If JS is enabled, do not follow href.
+
+        // If search query and filters are empty, then assume
+        // we are traversing all content with pagination.
+        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
+            const nextPage = currentPage + 1;
+
+            setCurrentPage(nextPage);
+            setPageTitle(buildPageTitle(nextPage));
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: {
+                        page: nextPage,
+                    },
+                },
+                undefined,
+                {
+                    scroll: false,
+                    shallow: true,
+                }
+            );
+            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
+        } else {
+            setResultsToShow(resultsToShow + 10);
+        }
+        setInitialSearchData(undefined);
     };
 
     const hasFiltersSet = !!allFilters.length;
@@ -153,6 +251,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                 onClick={() => {
                     setAllFilters([]);
                     setSearchString('');
+                    clearPagination();
                 }}
             >
                 Back to all {contentType.toLowerCase()}s
@@ -208,10 +307,34 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         </div>
     );
 
+    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const showLoadMoreButton = hasInitialData
+        ? currentPage < maxPage
+        : !fullyLoaded;
+    const isLoading = !hasInitialData ? isValidating : false;
+
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber,
+        initialPageResetFlag
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        isValidating
+    );
+    const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
+        ? `/developer${slug}/?page=${currentPage + 1}`
+        : '#';
+
     return (
         <>
             <NextSeo
-                title={`${pluralize(contentType)} | MongoDB`}
+                title={pageTitle}
                 {...(['Article', 'Code Example'].includes(contentType) &&
                     description && {
                         description,
@@ -233,7 +356,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                 >
                     <DesktopFilters
                         sx={desktopFiltersStyles}
-                        onFilter={onFilter}
+                        onFilter={filters => {
+                            onFilter(filters);
+                            clearPagination();
+                        }}
                         allFilters={allFilters}
                         l1Items={l1Items}
                         languageItems={languageItems}
@@ -249,13 +375,23 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             gridColumn: ['span 6', null, 'span 8', 'span 9'],
                         }}
                     >
-                        <div sx={searchBoxStyles}>
+                        <div
+                            sx={{
+                                ...searchBoxStyles,
+                                marginBottom: ['inc40', null, 'inc70'],
+                            }}
+                        >
                             <TextInput
                                 name="search-text-input"
                                 label={`Search ${pluralize(contentType)}`}
                                 iconName={ESystemIconNames.SEARCH}
                                 value={searchString}
-                                onChange={onSearch}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                    clearPagination();
+                                    onSearch(e);
+                                }}
                             />
                         </div>
                         {!searchString && !hasFiltersSet && (
@@ -296,14 +432,14 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             </>
                         )}
                         {resultsStringAndTags}
-                        {!!data.length || isValidating || error ? (
+                        {!!resultData.length || resultIsValidating || error ? (
                             <>
                                 <Results
-                                    data={data}
-                                    isLoading={isValidating}
+                                    data={resultData}
+                                    isLoading={isLoading}
                                     hasError={error}
                                 />
-                                {!fullyLoaded && (
+                                {showLoadMoreButton && (
                                     <div
                                         sx={{
                                             display: 'flex',
@@ -311,17 +447,15 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!isValidating && data && (
-                                            <Button
-                                                onClick={() =>
-                                                    setResultsToShow(
-                                                        resultsToShow + 10
-                                                    )
-                                                }
-                                                variant="secondary"
+                                        {!resultIsValidating && resultData && (
+                                            <a
+                                                href={loadMoreHref}
+                                                onClick={onLoadMore}
                                             >
-                                                Load more
-                                            </Button>
+                                                <Button variant="secondary">
+                                                    Load more
+                                                </Button>
+                                            </a>
                                         )}
                                     </div>
                                 )}
@@ -339,7 +473,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             />
             {mobileFiltersOpen && (
                 <MobileFilters
-                    onFilter={onFilter}
+                    onFilter={filters => {
+                        clearPagination();
+                        onFilter(filters);
+                    }}
                     allFilters={allFilters}
                     l1Items={l1Items}
                     languageItems={languageItems}

@@ -1,11 +1,39 @@
 import { ThemeUIStyleObject } from 'theme-ui';
+import { layers } from '../../styled/layout';
+
+export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
+    let height = 'auto';
+    const NAVBAR_HEIGHT = 56;
+
+    if (isOpen) {
+        // Calculate the total height that the dropdown and secondary nav should be.
+        // Since the consistent nav is not sticky, this height will vary based on the viewport's vertical offset.
+        let topOffset = window?.visualViewport?.pageTop || 0;
+        if (topOffset > NAVBAR_HEIGHT) {
+            topOffset = NAVBAR_HEIGHT; // Only want to compensate up to the navbar's height.
+        }
+        const navBarShowing = NAVBAR_HEIGHT - topOffset;
+
+        height = `calc(100vh - ${navBarShowing}px)`;
+    }
+
+    return {
+        boxSizing: 'border-box',
+        bg: '#ffffff',
+        display: ['block', null, null, 'none'],
+        position: 'sticky',
+        top: 0,
+        overflowY: isOpen ? 'auto' : 'visible', // Need the user menu to be visible when not open.
+        width: '100%',
+        zIndex: layers.secondaryNav,
+        height,
+    };
+};
 
 export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
     margin: 0,
     display: isOpen ? 'block' : 'none',
     px: 'inc40',
-    height: 'calc(100vh - 126px)', // Height of both navsbars.
-    zIndex: 998,
     overflowY: 'scroll',
 
     '& > li': {
@@ -21,12 +49,12 @@ export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
         },
     },
 });
-export const MainLinkStyles = {
+export const MainLinkStyles: ThemeUIStyleObject = {
+    width: '100%',
     fontSize: 'inc30',
     fontWeight: 500,
-    paddingLeft: 'inc50',
-    paddingTop: 'inc30',
-    paddingBottom: 'inc30',
+    py: 'inc30',
+
     'span.textlink-default-text-class': {
         color: '#000!important',
         fontSize: '18px!important',
@@ -88,11 +116,13 @@ export const aLinkStyles = {
     },
 };
 
-export const chevronStylesForMainLink = {
+export const chevronStylesForMainLink: ThemeUIStyleObject = {
     display: 'inline',
-    position: 'absolute' as 'absolute',
-    right: 'inc40',
     stroke: 'icon.system.success',
+};
+
+export const userMenuStyles: ThemeUIStyleObject = {
+    minWidth: 'inc60',
 };
 
 export const DropDownStyles = {
