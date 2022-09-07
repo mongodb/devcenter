@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { ITopicCard } from '../../components/topic-card/types';
-import { SearchItem } from '../../components/search/types';
+import { SearchQueryResponse } from '../../components/search/types';
 import { ContentTypeTag } from '../../interfaces/tag-type-response';
 import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
@@ -40,7 +40,7 @@ export const getTopicContentTypePageData = async (
         })
         .map((contentTypeTag: ContentTypeTag) => contentTypeTag.contentType)[0];
 
-    let initialSearchContent: SearchItem[] | null = null;
+    let initialSearchContent: SearchQueryResponse | null = null;
     try {
         initialSearchContent = await getSearchContent({
             searchString: '',

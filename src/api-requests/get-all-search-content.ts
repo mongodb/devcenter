@@ -3,29 +3,27 @@ import {
     buildSearchQuery,
     SearchQueryParams,
 } from '../components/search/utils';
-import { SearchItem } from '../components/search/types';
+import { SearchQueryResponse } from '../components/search/types';
 
 export const getSearchContent = async (
-    queryParams: SearchQueryParams
-): Promise<SearchItem[]> => {
+    queryParams: SearchQueryParams,
+    data?: any
+): Promise<SearchQueryResponse> => {
     const query = buildSearchQuery(queryParams);
 
-    console.log(
-        `${process.env.REALM_SEARCH_URL}/search_devcenter_dev?${query}`
-    );
-
     const url = `${process.env.REALM_SEARCH_URL}/search_devcenter_dev?${query}`;
-    const options = {
-        method: 'GET',
+    const options: any = {
+        method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
     };
+    if (data) options.body = data;
 
     try {
         const req = await fetch(url, options);
-        const data: SearchItem[] = await req.json();
+        const data: SearchQueryResponse = await req.json();
         return data;
     } catch (e) {
         Sentry.captureException(e);
@@ -34,7 +32,7 @@ export const getSearchContent = async (
 };
 
 // Used in get-all-search-content.preval for building search filters.
-export const getAllSearchContent = async (): Promise<SearchItem[]> => {
+export const getAllSearchContent = async (): Promise<SearchQueryResponse> => {
     const queryParams: SearchQueryParams = {
         searchString: '',
         sortBy: 'Most Recent',

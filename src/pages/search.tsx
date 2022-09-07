@@ -22,7 +22,7 @@ import Hero from '../components/hero';
 import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { pageWrapper } from '../styled/layout';
 
-import { SearchItem } from '../components/search/types';
+import { SearchItem, SearchQueryResponse } from '../components/search/types';
 import { FilterItem } from '../components/search-filters';
 import {
     resultsStringAndTagsStyles,
@@ -119,19 +119,14 @@ const Search: NextPage<SearchProps> = ({
         numberOfResults,
         onSort,
         sortBy,
-    } = useSearch(
-        undefined,
-        undefined,
-        {
-            l1Items,
-            languageItems,
-            technologyItems,
-            contributedByItems,
-            contentTypeItems,
-            expertiseLevelItems,
-        },
-        initialSearchData ? pageNumber : undefined
-    );
+    } = useSearch(pageNumber, undefined, undefined, {
+        l1Items,
+        languageItems,
+        technologyItems,
+        contributedByItems,
+        contentTypeItems,
+        expertiseLevelItems,
+    });
 
     const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -435,7 +430,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const pageNumber = parsePageNumber(query.page);
 
-    let initialSearchContent: SearchItem[] | undefined;
+    let initialSearchContent: SearchQueryResponse | null = null;
     try {
         // Used for "load more" crawling
         initialSearchContent = await getAllSearchContent();

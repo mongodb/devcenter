@@ -1,15 +1,21 @@
+import { Fetcher } from 'swr';
 import { useState, useEffect, useMemo } from 'react';
 import debounce from 'lodash.debounce';
 import useSWRInfinite from 'swr/infinite';
 import { FilterItem } from '../../components/search-filters';
-import { fetcher, itemInFilters, updateUrl } from './utils';
+import { searchItemToContentItem, updateUrl } from './utils';
+import { getURLPath } from '../../utils/format-url-path';
 import { useRouter } from 'next/router';
 import {
     buildSearchQuery,
     SearchQueryParams,
     DEFAULT_PAGE_SIZE,
 } from '../../components/search/utils';
-import { SortByType } from '../../components/search/types';
+import {
+    SortByType,
+    SearchQueryResponse,
+    SearchItem,
+} from '../../components/search/types';
 import { ContentItem } from '../../interfaces/content-item';
 
 interface SearchFilterItems {
@@ -22,11 +28,13 @@ interface SearchFilterItems {
 }
 
 const SWR_HOOK_DEFAULT_OPTIONS = {
+    revalidateAll: false,
     revalidateFirstPage: false,
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     shouldRetryOnError: true,
+    dedupingInterval: 300000,
     persistSize: true, // e.g. if page is set to 4, only load page 4 and onward
 };
 
@@ -36,7 +44,8 @@ const useSearch = (
     initialPageNumber: number,
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
-    filterItems?: SearchFilterItems // This is needed for URL filter/search updates.
+    filterItems?: SearchFilterItems, // This is needed for URL filter/search updates.
+    swrFallback?: { [key: string]: SearchQueryResponse }
 ) => {
     const shouldUseQueryParams = !!filterItems;
 
@@ -46,44 +55,65 @@ const useSearch = (
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
     const [sortBy, setSortBy] = useState<SortByType>('Most Recent');
 
-    const getKey = (pageIndex: number, previousPageData: any) => {
-        const queryParams: SearchQueryParams = {
-            searchString,
-            contentType,
-            tagSlug,
-            sortBy,
-            pageNumber: pageIndex + 1,
-            pageSize: DEFAULT_PAGE_SIZE,
-        };
+    const fetcher: Fetcher<
+        {
+            results: ContentItem[];
+            numberOfPages: number;
+            numberOfResults: number;
+        },
+        string
+    > = queryString => {
+        const url = (getURLPath('/api/search') as string) + '?' + queryString;
+        const splitUrl = url.split('&filterKey=');
 
-        console.log(
-            'getKey ',
-            'pageIndex ',
-            pageIndex,
-            ' query ',
-            buildSearchQuery(queryParams)
-        );
-
-        return buildSearchQuery(queryParams);
+        return fetch(splitUrl[0], {
+            method: 'POST',
+            body: JSON.stringify({
+                filters: allFilters,
+            }),
+        }).then(async response => {
+            const responseJson = await response.json();
+            const searchResults: SearchItem[] = responseJson.results;
+            return {
+                results: searchResults.map(searchItemToContentItem),
+                numberOfPages: responseJson.numberOfPages,
+                numberOfResults: responseJson.numberOfResults,
+            };
+        });
     };
 
-    const { data, error, isValidating, size, setSize } = useSWRInfinite(
-        getKey,
+    const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+        (pageIndex: number, previousPageData: any) => {
+            const queryParams: SearchQueryParams = {
+                searchString,
+                contentType,
+                tagSlug,
+                sortBy,
+                pageSize: DEFAULT_PAGE_SIZE,
+            };
+
+            const urlQuery = buildSearchQuery({
+                ...queryParams,
+                pageNumber: pageIndex + 1,
+            });
+            const filterQuery = Buffer.from(
+                JSON.stringify(allFilters)
+            ).toString('base64');
+            const swrCacheKey = urlQuery + '&filterKey=' + filterQuery;
+
+            // The SWR key needs to include each portion of the search
+            // including filters that are passed in the POST body.
+            return swrCacheKey;
+        },
         fetcher,
         {
             ...SWR_HOOK_DEFAULT_OPTIONS,
+            fallback: swrFallback,
             initialSize: initialPageNumber,
         }
     );
 
-    console.log('useSWRInfinite', data);
-
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setResultsToShow(
-            initialPageNumber && event.target.value === ''
-                ? initialPageNumber * DEFAULT_PAGE_SIZE
-                : DEFAULT_PAGE_SIZE
-        );
         setSearchString(event.target.value);
 
         if (shouldUseQueryParams) {
@@ -92,15 +122,14 @@ const useSearch = (
     };
 
     const onFilter = (filters: FilterItem[]) => {
-        setResultsToShow(DEFAULT_PAGE_SIZE);
         setAllFilters(filters);
+
         if (shouldUseQueryParams) {
             updateUrl(router, filters, searchString);
         }
     };
 
     const onSort = (sortByValue: string) => {
-        setResultsToShow(DEFAULT_PAGE_SIZE);
         setSortBy(sortByValue as SortByType);
 
         if (shouldUseQueryParams) {
@@ -122,7 +151,14 @@ const useSearch = (
         return () => {
             debouncedOnSearch.cancel();
         };
-    }, []);
+    }, [debouncedOnSearch]);
+
+    // Refresh search when filters are changed.
+    useEffect(() => {
+        return () => {
+            mutate();
+        };
+    }, [allFilters, mutate]);
 
     const getFiltersFromQueryStr = () => {
         const {
@@ -244,20 +280,13 @@ const useSearch = (
     }, [router?.isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
 
     const hasFiltersSet = !!allFilters.length;
-    const filteredData = (() => {
+    const flattenedData = (() => {
         const results =
             data && data.length > 0 ? data.map(item => item.results) : null;
         if (!results) {
             return [];
-        } else if (!hasFiltersSet) {
-            return ([] as ContentItem[]).concat(...results);
         } else {
-            const flattenedData: ContentItem[] = ([] as ContentItem[]).concat(
-                ...results
-            );
-            return flattenedData.filter(item => {
-                return itemInFilters(item, allFilters);
-            });
+            return ([] as ContentItem[]).concat(...results);
         }
     })();
 
@@ -268,7 +297,7 @@ const useSearch = (
     const fullyLoaded = numberOfPages ? size >= numberOfPages : false;
 
     return {
-        data: filteredData,
+        data: flattenedData,
         error,
         isValidating,
         resultsToShow,

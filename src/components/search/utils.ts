@@ -1,4 +1,4 @@
-import { SearchItem, SortByType } from './types';
+import { SortByType } from './types';
 
 export const DEFAULT_PAGE_SIZE = 10;
 

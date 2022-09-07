@@ -68,6 +68,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     featuredTechnologies,
     featuredProducts,
     initialSearchContent,
+    swrFallback,
     pageNumber,
     slug,
 }) => {
@@ -107,10 +108,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         size,
         setSize,
         onSearch,
+        onFilter,
         searchString,
         setSearchString,
         numberOfResults,
-    } = useSearch(pageNumber, contentType, undefined, undefined);
+    } = useSearch(pageNumber, contentType, undefined, undefined, swrFallback);
 
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
@@ -152,12 +154,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                 shallow: true,
             }
         );
-    };
-
-    const onFilter = (filters: FilterItem[]) => {
-        clearPagination();
-        setResultsToShow(10);
-        setAllFilters(filters);
     };
 
     const onFilterTagClose = (filterTag: FilterItem) => {
@@ -256,7 +252,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     const resultsStringAndTags = (
         <div sx={resultsStringAndTagsStyles}>
-            {(data || isValidating) && (
+            {!isValidating && (
                 <TypographyScale variant="heading5">
                     {!allFilters.length && !searchString
                         ? `All ${pluralize(contentType)}`
@@ -270,7 +266,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         : ''}
                 </TypographyScale>
             )}
-            {hasFiltersSet && (
+            {!isValidating && hasFiltersSet && (
                 <FilterTagSection
                     allFilters={allFilters}
                     filterTagsExpanded={filterTagsExpanded}
@@ -306,22 +302,26 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const showLoadMoreButton = hasInitialData
         ? currentPage < maxPage
         : !fullyLoaded;
-    const isLoading = !hasInitialData ? isValidating : false;
+    const isLoading = isValidating;
 
-    const resultData = getResultData(
-        data,
-        initialSearchData,
-        searchString,
-        allFilters,
-        pageNumber,
-        initialPageResetFlag
-    );
-    const resultIsValidating = getResultIsValidating(
-        initialSearchData,
-        searchString,
-        allFilters,
-        isValidating
-    );
+    // const resultData = getResultData(
+    //     data,
+    //     initialSearchData,
+    //     searchString,
+    //     allFilters,
+    //     pageNumber,
+    //     initialPageResetFlag
+    // );
+    // const resultIsValidating = getResultIsValidating(
+    //     initialSearchData,
+    //     searchString,
+    //     allFilters,
+    //     isValidating
+    // );
+
+    const resultData = data;
+    const resultIsValidating = isValidating;
+
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer${slug}/?page=${currentPage + 1}`
         : '#';
@@ -427,11 +427,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             </>
                         )}
                         {resultsStringAndTags}
-                        {!!resultData.length || resultIsValidating || error ? (
+                        {!!numberOfResults || isValidating || error ? (
                             <>
                                 <Results
-                                    data={resultData}
-                                    isLoading={isLoading}
+                                    data={data}
+                                    isLoading={isValidating}
                                     hasError={error}
                                 />
                                 {showLoadMoreButton && (
@@ -442,7 +442,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!resultIsValidating && resultData && (
+                                        {!isValidating && data && (
                                             <a
                                                 href={loadMoreHref}
                                                 onClick={onLoadMore}

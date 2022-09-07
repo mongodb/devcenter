@@ -1,8 +1,8 @@
 import preval from 'next-plugin-preval';
-import { SearchItem } from '../components/search/types';
+import { SearchQueryResponse } from '../components/search/types';
 import { getAllSearchContent } from '../api-requests/get-all-search-content';
 
-export const getData = async (): Promise<SearchItem[]> => {
+export const getData = async (): Promise<SearchQueryResponse> => {
     const data = await getAllSearchContent();
     return data;
 };

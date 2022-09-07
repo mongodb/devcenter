@@ -3,7 +3,7 @@ import { NextRouter } from 'next/router';
 
 import getAllSearchContent from '../../api-requests/get-all-search-content';
 import { PillCategory } from '../../types/pill-category';
-import { SearchItem } from '../../components/search/types';
+import { SearchItem, SearchQueryResponse } from '../../components/search/types';
 import { FilterItem } from '../../components/search-filters';
 import { Tag } from '../../interfaces/tag';
 import { ContentItem } from '../../interfaces/content-item';
@@ -71,14 +71,17 @@ export const searchItemToContentItem = ({
 
 export const getFilters = async (
     contentType?: PillCategory,
-    allSearchContent?: SearchItem[]
+    allSearchContent?: SearchQueryResponse
 ) => {
     const allFilters = contentType === undefined;
-    const allContent: SearchItem[] =
+    const allContent: SearchQueryResponse =
         allSearchContent || (await getAllSearchContent());
     const filterItems: FilterItem[] = [];
 
-    allContent.forEach(({ tags, type }) => {
+    const searchResults = Array.isArray(allContent)
+        ? allContent
+        : allContent.results;
+    searchResults.forEach(({ tags, type }) => {
         tags.forEach(tag => {
             if (!tag.name) return; // Short circuit if the tag name is null.
             if (tag.type === 'L2Product') {
@@ -314,8 +317,6 @@ export const fetcher: Fetcher<
     { results: ContentItem[]; numberOfPages: number; numberOfResults: number },
     string
 > = queryString => {
-    console.log('fetcher', queryString);
-
     return fetch(
         (getURLPath('/api/search') as string) + '?' + queryString
     ).then(async response => {
@@ -329,16 +330,7 @@ export const fetcher: Fetcher<
     });
 };
 
-export const updateUrl = (
-    router: NextRouter,
-    filters: FilterItem[],
-    searchString: string,
-    sortBy?: SortByType
-) => {
-    if (!sortBy) {
-        sortBy = 'Most Recent';
-    }
-    // Have to preserve the filters here as well.
+export const getFilterQuery = (filters: FilterItem[]) => {
     const product = filters
         .filter(
             filter => filter.type === 'L1Product' || filter.type === 'L2Product'
@@ -363,17 +355,34 @@ export const updateUrl = (
         .filter(filter => filter.type === 'ExpertiseLevel')
         .map(filter => filter.name);
 
+    return {
+        product,
+        language,
+        technology,
+        contentType,
+        contributedBy,
+        expertiseLevel,
+    };
+};
+
+export const updateUrl = (
+    router: NextRouter,
+    filters: FilterItem[],
+    searchString: string,
+    sortBy?: SortByType
+) => {
+    if (!sortBy) {
+        sortBy = 'Most Recent';
+    }
+    // Have to preserve the filters here as well.
+    const filterQuery = getFilterQuery(filters);
+
     router.replace(
         {
             pathname: router.pathname,
             query: {
                 s: searchString,
-                product,
-                language,
-                technology,
-                contentType,
-                contributedBy,
-                expertiseLevel,
+                ...filterQuery,
                 sortMode: sortByOptions[sortBy as SortByType],
             },
         },

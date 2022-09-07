@@ -7,7 +7,11 @@ import allContent from '../../service/get-all-content.preval';
 import allSearchContent from '../../service/get-all-search-content.preval';
 import { getFeaturedForContent } from '../../service/get-featured-for-content';
 import { getFeaturedLangProdTech } from './utils';
-import { SearchItem } from '../../components/search/types';
+import { SearchQueryResponse, SortByType } from '../../components/search/types';
+import {
+    buildSearchQuery,
+    DEFAULT_PAGE_SIZE,
+} from '../../components/search/utils';
 
 export const getContentTypePageData = async (
     contentType: PillCategory,
@@ -18,13 +22,17 @@ export const getContentTypePageData = async (
         throw Error(`Could not find slug for ${contentType}`);
     }
 
-    let initialSearchContent: SearchItem[] | null = null;
+    const searchContentQueryParams = {
+        searchString: '',
+        contentType: contentType,
+        sortBy: 'Most Recent' as SortByType,
+        pageNumber: pageNumber,
+        pageSize: DEFAULT_PAGE_SIZE,
+    };
+    const initialSearchContentKey = buildSearchQuery(searchContentQueryParams);
+    let initialSearchContent: SearchQueryResponse | null = null;
     try {
-        initialSearchContent = await getSearchContent({
-            searchString: '',
-            contentType: contentType,
-            sortBy: 'Most Recent',
-        });
+        initialSearchContent = await getSearchContent(searchContentQueryParams);
     } catch (e) {
         Sentry.captureException(e);
     }
@@ -49,6 +57,9 @@ export const getContentTypePageData = async (
 
     return {
         contentType,
+        swrFallback: {
+            [initialSearchContentKey]: initialSearchContent,
+        },
         ...filters,
         featured,
         description,

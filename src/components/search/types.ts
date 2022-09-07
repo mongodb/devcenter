@@ -52,3 +52,11 @@ export interface SearchItem {
 // add back when Most Popular is implemented
 // export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
 export type SortByType = 'Most Recent' | 'Highest Rated';
+
+export type SearchQueryResponse =
+    | {
+          results: SearchItem[];
+          numberOfPages: number;
+          numberOfResults: number;
+      }
+    | SearchItem[];
