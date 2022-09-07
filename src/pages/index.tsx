@@ -18,6 +18,7 @@ import {
 } from '../data/homepage';
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
+import { layers } from '../styled/layout';
 
 const getImage = (imageString: string | EThirdPartyLogoVariant) =>
     Object.values(EThirdPartyLogoVariant).includes(
@@ -83,7 +84,7 @@ const Home: NextPage<{}> = props => {
                     position: 'absolute' as 'absolute',
                     top: '-860px',
                     left: '-150px',
-                    zIndex: '-1',
+                    zIndex: layers.backdrop,
                 },
             }}
         >
@@ -227,7 +228,7 @@ const Home: NextPage<{}> = props => {
                         position: 'absolute' as 'absolute',
                         top: '80px',
                         right: '-580px',
-                        zIndex: '-1',
+                        zIndex: layers.backdrop,
                     },
                 }}
             >

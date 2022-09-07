@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import type {
     NextPage,
@@ -51,6 +51,7 @@ import {
     getResultIsValidating,
 } from '../hooks/search/utils';
 import FilterTagSection from '../components/search-filters/filter-tag-section';
+import { OverlayContext } from '../contexts/overlay';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -74,6 +75,7 @@ const Search: NextPage<SearchProps> = ({
     pageNumber,
 }) => {
     const router = useRouter();
+    const { setHasOverlay } = useContext(OverlayContext);
 
     // Used for initial "all content" page.
     const totalInitialResults = initialSearchContent
@@ -282,7 +284,10 @@ const Search: NextPage<SearchProps> = ({
                     iconStrokeWeight="medium"
                     hasIcon={true}
                     iconPosition="right"
-                    onClick={() => setMobileFiltersOpen(true)}
+                    onClick={() => {
+                        setMobileFiltersOpen(true);
+                        setHasOverlay(true);
+                    }}
                 >
                     Filter{!!allFilters.length && ` (${allFilters.length})`}
                 </Button>
@@ -421,7 +426,10 @@ const Search: NextPage<SearchProps> = ({
                     contributedByItems={contributedByItems}
                     contentTypeItems={contentTypeItems}
                     expertiseLevelItems={expertiseLevelItems}
-                    closeModal={() => setMobileFiltersOpen(false)}
+                    closeModal={() => {
+                        setMobileFiltersOpen(false);
+                        setHasOverlay(false);
+                    }}
                 />
             )}
         </>

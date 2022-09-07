@@ -1,36 +1,40 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import theme from '@mdb/flora/theme';
 
-export const globalStyles = css`
-    body {
-        font-family: ${theme.fonts['euclid-circular-a']};
-        margin: 0;
-    }
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-weight: normal;
-        font-style: normal;
-    }
-`;
+export const globalStyles = (hasOverlay: boolean) => ({
+    body: {
+        fontFamily: theme.fonts['euclid-circular-a'],
+        margin: 0,
+        overflow: hasOverlay ? 'hidden' : 'visible',
+    },
+    a: {
+        textDecoration: 'none',
+        color: 'inherit',
+    },
+    'h1,h2,h3,h4,h5,h6': {
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+    },
+});
+
+export const layers = {
+    backdrop: -1,
+    base: 0,
+    desktopConsistentNav: 1, // From ConsistentNav
+    navSearch: 2, // From ConsistentNav
+    textArea: 10, // From Flora
+    secondaryNav: 11,
+    desktopConsistentNavDropdown: 12,
+    mobileOverlay: 13,
+    mobileConsistentNav: 999, // From ConsistentNav
+    mobileNavMenu: 1000, // From ConsistentNav
+    modal: 9999, // From Flora (Lightbox)
+};
 
 export const Main = styled('main')`
     /* ensure content takes up full space between header & footer*/
     margin: 0;
-
-    /* Margin top set for secondary nav on mobile */
-    @media only screen and (max-width: ${theme.sizes.breakpoint.large}) {
-        margin-top: 70px;
-    }
 
     max-width: 100%;
     min-height: calc(100vh - 300px);
