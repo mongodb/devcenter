@@ -17,10 +17,24 @@ The data for this project is fetched from a Strapi CMS. In order to get actual d
 `STRAPI_URL`. See [this DevHub wiki page](https://wiki.corp.mongodb.com/display/DEVREL/DevHub+Front-End+Guide#DevHubFrontEndGuide-InstallationandSetup) and copy the value for `STRAPI_URL` shown there (or ask a teammate).
 `REALM_SEARCH_URL` and `REALM_API_URL` are needed for feedback and search functionality. Ask a teammate for these values.
 
+#### Logging in with SSO Locally
+
 For Okta SSO to work, the hostname must be a subdomain of mongodb.com. To test SSO locally, create an entry in /etc/hosts:
 `127.0.0.1       devcenter-local.mongodb.com`
 
-DevCenter will then be accessible at: http://devcenter-local.mongodb.com:3000/developer/
+Also, ensure the following environment variables are set:
+```
+HOST_URL=devcenter-local.mongodb.com:3000
+NEXTAUTH_URL=http://devcenter-local.mongodb.com:3000/developer/api/auth/
+NEXTAUTH_SECRET=<secret>
+OKTA_CLIENT_ID=<secret>
+OKTA_CLIENT_SECRET=<secret>
+OKTA_ISSUER=<secret>
+```
+
+For access to secrets, you can ask a teammate or review the existing secrets in the staging Kanopy cluster.
+
+DevCenter will then be accessible at http://devcenter-local.mongodb.com:3000/developer/ and with the above environment variables, Okta SSO should work.
 
 ## Running Locally
 

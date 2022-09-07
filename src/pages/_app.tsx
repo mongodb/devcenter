@@ -11,6 +11,7 @@ import { ThemeProvider } from '@theme-ui/core';
 import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
+import { OverlayProvider } from '../contexts/overlay';
 
 const CONTENT_ROUTE = '/[...slug]';
 
@@ -83,11 +84,13 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 refetchInterval={0}
             >
                 <ThemeProvider theme={theme}>
-                    <Layout pagePath={pagePath}>
-                        <ErrorBoundary>
-                            <Component {...pageProps} />
-                        </ErrorBoundary>
-                    </Layout>
+                    <OverlayProvider>
+                        <Layout pagePath={pagePath}>
+                            <ErrorBoundary>
+                                <Component {...pageProps} />
+                            </ErrorBoundary>
+                        </Layout>
+                    </OverlayProvider>
                 </ThemeProvider>
             </SessionProvider>
         </>
