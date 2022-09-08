@@ -25,10 +25,6 @@ const tags: Tag[] = [
 test('renders mobile dropdown', () => {
     render(<Mobile />);
 
-    // Hidden by default.
-    const languagesTitle = screen.queryByText('Languages');
-    expect(languagesTitle).toBeNull();
-
     userEvent.click(screen.getByTitle('chevron-down'));
 
     // See articles.
@@ -37,9 +33,6 @@ test('renders mobile dropdown', () => {
         'href',
         '/developer/articles/'
     );
-
-    const topics = screen.getByText('Topics');
-    topics.click();
 
     const allTopics = screen.getByText('All Topics');
     expect(

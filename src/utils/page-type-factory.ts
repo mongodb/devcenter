@@ -29,3 +29,14 @@ export const pageTypeFactory = async (
 
     return dynamicPageType;
 };
+
+export const parsePageNumber = (page: string | string[] | undefined) => {
+    let pageNumber: number;
+    try {
+        pageNumber = Math.abs(parseInt(page as string));
+    } catch (e) {
+        pageNumber = 1;
+    }
+    if (isNaN(pageNumber)) pageNumber = 1;
+    return pageNumber;
+};

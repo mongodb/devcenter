@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import theme from '@mdb/flora/theme';
 import { Link as FloraLink, TypographyScale, Button } from '@mdb/flora';
 import { getURLPath } from '../../utils/format-url-path';
+import { layers } from '../../styled/layout';
 
 export interface DropDownItem {
     name: string;
@@ -76,31 +77,15 @@ const DropDownMenuList = styled.ul`
     }
 `;
 
-const SubLinks = styled.ul`
-    list-style-type: none;
-    padding: 0;
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-        margin-top: ${theme.space.inc30};
-
-        > li {
-            position: relative;
-
-            &:last-child {
-                display: none;
-            }
-        }
-    }
-
-    @media only screen and (min-width: ${theme.sizes.breakpoint.large}) {
-        display: grid;
-        grid-column-gap: ${theme.space.inc50};
-        grid-template-columns: repeat(3, 1fr);
-        margin-right: ${theme.space.inc30};
-    }
-`;
+const subLinkStyles = {
+    listStyleType: 'none',
+    padding: 0,
+    marginTop: 'inc30',
+    display: [null, null, null, 'grid'],
+    gridColumnGap: [null, null, null, 'inc70', 'inc90'],
+    gridTemplateColumns: [null, null, null, 'repeat(3, 1fr)'],
+    marginRight: [null, null, null, 'inc90', 'inc130'],
+};
 
 const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
     return (
@@ -121,10 +106,19 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
             )}
             {dropDownItems && (
                 <>
-                    <SubLinks>
+                    <ul sx={subLinkStyles}>
                         {dropDownItems?.map(
                             ({ name, slug, dropDownItems, l1Product }) => (
-                                <li key={name}>
+                                <li
+                                    sx={{
+                                        position: 'relative',
+
+                                        '&:last-child': {
+                                            display: 'none',
+                                        },
+                                    }}
+                                    key={name}
+                                >
                                     <a
                                         href={getURLPath(slug)}
                                         sx={{
@@ -156,7 +150,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                 </li>
                             )
                         )}
-                    </SubLinks>
+                    </ul>
                     {all && (
                         <FloraLink
                             sx={{
@@ -178,6 +172,8 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                     href={getURLPath('topics')}
                     sx={{
                         marginTop: '25px',
+                        px: 'inc70',
+                        py: 'inc30',
                         '&:hover': {
                             color: 'initial!important',
                         },
@@ -215,7 +211,7 @@ const StylesDropDownWrapper = {
     paddingBottom: [null, null, null, theme.space.inc70],
     paddingRight: [null, null, null, theme.space.inc90],
     paddingLeft: ['inc50', 'inc50', 'inc50', theme.space.inc90],
-    zIndex: [null, null, null, 2],
+    zIndex: [null, null, null, layers.secondaryNav],
 };
 
 const DropDownMenu = ({ items }: { items: DropDownItem[] }) => {

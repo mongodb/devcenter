@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
+import { OverlayContext } from '../../contexts/overlay';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from './nav-item';
 import {
+    navWrapperStyles,
     aLinkStyles,
     chevronStylesForMainLink,
     userMenuStyles,
@@ -22,47 +24,7 @@ import {
 } from './mobile-styles';
 import { DropDownItem, DropDownItem2 } from './dropdown-menu';
 import { getURLPath } from '../../utils/format-url-path';
-
-const DropDownButton = ({
-    text,
-    dropDownItems,
-}: {
-    text: string;
-    dropDownItems: DropDownItem[];
-}) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const onClickShowMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
-    return (
-        <>
-            <div sx={DropDownStyles}>
-                {/* Level 1 */}
-                <div onClick={onClickShowMenu}>
-                    {text}
-                    {!isOpen && (
-                        <SystemIcon
-                            sx={plusOrMinusStylesForDropDowns}
-                            name={ESystemIconNames.PLUS}
-                            size="small"
-                            color="success"
-                        />
-                    )}
-                    {isOpen && (
-                        <SystemIcon
-                            sx={plusOrMinusStylesForDropDowns}
-                            name={ESystemIconNames.MINUS}
-                            size="small"
-                            color="success"
-                        />
-                    )}
-                </div>
-            </div>
-            {isOpen && <DropDownMenu items={dropDownItems} />}
-        </>
-    );
-};
+import { layers } from '../../styled/layout';
 
 const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -310,40 +272,61 @@ const MobileView = () => {
           }
         : null;
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
+    const { setHasOverlay } = useContext(OverlayContext);
     const openMobileMenu = () => {
         setMobileMenuIsOpen(!mobileMenuIsOpen);
+        setHasOverlay(!mobileMenuIsOpen);
     };
     return (
-        <div
-            sx={{
-                boxSizing: 'border-box',
-                background: '#fff',
-                backgroundColor: 'white',
-                display: ['block', 'block', 'block', 'none'],
-                position: 'fixed',
-                overflowY: 'visible',
-                width: '100%',
-                zIndex: '10',
-            }}
-        >
+        <div sx={navWrapperStyles(mobileMenuIsOpen)}>
             <div
                 sx={{
-                    display: 'grid',
-                    gridTemplateColumns: '240px 1fr',
+                    position: 'sticky',
+                    zIndex: layers.secondaryNav,
+                    bg: '#ffffff',
+                    top: 0,
+                    display: 'flex',
+                    gap: 'inc30',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                     borderBottom: '2px solid #00684A',
+                    px: 'inc50',
                     ...(mobileMenuIsOpen && {
                         borderImage:
                             'linear-gradient(to right, #00ED64 240px, #00684A 0) 1',
                     }),
                 }}
             >
-                <FloraLink sx={{ ...MainLinkStyles }} onClick={openMobileMenu}>
+                <FloraLink sx={MainLinkStyles} onClick={openMobileMenu}>
                     <TypographyScale variant="body1">
                         MongoDB Developer
                     </TypographyScale>
+                </FloraLink>
+
+                {account && (
+                    <div
+                        sx={userMenuStyles}
+                        className="secondary-nav-user-menu-mobile"
+                    >
+                        <UserMenu
+                            account={account}
+                            activePlatform="devHub"
+                            onLogout={e => {
+                                e.preventDefault();
+                                signOut({
+                                    callbackUrl: '/developer/api/logout/',
+                                });
+                            }}
+                        />
+                    </div>
+                )}
+                <FloraLink
+                    sx={{ ...MainLinkStyles, width: 'auto' }}
+                    onClick={openMobileMenu}
+                >
                     {!mobileMenuIsOpen && (
                         <SystemIcon
-                            sx={chevronStylesForMainLink(!!account)}
+                            sx={chevronStylesForMainLink}
                             className="chevron-icon"
                             name={ESystemIconNames.CHEVRON_DOWN}
                             size="small"
@@ -352,7 +335,7 @@ const MobileView = () => {
                     )}
                     {mobileMenuIsOpen && (
                         <SystemIcon
-                            sx={chevronStylesForMainLink(!!account)}
+                            sx={chevronStylesForMainLink}
                             className="chevron-icon"
                             name={ESystemIconNames.CHEVRON_UP}
                             size="small"
@@ -360,12 +343,6 @@ const MobileView = () => {
                         />
                     )}
                 </FloraLink>
-                <div
-                    sx={{
-                        height: '68px',
-                        width: '100%',
-                    }}
-                ></div>
             </div>
             <ul sx={secondaryLinkStyles(mobileMenuIsOpen)}>
                 {secondaryNavData.map(({ name, slug, dropDownItems }) => (
@@ -374,10 +351,13 @@ const MobileView = () => {
                         key={name}
                     >
                         {dropDownItems?.length ? (
-                            <DropDownButton
-                                text={name}
-                                dropDownItems={dropDownItems}
-                            />
+                            <>
+                                {/* Level 1 */}
+                                <div sx={DropDownStyles}>
+                                    <div>{name}</div>
+                                </div>
+                                <DropDownMenu items={dropDownItems} />
+                            </>
                         ) : (
                             <>
                                 <div sx={DropDownStyles}>
@@ -410,21 +390,6 @@ const MobileView = () => {
                     </SecondaryLinksList>
                 ))}
             </ul>
-            {account && (
-                <div
-                    sx={userMenuStyles}
-                    className="secondary-nav-user-menu-mobile"
-                >
-                    <UserMenu
-                        account={account}
-                        activePlatform="devHub"
-                        onLogout={e => {
-                            e.preventDefault();
-                            signOut({ callbackUrl: '/developer/api/logout/' });
-                        }}
-                    />
-                </div>
-            )}
         </div>
     );
 };

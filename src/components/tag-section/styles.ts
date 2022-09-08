@@ -1,3 +1,5 @@
+import { layers } from '../../styled/layout';
+
 export const tagWrapperStyles = (disappearOnMobile: boolean) => {
     return {
         display: [disappearOnMobile ? 'none' : 'flex', null, 'flex'],
@@ -10,5 +12,5 @@ export const tagStyles = {
     px: [null, null, null, 'inc30'],
     py: [null, null, null, 'inc20'],
     fontSize: [null, null, null, 'inc20'],
-    zIndex: 1,
+    zIndex: layers.desktopConsistentNav,
 };

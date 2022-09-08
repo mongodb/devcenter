@@ -1,3 +1,4 @@
+import type { NextPage } from 'next';
 import {
     BrandedIcon,
     EThirdPartyLogoVariant,
@@ -17,6 +18,7 @@ import {
 } from '../data/homepage';
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
+import { layers } from '../styled/layout';
 
 const getImage = (imageString: string | EThirdPartyLogoVariant) =>
     Object.values(EThirdPartyLogoVariant).includes(
@@ -70,7 +72,7 @@ const HomepageSearch: React.FunctionComponent = () => {
     );
 };
 
-const Home = () => {
+const Home: NextPage<{}> = props => {
     return (
         <main
             sx={{
@@ -82,7 +84,7 @@ const Home = () => {
                     position: 'absolute' as 'absolute',
                     top: '-860px',
                     left: '-150px',
-                    zIndex: '-1',
+                    zIndex: layers.backdrop,
                 },
             }}
         >
@@ -226,7 +228,7 @@ const Home = () => {
                         position: 'absolute' as 'absolute',
                         top: '80px',
                         right: '-580px',
-                        zIndex: '-1',
+                        zIndex: layers.backdrop,
                     },
                 }}
             >

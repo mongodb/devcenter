@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
     Button,
     TextInput,
@@ -19,8 +20,15 @@ import { SearchProps } from './types';
 import Results from './results';
 import ExpandingLink from '../expanding-link';
 import useSearch from '../../hooks/search';
+import {
+    createInitialSearchData,
+    hasEmptyFilterAndQuery,
+    getResultData,
+    getResultIsValidating,
+} from '../../hooks/search/utils';
 import EmptyState from './empty-state';
-import { sortByOptions } from './utils';
+import { sortByOptions, DEFAULT_PAGE_SIZE } from './utils';
+import { SearchItem } from './types';
 import { Grid } from 'theme-ui';
 
 const Search: React.FunctionComponent<SearchProps> = ({
@@ -32,7 +40,28 @@ const Search: React.FunctionComponent<SearchProps> = ({
     resultsLayout = 'list',
     titleLink,
     placeholder,
+    pageNumber,
+    pageSlug,
+    updatePageTitle,
+    initialSearchContent,
 }) => {
+    const router = useRouter();
+    const totalInitialResults = initialSearchContent
+        ? initialSearchContent.length
+        : DEFAULT_PAGE_SIZE;
+    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
+    const [currentPage, setCurrentPage] = useState(
+        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
+    );
+
+    const [initialSearchData, setInitialSearchData] = useState(
+        createInitialSearchData(
+            initialSearchContent as SearchItem[],
+            currentPage // page provided by query parameters
+        )
+    );
+    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
+
     const {
         data,
         error,
@@ -47,9 +76,39 @@ const Search: React.FunctionComponent<SearchProps> = ({
         fullyLoaded,
         onSort,
         sortBy,
-    } = useSearch(contentType, tagSlug);
+    } = useSearch(
+        contentType,
+        tagSlug,
+        undefined,
+        initialSearchData ? pageNumber : undefined
+    );
+
+    const clearPagination = () => {
+        setInitialPageResetFlag(true);
+        setInitialSearchData(undefined);
+        setCurrentPage(1);
+        updatePageTitle(1);
+
+        const query = pageSlug
+            ? {
+                  slug: pageSlug.slice(1),
+              }
+            : {};
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: query,
+            },
+            undefined,
+            {
+                scroll: false,
+                shallow: true,
+            }
+        );
+    };
 
     const onCheckToggle = (checked: boolean, filter: string) => {
+        clearPagination();
         if (checked) {
             setAllFilters([
                 { name: filter, type: 'CodeLevel', count: 0, subItems: [] },
@@ -59,9 +118,73 @@ const Search: React.FunctionComponent<SearchProps> = ({
         }
     };
 
+    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault(); // If JS is enabled, do not follow href.
+
+        // If search query and filters are empty, then assume
+        // we are traversing all content with pagination.
+        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
+            const nextPage = currentPage + 1;
+
+            setCurrentPage(nextPage);
+            updatePageTitle(nextPage);
+
+            // Need to pass slug for dynamic pages.
+            // https://github.com/vercel/next.js/discussions/8207
+            const query = pageSlug
+                ? {
+                      slug: pageSlug.slice(1),
+                      page: nextPage,
+                  }
+                : { page: nextPage };
+
+            router.replace(
+                {
+                    pathname: router.pathname,
+                    query: query,
+                },
+                undefined,
+                {
+                    scroll: false,
+                    shallow: true,
+                }
+            );
+            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
+        } else {
+            setResultsToShow(resultsToShow + 10);
+        }
+        setInitialSearchData(undefined);
+    };
+
+    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const showLoadMoreButton = hasInitialData
+        ? currentPage < initialMaxPage
+        : !fullyLoaded;
+    const isLoading = !hasInitialData ? isValidating : false;
+
     // To compensate for the Code Level filters.
     const extraSearchBoxStyles =
         contentType === 'Code Example' ? { marginBottom: 0 } : {};
+
+    const path = pageSlug?.join('/');
+
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber,
+        initialPageResetFlag
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        isValidating
+    );
+    const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
+        ? `/developer${path}/?page=${currentPage + 1}`
+        : '#';
 
     return (
         <div role="search" className={className}>
@@ -94,7 +217,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                         label={placeholder}
                         iconName={ESystemIconNames.SEARCH}
                         value={searchString}
-                        onChange={onSearch}
+                        onChange={e => {
+                            clearPagination();
+                            onSearch(e);
+                        }}
                     />
                 </div>
                 <Select
@@ -103,7 +229,10 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     name="sort-by-dropdown"
                     options={Object.keys(sortByOptions)}
                     value={sortBy}
-                    onSelect={onSort}
+                    onSelect={e => {
+                        clearPagination();
+                        onSort(e);
+                    }}
                     width="100%"
                     height="100%"
                 />
@@ -141,15 +270,15 @@ const Search: React.FunctionComponent<SearchProps> = ({
                 </div>
             )}
             <div sx={{}}></div>
-            {!!numberOfResults || isValidating || error ? (
+            {!!resultData.length || resultIsValidating || error ? (
                 <>
                     <Results
-                        data={data}
-                        isLoading={isValidating}
+                        data={resultData}
+                        isLoading={isLoading}
                         hasError={error}
                         layout={resultsLayout}
                     />
-                    {!fullyLoaded && (
+                    {showLoadMoreButton && (
                         <div
                             sx={{
                                 display: 'flex',
@@ -157,15 +286,12 @@ const Search: React.FunctionComponent<SearchProps> = ({
                                 marginTop: ['inc70', null, 'inc90'],
                             }}
                         >
-                            {!isValidating && data && (
-                                <Button
-                                    onClick={() =>
-                                        setResultsToShow(resultsToShow + 10)
-                                    }
-                                    variant="secondary"
-                                >
-                                    Load more
-                                </Button>
+                            {!resultIsValidating && resultData && (
+                                <a href={loadMoreHref} onClick={onLoadMore}>
+                                    <Button variant="secondary">
+                                        Load more
+                                    </Button>
+                                </a>
                             )}
                         </div>
                     )}
