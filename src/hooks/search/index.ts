@@ -1,15 +1,22 @@
+import { Fetcher } from 'swr';
 import { useState, useEffect, useMemo } from 'react';
 import debounce from 'lodash.debounce';
-import useSWR from 'swr';
+import useSWRInfinite from 'swr/infinite';
 import { FilterItem } from '../../components/search-filters';
-import { fetcher, itemInFilters, updateUrl } from './utils';
+import { searchItemToContentItem, updateUrl } from './utils';
+import { getURLPath } from '../../utils/format-url-path';
 import { useRouter } from 'next/router';
 import {
     buildSearchQuery,
     SearchQueryParams,
     DEFAULT_PAGE_SIZE,
 } from '../../components/search/utils';
-import { SortByType } from '../../components/search/types';
+import {
+    SortByType,
+    SearchQueryResponse,
+    SearchItem,
+} from '../../components/search/types';
+import { ContentItem } from '../../interfaces/content-item';
 
 interface SearchFilterItems {
     l1Items: FilterItem[];
@@ -20,13 +27,25 @@ interface SearchFilterItems {
     expertiseLevelItems: FilterItem[];
 }
 
+const SWR_HOOK_DEFAULT_OPTIONS = {
+    revalidateAll: false,
+    revalidateFirstPage: false,
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    shouldRetryOnError: true,
+    dedupingInterval: 300000,
+    persistSize: true, // e.g. if page is set to 4, only load page 4 and onward
+};
+
 // Hook that contains the majority of the logic for our search functionality across the site.
 
 const useSearch = (
+    initialPageNumber: number,
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
     filterItems?: SearchFilterItems, // This is needed for URL filter/search updates.
-    pageNumber?: number
+    swrFallback?: { [key: string]: SearchQueryResponse }
 ) => {
     const shouldUseQueryParams = !!filterItems;
 
@@ -36,29 +55,64 @@ const useSearch = (
     const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
     const [sortBy, setSortBy] = useState<SortByType>('Most Recent');
 
-    const queryParams: SearchQueryParams = {
-        searchString,
-        contentType,
-        tagSlug,
-        sortBy,
+    const fetcher: Fetcher<
+        {
+            results: ContentItem[];
+            numberOfPages: number;
+            numberOfResults: number;
+        },
+        string
+    > = queryString => {
+        const url = (getURLPath('/api/search') as string) + '?' + queryString;
+        const splitUrl = url.split('&filterKey=');
+
+        return fetch(splitUrl[0], {
+            method: 'POST',
+            body: JSON.stringify({
+                filters: allFilters,
+            }),
+        }).then(async response => {
+            const responseJson = await response.json();
+            const searchResults: SearchItem[] = responseJson.results;
+            return {
+                results: searchResults.map(searchItemToContentItem),
+                numberOfPages: responseJson.numberOfPages,
+                numberOfResults: responseJson.numberOfResults,
+            };
+        });
     };
 
-    const key = buildSearchQuery(queryParams);
+    const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(
+        (pageIndex: number, previousPageData: any) => {
+            const queryParams: SearchQueryParams = {
+                searchString,
+                contentType,
+                tagSlug,
+                sortBy,
+                pageSize: DEFAULT_PAGE_SIZE,
+            };
 
-    // TODO: Refactor to useSWRInfinite and implement client-side pagination.
-    const { data, error, isValidating } = useSWR(key, fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-        shouldRetryOnError: false,
-    });
+            const urlQuery = buildSearchQuery({
+                ...queryParams,
+                pageNumber: pageIndex + 1,
+            });
+            const filterQuery = Buffer.from(
+                JSON.stringify(allFilters)
+            ).toString('base64');
+            const swrCacheKey = urlQuery + '&filterKey=' + filterQuery;
+
+            // The SWR key needs to include each portion of the search
+            // including filters that are passed in the POST body.
+            return swrCacheKey;
+        },
+        fetcher,
+        {
+            ...SWR_HOOK_DEFAULT_OPTIONS,
+            initialSize: initialPageNumber,
+        }
+    );
 
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setResultsToShow(
-            pageNumber && event.target.value === ''
-                ? pageNumber * DEFAULT_PAGE_SIZE
-                : DEFAULT_PAGE_SIZE
-        );
         setSearchString(event.target.value);
 
         if (shouldUseQueryParams) {
@@ -67,15 +121,14 @@ const useSearch = (
     };
 
     const onFilter = (filters: FilterItem[]) => {
-        setResultsToShow(DEFAULT_PAGE_SIZE);
         setAllFilters(filters);
+
         if (shouldUseQueryParams) {
             updateUrl(router, filters, searchString);
         }
     };
 
     const onSort = (sortByValue: string) => {
-        setResultsToShow(DEFAULT_PAGE_SIZE);
         setSortBy(sortByValue as SortByType);
 
         if (shouldUseQueryParams) {
@@ -97,7 +150,14 @@ const useSearch = (
         return () => {
             debouncedOnSearch.cancel();
         };
-    }, []);
+    }, [debouncedOnSearch]);
+
+    // Refresh search when filters are changed.
+    useEffect(() => {
+        return () => {
+            mutate();
+        };
+    }, [allFilters, mutate]);
 
     const getFiltersFromQueryStr = () => {
         const {
@@ -219,30 +279,32 @@ const useSearch = (
     }, [router?.isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
 
     const hasFiltersSet = !!allFilters.length;
-    const filteredData = (() => {
-        if (!data) {
+    const flattenedData = (() => {
+        const results =
+            data && data.length > 0 ? data.map(item => item.results) : null;
+        if (!results) {
             return [];
-        } else if (!hasFiltersSet) {
-            return data;
         } else {
-            return data.filter(item => {
-                return itemInFilters(item, allFilters);
-            });
+            return ([] as ContentItem[]).concat(...results);
         }
     })();
 
-    const numberOfResults = filteredData.length;
-    const shownData = filteredData.slice(0, resultsToShow);
-    const fullyLoaded = resultsToShow >= numberOfResults;
+    const numberOfPages =
+        data && data.length > 0 ? data[0].numberOfPages : null;
+    const numberOfResults =
+        data && data.length > 0 ? data[0].numberOfResults : null;
+    const fullyLoaded = numberOfPages ? size >= numberOfPages : false;
 
     return {
-        data: shownData,
+        data: flattenedData,
         error,
         isValidating,
         resultsToShow,
         setResultsToShow,
         allFilters,
         setAllFilters,
+        setSize,
+        size,
         onSearch: debouncedOnSearch,
         onFilter,
         searchString,

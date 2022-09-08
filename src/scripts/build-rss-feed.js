@@ -1,6 +1,6 @@
 const Feed = require('feed').Feed;
+const axios = require('axios').default;
 const fs = require('fs');
-const https = require('https');
 
 async function buildRssFeed(baseUrl) {
     const date = new Date();
@@ -18,35 +18,22 @@ async function buildRssFeed(baseUrl) {
         },
     });
 
-    // We don't use axios here due to a bug in axios where
-    // it cannot always handle responses with long content lengths.
-    // Issue referenced in https://github.com/axios/axios/issues/4806.
-    https
-        .get(
-            `${process.env.REALM_SEARCH_URL}/search_devcenter?s=`,
-            response => {
-                let data = '';
-                response.on('data', chunk => {
-                    data += chunk;
-                });
-                response.on('end', () => {
-                    const parsedData = JSON.parse(data);
-                    parsedData.forEach(post => {
-                        const url = `${baseUrl}${post.slug}`;
-                        feed.addItem({
-                            title: post.name,
-                            id: url,
-                            link: url,
-                            description: post.description,
-                            date: new Date(post.date),
-                        });
-                    });
-                });
-            }
-        )
-        .on('error', err => {
-            console.error(err);
+    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter_dev?s=`;
+
+    // Bringing back axios here since axios.post does not
+    // appear to have issue referenced in https://github.com/axios/axios/issues/4806.
+    const posts = await axios.post(url, {});
+
+    posts.data.forEach(post => {
+        const url = `${baseUrl}${post.slug}`;
+        feed.addItem({
+            title: post.name,
+            id: url,
+            link: url,
+            description: post.description,
+            date: new Date(post.date),
         });
+    });
 
     fs.writeFileSync('public/rss.xml', feed.rss2());
 }

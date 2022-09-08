@@ -35,7 +35,7 @@ export interface SearchProps {
     pageNumber: number; // current page number
     pageSlug?: string[];
     updatePageTitle: (pageNumber: number) => void;
-    initialSearchContent?: SearchItem[]; // search content received from initial render
+    initialSearchContent?: SearchQueryResponse; // search content received from initial render
 }
 
 export interface SearchItem {
@@ -52,3 +52,11 @@ export interface SearchItem {
 // add back when Most Popular is implemented
 // export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
 export type SortByType = 'Most Recent' | 'Highest Rated';
+
+export type SearchQueryResponse =
+    | {
+          results: SearchItem[];
+          numberOfPages: number;
+          numberOfResults: number;
+      }
+    | SearchItem[];

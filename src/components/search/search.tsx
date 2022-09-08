@@ -27,7 +27,7 @@ import {
     getResultIsValidating,
 } from '../../hooks/search/utils';
 import EmptyState from './empty-state';
-import { sortByOptions, DEFAULT_PAGE_SIZE } from './utils';
+import { sortByOptions } from './utils';
 import { SearchItem } from './types';
 import { Grid } from 'theme-ui';
 
@@ -46,18 +46,24 @@ const Search: React.FunctionComponent<SearchProps> = ({
     initialSearchContent,
 }) => {
     const router = useRouter();
-    const totalInitialResults = initialSearchContent
-        ? initialSearchContent.length
-        : DEFAULT_PAGE_SIZE;
-    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
+
+    const maxPage =
+        initialSearchContent && 'numberOfPages' in initialSearchContent
+            ? initialSearchContent.numberOfPages
+            : 1;
     const [currentPage, setCurrentPage] = useState(
-        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
+        pageNumber && pageNumber > maxPage ? maxPage : pageNumber
     );
 
+    // Initial search data is the search content for initial page load (provided
+    // via SSR based on the query parameters). This data is used for both faster
+    // initial results and SEO crawlability. It must be cleared whenever any client
+    // side re-rendering is needed, such as "load more", filtering or search.
     const [initialSearchData, setInitialSearchData] = useState(
         createInitialSearchData(
-            initialSearchContent as SearchItem[],
-            currentPage // page provided by query parameters
+            initialSearchContent && 'results' in initialSearchContent
+                ? (initialSearchContent.results as SearchItem[])
+                : []
         )
     );
     const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
@@ -66,9 +72,8 @@ const Search: React.FunctionComponent<SearchProps> = ({
         data,
         error,
         isValidating,
-        resultsToShow,
-        numberOfResults,
-        setResultsToShow,
+        size,
+        setSize,
         allFilters,
         setAllFilters,
         onSearch,
@@ -76,12 +81,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
         fullyLoaded,
         onSort,
         sortBy,
-    } = useSearch(
-        contentType,
-        tagSlug,
-        undefined,
-        initialSearchData ? pageNumber : undefined
-    );
+    } = useSearch(pageNumber, contentType, tagSlug, undefined);
 
     const clearPagination = () => {
         setInitialPageResetFlag(true);
@@ -149,16 +149,16 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     shallow: true,
                 }
             );
-            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
-        } else {
-            setResultsToShow(resultsToShow + 10);
         }
+        setSize(size + 1);
         setInitialSearchData(undefined);
     };
 
-    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const hasInitialData = initialSearchData
+        ? initialSearchData.length > 0
+        : false;
     const showLoadMoreButton = hasInitialData
-        ? currentPage < initialMaxPage
+        ? currentPage < maxPage
         : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 

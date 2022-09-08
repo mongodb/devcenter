@@ -50,7 +50,6 @@ import {
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
-import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 
 let pluralize = require('pluralize');
 
@@ -67,15 +66,19 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     featuredLanguages,
     featuredTechnologies,
     featuredProducts,
-    initialSearchContent,
+    swrFallback,
     pageNumber,
     slug,
 }) => {
+    const initialSearchContent = swrFallback
+        ? swrFallback[Object.keys(swrFallback)[0]]
+        : undefined;
+
     const router = useRouter();
-    const totalResults = initialSearchContent
-        ? initialSearchContent.length
-        : DEFAULT_PAGE_SIZE;
-    const maxPage = Math.ceil(totalResults / DEFAULT_PAGE_SIZE);
+    const maxPage =
+        initialSearchContent && 'numberOfPages' in initialSearchContent
+            ? initialSearchContent.numberOfPages
+            : 1;
     const [currentPage, setCurrentPage] = useState(
         pageNumber && pageNumber > maxPage ? maxPage : pageNumber
     );
@@ -86,8 +89,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     // side re-rendering is needed, such as "load more", filtering or search.
     const [initialSearchData, setInitialSearchData] = useState(
         createInitialSearchData(
-            initialSearchContent as SearchItem[],
-            currentPage // page provided by query parameters
+            initialSearchContent && 'results' in initialSearchContent
+                ? (initialSearchContent.results as SearchItem[])
+                : []
         )
     );
     const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
@@ -100,21 +104,16 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         error,
         isValidating,
         fullyLoaded,
-        setResultsToShow,
-        resultsToShow,
         allFilters,
         setAllFilters,
+        size,
+        setSize,
         onSearch,
+        onFilter,
         searchString,
         setSearchString,
         numberOfResults,
-    } = useSearch(
-        contentType,
-        undefined,
-        undefined,
-        initialSearchData ? pageNumber : undefined
-    );
-
+    } = useSearch(pageNumber, contentType, undefined, undefined, swrFallback);
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
@@ -157,12 +156,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         );
     };
 
-    const onFilter = (filters: FilterItem[]) => {
-        clearPagination();
-        setResultsToShow(10);
-        setAllFilters(filters);
-    };
-
     const onFilterTagClose = (filterTag: FilterItem) => {
         setInitialSearchData(undefined);
         setAllFilters(allFilters.filter(filter => filter !== filterTag));
@@ -191,10 +184,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     shallow: true,
                 }
             );
-            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
-        } else {
-            setResultsToShow(resultsToShow + 10);
         }
+        setSize(size + 1);
         setInitialSearchData(undefined);
     };
 
@@ -261,7 +252,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     const resultsStringAndTags = (
         <div sx={resultsStringAndTagsStyles}>
-            {(data || isValidating) && (
+            {!isValidating && (
                 <TypographyScale variant="heading5">
                     {!allFilters.length && !searchString
                         ? `All ${pluralize(contentType)}`
@@ -275,7 +266,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         : ''}
                 </TypographyScale>
             )}
-            {hasFiltersSet && (
+            {!isValidating && hasFiltersSet && (
                 <FilterTagSection
                     allFilters={allFilters}
                     filterTagsExpanded={filterTagsExpanded}
@@ -307,11 +298,12 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         </div>
     );
 
-    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const hasInitialData = initialSearchData
+        ? initialSearchData.length > 0
+        : false;
     const showLoadMoreButton = hasInitialData
         ? currentPage < maxPage
         : !fullyLoaded;
-    const isLoading = !hasInitialData ? isValidating : false;
 
     const resultData = getResultData(
         data,
@@ -327,6 +319,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         allFilters,
         isValidating
     );
+    const isLoading = !hasInitialData ? isValidating : false;
+
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer${slug}/?page=${currentPage + 1}`
         : '#';

@@ -1,11 +1,15 @@
 import * as Sentry from '@sentry/nextjs';
 import { TopicCardProps } from '../../components/topic-card/types';
 import { ContentItem } from '../../interfaces/content-item';
-import { SearchItem } from '../../components/search/types';
+import { SearchQueryResponse, SortByType } from '../../components/search/types';
 import { getSideNav } from '../../service/get-side-nav';
 import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
+import {
+    buildSearchQuery,
+    DEFAULT_PAGE_SIZE,
+} from '../../components/search/utils';
 import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { getFeaturedForContent } from '../../service/get-featured-for-content';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
@@ -24,13 +28,17 @@ export const getTopicPageData = async (
         allMetaInfoPreval
     );
 
-    let initialSearchContent: SearchItem[] | null = null;
+    const searchContentQueryParams = {
+        searchString: '',
+        tagSlug: slugString,
+        sortBy: 'Most Recent' as SortByType,
+        pageNumber: pageNumber,
+        pageSize: DEFAULT_PAGE_SIZE,
+    };
+    const initialSearchContentKey = buildSearchQuery(searchContentQueryParams);
+    let initialSearchContent: SearchQueryResponse | null = null;
     try {
-        initialSearchContent = await getSearchContent({
-            searchString: '',
-            tagSlug: slugString,
-            sortBy: 'Most Recent',
-        });
+        initialSearchContent = await getSearchContent(searchContentQueryParams);
     } catch (e) {
         Sentry.captureException(e);
     }
@@ -88,7 +96,9 @@ export const getTopicPageData = async (
         ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
         topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
         relatedTopics,
-        initialSearchContent,
+        swrFallback: {
+            [initialSearchContentKey]: initialSearchContent,
+        },
         pageNumber,
     };
 

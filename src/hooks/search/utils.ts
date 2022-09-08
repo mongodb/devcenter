@@ -3,7 +3,7 @@ import { NextRouter } from 'next/router';
 
 import getAllSearchContent from '../../api-requests/get-all-search-content';
 import { PillCategory } from '../../types/pill-category';
-import { SearchItem } from '../../components/search/types';
+import { SearchItem, SearchQueryResponse } from '../../components/search/types';
 import { FilterItem } from '../../components/search-filters';
 import { Tag } from '../../interfaces/tag';
 import { ContentItem } from '../../interfaces/content-item';
@@ -17,16 +17,10 @@ import {
 } from '../../components/search/utils';
 
 export const createInitialSearchData = (
-    initialSearchContent: SearchItem[] | undefined,
-    pageNumber: number
+    initialSearchContent: SearchItem[] | undefined
 ) => {
     if (!!initialSearchContent && Array.isArray(initialSearchContent)) {
-        const initialSearchData = initialSearchContent.map(
-            searchItemToContentItem
-        );
-
-        const start = pageNumber > 1 ? (pageNumber - 1) * DEFAULT_PAGE_SIZE : 0;
-        return initialSearchData.slice(start, pageNumber * DEFAULT_PAGE_SIZE);
+        return initialSearchContent.map(searchItemToContentItem);
     }
 };
 
@@ -71,14 +65,17 @@ export const searchItemToContentItem = ({
 
 export const getFilters = async (
     contentType?: PillCategory,
-    allSearchContent?: SearchItem[]
+    allSearchContent?: SearchQueryResponse
 ) => {
     const allFilters = contentType === undefined;
-    const allContent: SearchItem[] =
+    const allContent: SearchQueryResponse =
         allSearchContent || (await getAllSearchContent());
     const filterItems: FilterItem[] = [];
 
-    allContent.forEach(({ tags, type }) => {
+    const searchResults = Array.isArray(allContent)
+        ? allContent
+        : allContent.results;
+    searchResults.forEach(({ tags, type }) => {
         tags.forEach(tag => {
             if (!tag.name) return; // Short circuit if the tag name is null.
             if (tag.type === 'L2Product') {
@@ -310,25 +307,24 @@ export const itemInFilters = (
     );
 };
 
-export const fetcher: Fetcher<ContentItem[], string> = queryString => {
+export const fetcher: Fetcher<
+    { results: ContentItem[]; numberOfPages: number; numberOfResults: number },
+    string
+> = queryString => {
     return fetch(
         (getURLPath('/api/search') as string) + '?' + queryString
     ).then(async response => {
-        const r_json: SearchItem[] = await response.json();
-        return r_json.map(searchItemToContentItem);
+        const responseJson = await response.json();
+        const searchResults: SearchItem[] = responseJson.results;
+        return {
+            results: searchResults.map(searchItemToContentItem),
+            numberOfPages: responseJson.numberOfPages,
+            numberOfResults: responseJson.numberOfResults,
+        };
     });
 };
 
-export const updateUrl = (
-    router: NextRouter,
-    filters: FilterItem[],
-    searchString: string,
-    sortBy?: SortByType
-) => {
-    if (!sortBy) {
-        sortBy = 'Most Recent';
-    }
-    // Have to preserve the filters here as well.
+export const getFilterQuery = (filters: FilterItem[]) => {
     const product = filters
         .filter(
             filter => filter.type === 'L1Product' || filter.type === 'L2Product'
@@ -353,17 +349,34 @@ export const updateUrl = (
         .filter(filter => filter.type === 'ExpertiseLevel')
         .map(filter => filter.name);
 
+    return {
+        product,
+        language,
+        technology,
+        contentType,
+        contributedBy,
+        expertiseLevel,
+    };
+};
+
+export const updateUrl = (
+    router: NextRouter,
+    filters: FilterItem[],
+    searchString: string,
+    sortBy?: SortByType
+) => {
+    if (!sortBy) {
+        sortBy = 'Most Recent';
+    }
+    // Have to preserve the filters here as well.
+    const filterQuery = getFilterQuery(filters);
+
     router.replace(
         {
             pathname: router.pathname,
             query: {
                 s: searchString,
-                product,
-                language,
-                technology,
-                contentType,
-                contributedBy,
-                expertiseLevel,
+                ...filterQuery,
                 sortMode: sortByOptions[sortBy as SortByType],
             },
         },

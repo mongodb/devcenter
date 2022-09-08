@@ -3,6 +3,7 @@ import { TagType } from '../../types/tag-type';
 export interface FilterItem {
     name: string;
     type?: TagType;
+    slug?: string;
     subItems: FilterItem[];
     count: number;
 }

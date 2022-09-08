@@ -16,7 +16,7 @@ import RequestContentModal, {
     requestContentModalStages,
 } from '../../components/request-content-modal';
 import Search from '../../components/search';
-import { SearchItem } from '../../components/search/types';
+import { SearchQueryResponse } from '../../components/search/types';
 import {
     sideNavStyles,
     sideNavTitleStyles,
@@ -41,7 +41,7 @@ export interface TopicContentTypePageProps {
     description: string;
     subTopics: ITopicCard[];
     pageNumber: number;
-    initialSearchContent: SearchItem[];
+    swrFallback: { [key: string]: SearchQueryResponse };
 }
 
 const spanAllColumns = {
@@ -78,9 +78,13 @@ export const TopicContentTypePageTemplate: NextPage<
     contentTypeAggregateSlug,
     description,
     subTopics,
-    initialSearchContent,
+    swrFallback,
     pageNumber,
 }) => {
+    const initialSearchContent = swrFallback
+        ? swrFallback[Object.keys(swrFallback)[0]]
+        : undefined;
+
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
