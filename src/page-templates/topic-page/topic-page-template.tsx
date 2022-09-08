@@ -12,7 +12,7 @@ import Hero from '../../components/hero';
 import { CTA } from '../../components/hero/types';
 import { createTopicPageCTAS } from '../../components/hero/utils';
 import Search from '../../components/search';
-import { SearchItem } from '../../components/search/types';
+import { SearchItem, SearchQueryResponse } from '../../components/search/types';
 import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
@@ -57,7 +57,7 @@ interface TopicPageProps {
     contentType: string;
     variant: 'light' | 'medium' | 'heavy';
     tertiaryNavItems: TertiaryNavItem[];
-    initialSearchContent?: SearchItem[];
+    swrFallback: { [key: string]: SearchQueryResponse };
     pageNumber: number;
 }
 
@@ -74,9 +74,13 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     contentType,
     variant,
     tertiaryNavItems,
-    initialSearchContent,
+    swrFallback,
     pageNumber,
 }) => {
+    const initialSearchContent = swrFallback
+        ? swrFallback[Object.keys(swrFallback)[0]]
+        : undefined;
+
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const contentRows =

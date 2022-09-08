@@ -17,16 +17,10 @@ import {
 } from '../../components/search/utils';
 
 export const createInitialSearchData = (
-    initialSearchContent: SearchItem[] | undefined,
-    pageNumber: number
+    initialSearchContent: SearchItem[] | undefined
 ) => {
     if (!!initialSearchContent && Array.isArray(initialSearchContent)) {
-        const initialSearchData = initialSearchContent.map(
-            searchItemToContentItem
-        );
-
-        const start = pageNumber > 1 ? (pageNumber - 1) * DEFAULT_PAGE_SIZE : 0;
-        return initialSearchData.slice(start, pageNumber * DEFAULT_PAGE_SIZE);
+        return initialSearchContent.map(searchItemToContentItem);
     }
 };
 

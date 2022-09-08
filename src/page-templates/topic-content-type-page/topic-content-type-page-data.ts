@@ -1,7 +1,11 @@
 import * as Sentry from '@sentry/nextjs';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { ITopicCard } from '../../components/topic-card/types';
-import { SearchQueryResponse } from '../../components/search/types';
+import { SearchQueryResponse, SortByType } from '../../components/search/types';
+import {
+    buildSearchQuery,
+    DEFAULT_PAGE_SIZE,
+} from '../../components/search/utils';
 import { ContentTypeTag } from '../../interfaces/tag-type-response';
 import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
@@ -40,14 +44,18 @@ export const getTopicContentTypePageData = async (
         })
         .map((contentTypeTag: ContentTypeTag) => contentTypeTag.contentType)[0];
 
+    const searchContentQueryParams = {
+        searchString: '',
+        tagSlug: topicSlug,
+        contentType: contentType,
+        sortBy: 'Most Recent' as SortByType,
+        pageNumber: pageNumber,
+        pageSize: DEFAULT_PAGE_SIZE,
+    };
+    const initialSearchContentKey = buildSearchQuery(searchContentQueryParams);
     let initialSearchContent: SearchQueryResponse | null = null;
     try {
-        initialSearchContent = await getSearchContent({
-            searchString: '',
-            tagSlug: topicSlug,
-            contentType: contentType,
-            sortBy: 'Most Recent',
-        });
+        initialSearchContent = await getSearchContent(searchContentQueryParams);
     } catch (e) {
         Sentry.captureException(e);
     }
@@ -106,7 +114,9 @@ export const getTopicContentTypePageData = async (
             ? metaInfoForTopic.description
             : '',
         subTopics: subTopicsWithContentType,
-        initialSearchContent,
+        swrFallback: {
+            [initialSearchContentKey]: initialSearchContent,
+        },
         pageNumber,
     };
 

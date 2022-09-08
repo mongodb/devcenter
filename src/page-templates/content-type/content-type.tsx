@@ -50,7 +50,6 @@ import {
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
-import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 
 let pluralize = require('pluralize');
 
@@ -67,16 +66,19 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     featuredLanguages,
     featuredTechnologies,
     featuredProducts,
-    initialSearchContent,
     swrFallback,
     pageNumber,
     slug,
 }) => {
+    const initialSearchContent = swrFallback
+        ? swrFallback[Object.keys(swrFallback)[0]]
+        : undefined;
+
     const router = useRouter();
-    const totalResults = initialSearchContent
-        ? initialSearchContent.length
-        : DEFAULT_PAGE_SIZE;
-    const maxPage = Math.ceil(totalResults / DEFAULT_PAGE_SIZE);
+    const maxPage =
+        initialSearchContent && 'numberOfPages' in initialSearchContent
+            ? initialSearchContent.numberOfPages
+            : 1;
     const [currentPage, setCurrentPage] = useState(
         pageNumber && pageNumber > maxPage ? maxPage : pageNumber
     );
@@ -87,8 +89,9 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     // side re-rendering is needed, such as "load more", filtering or search.
     const [initialSearchData, setInitialSearchData] = useState(
         createInitialSearchData(
-            initialSearchContent as SearchItem[],
-            currentPage // page provided by query parameters
+            initialSearchContent && 'results' in initialSearchContent
+                ? (initialSearchContent.results as SearchItem[])
+                : []
         )
     );
     const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
@@ -101,8 +104,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         error,
         isValidating,
         fullyLoaded,
-        setResultsToShow,
-        resultsToShow,
         allFilters,
         setAllFilters,
         size,
@@ -113,7 +114,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setSearchString,
         numberOfResults,
     } = useSearch(pageNumber, contentType, undefined, undefined, swrFallback);
-
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
@@ -298,29 +298,28 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         </div>
     );
 
-    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const hasInitialData = initialSearchData
+        ? initialSearchData.length > 0
+        : false;
     const showLoadMoreButton = hasInitialData
         ? currentPage < maxPage
         : !fullyLoaded;
-    const isLoading = isValidating;
 
-    // const resultData = getResultData(
-    //     data,
-    //     initialSearchData,
-    //     searchString,
-    //     allFilters,
-    //     pageNumber,
-    //     initialPageResetFlag
-    // );
-    // const resultIsValidating = getResultIsValidating(
-    //     initialSearchData,
-    //     searchString,
-    //     allFilters,
-    //     isValidating
-    // );
-
-    const resultData = data;
-    const resultIsValidating = isValidating;
+    const resultData = getResultData(
+        data,
+        initialSearchData,
+        searchString,
+        allFilters,
+        pageNumber,
+        initialPageResetFlag
+    );
+    const resultIsValidating = getResultIsValidating(
+        initialSearchData,
+        searchString,
+        allFilters,
+        isValidating
+    );
+    const isLoading = !hasInitialData ? isValidating : false;
 
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer${slug}/?page=${currentPage + 1}`
@@ -427,11 +426,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             </>
                         )}
                         {resultsStringAndTags}
-                        {!!numberOfResults || isValidating || error ? (
+                        {!!resultData.length || resultIsValidating || error ? (
                             <>
                                 <Results
-                                    data={data}
-                                    isLoading={isValidating}
+                                    data={resultData}
+                                    isLoading={isLoading}
                                     hasError={error}
                                 />
                                 {showLoadMoreButton && (
@@ -442,7 +441,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                             marginTop: ['inc70', null, 'inc90'],
                                         }}
                                     >
-                                        {!isValidating && data && (
+                                        {!resultIsValidating && resultData && (
                                             <a
                                                 href={loadMoreHref}
                                                 onClick={onLoadMore}

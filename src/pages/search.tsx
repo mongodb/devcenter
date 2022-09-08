@@ -16,13 +16,17 @@ import {
     Select,
 } from '@mdb/flora';
 
-import { getAllSearchContent } from '../api-requests/get-all-search-content';
+import { getSearchContent } from '../api-requests/get-all-search-content';
 import allSearchContentPreval from '../service/get-all-search-content.preval';
 import Hero from '../components/hero';
 import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { pageWrapper } from '../styled/layout';
 
-import { SearchItem, SearchQueryResponse } from '../components/search/types';
+import {
+    SearchItem,
+    SortByType,
+    SearchQueryResponse,
+} from '../components/search/types';
 import { FilterItem } from '../components/search-filters';
 import {
     resultsStringAndTagsStyles,
@@ -33,7 +37,11 @@ import {
     searchBoxSortBarWrapperStyles,
     sortBoxStyles,
 } from '../components/search/styles';
-import { sortByOptions, DEFAULT_PAGE_SIZE } from '../components/search/utils';
+import {
+    buildSearchQuery,
+    DEFAULT_PAGE_SIZE,
+    sortByOptions,
+} from '../components/search/utils';
 
 import { Grid } from 'theme-ui';
 
@@ -59,7 +67,7 @@ export interface SearchProps {
     contributedByItems: FilterItem[];
     contentTypeItems: FilterItem[];
     expertiseLevelItems: FilterItem[];
-    initialSearchContent: SearchItem[];
+    swrFallback: { [key: string]: SearchQueryResponse };
     pageNumber: number;
 }
 
@@ -70,18 +78,21 @@ const Search: NextPage<SearchProps> = ({
     contributedByItems,
     contentTypeItems,
     expertiseLevelItems,
-    initialSearchContent,
+    swrFallback,
     pageNumber,
 }) => {
+    const initialSearchContent = swrFallback
+        ? swrFallback[Object.keys(swrFallback)[0]]
+        : undefined;
     const router = useRouter();
 
     // Used for initial "all content" page.
-    const totalInitialResults = initialSearchContent
-        ? initialSearchContent.length
-        : DEFAULT_PAGE_SIZE;
-    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
+    const maxPage =
+        initialSearchContent && 'numberOfPages' in initialSearchContent
+            ? initialSearchContent.numberOfPages
+            : 1;
     const [currentPage, setCurrentPage] = useState(
-        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
+        pageNumber && pageNumber > maxPage ? maxPage : pageNumber
     );
     const [pageTitle, setPageTitle] = useState(
         pageNumber > 1
@@ -95,8 +106,9 @@ const Search: NextPage<SearchProps> = ({
     // side re-rendering is needed, such as "load more", filtering or search.
     const [initialSearchData, setInitialSearchData] = useState(
         createInitialSearchData(
-            initialSearchContent as SearchItem[],
-            currentPage // page provided by query parameters
+            initialSearchContent && 'results' in initialSearchContent
+                ? (initialSearchContent.results as SearchItem[])
+                : []
         )
     );
     const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
@@ -106,8 +118,6 @@ const Search: NextPage<SearchProps> = ({
         error,
         isValidating,
         fullyLoaded,
-        setResultsToShow,
-        resultsToShow,
         allFilters,
         setAllFilters,
         setSize,
@@ -189,9 +199,11 @@ const Search: NextPage<SearchProps> = ({
         setInitialSearchData(undefined);
     };
 
-    const hasInitialData = typeof initialSearchData !== 'undefined';
+    const hasInitialData = initialSearchData
+        ? initialSearchData.length > 0
+        : false;
     const showLoadMoreButton = hasInitialData
-        ? currentPage < initialMaxPage
+        ? currentPage < maxPage
         : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 
@@ -430,27 +442,30 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const pageNumber = parsePageNumber(query.page);
 
+    const searchContentQueryParams = {
+        searchString: '',
+        sortBy: 'Most Recent' as SortByType,
+        pageNumber: pageNumber,
+        pageSize: DEFAULT_PAGE_SIZE,
+    };
+    const initialSearchContentKey = buildSearchQuery(searchContentQueryParams);
     let initialSearchContent: SearchQueryResponse | null = null;
     try {
-        // Used for "load more" crawling
-        initialSearchContent = await getAllSearchContent();
+        initialSearchContent = await getSearchContent(searchContentQueryParams);
     } catch (e) {
         Sentry.captureException(e);
     }
 
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
-    const filters = await getFilters(
-        undefined,
-        !!initialSearchContent && Array.isArray(initialSearchContent)
-            ? initialSearchContent
-            : allSearchContentPreval
-    );
+    const filters = await getFilters(undefined, allSearchContentPreval);
 
     return {
         props: {
             ...filters,
             pageNumber,
-            initialSearchContent,
+            swrFallback: {
+                [initialSearchContentKey]: initialSearchContent,
+            },
         },
     };
 };

@@ -3,7 +3,7 @@ import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';
 import { ITopicCard } from '../../components/topic-card/types';
-import { SearchItem, SearchQueryResponse } from '../../components/search/types';
+import { SearchQueryResponse } from '../../components/search/types';
 
 export interface ContentTypePageProps {
     description: string;
@@ -18,8 +18,7 @@ export interface ContentTypePageProps {
     featuredLanguages?: ShowcaseCardItem[];
     featuredTechnologies?: ITopicCard[];
     featuredProducts?: ShowcaseCardItem[];
-    initialSearchContent?: SearchItem[];
-    swrFallback?: { [key: string]: SearchQueryResponse };
+    swrFallback: { [key: string]: SearchQueryResponse };
     pageNumber: number;
     slug: string;
 }

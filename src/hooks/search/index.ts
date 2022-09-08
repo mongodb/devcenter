@@ -108,7 +108,6 @@ const useSearch = (
         fetcher,
         {
             ...SWR_HOOK_DEFAULT_OPTIONS,
-            fallback: swrFallback,
             initialSize: initialPageNumber,
         }
     );
