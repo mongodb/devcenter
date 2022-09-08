@@ -311,9 +311,12 @@ export const itemInFilters = (
 };
 
 export const fetcher: Fetcher<ContentItem[], string> = queryString => {
-    return fetch(
-        (getURLPath('/api/search') as string) + '?' + queryString
-    ).then(async response => {
+    return fetch((getURLPath('/api/search') as string) + '?' + queryString, {
+        method: 'POST',
+        body: JSON.stringify({
+            filters: [],
+        }),
+    }).then(async response => {
         const r_json: SearchItem[] = await response.json();
         return r_json.map(searchItemToContentItem);
     });
