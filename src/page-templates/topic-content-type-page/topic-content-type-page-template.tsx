@@ -107,6 +107,7 @@ export const TopicContentTypePageTemplate: NextPage<
             ? description
             : getMetaDescr(publicRuntimeConfig, route, asPath)
     );
+    const [h2Title, setH2Title] = useState(pluralize(contentType));
 
     const updatePageTitle = useCallback(
         pageNumber => {
@@ -117,8 +118,14 @@ export const TopicContentTypePageTemplate: NextPage<
                     ? `${metaDescr} - Page ${pageNumber}`
                     : metaDescr
             );
+            const contentTypePluralized = pluralize(contentType);
+            setH2Title(
+                pageNumber > 1
+                    ? `${contentTypePluralized} - Page ${pageNumber}`
+                    : contentTypePluralized
+            );
         },
-        [buildPageTitle, metaDescr]
+        [buildPageTitle, contentType, metaDescr]
     );
 
     const [requestContentModalStage, setRequestContentModalStage] =
@@ -164,7 +171,7 @@ export const TopicContentTypePageTemplate: NextPage<
                         marginBottom: ['inc20', null, null, 'inc40'],
                     }}
                 >
-                    {pluralize(contentType)}
+                    {h2Title}
                 </TypographyScale>
                 <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
