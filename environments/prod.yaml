@@ -10,6 +10,7 @@ env:
 
 envSecrets:
   DEVHUB_URL: devcenter-secrets
+  DRONE_TOKEN: devcenter-secrets
   NEXTAUTH_SECRET: devcenter-secrets
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
