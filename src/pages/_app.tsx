@@ -12,8 +12,7 @@ import { GTM_ID, pageView } from '../utils/gtm';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
 import { OverlayProvider } from '../contexts/overlay';
-
-const CONTENT_ROUTE = '/[...slug]';
+import { getMetaDescr, getCanonicalUrl } from '../utils/seo';
 
 interface CustomProps {
     session?: Session;
@@ -25,18 +24,8 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const { asPath, route } = router;
 
     let pagePath = route === '/_error' ? null : asPath;
-    let pageDescription = null;
-    if (asPath in publicRuntimeConfig.pageDescriptions) {
-        pageDescription = publicRuntimeConfig.pageDescriptions[asPath];
-    } else if (route !== CONTENT_ROUTE) {
-        // if no mapping found, set default meta description to that of the homepage
-        pageDescription = publicRuntimeConfig.pageDescriptions['/'];
-    }
-
-    let canonicalUrl = null;
-    if (route !== '/_error' && route !== CONTENT_ROUTE) {
-        canonicalUrl = publicRuntimeConfig.absoluteBasePath + asPath;
-    }
+    let pageDescription = getMetaDescr(publicRuntimeConfig, route, asPath);
+    let canonicalUrl = getCanonicalUrl(publicRuntimeConfig, route, asPath);
 
     // Is used to track route changes and send page views to Google Tag Manager
     useEffect(() => {

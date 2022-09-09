@@ -33,7 +33,11 @@ import {
     searchBoxSortBarWrapperStyles,
     sortBoxStyles,
 } from '../components/search/styles';
-import { sortByOptions, DEFAULT_PAGE_SIZE } from '../components/search/utils';
+import {
+    sortByOptions,
+    DEFAULT_PAGE_SIZE,
+    isValidPage,
+} from '../components/search/utils';
 
 import { Grid } from 'theme-ui';
 
@@ -313,13 +317,15 @@ const Search: NextPage<SearchProps> = ({
         ? `/developer/search/?page=${currentPage + 1}`
         : '#';
 
+    const h1Title = currentPage > 1 ? `Search - Page ${currentPage}` : 'Search';
+
     return (
         <>
             <NextSeo
                 title={pageTitle}
                 noindex={router.asPath === '/search/' ? false : true}
             />
-            <Hero name="Search" />
+            <Hero name={h1Title} />
             <div sx={pageWrapper}>
                 <GridLayout
                     sx={{
@@ -447,6 +453,11 @@ export const getServerSideProps: GetServerSideProps = async (
     try {
         // Used for "load more" crawling
         initialSearchContent = await getAllSearchContent();
+        if (!isValidPage(initialSearchContent.length, pageNumber)) {
+            return {
+                notFound: true,
+            };
+        }
     } catch (e) {
         Sentry.captureException(e);
     }

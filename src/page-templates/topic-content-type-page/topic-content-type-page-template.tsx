@@ -8,7 +8,9 @@ import {
 } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
+import getConfig from 'next/config';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
@@ -29,6 +31,7 @@ import { PillCategory } from '../../types/pill-category';
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { getURLPath, setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
+import { getMetaDescr } from '../../utils/seo';
 
 export interface TopicContentTypePageProps {
     crumbs: Crumb[];
@@ -81,6 +84,9 @@ export const TopicContentTypePageTemplate: NextPage<
     initialSearchContent,
     pageNumber,
 }) => {
+    const router = useRouter();
+    const { publicRuntimeConfig } = getConfig();
+    const { asPath, route } = router;
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
@@ -96,13 +102,23 @@ export const TopicContentTypePageTemplate: NextPage<
     );
 
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+    const [metaDescr, setMetaDescr] = useState(
+        description && description !== ''
+            ? description
+            : getMetaDescr(publicRuntimeConfig, route, asPath)
+    );
 
     const updatePageTitle = useCallback(
         pageNumber => {
             const pageTitle = buildPageTitle(pageNumber);
             setPageTitle(pageTitle);
+            setMetaDescr(
+                metaDescr && metaDescr !== '' && pageNumber > 1
+                    ? `${metaDescr} - Page ${pageNumber}`
+                    : metaDescr
+            );
         },
-        [buildPageTitle]
+        [buildPageTitle, metaDescr]
     );
 
     const [requestContentModalStage, setRequestContentModalStage] =
@@ -167,7 +183,7 @@ export const TopicContentTypePageTemplate: NextPage<
 
     return (
         <>
-            <NextSeo title={pageTitle} />
+            <NextSeo title={pageTitle} description={metaDescr} />
             <div
                 sx={{
                     paddingBottom: 'inc160',
