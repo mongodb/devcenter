@@ -10,7 +10,7 @@ env:
 
 envSecrets:
   DEVHUB_URL: devcenter-secrets
-  DRONE_TOKEN: devcenter-secrets
+  DRONE_TOKEN: devcenter-secrets # Only production needs to have this (it's for the preview webhook).
   NEXTAUTH_SECRET: devcenter-secrets
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
