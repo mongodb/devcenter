@@ -245,6 +245,10 @@ export const hasEmptyFilterAndQuery = (
     return (!searchString || searchString == '') && allFilters.length == 0;
 };
 
+export const isEmptyArray = (results: any) => {
+    return !results || (Array.isArray(results) && results.length === 0);
+};
+
 // TODO: Refactor.
 export const getResultData = (
     data: ContentItem[],

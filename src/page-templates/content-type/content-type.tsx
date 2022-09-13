@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
@@ -40,7 +41,7 @@ import ProductsSection from './products-section';
 import { getURLPath } from '../../utils/format-url-path';
 import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
-import { hasEmptyFilterAndQuery } from '../../hooks/search/utils';
+import { hasEmptyFilterAndQuery, isEmptyArray } from '../../hooks/search/utils';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
 import {
     createInitialSearchData,
@@ -313,7 +314,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         : !fullyLoaded;
     const isLoading = !hasInitialData ? isValidating : false;
 
-    const resultData = getResultData(
+    let resultData = getResultData(
         data,
         initialSearchData,
         searchString,
@@ -321,12 +322,33 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         pageNumber,
         initialPageResetFlag
     );
-    const resultIsValidating = getResultIsValidating(
+
+    let resultIsValidating = getResultIsValidating(
         initialSearchData,
         searchString,
         allFilters,
         isValidating
     );
+
+    // Debug for DEVHUB-1501 which is not yet replicable.
+    // Ensure results fall back to client SWR results if initial data is somehow empty (e.g. initialSearchContent = []).
+    if (isEmptyArray(resultData)) {
+        resultData = data;
+        resultIsValidating = isValidating;
+        Sentry.withScope(scope => {
+            scope.setExtra('initialSearchContent', initialSearchContent);
+            Sentry.captureException('Initial result data is empty');
+        });
+    }
+
+    // If data is still empty, capture another exception for Sentry.
+    if (isEmptyArray(resultData)) {
+        Sentry.withScope(scope => {
+            scope.setExtra('resultData', resultData);
+            Sentry.captureException('Result data is empty');
+        });
+    }
+
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer${slug}/?page=${currentPage + 1}`
         : '#';

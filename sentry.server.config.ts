@@ -7,7 +7,7 @@ Sentry.init({
     environment: process.env.APP_ENV ? process.env.APP_ENV : 'dev',
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.1,
     // ...
     // Note: if you want to override the automatic release value, do not set a
     // `release` value here - use the environment variable `SENTRY_RELEASE`, so
