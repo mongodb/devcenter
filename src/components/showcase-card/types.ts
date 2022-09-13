@@ -34,4 +34,5 @@ export interface ShowcaseCardProps {
         url: string;
     }[];
     wholeCardHref?: string;
+    imageStyles?: object;
 }

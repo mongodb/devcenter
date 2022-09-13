@@ -37,7 +37,6 @@ const AuthorImage: React.FunctionComponent<AuthorImageProps> = ({
         <div sx={profileImage(size)} className={className}>
             <Image
                 sx={profileImage(size)}
-                loader={thumbnailLoader}
                 layout="fill"
                 src={getURLPath(src) as string}
                 alt={alt || ''}

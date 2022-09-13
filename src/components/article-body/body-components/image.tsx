@@ -1,3 +1,5 @@
+import Image from 'next/future/image';
+
 export const ArticleImage = ({
     url,
     alt,
@@ -9,5 +11,14 @@ export const ArticleImage = ({
     if (!url) {
         return null;
     }
-    return <img src={url} alt={alt || ''} />;
+    return (
+        <Image
+            alt={alt || ''}
+            src={url}
+            width="0"
+            height="0"
+            sizes="100vw"
+            style={{ width: '100%', height: 'auto' }}
+        />
+    );
 };

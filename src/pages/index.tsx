@@ -5,9 +5,11 @@ import {
     GridLayout,
     Link,
     TextInput,
-    ThirdPartyLogo,
     TypographyScale,
+    LogoPaths,
 } from '@mdb/flora';
+import Image from 'next/image';
+
 import theme from '@mdb/flora/theme';
 import { useState } from 'react';
 import ShowcaseCard from '../components/showcase-card';
@@ -19,18 +21,14 @@ import {
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
 
-const getImage = (imageString: string | EThirdPartyLogoVariant) =>
-    Object.values(EThirdPartyLogoVariant).includes(
-        imageString as EThirdPartyLogoVariant
-    ) ? (
-        <ThirdPartyLogo
-            variant={imageString as EThirdPartyLogoVariant}
-            target="_blank"
-            imageWidth="150px"
-        />
-    ) : (
-        <BrandedIcon name={imageString} />
-    );
+const getImageSrc = (imageString: string | EThirdPartyLogoVariant) => {
+    const brandedIconUrl = `https://webimages.mongodb.com/_com_assets/icons/${imageString}.svg`;
+    const src = (
+        LogoPaths[imageString as EThirdPartyLogoVariant] || brandedIconUrl
+    ).split('?')[0];
+
+    return src;
+};
 
 const HomepageSearch: React.FunctionComponent = () => {
     const router = useRouter();
@@ -191,10 +189,10 @@ const Home: NextPage<{}> = props => {
                                 alignment="left"
                                 titleLink={titleLink}
                                 image={
-                                    <ThirdPartyLogo
-                                        variant={imageString}
-                                        target="_blank"
-                                        imageWidth="150px"
+                                    <Image
+                                        src={getImageSrc(imageString)}
+                                        height={theme.sizes.inc80}
+                                        width={theme.sizes.inc80}
                                     />
                                 }
                                 links={links}
@@ -294,7 +292,16 @@ const Home: NextPage<{}> = props => {
                                     sx={{ backgroundColor: 'white' }}
                                     alignment="center"
                                     titleLink={titleLink}
-                                    image={getImage(imageString)}
+                                    image={
+                                        <Image
+                                            src={getImageSrc(imageString)}
+                                            height={theme.sizes.inc60}
+                                            width={theme.sizes.inc60}
+                                        />
+                                    }
+                                    imageStyles={{
+                                        width: ['inc40', null, 'inc60'],
+                                    }}
                                     wholeCardHref={titleLink.url}
                                 />
                             </div>
@@ -379,7 +386,13 @@ const Home: NextPage<{}> = props => {
                                     alignment="left"
                                     description={description}
                                     titleLink={titleLink}
-                                    image={getImage(imageString)}
+                                    image={
+                                        <Image
+                                            src={getImageSrc(imageString)}
+                                            height="72px"
+                                            width="72px"
+                                        />
+                                    }
                                     cta={cta}
                                     links={links}
                                 />

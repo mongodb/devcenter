@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image';
 import theme from '@mdb/flora/theme';
 
 import { circleStyles } from './styles';
@@ -15,11 +16,17 @@ const CopyLink: React.FunctionComponent<{ url: string }> = ({ url }) => {
                     setTimeout(() => setToolTipShown(false), 2000);
                 }}
                 title="Copy link"
+                sx={{
+                    span: {
+                        display: 'block !important;', // Override next/image default styling
+                    },
+                }}
             >
-                <img
+                <Image
                     src="/developer/link.svg"
                     alt="Copy Link"
-                    sx={{ width: '12px', height: '12px', display: 'block' }}
+                    width={12}
+                    height={12}
                 />
             </a>
             {tooltipShown && (

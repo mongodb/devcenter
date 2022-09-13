@@ -21,12 +21,18 @@ const configVals = {
     basePath: basePath,
     reactStrictMode: true,
     images: {
-        domains: ['mongodb-devhub-cms.s3.us-west-1.amazonaws.com'],
+        domains: [
+            'mongodb-devhub-cms.s3.us-west-1.amazonaws.com',
+            'localhost',
+            'webimages.mongodb.com',
+        ],
+        path: `${basePath}/_next/image`,
     },
     compiler: {
         styledComponents: true,
         emotion: true,
     },
+    swcMinify: true,
     async headers() {
         return [
             {
@@ -72,6 +78,7 @@ const configVals = {
                 console.log('Built RSS feed.')
             );
         }
+
         return config;
     },
 };
