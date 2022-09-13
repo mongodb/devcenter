@@ -34,7 +34,7 @@ const configVals = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'max-age=3600',
+                        value: 'public, must-revalidate, proxy-revalidate, max-age=300',
                     },
                     {
                         key: 'Strict-Transport-Security',
@@ -53,6 +53,15 @@ const configVals = {
                     {
                         key: 'Cache-Control',
                         value: 'no-store, max-age=0',
+                    },
+                ],
+            },
+            {
+                source: '/_next/:path',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=300, immutable',
                     },
                 ],
             },
