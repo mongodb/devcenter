@@ -34,7 +34,7 @@ const configVals = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'public, must-revalidate, proxy-revalidate, max-age=0',
+                        value: 'public, must-revalidate, proxy-revalidate, max-age=300',
                     },
                     {
                         key: 'Strict-Transport-Security',
