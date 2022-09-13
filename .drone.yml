@@ -65,7 +65,7 @@ steps:
 
 trigger:
   branch:
-    - DEVHUB-1501-cache-settings
+    - main
   event:
     - push
 
