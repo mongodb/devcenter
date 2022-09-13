@@ -336,16 +336,27 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         resultData = data;
         resultIsValidating = isValidating;
         Sentry.withScope(scope => {
-            scope.setExtra('initialSearchContent', initialSearchContent);
-            Sentry.captureException('Initial result data is empty');
+            scope.setExtra('resultParameters', {
+                data,
+                error,
+                initialSearchData,
+                searchString,
+                allFilters,
+                pageNumber,
+                initialPageResetFlag,
+            });
+            Sentry.captureException(new Error('Initial result data is empty'));
         });
     }
 
     // If data is still empty, capture another exception for Sentry.
     if (isEmptyArray(resultData)) {
         Sentry.withScope(scope => {
-            scope.setExtra('resultData', resultData);
-            Sentry.captureException('Result data is empty');
+            scope.setExtra('resultParameters', {
+                data,
+                error,
+            });
+            Sentry.captureException(new Error('Result data is empty'));
         });
     }
 
