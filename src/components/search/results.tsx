@@ -48,12 +48,7 @@ const Results: React.FunctionComponent<ResultsProps> = React.memo(
                         alt="Loading..."
                         width={116}
                         height={116}
-                        src={(() => {
-                            console.log(getURLPath('/loading-animation.gif'));
-                            return getURLPath(
-                                '/loading-animation.gif'
-                            ) as string;
-                        })()}
+                        src={getURLPath('/loading-animation.gif') as string}
                     />
                 ) : hasError ? (
                     <div>Something went wrong, please try again</div>
