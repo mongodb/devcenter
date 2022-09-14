@@ -23,11 +23,9 @@ import { useRouter } from 'next/router';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) => {
     const brandedIconUrl = `https://webimages.mongodb.com/_com_assets/icons/${imageString}.svg`;
-    const src = (
+    return (
         LogoPaths[imageString as EThirdPartyLogoVariant] || brandedIconUrl
     ).split('?')[0];
-
-    return src;
 };
 
 const HomepageSearch: React.FunctionComponent = () => {
@@ -389,8 +387,8 @@ const Home: NextPage<{}> = props => {
                                     image={
                                         <Image
                                             src={getImageSrc(imageString)}
-                                            height="72px"
-                                            width="72px"
+                                            height={theme.sizes.inc80}
+                                            width={theme.sizes.inc80}
                                         />
                                     }
                                     cta={cta}
