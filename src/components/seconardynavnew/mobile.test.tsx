@@ -31,13 +31,13 @@ test('renders mobile dropdown', () => {
     const article = screen.getByText('Articles');
     expect(article.parentElement?.parentElement).toHaveAttribute(
         'href',
-        '/developer/articles/'
+        '/developer/articles'
     );
 
     const allTopics = screen.getByText('All Topics');
     expect(
         allTopics.parentElement?.parentElement?.parentElement
-    ).toHaveAttribute('href', '/developer/topics/');
+    ).toHaveAttribute('href', '/developer/topics');
 
     const languages = screen.getByText('Languages');
     languages.click();
@@ -45,11 +45,11 @@ test('renders mobile dropdown', () => {
     const python = screen.getByText('Python');
     expect(python.parentElement?.parentElement?.parentElement).toHaveAttribute(
         'href',
-        '/developer/languages/python/'
+        '/developer/languages/python'
     );
 
     const allLanguages = screen.getByText('All Languages');
     expect(
         allLanguages.parentElement?.parentElement?.parentElement
-    ).toHaveAttribute('href', '/developer/languages/');
+    ).toHaveAttribute('href', '/developer/languages');
 });

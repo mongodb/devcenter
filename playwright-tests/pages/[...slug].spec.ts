@@ -10,7 +10,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
 
     // TertiaryNav
     const tertiaryNavTitle = page.locator(
-        'a[href="/developer/products/atlas/"] h6'
+        'a[href="/developer/products/atlas"] h6'
     );
     expect(await tertiaryNavTitle.count()).toEqual(1);
 
@@ -30,7 +30,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
     // Author Lockup
     const authorName = page.locator('"Joel Lord"');
     expect(await authorName.getAttribute('href')).toBe(
-        '/developer/author/joel-lord/'
+        '/developer/author/joel-lord'
     );
 
     // Social Buttons, top and bottom

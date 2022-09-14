@@ -48,13 +48,13 @@ test('renders dropdown', () => {
     screen.getByText('Languages');
 
     const pythonLink = screen.getByText('Python');
-    expect(pythonLink).toHaveAttribute('href', '/developer/languages/python/');
+    expect(pythonLink).toHaveAttribute('href', '/developer/languages/python');
 
     const allLanguages = screen.getByText('All Languages');
     expect(
         allLanguages.parentElement?.parentElement?.parentElement
-    ).toHaveAttribute('href', '/developer/languages/');
+    ).toHaveAttribute('href', '/developer/languages');
 
     const allTopics = screen.getByText('All Topics');
-    expect(allTopics).toHaveAttribute('href', '/developer/topics/');
+    expect(allTopics).toHaveAttribute('href', '/developer/topics');
 });
