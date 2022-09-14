@@ -34,10 +34,6 @@ const configVals = {
                 protocol: 'https',
                 hostname: 'i.ytimg.com',
             },
-            {
-                protocol: 'http',
-                hostname: 'localhost',
-            },
         ],
         path: `${basePath}/_next/image`,
     },
