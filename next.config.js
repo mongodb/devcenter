@@ -21,11 +21,23 @@ const configVals = {
     basePath: basePath,
     reactStrictMode: true,
     images: {
-        domains: [
-            'mongodb-devhub-cms.s3.us-west-1.amazonaws.com',
-            'localhost',
-            'webimages.mongodb.com',
-            'i.ytimg.com',
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**.mongodb.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'mongodb-devhub-cms.s3.us-west-1.amazonaws.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.ytimg.com',
+            },
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+            },
         ],
         path: `${basePath}/_next/image`,
     },
