@@ -25,6 +25,7 @@ const configVals = {
             'mongodb-devhub-cms.s3.us-west-1.amazonaws.com',
             'localhost',
             'webimages.mongodb.com',
+            'i.ytimg.com',
         ],
         path: `${basePath}/_next/image`,
     },

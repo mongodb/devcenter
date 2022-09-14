@@ -41,7 +41,6 @@ import Results from '../components/search/results';
 import { useRouter } from 'next/router';
 import { getURLPath } from '../utils/format-url-path';
 import { parsePageNumber } from '../utils/page-type-factory';
-import { thumbnailLoader } from '../components/card/utils';
 import useSearch from '../hooks/search';
 import {
     createInitialSearchData,
@@ -221,7 +220,6 @@ const Search: NextPage<SearchProps> = ({
             <div>
                 <NextImage
                     src={getURLPath('/no-results.png') as string}
-                    loader={thumbnailLoader}
                     alt="No Results"
                     height={500}
                     width={500}

@@ -7,7 +7,6 @@ import { signIn, useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { nextAuthOptions } from '../api/auth/[...nextauth]';
 import { getURLPath } from '../../utils/format-url-path';
-import { thumbnailLoader } from '../../components/card/utils';
 
 interface SigninProps {
     session: Session;
@@ -48,11 +47,10 @@ const SigninPage: NextPage<SigninProps> = ({ session }) => {
         >
             {isLoading && (
                 <Image
-                    loader={thumbnailLoader}
                     alt="Loading..."
                     width={116}
                     height={116}
-                    src={getURLPath('/loading-animation.gif') as string}
+                    src="/loading-animation.gif"
                 />
             )}
             <div

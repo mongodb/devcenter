@@ -7,7 +7,6 @@ import { dataStyles } from './styles';
 import Card, { getCardProps } from '../card';
 
 import { getURLPath } from '../../utils/format-url-path';
-import { thumbnailLoader } from '../card/utils';
 
 // TODO: This isn't being memoized correctly.
 const Results: React.FunctionComponent<ResultsProps> = React.memo(
@@ -46,11 +45,15 @@ const Results: React.FunctionComponent<ResultsProps> = React.memo(
                 )}
                 {isLoading ? (
                     <Image
-                        loader={thumbnailLoader}
                         alt="Loading..."
                         width={116}
                         height={116}
-                        src={getURLPath('/loading-animation.gif') as string}
+                        src={(() => {
+                            console.log(getURLPath('/loading-animation.gif'));
+                            return getURLPath(
+                                '/loading-animation.gif'
+                            ) as string;
+                        })()}
                     />
                 ) : hasError ? (
                     <div>Something went wrong, please try again</div>

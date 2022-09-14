@@ -22,10 +22,6 @@ export const getURLPath = (url: string | undefined) => {
         }
     }
 
-    if (urlPath[urlPath.length - 1] !== '/') {
-        urlPath += '/';
-    }
-
     return urlPath;
 };
 
