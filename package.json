@@ -30,8 +30,6 @@
         "@types/react-truncate": "2.3.4",
         "apollo-link-rest": "0.9.0-rc.1",
         "axios": "^0.27.2",
-        "babel-plugin-lodash": "^3.3.4",
-        "babel-plugin-transform-imports": "^2.0.0",
         "feed": "4.2.2",
         "graphql": "16.2.0",
         "graphql-anywhere": "4.2.7",
@@ -63,7 +61,7 @@
     },
     "devDependencies": {
         "@babel/plugin-transform-react-jsx": "^7.17.3",
-        "@emotion/babel-plugin": "11.10.2",
+        "@emotion/babel-plugin": "11.7.2",
         "@next/bundle-analyzer": "12.0.8",
         "@playwright/test": "^1.22.2",
         "@testing-library/jest-dom": "5.16.1",
