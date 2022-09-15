@@ -317,15 +317,13 @@ const Search: NextPage<SearchProps> = ({
         ? `/developer/search/?page=${currentPage + 1}`
         : '#';
 
-    const h1Title = currentPage > 1 ? `Search - Page ${currentPage}` : 'Search';
-
     return (
         <>
             <NextSeo
                 title={pageTitle}
                 noindex={router.asPath === '/search/' ? false : true}
             />
-            <Hero name={h1Title} />
+            <Hero name="Search" />
             <div sx={pageWrapper}>
                 <GridLayout
                     sx={{

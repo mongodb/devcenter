@@ -115,21 +115,19 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     );
 
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-    const [h1Title, setH1Title] = useState(name);
     const [metaDescr, setMetaDescr] = useState(description);
 
     const updatePageTitle = useCallback(
         pageNumber => {
             const pageTitle = buildPageTitle(pageNumber);
             setPageTitle(pageTitle);
-            setH1Title(pageNumber > 1 ? `${name} - Page ${pageNumber}` : name);
             setMetaDescr(
                 metaDescr && metaDescr !== '' && pageNumber > 1
                     ? `${metaDescr} - Page ${pageNumber}`
                     : metaDescr
             );
         },
-        [buildPageTitle, metaDescr, name]
+        [buildPageTitle, metaDescr]
     );
 
     const topicsRow = topics.length > 0 ? 1 : 0;
@@ -172,7 +170,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             <NextSeo title={pageTitle} canonical={canonicalUrl} />
             <Hero
                 crumbs={crumbs}
-                name={h1Title}
+                name={name}
                 description={metaDescr}
                 ctas={CTAComponents}
             />

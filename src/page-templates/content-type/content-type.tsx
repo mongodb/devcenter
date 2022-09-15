@@ -364,12 +364,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         ? `/developer${slug}/?page=${currentPage + 1}`
         : '#';
 
-    const contentTypePluralized = pluralize(contentType);
-    const h1Title =
-        currentPage > 1
-            ? `${contentTypePluralized} - Page ${currentPage}`
-            : contentTypePluralized;
-
     return (
         <>
             <NextSeo
@@ -381,7 +375,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             />
             <Hero
                 crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
-                name={h1Title}
+                name={pluralize(contentType)}
                 description={description}
                 ctas={
                     shouldRenderRequestButton(contentType) ? CTAElement : null
