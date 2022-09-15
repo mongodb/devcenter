@@ -73,7 +73,7 @@ metrics:
 prometheusRules:
   - alert: ServiceDown
     expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app"}) == 0
-    for: 0m
+    for: 2m
     labels:
       email_to: devhubplatform@mongodb.com
       severity: critical

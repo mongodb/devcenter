@@ -10,6 +10,7 @@ env:
 
 envSecrets:
   DEVHUB_URL: devcenter-secrets
+  DRONE_TOKEN: devcenter-secrets # Only production needs to have this (it's for the preview webhook).
   NEXTAUTH_SECRET: devcenter-secrets
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
@@ -69,7 +70,7 @@ metrics:
 prometheusRules:
   - alert: ServiceDown
     expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app"}) == 0
-    for: 0m
+    for: 2m
     labels:
       email_to: devhubplatform@mongodb.com
       severity: critical
