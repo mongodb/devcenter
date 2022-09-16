@@ -35,7 +35,7 @@ test('Homepage links are correct', async ({ page }) => {
     const allTechLinks = page.locator('a:has-text("View All Technologies")');
     const allProductsLinks = page.locator('a:has-text("View All Products")');
     // There are mobile and desktop links rendered, check both links
-    await allLinksHaveHref(allLangLinks, '/developer/languages');
-    await allLinksHaveHref(allTechLinks, '/developer/technologies');
-    await allLinksHaveHref(allProductsLinks, '/developer/products');
+    await allLinksHaveHref(allLangLinks, '/developer/languages/');
+    await allLinksHaveHref(allTechLinks, '/developer/technologies/');
+    await allLinksHaveHref(allProductsLinks, '/developer/products/');
 });

@@ -17,6 +17,41 @@ const basePath = '/developer';
 
 const accountPortalUrl = `${process.env.ACCOUNT_PORTAL_URL}/account/login`;
 
+const buildImagePatterns = (hostsString = '') => {
+    const items = hostsString.split(';');
+
+    if (items.length === 0) {
+        return [];
+    }
+
+    return items.reduce((acc, item) => {
+        const match =
+            /^(https?):\/\/([a-zA-Z0-9\*\.\-]+)((?:\/[a-zA-Z0-9\*\-]+)+)?/.exec(
+                item.trim()
+            );
+
+        if (match && match[2]) {
+            return [
+                ...acc,
+                {
+                    protocol: match[1],
+                    hostname: match[2],
+                    ...(match[3] ? { pathname: match[3] } : {}),
+                },
+            ];
+        } else {
+            return acc;
+        }
+    }, []);
+};
+
+/*
+    Set the NEXT_IMAGE_HOSTS env variable to a semicolon-delimited list of hosts to add extra image hosts
+    e.g. export NEXT_IMAGE_HOSTS="https://google.com/;http://**.test.com/test?abc=123" will generate the entries
+    [{ 'protocol': 'https', 'hostname': 'google.com' }, { 'protocol': 'http', 'hostname': '**.test.com', 'pathname': '/test' }]
+*/
+const IMAGE_PATTERNS = buildImagePatterns(process.env.NEXT_IMAGE_HOSTS);
+
 const configVals = {
     basePath: basePath,
     reactStrictMode: true,
@@ -24,7 +59,7 @@ const configVals = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: '**.mongodb.com',
+                hostname: '**.mongodb.com', // webimages.mongodb.com, www.mongodb.com, etc.
             },
             {
                 protocol: 'https',
@@ -32,8 +67,9 @@ const configVals = {
             },
             {
                 protocol: 'https',
-                hostname: 'i.ytimg.com',
+                hostname: 'i.ytimg.com', // YouTube thumbnails
             },
+            ...IMAGE_PATTERNS,
         ],
         path: `${basePath}/_next/image`,
     },

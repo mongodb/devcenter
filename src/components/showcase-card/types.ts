@@ -1,3 +1,5 @@
+import { ThemeUICSSObject } from 'theme-ui';
+
 export interface ShowcaseCardItem {
     titleLink: {
         text: string;
@@ -34,5 +36,5 @@ export interface ShowcaseCardProps {
         url: string;
     }[];
     wholeCardHref?: string;
-    imageStyles?: object;
+    imageStyles?: ThemeUICSSObject;
 }
