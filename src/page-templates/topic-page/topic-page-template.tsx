@@ -29,6 +29,7 @@ import {
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
+import { getMetaDescr } from '../../utils/seo';
 
 export interface TopicContentTypeProps {
     crumbs: Crumb[];
@@ -79,6 +80,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 }) => {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
+    const { asPath, route } = router;
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -115,19 +117,24 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     );
 
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-    const [metaDescr, setMetaDescr] = useState(description);
+    const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
+    const [metaDescr, setMetaDescr] = useState(
+        defaultMetaDescr && pageNumber > 1
+            ? `${defaultMetaDescr} - Page ${pageNumber}`
+            : defaultMetaDescr
+    );
 
     const updatePageTitle = useCallback(
         pageNumber => {
             const pageTitle = buildPageTitle(pageNumber);
             setPageTitle(pageTitle);
             setMetaDescr(
-                metaDescr && metaDescr !== '' && pageNumber > 1
-                    ? `${metaDescr} - Page ${pageNumber}`
-                    : metaDescr
+                defaultMetaDescr && pageNumber > 1
+                    ? `${defaultMetaDescr} - Page ${pageNumber}`
+                    : defaultMetaDescr
             );
         },
-        [buildPageTitle, metaDescr]
+        [buildPageTitle, defaultMetaDescr]
     );
 
     const topicsRow = topics.length > 0 ? 1 : 0;
@@ -167,11 +174,15 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 
     return (
         <>
-            <NextSeo title={pageTitle} canonical={canonicalUrl} />
+            <NextSeo
+                title={pageTitle}
+                canonical={canonicalUrl}
+                {...(metaDescr ? { description: metaDescr } : {})}
+            />
             <Hero
                 crumbs={crumbs}
                 name={name}
-                description={metaDescr}
+                description={description}
                 ctas={CTAComponents}
             />
             <TertiaryNav items={tertiaryNavItems} topic={name} />

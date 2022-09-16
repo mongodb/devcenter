@@ -102,10 +102,11 @@ export const TopicContentTypePageTemplate: NextPage<
     );
 
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+    const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
     const [metaDescr, setMetaDescr] = useState(
-        description && description !== ''
-            ? description
-            : getMetaDescr(publicRuntimeConfig, route, asPath)
+        defaultMetaDescr && pageNumber > 1
+            ? `${defaultMetaDescr} - Page ${pageNumber}`
+            : defaultMetaDescr
     );
 
     const updatePageTitle = useCallback(
@@ -113,12 +114,12 @@ export const TopicContentTypePageTemplate: NextPage<
             const pageTitle = buildPageTitle(pageNumber);
             setPageTitle(pageTitle);
             setMetaDescr(
-                metaDescr && metaDescr !== '' && pageNumber > 1
-                    ? `${metaDescr} - Page ${pageNumber}`
-                    : metaDescr
+                defaultMetaDescr && pageNumber > 1
+                    ? `${defaultMetaDescr} - Page ${pageNumber}`
+                    : defaultMetaDescr
             );
         },
-        [buildPageTitle, metaDescr]
+        [buildPageTitle, defaultMetaDescr]
     );
 
     const [requestContentModalStage, setRequestContentModalStage] =
@@ -183,7 +184,10 @@ export const TopicContentTypePageTemplate: NextPage<
 
     return (
         <>
-            <NextSeo title={pageTitle} description={metaDescr} />
+            <NextSeo
+                title={pageTitle}
+                {...(metaDescr ? { description: metaDescr } : {})}
+            />
             <div
                 sx={{
                     paddingBottom: 'inc160',
