@@ -11,6 +11,7 @@ import { PageParams } from '../interfaces/page-params';
 import { PageType } from '../types/page-type';
 import { DynamicPageType } from '../types/page-type-factory';
 import { pageTypeFactory, parsePageNumber } from '../utils/page-type-factory';
+import { isValidPage } from '../components/search/utils';
 
 interface ContentPageProps {
     pageType: PageType;
@@ -51,6 +52,14 @@ export const getServerSideProps: GetServerSideProps = async (
                 pageParams.slug,
                 pageNumber
             );
+            if (
+                data?.initialSearchContent &&
+                !isValidPage(data?.initialSearchContent.length, pageNumber)
+            ) {
+                return {
+                    notFound: true,
+                };
+            }
             break;
         case PageType.TopicContentType:
             pageNumber = parsePageNumber(query.page);
@@ -60,6 +69,14 @@ export const getServerSideProps: GetServerSideProps = async (
                 pageParams.slug,
                 pageNumber
             );
+            if (
+                data?.initialSearchContent &&
+                !isValidPage(data?.initialSearchContent.length, pageNumber)
+            ) {
+                return {
+                    notFound: true,
+                };
+            }
             break;
         default:
             data = null;

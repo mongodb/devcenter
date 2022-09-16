@@ -1,4 +1,4 @@
-import { SearchItem, SortByType } from './types';
+import { SortByType } from './types';
 
 export const DEFAULT_PAGE_SIZE = 10;
 
@@ -29,4 +29,12 @@ export const buildSearchQuery = (queryParams: SearchQueryParams) => {
         uriParts.push(`tagSlug=${encodeURIComponent(queryParams.tagSlug)}`);
     }
     return uriParts.join('&');
+};
+
+// Given a list of total results for searcch content, will return if the page number exists.
+export const isValidPage = (totalResults: number, pageNumber: number) => {
+    return (
+        pageNumber <= Math.ceil(totalResults / DEFAULT_PAGE_SIZE) &&
+        pageNumber > 0
+    );
 };
