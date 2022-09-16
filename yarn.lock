@@ -5607,9 +5607,9 @@ jest@27.4.7:
     jest-cli "^27.4.7"
 
 jose@^4.1.4, jose@^4.3.7:
-  version "4.8.3"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/jose/-/jose-4.8.3.tgz#5a754fb4aa5f2806608d083f438e6916b11087da"
-  integrity sha1-WnVPtKpfKAZgjQg/Q45pFrEQh9o=
+  version "4.9.3"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-4.9.3.tgz#890abd3f26725fe0f2aa720bc2f7835702b624db"
+  integrity sha512-f8E/z+T3Q0kA9txzH2DKvH/ds2uggcw0m3vVPSB9HrSkrQ7mojjifvS7aR8cw+lQl2Fcmx9npwaHpM/M3GD8UQ==
 
 js-base64@~3.7.0:
   version "3.7.2"
