@@ -33,5 +33,8 @@ export const buildSearchQuery = (queryParams: SearchQueryParams) => {
 
 // Given a list of total results for searcch content, will return if the page number exists.
 export const isValidPage = (totalResults: number, pageNumber: number) => {
-    return pageNumber <= Math.ceil(totalResults / DEFAULT_PAGE_SIZE);
+    return (
+        pageNumber <= Math.ceil(totalResults / DEFAULT_PAGE_SIZE) &&
+        pageNumber > 0
+    );
 };
