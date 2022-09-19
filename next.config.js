@@ -134,6 +134,7 @@ const configVals = {
 
         return config;
     },
+    swcMinify: true,
 };
 
 const sentryWebpackPluginOptions = {
