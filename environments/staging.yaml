@@ -26,7 +26,6 @@ envSecrets:
   SENTRY_DSN: devcenter-secrets
   STRAPI_URL: devcenter-secrets
   STRAPI_API_TOKEN: devcenter-secrets
-  NEXT_IMAGE_HOSTS: devcenter-secrets
 
 autoscaling:
   minReplicas: 2
