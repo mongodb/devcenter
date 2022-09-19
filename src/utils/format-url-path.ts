@@ -6,7 +6,7 @@
 
 export const BASE_PATH: string = '/developer';
 
-export const getURLPath = (url: string | undefined) => {
+export const getURLPath = (url: string | undefined, trailingSlash = true) => {
     if (typeof url !== 'string') return url;
     if (url.startsWith('#')) return url;
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0)
@@ -22,7 +22,7 @@ export const getURLPath = (url: string | undefined) => {
         }
     }
 
-    if (urlPath[urlPath.length - 1] !== '/') {
+    if (trailingSlash && urlPath[urlPath.length - 1] !== '/') {
         urlPath += '/';
     }
 

@@ -50,7 +50,7 @@ const SigninPage: NextPage<SigninProps> = ({ session }) => {
                     alt="Loading..."
                     width={116}
                     height={116}
-                    src={getURLPath('/loading-animation.gif') as string}
+                    src={getURLPath('/loading-animation.gif', false) as string}
                 />
             )}
             <div
