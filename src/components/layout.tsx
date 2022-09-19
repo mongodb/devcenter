@@ -10,9 +10,9 @@ import { OverlayContext } from '../contexts/overlay';
 import { layers } from '../styled/layout';
 
 const navStyles = {
-    'nav > div > div': {
+    'nav > div > div > ul': {
         zIndex: `${layers.desktopConsistentNavDropdown}!important`,
-    }, // Need this so it can display over our secondary nav
+    }, // Needed so <ul /> list options from consistent nav displays over our secondary nav
     'div[role=menu-wrapper]': {
         zIndex: `${layers.mobileNavMenu}!important`,
     },
