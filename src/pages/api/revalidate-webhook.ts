@@ -44,7 +44,7 @@ const revalidateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         logger.info(`Revalidating ${slug}`);
 
-        await res.unstable_revalidate(`${baseUrl}${slug}`);
+        await res.revalidate(`${baseUrl}${slug}`);
         return res.json({ revalidated: true });
     } catch (err) {
         Sentry.captureException(err);

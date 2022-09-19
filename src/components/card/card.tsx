@@ -13,7 +13,6 @@ import {
     thumbnailWrapperStyles,
 } from './styles';
 import {
-    thumbnailLoader,
     hasThumbnail,
     hasTags,
     hasDescription,
@@ -85,11 +84,11 @@ const Card: React.FunctionComponent<CardProps> = ({
                                         ? 'Play Button'
                                         : thumbnail?.alt || 'alt not provided'
                                 }
-                                loader={thumbnailLoader}
                                 src={
                                     pillCategory === 'Podcast'
                                         ? (getURLPath(
-                                              '/play-button.svg'
+                                              '/play-button.svg',
+                                              false
                                           ) as string)
                                         : (thumbnail?.url as string)
                                 }
@@ -111,10 +110,10 @@ const Card: React.FunctionComponent<CardProps> = ({
                                         alt={'Play Button'}
                                         src={
                                             getURLPath(
-                                                '/play-button.svg'
+                                                '/play-button.svg',
+                                                false
                                             ) as string
                                         }
-                                        loader={thumbnailLoader}
                                         width={60}
                                         height={60}
                                     />

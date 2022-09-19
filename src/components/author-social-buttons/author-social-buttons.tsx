@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import theme from '@mdb/flora/theme';
-
 interface SocialButtonsProps {
     facebookUrl?: string;
     linkedinUrl?: string;
@@ -34,6 +34,10 @@ const AuthorSocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
             sx={{
                 display: 'flex',
                 gap: 'inc30',
+                height: 'fit-content',
+                span: {
+                    display: 'block !important;', // Override next/image default styling
+                },
             }}
             className={className}
         >
@@ -45,10 +49,11 @@ const AuthorSocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                     rel="noreferrer"
                     title="Author's facebook Link"
                 >
-                    <img
+                    <Image
                         src="/developer/facebook.svg"
                         alt="facebook icon"
-                        sx={{ width: '12px', height: '12px', display: 'block' }}
+                        width={12}
+                        height={12}
                     />
                 </a>
             )}
@@ -60,10 +65,11 @@ const AuthorSocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                     href={twitterUrl}
                     title="Author's twitter Link"
                 >
-                    <img
+                    <Image
                         src="/developer/twitter.svg"
                         alt="twitter icon"
-                        sx={{ width: '12px', height: '12px', display: 'block' }}
+                        width={12}
+                        height={12}
                     />
                 </a>
             )}
@@ -76,10 +82,11 @@ const AuthorSocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                     href={linkedinUrl}
                     title="Author's linkedin Link"
                 >
-                    <img
+                    <Image
                         src="/developer/linkedin.svg"
                         alt="linkedin icon"
-                        sx={{ width: '12px', height: '12px', display: 'block' }}
+                        width={12}
+                        height={12}
                     />
                 </a>
             )}

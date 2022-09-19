@@ -17,13 +17,22 @@ test('renders author social buttons with all social', () => {
     );
 
     const fbIcon = screen.getByAltText('facebook icon');
-    expect(fbIcon.parentElement).toHaveAttribute('href', facebookUrl);
+    expect(fbIcon.parentElement?.parentElement).toHaveAttribute(
+        'href',
+        facebookUrl
+    );
 
     const twitterIcon = screen.getByAltText('twitter icon');
-    expect(twitterIcon.parentElement).toHaveAttribute('href', twitterUrl);
+    expect(twitterIcon.parentElement?.parentElement).toHaveAttribute(
+        'href',
+        twitterUrl
+    );
 
     const linkedinIcon = screen.getByAltText('linkedin icon');
-    expect(linkedinIcon.parentElement).toHaveAttribute('href', linkedinUrl);
+    expect(linkedinIcon.parentElement?.parentElement).toHaveAttribute(
+        'href',
+        linkedinUrl
+    );
 });
 
 test('renders author social buttons with some social', () => {
@@ -35,10 +44,16 @@ test('renders author social buttons with some social', () => {
     );
 
     const fbIcon = screen.getByAltText('facebook icon');
-    expect(fbIcon.parentElement).toHaveAttribute('href', facebookUrl);
+    expect(fbIcon.parentElement?.parentElement).toHaveAttribute(
+        'href',
+        facebookUrl
+    );
 
     const twitterIcon = screen.getByAltText('twitter icon');
-    expect(twitterIcon.parentElement).toHaveAttribute('href', twitterUrl);
+    expect(twitterIcon.parentElement?.parentElement).toHaveAttribute(
+        'href',
+        twitterUrl
+    );
 
     const linkedinIcon = screen.queryByAltText('linkedin icon');
     expect(linkedinIcon).toBeNull();

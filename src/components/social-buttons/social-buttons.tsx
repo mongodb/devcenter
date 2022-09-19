@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 import { Author } from '../../interfaces/author';
 
@@ -36,6 +37,9 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
             sx={{
                 display: 'flex',
                 gap: 'inc30',
+                span: {
+                    display: 'block !important', // Override next/image default styling
+                },
             }}
             className={className}
         >
@@ -47,10 +51,11 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                 rel="noreferrer"
                 title="Share on Facebook"
             >
-                <img
+                <Image
                     src="/developer/facebook.svg"
                     alt="facebook icon"
-                    sx={{ width: '12px', height: '12px', display: 'block' }}
+                    width={12}
+                    height={12}
                 />
             </a>
             <a
@@ -60,10 +65,11 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                 href={`https://twitter.com/intent/tweet?url=${url}&text=${tweetText}`}
                 title="Share on Twitter"
             >
-                <img
+                <Image
                     src="/developer/twitter.svg"
                     alt="twitter icon"
-                    sx={{ width: '12px', height: '12px', display: 'block' }}
+                    width={12}
+                    height={12}
                 />
             </a>
             <a
@@ -74,10 +80,11 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                 href={`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${heading}&summary=${heading}&source=MongoDB`}
                 title="Share on LinkedIn"
             >
-                <img
+                <Image
                     src="/developer/linkedin.svg"
                     alt="linkedin icon"
-                    sx={{ width: '12px', height: '12px', display: 'block' }}
+                    width={12}
+                    height={12}
                 />
             </a>
         </div>

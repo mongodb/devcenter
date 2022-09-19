@@ -38,7 +38,7 @@ import PodcastPlayer from '../../components/podcast-player/podcast-player';
 import { VideoEmbed } from '../../components/article-body/body-components/video-embed';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import Image from 'next/image';
-import { getCardProps, thumbnailLoader } from '../../components/card/utils';
+import { getCardProps } from '../../components/card/utils';
 import parse from 'html-react-parser';
 import { DocumentBody } from '../../components/article-body/document-body';
 import SeriesCard from '../../components/series-card';
@@ -349,7 +349,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         <Image
                             alt={parseUndefinedValue(image?.alt)}
                             src={getPlaceHolderImage(image?.url)}
-                            loader={thumbnailLoader}
                             sx={{
                                 borderRadius: 'inc30',
                                 objectFit: 'cover',

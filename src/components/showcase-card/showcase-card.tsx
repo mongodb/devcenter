@@ -14,6 +14,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
     links,
     defaultLink,
     wholeCardHref,
+    imageStyles,
 }) => {
     const smallImage = !description && !cta && image;
     const imageDimensions = smallImage ? ['40px', null, '56px'] : '72px';
@@ -44,6 +45,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
                             width: imageDimensions,
                             height: imageDimensions,
                         },
+                        ...imageStyles,
                     }}
                 >
                     {image}

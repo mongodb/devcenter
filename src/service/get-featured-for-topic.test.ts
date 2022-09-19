@@ -3,6 +3,11 @@ import { FeaturedItem, FeaturedResponse } from '../interfaces/featured';
 import { getFeaturedForTopic } from './get-featured-for-topic';
 import * as apiRequestModule from '../api-requests/get-featured-for-topic';
 
+jest.mock('../api-requests/get-featured-for-topic', () => ({
+    __esModule: true,
+    ...jest.requireActual('../api-requests/get-featured-for-topic'),
+}));
+
 const featuredArticles: FeaturedResponse = {
     articles: [
         { title: 'Article 1' },
