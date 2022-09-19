@@ -236,7 +236,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         >
             <div>
                 <Image
-                    src={getURLPath('/no-results.png') as string}
+                    src={getURLPath('/no-results.png', false) as string}
                     alt="No Results"
                     height={500}
                     width={500}

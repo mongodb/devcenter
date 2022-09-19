@@ -219,7 +219,7 @@ const Search: NextPage<SearchProps> = ({
         >
             <div>
                 <NextImage
-                    src={getURLPath('/no-results.png') as string}
+                    src={getURLPath('/no-results.png', false) as string}
                     alt="No Results"
                     height={500}
                     width={500}
