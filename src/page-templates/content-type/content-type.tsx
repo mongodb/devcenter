@@ -12,6 +12,7 @@ import {
     TextInput,
     ESystemIconNames,
     Button,
+    Select,
 } from '@mdb/flora';
 
 import Results from '../../components/search/results';
@@ -51,8 +52,15 @@ import {
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
+<<<<<<< HEAD
 import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 import { getMetaDescr } from '../../utils/seo';
+=======
+import {
+    sortByOptions,
+    DEFAULT_PAGE_SIZE,
+} from '../../components/search/utils';
+>>>>>>> d7dcef6 (sort by functionality)
 
 let pluralize = require('pluralize');
 
@@ -120,6 +128,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         searchString,
         setSearchString,
         numberOfResults,
+        onSort,
+        sortBy,
     } = useSearch(
         contentType,
         undefined,
@@ -145,10 +155,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         [contentType]
     );
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-
-    const clearFilters = () => {
-        setAllFilters([]);
-    };
 
     const clearPagination = () => {
         setInitialPageResetFlag(true);
@@ -232,6 +238,22 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setFilterTagsExpanded(false);
     }
 
+    const sortByDropdown = (
+        <Select
+            label="Sort by"
+            name="sort-by-dropdown"
+            options={Object.keys(sortByOptions)}
+            value={sortBy}
+            onSelect={onSort}
+            width="355px"
+            // height="86px"
+            sx={{
+                display: ['none', null, null, 'block'],
+                marginLeft: '20px', // check for inc val
+            }}
+        />
+    );
+
     const CTAElement = (
         <div sx={CTAContainerStyles}>
             <Button
@@ -277,50 +299,47 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     );
 
     const resultsStringAndTags = (
-        <div sx={resultsStringAndTagsStyles}>
-            {(data || isValidating) && (
-                <TypographyScale variant="heading2" sx={h5Styles}>
-                    {!allFilters.length && !searchString
-                        ? `All ${pluralize(contentType)}`
-                        : isValidating
-                        ? ''
-                        : numberOfResults === 1
-                        ? '1 Result'
-                        : `${numberOfResults} Results`}
-                    {!isValidating && !!searchString && !allFilters.length
-                        ? ` for "${searchString}"`
-                        : ''}
-                </TypographyScale>
-            )}
+        <div sx={{ marginBottom: 'inc50' }}>
+            <div sx={resultsStringAndTagsStyles}>
+                {(data || isValidating) && (
+                    <TypographyScale variant="heading5">
+                        {!allFilters.length && !searchString
+                            ? `All ${pluralize(contentType)}`
+                            : isValidating
+                            ? ''
+                            : numberOfResults === 1
+                            ? '1 Result'
+                            : `${numberOfResults} Results`}
+                        {!isValidating && !!searchString && !allFilters.length
+                            ? ` for "${searchString}"`
+                            : ''}
+                    </TypographyScale>
+                )}
+                <Button
+                    hasIcon
+                    iconPosition="right"
+                    iconStrokeWeight="medium"
+                    iconName={ESystemIconNames.FILTER_HAMBURGER}
+                    onClick={() => setMobileFiltersOpen(true)}
+                    sx={{
+                        display: ['block', null, null, 'none'],
+                        justifyContent: 'center',
+                    }}
+                >
+                    Filter & Sort
+                    {!!allFilters.length && ` (${allFilters.length})`}
+                </Button>
+                {!searchString && !hasFiltersSet && sortByDropdown}
+            </div>
             {hasFiltersSet && (
                 <FilterTagSection
                     allFilters={allFilters}
                     filterTagsExpanded={filterTagsExpanded}
                     setFilterTagsExpanded={setFilterTagsExpanded}
                     onFilterTagClose={onFilterTagClose}
-                    clearFilters={clearFilters}
+                    clearFilters={() => setAllFilters([])}
                 />
             )}
-            <div
-                sx={{
-                    display: ['block', null, null, 'none'],
-                    width: ['100%', null, 'unset'],
-                    '&>div': { width: '100%' },
-                }}
-            >
-                <Button
-                    sx={{
-                        justifyContent: 'center',
-                    }}
-                    iconName={ESystemIconNames.FILTER_HAMBURGER}
-                    iconStrokeWeight="medium"
-                    hasIcon={true}
-                    iconPosition="right"
-                    onClick={() => setMobileFiltersOpen(true)}
-                >
-                    Filter{!!allFilters.length && ` (${allFilters.length})`}
-                </Button>
-            </div>
         </div>
     );
 
@@ -422,6 +441,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             sx={{
                                 ...searchBoxStyles,
                                 marginBottom: ['inc40', null, 'inc70'],
+                                display: 'flex',
                             }}
                         >
                             <TextInput
@@ -436,6 +456,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                                     onSearch(e);
                                 }}
                             />
+                            {(!!searchString || hasFiltersSet) &&
+                                sortByDropdown}
                         </div>
                         {!searchString && !hasFiltersSet && (
                             <>
@@ -520,6 +542,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         clearPagination();
                         onFilter(filters);
                     }}
+                    onSort={onSort}
+                    sortBy={sortBy}
                     allFilters={allFilters}
                     l1Items={l1Items}
                     languageItems={languageItems}

@@ -13,7 +13,17 @@ import { titleStyles, itemsStyles } from './styles';
 const FILTER_STEP = 5;
 
 const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
-    ({ className, title, items, filters, setFilters, isMobile = false }) => {
+    ({
+        className,
+        title,
+        items,
+        filters,
+        setFilters = () => {},
+        isMobile = false,
+        setSort = () => {},
+        isRadio = false,
+        sortBy,
+    }) => {
         const [expanded, setExpanded] = useState<boolean>(
             isMobile ? false : true
         );
@@ -51,6 +61,13 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
 
         const mobileFilterList = (() => {
             if (!title) return null;
+            if (isRadio) {
+                return (
+                    <TypographyScale variant="body1" color="mark">
+                        {sortBy}
+                    </TypographyScale>
+                );
+            }
             const getFilterNames = (items: FilterItem[]): string[] => {
                 let filterList: string[] = [];
 
@@ -103,14 +120,36 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                         {isMobile && !expanded && mobileFilterList}
                     </div>
                 )}
-                {expanded && (
+                {expanded && isRadio && (
+                    <div>
+                        {' '}
+                        {/* Temp implementation until Flora release of RadioGroup component */}
+                        <input
+                            type="radio"
+                            id="recent"
+                            name="sort-group"
+                            value="Most Recent"
+                            onChange={() => setSort('Most Recent')}
+                        />
+                        <label htmlFor="recent">Most Recent</label>
+                        <br />
+                        <input
+                            type="radio"
+                            id="rated"
+                            name="sort-group"
+                            value="Highest Rated"
+                            onChange={() => setSort('Highest Rated')}
+                        />
+                        <label htmlFor="rated">Highest Rated</label>
+                    </div>
+                )}
+                {expanded && !isRadio && (
                     <>
                         <div sx={itemsStyles(title)}>
                             {items
                                 .slice(0, showAll ? undefined : FILTER_STEP) // Show FILTER_STEP to start, then all if they click "Show more"
                                 .map(item => {
-                                    const { subItems, name, type, count } =
-                                        item;
+                                    const { subItems, name, type } = item;
                                     if (subItems && subItems.length) {
                                         return (
                                             <div
@@ -123,7 +162,6 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                                     name={`${name} ${type} ${
                                                         isMobile ? 'mobile' : ''
                                                     }`}
-                                                    // label={`${name} (${count})`}
                                                     label={name}
                                                     onToggle={checked =>
                                                         onCheckToggle(
@@ -158,7 +196,6 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                             name={`${name} ${type} ${
                                                 isMobile ? 'mobile' : ''
                                             }`}
-                                            // label={`${name} (${count})`}
                                             label={name}
                                             onToggle={checked =>
                                                 onCheckToggle(checked, item)

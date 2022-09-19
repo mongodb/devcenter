@@ -67,7 +67,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
         error,
         isValidating,
         resultsToShow,
-        numberOfResults,
         setResultsToShow,
         allFilters,
         setAllFilters,
@@ -269,7 +268,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     />
                 </div>
             )}
-            <div sx={{}}></div>
             {!!resultData.length || resultIsValidating || error ? (
                 <>
                     <Results

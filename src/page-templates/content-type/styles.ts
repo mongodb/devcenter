@@ -8,17 +8,16 @@ export const desktopFiltersStyles = {
 };
 
 export const resultsStringAndTagsStyles = {
-    marginBottom: 'inc50',
     display: 'flex',
-    flexDirection: [
-        'column' as 'column',
-        null,
-        'row' as 'row',
-        'column' as 'column',
-    ],
-    justifyContent: ['start', null, 'space-between', 'start'],
-    alignItems: ['start', null, 'center', 'start'],
+    flexDirection: ['column' as 'column', null, 'row' as 'row'],
+    justifyContent: 'space-between',
+    alignItems: ['start', null, 'center', null],
     gap: 'inc30',
+    marginBottom: 'inc30',
+    // have to get crazy with selectors because Flora wraps everything in a div but then doesn't provide a way to style those wrapper divs which is awesome :)
+    '> div:nth-child(2)': {
+        width: ['100%', null, 'auto'],
+    },
 };
 
 export const tagWrapper = {

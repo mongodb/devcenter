@@ -19,6 +19,7 @@ export const searchBoxSortBarWrapperStyles = {
 export const searchBoxStyles = {
     '& > div': {
         width: '100%',
+        height: '78px',
         maxWidth: 'unset',
     },
     gridColumn: ['span 1', null, 'span 5', 'span 2'],
