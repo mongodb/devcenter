@@ -8,6 +8,7 @@ import ContentTypePage from '../page-templates/content-type';
 import { ContentTypePageProps } from '../page-templates/content-type/types';
 import { getContentTypePageData } from '../page-templates/content-type/content-type-data';
 import { parsePageNumber } from '../utils/page-type-factory';
+import { isValidPage } from '../components/search/utils';
 
 const NewsPage: NextPage<ContentTypePageProps> = props => {
     return <ContentTypePage {...props} />;
@@ -23,6 +24,14 @@ export const getServerSideProps: GetServerSideProps = async (
         'News & Announcements',
         pageNumber
     );
+    if (
+        data?.initialSearchContent &&
+        !isValidPage(data?.initialSearchContent.length, pageNumber)
+    ) {
+        return {
+            notFound: true,
+        };
+    }
     return {
         props: data,
     };

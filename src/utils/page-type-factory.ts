@@ -33,7 +33,7 @@ export const pageTypeFactory = async (
 export const parsePageNumber = (page: string | string[] | undefined) => {
     let pageNumber: number;
     try {
-        pageNumber = Math.abs(parseInt(page as string));
+        pageNumber = parseInt(page as string);
     } catch (e) {
         pageNumber = 1;
     }

@@ -256,17 +256,17 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
 export default AuthorPage;
 
 interface IParams extends ParsedUrlQuery {
-    slug: string[];
+    name: string;
 } // Need this to avoid TS errors.
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // All author pages ([...slug.tsx]) are not generated at build time.
+    // All author pages ([name.tsx]) are not generated at build time.
     return { paths: [], fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const { slug } = params as IParams;
-    const slugString = '/author/' + slug[0];
+    const { name } = params as IParams;
+    const slugString = '/author/' + name;
 
     let author: Author | null;
     try {

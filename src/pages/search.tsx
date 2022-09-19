@@ -33,7 +33,11 @@ import {
     searchBoxSortBarWrapperStyles,
     sortBoxStyles,
 } from '../components/search/styles';
-import { sortByOptions, DEFAULT_PAGE_SIZE } from '../components/search/utils';
+import {
+    sortByOptions,
+    DEFAULT_PAGE_SIZE,
+    isValidPage,
+} from '../components/search/utils';
 
 import { Grid } from 'theme-ui';
 
@@ -447,6 +451,11 @@ export const getServerSideProps: GetServerSideProps = async (
     try {
         // Used for "load more" crawling
         initialSearchContent = await getAllSearchContent();
+        if (!isValidPage(initialSearchContent.length, pageNumber)) {
+            return {
+                notFound: true,
+            };
+        }
     } catch (e) {
         Sentry.captureException(e);
     }
