@@ -38,8 +38,6 @@ const fontURLTransformer =
                         'g'
                     ).exec(content);
 
-                    console.log(match);
-
                     if (match && match[2]) {
                         const localFontPath = `/developer/fonts/${match[1]}`;
                         element.return = `src:url(${localFontPath})${match[2]};`;
