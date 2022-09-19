@@ -87,7 +87,8 @@ const Card: React.FunctionComponent<CardProps> = ({
                                 src={
                                     pillCategory === 'Podcast'
                                         ? (getURLPath(
-                                              '/play-button.svg'
+                                              '/play-button.svg',
+                                              false
                                           ) as string)
                                         : (thumbnail?.url as string)
                                 }
@@ -109,7 +110,8 @@ const Card: React.FunctionComponent<CardProps> = ({
                                         alt={'Play Button'}
                                         src={
                                             getURLPath(
-                                                '/play-button.svg'
+                                                '/play-button.svg',
+                                                false
                                             ) as string
                                         }
                                         width={60}
