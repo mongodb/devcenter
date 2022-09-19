@@ -30,11 +30,11 @@ const fontURLTransformer =
                     const content = children.toString().trim();
 
                     /*
-                        Match a string like "url(https://https://static.mongodb.com/com/fonts/EuclidCircularA-Medium-WebXL.woff2) format('woff2');" 
+                        Match a string like "url(https://static.mongodb.com/com/fonts/EuclidCircularA-Medium-WebXL.woff2) format('woff2');" 
                         and capture the font file name ("EuclidCircularA-Medium-WebXL.woff2") and anything after ("format('woff2')")
                     */
                     const match = new RegExp(
-                        `url\\(${escapedDomain}([a-zA-Z0-9\_\-]+\.[a-zA-Z0-9\_\-]+)\\)(.*)`,
+                        `url\\(${escapedDomain}([a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+)\\)(.*)`,
                         'g'
                     ).exec(content);
 
