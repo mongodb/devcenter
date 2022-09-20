@@ -54,6 +54,7 @@
         "remark-directive": "1.0.1",
         "remark-gfm": "1.0.0",
         "sanitize-html": "2.7.0",
+        "sharp": "0.31.0",
         "styled-components": "5.3.3",
         "stylis": "4.1.2",
         "swr": "1.2.1",
