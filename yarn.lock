@@ -7499,7 +7499,7 @@ shallowequal@^1.1.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha1-GI1SHelbkIdAT9TctosT3wrk5/g=
 
-sharp@^0.31.0:
+sharp@0.31.0:
   version "0.31.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/sharp/-/sharp-0.31.0.tgz#ce9b5202a5667486721cf07fd5b52360b1c2275a"
   integrity sha512-ft96f8WzGxavg0rkLpMw90MTPMUZDyf0tHjPPh8Ob59xt6KzX8EqtotcqZGUm7kwqpX2pmYiyYX2LL0IZ/FDEw==
