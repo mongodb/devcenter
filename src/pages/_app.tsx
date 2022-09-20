@@ -8,7 +8,9 @@ import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
+import { CacheProvider } from '@emotion/react';
 import { GTM_ID, pageView } from '../utils/gtm';
+import { customCache } from '../utils/emotion';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
 import { OverlayProvider } from '../contexts/overlay';
@@ -72,15 +74,17 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 refetchOnWindowFocus={true}
                 refetchInterval={0}
             >
-                <ThemeProvider theme={theme}>
-                    <OverlayProvider>
-                        <Layout pagePath={pagePath}>
-                            <ErrorBoundary>
-                                <Component {...pageProps} />
-                            </ErrorBoundary>
-                        </Layout>
-                    </OverlayProvider>
-                </ThemeProvider>
+                <CacheProvider value={customCache(theme)}>
+                    <ThemeProvider theme={theme}>
+                        <OverlayProvider>
+                            <Layout pagePath={pagePath}>
+                                <ErrorBoundary>
+                                    <Component {...pageProps} />
+                                </ErrorBoundary>
+                            </Layout>
+                        </OverlayProvider>
+                    </ThemeProvider>
+                </CacheProvider>
             </SessionProvider>
         </>
     );
