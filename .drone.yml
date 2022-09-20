@@ -23,7 +23,7 @@ steps:
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
-        from_secret: REALM_SEARCH_URL_STAGING
+        from_secret: REALM_SEARCH_URL
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
@@ -34,6 +34,8 @@ steps:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-staging
@@ -133,6 +135,8 @@ steps:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-production
@@ -212,7 +216,7 @@ steps:
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
-        from_secret: REALM_SEARCH_URL_STAGING
+        from_secret: REALM_SEARCH_URL
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
@@ -223,6 +227,8 @@ steps:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-staging-from-cron
@@ -293,6 +299,8 @@ steps:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-prod-from-cron
@@ -363,6 +371,8 @@ steps:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
         from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-preview

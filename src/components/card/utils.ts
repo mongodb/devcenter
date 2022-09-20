@@ -20,10 +20,6 @@ export const getLatestDate = (contentDate: string, updatedDate?: string) => {
     return latestDate;
 };
 
-export const thumbnailLoader = ({ src, width, quality }: ImageLoaderProps) => {
-    return `${src}?w=${width}&q=${quality || 90}`;
-};
-
 export const hasThumbnail = (variant: CardVariant, category: PillCategory) =>
     variant !== 'related' &&
     !(

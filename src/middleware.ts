@@ -1,7 +1,7 @@
 import { withAuth } from 'next-auth/middleware';
-import { NextRequest, NextResponse } from 'next/server';
-import { rewrites } from '../../config/rewrites';
-import { logRequestData } from '../utils/logger';
+import { NextRequest, NextResponse, userAgent } from 'next/server';
+import { rewrites } from '../config/rewrites';
+import { logRequestData } from './utils/logger';
 
 const middleware = async (req: NextRequest) => {
     const { pathname } = req.nextUrl;
@@ -18,34 +18,25 @@ const middleware = async (req: NextRequest) => {
         ['POST', 'PUT'].includes(req.method);
 
     if (checkRequest) {
-        let headers: { [key: string]: string } = {
-            'Content-Type': 'application/json',
-        };
-
         if (
             origin.replace(/^(https?:|)\/\//, '') !== host // Remove the protocol from the URL.
         ) {
-            const userAgent: any = req.ua;
+            const ua: any = userAgent(req);
+
             console.log(
-                `${req.ip} blocked because of bad user agent (${userAgent?.browser?.name}) or origin (${origin})`
-            );
-            const res = new NextResponse(
-                JSON.stringify({
-                    error: { message: 'Something went wrong' },
-                }),
-                {
-                    status: 500,
-                    headers,
-                }
+                `${req.ip} blocked because of bad user agent (${ua?.browser?.name}) or origin (${origin})`
             );
 
+            const blockedURL = new URL('/api/blocked', req.url);
+            blockedURL.searchParams.set('from', req.nextUrl.pathname);
+
+            const res = NextResponse.rewrite(blockedURL);
             logRequestData(pathname, req.method, res.status);
             return res;
         }
+
         const res = NextResponse.next();
-        for (const key in headers) {
-            res.headers.set(key, headers[key]);
-        }
+        res.headers.set('Content-Type', 'application/json');
 
         logRequestData(pathname, req.method, res.status);
         return res;

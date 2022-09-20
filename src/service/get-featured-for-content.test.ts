@@ -3,6 +3,11 @@ import { Featured, FeaturedItem } from '../interfaces/featured';
 import { getFeaturedForContent } from './get-featured-for-content';
 import * as getFeaturedForTopicModule from './get-featured-for-topic';
 
+jest.mock('./get-featured-for-topic', () => ({
+    __esModule: true,
+    ...jest.requireActual('./get-featured-for-topic'),
+}));
+
 const featuredArticles: Featured = {
     articles: ['Article 1', 'Article 2', 'Article 3', 'Article 4'],
     podcasts: [],

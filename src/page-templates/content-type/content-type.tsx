@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/nextjs';
 import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
-import NextImage from 'next/image';
+import Image from 'next/image';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 
@@ -39,7 +39,6 @@ import TechnologiesSection from './technologies-section';
 import ProductsSection from './products-section';
 
 import { getURLPath } from '../../utils/format-url-path';
-import { thumbnailLoader } from '../../components/card/utils';
 import useSearch from '../../hooks/search';
 import { hasEmptyFilterAndQuery, isEmptyArray } from '../../hooks/search/utils';
 import FilterTagSection from '../../components/search-filters/filter-tag-section';
@@ -237,9 +236,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             }}
         >
             <div>
-                <NextImage
-                    loader={thumbnailLoader}
-                    src={getURLPath('/no-results.png') as string}
+                <Image
+                    src={getURLPath('/no-results.png', false) as string}
                     alt="No Results"
                     height={500}
                     width={500}
