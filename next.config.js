@@ -56,6 +56,7 @@ const configVals = {
     basePath: basePath,
     reactStrictMode: true,
     images: {
+        minimumCacheTTL: 86400,
         remotePatterns: [
             {
                 protocol: 'https',
@@ -84,7 +85,24 @@ const configVals = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'public, must-revalidate, proxy-revalidate, max-age=300',
+                        value: 'public, must-revalidate, proxy-revalidate, max-age=3600',
+                    },
+                    {
+                        key: 'Strict-Transport-Security',
+                        value: 'max-age=63072000; includeSubDomains; preload',
+                    },
+                    {
+                        key: 'X-Frame-Options',
+                        value: 'SAMEORIGIN',
+                    },
+                ],
+            },
+            {
+                source: '/(.*).(jpg|jpeg|png|gif|svg|ico|woff2|ttf)', // all images and fonts
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
                     },
                     {
                         key: 'Strict-Transport-Security',
@@ -103,15 +121,6 @@ const configVals = {
                     {
                         key: 'Cache-Control',
                         value: 'no-store, max-age=0',
-                    },
-                ],
-            },
-            {
-                source: '/_next/:path',
-                headers: [
-                    {
-                        key: 'Cache-Control',
-                        value: 'public, max-age=300, immutable',
                     },
                 ],
             },
