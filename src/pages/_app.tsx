@@ -41,6 +41,16 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
         <>
             <Head>
                 <title>MongoDB Developer Center</title>
+                <link
+                    rel="preload"
+                    href="//cdn.optimizely.com/js/15508090763.js"
+                    as="script"
+                />
+                <link rel="preconnect" href="//logx.optimizely.com" />
+                <script
+                    src="//cdn.optimizely.com/js/15508090763.js"
+                    async
+                ></script>
                 {pageDescription && (
                     <meta name="description" content={pageDescription} />
                 )}
@@ -49,11 +59,6 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                     <link rel="canonical" href={`${canonicalUrl}`} />
                 )}
             </Head>
-            <Script
-                id="optimizely"
-                strategy="beforeInteractive"
-                src="https://cdn.optimizely.com/js/15508090763.js"
-            />
             {/* Google Tag Manager - Global base code */}
             <Script
                 id="gtag-base"
