@@ -43,6 +43,12 @@ export const getServerSideProps: GetServerSideProps = async (
     let pageNumber: number;
     switch (pageType) {
         case PageType.Content:
+            // cache content only for 5 minutes
+            context.res.setHeader(
+                'Cache-Control',
+                'public, must-revalidate, proxy-revalidate, max-age=300'
+            );
+
             data = await getContentPageData(slug);
             break;
         case PageType.Topic:
