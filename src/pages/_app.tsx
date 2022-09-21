@@ -62,6 +62,7 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 })(window,document,'script','dataLayer', '${GTM_ID}');
                 `,
                 }}
+                async
             />
             <SessionProvider
                 session={session}

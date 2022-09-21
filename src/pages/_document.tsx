@@ -47,6 +47,8 @@ export default class MyDocument extends Document {
                         id="optimizely-snippet"
                         strategy="beforeInteractive"
                         src="https://cdn.optimizely.com/js/15508090763.js"
+                        defer={false}
+                        async
                     />
                 </body>
             </Html>
