@@ -44,8 +44,8 @@ export default class MyDocument extends Document {
                     <Main />
                     <NextScript />
                     <Script
-                        id="optimizely"
-                        strategy="afterInteractive"
+                        id="optimizely-snippet"
+                        strategy="beforeInteractive"
                         src="https://cdn.optimizely.com/js/15508090763.js"
                     />
                 </body>
