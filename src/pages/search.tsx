@@ -449,7 +449,11 @@ export const getServerSideProps: GetServerSideProps = async (
     try {
         // Used for "load more" crawling
         initialSearchContent = await getAllSearchContent();
-        if (!isValidPage(initialSearchContent.length, pageNumber)) {
+        if (
+            initialSearchContent &&
+            initialSearchContent.length > 0 &&
+            !isValidPage(initialSearchContent.length, pageNumber)
+        ) {
             return {
                 notFound: true,
             };

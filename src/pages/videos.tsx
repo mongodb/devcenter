@@ -23,6 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (
     const data = await getContentTypePageData('Video', pageNumber);
     if (
         data?.initialSearchContent &&
+        data?.initialSearchContent.length > 0 &&
         !isValidPage(data?.initialSearchContent.length, pageNumber)
     ) {
         return {

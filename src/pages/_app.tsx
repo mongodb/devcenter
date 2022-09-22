@@ -49,11 +49,6 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                     <link rel="canonical" href={`${canonicalUrl}`} />
                 )}
             </Head>
-            <Script
-                id="optimizely"
-                strategy="beforeInteractive"
-                src="https://cdn.optimizely.com/js/15508090763.js"
-            />
             {/* Google Tag Manager - Global base code */}
             <Script
                 id="gtag-base"
@@ -67,6 +62,7 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 })(window,document,'script','dataLayer', '${GTM_ID}');
                 `,
                 }}
+                async
             />
             <SessionProvider
                 session={session}
