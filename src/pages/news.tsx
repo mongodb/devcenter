@@ -26,6 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (
     );
     if (
         data?.initialSearchContent &&
+        data?.initialSearchContent.length > 0 &&
         !isValidPage(data?.initialSearchContent.length, pageNumber)
     ) {
         return {
