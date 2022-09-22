@@ -4,6 +4,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import getConfig from 'next/config';
 
 import {
     GridLayout,
@@ -51,6 +52,7 @@ import {
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
 import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
+import { getMetaDescr } from '../../utils/seo';
 
 let pluralize = require('pluralize');
 
@@ -72,12 +74,22 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     slug,
 }) => {
     const router = useRouter();
+    const { publicRuntimeConfig } = getConfig();
+    const { asPath, route } = router;
+
     const totalResults = initialSearchContent
         ? initialSearchContent.length
         : DEFAULT_PAGE_SIZE;
     const maxPage = Math.ceil(totalResults / DEFAULT_PAGE_SIZE);
     const [currentPage, setCurrentPage] = useState(
         pageNumber && pageNumber > maxPage ? maxPage : pageNumber
+    );
+
+    const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
+    const [metaDescr, setMetaDescr] = useState(
+        defaultMetaDescr && pageNumber > 1
+            ? `${defaultMetaDescr} - Page ${pageNumber}`
+            : defaultMetaDescr
     );
 
     // Initial search data is the search content for initial page load (provided
@@ -143,6 +155,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setInitialSearchData(undefined);
         setCurrentPage(1);
         setPageTitle(buildPageTitle(1));
+        setMetaDescr(defaultMetaDescr);
 
         router.replace(
             {
@@ -178,6 +191,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
             setCurrentPage(nextPage);
             setPageTitle(buildPageTitle(nextPage));
+            setMetaDescr(
+                defaultMetaDescr && nextPage > 1
+                    ? `${defaultMetaDescr} - Page ${nextPage}`
+                    : defaultMetaDescr
+            );
             router.replace(
                 {
                     pathname: router.pathname,
@@ -364,13 +382,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     return (
         <>
-            <NextSeo
-                title={pageTitle}
-                {...(['Article', 'Code Example'].includes(contentType) &&
-                    description && {
-                        description,
-                    })}
-            />
+            <NextSeo title={pageTitle} description={metaDescr} />
             <Hero
                 crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
                 name={pluralize(contentType)}
