@@ -17,6 +17,11 @@ import DropDownMenu from './dropdown-menu';
 import { navWrapperStyles, navContainerStyles } from './desktop-styles';
 import { getURLPath } from '../../utils/format-url-path';
 import { layers } from '../../styled/layout';
+import {
+    useLinkTracking,
+    trackSecondaryNavLink,
+    trackSecondaryNavToggle,
+} from './tracking';
 
 const linkWrapperStyles = {
     position: 'relative' as 'relative',
@@ -81,9 +86,19 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
         : null;
     const [isOpen, setIsOpen] = useState(false);
     const onClickShowMenu = () => {
+        trackSecondaryNavToggle(!isOpen);
         setIsOpen(isOpen => !isOpen);
     };
-    const dropdownEl = useRef<HTMLDivElement>(null);
+
+    // Keep in state to pass the updated version to tracking handler
+    const [dropdownEl, setDropdownEl] = useState<HTMLElement | null>();
+    // Also keep in a ref to avoid stale state in click listener
+    const dropdownRef = useRef<HTMLElement>();
+    dropdownRef.current = dropdownEl || undefined;
+    const parentRef = useRef<HTMLDivElement>(null);
+
+    useLinkTracking(parentRef.current, trackSecondaryNavLink);
+    useLinkTracking(dropdownEl, trackSecondaryNavLink);
 
     useEffect(() => {
         const checkIfClickedOutside = (event: MouseEvent) => {
@@ -91,10 +106,11 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
             // then close the menu
             if (
                 isOpen &&
-                dropdownEl.current &&
-                !dropdownEl.current.contains(event.target as HTMLDivElement)
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target as HTMLDivElement)
             ) {
                 setIsOpen(false);
+                trackSecondaryNavToggle(false);
             }
         };
 
@@ -107,7 +123,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
     }, [isOpen]);
 
     return (
-        <div sx={navWrapperStyles}>
+        <div ref={parentRef} sx={navWrapperStyles}>
             <nav sx={navContainerStyles}>
                 <div sx={{ ...linkWrapperStyles, whiteSpace: 'nowrap' }}>
                     <FloraLink
@@ -163,7 +179,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                                         </FloraLink>
                                     </div>
                                     {isOpen && (
-                                        <div ref={dropdownEl}>
+                                        <div ref={ref => setDropdownEl(ref)}>
                                             <DropDownMenu
                                                 items={dropDownItems}
                                             />
