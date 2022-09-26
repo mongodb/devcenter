@@ -381,6 +381,14 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     sx={{
                         marginBottom: ['inc20', null, null, 'inc40'],
                         whiteSpace: 'pre-wrap',
+                        a: {
+                            color: 'blue60',
+                            '&:hover': {
+                                borderBottomWidth: 2,
+                                borderBottomStyle: 'solid',
+                                borderBottomColor: 'blue80',
+                            },
+                        },
                     }}
                 >
                     {parse(parseUndefinedValue(description))}

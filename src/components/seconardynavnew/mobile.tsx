@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink, TypographyScale } from '@mdb/flora';
@@ -25,6 +25,11 @@ import {
 import { DropDownItem, DropDownItem2 } from './dropdown-menu';
 import { getURLPath } from '../../utils/format-url-path';
 import { layers } from '../../styled/layout';
+import {
+    useLinkTracking,
+    trackSecondaryNavLink,
+    trackSecondaryNavToggle,
+} from './tracking';
 
 const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -274,11 +279,16 @@ const MobileView = () => {
     const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
     const { setHasOverlay } = useContext(OverlayContext);
     const openMobileMenu = () => {
+        trackSecondaryNavToggle(!mobileMenuIsOpen);
         setMobileMenuIsOpen(!mobileMenuIsOpen);
         setHasOverlay(!mobileMenuIsOpen);
     };
+
+    const parentRef = useRef<HTMLDivElement>(null);
+    useLinkTracking(parentRef.current, trackSecondaryNavLink);
+
     return (
-        <div sx={navWrapperStyles(mobileMenuIsOpen)}>
+        <div ref={parentRef} sx={navWrapperStyles(mobileMenuIsOpen)}>
             <div
                 sx={{
                     position: 'sticky',
