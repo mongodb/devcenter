@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
                     />
                     <link
                         rel="dns-prefetch preconnect"
-                        href="https://cdn.optimizely.com/js/15508090763.js"
+                        href="https://cdn.optimizely.com/js/22247140071.js"
                     />
                     <link
                         rel="dns-prefetch preconnect"
@@ -31,7 +31,7 @@ export default class MyDocument extends Document {
                     ></link>
                     <link
                         rel="preload"
-                        href="https://cdn.optimizely.com/js/15508090763.js"
+                        href="https://cdn.optimizely.com/js/22247140071.js"
                         as="script"
                     ></link>
                 </Head>
@@ -49,7 +49,7 @@ export default class MyDocument extends Document {
                     <Script
                         id="optimizely-snippet"
                         strategy="beforeInteractive"
-                        src="https://cdn.optimizely.com/js/15508090763.js"
+                        src="https://cdn.optimizely.com/js/22247140071.js"
                         defer={false}
                         async
                     />
