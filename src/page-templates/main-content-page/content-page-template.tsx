@@ -110,6 +110,18 @@ const middleSectionStyles = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
 };
 
+const contentBodyStyles: ThemeUICSSObject = {
+    whiteSpace: 'pre-wrap',
+    a: {
+        color: 'blue60',
+        '&:hover': {
+            borderBottomWidth: 2,
+            borderBottomStyle: 'solid',
+            borderBottomColor: 'blue80',
+        },
+    },
+};
+
 const parseUndefinedValue = (description: string | undefined): string => {
     return description ? description : '';
 };
@@ -159,6 +171,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         liveSiteUrl,
         codeType,
         seo,
+        relevantLinks,
     } = contentItem;
     const [ratingStars, setRatingStars] = useState(0);
     const [feedbackId, setFeedbackId] = useState<string>('');
@@ -376,23 +389,29 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             }}
         >
             {vidOrPod && (
-                <TypographyScale
-                    variant="body1"
-                    sx={{
-                        marginBottom: ['inc20', null, null, 'inc40'],
-                        whiteSpace: 'pre-wrap',
-                        a: {
-                            color: 'blue60',
-                            '&:hover': {
-                                borderBottomWidth: 2,
-                                borderBottomStyle: 'solid',
-                                borderBottomColor: 'blue80',
-                            },
-                        },
-                    }}
-                >
-                    {parse(parseUndefinedValue(description))}
-                </TypographyScale>
+                <>
+                    <TypographyScale
+                        variant="body1"
+                        sx={{
+                            ...contentBodyStyles,
+                            marginBottom: ['inc20', null, null, 'inc40'],
+                        }}
+                    >
+                        {parse(parseUndefinedValue(description))}
+                    </TypographyScale>
+                    {relevantLinks && (
+                        <TypographyScale
+                            variant="body1"
+                            sx={{
+                                ...contentBodyStyles,
+                                display: 'block',
+                                marginTop: 'inc40',
+                            }}
+                        >
+                            {parse(parseUndefinedValue(relevantLinks))}
+                        </TypographyScale>
+                    )}
+                </>
             )}
             {vidOrPod && (
                 <Link

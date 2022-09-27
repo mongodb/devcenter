@@ -52,6 +52,7 @@ export const mapVideosToContentItems = (
             tags: flattenTags([v.otherTags]),
             title: v.title,
             seo: v.seo,
+            relevantLinks: v?.relevantLinks || '',
         };
         if (v.description) {
             item.description = v.description;
