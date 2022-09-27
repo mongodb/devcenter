@@ -9,6 +9,7 @@ export const videoFields = `
     title
     slug
     videoId
+    relevantLinks: relevant_links
     thumbnailUrl
     l1Product: l_1_product {
         name
