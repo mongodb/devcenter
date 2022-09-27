@@ -12,6 +12,7 @@ export interface Media {
     publishDate: string;
     title: string;
     slug: string;
+    relevantLinks?: string;
     thumbnailUrl?: string;
     l1Product?: L1ProductTag;
     l2Product?: L2ProductTag;

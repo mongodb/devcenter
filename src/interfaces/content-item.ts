@@ -20,6 +20,7 @@ export interface ContentItem {
     slug: string;
     tags: Tag[];
     title: string;
+    relevantLinks?: string;
     podcastFileUrl?: string;
     videoId?: string;
     series?: Series;
