@@ -9,7 +9,7 @@ steps:
     image: plugins/slack
     settings:
       channel: devcenter-testing
-      template: '{{repo.name}}-test-{{build.branch}} - #{{build.number}} TESTING SLACK INTEGRATION'
+      template: '{{repo.name}}-test-{{build.branch}} - #{{build.number}} TESTING SLACK INTEGRATION PRIVATE'
       webhook:
         from_secret: SLACK_WEBHOOK
 
