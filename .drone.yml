@@ -8,7 +8,7 @@ steps:
   - name: slack-notification
     image: plugins/slack
     settings:
-      channel: devhub-engineers
+      channel: devhubsquad
       template: '{{repo.name}}-test-{{build.branch}} - #{{build.number}} TESTING SLACK INTEGRATION'
       webhook:
         from_secret: SLACK_WEBHOOK
