@@ -1,23 +1,23 @@
----
-depends_on: null
-kind: pipeline
-type: kubernetes
-name: test
+# ---
+# depends_on: null
+# kind: pipeline
+# type: kubernetes
+# name: test
 
-steps:
-  - name: slack-notification
-    image: plugins/slack
-    settings:
-      channel: devcenter-testing
-      template: '{{repo.name}}-test-{{build.branch}} - #{{build.number}} TESTING SLACK INTEGRATION PRIVATE'
-      webhook:
-        from_secret: SLACK_WEBHOOK
+# steps:
+#   - name: slack-notification
+#     image: plugins/slack
+#     settings:
+#       channel: devcenter-testing
+#       template: '{{repo.name}}-test-{{build.branch}} - #{{build.number}} TESTING SLACK INTEGRATION PRIVATE'
+#       webhook:
+#         from_secret: SLACK_WEBHOOK
 
-trigger:
-  branch:
-    - DEVHUB-1506
-  event:
-    - push
+# trigger:
+#   branch:
+#     - DEVHUB-1506
+#   event:
+#     - push
 
 ---
 depends_on: null
