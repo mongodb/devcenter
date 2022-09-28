@@ -1,3 +1,25 @@
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: build-devcenter-staging
+
+steps:
+  - name: slack-notification
+    image: plugins/slack
+    settings:
+      channel: devhub-engineers
+      template: '{{repo.name}}-test-{{build.branch}} - #{{build.number}} TESTING SLACK INTEGRATION'
+      webhook:
+        from_secret: SLACK_WEBHOOK
+
+trigger:
+  branch:
+    - DEVHUB-1506
+  event:
+    - push
+
 ---
 depends_on: null
 kind: pipeline
