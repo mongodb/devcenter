@@ -1,9 +1,8 @@
-
 ---
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: build-devcenter-staging
+name: test
 
 steps:
   - name: slack-notification
