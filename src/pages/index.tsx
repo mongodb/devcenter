@@ -8,10 +8,11 @@ import {
     TypographyScale,
     LogoPaths,
 } from '@mdb/flora';
+
 import Image from 'next/image';
 
 import theme from '@mdb/flora/theme';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShowcaseCard from '../components/showcase-card';
 import {
     cardsLanguagesData,
@@ -20,7 +21,7 @@ import {
 } from '../data/homepage';
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
-import { layers } from '../styled/layout';
+import { layers, h5Styles } from '../styled/layout';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) => {
     const brandedIconUrl = `https://webimages.mongodb.com/_com_assets/icons/${imageString}.svg`;
@@ -124,11 +125,7 @@ const Home: NextPage<{}> = props => {
                         textAlign: 'center',
                     }}
                 >
-                    <TypographyScale
-                        customElement="h2"
-                        variant="body1"
-                        color="default"
-                    >
+                    <TypographyScale variant="body1" color="default">
                         The latest MongoDB tutorials, videos and code examples
                         with your languages and tools. A global community of
                         more than 7 million developers. Build something{' '}
@@ -147,7 +144,7 @@ const Home: NextPage<{}> = props => {
                         alignItems: 'center',
                     }}
                 >
-                    <TypographyScale variant="heading5">
+                    <TypographyScale variant="heading2" customStyles={h5Styles}>
                         Develop in your language
                     </TypographyScale>
                     <div
@@ -192,6 +189,7 @@ const Home: NextPage<{}> = props => {
                                         src={getImageSrc(imageString)}
                                         height={theme.sizes.inc80}
                                         width={theme.sizes.inc80}
+                                        alt={titleLink.text}
                                     />
                                 }
                                 links={links}
@@ -255,7 +253,10 @@ const Home: NextPage<{}> = props => {
                             alignItems: 'center',
                         }}
                     >
-                        <TypographyScale variant="heading5">
+                        <TypographyScale
+                            variant="heading2"
+                            customStyles={h5Styles}
+                        >
                             Integrate MongoDB with the technologies you use
                         </TypographyScale>
                         <div
@@ -296,6 +297,7 @@ const Home: NextPage<{}> = props => {
                                             src={getImageSrc(imageString)}
                                             height={theme.sizes.inc60}
                                             width={theme.sizes.inc60}
+                                            alt={titleLink.text}
                                         />
                                     }
                                     imageStyles={{
@@ -337,7 +339,10 @@ const Home: NextPage<{}> = props => {
                             alignItems: 'center',
                         }}
                     >
-                        <TypographyScale variant="heading5">
+                        <TypographyScale
+                            variant="heading2"
+                            customStyles={h5Styles}
+                        >
                             Start building with these MongoDB products
                         </TypographyScale>
                         <div
@@ -390,6 +395,7 @@ const Home: NextPage<{}> = props => {
                                             src={getImageSrc(imageString)}
                                             height={theme.sizes.inc80}
                                             width={theme.sizes.inc80}
+                                            alt={titleLink.text}
                                         />
                                     }
                                     cta={cta}

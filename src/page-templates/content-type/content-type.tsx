@@ -29,7 +29,7 @@ import {
 
 import { ContentTypePageProps } from './types';
 import { desktopFiltersStyles, resultsStringAndTagsStyles } from './styles';
-import { pageWrapper } from '../../styled/layout';
+import { h5Styles, pageWrapper } from '../../styled/layout';
 
 import { searchBoxStyles } from '../../components/search/styles';
 
@@ -279,7 +279,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const resultsStringAndTags = (
         <div sx={resultsStringAndTagsStyles}>
             {(data || isValidating) && (
-                <TypographyScale variant="heading5">
+                <TypographyScale variant="heading2" sx={h5Styles}>
                     {!allFilters.length && !searchString
                         ? `All ${pluralize(contentType)}`
                         : isValidating

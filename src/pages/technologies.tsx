@@ -43,6 +43,7 @@ const TechnologiesSection: React.FunctionComponent<{
                             <ThirdPartyLogo
                                 sx={iconStyles}
                                 variant={technologyToLogo[tagName]}
+                                href={slug}
                             />
                         );
                     }

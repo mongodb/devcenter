@@ -36,6 +36,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
                         left: 0,
                         top: 0,
                     }}
+                    aria-label={titleLink.text}
                 />
             )}
             {image && (

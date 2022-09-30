@@ -23,6 +23,7 @@ export const topicWithIcon = (
                 <ThirdPartyLogo
                     sx={iconStyles}
                     variant={technologyToLogo[item.title]}
+                    href={item.href}
                 />
             );
         }
