@@ -61,9 +61,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
             </div>
             <SecondaryNav />
             <Main>{children}</Main>
-            <div>
-                <UnifiedFooter hideLocale />
-            </div>
+            <UnifiedFooter hideLocale />
         </div>
     );
 };

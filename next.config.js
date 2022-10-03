@@ -115,7 +115,8 @@ const configVals = {
                 ],
             },
             {
-                source: '/(.*).js',
+                //https://github.com/nextauthjs/next-auth/issues/2408
+                source: '/api/auth/:slug',
                 headers: [
                     {
                         key: 'Cache-Control',
@@ -143,7 +144,6 @@ const configVals = {
         return config;
     },
     swcMinify: true,
-    productionBrowserSourceMaps: true,
 };
 
 const sentryWebpackPluginOptions = {
