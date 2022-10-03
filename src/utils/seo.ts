@@ -36,7 +36,7 @@ export const useEnsureImageAlts = (parent: HTMLElement | undefined | null) => {
                         src
                     );
 
-                img.setAttribute('alt', (match && match[1]) || 'Image');
+                img.setAttribute('alt', (match && match[1]) || '');
             }
         });
     }, [parent]);
