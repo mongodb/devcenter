@@ -1,14 +1,17 @@
-import { useState, memo } from 'react';
+import { useState, Fragment, memo } from 'react';
 import {
     TypographyScale,
     SystemIcon,
     ESystemIconNames,
     Checkbox,
     Link,
+    RadioGroup,
+    Radio,
 } from '@mdb/flora';
 
 import { FilterGroupProps, FilterItem } from './types';
 import { titleStyles, itemsStyles } from './styles';
+import { SortByTypes } from '../search/types';
 
 const FILTER_STEP = 5;
 
@@ -21,7 +24,6 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
         setFilters = () => {},
         isMobile = false,
         setSort = () => {},
-        isRadio = false,
         sortBy,
     }) => {
         const [expanded, setExpanded] = useState<boolean>(
@@ -61,7 +63,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
 
         const mobileFilterList = (() => {
             if (!title) return null;
-            if (isRadio) {
+            if (sortBy) {
                 return (
                     <TypographyScale variant="body1" color="mark">
                         {sortBy}
@@ -120,48 +122,31 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                         {isMobile && !expanded && mobileFilterList}
                     </div>
                 )}
-                {expanded && isRadio && (
-                    <div>
-                        {' '}
-                        {/* Temp implementation until Flora release of RadioGroup component */}
-                        <input
-                            type="radio"
-                            id="recent"
-                            name="sort-group"
-                            value="Most Recent"
-                            onChange={() => setSort('Most Recent')}
-                        />
-                        <label htmlFor="recent">Most Recent</label>
-                        <br />
-                        <input
-                            type="radio"
-                            id="rated"
-                            name="sort-group"
-                            value="Highest Rated"
-                            onChange={() => setSort('Highest Rated')}
-                        />
-                        <label htmlFor="rated">Highest Rated</label>
-                    </div>
-                )}
-                {expanded && !isRadio && (
-                    <>
-                        <div sx={itemsStyles(title)}>
-                            {items
-                                .slice(0, showAll ? undefined : FILTER_STEP) // Show FILTER_STEP to start, then all if they click "Show more"
-                                .map(item => {
-                                    const { subItems, name, type } = item;
-                                    if (subItems && subItems.length) {
+
+                {expanded && (
+                    <div sx={itemsStyles(title)}>
+                        {!sortBy && (
+                            <>
+                                {items
+                                    .slice(0, showAll ? undefined : FILTER_STEP) // Show FILTER_STEP to start, then all if they click "Show more"
+                                    .map(item => {
+                                        const { subItems, name, type } = item;
+                                        const hasSubItems =
+                                            subItems && !!subItems.length;
+                                        const key = `${name} ${type} ${
+                                            isMobile ? 'mobile' : ''
+                                        }`;
+
                                         return (
-                                            <div
-                                                // Need to specify mobile here or it gets confused with mobile and desktop checkboxes present.
-                                                key={`${name} ${type} ${
-                                                    isMobile ? 'mobile' : ''
-                                                }`}
+                                            <Fragment
+                                                key={
+                                                    hasSubItems
+                                                        ? key
+                                                        : undefined
+                                                }
                                             >
                                                 <Checkbox
-                                                    name={`${name} ${type} ${
-                                                        isMobile ? 'mobile' : ''
-                                                    }`}
+                                                    name={key}
                                                     label={name}
                                                     onToggle={checked =>
                                                         onCheckToggle(
@@ -179,47 +164,47 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                                         )
                                                     }
                                                 />
-                                                <FilterGroup
-                                                    sx={{ marginLeft: 'inc40' }}
-                                                    items={subItems}
-                                                    filters={filters}
-                                                    setFilters={setFilters}
-                                                />
-                                            </div>
+                                                {hasSubItems && (
+                                                    <FilterGroup
+                                                        sx={{
+                                                            marginLeft: 'inc40',
+                                                        }}
+                                                        items={subItems}
+                                                        filters={filters}
+                                                        setFilters={setFilters}
+                                                    />
+                                                )}
+                                            </Fragment>
                                         );
-                                    }
-                                    return (
-                                        <Checkbox
-                                            key={`${name} ${type} ${
-                                                isMobile ? 'mobile' : ''
-                                            }`}
-                                            name={`${name} ${type} ${
-                                                isMobile ? 'mobile' : ''
-                                            }`}
-                                            label={name}
-                                            onToggle={checked =>
-                                                onCheckToggle(checked, item)
-                                            }
-                                            checked={
-                                                !!filters.find(
-                                                    filter =>
-                                                        filter.type === type &&
-                                                        filter.name === name
-                                                )
-                                            }
-                                        />
-                                    );
-                                })}
-                        </div>
-                        {items.length > FILTER_STEP && (
-                            <Link
-                                onClick={() => setShowAll(!showAll)}
-                                sx={{ marginTop: 'inc30' }}
-                            >
-                                Show {showAll ? 'less' : 'more'}
-                            </Link>
+                                    })}
+
+                                {items.length > FILTER_STEP && (
+                                    <Link
+                                        onClick={() => setShowAll(!showAll)}
+                                        sx={{ marginTop: 'inc30' }}
+                                    >
+                                        Show {showAll ? 'less' : 'more'}
+                                    </Link>
+                                )}
+                            </>
                         )}
-                    </>
+
+                        {sortBy && (
+                            <RadioGroup
+                                name={title || 'RadioGroup'}
+                                onChange={setSort}
+                                defaultChecked={sortBy}
+                            >
+                                {SortByTypes.map(
+                                    (filterType: string, index: number) => (
+                                        <Radio key={index} value={filterType}>
+                                            {filterType}
+                                        </Radio>
+                                    )
+                                )}
+                            </RadioGroup>
+                        )}
+                    </div>
                 )}
             </div>
         );

@@ -50,5 +50,6 @@ export interface SearchItem {
 }
 
 // add back when Most Popular is implemented
-// export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
-export type SortByType = 'Most Recent' | 'Highest Rated';
+// export const SortByTypes: string[] = ['Most Recent', 'Most Popular', 'Highest Rated']
+export const SortByTypes: string[] = ['Most Recent', 'Highest Rated'];
+export type SortByType = typeof SortByTypes[number];

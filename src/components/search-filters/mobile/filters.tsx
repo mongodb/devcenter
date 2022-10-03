@@ -55,8 +55,8 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                         title="Sort by"
                         items={[]}
                         sortBy={sortBy}
-                        filters={tempFilters}
                         setSort={onSort}
+                        filters={tempFilters}
                         isMobile
                         isRadio
                     />
