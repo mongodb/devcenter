@@ -14,6 +14,7 @@ import {
     Button,
     Select,
 } from '@mdb/flora';
+import { Grid } from 'theme-ui';
 
 import Results from '../../components/search/results';
 import Hero from '../../components/hero';
@@ -32,7 +33,11 @@ import { ContentTypePageProps } from './types';
 import { desktopFiltersStyles, resultsStringAndTagsStyles } from './styles';
 import { h5Styles, pageWrapper } from '../../styled/layout';
 
-import { searchBoxStyles } from '../../components/search/styles';
+import {
+    searchBoxSortBarWrapperStyles,
+    searchBoxStyles,
+    sortBoxStyles,
+} from '../../components/search/styles';
 
 import { FeaturedCardSection } from '../../components/card-section';
 
@@ -245,11 +250,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             options={Object.keys(sortByOptions)}
             value={sortBy}
             onSelect={onSort}
-            width="355px"
-            // height="86px"
+            width="100%"
+            height="100%"
             sx={{
-                display: ['none', null, null, 'block'],
-                marginLeft: '20px', // check for inc val
+                ...sortBoxStyles,
+                flexBasis: '33%',
             }}
         />
     );
@@ -437,28 +442,35 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             gridColumn: ['span 6', null, 'span 8', 'span 9'],
                         }}
                     >
-                        <div
-                            sx={{
-                                ...searchBoxStyles,
-                                marginBottom: ['inc40', null, 'inc70'],
-                                display: 'flex',
-                            }}
+                        <Grid
+                            columns={[1, null, 3]}
+                            sx={searchBoxSortBarWrapperStyles}
                         >
-                            <TextInput
-                                name="search-text-input"
-                                label={`Search ${pluralize(contentType)}`}
-                                iconName={ESystemIconNames.SEARCH}
-                                value={searchString}
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                    clearPagination();
-                                    onSearch(e);
+                            <div
+                                sx={{
+                                    ...searchBoxStyles,
+                                    ...(!!searchString || hasFiltersSet
+                                        ? {}
+                                        : { gridColumn: 'span 3' }),
                                 }}
-                            />
+                            >
+                                <TextInput
+                                    name="search-text-input"
+                                    label={`Search ${pluralize(contentType)}`}
+                                    iconName={ESystemIconNames.SEARCH}
+                                    value={searchString}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                        clearPagination();
+                                        onSearch(e);
+                                    }}
+                                />
+                            </div>
+
                             {(!!searchString || hasFiltersSet) &&
                                 sortByDropdown}
-                        </div>
+                        </Grid>
                         {!searchString && !hasFiltersSet && (
                             <>
                                 <FeaturedCardSection

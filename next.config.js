@@ -70,6 +70,10 @@ const configVals = {
                 protocol: 'https',
                 hostname: 'i.ytimg.com', // YouTube thumbnails
             },
+            {
+                protocol: 'https',
+                hostname: 'raw.githubusercontent.com',
+            },
             ...IMAGE_PATTERNS,
         ],
         path: `${basePath}/_next/image`,

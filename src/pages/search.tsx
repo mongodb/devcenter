@@ -349,7 +349,7 @@ const Search: NextPage<SearchProps> = ({
                         }}
                     >
                         <Grid
-                            columns={[1, null, 2, 3]}
+                            columns={[1, null, 3]}
                             sx={searchBoxSortBarWrapperStyles}
                         >
                             <div sx={searchBoxStyles}>
@@ -372,7 +372,6 @@ const Search: NextPage<SearchProps> = ({
                                 label="Sort by"
                                 name="sort-by-dropdown"
                                 options={Object.keys(sortByOptions)}
-                                value={sortBy}
                                 onSelect={e => {
                                     clearPagination();
                                     onSort(e);

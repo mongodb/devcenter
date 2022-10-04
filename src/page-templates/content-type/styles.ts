@@ -15,7 +15,7 @@ export const resultsStringAndTagsStyles = {
     gap: 'inc30',
     marginBottom: 'inc30',
     // have to get crazy with selectors because Flora wraps everything in a div but then doesn't provide a way to style those wrapper divs which is awesome :)
-    '> div:nth-child(2)': {
+    '> div:nth-of-type(2)': {
         width: ['100%', null, 'auto'],
     },
 };
