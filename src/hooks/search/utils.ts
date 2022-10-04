@@ -256,9 +256,12 @@ export const getResultData = (
     searchString: string,
     allFilters: FilterItem[],
     initialPageNumber: number,
-    initialPageResetFlag: boolean
+    initialPageResetFlag: boolean,
+    sortBy: string
 ) => {
-    return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
+    return initialSearchData &&
+        hasEmptyFilterAndQuery(searchString, allFilters) &&
+        (!sortBy || sortBy === '')
         ? initialSearchData
         : data.slice(
               !initialPageResetFlag && initialPageNumber > 1
@@ -271,9 +274,12 @@ export const getResultIsValidating = (
     initialSearchData: ContentItem[] | undefined,
     searchString: string,
     allFilters: FilterItem[],
-    isValidating: boolean
+    isValidating: boolean,
+    sortBy: string
 ) => {
-    return initialSearchData && hasEmptyFilterAndQuery(searchString, allFilters)
+    return initialSearchData &&
+        hasEmptyFilterAndQuery(searchString, allFilters) &&
+        (!sortBy || sortBy === '')
         ? false
         : isValidating;
 };

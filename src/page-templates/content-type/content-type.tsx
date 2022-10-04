@@ -360,14 +360,16 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         searchString,
         allFilters,
         pageNumber,
-        initialPageResetFlag
+        initialPageResetFlag,
+        sortBy
     );
 
     let resultIsValidating = getResultIsValidating(
         initialSearchData,
         searchString,
         allFilters,
-        isValidating
+        isValidating,
+        sortBy
     );
 
     // Debug for DEVHUB-1501 which is not yet replicable.
