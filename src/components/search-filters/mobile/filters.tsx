@@ -58,7 +58,6 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                         setSort={onSort}
                         filters={tempFilters}
                         isMobile
-                        isRadio
                     />
                     <HorizontalRule spacing="small" />
                 </>

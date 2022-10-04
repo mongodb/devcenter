@@ -16,7 +16,6 @@ export interface FilterGroupProps {
     setSort?: (sortByValue: string) => void;
     setFilters?: (filters: FilterItem[]) => void;
     isMobile?: boolean;
-    isRadio?: boolean;
 }
 
 export interface FiltersProps {
