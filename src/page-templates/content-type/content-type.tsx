@@ -322,7 +322,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     iconName={ESystemIconNames.FILTER_HAMBURGER}
                     onClick={() => setMobileFiltersOpen(true)}
                     sx={{
-                        display: ['block', null, null, 'none'],
+                        display: ['flex', null, null, 'none'],
                         justifyContent: 'center',
                     }}
                 >

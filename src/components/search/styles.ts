@@ -27,6 +27,7 @@ export const searchBoxStyles = {
 
 export const sortBoxStyles = {
     gridColumn: ['span 1', null, 'span 3', 'span 1'],
+    display: ['none', null, null, 'block'],
 };
 
 export const dataStyles = (layout: 'list' | 'grid') =>

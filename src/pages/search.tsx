@@ -291,7 +291,8 @@ const Search: NextPage<SearchProps> = ({
                         setHasOverlay(true);
                     }}
                 >
-                    Filter{!!allFilters.length && ` (${allFilters.length})`}
+                    Filter & Sort
+                    {!!allFilters.length && ` (${allFilters.length})`}
                 </Button>
             </div>
         </div>
@@ -348,7 +349,7 @@ const Search: NextPage<SearchProps> = ({
                         }}
                     >
                         <Grid
-                            columns={[1, null, 8, 3]}
+                            columns={[1, null, 2, 3]}
                             sx={searchBoxSortBarWrapperStyles}
                         >
                             <div sx={searchBoxStyles}>
@@ -421,6 +422,8 @@ const Search: NextPage<SearchProps> = ({
                         clearPagination();
                         onFilter(filters);
                     }}
+                    onSort={onSort}
+                    sortBy={sortBy}
                     allFilters={allFilters}
                     l1Items={l1Items}
                     languageItems={languageItems}

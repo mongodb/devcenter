@@ -1,4 +1,4 @@
-import { useState, Fragment, memo } from 'react';
+import { useState, memo } from 'react';
 import {
     TypographyScale,
     SystemIcon,
@@ -11,7 +11,7 @@ import {
 
 import { FilterGroupProps, FilterItem } from './types';
 import { titleStyles, itemsStyles } from './styles';
-import { SortByTypes } from '../search/types';
+import { sortByOptions } from '../search/utils';
 
 const FILTER_STEP = 5;
 
@@ -138,7 +138,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                         }`;
 
                                         return (
-                                            <Fragment
+                                            <div
                                                 key={
                                                     hasSubItems
                                                         ? key
@@ -174,7 +174,7 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                                         setFilters={setFilters}
                                                     />
                                                 )}
-                                            </Fragment>
+                                            </div>
                                         );
                                     })}
 
@@ -194,8 +194,25 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                 name={title || 'RadioGroup'}
                                 onChange={setSort}
                                 defaultChecked={sortBy}
+                                customStyles={{
+                                    // TODO: Remove custom styling once "box-sizing: border-box" is set globally
+                                    '& *': {
+                                        boxSizing: 'border-box',
+                                    },
+                                    'span[aria-label="radio-button-container"]':
+                                        {
+                                            width: [20, null, null, 24],
+                                            height: [20, null, null, 24],
+                                        },
+                                    'span[aria-label="radio-button"]::after': {
+                                        height: [10, null, null, 12],
+                                        width: [10, null, null, 12],
+                                        top: [3, null, null, 4],
+                                        left: [3, null, null, 4],
+                                    },
+                                }}
                             >
-                                {SortByTypes.map(
+                                {Object.keys(sortByOptions).map(
                                     (filterType: string, index: number) => (
                                         <Radio key={index} value={filterType}>
                                             {filterType}
