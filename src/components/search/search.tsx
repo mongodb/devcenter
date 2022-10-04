@@ -173,13 +173,15 @@ const Search: React.FunctionComponent<SearchProps> = ({
         searchString,
         allFilters,
         pageNumber,
-        initialPageResetFlag
+        initialPageResetFlag,
+        sortBy
     );
     const resultIsValidating = getResultIsValidating(
         initialSearchData,
         searchString,
         allFilters,
-        isValidating
+        isValidating,
+        sortBy
     );
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer${path}/?page=${currentPage + 1}`

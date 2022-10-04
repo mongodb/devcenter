@@ -328,6 +328,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     onClick={() => setMobileFiltersOpen(true)}
                     sx={{
                         display: ['flex', null, null, 'none'],
+                        flexBasis: ['100%', '33%'],
                         justifyContent: 'center',
                     }}
                 >

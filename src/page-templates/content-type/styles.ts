@@ -11,7 +11,7 @@ export const resultsStringAndTagsStyles = {
     display: 'flex',
     flexDirection: ['column' as 'column', null, 'row' as 'row'],
     justifyContent: 'space-between',
-    alignItems: ['start', null, 'center', null],
+    alignItems: 'initial',
     gap: 'inc30',
     marginBottom: 'inc30',
     // have to get crazy with selectors because Flora wraps everything in a div but then doesn't provide a way to style those wrapper divs which is awesome :)

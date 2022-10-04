@@ -304,13 +304,15 @@ const Search: NextPage<SearchProps> = ({
         searchString,
         allFilters,
         pageNumber,
-        initialPageResetFlag
+        initialPageResetFlag,
+        sortBy
     );
     const resultIsValidating = getResultIsValidating(
         initialSearchData,
         searchString,
         allFilters,
-        isValidating
+        isValidating,
+        sortBy
     );
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer/search/?page=${currentPage + 1}`
@@ -372,6 +374,7 @@ const Search: NextPage<SearchProps> = ({
                                 label="Sort by"
                                 name="sort-by-dropdown"
                                 options={Object.keys(sortByOptions)}
+                                value={sortBy}
                                 onSelect={e => {
                                     clearPagination();
                                     onSort(e);
