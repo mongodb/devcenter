@@ -57,15 +57,11 @@ import {
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
-<<<<<<< HEAD
-import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 import { getMetaDescr } from '../../utils/seo';
-=======
 import {
     sortByOptions,
     DEFAULT_PAGE_SIZE,
 } from '../../components/search/utils';
->>>>>>> d7dcef6 (sort by functionality)
 
 let pluralize = require('pluralize');
 
@@ -307,7 +303,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         <div sx={{ marginBottom: 'inc50' }}>
             <div sx={resultsStringAndTagsStyles}>
                 {(data || isValidating) && (
-                    <TypographyScale variant="heading5">
+                    <TypographyScale variant="heading2" sx={h5Styles}>
                         {!allFilters.length && !searchString
                             ? `All ${pluralize(contentType)}`
                             : isValidating
