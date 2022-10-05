@@ -112,18 +112,6 @@ const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
                                                             >
                                                                 {name}
                                                             </FloraLink>
-                                                            <SystemIcon
-                                                                sx={{
-                                                                    paddingLeft:
-                                                                        'inc10',
-                                                                    display:
-                                                                        'inline',
-                                                                }}
-                                                                name={
-                                                                    ESystemIconNames.CHEVRON_RIGHT
-                                                                }
-                                                                size="small"
-                                                            />
                                                         </a>
                                                     </li>
                                                 )}
@@ -147,16 +135,6 @@ const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
                                                 >
                                                     {all}
                                                 </FloraLink>
-                                                <SystemIcon
-                                                    sx={{
-                                                        paddingLeft: 'inc10',
-                                                        display: 'inline',
-                                                    }}
-                                                    name={
-                                                        ESystemIconNames.CHEVRON_RIGHT
-                                                    }
-                                                    size="small"
-                                                />
                                             </a>
                                         </li>
                                     )}
