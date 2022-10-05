@@ -50,7 +50,7 @@ module.exports = {
                 'link-name': 'warn',
                 'link-text': 'warn',
                 'aria-roles': 'warn',
-
+                'uses-rel-preconnect': 'warn',
                 'categories:performance': ['error', { minScore: 0.55 }],
                 'categories:accessibility': ['error', { minScore: 0.8 }],
                 'categories:best-practices': ['error', { minScore: 0.75 }],

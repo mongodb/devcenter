@@ -1,7 +1,5 @@
 name: Pull Request Checks
 on:
-    push:
-        branches: [mm/lighthouse-prs]
     pull_request:
         branches: [main]
 env:
