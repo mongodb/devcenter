@@ -1,4 +1,4 @@
-import { useContext, ReactNode, FunctionComponent } from 'react';
+import { useContext, useState } from 'react';
 import { Global } from '@emotion/react';
 import getConfig from 'next/config';
 import { useSession } from 'next-auth/react';
@@ -8,6 +8,7 @@ import { UnifiedNav } from '@mdb/consistent-nav';
 import SecondaryNav from './seconardynavnew/';
 import { OverlayContext } from '../contexts/overlay';
 import { layers } from '../styled/layout';
+import { useEnsureImageAlts } from '../utils/seo';
 
 const navStyles = {
     'nav > div > div > ul': {
@@ -41,8 +42,12 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     });
     const signInUrl = `${accountPortalUrl}?` + signInParams.toString();
 
+    // SEO workaround because unified nav/footer doesn't set their image alts properly
+    const [layoutRef, setLayoutRef] = useState<HTMLElement | null>();
+    useEnsureImageAlts(layoutRef);
+
     return (
-        <>
+        <div ref={ref => setLayoutRef(ref)}>
             <Global styles={globalStyles(!!hasOverlay)} />
             <div sx={navStyles}>
                 <UnifiedNav
@@ -57,7 +62,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
             <SecondaryNav />
             <Main>{children}</Main>
             <UnifiedFooter hideLocale />
-        </>
+        </div>
     );
 };
 

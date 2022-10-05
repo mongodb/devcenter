@@ -5,7 +5,7 @@ import { getURLPath } from '../utils/format-url-path';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 import { TypographyScale } from '@mdb/flora';
-import { pageWrapper } from '../styled/layout';
+import { h4Styles, h5Styles, h6Styles, pageWrapper } from '../styled/layout';
 
 interface Topic {
     title: string;
@@ -94,9 +94,10 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
                     <div>
                         <TypographyScale
                             sx={{
+                                ...h5Styles,
                                 marginBottom: ['inc30', null, null, 'inc50'],
                             }}
-                            variant="heading5"
+                            variant="heading2"
                         >
                             Expertise Level
                         </TypographyScale>
@@ -113,9 +114,10 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
                     <div>
                         <TypographyScale
                             sx={{
+                                ...h5Styles,
                                 marginBottom: ['inc30', null, null, 'inc50'],
                             }}
-                            variant="heading5"
+                            variant="heading2"
                         >
                             Languages
                         </TypographyScale>
@@ -132,9 +134,10 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
                     <div>
                         <TypographyScale
                             sx={{
+                                ...h5Styles,
                                 marginBottom: ['inc30', null, null, 'inc50'],
                             }}
-                            variant="heading5"
+                            variant="heading2"
                         >
                             Technologies
                         </TypographyScale>
@@ -151,9 +154,10 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
                     <div>
                         <TypographyScale
                             sx={{
+                                ...h5Styles,
                                 marginBottom: ['inc30', null, null, 'inc50'],
                             }}
-                            variant="heading5"
+                            variant="heading2"
                         >
                             Products
                         </TypographyScale>
@@ -168,6 +172,7 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
                                 <div key={tagName}>
                                     <TypographyScale
                                         sx={{
+                                            ...h6Styles,
                                             fontWeight: '700',
                                             marginBottom: [
                                                 'inc20',
@@ -180,7 +185,7 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
                                                     'underline !important',
                                             },
                                         }}
-                                        variant="heading6"
+                                        variant="heading3"
                                     >
                                         <a href={getURLPath(slug)}>{tagName}</a>
                                     </TypographyScale>

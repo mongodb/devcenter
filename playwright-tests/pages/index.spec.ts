@@ -6,7 +6,7 @@ test('Homepage has correct titles', async ({ page }) => {
     const title = page.locator('h1');
     await expect(title).toHaveText('MongoDB Developer Center');
 
-    const sectionTitles = page.locator('h5');
+    const sectionTitles = page.locator('h2');
     const text = await sectionTitles.allTextContents();
     expect(text[0]).toEqual('Develop in your language');
     expect(text[1]).toEqual('Integrate MongoDB with the technologies you use');

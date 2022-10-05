@@ -48,6 +48,7 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
                 {items.map(({ titleLink, imageString }) => {
                     const image = imageString ? (
                         <ThirdPartyLogo
+                            href={titleLink.url}
                             variant={imageString as EThirdPartyLogoVariant}
                         />
                     ) : null;
@@ -79,6 +80,7 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
                         .map(({ titleLink, imageString }) => {
                             const image = imageString ? (
                                 <ThirdPartyLogo
+                                    href={titleLink.url}
                                     variant={
                                         imageString as EThirdPartyLogoVariant
                                     }
