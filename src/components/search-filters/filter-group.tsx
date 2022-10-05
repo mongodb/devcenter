@@ -5,15 +5,27 @@ import {
     ESystemIconNames,
     Checkbox,
     Link,
+    RadioGroup,
+    Radio,
 } from '@mdb/flora';
 
 import { FilterGroupProps, FilterItem } from './types';
 import { titleStyles, itemsStyles } from './styles';
+import { sortByOptions } from '../search/utils';
 
 const FILTER_STEP = 5;
 
 const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
-    ({ className, title, items, filters, setFilters, isMobile = false }) => {
+    ({
+        className,
+        title,
+        items,
+        filters,
+        setFilters = () => {},
+        isMobile = false,
+        setSort = () => {},
+        sortBy,
+    }) => {
         const [expanded, setExpanded] = useState<boolean>(
             isMobile ? false : true
         );
@@ -51,6 +63,13 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
 
         const mobileFilterList = (() => {
             if (!title) return null;
+            if (sortBy) {
+                return (
+                    <TypographyScale variant="body1" color="mark">
+                        {sortBy}
+                    </TypographyScale>
+                );
+            }
             const getFilterNames = (items: FilterItem[]): string[] => {
                 let filterList: string[] = [];
 
@@ -103,27 +122,31 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                         {isMobile && !expanded && mobileFilterList}
                     </div>
                 )}
+
                 {expanded && (
-                    <>
-                        <div sx={itemsStyles(title)}>
-                            {items
-                                .slice(0, showAll ? undefined : FILTER_STEP) // Show FILTER_STEP to start, then all if they click "Show more"
-                                .map(item => {
-                                    const { subItems, name, type, count } =
-                                        item;
-                                    if (subItems && subItems.length) {
+                    <div sx={itemsStyles(title)}>
+                        {!sortBy && (
+                            <>
+                                {items
+                                    .slice(0, showAll ? undefined : FILTER_STEP) // Show FILTER_STEP to start, then all if they click "Show more"
+                                    .map(item => {
+                                        const { subItems, name, type } = item;
+                                        const hasSubItems =
+                                            subItems && !!subItems.length;
+                                        const key = `${name} ${type} ${
+                                            isMobile ? 'mobile' : ''
+                                        }`;
+
                                         return (
                                             <div
-                                                // Need to specify mobile here or it gets confused with mobile and desktop checkboxes present.
-                                                key={`${name} ${type} ${
-                                                    isMobile ? 'mobile' : ''
-                                                }`}
+                                                key={
+                                                    hasSubItems
+                                                        ? key
+                                                        : undefined
+                                                }
                                             >
                                                 <Checkbox
-                                                    name={`${name} ${type} ${
-                                                        isMobile ? 'mobile' : ''
-                                                    }`}
-                                                    // label={`${name} (${count})`}
+                                                    name={key}
                                                     label={name}
                                                     onToggle={checked =>
                                                         onCheckToggle(
@@ -141,48 +164,64 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                                                         )
                                                     }
                                                 />
-                                                <FilterGroup
-                                                    sx={{ marginLeft: 'inc40' }}
-                                                    items={subItems}
-                                                    filters={filters}
-                                                    setFilters={setFilters}
-                                                />
+                                                {hasSubItems && (
+                                                    <FilterGroup
+                                                        sx={{
+                                                            marginLeft: 'inc40',
+                                                        }}
+                                                        items={subItems}
+                                                        filters={filters}
+                                                        setFilters={setFilters}
+                                                    />
+                                                )}
                                             </div>
                                         );
-                                    }
-                                    return (
-                                        <Checkbox
-                                            key={`${name} ${type} ${
-                                                isMobile ? 'mobile' : ''
-                                            }`}
-                                            name={`${name} ${type} ${
-                                                isMobile ? 'mobile' : ''
-                                            }`}
-                                            // label={`${name} (${count})`}
-                                            label={name}
-                                            onToggle={checked =>
-                                                onCheckToggle(checked, item)
-                                            }
-                                            checked={
-                                                !!filters.find(
-                                                    filter =>
-                                                        filter.type === type &&
-                                                        filter.name === name
-                                                )
-                                            }
-                                        />
-                                    );
-                                })}
-                        </div>
-                        {items.length > FILTER_STEP && (
-                            <Link
-                                onClick={() => setShowAll(!showAll)}
-                                sx={{ marginTop: 'inc30' }}
-                            >
-                                Show {showAll ? 'less' : 'more'}
-                            </Link>
+                                    })}
+
+                                {items.length > FILTER_STEP && (
+                                    <Link
+                                        onClick={() => setShowAll(!showAll)}
+                                        sx={{ marginTop: 'inc30' }}
+                                    >
+                                        Show {showAll ? 'less' : 'more'}
+                                    </Link>
+                                )}
+                            </>
                         )}
-                    </>
+
+                        {sortBy && (
+                            <RadioGroup
+                                name={title || 'RadioGroup'}
+                                onChange={setSort}
+                                defaultChecked={sortBy}
+                                customStyles={{
+                                    // TODO: Remove custom styling once "box-sizing: border-box" is set globally
+                                    '& *': {
+                                        boxSizing: 'border-box',
+                                    },
+                                    'span[aria-label="radio-button-container"]':
+                                        {
+                                            width: [20, null, null, 24],
+                                            height: [20, null, null, 24],
+                                        },
+                                    'span[aria-label="radio-button"]::after': {
+                                        height: [10, null, null, 12],
+                                        width: [10, null, null, 12],
+                                        top: [3, null, null, 4],
+                                        left: [3, null, null, 4],
+                                    },
+                                }}
+                            >
+                                {Object.keys(sortByOptions).map(
+                                    (filterType: string, index: number) => (
+                                        <Radio key={index} value={filterType}>
+                                            {filterType}
+                                        </Radio>
+                                    )
+                                )}
+                            </RadioGroup>
+                        )}
+                    </div>
                 )}
             </div>
         );

@@ -42,6 +42,8 @@ test('renders mobile filters', () => {
             contributedByItems={[]}
             expertiseLevelItems={[]}
             closeModal={() => closeCounter++}
+            sortBy=""
+            onSort={() => {}}
         />
     );
 
@@ -59,7 +61,7 @@ test('renders mobile filters', () => {
     expect(screen.queryByText('Contributed By')).toBeNull();
 
     // Check onFilter works
-    screen.getByText('Apply Filters').click();
+    screen.getByText('Apply').click();
     expect(filterCounter).toEqual(1);
 
     // Check closeModal works

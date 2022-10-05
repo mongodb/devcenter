@@ -13,9 +13,13 @@ import { buttonSection, filtersModal, titleSection } from './styles';
 
 interface MobileFiltersProps extends FiltersProps {
     closeModal: () => void;
+    sortBy: any;
+    onSort: (sortByValue: string) => void;
 }
 
 const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
+    sortBy,
+    onSort,
     className,
     onFilter,
     allFilters,
@@ -36,7 +40,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
         <div className={className} sx={filtersModal}>
             <div sx={{ padding: 'inc50', marginBottom: '120px' }}>
                 <div sx={titleSection}>
-                    <TypographyScale>Filter</TypographyScale>
+                    <TypographyScale>Filter & Sort</TypographyScale>
                     <ButtonIcon
                         iconName={ESystemIconNames.CLOSE}
                         variant="outline"
@@ -46,6 +50,17 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     />
                 </div>
                 <HorizontalRule spacing="small" />
+                <>
+                    <FilterGroup
+                        title="Sort by"
+                        items={[]}
+                        sortBy={sortBy}
+                        setSort={onSort}
+                        filters={tempFilters}
+                        isMobile
+                    />
+                    <HorizontalRule spacing="small" />
+                </>
                 {!!codeLevelItems.length && (
                     <>
                         <FilterGroup
@@ -53,7 +68,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                             items={codeLevelItems}
                             filters={tempFilters}
                             setFilters={onTempFilter}
-                            isMobile={true}
+                            isMobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -65,7 +80,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                             items={languageItems}
                             filters={tempFilters}
                             setFilters={onTempFilter}
-                            isMobile={true}
+                            isMobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -77,7 +92,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                             items={technologyItems}
                             filters={tempFilters}
                             setFilters={onTempFilter}
-                            isMobile={true}
+                            isMobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -89,7 +104,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                             items={contentTypeItems}
                             filters={tempFilters}
                             setFilters={onTempFilter}
-                            isMobile={true}
+                            isMobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -101,7 +116,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                             items={l1Items}
                             filters={tempFilters}
                             setFilters={onTempFilter}
-                            isMobile={true}
+                            isMobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -114,7 +129,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                             items={expertiseLevelItems}
                             filters={tempFilters}
                             setFilters={onTempFilter}
-                            isMobile={true}
+                            isMobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -126,7 +141,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                         items={contributedByItems}
                         filters={tempFilters}
                         setFilters={onTempFilter}
-                        isMobile={true}
+                        isMobile
                     />
                 )}
             </div>
@@ -146,7 +161,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                         closeModal();
                     }}
                 >
-                    Apply Filters
+                    Apply {tempFilters.length ? `(${tempFilters.length})` : ''}
                 </Button>
             </div>
         </div>
