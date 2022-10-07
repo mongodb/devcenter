@@ -48,3 +48,6 @@ rss.xml
 
 # Sentry
 .sentryclirc
+
+# lighthouse
+.lighthouseci/
