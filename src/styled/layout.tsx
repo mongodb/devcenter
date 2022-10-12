@@ -46,3 +46,51 @@ export const pageWrapper = {
     px: ['inc40', null, 'inc50', 'inc70'],
     paddingTop: ['inc40', null, 'inc50', 'inc70'],
 };
+
+export const h4Styles = {
+    fontFamily: 'heading',
+    fontSize: [
+        'headingMResponsive',
+        'headingMResponsive',
+        'headingMResponsive',
+        'headingM',
+    ],
+    lineHeight: [
+        'headingMResponsive',
+        'headingMResponsive',
+        'headingMResponsive',
+        'headingM',
+    ],
+};
+
+export const h5Styles = {
+    fontFamily: 'body',
+    fontSize: [
+        'headingSResponsive',
+        'headingSResponsive',
+        'headingSResponsive',
+        'headingS',
+    ],
+    lineHeight: [
+        'headingSResponsive',
+        'headingSResponsive',
+        'headingSResponsive',
+        'headingS',
+    ],
+};
+
+export const h6Styles = {
+    fontFamily: 'body',
+    fontSize: [
+        'headingXSResponsive',
+        'headingXSResponsive',
+        'headingXSResponsive',
+        'headingXS',
+    ],
+    lineHeight: [
+        'headingXSResponsive',
+        'headingXSResponsive',
+        'headingXSResponsive',
+        'headingXS',
+    ],
+};

@@ -27,6 +27,7 @@ import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-
 import { getURLPath } from '../../utils/format-url-path';
 import SecondaryTag from './secondary-tag';
 import { CodeLevel } from '../../types/tag-type';
+import { h5Styles, h6Styles } from '../../styled/layout';
 
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
@@ -73,6 +74,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                     left: 0,
                     top: 0,
                 }}
+                aria-label={title}
             />
             <div sx={cardHeaderStyles(variant, pillCategory)}>
                 {((thumbnail && thumbnail.url) || pillCategory === 'Podcast') &&
@@ -130,8 +132,9 @@ const Card: React.FunctionComponent<CardProps> = ({
                     />
                     {secondaryTagElement}
                     <TypographyScale
-                        variant={variant === 'large' ? 'heading5' : 'heading6'}
+                        variant="heading3"
                         sx={{
+                            ...(variant === 'large' ? h5Styles : h6Styles),
                             ...(variant === 'large' && {
                                 fontSize: ['inc30', 'inc30', 'inc50', 'inc80'],
                                 lineHeight: [

@@ -5,7 +5,7 @@ test('All News & Announcements Page has correct titles', async ({ page }) => {
     const title = page.locator('h1');
     await expect(title).toHaveText('News & Announcements');
 
-    const sectionTitles = page.locator('h5');
+    const sectionTitles = page.locator('h2');
     const text = await sectionTitles.allTextContents();
 
     const expected = [

@@ -21,6 +21,7 @@ const TopicCard: React.FunctionComponent<TopicCardProps> = ({
                     left: 0,
                     top: 0,
                 }}
+                aria-label={title}
             />
             {icon}
             <TypographyScale variant="body3" sx={{ my: 'auto' }}>

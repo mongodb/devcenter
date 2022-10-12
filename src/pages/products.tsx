@@ -18,6 +18,7 @@ import { productToLogo } from '../utils/product-to-logo';
 import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { MetaInfo } from '../interfaces/meta-info';
 import { getURLPath } from '../utils/format-url-path';
+import { h4Styles, h5Styles } from '../styled/layout';
 
 const crumbs: Crumb[] = [
     { text: 'MongoDB Developer Center', url: '/developer' },
@@ -164,8 +165,8 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                     }}
                 >
                     <TypographyScale
-                        variant="heading5"
-                        sx={{ marginBottom: 'inc40' }}
+                        variant="heading2"
+                        sx={{ ...h5Styles, marginBottom: 'inc40' }}
                     >
                         Featured Products
                     </TypographyScale>
@@ -184,8 +185,12 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                 </div>
                 <div sx={{ gridColumn: ['span 6', null, 'span 8', 'span 12'] }}>
                     <TypographyScale
-                        variant="heading4"
-                        sx={{ marginBottom: 'inc90', width: 'max-content' }}
+                        variant="heading2"
+                        sx={{
+                            ...h4Styles,
+                            marginBottom: 'inc90',
+                            width: 'max-content',
+                        }}
                     >
                         All Products
                     </TypographyScale>

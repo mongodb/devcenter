@@ -67,7 +67,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
         error,
         isValidating,
         resultsToShow,
-        numberOfResults,
         setResultsToShow,
         allFilters,
         setAllFilters,
@@ -174,13 +173,15 @@ const Search: React.FunctionComponent<SearchProps> = ({
         searchString,
         allFilters,
         pageNumber,
-        initialPageResetFlag
+        initialPageResetFlag,
+        sortBy
     );
     const resultIsValidating = getResultIsValidating(
         initialSearchData,
         searchString,
         allFilters,
-        isValidating
+        isValidating,
+        sortBy
     );
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer${path}/?page=${currentPage + 1}`
@@ -203,13 +204,14 @@ const Search: React.FunctionComponent<SearchProps> = ({
                 )}
             </div>
             <Grid
-                columns={[1, null, 8, 3]}
+                columns={[1, null, 3]}
                 sx={{ ...searchBoxSortBarWrapperStyles }}
             >
                 <div
                     sx={{
                         ...searchBoxStyles,
                         ...extraSearchBoxStyles,
+                        gridColumn: ['span 1', null, 'span 2'],
                     }}
                 >
                     <TextInput
@@ -224,7 +226,11 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     />
                 </div>
                 <Select
-                    sx={sortBoxStyles}
+                    sx={{
+                        ...sortBoxStyles,
+                        display: 'block',
+                        gridColumn: 'span 1',
+                    }}
                     label="Sort by"
                     name="sort-by-dropdown"
                     options={Object.keys(sortByOptions)}
@@ -269,7 +275,6 @@ const Search: React.FunctionComponent<SearchProps> = ({
                     />
                 </div>
             )}
-            <div sx={{}}></div>
             {!!resultData.length || resultIsValidating || error ? (
                 <>
                     <Results

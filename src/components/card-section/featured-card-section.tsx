@@ -10,6 +10,7 @@ import {
     smallFeaturedCardStyles,
 } from './styles';
 import { getCardProps } from '../card';
+import { h5Styles } from '../../styled/layout';
 
 const FeaturedCardSection: React.FunctionComponent<
     FeaturedCardSectionProps
@@ -26,7 +27,9 @@ const FeaturedCardSection: React.FunctionComponent<
             className={className}
         >
             <div sx={sectionHeadingTopStyles}>
-                <TypographyScale variant="heading5">{title}</TypographyScale>
+                <TypographyScale variant="heading2" sx={h5Styles}>
+                    {title}
+                </TypographyScale>
             </div>
             <Grid columns={6} sx={featuredCardSectionListStyles}>
                 <Card

@@ -20,7 +20,7 @@ import { getAllSearchContent } from '../api-requests/get-all-search-content';
 import allSearchContentPreval from '../service/get-all-search-content.preval';
 import Hero from '../components/hero';
 import { DesktopFilters, MobileFilters } from '../components/search-filters';
-import { pageWrapper } from '../styled/layout';
+import { h5Styles, pageWrapper } from '../styled/layout';
 
 import { SearchItem } from '../components/search/types';
 import { FilterItem } from '../components/search-filters';
@@ -249,7 +249,7 @@ const Search: NextPage<SearchProps> = ({
     const resultsStringAndTags = (
         <div sx={resultsStringAndTagsStyles}>
             {(data || isValidating) && (
-                <TypographyScale variant="heading5">
+                <TypographyScale variant="heading2" sx={h5Styles}>
                     {!allFilters.length && !searchString
                         ? 'All Content'
                         : isValidating
@@ -291,7 +291,8 @@ const Search: NextPage<SearchProps> = ({
                         setHasOverlay(true);
                     }}
                 >
-                    Filter{!!allFilters.length && ` (${allFilters.length})`}
+                    Filter & Sort
+                    {!!allFilters.length && ` (${allFilters.length})`}
                 </Button>
             </div>
         </div>
@@ -303,13 +304,15 @@ const Search: NextPage<SearchProps> = ({
         searchString,
         allFilters,
         pageNumber,
-        initialPageResetFlag
+        initialPageResetFlag,
+        sortBy
     );
     const resultIsValidating = getResultIsValidating(
         initialSearchData,
         searchString,
         allFilters,
-        isValidating
+        isValidating,
+        sortBy
     );
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer/search/?page=${currentPage + 1}`
@@ -348,7 +351,7 @@ const Search: NextPage<SearchProps> = ({
                         }}
                     >
                         <Grid
-                            columns={[1, null, 8, 3]}
+                            columns={[1, null, 3]}
                             sx={searchBoxSortBarWrapperStyles}
                         >
                             <div sx={searchBoxStyles}>
@@ -421,6 +424,8 @@ const Search: NextPage<SearchProps> = ({
                         clearPagination();
                         onFilter(filters);
                     }}
+                    onSort={onSort}
+                    sortBy={sortBy}
                     allFilters={allFilters}
                     l1Items={l1Items}
                     languageItems={languageItems}

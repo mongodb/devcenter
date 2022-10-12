@@ -12,7 +12,9 @@ import {
     TextInput,
     ESystemIconNames,
     Button,
+    Select,
 } from '@mdb/flora';
+import { Grid } from 'theme-ui';
 
 import Results from '../../components/search/results';
 import Hero from '../../components/hero';
@@ -29,9 +31,13 @@ import {
 
 import { ContentTypePageProps } from './types';
 import { desktopFiltersStyles, resultsStringAndTagsStyles } from './styles';
-import { pageWrapper } from '../../styled/layout';
+import { h5Styles, pageWrapper } from '../../styled/layout';
 
-import { searchBoxStyles } from '../../components/search/styles';
+import {
+    searchBoxSortBarWrapperStyles,
+    searchBoxStyles,
+    sortBoxStyles,
+} from '../../components/search/styles';
 
 import { FeaturedCardSection } from '../../components/card-section';
 
@@ -51,8 +57,11 @@ import {
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
-import { DEFAULT_PAGE_SIZE } from '../../components/search/utils';
 import { getMetaDescr } from '../../utils/seo';
+import {
+    sortByOptions,
+    DEFAULT_PAGE_SIZE,
+} from '../../components/search/utils';
 
 let pluralize = require('pluralize');
 
@@ -120,6 +129,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         searchString,
         setSearchString,
         numberOfResults,
+        onSort,
+        sortBy,
     } = useSearch(
         contentType,
         undefined,
@@ -145,10 +156,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         [contentType]
     );
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-
-    const clearFilters = () => {
-        setAllFilters([]);
-    };
 
     const clearPagination = () => {
         setInitialPageResetFlag(true);
@@ -232,6 +239,22 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setFilterTagsExpanded(false);
     }
 
+    const sortByDropdown = (
+        <Select
+            label="Sort by"
+            name="sort-by-dropdown"
+            options={Object.keys(sortByOptions)}
+            value={sortBy}
+            onSelect={onSort}
+            width="100%"
+            height="100%"
+            sx={{
+                ...sortBoxStyles,
+                flexBasis: '33%',
+            }}
+        />
+    );
+
     const CTAElement = (
         <div sx={CTAContainerStyles}>
             <Button
@@ -277,50 +300,48 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     );
 
     const resultsStringAndTags = (
-        <div sx={resultsStringAndTagsStyles}>
-            {(data || isValidating) && (
-                <TypographyScale variant="heading5">
-                    {!allFilters.length && !searchString
-                        ? `All ${pluralize(contentType)}`
-                        : isValidating
-                        ? ''
-                        : numberOfResults === 1
-                        ? '1 Result'
-                        : `${numberOfResults} Results`}
-                    {!isValidating && !!searchString && !allFilters.length
-                        ? ` for "${searchString}"`
-                        : ''}
-                </TypographyScale>
-            )}
+        <div sx={{ marginBottom: 'inc50' }}>
+            <div sx={resultsStringAndTagsStyles}>
+                {(data || isValidating) && (
+                    <TypographyScale variant="heading2" sx={h5Styles}>
+                        {!allFilters.length && !searchString
+                            ? `All ${pluralize(contentType)}`
+                            : isValidating
+                            ? ''
+                            : numberOfResults === 1
+                            ? '1 Result'
+                            : `${numberOfResults} Results`}
+                        {!isValidating && !!searchString && !allFilters.length
+                            ? ` for "${searchString}"`
+                            : ''}
+                    </TypographyScale>
+                )}
+                <Button
+                    hasIcon
+                    iconPosition="right"
+                    iconStrokeWeight="medium"
+                    iconName={ESystemIconNames.FILTER_HAMBURGER}
+                    onClick={() => setMobileFiltersOpen(true)}
+                    sx={{
+                        display: ['flex', null, null, 'none'],
+                        flexBasis: ['100%', '33%'],
+                        justifyContent: 'center',
+                    }}
+                >
+                    Filter & Sort
+                    {!!allFilters.length && ` (${allFilters.length})`}
+                </Button>
+                {!searchString && !hasFiltersSet && sortByDropdown}
+            </div>
             {hasFiltersSet && (
                 <FilterTagSection
                     allFilters={allFilters}
                     filterTagsExpanded={filterTagsExpanded}
                     setFilterTagsExpanded={setFilterTagsExpanded}
                     onFilterTagClose={onFilterTagClose}
-                    clearFilters={clearFilters}
+                    clearFilters={() => setAllFilters([])}
                 />
             )}
-            <div
-                sx={{
-                    display: ['block', null, null, 'none'],
-                    width: ['100%', null, 'unset'],
-                    '&>div': { width: '100%' },
-                }}
-            >
-                <Button
-                    sx={{
-                        justifyContent: 'center',
-                    }}
-                    iconName={ESystemIconNames.FILTER_HAMBURGER}
-                    iconStrokeWeight="medium"
-                    hasIcon={true}
-                    iconPosition="right"
-                    onClick={() => setMobileFiltersOpen(true)}
-                >
-                    Filter{!!allFilters.length && ` (${allFilters.length})`}
-                </Button>
-            </div>
         </div>
     );
 
@@ -336,14 +357,16 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         searchString,
         allFilters,
         pageNumber,
-        initialPageResetFlag
+        initialPageResetFlag,
+        sortBy
     );
 
     let resultIsValidating = getResultIsValidating(
         initialSearchData,
         searchString,
         allFilters,
-        isValidating
+        isValidating,
+        sortBy
     );
 
     // Debug for DEVHUB-1501 which is not yet replicable.
@@ -418,25 +441,35 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                             gridColumn: ['span 6', null, 'span 8', 'span 9'],
                         }}
                     >
-                        <div
-                            sx={{
-                                ...searchBoxStyles,
-                                marginBottom: ['inc40', null, 'inc70'],
-                            }}
+                        <Grid
+                            columns={[1, null, 3]}
+                            sx={searchBoxSortBarWrapperStyles}
                         >
-                            <TextInput
-                                name="search-text-input"
-                                label={`Search ${pluralize(contentType)}`}
-                                iconName={ESystemIconNames.SEARCH}
-                                value={searchString}
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                    clearPagination();
-                                    onSearch(e);
+                            <div
+                                sx={{
+                                    ...searchBoxStyles,
+                                    ...(!!searchString || hasFiltersSet
+                                        ? {}
+                                        : { gridColumn: 'span 3' }),
                                 }}
-                            />
-                        </div>
+                            >
+                                <TextInput
+                                    name="search-text-input"
+                                    label={`Search ${pluralize(contentType)}`}
+                                    iconName={ESystemIconNames.SEARCH}
+                                    value={searchString}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                        clearPagination();
+                                        onSearch(e);
+                                    }}
+                                />
+                            </div>
+
+                            {(!!searchString || hasFiltersSet) &&
+                                sortByDropdown}
+                        </Grid>
                         {!searchString && !hasFiltersSet && (
                             <>
                                 <FeaturedCardSection
@@ -520,6 +553,8 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                         clearPagination();
                         onFilter(filters);
                     }}
+                    onSort={onSort}
+                    sortBy={sortBy}
                     allFilters={allFilters}
                     l1Items={l1Items}
                     languageItems={languageItems}

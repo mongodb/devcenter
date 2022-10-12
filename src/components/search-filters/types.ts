@@ -12,7 +12,9 @@ export interface FilterGroupProps {
     title?: string;
     items: FilterItem[];
     filters: FilterItem[];
-    setFilters: (filters: FilterItem[]) => void;
+    sortBy?: any;
+    setSort?: (sortByValue: string) => void;
+    setFilters?: (filters: FilterItem[]) => void;
     isMobile?: boolean;
 }
 

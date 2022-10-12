@@ -21,11 +21,12 @@ export const searchBoxStyles = {
         width: '100%',
         maxWidth: 'unset',
     },
-    gridColumn: ['span 1', null, 'span 5', 'span 2'],
+    gridColumn: ['span 1', null, 'span 3', 'span 2'],
 };
 
 export const sortBoxStyles = {
-    gridColumn: ['span 1', null, 'span 3', 'span 1'],
+    gridColumn: 'span 1',
+    display: ['none', null, null, 'block'],
 };
 
 export const dataStyles = (layout: 'list' | 'grid') =>
