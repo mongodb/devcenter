@@ -307,7 +307,7 @@ const MobileView = () => {
                     }),
                 }}
             >
-                <FloraLink sx={MainLinkStyles} onClick={openMobileMenu}>
+                <FloraLink sx={MainLinkStyles} href={getURLPath('/')}>
                     <TypographyScale variant="body1">
                         MongoDB Developer
                     </TypographyScale>
