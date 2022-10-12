@@ -342,7 +342,7 @@ const MobileView = () => {
                     sx={{
                         ...MainLinkStyles,
                         width: 'auto',
-                        padding: 'inc20',
+                        padding: 'inc40',
                         marginRight: 'inc20',
                     }}
                     onClick={openMobileMenu}
