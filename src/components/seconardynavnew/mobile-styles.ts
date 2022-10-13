@@ -58,8 +58,9 @@ export const MainLinkStyles: ThemeUIStyleObject = {
     'span.textlink-default-text-class': {
         color: '#000!important',
         fontSize: '18px!important',
-        '&:hover': {
-            borderBottom: '2px solid transparent!important',
+
+        '&, &:hover': {
+            border: '0 !important',
         },
     },
 };
