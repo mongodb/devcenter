@@ -1,6 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import Script from 'next/script';
-import { GTM_ID } from '../utils/gtm';
+
+const gaScriptArgs =
+    process.env['APP_ENV'] === 'production' ? '' : '!0,{debugMode:!0}';
 
 export default class MyDocument extends Document {
     render() {
@@ -13,22 +15,12 @@ export default class MyDocument extends Document {
                     />
                     <link
                         rel="dns-prefetch preconnect"
-                        href="https://www.googletagmanager.com"
-                    />
-                    <link
-                        rel="dns-prefetch preconnect"
                         href="https://cdn.optimizely.com/js/22247140071.js"
                     />
                     <link
                         rel="dns-prefetch preconnect"
                         href="https://logx.optimizely.com"
                     />
-
-                    <link
-                        href={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
-                        rel="preload"
-                        as="script"
-                    ></link>
                     <link
                         rel="preload"
                         href="https://cdn.optimizely.com/js/22247140071.js"
@@ -89,16 +81,20 @@ export default class MyDocument extends Document {
                         as="font"
                         type="font/woff2"
                     />
+                    <Script
+                        id="ga-base"
+                        strategy="afterInteractive"
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                  !function(e,n){var t=document.createElement("script"),o=null,x="pathway";t.async=!0,t.src='https://'+x+'.mongodb.com/'+(e?x+'-debug.js':''),
+                  document.head.append(t),t.addEventListener("load",function(){o=window.pathway.default,(n&&o.configure(n)),o.createProfile("mongodbcom").load(),
+                  window.segment=o})}(${gaScriptArgs});
+                `,
+                        }}
+                        async
+                    />
                 </Head>
                 <body>
-                    <noscript>
-                        <iframe
-                            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-                            height="0"
-                            width="0"
-                            style={{ display: 'none', visibility: 'hidden' }}
-                        />
-                    </noscript>
                     <Main />
                     <NextScript />
                     <Script
