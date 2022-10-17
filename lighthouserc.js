@@ -51,6 +51,7 @@ module.exports = {
                 'link-text': 'warn',
                 'aria-roles': 'warn',
                 'uses-rel-preconnect': 'warn',
+                'uses-text-compression': 'warn',
                 'categories:performance': ['warn', { minScore: 0.55 }],
                 'categories:accessibility': ['error', { minScore: 0.8 }],
                 'categories:best-practices': ['error', { minScore: 0.7 }],
