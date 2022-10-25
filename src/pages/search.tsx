@@ -247,21 +247,38 @@ const Search: NextPage<SearchProps> = ({
     );
 
     const resultsStringAndTags = (
-        <div sx={resultsStringAndTagsStyles}>
-            {(data || isValidating) && (
-                <TypographyScale variant="heading2" sx={h5Styles}>
-                    {!allFilters.length && !searchString
-                        ? 'All Content'
-                        : isValidating
-                        ? ''
-                        : numberOfResults === 1
-                        ? '1 Result'
-                        : `${numberOfResults} Results`}
-                    {!isValidating && !!searchString && !allFilters.length
-                        ? ` for "${searchString}"`
-                        : ''}
-                </TypographyScale>
-            )}
+        <div sx={{ marginBottom: 'inc50' }}>
+            <div sx={resultsStringAndTagsStyles}>
+                {(data || isValidating) && (
+                    <TypographyScale variant="heading2" sx={h5Styles}>
+                        {!allFilters.length && !searchString
+                            ? `All Content`
+                            : isValidating
+                            ? ''
+                            : numberOfResults === 1
+                            ? '1 Result'
+                            : `${numberOfResults} Results`}
+                        {!isValidating && !!searchString && !allFilters.length
+                            ? ` for "${searchString}"`
+                            : ''}
+                    </TypographyScale>
+                )}
+                <Button
+                    hasIcon
+                    iconPosition="right"
+                    iconStrokeWeight="medium"
+                    iconName={ESystemIconNames.FILTER_HAMBURGER}
+                    onClick={() => setMobileFiltersOpen(true)}
+                    sx={{
+                        display: ['flex', null, null, 'none'],
+                        flexBasis: ['100%', '33%'],
+                        justifyContent: 'center',
+                    }}
+                >
+                    Filter & Sort
+                    {!!allFilters.length && ` (${allFilters.length})`}
+                </Button>
+            </div>
             {hasFiltersSet && (
                 <FilterTagSection
                     allFilters={allFilters}
@@ -271,30 +288,6 @@ const Search: NextPage<SearchProps> = ({
                     clearFilters={clearFilters}
                 />
             )}
-            <div
-                sx={{
-                    display: ['block', null, null, 'none'],
-                    width: ['100%', null, 'unset'],
-                    '&>div': { width: '100%' },
-                }}
-            >
-                <Button
-                    sx={{
-                        justifyContent: 'center',
-                    }}
-                    iconName={ESystemIconNames.FILTER_HAMBURGER}
-                    iconStrokeWeight="medium"
-                    hasIcon={true}
-                    iconPosition="right"
-                    onClick={() => {
-                        setMobileFiltersOpen(true);
-                        setHasOverlay(true);
-                    }}
-                >
-                    Filter & Sort
-                    {!!allFilters.length && ` (${allFilters.length})`}
-                </Button>
-            </div>
         </div>
     );
 
