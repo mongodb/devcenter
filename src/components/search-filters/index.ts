@@ -1,7 +1,7 @@
 import DesktopFilters from './desktop/filters';
 import MobileFilters from './mobile/filters';
 
-import { FilterItem } from './types';
+import { FilterItem } from '@mdb/devcenter-components';
 
 export type { FilterItem };
 

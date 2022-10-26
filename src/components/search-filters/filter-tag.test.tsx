@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import FilterTag from './filter-tag';
-import { FilterItem } from './types';
+import { FilterItem } from '@mdb/devcenter-components';
 
 const filterItem: FilterItem = {
     name: 'Test Filter',

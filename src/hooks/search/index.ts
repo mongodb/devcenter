@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import debounce from 'lodash.debounce';
 import useSWR from 'swr';
-import { FilterItem } from '../../components/search-filters';
+import { FilterItem } from '@mdb/devcenter-components';
 import { fetcher, itemInFilters, updateUrl } from './utils';
 import { useRouter } from 'next/router';
 import {
@@ -130,13 +130,13 @@ const useSearch = (
                 const filterProduct = filterTypeItems.find(
                     l1 =>
                         l1.name === item ||
-                        l1.subItems.find(l2 => l2.name === item)
+                        l1.subFilters?.find(l2 => l2.name === item)
                 );
                 if (filterProduct) {
                     if (filterProduct.name !== item) {
                         // This means it's an L2 match.
                         filtersList.push(
-                            filterProduct.subItems.find(
+                            filterProduct.subFilters?.find(
                                 l2 => l2.name === item
                             ) as FilterItem
                         );

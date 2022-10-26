@@ -2,13 +2,12 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import FilterTagSection from './filter-tag-section';
-import { FilterItem } from './types';
+import { FilterItem } from '@mdb/devcenter-components';
 
 const filterItem: FilterItem = {
     name: 'Test Filter',
     type: 'ProgrammingLanguage',
-    subItems: [],
-    count: 0,
+    subFilters: [],
 };
 
 const filterItems = Array(7).fill(filterItem);

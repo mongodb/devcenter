@@ -1,6 +1,6 @@
 import { Link } from '@mdb/flora';
 import FilterTag from './filter-tag';
-import { FilterItem } from './types';
+import { FilterItem } from '@mdb/devcenter-components';
 
 interface FilterTagSectionProps {
     allFilters: FilterItem[];
@@ -40,7 +40,6 @@ const FilterTagSection: React.FunctionComponent<FilterTagSectionProps> = ({
                             filter={{
                                 name: 'Show less',
                                 count: 0,
-                                subItems: [],
                             }}
                             onClick={() => setFilterTagsExpanded(false)}
                         />
@@ -59,7 +58,6 @@ const FilterTagSection: React.FunctionComponent<FilterTagSectionProps> = ({
                             filter={{
                                 name: `+${allFilters.length - 5}`,
                                 count: 0,
-                                subItems: [],
                             }}
                             onClick={() => setFilterTagsExpanded(true)}
                         />

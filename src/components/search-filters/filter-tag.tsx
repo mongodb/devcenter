@@ -1,5 +1,5 @@
 import { SystemIcon, TypographyScale, ESystemIconNames } from '@mdb/flora';
-import { FilterItem } from '.';
+import { FilterItem } from '@mdb/devcenter-components';
 import { tagWrapper } from '../../page-templates/content-type/styles';
 
 interface FilterTagProps {

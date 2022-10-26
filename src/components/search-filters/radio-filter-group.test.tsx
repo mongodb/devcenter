@@ -1,14 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { FilterItem } from './types';
-import FilterGroup from './filter-group';
+import { FilterItem } from '@mdb/devcenter-components';
+import FilterGroup from './radio-filter-group';
 
 const filterItem: FilterItem = {
     name: 'Test Filter',
     type: 'ProgrammingLanguage',
-    subItems: [],
-    count: 0,
 };
 
 test('renders filter group desktop with few items', () => {
@@ -18,8 +16,6 @@ test('renders filter group desktop with few items', () => {
         filterItems.push({
             name: `Language ${index}`,
             type: 'ProgrammingLanguage',
-            subItems: [],
-            count: 0,
         })
     );
     let checkedFilters: FilterItem[] = [];
@@ -58,8 +54,6 @@ test('renders filter group desktop with many items', () => {
         filterItems.push({
             name: `Language ${index}`,
             type: 'ProgrammingLanguage',
-            subItems: [],
-            count: 0,
         })
     );
     let checkedFilters: FilterItem[] = [];
@@ -96,28 +90,21 @@ test('renders filter group desktop with subitems', () => {
         filterItems.push({
             name: `Product ${index}`,
             type: 'L1Product',
-            subItems: [],
-            count: 0,
         })
     );
     filterItems.push({
         name: 'Product 3',
         type: 'ProgrammingLanguage',
-        subItems: [
+        subFilters: [
             {
                 name: 'Subproduct 1',
                 type: 'L2Product',
-                subItems: [],
-                count: 0,
             },
             {
                 name: 'Subproduct 2',
                 type: 'L2Product',
-                subItems: [],
-                count: 0,
             },
         ],
-        count: 0,
     });
     let checkedFilters: FilterItem[] = [];
     render(
@@ -144,8 +131,6 @@ test('renders filter group mobile', () => {
         filterItems.push({
             name: `Language ${index}`,
             type: 'ProgrammingLanguage',
-            subItems: [],
-            count: 0,
         })
     );
     render(

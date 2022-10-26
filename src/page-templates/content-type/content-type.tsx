@@ -23,11 +23,9 @@ import RequestContentModal, {
 } from '../../components/request-content-modal';
 import { CTAContainerStyles } from '../../components/hero/styles';
 
-import {
-    FilterItem,
-    DesktopFilters,
-    MobileFilters,
-} from '../../components/search-filters';
+import { DesktopFilters, MobileFilters } from '../../components/search-filters';
+
+import { FilterItem } from '@mdb/devcenter-components';
 
 import { ContentTypePageProps } from './types';
 import { desktopFiltersStyles, resultsStringAndTagsStyles } from './styles';

@@ -16,6 +16,8 @@ import {
     Select,
 } from '@mdb/flora';
 
+import { FilterItem } from '@mdb/devcenter-components';
+
 import { getAllSearchContent } from '../api-requests/get-all-search-content';
 import allSearchContentPreval from '../service/get-all-search-content.preval';
 import Hero from '../components/hero';
@@ -23,7 +25,6 @@ import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { h5Styles, pageWrapper } from '../styled/layout';
 
 import { SearchItem } from '../components/search/types';
-import { FilterItem } from '../components/search-filters';
 import {
     resultsStringAndTagsStyles,
     desktopFiltersStyles,

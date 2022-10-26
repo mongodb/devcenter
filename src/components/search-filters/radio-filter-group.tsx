@@ -3,19 +3,19 @@ import {
     TypographyScale,
     SystemIcon,
     ESystemIconNames,
-    Checkbox,
-    Link,
     RadioGroup,
     Radio,
 } from '@mdb/flora';
 
-import { FilterGroupProps, FilterItem } from './types';
+import { FilterItem } from '@mdb/devcenter-components';
+
+import { RadioFilterGroupProps } from './types';
 import { titleStyles, itemsStyles } from './styles';
 import { sortByOptions } from '../search/utils';
 
 const FILTER_STEP = 5;
 
-const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
+const RadioFilterGroup: React.FunctionComponent<RadioFilterGroupProps> = memo(
     ({
         className,
         title,
@@ -38,16 +38,16 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
 
         const onCheckToggle = (checked: boolean, filter: FilterItem) => {
             if (checked) {
-                if (filter.subItems && filter.subItems.length) {
-                    const subItemsToAdd = filter.subItems.filter(
-                        subItem =>
+                if (filter.subFilters && filter.subFilters.length) {
+                    const subFiltersToAdd = filter.subFilters.filter(
+                        subFilter =>
                             !filters.find(
                                 ({ name, type }) =>
-                                    name === subItem.name &&
-                                    type === subItem.type
+                                    name === subFilter.name &&
+                                    type === subFilter.type
                             )
                     );
-                    setFilters(filters.concat(filter).concat(subItemsToAdd));
+                    setFilters(filters.concat(filter).concat(subFiltersToAdd));
                 } else {
                     setFilters(filters.concat(filter));
                 }
@@ -77,9 +77,9 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
                     if (filters.includes(item)) {
                         filterList.push(item.name);
                     }
-                    if (item.subItems) {
+                    if (item.subFilters) {
                         filterList = filterList.concat(
-                            getFilterNames(item.subItems)
+                            getFilterNames(item.subFilters)
                         );
                     }
                 });
@@ -125,70 +125,6 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
 
                 {expanded && (
                     <div sx={itemsStyles(title)}>
-                        {!sortBy && (
-                            <>
-                                {items
-                                    .slice(0, showAll ? undefined : FILTER_STEP) // Show FILTER_STEP to start, then all if they click "Show more"
-                                    .map(item => {
-                                        const { subItems, name, type } = item;
-                                        const hasSubItems =
-                                            subItems && !!subItems.length;
-                                        const key = `${name} ${type} ${
-                                            isMobile ? 'mobile' : ''
-                                        }`;
-
-                                        return (
-                                            <div
-                                                key={
-                                                    hasSubItems
-                                                        ? key
-                                                        : undefined
-                                                }
-                                            >
-                                                <Checkbox
-                                                    name={key}
-                                                    label={name}
-                                                    onToggle={checked =>
-                                                        onCheckToggle(
-                                                            checked,
-                                                            item
-                                                        )
-                                                    }
-                                                    checked={
-                                                        !!filters.find(
-                                                            filter =>
-                                                                filter.type ===
-                                                                    type &&
-                                                                filter.name ===
-                                                                    name
-                                                        )
-                                                    }
-                                                />
-                                                {hasSubItems && (
-                                                    <FilterGroup
-                                                        sx={{
-                                                            marginLeft: 'inc40',
-                                                        }}
-                                                        items={subItems}
-                                                        filters={filters}
-                                                        setFilters={setFilters}
-                                                    />
-                                                )}
-                                            </div>
-                                        );
-                                    })}
-
-                                {items.length > FILTER_STEP && (
-                                    <Link
-                                        onClick={() => setShowAll(!showAll)}
-                                        sx={{ marginTop: 'inc30' }}
-                                    >
-                                        Show {showAll ? 'less' : 'more'}
-                                    </Link>
-                                )}
-                            </>
-                        )}
-
                         {sortBy && (
                             <RadioGroup
                                 name={title || 'RadioGroup'}
@@ -227,5 +163,5 @@ const FilterGroup: React.FunctionComponent<FilterGroupProps> = memo(
         );
     }
 );
-FilterGroup.displayName = 'FilterGroup';
-export default FilterGroup;
+RadioFilterGroup.displayName = 'RadioFilterGroup';
+export default RadioFilterGroup;
