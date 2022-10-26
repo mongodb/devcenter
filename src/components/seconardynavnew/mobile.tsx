@@ -4,6 +4,7 @@ import { secondaryNavData } from '../../data/secondary-nav';
 import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
 import { OverlayContext } from '../../contexts/overlay';
+import theme from '@mdb/flora/theme';
 
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
 import SecondaryLinksList from './nav-item';
@@ -112,18 +113,6 @@ const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
                                                             >
                                                                 {name}
                                                             </FloraLink>
-                                                            <SystemIcon
-                                                                sx={{
-                                                                    paddingLeft:
-                                                                        'inc10',
-                                                                    display:
-                                                                        'inline',
-                                                                }}
-                                                                name={
-                                                                    ESystemIconNames.CHEVRON_RIGHT
-                                                                }
-                                                                size="small"
-                                                            />
                                                         </a>
                                                     </li>
                                                 )}
@@ -147,16 +136,6 @@ const SubNavLink = ({ name, dropDownItems, path, all }: DropDownItem) => {
                                                 >
                                                     {all}
                                                 </FloraLink>
-                                                <SystemIcon
-                                                    sx={{
-                                                        paddingLeft: 'inc10',
-                                                        display: 'inline',
-                                                    }}
-                                                    name={
-                                                        ESystemIconNames.CHEVRON_RIGHT
-                                                    }
-                                                    size="small"
-                                                />
                                             </a>
                                         </li>
                                     )}
@@ -295,19 +274,26 @@ const MobileView = () => {
                     zIndex: layers.secondaryNav,
                     bg: '#ffffff',
                     top: 0,
-                    display: 'flex',
+                    display: 'inline-flex',
+                    width: '100%',
                     gap: 'inc30',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     borderBottom: '2px solid #00684A',
-                    px: 'inc50',
                     ...(mobileMenuIsOpen && {
                         borderImage:
                             'linear-gradient(to right, #00ED64 240px, #00684A 0) 1',
                     }),
                 }}
             >
-                <FloraLink sx={MainLinkStyles} onClick={openMobileMenu}>
+                <FloraLink
+                    sx={{
+                        ...MainLinkStyles,
+                        width: 'auto',
+                        marginLeft: 'inc50',
+                    }}
+                    href={getURLPath('/')}
+                >
                     <TypographyScale variant="body1">
                         MongoDB Developer
                     </TypographyScale>
@@ -331,7 +317,12 @@ const MobileView = () => {
                     </div>
                 )}
                 <FloraLink
-                    sx={{ ...MainLinkStyles, width: 'auto' }}
+                    sx={{
+                        ...MainLinkStyles,
+                        width: 'auto',
+                        padding: 'inc40',
+                        marginRight: 'inc20',
+                    }}
                     onClick={openMobileMenu}
                 >
                     {!mobileMenuIsOpen && (
