@@ -12,7 +12,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
-    - yarn start && npx @percy/cli snapshot snapshots.js
+    - (yarn start &) && npx @percy/cli snapshot snapshots.js
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
