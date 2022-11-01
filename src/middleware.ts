@@ -7,6 +7,17 @@ const middleware = async (req: NextRequest) => {
     const { method } = req;
     const { pathname } = req.nextUrl;
 
+    // The following fixes an issue where POST, PUT and other methods are NOT prevented
+    // in pages/ routes. With the following code, we only allow non-GET methods for /api/ routes.
+    if (method !== 'GET' && !pathname.startsWith('/api/')) {
+        //https://nextjs.org/docs/messages/returning-response-body-in-middleware
+        const methodNotAllowedURL = new URL('/api/405', req.url);
+
+        const res = NextResponse.rewrite(methodNotAllowedURL);
+        logRequestData(pathname, req.method, 405);
+        return res;
+    }
+
     const origin = req.headers.get('Origin') || '';
 
     const host = process.env.VERCEL_URL
@@ -17,17 +28,6 @@ const middleware = async (req: NextRequest) => {
         pathname.startsWith('/api/') &&
         !pathname.includes('webhook') &&
         ['POST', 'PUT'].includes(req.method);
-
-    // The following fixes an issue where POST, PUT and other methods are not prevented
-    // in pages/ routes.
-    if (method !== 'GET' && !pathname.startsWith('/api/')) {
-        //https://nextjs.org/docs/messages/returning-response-body-in-middleware
-        const methodNotAllowedURL = new URL('/api/405', req.url);
-
-        const res = NextResponse.rewrite(methodNotAllowedURL);
-        logRequestData(pathname, req.method, 405);
-        return res;
-    }
 
     if (checkRequest) {
         if (
