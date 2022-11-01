@@ -2052,6 +2052,130 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@panva/hkdf/-/hkdf-1.0.2.tgz#bab0f09d09de9fd83628220d496627681bc440d6"
   integrity sha1-urDwnQnen9g2KCINSWYnaBvEQNY=
 
+"@percy/cli-app@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/cli-app/-/cli-app-1.12.0.tgz#1c4dfd5756a80411e5ecec12115a957a74c56b95"
+  integrity sha512-vS002JnlGyu8CxIY69WXGvgZn7RillBM4MOyAtFmT2r/u8KUsUTslJ3pIimXQMeC7jFnwkEK2bxfcstoBNv5hA==
+  dependencies:
+    "@percy/cli-command" "1.12.0"
+    "@percy/cli-exec" "1.12.0"
+
+"@percy/cli-build@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/cli-build/-/cli-build-1.12.0.tgz#e5f38d7032f048370429a1d1be8b716178b3160a"
+  integrity sha512-O18xPFuCsrsyUgpkozTsvQCvqQkv/y3dj5cDiGzwMI+fI2B+jdCIEri6J/ZEWw78CGPQSCrBO0ufKK2qHd5wVw==
+  dependencies:
+    "@percy/cli-command" "1.12.0"
+
+"@percy/cli-command@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/cli-command/-/cli-command-1.12.0.tgz#84625bf7999f8e3b97db14089e911bb92aa10ae5"
+  integrity sha512-D7wy/r/HczO0dz8IfBiZP7kquMocPtiAd8rTYdEDBKkWyiC+bKGgYAbV3MzYAFgwRkXpswRbbPgq3exXp19oLg==
+  dependencies:
+    "@percy/config" "1.12.0"
+    "@percy/core" "1.12.0"
+    "@percy/logger" "1.12.0"
+
+"@percy/cli-config@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/cli-config/-/cli-config-1.12.0.tgz#1d71e0961ba9fb2b22d9deec3a92b5ef3fecade9"
+  integrity sha512-ae3cEjFCrVZz9yexj3+VjYFNZMvRYsZ9DI6MHxcujb72DRmnG5Xs0ZnAThx3pkSrRNOWViAJxcNE2AIBtkKQsQ==
+  dependencies:
+    "@percy/cli-command" "1.12.0"
+
+"@percy/cli-exec@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/cli-exec/-/cli-exec-1.12.0.tgz#4e6532570c6cb4f59fcf69cf974f329c7b1de23d"
+  integrity sha512-UdZQs1GcttqabgV7Md8p/UsgJLiwaeZ7pI4nQ5bGQ0LBa1F5c/so2pX0MUcQqeUt5Vy9P8mixCSD+OI+djlzKw==
+  dependencies:
+    "@percy/cli-command" "1.12.0"
+    cross-spawn "^7.0.3"
+    which "^2.0.2"
+
+"@percy/cli-snapshot@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/cli-snapshot/-/cli-snapshot-1.12.0.tgz#1f0cfdb2aedefb32376b304341b93a681962dbfb"
+  integrity sha512-kKgdj6HSMaF9QDhYg8wZvlHftj+d2Nq+g1pWmRrtsCGJH5aNEORU1396fs7t7WBUZagy9O7lzLzZ+xxPoTa1og==
+  dependencies:
+    "@percy/cli-command" "1.12.0"
+    yaml "^2.0.0"
+
+"@percy/cli-upload@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/cli-upload/-/cli-upload-1.12.0.tgz#6bfe1ef13e1b47d18503255cc45264386ade925d"
+  integrity sha512-caK70dxhew9/wbVwJp6cp5CU66oTOXJdVQjBqfvWqqG1qGMqeA+mYYzG2XMtDOGs8CLD61IRJHkBOBL6vTVjnA==
+  dependencies:
+    "@percy/cli-command" "1.12.0"
+    fast-glob "^3.2.11"
+    image-size "^1.0.0"
+
+"@percy/cli@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/cli/-/cli-1.12.0.tgz#86174ac15e7feb5ea75c2b7051555dcbba354483"
+  integrity sha512-cWp6enOQP/DB0EqJK7F+KznjpLEis5JaAVHSoKkYiSQMsNgNhwMq6IgTSkTbu+ZfUqr3n8s5SL02JVIsgRgXyQ==
+  dependencies:
+    "@percy/cli-app" "1.12.0"
+    "@percy/cli-build" "1.12.0"
+    "@percy/cli-command" "1.12.0"
+    "@percy/cli-config" "1.12.0"
+    "@percy/cli-exec" "1.12.0"
+    "@percy/cli-snapshot" "1.12.0"
+    "@percy/cli-upload" "1.12.0"
+    "@percy/client" "1.12.0"
+    "@percy/logger" "1.12.0"
+
+"@percy/client@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/client/-/client-1.12.0.tgz#6f490323c6f1a5f91f0150d01a4eb15b312b0c4e"
+  integrity sha512-KQJ8ykLteQwf8ldTJPh8szLqmJpMJvVG7d7+TVnkYKpNJRhsGEqHnymhKADGWn5/U6i0Z8DdEJGExfnABmRB1A==
+  dependencies:
+    "@percy/env" "1.12.0"
+    "@percy/logger" "1.12.0"
+
+"@percy/config@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/config/-/config-1.12.0.tgz#8655b3b9a36fa38c527515791d8817757a0fc07c"
+  integrity sha512-4ECAofbnlyP10PxNeiE8hlEG+IvqCNQ/R8V9on2EGD68mo9E7gsD9zWfMpVHuFNxCQxC0FYinR7VWaQVBvIb6Q==
+  dependencies:
+    "@percy/logger" "1.12.0"
+    ajv "^8.6.2"
+    cosmiconfig "^7.0.0"
+    yaml "^2.0.0"
+
+"@percy/core@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/core/-/core-1.12.0.tgz#538ed5f44d51283935ccc9308d166029abfc1eb1"
+  integrity sha512-djjyRDQ/fSYc5n4L952fezMamXA4coNCSnCOIuV1tuul6HP2QpQBqSLUlTNIqtCy1vWUYQQvz6WtCzSw8Fp08g==
+  dependencies:
+    "@percy/client" "1.12.0"
+    "@percy/config" "1.12.0"
+    "@percy/dom" "1.12.0"
+    "@percy/logger" "1.12.0"
+    content-disposition "^0.5.4"
+    cross-spawn "^7.0.3"
+    extract-zip "^2.0.1"
+    fast-glob "^3.2.11"
+    micromatch "^4.0.4"
+    mime-types "^2.1.34"
+    path-to-regexp "^6.2.0"
+    rimraf "^3.0.2"
+    ws "^8.0.0"
+
+"@percy/dom@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/dom/-/dom-1.12.0.tgz#3e1660bc557997c80d359c43086a0e5d3e60cc64"
+  integrity sha512-EUy281hPhpPqdy9DV3OXROOK2B7p0nujox/n18MmgWwxlO4YxVQJC0C3VF7TmHIhGBwE8BLSqxqz6r1RramKyw==
+
+"@percy/env@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/env/-/env-1.12.0.tgz#dd35b9c82b059d3fbcb7c2c8f10f6272931f6cac"
+  integrity sha512-baEMvDcVzbJcOL+rr4s98Jb7tKdUVWnNGdXZI26UxsaSwHtKJRceHe4Qzw79FPU1KtJnK34KEsCDj4S9eAtGEg==
+
+"@percy/logger@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/@percy/logger/-/logger-1.12.0.tgz#0799261eee677e67cafd6ab05dd5a6f1a8d18317"
+  integrity sha512-GQ9XiwOK9sb+5luZH4899Wwt1RF6K5fkiyumjYrZk4MtkxOqVIUtU08rat0rZZUO0T+KkNHvjbZ487XvLQjN1g==
+
 "@playwright/test@^1.22.2":
   version "1.22.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@playwright/test/-/test-1.22.2.tgz#b848f25f8918140c2d0bae8e9227a40198f2dd4a"
@@ -2682,6 +2806,13 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@types/yauzl@^2.9.1":
+  version "2.10.0"
+  resolved "https://registry.npmjs.org/@types/yauzl/-/yauzl-2.10.0.tgz#b3248295276cf8c6f153ebe6a9aba0c988cb2599"
+  integrity sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==
+  dependencies:
+    "@types/node" "*"
+
 "@typescript-eslint/parser@^5.21.0":
   version "5.32.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@typescript-eslint/parser/-/parser-5.32.0.tgz#1de243443bc6186fb153b9e395b842e46877ca5d"
@@ -2961,6 +3092,16 @@ ajv@^6.10.0, ajv@^6.12.4, ajv@^6.12.5:
     fast-deep-equal "^3.1.1"
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
+    uri-js "^4.2.2"
+
+ajv@^8.6.2:
+  version "8.11.0"
+  resolved "https://registry.npmjs.org/ajv/-/ajv-8.11.0.tgz#977e91dd96ca669f54a11e23e378e33b884a565f"
+  integrity sha512-wGgprdCvMalC0BztXvitD2hC04YffAvtsUn93JbGXYLAtCUO4xd17mCCZQxUOItiBwZvJScWo8NIvQMQ71rdpg==
+  dependencies:
+    fast-deep-equal "^3.1.1"
+    json-schema-traverse "^1.0.0"
+    require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
 ansi-colors@^4.1.1:
@@ -3379,6 +3520,11 @@ bser@2.1.1:
   dependencies:
     node-int64 "^0.4.0"
 
+buffer-crc32@~0.2.3:
+  version "0.2.13"
+  resolved "https://registry.npmjs.org/buffer-crc32/-/buffer-crc32-0.2.13.tgz#0d333e3f00eac50aa1454abd30ef8c2a5d9a7242"
+  integrity sha512-VO9Ht/+p3SN7SKWqcrgEzjGbRSJYTx+Q1pTQC0wrWqHx0vpJraQ6GtHx8tvcg1rlK1byhU5gccxgOgj7B0TDkQ==
+
 buffer-from@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
@@ -3681,6 +3827,13 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
+
+content-disposition@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.npmjs.org/content-disposition/-/content-disposition-0.5.4.tgz#8b82b4efac82512a02bb0b1dcec9d2c5e8eb5bfe"
+  integrity sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==
+  dependencies:
+    safe-buffer "5.2.1"
 
 convert-source-map@^1.4.0, convert-source-map@^1.5.0, convert-source-map@^1.6.0, convert-source-map@^1.7.0:
   version "1.8.0"
@@ -4453,6 +4606,17 @@ extend@^3.0.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha1-+LETa0Bx+9jrFAr/hYsQGewpFfo=
 
+extract-zip@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/extract-zip/-/extract-zip-2.0.1.tgz#663dca56fe46df890d5f131ef4a06d22bb8ba13a"
+  integrity sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==
+  dependencies:
+    debug "^4.1.1"
+    get-stream "^5.1.0"
+    yauzl "^2.10.0"
+  optionalDependencies:
+    "@types/yauzl" "^2.9.1"
+
 facepaint@^1.2.1:
   version "1.2.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/facepaint/-/facepaint-1.2.1.tgz#89929e601b15227278c53c516f764fc462b09c33"
@@ -4462,6 +4626,17 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha1-On1WtVnWy8PrUSMlJE5hmmXGxSU=
+
+fast-glob@^3.2.11:
+  version "3.2.12"
+  resolved "https://registry.npmjs.org/fast-glob/-/fast-glob-3.2.12.tgz#7f39ec99c2e6ab030337142da9e0c18f37afae80"
+  integrity sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==
+  dependencies:
+    "@nodelib/fs.stat" "^2.0.2"
+    "@nodelib/fs.walk" "^1.2.3"
+    glob-parent "^5.1.2"
+    merge2 "^1.3.0"
+    micromatch "^4.0.4"
 
 fast-glob@^3.2.9:
   version "3.2.11"
@@ -4502,6 +4677,13 @@ fb-watchman@^2.0.0:
   integrity sha1-/IT7OdJwnPP/bXQ3BhV7tXCKioU=
   dependencies:
     bser "2.1.1"
+
+fd-slicer@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/fd-slicer/-/fd-slicer-1.1.0.tgz#25c7c89cb1f9077f8891bbe61d8f390eae256f1e"
+  integrity sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==
+  dependencies:
+    pend "~1.2.0"
 
 feed@4.2.2:
   version "4.2.2"
@@ -4701,6 +4883,13 @@ get-package-type@^0.1.0:
   version "0.1.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/get-package-type/-/get-package-type-0.1.0.tgz#8de2d803cff44df3bc6c456e6668b36c3926e11a"
   integrity sha1-jeLYA8/0TfO8bEVuZmizbDkm4Ro=
+
+get-stream@^5.1.0:
+  version "5.2.0"
+  resolved "https://registry.npmjs.org/get-stream/-/get-stream-5.2.0.tgz#4966a1795ee5ace65e706c4b7beb71257d6e22d3"
+  integrity sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA==
+  dependencies:
+    pump "^3.0.0"
 
 get-stream@^6.0.0:
   version "6.0.1"
@@ -5022,6 +5211,13 @@ ignore@^5.2.0:
   version "5.2.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha1-bTusj6f+DUXZ+b57rC/CeVd+NFo=
+
+image-size@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/image-size/-/image-size-1.0.2.tgz#d778b6d0ab75b2737c1556dd631652eb963bc486"
+  integrity sha512-xfOoWjceHntRb3qFCrh5ZFORYH8XCdYpASltMhZ/Q0KZiOwjdE/Yl2QCiWdwD+lygV5bMCvauzgu5PxBX/Yerg==
+  dependencies:
+    queue "6.0.2"
 
 immediate@~3.0.5:
   version "3.0.6"
@@ -5842,6 +6038,11 @@ json-schema-traverse@^0.4.1:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
   integrity sha1-afaofZUTq4u4/mO9sJecRI5oRmA=
 
+json-schema-traverse@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz#ae7bcb3656ab77a73ba5c49bf654f38e6b6860e2"
+  integrity sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==
+
 json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
@@ -6307,7 +6508,7 @@ mime-db@1.52.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
   integrity sha1-u6vNwChZ9JhzAchW4zh85exDv3A=
 
-mime-types@^2.1.12, mime-types@^2.1.27:
+mime-types@^2.1.12, mime-types@^2.1.27, mime-types@^2.1.34:
   version "2.1.35"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mime-types/-/mime-types-2.1.35.tgz#381a871b62a734450660ae3deee44813f70d959a"
   integrity sha1-OBqHG2KnNEUGYK497uRIE/cNlZo=
@@ -6831,10 +7032,20 @@ path-parse@^1.0.6, path-parse@^1.0.7:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
   integrity sha1-+8EUtgykKzDZ2vWFjkvWi77bZzU=
 
+path-to-regexp@^6.2.0:
+  version "6.2.1"
+  resolved "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-6.2.1.tgz#d54934d6798eb9e5ef14e7af7962c945906918e5"
+  integrity sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==
+
 path-type@^4.0.0:
   version "4.0.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha1-hO0BwKe6OAr+CdkKjBgNzZ0DBDs=
+
+pend@~1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
+  integrity sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==
 
 picocolors@^1.0.0:
   version "1.0.0"
@@ -7093,6 +7304,13 @@ queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha1-SSkii7xyTfrEPg77BYyve2z7YkM=
+
+queue@6.0.2:
+  version "6.0.2"
+  resolved "https://registry.npmjs.org/queue/-/queue-6.0.2.tgz#b91525283e2315c7553d2efa18d83e76432fed65"
+  integrity sha512-iHZWu+q3IdFZFX36ro/lKBkSvfkztY5Y7HMiPlOUjhupPcG2JMfst2KKEpu5XndviX/3UhFbRngUPNKtgvtZiA==
+  dependencies:
+    inherits "~2.0.3"
 
 quick-format-unescaped@^4.0.3:
   version "4.0.4"
@@ -7439,7 +7657,7 @@ rxjs@^7.5.1:
   dependencies:
     tslib "^2.1.0"
 
-safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@~5.2.0:
+safe-buffer@5.2.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@~5.2.0:
   version "5.2.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha1-Hq+fqb2x/dTsdfWPnNtOa3gn7sY=
@@ -8639,6 +8857,11 @@ ws@^7.3.1, ws@^7.4.6:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/ws/-/ws-7.5.7.tgz#9e0ac77ee50af70d58326ecff7e85eb3fa375e67"
   integrity sha1-ngrHfuUK9w1YMm7P9+hes/o3Xmc=
 
+ws@^8.0.0:
+  version "8.10.0"
+  resolved "https://registry.npmjs.org/ws/-/ws-8.10.0.tgz#00a28c09dfb76eae4eb45c3b565f771d6951aa51"
+  integrity sha512-+s49uSmZpvtAsd2h37vIPy1RBusaLawVe8of+GyEPsaJTCMpj/2v8NpeK1SHXjBlQ95lQTmQofOJnFiLoaN3yw==
+
 xml-js@^1.6.11:
   version "1.6.11"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/xml-js/-/xml-js-1.6.11.tgz#927d2f6947f7f1c19a316dd8eea3614e8b18f8e9"
@@ -8683,6 +8906,11 @@ yaml@^1.10.0, yaml@^1.7.2:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha1-IwHF/78StGfejaIzOkWeKeeSDks=
 
+yaml@^2.0.0:
+  version "2.1.3"
+  resolved "https://registry.npmjs.org/yaml/-/yaml-2.1.3.tgz#9b3a4c8aff9821b696275c79a8bee8399d945207"
+  integrity sha512-AacA8nRULjKMX2DvWvOAdBZMOfQlypSFkjcOcu9FalllIDJ1kvlREzcdIZmidQUqqeMv7jorHjq2HlLv/+c2lg==
+
 yargs-parser@^20.2.2:
   version "20.2.9"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/yargs-parser/-/yargs-parser-20.2.9.tgz#2eb7dc3b0289718fc295f362753845c41a0c94ee"
@@ -8700,6 +8928,14 @@ yargs@^16.2.0:
     string-width "^4.2.0"
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
+
+yauzl@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.npmjs.org/yauzl/-/yauzl-2.10.0.tgz#c7eb17c93e112cb1086fa6d8e51fb0667b79a5f9"
+  integrity sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g==
+  dependencies:
+    buffer-crc32 "~0.2.3"
+    fd-slicer "~1.1.0"
 
 yocto-queue@^0.1.0:
   version "0.1.0"

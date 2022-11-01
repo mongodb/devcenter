@@ -67,6 +67,7 @@
         "@babel/plugin-transform-react-jsx": "^7.17.3",
         "@emotion/babel-plugin": "11.7.2",
         "@next/bundle-analyzer": "12.0.8",
+        "@percy/cli": "^1.12.0",
         "@playwright/test": "^1.22.2",
         "@testing-library/jest-dom": "5.16.1",
         "@testing-library/react": "12.1.2",

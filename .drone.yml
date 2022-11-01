@@ -12,6 +12,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    - yarn start && npx @percy/cli snapshot snapshots.js
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
@@ -24,7 +25,7 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
-      STRAPI_URL:
+      STRAPI_URL:  
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
         from_secret: STRAPI_API_TOKEN
@@ -34,6 +35,7 @@ steps:
         from_secret: SENTRY_DSN
       NEXT_IMAGE_HOSTS:
         from_secret: NEXT_IMAGE_HOSTS
+      PERCY_TOKEN: f56d06061ad33fa5df51f3121cf05468675a9af16e812b2feeed98a990743e81
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-staging
@@ -65,7 +67,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - mm/percy
   event:
     - push
 
