@@ -18,8 +18,8 @@ const middleware = async (req: NextRequest) => {
         !pathname.includes('webhook') &&
         ['POST', 'PUT'].includes(req.method);
 
-    // The following fixes and issue where POST / PUT and other methods are prevented
-    // in normal page routes.
+    // The following fixes an issue where POST, PUT and other methods are not prevented
+    // in pages/ routes.
     if (method !== 'GET' && !pathname.startsWith('/api/')) {
         //https://nextjs.org/docs/messages/returning-response-body-in-middleware
         const methodNotAllowedURL = new URL('/api/405', req.url);
