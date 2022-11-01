@@ -10,7 +10,8 @@
         "format:write": "prettier --write .",
         "format:check": "prettier --check .",
         "test": "jest --watch",
-        "test:e2e": "npx playwright install --with-deps && npx playwright test"
+        "test:e2e": "npx playwright install --with-deps && npx playwright test",
+        "test:visual": "npx @percy/cli snapshot snapshots.js"
     },
     "husky": {
         "hooks": {

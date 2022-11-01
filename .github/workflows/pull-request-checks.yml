@@ -2,6 +2,8 @@ name: Pull Request Checks
 on:
     pull_request:
         branches: [main]
+    push:
+        branches: [mm/percy]
 env:
     NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
     NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
@@ -69,6 +71,35 @@ jobs:
               with:
                   name: playwright-artifacts
                   path: playwright-artifacts
+    percy-tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout target branch
+              uses: actions/checkout@v2
+            - name: Use Node 16.x
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+            - name: Cache node modules
+              uses: actions/cache@v2
+              id: cache
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+            - name: Install dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: yarn install --frozen-lockfile
+            - name: Build
+              run: yarn build
+            - name: Start
+              run: yarn start &
+            - name: Run Percy
+              run: npx @percy/cli snapshot snapshots.js
+              env:
+                  PERCY_TOKEN: f56d06061ad33fa5df51f3121cf05468675a9af16e812b2feeed98a990743e81
+
     jest-tests:
         runs-on: ubuntu-latest
         permissions:
