@@ -4,7 +4,19 @@ import { rewrites } from '../config/rewrites';
 import { logRequestData } from './utils/logger';
 
 const middleware = async (req: NextRequest) => {
+    const { method } = req;
     const { pathname } = req.nextUrl;
+
+    // The following fixes an issue where POST, PUT and other methods are NOT prevented
+    // in pages/ routes. With the following code, we only allow non-GET methods for /api/ routes.
+    if (method !== 'GET' && !pathname.startsWith('/api/')) {
+        //https://nextjs.org/docs/messages/returning-response-body-in-middleware
+        const methodNotAllowedURL = new URL('/api/405', req.url);
+
+        const res = NextResponse.rewrite(methodNotAllowedURL);
+        logRequestData(pathname, req.method, 405);
+        return res;
+    }
 
     const origin = req.headers.get('Origin') || '';
 
@@ -27,11 +39,12 @@ const middleware = async (req: NextRequest) => {
                 `${req.ip} blocked because of bad user agent (${ua?.browser?.name}) or origin (${origin})`
             );
 
-            const blockedURL = new URL('/api/blocked', req.url);
+            //https://nextjs.org/docs/messages/returning-response-body-in-middleware
+            const blockedURL = new URL('/api/429', req.url);
             blockedURL.searchParams.set('from', req.nextUrl.pathname);
 
             const res = NextResponse.rewrite(blockedURL);
-            logRequestData(pathname, req.method, res.status);
+            logRequestData(pathname, req.method, 429);
             return res;
         }
 
