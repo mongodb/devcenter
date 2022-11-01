@@ -38,32 +38,32 @@ steps:
       PERCY_TOKEN: f56d06061ad33fa5df51f3121cf05468675a9af16e812b2feeed98a990743e81
       DEBIAN_FRONTEND: noninteractive
 
-  - name: publish-staging
-    image: plugins/kaniko-ecr
-    settings:
-      create_repository: true
-      enable_cache: true
-      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
-      repo: devrel/${DRONE_REPO_NAME}
-      tags:
-        - devcenter-staging-build-${DRONE_BUILD_NUMBER}
-        - latest-staging
-      build_args:
-      - APP_RELEASE=${DRONE_COMMIT_SHA}
-      access_key:
-        from_secret: ecr_access_key
-      secret_key:
-        from_secret: ecr_secret_key
-      values_files: ["environments/staging.yaml"]
+  # - name: publish-staging
+  #   image: plugins/kaniko-ecr
+  #   settings:
+  #     create_repository: true
+  #     enable_cache: true
+  #     registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+  #     repo: devrel/${DRONE_REPO_NAME}
+  #     tags:
+  #       - devcenter-staging-build-${DRONE_BUILD_NUMBER}
+  #       - latest-staging
+  #     build_args:
+  #     - APP_RELEASE=${DRONE_COMMIT_SHA}
+  #     access_key:
+  #       from_secret: ecr_access_key
+  #     secret_key:
+  #       from_secret: ecr_secret_key
+  #     values_files: ["environments/staging.yaml"]
 
-  - name: deploy-staging
-    image: drone/cli:1.4.0-alpine
-    commands:
-    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} staging
-    environment:
-      DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
-      DRONE_TOKEN:
-        from_secret: drone_token
+  # - name: deploy-staging
+  #   image: drone/cli:1.4.0-alpine
+  #   commands:
+  #   - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} staging
+  #   environment:
+  #     DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
+  #     DRONE_TOKEN:
+  #       from_secret: drone_token
 
 trigger:
   branch:
