@@ -25,8 +25,6 @@ import { CTAContainerStyles } from '../../components/hero/styles';
 
 import { DesktopFilters, MobileFilters } from '../../components/search-filters';
 
-import { FilterItem } from '@mdb/devcenter-components';
-
 import { ContentTypePageProps } from './types';
 import { desktopFiltersStyles, resultsStringAndTagsStyles } from './styles';
 import { h5Styles, pageWrapper } from '../../styled/layout';
@@ -46,7 +44,7 @@ import ProductsSection from './products-section';
 import { getURLPath } from '../../utils/format-url-path';
 import useSearch from '../../hooks/search';
 import { hasEmptyFilterAndQuery, isEmptyArray } from '../../hooks/search/utils';
-import FilterTagSection from '../../components/search-filters/filter-tag-section';
+import { FilterTagSection, FilterItem } from '@mdb/devcenter-components';
 import {
     createInitialSearchData,
     getResultData,
@@ -333,11 +331,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             </div>
             {hasFiltersSet && (
                 <FilterTagSection
+                    sx={{ display: ['none', null, null, 'flex'] }}
                     allFilters={allFilters}
-                    filterTagsExpanded={filterTagsExpanded}
-                    setFilterTagsExpanded={setFilterTagsExpanded}
-                    onFilterTagClose={onFilterTagClose}
-                    clearFilters={() => setAllFilters([])}
+                    onClearTag={onFilterTagClose}
+                    onClearAll={() => setAllFilters([])}
                 />
             )}
         </div>

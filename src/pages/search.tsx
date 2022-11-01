@@ -54,7 +54,7 @@ import {
     getResultData,
     getResultIsValidating,
 } from '../hooks/search/utils';
-import FilterTagSection from '../components/search-filters/filter-tag-section';
+import { FilterTagSection } from '@mdb/devcenter-components';
 import { OverlayContext } from '../contexts/overlay';
 
 export interface SearchProps {
@@ -282,11 +282,10 @@ const Search: NextPage<SearchProps> = ({
             </div>
             {hasFiltersSet && (
                 <FilterTagSection
+                    sx={{ display: ['none', null, null, 'flex'] }}
                     allFilters={allFilters}
-                    filterTagsExpanded={filterTagsExpanded}
-                    setFilterTagsExpanded={setFilterTagsExpanded}
-                    onFilterTagClose={onFilterTagClose}
-                    clearFilters={clearFilters}
+                    onClearTag={onFilterTagClose}
+                    onClearAll={clearFilters}
                 />
             )}
         </div>
