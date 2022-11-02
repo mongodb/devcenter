@@ -1922,6 +1922,11 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.15.tgz#74defdd055ea5dc0c0fd3e22ba5d7174ed29a956"
   integrity sha1-dN790FXqXcDA/T4iul1xdO0pqVY=
 
+"@mdb/devcenter-components@0.1.1":
+  version "0.1.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/devcenter-components/-/@mdb/devcenter-components-0.1.1.tgz#2718653cab9933f4131e4c9d73c5e4f9e01e6d23"
+  integrity sha512-GtQj4vbM4kG9tfi+NZVQ/UQ0rDJTRl1oJ4aUNaWFTUNP/eF+6DXfbVbWAlkU3pPLrvj/2u+RzhKqLuljQaOW3Q==
+
 "@mdb/flora@1.1.0-rc.0":
   version "1.1.0-rc.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-1.1.0-rc.0.tgz#e03662d8e63e87ffd7310042187f9f01c0af3d31"
