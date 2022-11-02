@@ -9,14 +9,14 @@ const middleware = async (req: NextRequest) => {
 
     // The following fixes an issue where POST, PUT and other methods are NOT prevented
     // in pages/ routes. With the following code, we only allow non-GET methods for /api/ routes.
-    if (method !== 'GET' && !pathname.startsWith('/api/')) {
-        //https://nextjs.org/docs/messages/returning-response-body-in-middleware
-        const methodNotAllowedURL = new URL('/api/405', req.url);
+    // if (method !== 'GET' && !pathname.startsWith('/api/')) {
+    //     //https://nextjs.org/docs/messages/returning-response-body-in-middleware
+    //     const methodNotAllowedURL = new URL('/api/405', req.url);
 
-        const res = NextResponse.rewrite(methodNotAllowedURL);
-        logRequestData(pathname, req.method, 405);
-        return res;
-    }
+    //     const res = NextResponse.rewrite(methodNotAllowedURL);
+    //     logRequestData(pathname, req.method, 405);
+    //     return res;
+    // }
 
     const origin = req.headers.get('Origin') || '';
 

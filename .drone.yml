@@ -67,7 +67,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - devhub-1558-preview
   event:
     - push
 
@@ -85,7 +85,7 @@ steps:
       chart_version: 4.12.0
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
-      release: devcenter-frontend
+      release: devcenter-frontend-preview-1558
       values: image.tag=devcenter-staging-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
