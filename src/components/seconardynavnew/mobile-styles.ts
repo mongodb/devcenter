@@ -124,6 +124,7 @@ export const chevronStylesForMainLink: ThemeUIStyleObject = {
 
 export const userMenuStyles: ThemeUIStyleObject = {
     minWidth: 'inc60',
+    marginLeft: 'auto',
 };
 
 export const DropDownStyles = {
