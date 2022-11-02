@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { runPercy } from '../utils';
 
 test.describe.configure({ mode: 'parallel' });
 
@@ -204,3 +205,8 @@ test('5 star rating flow on content page', async ({ page }) => {
         page.locator('button:text("Next")').click(),
     ]);
 });
+
+test(
+    'Content page visual regression testing',
+    runPercy(PAGE_URL, 'Content Page')
+);

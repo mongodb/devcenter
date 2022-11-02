@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { runPercy } from '../utils';
 
 test('All News & Announcements Page has correct titles', async ({ page }) => {
     await page.goto('/developer/news');
@@ -16,3 +17,8 @@ test('All News & Announcements Page has correct titles', async ({ page }) => {
     // https://jestjs.io/docs/expect#expectarraycontainingarray
     expect(text).toEqual(expect.arrayContaining(expected));
 });
+
+test(
+    'News & Announcements visual regression testing',
+    runPercy('/developer/news', 'News & Announcements')
+);

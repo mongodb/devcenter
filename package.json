@@ -11,7 +11,7 @@
         "format:check": "prettier --check .",
         "test": "jest --watch",
         "test:e2e": "npx playwright install --with-deps && npx playwright test",
-        "test:visual": "npx @percy/cli snapshot snapshots.js"
+        "test:e2e:visual": "npx @percy/cli exec -- npm run test:e2e"
     },
     "husky": {
         "hooks": {
@@ -31,6 +31,7 @@
         "@mdx-js/react": "1.6.22",
         "@sentry/nextjs": "7.19.0",
         "@types/react-truncate": "2.3.4",
+        "@percy/playwright": "^1.0.4",
         "apollo-link-rest": "0.9.0-rc.1",
         "axios": "^0.27.2",
         "feed": "4.2.2",
