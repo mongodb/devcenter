@@ -66,7 +66,7 @@ jobs:
             - name: Run Playwright/Percy
               run: yarn test:e2e:visual
               env:
-                  PERCY_TOKEN: f56d06061ad33fa5df51f3121cf05468675a9af16e812b2feeed98a990743e81
+                  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
             - name: Upload test results
               if: ${{ failure() }}
               uses: actions/upload-artifact@v2
