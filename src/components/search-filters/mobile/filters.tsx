@@ -7,8 +7,11 @@ import {
     Button,
 } from '@mdb/flora';
 
-import { FilterItem, FiltersProps } from '../types';
-import FilterGroup from '../filter-group';
+import { FilterGroup, FilterItem } from '@mdb/devcenter-components';
+
+import { FiltersProps } from '../types';
+
+import RadioFilterGroup from '../radio-filter-group';
 import { buttonSection, filtersModal, titleSection } from './styles';
 
 interface MobileFiltersProps extends FiltersProps {
@@ -33,9 +36,33 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
     closeModal,
 }) => {
     const [tempFilters, setTempFilters] = useState<FilterItem[]>(allFilters);
-    const onTempFilter = (filters: FilterItem[]) => {
-        setTempFilters(filters);
+    const onToggle = (checked: boolean, filter: FilterItem) => {
+        if (checked) {
+            if (filter.subFilters?.length) {
+                const subFiltersToAdd = filter.subFilters.filter(
+                    subFilter =>
+                        !tempFilters.find(
+                            ({ name, type }) =>
+                                name === subFilter.name &&
+                                type === subFilter.type
+                        )
+                );
+                setTempFilters(
+                    tempFilters.concat(filter).concat(subFiltersToAdd)
+                );
+            } else {
+                setTempFilters(tempFilters.concat(filter));
+            }
+        } else {
+            setTempFilters(
+                tempFilters.filter(
+                    ({ name, type }) =>
+                        !(name === filter.name && type === filter.type)
+                )
+            );
+        }
     };
+
     return (
         <div className={className} sx={filtersModal}>
             <div sx={{ padding: 'inc50', marginBottom: '120px' }}>
@@ -51,7 +78,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                 </div>
                 <HorizontalRule spacing="small" />
                 <>
-                    <FilterGroup
+                    <RadioFilterGroup
                         title="Sort by"
                         items={[]}
                         sortBy={sortBy}
@@ -65,10 +92,10 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     <>
                         <FilterGroup
                             title="Example Type"
-                            items={codeLevelItems}
-                            filters={tempFilters}
-                            setFilters={onTempFilter}
-                            isMobile
+                            allFilters={codeLevelItems}
+                            activeFilters={tempFilters}
+                            onToggle={onToggle}
+                            mobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -77,10 +104,10 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     <>
                         <FilterGroup
                             title="Language"
-                            items={languageItems}
-                            filters={tempFilters}
-                            setFilters={onTempFilter}
-                            isMobile
+                            allFilters={languageItems}
+                            activeFilters={tempFilters}
+                            onToggle={onToggle}
+                            mobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -89,10 +116,10 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     <>
                         <FilterGroup
                             title="Technology"
-                            items={technologyItems}
-                            filters={tempFilters}
-                            setFilters={onTempFilter}
-                            isMobile
+                            allFilters={technologyItems}
+                            activeFilters={tempFilters}
+                            onToggle={onToggle}
+                            mobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -101,10 +128,10 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     <>
                         <FilterGroup
                             title="Content Type"
-                            items={contentTypeItems}
-                            filters={tempFilters}
-                            setFilters={onTempFilter}
-                            isMobile
+                            allFilters={contentTypeItems}
+                            activeFilters={tempFilters}
+                            onToggle={onToggle}
+                            mobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -113,10 +140,10 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     <>
                         <FilterGroup
                             title="Products"
-                            items={l1Items}
-                            filters={tempFilters}
-                            setFilters={onTempFilter}
-                            isMobile
+                            allFilters={l1Items}
+                            activeFilters={tempFilters}
+                            onToggle={onToggle}
+                            mobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -126,10 +153,10 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     <>
                         <FilterGroup
                             title="Expertise Level"
-                            items={expertiseLevelItems}
-                            filters={tempFilters}
-                            setFilters={onTempFilter}
-                            isMobile
+                            allFilters={expertiseLevelItems}
+                            activeFilters={tempFilters}
+                            onToggle={onToggle}
+                            mobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
@@ -138,10 +165,10 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                 {!!contributedByItems.length && (
                     <FilterGroup
                         title="Contributed By"
-                        items={contributedByItems}
-                        filters={tempFilters}
-                        setFilters={onTempFilter}
-                        isMobile
+                        allFilters={contributedByItems}
+                        activeFilters={tempFilters}
+                        onToggle={onToggle}
+                        mobile
                     />
                 )}
             </div>

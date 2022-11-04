@@ -1,5 +1,6 @@
 import { FiltersProps } from '../types';
-import FilterGroup from '../filter-group';
+
+import { FilterGroup, FilterItem } from '@mdb/devcenter-components';
 
 const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
     className,
@@ -13,64 +14,88 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
     contentTypeItems = [],
     codeLevelItems = [],
 }) => {
+    const onToggle = (checked: boolean, filter: FilterItem) => {
+        if (checked) {
+            if (filter.subFilters?.length) {
+                const subFiltersToAdd = filter.subFilters.filter(
+                    subFilter =>
+                        !allFilters.find(
+                            ({ name, type }) =>
+                                name === subFilter.name &&
+                                type === subFilter.type
+                        )
+                );
+                onFilter(allFilters.concat(filter).concat(subFiltersToAdd));
+            } else {
+                onFilter(allFilters.concat(filter));
+            }
+        } else {
+            onFilter(
+                allFilters.filter(
+                    ({ name, type }) =>
+                        !(name === filter.name && type === filter.type)
+                )
+            );
+        }
+    };
     return (
         <div className={className}>
             {!!codeLevelItems.length && (
                 <FilterGroup
                     title="Example Type"
-                    items={codeLevelItems}
-                    filters={allFilters}
-                    setFilters={onFilter}
+                    allFilters={codeLevelItems}
+                    activeFilters={allFilters}
+                    onToggle={onToggle}
                 />
             )}
             {!!languageItems.length && (
                 <FilterGroup
                     title="Language"
-                    items={languageItems}
-                    filters={allFilters}
-                    setFilters={onFilter}
+                    allFilters={languageItems}
+                    activeFilters={allFilters}
+                    onToggle={onToggle}
                 />
             )}
             {!!technologyItems.length && (
                 <FilterGroup
                     title="Technology"
-                    items={technologyItems}
-                    filters={allFilters}
-                    setFilters={onFilter}
+                    allFilters={technologyItems}
+                    activeFilters={allFilters}
+                    onToggle={onToggle}
                 />
             )}
 
             {!!contentTypeItems.length && (
                 <FilterGroup
                     title="Content Type"
-                    items={contentTypeItems}
-                    filters={allFilters}
-                    setFilters={onFilter}
+                    allFilters={contentTypeItems}
+                    activeFilters={allFilters}
+                    onToggle={onToggle}
                 />
             )}
             {!!l1Items.length && (
                 <FilterGroup
                     title="Products"
-                    items={l1Items}
-                    filters={allFilters}
-                    setFilters={onFilter}
+                    allFilters={l1Items}
+                    activeFilters={allFilters}
+                    onToggle={onToggle}
                 />
             )}
 
             {!!expertiseLevelItems.length && (
                 <FilterGroup
                     title="Expertise Level"
-                    items={expertiseLevelItems}
-                    filters={allFilters}
-                    setFilters={onFilter}
+                    allFilters={expertiseLevelItems}
+                    activeFilters={allFilters}
+                    onToggle={onToggle}
                 />
             )}
             {!!contributedByItems.length && (
                 <FilterGroup
                     title="Contributed By"
-                    items={contributedByItems}
-                    filters={allFilters}
-                    setFilters={onFilter}
+                    allFilters={contributedByItems}
+                    activeFilters={allFilters}
+                    onToggle={onToggle}
                 />
             )}
         </div>

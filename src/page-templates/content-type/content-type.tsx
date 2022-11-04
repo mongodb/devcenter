@@ -23,11 +23,7 @@ import RequestContentModal, {
 } from '../../components/request-content-modal';
 import { CTAContainerStyles } from '../../components/hero/styles';
 
-import {
-    FilterItem,
-    DesktopFilters,
-    MobileFilters,
-} from '../../components/search-filters';
+import { DesktopFilters, MobileFilters } from '../../components/search-filters';
 
 import { ContentTypePageProps } from './types';
 import { desktopFiltersStyles, resultsStringAndTagsStyles } from './styles';
@@ -48,7 +44,7 @@ import ProductsSection from './products-section';
 import { getURLPath } from '../../utils/format-url-path';
 import useSearch from '../../hooks/search';
 import { hasEmptyFilterAndQuery, isEmptyArray } from '../../hooks/search/utils';
-import FilterTagSection from '../../components/search-filters/filter-tag-section';
+import { FilterTagSection, FilterItem } from '@mdb/devcenter-components';
 import {
     createInitialSearchData,
     getResultData,
@@ -335,11 +331,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             </div>
             {hasFiltersSet && (
                 <FilterTagSection
+                    sx={{ display: ['none', null, null, 'flex'] }}
                     allFilters={allFilters}
-                    filterTagsExpanded={filterTagsExpanded}
-                    setFilterTagsExpanded={setFilterTagsExpanded}
-                    onFilterTagClose={onFilterTagClose}
-                    clearFilters={() => setAllFilters([])}
+                    onClearTag={onFilterTagClose}
+                    onClearAll={() => setAllFilters([])}
                 />
             )}
         </div>

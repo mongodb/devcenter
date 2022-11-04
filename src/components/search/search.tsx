@@ -109,9 +109,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
     const onCheckToggle = (checked: boolean, filter: string) => {
         clearPagination();
         if (checked) {
-            setAllFilters([
-                { name: filter, type: 'CodeLevel', count: 0, subItems: [] },
-            ]);
+            setAllFilters([{ name: filter, type: 'CodeLevel', count: 0 }]);
         } else {
             setAllFilters([]);
         }
