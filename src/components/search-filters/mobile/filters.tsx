@@ -38,7 +38,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
     const [tempFilters, setTempFilters] = useState<FilterItem[]>(allFilters);
     const onToggle = (checked: boolean, filter: FilterItem) => {
         if (checked) {
-            if (filter.subFilters && filter.subFilters.length) {
+            if (filter.subFilters?.length) {
                 const subFiltersToAdd = filter.subFilters.filter(
                     subFilter =>
                         !tempFilters.find(

@@ -184,7 +184,7 @@ export const getFilters = async (
                     const filterItem: FilterItem = {
                         type: tag.type,
                         name: tag.name,
-                        // count: allFilters || type === contentType ? 1 : 0,
+                        count: allFilters || type === contentType ? 1 : 0,
                         subFilters: [],
                     };
                     return filterItems.push(filterItem);

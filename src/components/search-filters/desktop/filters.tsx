@@ -16,7 +16,7 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
 }) => {
     const onToggle = (checked: boolean, filter: FilterItem) => {
         if (checked) {
-            if (filter.subFilters && filter.subFilters.length) {
+            if (filter.subFilters?.length) {
                 const subFiltersToAdd = filter.subFilters.filter(
                     subFilter =>
                         !allFilters.find(
