@@ -2213,5 +2213,10 @@
         "source": "/videos/twitch/parsing-gdelt-web-data---mongodb-world-hackathon-series/",
         "destination": "/videos/",
         "permanent": true
+    },
+    {
+        "source": "/products/atlas/cloudflare-worker-rest-api-realm/",
+        "destination": "/products/atlas/cloudflare-worker-rest-api/",
+        "permanent": true
     }
 ]
