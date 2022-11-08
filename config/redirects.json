@@ -610,6 +610,11 @@
         "permanent": true
     },
     {
+        "source": "/article/build-serverless-applications-sst-mongodb-atlas/",
+        "destination": "/products/atlas/build-serverless-applications-sst-mongodb-atlas/",
+        "permanent": true
+    },
+    {
         "source": "/community/apply-to-speak/",
         "destination": "/products/mongodb/news/",
         "permanent": true
