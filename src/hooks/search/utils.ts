@@ -277,7 +277,7 @@ export const getResultData = (
 ) => {
     return initialSearchData &&
         hasEmptyFilterAndQuery(searchString, allFilters) &&
-        (!sortBy || sortBy === '')
+        (!sortBy || sortBy === 'Most Recent')
         ? initialSearchData
         : data.slice(
               !initialPageResetFlag && initialPageNumber > 1
