@@ -109,6 +109,11 @@ export const TopicContentTypePageTemplate: NextPage<
             ? `${defaultMetaDescr} - Page ${pageNumber}`
             : defaultMetaDescr
     );
+    const [canonicalUrl, setCanonicalUrl] = useState(
+        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+            page: pageNumber.toString(),
+        })
+    );
 
     const setSeoAttributes = useCallback(
         pageNumber => {
@@ -119,8 +124,19 @@ export const TopicContentTypePageTemplate: NextPage<
                     ? `${defaultMetaDescr} - Page ${pageNumber}`
                     : defaultMetaDescr
             );
+
+            const pathWithoutParams = asPath.split('?')[0];
+            setCanonicalUrl(
+                getCanonicalUrlWithParams(
+                    absoluteBasePath,
+                    `${pathWithoutParams}?page=${pageNumber}`,
+                    {
+                        page: pageNumber.toString(),
+                    }
+                )
+            );
         },
-        [buildPageTitle, defaultMetaDescr]
+        [absoluteBasePath, asPath, buildPageTitle, defaultMetaDescr]
     );
 
     const [requestContentModalStage, setRequestContentModalStage] =
@@ -182,10 +198,6 @@ export const TopicContentTypePageTemplate: NextPage<
             )}
         </GridLayout>
     );
-
-    const canonicalUrl = getCanonicalUrlWithParams(absoluteBasePath, asPath, {
-        page: pageNumber.toString(),
-    });
 
     return (
         <>

@@ -219,10 +219,16 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     shallow: true,
                 }
             );
+
+            const pathWithoutParams = asPath.split('?')[0];
             setCanonicalUrl(
-                getCanonicalUrlWithParams(absoluteBasePath, router.asPath, {
-                    page: nextPage.toString(),
-                })
+                getCanonicalUrlWithParams(
+                    absoluteBasePath,
+                    `${pathWithoutParams}?page=${nextPage}`,
+                    {
+                        page: nextPage.toString(),
+                    }
+                )
             );
             setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
         } else {
@@ -409,8 +415,6 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
         ? `/developer${slug}/?page=${currentPage + 1}`
         : '#';
-
-    console.log('canonicalUrl', canonicalUrl);
 
     return (
         <>

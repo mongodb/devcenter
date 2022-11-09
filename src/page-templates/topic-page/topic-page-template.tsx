@@ -124,6 +124,11 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             ? `${defaultMetaDescr} - Page ${pageNumber}`
             : defaultMetaDescr
     );
+    const [canonicalUrl, setCanonicalUrl] = useState(
+        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+            page: pageNumber.toString(),
+        })
+    );
 
     const setSeoAttributes = useCallback(
         pageNumber => {
@@ -134,8 +139,19 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                     ? `${defaultMetaDescr} - Page ${pageNumber}`
                     : defaultMetaDescr
             );
+
+            const pathWithoutParams = asPath.split('?')[0];
+            setCanonicalUrl(
+                getCanonicalUrlWithParams(
+                    absoluteBasePath,
+                    `${pathWithoutParams}?page=${pageNumber}`,
+                    {
+                        page: pageNumber.toString(),
+                    }
+                )
+            );
         },
-        [buildPageTitle, defaultMetaDescr]
+        [absoluteBasePath, asPath, buildPageTitle, defaultMetaDescr]
     );
 
     const topicsRow = topics.length > 0 ? 1 : 0;
@@ -170,10 +186,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         tertiaryNavItems,
         'documentation'
     );
-
-    const canonicalUrl = getCanonicalUrlWithParams(absoluteBasePath, asPath, {
-        page: pageNumber.toString(),
-    });
 
     return (
         <>
