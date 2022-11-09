@@ -54,13 +54,14 @@ export const getCanonicalUrlWithParams = (
                 asPath.split('?')[1]
             );
 
+            // Pass through valid query params to the canonical query string.
             const canonicalQueryParams: URLSearchParams = new URLSearchParams();
-            for (const queryParam of Object.keys(queryParams)) {
-                if (queryParamsInUrl.has(queryParam)) {
+            for (const [paramKey, paramVal] of Object.entries(queryParams)) {
+                if (queryParamsInUrl.has(paramKey)) {
                     const matchingParam: string | null =
-                        queryParamsInUrl.get(queryParam);
-                    if (matchingParam === queryParams[queryParam])
-                        canonicalQueryParams.append(queryParam, matchingParam);
+                        queryParamsInUrl.get(paramKey);
+                    if (matchingParam === paramVal)
+                        canonicalQueryParams.append(paramKey, matchingParam);
                 }
             }
 
@@ -72,11 +73,7 @@ export const getCanonicalUrlWithParams = (
     return canonicalUrl;
 };
 
-export const getCanonicalUrl = (
-    absoluteBasePath: string,
-    route: string,
-    asPath: string
-) => {
+export const getCanonicalUrl = (absoluteBasePath: string, asPath: string) => {
     // if query strings are in the path, remove them
     if (asPath.includes('?')) {
         return absoluteBasePath + asPath.split('?')[0];

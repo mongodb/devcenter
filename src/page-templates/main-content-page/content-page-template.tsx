@@ -503,7 +503,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     };
     const canonicalUrl =
         seo?.canonical_url ||
-        getCanonicalUrl(publicRuntimeConfig.absoluteBasePath, route, asPath);
+        getCanonicalUrl(publicRuntimeConfig.absoluteBasePath, asPath);
     const metaDescription =
         seo?.meta_description || publicRuntimeConfig.pageDescriptions['/'];
 

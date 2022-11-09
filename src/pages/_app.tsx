@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     // Attributes for SEO may be overridden at the component-level if needed with NextSeo.
     let pageDescription = getMetaDescr(publicRuntimeConfig, route, asPath);
     let canonicalUrl = shouldDefineDefaultCanonical(route)
-        ? getCanonicalUrl(absoluteBasePath, route, asPath)
+        ? getCanonicalUrl(absoluteBasePath, asPath)
         : null;
 
     return (
