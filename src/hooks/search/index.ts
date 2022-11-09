@@ -74,7 +74,7 @@ const useSearch = (
         }
     };
 
-    const onSort = (sortByValue: string) => {
+    const onSort = (sortByValue?: string) => {
         setResultsToShow(DEFAULT_PAGE_SIZE);
         setSortBy(sortByValue as SortByType);
 
