@@ -31,7 +31,7 @@ import { PillCategory } from '../../types/pill-category';
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { getURLPath, setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getMetaDescr } from '../../utils/seo';
+import { getMetaDescr, getCanonicalUrlWithParams } from '../../utils/seo';
 
 export interface TopicContentTypePageProps {
     crumbs: Crumb[];
@@ -86,6 +86,7 @@ export const TopicContentTypePageTemplate: NextPage<
 }) => {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
@@ -109,7 +110,7 @@ export const TopicContentTypePageTemplate: NextPage<
             : defaultMetaDescr
     );
 
-    const updatePageTitle = useCallback(
+    const setSeoAttributes = useCallback(
         pageNumber => {
             const pageTitle = buildPageTitle(pageNumber);
             setPageTitle(pageTitle);
@@ -182,10 +183,15 @@ export const TopicContentTypePageTemplate: NextPage<
         </GridLayout>
     );
 
+    const canonicalUrl = getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+        page: pageNumber.toString(),
+    });
+
     return (
         <>
             <NextSeo
                 title={pageTitle}
+                canonical={canonicalUrl}
                 {...(metaDescr ? { description: metaDescr } : {})}
             />
             <div
@@ -238,7 +244,7 @@ export const TopicContentTypePageTemplate: NextPage<
                         contentType={contentType}
                         pageNumber={pageNumber}
                         pageSlug={(topicSlug + contentTypeSlug).split('/')}
-                        updatePageTitle={updatePageTitle}
+                        setSeoAttributes={setSeoAttributes}
                         initialSearchContent={initialSearchContent}
                         resultsLayout="grid"
                         titleLink={getSearchTitleLink(

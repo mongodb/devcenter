@@ -7,6 +7,7 @@ import type {
 } from 'next';
 import * as Sentry from '@sentry/nextjs';
 import NextImage from 'next/image';
+import getConfig from 'next/config';
 import {
     GridLayout,
     TextInput,
@@ -56,6 +57,7 @@ import {
 } from '../hooks/search/utils';
 import { FilterTagSection } from '@mdb/devcenter-components';
 import { OverlayContext } from '../contexts/overlay';
+import { getCanonicalUrlWithParams } from '../utils/seo';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -78,6 +80,8 @@ const Search: NextPage<SearchProps> = ({
     initialSearchContent,
     pageNumber,
 }) => {
+    const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
     const router = useRouter();
     const { setHasOverlay } = useContext(OverlayContext);
 
@@ -311,10 +315,19 @@ const Search: NextPage<SearchProps> = ({
         ? `/developer/search/?page=${currentPage + 1}`
         : '#';
 
+    const canonicalUrl = getCanonicalUrlWithParams(
+        absoluteBasePath,
+        router.asPath,
+        {
+            page: pageNumber.toString(),
+        }
+    );
+
     return (
         <>
             <NextSeo
                 title={pageTitle}
+                canonical={canonicalUrl}
                 noindex={router.asPath === '/search/' ? false : true}
             />
             <Hero name="Search" />

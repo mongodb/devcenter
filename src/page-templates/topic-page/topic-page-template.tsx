@@ -29,7 +29,7 @@ import {
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getMetaDescr } from '../../utils/seo';
+import { getMetaDescr, getCanonicalUrlWithParams } from '../../utils/seo';
 
 export interface TopicContentTypeProps {
     crumbs: Crumb[];
@@ -80,6 +80,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 }) => {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;
     const contentRows =
         variant === 'heavy'
@@ -124,7 +125,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             : defaultMetaDescr
     );
 
-    const updatePageTitle = useCallback(
+    const setSeoAttributes = useCallback(
         pageNumber => {
             const pageTitle = buildPageTitle(pageNumber);
             setPageTitle(pageTitle);
@@ -170,7 +171,9 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         'documentation'
     );
 
-    const canonicalUrl = publicRuntimeConfig.absoluteBasePath + router.asPath;
+    const canonicalUrl = getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+        page: pageNumber.toString(),
+    });
 
     return (
         <>
@@ -241,7 +244,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         tagSlug={slug}
                         pageNumber={pageNumber}
                         pageSlug={slug.split('/')}
-                        updatePageTitle={updatePageTitle}
+                        setSeoAttributes={setSeoAttributes}
                         initialSearchContent={initialSearchContent}
                         sx={{
                             gridColumn: [

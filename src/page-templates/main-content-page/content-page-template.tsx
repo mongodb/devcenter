@@ -55,6 +55,7 @@ import { TableOfContents } from '../../components/article-body/table-of-contents
 import { IRating } from '../../components/feedback-modal/types';
 
 import { normalizeCategory } from './util';
+import { getCanonicalUrl } from '../../utils/seo';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -151,6 +152,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     previewMode,
 }) => {
     const router = useRouter();
+    const { asPath, route } = router;
     const { publicRuntimeConfig } = getConfig();
     const {
         collectionType,
@@ -501,7 +503,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     };
     const canonicalUrl =
         seo?.canonical_url ||
-        publicRuntimeConfig.absoluteBasePath + router.asPath;
+        getCanonicalUrl(publicRuntimeConfig.absoluteBasePath, route, asPath);
     const metaDescription =
         seo?.meta_description || publicRuntimeConfig.pageDescriptions['/'];
 
