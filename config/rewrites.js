@@ -7,14 +7,6 @@ need to be modified before setting the rewrites attribute in the next.config.js.
 
 const rewrites = [
     {
-        source: '/article/behind-scenes-mongodb-podcast/',
-        destination: `${process.env.DEVHUB_URL}/article/behind-scenes-mongodb-podcast/`,
-    },
-    {
-        source: '/article/introduction-to-modern-databases-mongodb-academia/',
-        destination: `${process.env.DEVHUB_URL}/article/introduction-to-modern-databases-mongodb-academia/`,
-    },
-    {
         source: '/community/creating-stunning-slides/',
         destination: `${process.env.DEVHUB_URL}/community/creating-stunning-slides/`,
     },
