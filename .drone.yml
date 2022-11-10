@@ -67,7 +67,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - devhub-1480
   event:
     - push
 
