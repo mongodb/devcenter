@@ -1,6 +1,7 @@
 import { ContentItem } from '../../interfaces/content-item';
 import { PillCategory } from '../../types/pill-category';
 import { Tag } from '../../interfaces/tag';
+import { ThemeUICSSObject } from 'theme-ui';
 
 interface SearchImage {
     url: string;
@@ -13,12 +14,6 @@ interface SearchAuthor {
     calculated_slug: string;
 }
 
-export interface ResultsProps {
-    data: ContentItem[] | undefined;
-    isLoading: boolean;
-    hasError: boolean;
-    layout?: 'list' | 'grid';
-}
 export interface SearchProps {
     titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
     className?: string;
@@ -38,6 +33,27 @@ export interface SearchProps {
     initialSearchContent?: SearchItem[]; // search content received from initial render
 }
 
+export interface SearchBoxProps {
+    placeholder?: string;
+    searchString: string;
+    onSearch: any;
+    debouncedOnSearch: any;
+    extraStyles?: ThemeUICSSObject;
+}
+
+export interface SortBoxProps {
+    extraStyles?: ThemeUICSSObject;
+    onSort: (value: string) => void;
+    sortBy: string;
+}
+
+export interface ResultsProps {
+    results: ContentItem[] | undefined;
+    isValidating: boolean;
+    error: boolean;
+    layout?: 'list' | 'grid';
+    extraStyles?: ThemeUICSSObject;
+}
 export interface SearchItem {
     type: PillCategory;
     authors: SearchAuthor[];

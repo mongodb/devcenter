@@ -225,22 +225,23 @@ export const getFilters = async (
     const expertiseLevelItems = filterItems
         .filter(({ type }) => type === 'ExpertiseLevel')
         .sort(sortFunction);
-
     // Parse the code levels from the subitmes of the Code Example content type filter.
-    const codeLevelItems = filterItems
-        .filter(
-            item => item.type === 'ContentType' && item.name === 'Code Example'
-        )[0]
-        .subFilters?.sort(sortFunction);
+    const codeLevelItems =
+        filterItems
+            .filter(
+                item =>
+                    item.type === 'ContentType' && item.name === 'Code Example'
+            )?.[0]
+            ?.subFilters?.sort(sortFunction) || [];
 
     return {
-        l1Items,
-        languageItems,
-        technologyItems,
-        contributedByItems,
-        contentTypeItems,
-        expertiseLevelItems,
-        codeLevelItems,
+        Products: l1Items,
+        Language: languageItems,
+        Technology: technologyItems,
+        'Contributed By': contributedByItems,
+        'Content Type': contentTypeItems,
+        'Expertise Level': expertiseLevelItems,
+        'Example Type': codeLevelItems,
     };
 };
 

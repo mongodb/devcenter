@@ -17,16 +17,24 @@ export const searchBoxSortBarWrapperStyles = {
 };
 
 export const searchBoxStyles = {
+    flexGrow: '1',
+    flexShrink: '1',
     '& > div': {
-        width: '100%',
         maxWidth: 'unset',
     },
-    gridColumn: ['span 1', null, 'span 3', 'span 2'],
 };
 
 export const sortBoxStyles = {
+    '&, & > button, & span': {
+        width: '100%',
+        maxWidth: 'unset',
+    },
+    '& > button#sort-by-dropdown': {
+        height: '84px',
+    },
     gridColumn: 'span 1',
     display: ['none', null, null, 'block'],
+    flexBasis: '33%',
 };
 
 export const dataStyles = (layout: 'list' | 'grid') =>

@@ -20,22 +20,16 @@ interface MobileFiltersProps extends FiltersProps {
     onSort: (sortByValue: string) => void;
 }
 
-const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
-    sortBy,
-    onSort,
+const MobileSortAndFilters: React.FunctionComponent<MobileFiltersProps> = ({
     className,
+    filterItems,
+    filters,
     onFilter,
-    allFilters,
-    l1Items,
-    languageItems,
-    technologyItems,
-    contributedByItems,
-    expertiseLevelItems,
-    contentTypeItems = [],
-    codeLevelItems = [],
+    onSort,
+    sortBy,
     closeModal,
 }) => {
-    const [tempFilters, setTempFilters] = useState<FilterItem[]>(allFilters);
+    const [tempFilters, setTempFilters] = useState<FilterItem[]>(filters);
     const onToggle = (checked: boolean, filter: FilterItem) => {
         if (checked) {
             if (filter.subFilters?.length) {
@@ -88,89 +82,19 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
                     />
                     <HorizontalRule spacing="small" />
                 </>
-                {!!codeLevelItems.length && (
+                {Object.keys(filterItems).map((key, i) => {
                     <>
                         <FilterGroup
-                            title="Example Type"
-                            allFilters={codeLevelItems}
+                            title={key}
+                            allFilters={filterItems[key]}
                             activeFilters={tempFilters}
                             onToggle={onToggle}
                             mobile
+                            key={i}
                         />
                         <HorizontalRule spacing="small" />
-                    </>
-                )}
-                {!!languageItems.length && (
-                    <>
-                        <FilterGroup
-                            title="Language"
-                            allFilters={languageItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-                {!!technologyItems.length && (
-                    <>
-                        <FilterGroup
-                            title="Technology"
-                            allFilters={technologyItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-                {!!contentTypeItems.length && (
-                    <>
-                        <FilterGroup
-                            title="Content Type"
-                            allFilters={contentTypeItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-                {!!l1Items.length && (
-                    <>
-                        <FilterGroup
-                            title="Products"
-                            allFilters={l1Items}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-
-                {!!expertiseLevelItems.length && (
-                    <>
-                        <FilterGroup
-                            title="Expertise Level"
-                            allFilters={expertiseLevelItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-
-                {!!contributedByItems.length && (
-                    <FilterGroup
-                        title="Contributed By"
-                        allFilters={contributedByItems}
-                        activeFilters={tempFilters}
-                        onToggle={onToggle}
-                        mobile
-                    />
-                )}
+                    </>;
+                })}
             </div>
             <div sx={buttonSection}>
                 <Button
@@ -195,4 +119,4 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
     );
 };
 
-export default MobileFilters;
+export default MobileSortAndFilters;

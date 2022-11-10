@@ -30,10 +30,9 @@ export const getContentTypePageData = async (
     }
 
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
-    const { contentTypeItems, ...filters } = await getFilters(
-        contentType,
-        allSearchContent
-    );
+    const { ['Content Type']: contentTypeItems, ...filterItems } =
+        await getFilters(contentType, allSearchContent);
+
     const metaInfoForTopic = await getMetaInfoForTopic(slug);
     const description = metaInfoForTopic?.description
         ? metaInfoForTopic.description
@@ -49,10 +48,12 @@ export const getContentTypePageData = async (
 
     return {
         contentType,
-        ...filters,
+        filterItems,
         featured,
+        extraFeatured: {
+            ...extra,
+        },
         description,
-        ...extra,
         initialSearchContent,
         pageNumber,
         slug,

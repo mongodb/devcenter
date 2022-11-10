@@ -8,16 +8,13 @@ import { SearchItem } from '../../components/search/types';
 export interface ContentTypePageProps {
     description: string;
     contentType: PillCategory;
-    l1Items: FilterItem[];
-    languageItems: FilterItem[];
-    technologyItems: FilterItem[];
-    contributedByItems: FilterItem[];
-    expertiseLevelItems: FilterItem[];
-    codeLevelItems: FilterItem[];
+    filterItems: { [name: string]: FilterItem[] };
     featured: ContentItem[];
-    featuredLanguages?: ShowcaseCardItem[];
-    featuredTechnologies?: ITopicCard[];
-    featuredProducts?: ShowcaseCardItem[];
+    extraFeatured: {
+        featuredLanguages?: ShowcaseCardItem[];
+        featuredTechnologies?: ITopicCard[];
+        featuredProducts?: ShowcaseCardItem[];
+    };
     initialSearchContent?: SearchItem[];
     pageNumber: number;
     slug: string;

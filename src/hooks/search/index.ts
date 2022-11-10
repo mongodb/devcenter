@@ -25,15 +25,13 @@ interface SearchFilterItems {
 const useSearch = (
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
-    filterItems?: SearchFilterItems, // This is needed for URL filter/search updates.
-    pageNumber?: number
+    filterItems?: SearchFilterItems // This is needed for URL filter/search updates.
 ) => {
     const shouldUseQueryParams = !!filterItems;
 
     const router = useRouter();
     const [searchString, setSearchString] = useState('');
-    const [resultsToShow, setResultsToShow] = useState(DEFAULT_PAGE_SIZE);
-    const [allFilters, setAllFilters] = useState<FilterItem[]>([]);
+    const [filters, setFilters] = useState<FilterItem[]>([]);
     const [sortBy, setSortBy] = useState<SortByType>('Most Recent');
 
     const queryParams: SearchQueryParams = {
@@ -54,43 +52,31 @@ const useSearch = (
     });
 
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setResultsToShow(
-            pageNumber && event.target.value === ''
-                ? pageNumber * DEFAULT_PAGE_SIZE
-                : DEFAULT_PAGE_SIZE
-        );
         setSearchString(event.target.value);
 
         if (shouldUseQueryParams) {
-            updateUrl(router, allFilters, event.target.value);
+            updateUrl(router, filters, event.target.value);
         }
     };
 
     const onFilter = (filters: FilterItem[]) => {
-        setResultsToShow(DEFAULT_PAGE_SIZE);
-        setAllFilters(filters);
+        setFilters(filters);
         if (shouldUseQueryParams) {
             updateUrl(router, filters, searchString);
         }
     };
 
     const onSort = (sortByValue?: string) => {
-        setResultsToShow(DEFAULT_PAGE_SIZE);
         setSortBy(sortByValue as SortByType);
 
         if (shouldUseQueryParams) {
-            updateUrl(
-                router,
-                allFilters,
-                searchString,
-                sortByValue as SortByType
-            );
+            updateUrl(router, filters, searchString, sortByValue as SortByType);
         }
     };
 
     const debouncedOnSearch = useMemo(
         () => debounce(onSearch, 400), // Not sure what this value should be, so set to 400ms.
-        [allFilters]
+        [filters]
     );
     // Stop the invocation of the debounced function after unmounting.
     useEffect(() => {
@@ -209,7 +195,7 @@ const useSearch = (
 
             if (!!filterItems) {
                 const allNewFilters = getFiltersFromQueryStr();
-                setAllFilters(allNewFilters);
+                setFilters(allNewFilters);
             }
 
             if (s && typeof s === 'string' && s !== searchString) {
@@ -218,7 +204,7 @@ const useSearch = (
         }
     }, [router?.isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
 
-    const hasFiltersSet = !!allFilters.length;
+    const hasFiltersSet = !!filters.length;
     const filteredData = (() => {
         if (!data) {
             return [];
@@ -226,31 +212,29 @@ const useSearch = (
             return data;
         } else {
             return data.filter(item => {
-                return itemInFilters(item, allFilters);
+                return itemInFilters(item, filters);
             });
         }
     })();
 
-    const numberOfResults = filteredData.length;
-    const shownData = filteredData.slice(0, resultsToShow);
-    const fullyLoaded = resultsToShow >= numberOfResults;
-
     return {
-        data: shownData,
-        error,
-        isValidating,
-        resultsToShow,
-        setResultsToShow,
-        allFilters,
-        setAllFilters,
-        onSearch: debouncedOnSearch,
-        onFilter,
-        searchString,
-        setSearchString,
-        fullyLoaded,
-        numberOfResults,
-        onSort,
-        sortBy,
+        searchBoxProps: {
+            searchString,
+            onSearch: debouncedOnSearch,
+        },
+        filterProps: {
+            onFilter,
+            filters,
+        },
+        sortBoxProps: {
+            onSort,
+            sortBy,
+        },
+        resultsProps: {
+            results: filteredData,
+            error,
+            isValidating,
+        },
     };
 };
 
