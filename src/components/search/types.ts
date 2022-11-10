@@ -2,6 +2,7 @@ import { ContentItem } from '../../interfaces/content-item';
 import { PillCategory } from '../../types/pill-category';
 import { Tag } from '../../interfaces/tag';
 import { ThemeUICSSObject } from 'theme-ui';
+import { FilterItem } from '@mdb/devcenter-components';
 
 interface SearchImage {
     url: string;
@@ -35,9 +36,9 @@ export interface SearchProps {
 
 export interface SearchBoxProps {
     placeholder?: string;
-    searchString: string;
+    searchString?: string;
     onSearch: any;
-    debouncedOnSearch: any;
+    autoFocus?: boolean;
     extraStyles?: ThemeUICSSObject;
 }
 
@@ -51,6 +52,13 @@ export interface ResultsProps {
     results: ContentItem[] | undefined;
     isValidating: boolean;
     error: boolean;
+    searchString: string;
+    filters: FilterItem[];
+    slug: string;
+    pageNumber: number;
+    updatePageMeta?: (pageNumber: number) => void;
+    onBack: () => void;
+    contentType: string;
     layout?: 'list' | 'grid';
     extraStyles?: ThemeUICSSObject;
 }

@@ -2,34 +2,40 @@ import { useState, useEffect, useMemo } from 'react';
 import debounce from 'lodash.debounce';
 import useSWR from 'swr';
 import { FilterItem } from '@mdb/devcenter-components';
-import { fetcher, itemInFilters, updateUrl } from './utils';
+import {
+    createInitialSearchData,
+    fetcher,
+    itemInFilters,
+    updateUrl,
+} from './utils';
 import { useRouter } from 'next/router';
 import {
     buildSearchQuery,
-    SearchQueryParams,
     DEFAULT_PAGE_SIZE,
+    SearchQueryParams,
 } from '../../components/search/utils';
-import { SortByType } from '../../components/search/types';
-
-interface SearchFilterItems {
-    l1Items: FilterItem[];
-    contentTypeItems: FilterItem[];
-    languageItems: FilterItem[];
-    technologyItems: FilterItem[];
-    contributedByItems: FilterItem[];
-    expertiseLevelItems: FilterItem[];
-}
+import { SearchItem, SortByType } from '../../components/search/types';
 
 // Hook that contains the majority of the logic for our search functionality across the site.
 
 const useSearch = (
+    pageNumber: number,
+    initialSearchContent?: SearchItem[],
+    updatePageMeta: (pageNumber?: number) => void = () => {},
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
-    filterItems?: SearchFilterItems // This is needed for URL filter/search updates.
+    filterItems?: { [name: string]: FilterItem[] } // This is needed for URL filter/search updates.
 ) => {
     const shouldUseQueryParams = !!filterItems;
 
     const router = useRouter();
+    const totalInitialResults = initialSearchContent
+        ? initialSearchContent.length
+        : DEFAULT_PAGE_SIZE;
+    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
+    const initialPage =
+        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber;
+
     const [searchString, setSearchString] = useState('');
     const [filters, setFilters] = useState<FilterItem[]>([]);
     const [sortBy, setSortBy] = useState<SortByType>('Most Recent');
@@ -42,16 +48,27 @@ const useSearch = (
     };
 
     const key = buildSearchQuery(queryParams);
+    console.log(key);
 
     // TODO: Refactor to useSWRInfinite and implement client-side pagination.
     const { data, error, isValidating } = useSWR(key, fetcher, {
-        revalidateIfStale: false,
+        // revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
         shouldRetryOnError: false,
+        fallback: {
+            [// default search query when loading a page
+            buildSearchQuery({
+                searchString: '',
+                contentType,
+                tagSlug,
+                sortBy: 'Most Recent',
+            })]: createInitialSearchData(initialSearchContent, initialPage),
+        },
     });
 
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        updatePageMeta();
         setSearchString(event.target.value);
 
         if (shouldUseQueryParams) {
@@ -60,6 +77,7 @@ const useSearch = (
     };
 
     const onFilter = (filters: FilterItem[]) => {
+        updatePageMeta();
         setFilters(filters);
         if (shouldUseQueryParams) {
             updateUrl(router, filters, searchString);
@@ -67,6 +85,7 @@ const useSearch = (
     };
 
     const onSort = (sortByValue?: string) => {
+        updatePageMeta();
         setSortBy(sortByValue as SortByType);
 
         if (shouldUseQueryParams) {
@@ -87,13 +106,14 @@ const useSearch = (
 
     const getFiltersFromQueryStr = () => {
         const {
-            l1Items,
-            contentTypeItems,
-            languageItems,
-            technologyItems,
-            contributedByItems,
-            expertiseLevelItems,
-        } = filterItems as SearchFilterItems;
+            L1Product: l1Items,
+            ContentType: contentTypeItems,
+            ProgrammingLanguage: languageItems,
+            Technology: technologyItems,
+            AuthorType: contributedByItems,
+            ExpertiseLevel: expertiseLevelItems,
+        } = filterItems as { [type: string]: FilterItem[] };
+
         const {
             product,
             language,
@@ -193,6 +213,7 @@ const useSearch = (
         if (router?.isReady) {
             const { s } = router.query;
 
+            console.log('router ready', s, searchString);
             if (!!filterItems) {
                 const allNewFilters = getFiltersFromQueryStr();
                 setFilters(allNewFilters);
@@ -217,6 +238,13 @@ const useSearch = (
         }
     })();
 
+    const clearAll = () => {
+        setSearchString('');
+        setFilters([]);
+        setSortBy('Most Recent');
+        updatePageMeta();
+    };
+
     return {
         searchBoxProps: {
             searchString,
@@ -234,7 +262,10 @@ const useSearch = (
             results: filteredData,
             error,
             isValidating,
+            searchString,
+            filters,
         },
+        clearAll,
     };
 };
 

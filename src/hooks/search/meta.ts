@@ -4,8 +4,12 @@ import { useCallback, useState } from 'react';
 import { getMetaDescr } from '../../utils/seo';
 let pluralize = require('pluralize');
 
-export const useSearchMeta = (pageNumber: number, contentType: string) => {
-    const { asPath, route } = useRouter();
+export const useSearchMeta = (
+    pageNumber: number,
+    slug: string,
+    contentType: string
+) => {
+    const { asPath, route, replace, pathname } = useRouter();
     const publicRuntimeConfig = getConfig().publicRuntimeConfig;
 
     const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
@@ -24,18 +28,30 @@ export const useSearchMeta = (pageNumber: number, contentType: string) => {
         [contentType]
     );
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-    const updatePageTitle = useCallback(
-        pageNumber => {
-            const pageTitle = buildPageTitle(pageNumber);
-            setPageTitle(pageTitle);
+    const updatePageMeta = useCallback(
+        (pageNumber = 1) => {
+            const newPageTitle = buildPageTitle(pageNumber);
+            setPageTitle(newPageTitle);
             setMetaDescr(
                 defaultMetaDescr && pageNumber > 1
                     ? `${defaultMetaDescr} - Page ${pageNumber}`
                     : defaultMetaDescr
             );
+
+            replace(
+                {
+                    pathname: slug,
+                    ...(pageNumber <= 1 ? {} : { query: { page: pageNumber } }),
+                },
+                undefined,
+                {
+                    scroll: false,
+                    shallow: true,
+                }
+            );
         },
         [buildPageTitle, defaultMetaDescr]
     );
 
-    return [pageTitle, metaDescr, updatePageTitle];
+    return [pageTitle, metaDescr, updatePageMeta];
 };

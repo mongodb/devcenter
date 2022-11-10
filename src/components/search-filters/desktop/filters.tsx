@@ -1,6 +1,7 @@
 import { FiltersProps } from '../types';
 
 import { FilterGroup, FilterItem } from '@mdb/devcenter-components';
+import { CONTENT_TYPE_NAME_MAP } from '../../../data/constants';
 
 const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
     className,
@@ -38,7 +39,7 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = ({
             {Object.keys(filterItems).map((key, i) =>
                 filterItems?.[key].length ? (
                     <FilterGroup
-                        title={key}
+                        title={CONTENT_TYPE_NAME_MAP[key]}
                         allFilters={filterItems[key]}
                         activeFilters={filters}
                         onToggle={onToggle}

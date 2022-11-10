@@ -17,7 +17,11 @@ import { CTAContainerStyles } from '../../components/hero/styles';
 import RequestContentModal, {
     requestContentModalStages,
 } from '../../components/request-content-modal';
-import Search from '../../components/search';
+import Search, {
+    SearchBox,
+    SearchResults,
+    SortBox,
+} from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import {
     sideNavStyles,
@@ -31,7 +35,10 @@ import { PillCategory } from '../../types/pill-category';
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { getURLPath, setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getMetaDescr, getCanonicalUrlWithParams } from '../../utils/seo';
+import { getMetaDescr } from '../../utils/seo';
+import useSearch from '../../hooks/search';
+import { useSearchMeta } from '../../hooks/search/meta';
+import { h5Styles } from '../../styled/layout';
 
 export interface TopicContentTypePageProps {
     crumbs: Crumb[];
@@ -84,63 +91,33 @@ export const TopicContentTypePageTemplate: NextPage<
     initialSearchContent,
     pageNumber,
 }) => {
-    const router = useRouter();
-    const { publicRuntimeConfig } = getConfig();
-    const { absoluteBasePath } = publicRuntimeConfig;
-    const { asPath, route } = router;
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
 
-    const buildPageTitle = useCallback(
-        (pageNumber: number) => {
-            const titlePageNo = pageNumber > 1 ? `- Page ${pageNumber}` : '';
-            return `${topicName} ${pluralize(
-                contentType
-            )} ${titlePageNo} | MongoDB`;
-        },
-        [contentType, topicName]
-    );
-
-    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-    const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
-    const [metaDescr, setMetaDescr] = useState(
-        defaultMetaDescr && pageNumber > 1
-            ? `${defaultMetaDescr} - Page ${pageNumber}`
-            : defaultMetaDescr
-    );
-    const [canonicalUrl, setCanonicalUrl] = useState(
-        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
-            page: pageNumber.toString(),
-        })
-    );
-
-    const setSeoAttributes = useCallback(
-        pageNumber => {
-            const pageTitle = buildPageTitle(pageNumber);
-            setPageTitle(pageTitle);
-            setMetaDescr(
-                defaultMetaDescr && pageNumber > 1
-                    ? `${defaultMetaDescr} - Page ${pageNumber}`
-                    : defaultMetaDescr
-            );
-
-            const pathWithoutParams = asPath.split('?')[0];
-            setCanonicalUrl(
-                getCanonicalUrlWithParams(
-                    absoluteBasePath,
-                    `${pathWithoutParams}?page=${pageNumber}`,
-                    {
-                        page: pageNumber.toString(),
-                    }
-                )
-            );
-        },
-        [absoluteBasePath, asPath, buildPageTitle, defaultMetaDescr]
-    );
-
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
+
+    const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
+        pageNumber,
+        topicSlug,
+        contentType
+    );
+
+    const {
+        searchBoxProps,
+        sortBoxProps,
+        resultsProps,
+        resultsProps: { isValidating },
+        clearAll,
+    } = useSearch(
+        pageNumber,
+        initialSearchContent,
+        updatePageMeta,
+        contentType,
+        topicSlug,
+        undefined
+    );
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
@@ -246,24 +223,31 @@ export const TopicContentTypePageTemplate: NextPage<
                             }}
                         />
                     )}
-                    <Search
-                        titleElement="h1"
-                        title={`All ${topicName} ${pluralize(contentType)}`}
-                        placeholder={`Search ${topicName} ${pluralize(
-                            contentType
-                        )}`}
-                        tagSlug={topicSlug}
-                        contentType={contentType}
+
+                    <SearchBox {...searchBoxProps} />
+                    <SortBox {...sortBoxProps} />
+
+                    {!isValidating && (
+                        <TypographyScale
+                            variant="heading5"
+                            customElement="h5"
+                            sx={{
+                                ...h5Styles,
+                                flexGrow: '1',
+                                flexBasis: '100%',
+                            }}
+                        >
+                            All {topicName} {pluralize(contentType)}
+                        </TypographyScale>
+                    )}
+
+                    <SearchResults
+                        {...resultsProps}
                         pageNumber={pageNumber}
-                        pageSlug={(topicSlug + contentTypeSlug).split('/')}
-                        setSeoAttributes={setSeoAttributes}
-                        initialSearchContent={initialSearchContent}
-                        resultsLayout="grid"
-                        titleLink={getSearchTitleLink(
-                            contentType,
-                            contentTypeAggregateSlug
-                        )}
-                        sx={spanAllColumns}
+                        slug={topicSlug}
+                        updatePageMeta={updatePageMeta}
+                        contentType={contentType}
+                        onBack={clearAll}
                     />
                 </GridLayout>
             </div>

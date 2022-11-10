@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { BrandedIcon, GridLayout, SideNav } from '@mdb/flora';
+import { BrandedIcon, GridLayout, SideNav, TypographyScale } from '@mdb/flora';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import getConfig from 'next/config';
@@ -11,7 +11,11 @@ import CardSection, {
 import Hero from '../../components/hero';
 import { CTA } from '../../components/hero/types';
 import { createTopicPageCTAS } from '../../components/hero/utils';
-import Search from '../../components/search';
+import Search, {
+    SearchBox,
+    SearchResults,
+    SortBox,
+} from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
@@ -29,7 +33,15 @@ import {
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
+<<<<<<< HEAD
 import { getMetaDescr, getCanonicalUrlWithParams } from '../../utils/seo';
+=======
+import { getMetaDescr } from '../../utils/seo';
+import { useSearchMeta } from '../../hooks/search/meta';
+import useSearch from '../../hooks/search';
+import { h5Styles } from '../../styled/layout';
+import { searchWrapperStyles } from '../../components/search/styles';
+>>>>>>> 04a1068 (convert topic page and topic content type page to new search pattern)
 
 export interface TopicContentTypeProps {
     crumbs: Crumb[];
@@ -80,8 +92,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 }) => {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
-    const { absoluteBasePath } = publicRuntimeConfig;
-    const { asPath, route } = router;
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -99,30 +109,25 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         );
     });
 
-    const buildPageTitle = useCallback(
-        (pageNumber: number) => {
-            const titlePageNo = pageNumber > 1 ? ` - Page ${pageNumber} ` : '';
-            let pageTitle = `${name} ${titlePageNo} | MongoDB`;
-            if (contentType === 'languages' || contentType === 'technologies') {
-                pageTitle = `${name} and MongoDB ${titlePageNo}`;
-            } else if (contentType === 'products') {
-                if (name.toLowerCase() === 'mongodb') {
-                    pageTitle = `Product ${titlePageNo} | MongoDB`;
-                } else {
-                    pageTitle = `MongoDB ${name} ${titlePageNo}`;
-                }
-            }
-            return pageTitle;
-        },
-        [contentType, name]
+    const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
+        pageNumber,
+        slug,
+        contentType
     );
 
-    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-    const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
-    const [metaDescr, setMetaDescr] = useState(
-        defaultMetaDescr && pageNumber > 1
-            ? `${defaultMetaDescr} - Page ${pageNumber}`
-            : defaultMetaDescr
+    const {
+        searchBoxProps,
+        sortBoxProps,
+        resultsProps,
+        resultsProps: { isValidating },
+        clearAll,
+    } = useSearch(
+        pageNumber,
+        initialSearchContent,
+        updatePageMeta,
+        undefined,
+        slug,
+        undefined
     );
     const [canonicalUrl, setCanonicalUrl] = useState(
         getCanonicalUrlWithParams(absoluteBasePath, asPath, {
@@ -130,29 +135,23 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         })
     );
 
-    const setSeoAttributes = useCallback(
-        pageNumber => {
-            const pageTitle = buildPageTitle(pageNumber);
-            setPageTitle(pageTitle);
-            setMetaDescr(
-                defaultMetaDescr && pageNumber > 1
-                    ? `${defaultMetaDescr} - Page ${pageNumber}`
-                    : defaultMetaDescr
-            );
-
-            const pathWithoutParams = asPath.split('?')[0];
-            setCanonicalUrl(
-                getCanonicalUrlWithParams(
-                    absoluteBasePath,
-                    `${pathWithoutParams}?page=${pageNumber}`,
-                    {
-                        page: pageNumber.toString(),
-                    }
-                )
-            );
-        },
-        [absoluteBasePath, asPath, buildPageTitle, defaultMetaDescr]
-    );
+    // const buildPageTitle = useCallback(
+    //     (pageNumber: number) => {
+    //         const titlePageNo = pageNumber > 1 ? ` - Page ${pageNumber} ` : '';
+    //         let pageTitle = `${name} ${titlePageNo} | MongoDB`;
+    //         if (contentType === 'languages' || contentType === 'technologies') {
+    //             pageTitle = `${name} and MongoDB ${titlePageNo}`;
+    //         } else if (contentType === 'products') {
+    //             if (name.toLowerCase() === 'mongodb') {
+    //                 pageTitle = `Product ${titlePageNo} | MongoDB`;
+    //             } else {
+    //                 pageTitle = `MongoDB ${name} ${titlePageNo}`;
+    //             }
+    //         }
+    //         return pageTitle;
+    //     },
+    //     [contentType, name]
+    // );
 
     const topicsRow = topics.length > 0 ? 1 : 0;
     const featuredRow = variant === 'light' ? 0 : 1;
@@ -250,6 +249,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                                 })}
                         </>
                     )}
+<<<<<<< HEAD
                     <Search
                         title={`All ${name} Content`}
                         placeholder={`Search ${name} Content`}
@@ -268,6 +268,40 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                             ],
                         }}
                     />
+=======
+
+                    <div sx={searchWrapperStyles}>
+                        <SearchBox
+                            {...searchBoxProps}
+                            placeholder={`Search ${name} Content`}
+                        />
+
+                        <SortBox {...sortBoxProps} />
+
+                        {!isValidating && (
+                            <TypographyScale
+                                variant="heading5"
+                                customElement="h5"
+                                sx={{
+                                    ...h5Styles,
+                                    flexGrow: '1',
+                                    flexBasis: '100%',
+                                }}
+                            >
+                                All {name} Content
+                            </TypographyScale>
+                        )}
+
+                        <SearchResults
+                            {...resultsProps}
+                            pageNumber={pageNumber}
+                            slug={slug}
+                            updatePageMeta={updatePageMeta}
+                            contentType={contentType}
+                            onBack={clearAll}
+                        />
+                    </div>
+>>>>>>> 04a1068 (convert topic page and topic content type page to new search pattern)
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer

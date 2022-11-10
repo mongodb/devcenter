@@ -16,6 +16,18 @@ export const searchBoxSortBarWrapperStyles = {
     rowGap: 'inc30',
 };
 
+export const searchWrapperStyles = {
+    alignItems: 'flex-start',
+    alignContent: 'flex-start',
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 'inc40',
+    gridColumn: 'span 9',
+    '& > *': {
+        order: 1,
+    },
+};
+
 export const searchBoxStyles = {
     flexGrow: '1',
     flexShrink: '1',

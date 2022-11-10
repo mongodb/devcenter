@@ -26,6 +26,7 @@ import { CTAContainerStyles } from '../../components/hero/styles';
 import { NextSeo } from 'next-seo';
 import { ContentTypePageProps } from './types';
 import useSearch from '../../hooks/search';
+import { searchWrapperStyles } from '../../components/search/styles';
 
 let pluralize = require('pluralize');
 
@@ -51,18 +52,28 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
 
-    const { searchBoxProps, filterProps, sortBoxProps, resultsProps } =
-        useSearch(contentType, slug);
+    const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
+        pageNumber,
+        slug,
+        contentType
+    );
 
     const {
+        searchBoxProps,
         searchBoxProps: { searchString },
+        filterProps,
         filterProps: { filters, onFilter },
-        resultsProps: { results },
-    } = { searchBoxProps, filterProps, resultsProps };
-
-    const [pageTitle, metaDescr, updatePageTitle] = useSearchMeta(
+        sortBoxProps,
+        resultsProps,
+        resultsProps: { results, isValidating },
+        clearAll,
+    } = useSearch(
         pageNumber,
-        contentType
+        initialSearchContent,
+        updatePageMeta,
+        contentType,
+        slug,
+        undefined
     );
 
     const showFeatured = !searchString && !filters.length;
@@ -134,24 +145,13 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                         )}
                     </div>
 
-                    <div
-                        sx={{
-                            alignItems: 'flex-start',
-                            alignContent: 'flex-start',
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            gap: 'inc40',
-                            gridColumn: 'span 9',
-                            '& > *': {
-                                order: 1,
-                            },
-                        }}
-                    >
+                    <div sx={searchWrapperStyles}>
                         <SearchBox
                             {...searchBoxProps}
                             placeholder={`Search ${pluralize(contentType)}`}
                             extraStyles={{
                                 flexBasis: showFeatured ? '100%' : '60%',
+                                marginBottom: 'inc50',
                             }}
                         />
 
@@ -197,17 +197,19 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                             }}
                         />
 
-                        <TypographyScale
-                            variant="heading5"
-                            customElement="h5"
-                            sx={{
-                                ...h5Styles,
-                                flexGrow: '1',
-                                flexBasis: showFeatured ? 'auto' : '100%',
-                            }}
-                        >
-                            {resultsHeader}
-                        </TypographyScale>
+                        {(!isValidating || showFeatured) && (
+                            <TypographyScale
+                                variant="heading5"
+                                customElement="h5"
+                                sx={{
+                                    ...h5Styles,
+                                    flexGrow: '1',
+                                    flexBasis: showFeatured ? 'auto' : '100%',
+                                }}
+                            >
+                                {resultsHeader}
+                            </TypographyScale>
+                        )}
 
                         {!!filters?.length && (
                             <div sx={{ flexBasis: '100%' }}>
@@ -246,14 +248,12 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
 
                         <SearchResults
                             {...resultsProps}
+                            pageNumber={pageNumber}
+                            slug={slug}
+                            updatePageMeta={updatePageMeta}
+                            contentType={contentType}
+                            onBack={clearAll}
                             extraStyles={{
-                                gridColumn: [
-                                    'span 6',
-                                    null,
-                                    'span 8',
-                                    'span 12',
-                                    '4 / span 9',
-                                ],
                                 order: showFeatured ? '2' : '1',
                             }}
                         />

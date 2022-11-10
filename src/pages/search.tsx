@@ -34,6 +34,7 @@ import {
     searchBoxStyles,
     searchBoxSortBarWrapperStyles,
     sortBoxStyles,
+    searchWrapperStyles,
 } from '../components/search/styles';
 import {
     sortByOptions,
@@ -57,282 +58,60 @@ import {
 } from '../hooks/search/utils';
 import { FilterTagSection } from '@mdb/devcenter-components';
 import { OverlayContext } from '../contexts/overlay';
-import { getCanonicalUrlWithParams } from '../utils/seo';
+import { useSearchMeta } from '../hooks/search/meta';
+import { SearchBox, SearchResults, SortBox } from '../components/search';
 
 export interface SearchProps {
-    l1Items: FilterItem[];
-    languageItems: FilterItem[];
-    technologyItems: FilterItem[];
-    contributedByItems: FilterItem[];
-    contentTypeItems: FilterItem[];
-    expertiseLevelItems: FilterItem[];
+    filterItems: { [name: string]: FilterItem[] };
     initialSearchContent: SearchItem[];
     pageNumber: number;
 }
 
 const Search: NextPage<SearchProps> = ({
-    l1Items,
-    languageItems,
-    technologyItems,
-    contributedByItems,
-    contentTypeItems,
-    expertiseLevelItems,
+    filterItems,
     initialSearchContent,
     pageNumber,
 }) => {
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath } = publicRuntimeConfig;
     const router = useRouter();
-    const { asPath } = router;
-    const { setHasOverlay } = useContext(OverlayContext);
-
-    // Used for initial "all content" page.
-    const totalInitialResults = initialSearchContent
-        ? initialSearchContent.length
-        : DEFAULT_PAGE_SIZE;
-    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
-    const [currentPage, setCurrentPage] = useState(
-        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber
-    );
-    const [pageTitle, setPageTitle] = useState(
-        pageNumber > 1
-            ? `Search - Page ${pageNumber} | MongoDB`
-            : `Search | MongoDB`
-    );
-    const [canonicalUrl, setCanonicalUrl] = useState(
-        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
-            page: pageNumber.toString(),
-        })
-    );
-
-    // Initial search data is the search content for initial page load (provided
-    // via SSR based on the query parameters). This data is used for both faster
-    // initial results and SEO crawlability. It must be cleared whenever any client
-    // side re-rendering is needed, such as "load more", filtering or search.
-    const [initialSearchData, setInitialSearchData] = useState(
-        createInitialSearchData(
-            initialSearchContent as SearchItem[],
-            currentPage // page provided by query parameters
-        )
-    );
-    const [initialPageResetFlag, setInitialPageResetFlag] = useState(false);
-
-    const {
-        data,
-        error,
-        isValidating,
-        fullyLoaded,
-        setResultsToShow,
-        resultsToShow,
-        allFilters,
-        setAllFilters,
-        onSearch,
-        onFilter,
-        searchString,
-        setSearchString,
-        numberOfResults,
-        onSort,
-        sortBy,
-    } = useSearch(
-        undefined,
-        undefined,
-        {
-            l1Items,
-            languageItems,
-            technologyItems,
-            contributedByItems,
-            contentTypeItems,
-            expertiseLevelItems,
-        },
-        initialSearchData ? pageNumber : undefined
-    );
-
-    const [filterTagsExpanded, setFilterTagsExpanded] = useState(false);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-    const clearFilters = () => {
-        onFilter([]);
-    };
-
-    const onFilterTagClose = (filterTag: FilterItem) => {
-        clearPagination();
-        const newFilters = allFilters.filter(filter => filter !== filterTag);
-        onFilter(newFilters);
-    };
-
-    const clearPagination = () => {
-        setInitialPageResetFlag(true);
-        setInitialSearchData(undefined);
-        setCurrentPage(1);
-        setPageTitle(`Search | MongoDB`);
-        setCanonicalUrl(getCanonicalUrlWithParams(absoluteBasePath, asPath));
-
-        router.replace(
-            {
-                pathname: router.pathname,
-                query: {},
-            },
-            undefined,
-            {
-                scroll: false,
-                shallow: true,
-            }
-        );
-    };
-
-    const onLoadMore = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault(); // If JS is enabled, do not follow href.
-
-        // If search query and filters are empty, then assume
-        // we are traversing all content with pagination.
-        if (hasEmptyFilterAndQuery(searchString, allFilters)) {
-            const nextPage = currentPage + 1;
-
-            setCurrentPage(nextPage);
-            if (nextPage > 1) {
-                setPageTitle(`Search - Page ${nextPage} | MongoDB`);
-            }
-
-            router.replace(
-                {
-                    pathname: router.pathname,
-                    query: { page: nextPage },
-                },
-                undefined,
-                {
-                    scroll: false,
-                    shallow: true,
-                }
-            );
-
-            const pathWithoutParams = asPath.split('?')[0];
-            setCanonicalUrl(
-                getCanonicalUrlWithParams(
-                    absoluteBasePath,
-                    `${pathWithoutParams}?page=${nextPage}`,
-                    {
-                        page: nextPage.toString(),
-                    }
-                )
-            );
-
-            setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
-        } else {
-            setResultsToShow(resultsToShow + 10);
-        }
-        setInitialSearchData(undefined);
-    };
-
-    const hasInitialData = typeof initialSearchData !== 'undefined';
-    const showLoadMoreButton = hasInitialData
-        ? currentPage < initialMaxPage
-        : !fullyLoaded;
-    const isLoading = !hasInitialData ? isValidating : false;
-
-    const hasFiltersSet = !!allFilters.length;
-
-    ///////////////////////////////////////
-    // COMPUTED ELEMENTS
-    ///////////////////////////////////////
-    if (allFilters.length <= 5 && filterTagsExpanded) {
-        setFilterTagsExpanded(false);
-    }
-
-    const emptyState = (
-        <div
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <div>
-                <NextImage
-                    src={getURLPath('/no-results.png', false) as string}
-                    alt="No Results"
-                    height={500}
-                    width={500}
-                />
-            </div>
-            <Button
-                hasIcon={true}
-                iconName={ESystemIconNames.ARROW_LEFT}
-                iconPosition="left"
-                onClick={() => {
-                    setAllFilters([]);
-                    setSearchString('');
-                    clearPagination();
-                }}
-            >
-                Back to all content
-            </Button>
-        </div>
-    );
-
-    const resultsStringAndTags = (
-        <div sx={{ marginBottom: 'inc50' }}>
-            <div sx={resultsStringAndTagsStyles}>
-                {(data || isValidating) && (
-                    <TypographyScale variant="heading2" sx={h5Styles}>
-                        {!allFilters.length && !searchString
-                            ? `All Content`
-                            : isValidating
-                            ? ''
-                            : numberOfResults === 1
-                            ? '1 Result'
-                            : `${numberOfResults} Results`}
-                        {!isValidating && !!searchString && !allFilters.length
-                            ? ` for "${searchString}"`
-                            : ''}
-                    </TypographyScale>
-                )}
-                <Button
-                    hasIcon
-                    iconPosition="right"
-                    iconStrokeWeight="medium"
-                    iconName={ESystemIconNames.FILTER_HAMBURGER}
-                    onClick={() => setMobileFiltersOpen(true)}
-                    sx={{
-                        display: ['flex', null, null, 'none'],
-                        flexBasis: ['100%', '33%'],
-                        justifyContent: 'center',
-                    }}
-                >
-                    Filter & Sort
-                    {!!allFilters.length && ` (${allFilters.length})`}
-                </Button>
-            </div>
-            {hasFiltersSet && (
-                <FilterTagSection
-                    sx={{ display: ['none', null, null, 'flex'] }}
-                    allFilters={allFilters}
-                    onClearTag={onFilterTagClose}
-                    onClearAll={clearFilters}
-                />
-            )}
-        </div>
-    );
-
-    const resultData = getResultData(
-        data,
-        initialSearchData,
-        searchString,
-        allFilters,
+    const [pageTitle, _, updatePageMeta] = useSearchMeta(
         pageNumber,
-        initialPageResetFlag,
-        sortBy
+        '/search',
+        'Search'
     );
-    const resultIsValidating = getResultIsValidating(
-        initialSearchData,
-        searchString,
-        allFilters,
-        isValidating,
-        sortBy
+
+    const {
+        searchBoxProps,
+        searchBoxProps: { searchString },
+        filterProps,
+        filterProps: { filters, onFilter },
+        sortBoxProps,
+        resultsProps,
+        resultsProps: { results, isValidating },
+        clearAll,
+    } = useSearch(
+        pageNumber,
+        initialSearchContent,
+        updatePageMeta,
+        undefined,
+        undefined,
+        filterItems
     );
-    const loadMoreHref = hasEmptyFilterAndQuery(searchString, allFilters)
-        ? `/developer/search/?page=${currentPage + 1}`
-        : '#';
+
+    const resultsHeader =
+        (!filters.length && !searchString
+            ? `All Content`
+            : isValidating
+            ? ''
+            : results.length === 1
+            ? '1 Result'
+            : `${results.length} Results`) +
+        (!isValidating && !!searchString && !filters.length
+            ? ` for "${searchString}"`
+            : '');
 
     return (
         <>
@@ -341,7 +120,9 @@ const Search: NextPage<SearchProps> = ({
                 canonical={canonicalUrl}
                 noindex={router.asPath === '/search/' ? false : true}
             />
+
             <Hero name="Search" />
+
             <div sx={pageWrapper}>
                 <GridLayout
                     sx={{
@@ -349,111 +130,89 @@ const Search: NextPage<SearchProps> = ({
                     }}
                 >
                     <DesktopFilters
+                        {...filterProps}
                         sx={desktopFiltersStyles}
-                        onFilter={filters => {
-                            clearPagination();
-                            onFilter(filters);
-                        }}
-                        allFilters={allFilters}
-                        l1Items={l1Items}
-                        languageItems={languageItems}
-                        technologyItems={technologyItems}
-                        contributedByItems={contributedByItems}
-                        contentTypeItems={contentTypeItems}
-                        expertiseLevelItems={expertiseLevelItems}
+                        filterItems={filterItems}
                     />
-                    <div
-                        sx={{
-                            gridColumn: ['span 6', null, 'span 8', 'span 9'],
-                        }}
-                    >
-                        <Grid
-                            columns={[1, null, 3]}
-                            sx={searchBoxSortBarWrapperStyles}
-                        >
-                            <div sx={searchBoxStyles}>
-                                <TextInput
-                                    // The key prop will force it to rerender on external searchString changes.
-                                    key={searchString}
-                                    name="search-text-input"
-                                    label="Search All"
-                                    iconName={ESystemIconNames.SEARCH}
-                                    value={searchString}
-                                    onChange={(e: React.ChangeEvent<any>) => {
-                                        clearPagination();
-                                        onSearch(e);
-                                    }}
-                                    autoFocus={true}
+
+                    <div sx={searchWrapperStyles}>
+                        <SearchBox
+                            {...searchBoxProps}
+                            placeholder="Search All"
+                            autoFocus
+                            extraStyles={{
+                                marginBottom: 'inc50',
+                            }}
+                        />
+
+                        <SortBox {...sortBoxProps} />
+
+                        {!isValidating && (
+                            <TypographyScale
+                                variant="heading5"
+                                customElement="h5"
+                                sx={{
+                                    ...h5Styles,
+                                    flexGrow: '1',
+                                    flexBasis: '100%',
+                                }}
+                            >
+                                {resultsHeader}
+                            </TypographyScale>
+                        )}
+
+                        {!!filters?.length && (
+                            <div sx={{ flexBasis: '100%' }}>
+                                <FilterTagSection
+                                    allFilters={filters}
+                                    onClearTag={(filterTag: FilterItem) =>
+                                        onFilter(
+                                            filters.filter(
+                                                item => item !== filterTag
+                                            )
+                                        )
+                                    }
+                                    onClearAll={() => onFilter([])}
                                 />
                             </div>
-                            <Select
-                                sx={sortBoxStyles}
-                                label="Sort by"
-                                name="sort-by-dropdown"
-                                options={Object.keys(sortByOptions)}
-                                value={sortBy}
-                                onSelect={e => {
-                                    clearPagination();
-                                    onSort(e);
-                                }}
-                                width="100%"
-                                height="100%"
-                            />
-                        </Grid>
-                        {resultsStringAndTags}
-                        {!!resultData.length || resultIsValidating || error ? (
-                            <>
-                                <Results
-                                    data={resultData}
-                                    isLoading={isLoading}
-                                    hasError={error}
-                                />
-                                {showLoadMoreButton && (
-                                    <div
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            marginTop: ['inc70', null, 'inc90'],
-                                        }}
-                                    >
-                                        {!resultIsValidating && resultData && (
-                                            <a
-                                                href={loadMoreHref}
-                                                onClick={onLoadMore}
-                                            >
-                                                <Button variant="secondary">
-                                                    Load more
-                                                </Button>
-                                            </a>
-                                        )}
-                                    </div>
-                                )}
-                            </>
-                        ) : (
-                            emptyState
                         )}
+
+                        <Button
+                            hasIcon
+                            iconPosition="right"
+                            iconStrokeWeight="medium"
+                            iconName={ESystemIconNames.FILTER_HAMBURGER}
+                            onClick={() => setMobileFiltersOpen(true)}
+                            customWrapperStyles={{
+                                display: ['block', null, null, 'none'],
+                                flexBasis: ['100%', null, 'auto'],
+                            }}
+                            customStyles={{
+                                display: ['flex', null, null, 'none'],
+                                justifyContent: 'center',
+                            }}
+                        >
+                            Filter & Sort
+                            {!!filters.length && ` (${filters.length})`}
+                        </Button>
+
+                        <SearchResults
+                            {...resultsProps}
+                            pageNumber={pageNumber}
+                            slug="/search"
+                            updatePageMeta={updatePageMeta}
+                            contentType="Content"
+                            onBack={clearAll}
+                        />
                     </div>
                 </GridLayout>
             </div>
             {mobileFiltersOpen && (
                 <MobileFilters
-                    onFilter={filters => {
-                        clearPagination();
-                        onFilter(filters);
-                    }}
-                    onSort={onSort}
-                    sortBy={sortBy}
-                    allFilters={allFilters}
-                    l1Items={l1Items}
-                    languageItems={languageItems}
-                    technologyItems={technologyItems}
-                    contributedByItems={contributedByItems}
-                    contentTypeItems={contentTypeItems}
-                    expertiseLevelItems={expertiseLevelItems}
-                    closeModal={() => {
-                        setMobileFiltersOpen(false);
-                        setHasOverlay(false);
-                    }}
+                    {...filterProps}
+                    {...sortBoxProps} // Mobile filters include sorting
+                    filterItems={filterItems}
+                    closeModal={() => setMobileFiltersOpen(false)}
                 />
             )}
         </>
@@ -494,7 +253,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
     return {
         props: {
-            ...filters,
+            filterItems: filters,
             pageNumber,
             initialSearchContent,
         },

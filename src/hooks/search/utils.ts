@@ -15,6 +15,7 @@ import {
     sortByOptions,
     DEFAULT_PAGE_SIZE,
 } from '../../components/search/utils';
+import { CONTENT_TYPE_NAME_MAP } from '../../data/constants';
 
 export const createInitialSearchData = (
     initialSearchContent: SearchItem[] | undefined,
@@ -207,24 +208,16 @@ export const getFilters = async (
         }
     });
 
-    const l1Items = filterItems
-        .filter(({ type }) => type === 'L1Product')
-        .sort(sortFunction);
-    const languageItems = filterItems
-        .filter(({ type }) => type === 'ProgrammingLanguage')
-        .sort(sortFunction);
-    const technologyItems = filterItems
-        .filter(({ type }) => type === 'Technology')
-        .sort(sortFunction);
-    const contributedByItems = filterItems
-        .filter(({ type }) => type === 'AuthorType')
-        .sort(sortFunction);
-    const contentTypeItems = filterItems
-        .filter(({ type }) => type === 'ContentType')
-        .sort(sortFunction);
-    const expertiseLevelItems = filterItems
-        .filter(({ type }) => type === 'ExpertiseLevel')
-        .sort(sortFunction);
+    let mappedFilterItems: { [name: string]: FilterItem[] } = {};
+
+    Object.keys(CONTENT_TYPE_NAME_MAP).forEach(key => {
+        const items = filterItems
+            .filter(({ type }) => type === key)
+            .sort(sortFunction);
+
+        mappedFilterItems = { ...mappedFilterItems, [key]: items };
+    });
+
     // Parse the code levels from the subitmes of the Code Example content type filter.
     const codeLevelItems =
         filterItems
@@ -234,15 +227,9 @@ export const getFilters = async (
             )?.[0]
             ?.subFilters?.sort(sortFunction) || [];
 
-    return {
-        Products: l1Items,
-        Language: languageItems,
-        Technology: technologyItems,
-        'Contributed By': contributedByItems,
-        'Content Type': contentTypeItems,
-        'Expertise Level': expertiseLevelItems,
-        'Example Type': codeLevelItems,
-    };
+    mappedFilterItems = { ...mappedFilterItems, ExampleType: codeLevelItems };
+
+    return mappedFilterItems;
 };
 
 const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
