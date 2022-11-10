@@ -7,26 +7,6 @@ need to be modified before setting the rewrites attribute in the next.config.js.
 
 const rewrites = [
     {
-        source: '/community/creating-stunning-slides/',
-        destination: `${process.env.DEVHUB_URL}/community/creating-stunning-slides/`,
-    },
-    {
-        source: '/community/speaker-program/',
-        destination: `${process.env.DEVHUB_URL}/community/speaker-program/`,
-    },
-    {
-        source: '/community/art-of-creating-talk/',
-        destination: `${process.env.DEVHUB_URL}/community/art-of-creating-talk/`,
-    },
-    {
-        source: '/community/surviving-the-stage/',
-        destination: `${process.env.DEVHUB_URL}/community/surviving-the-stage/`,
-    },
-    {
-        source: '/community/virtual-presentation/',
-        destination: `${process.env.DEVHUB_URL}/community/virtual-presentation/`,
-    },
-    {
         source: '/community-champions/',
         destination: `${process.env.DEVHUB_URL}/community-champions/`,
     },
