@@ -11,6 +11,7 @@ export const CONTENT_TYPE_ROUTES = [
     '/tutorials',
     '/videos',
 ];
+export const SEARCH_ROUTE = '/search';
 
 export const getMetaDescr = (config: any, route: string, asPath: string) => {
     const path =
@@ -29,6 +30,7 @@ export const shouldDefineDefaultCanonical = (route: string) => {
     if (
         route === '/_error' ||
         route === CONTENT_ROUTE ||
+        route === SEARCH_ROUTE ||
         CONTENT_TYPE_ROUTES.includes(route)
     ) {
         return false;
