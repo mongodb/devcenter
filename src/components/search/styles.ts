@@ -1,4 +1,5 @@
 import theme from '@mdb/flora/theme';
+import { FlexProps, StylePropertyValue } from 'theme-ui';
 
 export const titleStyles = {
     marginBottom: ['inc30', null, 'inc40'],
@@ -20,11 +21,11 @@ export const searchWrapperStyles = {
     alignItems: 'flex-start',
     alignContent: 'flex-start',
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap' as 'wrap',
     gap: 'inc40',
     gridColumn: 'span 9',
     '& > *': {
-        order: 1,
+        order: '1',
     },
 };
 

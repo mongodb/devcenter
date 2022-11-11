@@ -9,7 +9,7 @@ export const useSearchMeta = (
     slug: string,
     contentType: string
 ) => {
-    const { asPath, route, replace, pathname } = useRouter();
+    const { asPath, route } = useRouter();
     const publicRuntimeConfig = getConfig().publicRuntimeConfig;
 
     const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
@@ -38,19 +38,30 @@ export const useSearchMeta = (
                     : defaultMetaDescr
             );
 
-            replace(
-                {
-                    pathname: slug,
-                    ...(pageNumber <= 1 ? {} : { query: { page: pageNumber } }),
-                },
-                undefined,
-                {
-                    scroll: false,
-                    shallow: true,
-                }
+            // Using window.history.replaceState instead of next/router's replace because the latter
+            // causes the entire page to re-render
+            const newUrl = `/developer${slug}${
+                pageNumber <= 1 ? '' : `&page=${pageNumber}`
+            }`;
+            window.history.replaceState(
+                { ...window.history.state, as: newUrl, url: newUrl },
+                '',
+                newUrl
             );
+
+            // replace(
+            //     {
+            //         pathname: slug,
+            //         ...(pageNumber <= 1 ? {} : { query: { page: pageNumber } }),
+            //     },
+            //     undefined,
+            //     {
+            //         scroll: false,
+            //         shallow: true,
+            //     }
+            // );
         },
-        [buildPageTitle, defaultMetaDescr]
+        [buildPageTitle, defaultMetaDescr, slug]
     );
 
     return [pageTitle, metaDescr, updatePageMeta];

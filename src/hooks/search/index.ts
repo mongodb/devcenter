@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import debounce from 'lodash.debounce';
 import useSWR from 'swr';
 import { FilterItem } from '@mdb/devcenter-components';
@@ -48,7 +48,6 @@ const useSearch = (
     };
 
     const key = buildSearchQuery(queryParams);
-    console.log(key);
 
     // TODO: Refactor to useSWRInfinite and implement client-side pagination.
     const { data, error, isValidating } = useSWR(key, fetcher, {
@@ -57,8 +56,8 @@ const useSearch = (
         revalidateOnReconnect: false,
         shouldRetryOnError: false,
         fallback: {
-            [// default search query when loading a page
-            buildSearchQuery({
+            // default search query when loading a page
+            [buildSearchQuery({
                 searchString: '',
                 contentType,
                 tagSlug,
@@ -67,44 +66,62 @@ const useSearch = (
         },
     });
 
-    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        updatePageMeta();
-        setSearchString(event.target.value);
+    const onSearch = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            updatePageMeta();
+            setSearchString(event.target.value);
 
-        if (shouldUseQueryParams) {
-            updateUrl(router, filters, event.target.value);
-        }
-    };
+            if (shouldUseQueryParams) {
+                updateUrl(router, filters, event.target.value);
+            }
+        },
+        [filters, router, shouldUseQueryParams, updatePageMeta]
+    );
+    // }, [updatePageMeta])
 
-    const onFilter = (filters: FilterItem[]) => {
-        updatePageMeta();
-        setFilters(filters);
-        if (shouldUseQueryParams) {
-            updateUrl(router, filters, searchString);
-        }
-    };
+    const onFilter = useCallback(
+        (filters: FilterItem[]) => {
+            updatePageMeta();
+            setFilters(filters);
 
-    const onSort = (sortByValue?: string) => {
-        updatePageMeta();
-        setSortBy(sortByValue as SortByType);
+            if (shouldUseQueryParams) {
+                updateUrl(router, filters, searchString);
+            }
+        },
+        [router, searchString, shouldUseQueryParams, updatePageMeta]
+    );
+    // }, [updatePageMeta])
 
-        if (shouldUseQueryParams) {
-            updateUrl(router, filters, searchString, sortByValue as SortByType);
-        }
-    };
+    const onSort = useCallback(
+        (sortByValue?: string) => {
+            updatePageMeta();
+            setSortBy(sortByValue as SortByType);
+
+            if (shouldUseQueryParams) {
+                updateUrl(
+                    router,
+                    filters,
+                    searchString,
+                    sortByValue as SortByType
+                );
+            }
+        },
+        [filters, router, searchString, shouldUseQueryParams, updatePageMeta]
+    );
+    // }, [updatePageMeta])
 
     const debouncedOnSearch = useMemo(
         () => debounce(onSearch, 400), // Not sure what this value should be, so set to 400ms.
-        [filters]
+        [onSearch]
     );
     // Stop the invocation of the debounced function after unmounting.
     useEffect(() => {
         return () => {
             debouncedOnSearch.cancel();
         };
-    }, []);
+    }, [debouncedOnSearch]);
 
-    const getFiltersFromQueryStr = () => {
+    const getFiltersFromQueryStr = useCallback(() => {
         const {
             L1Product: l1Items,
             ContentType: contentTypeItems,
@@ -206,14 +223,13 @@ const useSearch = (
             allNewFilters = allNewFilters.concat(expertiseLevelFilters);
         }
         return allNewFilters;
-    };
+    }, [filterItems, router.query]);
 
     // Populate the search/filters with query params on page load/param change if we have a router and filters defined.
     useEffect(() => {
         if (router?.isReady) {
             const { s } = router.query;
 
-            console.log('router ready', s, searchString);
             if (!!filterItems) {
                 const allNewFilters = getFiltersFromQueryStr();
                 setFilters(allNewFilters);
@@ -223,7 +239,13 @@ const useSearch = (
                 setSearchString(s);
             }
         }
-    }, [router?.isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
+    }, [
+        filterItems,
+        getFiltersFromQueryStr,
+        router?.isReady,
+        router.query,
+        searchString,
+    ]); // Missing query dependency, but that's ok because we only need this on first page load.
 
     const hasFiltersSet = !!filters.length;
     const filteredData = (() => {

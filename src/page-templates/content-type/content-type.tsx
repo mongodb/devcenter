@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
     Button,
     ESystemIconNames,
@@ -29,6 +29,13 @@ import useSearch from '../../hooks/search';
 import { searchWrapperStyles } from '../../components/search/styles';
 
 let pluralize = require('pluralize');
+
+const heroCrumbs = [
+    {
+        text: 'MongoDB Developer Center',
+        url: '/',
+    },
+];
 
 const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
     description,
@@ -89,6 +96,22 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
             ? ` for "${searchString}"`
             : '');
 
+    const heroCTAs = useMemo(
+        () =>
+            shouldRenderRequestButton(contentType) ? (
+                <div sx={CTAContainerStyles}>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setRequestContentModalStage('text')}
+                        size="large"
+                    >
+                        {requestButtonText}
+                    </Button>
+                </div>
+            ) : null,
+        [contentType, requestButtonText]
+    );
+
     return (
         <>
             <NextSeo
@@ -97,24 +120,10 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                 title={pageTitle}
             />
             <Hero
-                crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
+                crumbs={heroCrumbs}
                 name={pluralize(contentType)}
                 description={description}
-                ctas={
-                    shouldRenderRequestButton(contentType) ? (
-                        <div sx={CTAContainerStyles}>
-                            <Button
-                                variant="secondary"
-                                onClick={() =>
-                                    setRequestContentModalStage('text')
-                                }
-                                size="large"
-                            >
-                                {requestButtonText}
-                            </Button>
-                        </div>
-                    ) : null
-                }
+                ctas={heroCTAs}
             />
 
             {/* Main content body */}
@@ -150,7 +159,9 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                             {...searchBoxProps}
                             placeholder={`Search ${pluralize(contentType)}`}
                             extraStyles={{
-                                flexBasis: showFeatured ? '100%' : '60%',
+                                flexBasis: showFeatured
+                                    ? '100%'
+                                    : ['100%', null, null, '60%'],
                                 marginBottom: 'inc50',
                             }}
                         />
@@ -204,7 +215,9 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                                 sx={{
                                     ...h5Styles,
                                     flexGrow: '1',
-                                    flexBasis: showFeatured ? 'auto' : '100%',
+                                    flexBasis: showFeatured
+                                        ? 'auto'
+                                        : ['100%', null, 'auto'],
                                 }}
                             >
                                 {resultsHeader}
