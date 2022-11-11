@@ -38,6 +38,7 @@ export const technologyToLogo: { [key: string]: EThirdPartyLogoVariant } = {
     'React Native': EThirdPartyLogoVariant.REACT,
     SQL: EThirdPartyLogoVariant.SQL,
     Spark: EThirdPartyLogoVariant.SPARK,
+    Spring: EThirdPartyLogoVariant.SPRING,
     Svelte: EThirdPartyLogoVariant.SVELTE,
     TLS: EThirdPartyLogoVariant.TLS,
     Unity: EThirdPartyLogoVariant.UNITY,
