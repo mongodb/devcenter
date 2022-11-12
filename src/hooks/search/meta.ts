@@ -41,7 +41,7 @@ export const useSearchMeta = (
             // Using window.history.replaceState instead of next/router's replace because the latter
             // causes the entire page to re-render
             const newUrl = `/developer${slug}${
-                pageNumber <= 1 ? '' : `&page=${pageNumber}`
+                pageNumber <= 1 ? '' : `?page=${pageNumber}`
             }`;
             window.history.replaceState(
                 { ...window.history.state, as: newUrl, url: newUrl },

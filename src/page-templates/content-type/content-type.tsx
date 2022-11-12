@@ -162,7 +162,6 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                                 flexBasis: showFeatured
                                     ? '100%'
                                     : ['100%', null, null, '60%'],
-                                marginBottom: 'inc50',
                             }}
                         />
 

@@ -11,11 +11,7 @@ import CardSection, {
 import Hero from '../../components/hero';
 import { CTA } from '../../components/hero/types';
 import { createTopicPageCTAS } from '../../components/hero/utils';
-import Search, {
-    SearchBox,
-    SearchResults,
-    SortBox,
-} from '../../components/search';
+import { SearchBox, SearchResults, SortBox } from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
@@ -33,15 +29,11 @@ import {
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-<<<<<<< HEAD
-import { getMetaDescr, getCanonicalUrlWithParams } from '../../utils/seo';
-=======
 import { getMetaDescr } from '../../utils/seo';
 import { useSearchMeta } from '../../hooks/search/meta';
 import useSearch from '../../hooks/search';
 import { h5Styles } from '../../styled/layout';
 import { searchWrapperStyles } from '../../components/search/styles';
->>>>>>> 04a1068 (convert topic page and topic content type page to new search pattern)
 
 export interface TopicContentTypeProps {
     crumbs: Crumb[];
@@ -249,48 +241,38 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                                 })}
                         </>
                     )}
-<<<<<<< HEAD
-                    <Search
-                        title={`All ${name} Content`}
-                        placeholder={`Search ${name} Content`}
-                        tagSlug={slug}
-                        pageNumber={pageNumber}
-                        pageSlug={slug.split('/')}
-                        setSeoAttributes={setSeoAttributes}
-                        initialSearchContent={initialSearchContent}
+
+                    <div
                         sx={{
-                            gridColumn: [
-                                'span 6',
-                                null,
-                                'span 8',
-                                'span 12',
-                                '4 / span 9',
-                            ],
+                            ...searchWrapperStyles,
+                            gridColumn: ['span 12', null, null, null, 'span 9'],
                         }}
-                    />
-=======
-
-                    <div sx={searchWrapperStyles}>
-                        <SearchBox
-                            {...searchBoxProps}
-                            placeholder={`Search ${name} Content`}
-                        />
-
-                        <SortBox {...sortBoxProps} />
-
-                        {!isValidating && (
+                    >
+                        <div sx={titleStyles}>
                             <TypographyScale
                                 variant="heading5"
                                 customElement="h5"
-                                sx={{
-                                    ...h5Styles,
-                                    flexGrow: '1',
-                                    flexBasis: '100%',
-                                }}
                             >
                                 All {name} Content
                             </TypographyScale>
-                        )}
+                        </div>
+
+                        <SearchBox
+                            {...searchBoxProps}
+                            placeholder={`Search ${name} Content`}
+                            extraStyles={{
+                                flexBasis: ['100%', null, '60%'],
+                                marginBottom: ['0', null, 'inc50'],
+                            }}
+                        />
+
+                        <SortBox
+                            {...sortBoxProps}
+                            extraStyles={{
+                                display: 'block',
+                                flexBasis: ['100%', null, '33%'],
+                            }}
+                        />
 
                         <SearchResults
                             {...resultsProps}
@@ -301,7 +283,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                             onBack={clearAll}
                         />
                     </div>
->>>>>>> 04a1068 (convert topic page and topic content type page to new search pattern)
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer

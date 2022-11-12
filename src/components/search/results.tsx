@@ -69,7 +69,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = memo(
                     ...extraStyles,
                 }}
             >
-                {isValidating ? (
+                {isValidating && (
                     <Image
                         alt="Loading..."
                         width={116}
@@ -84,89 +84,103 @@ const SearchResults: React.FunctionComponent<ResultsProps> = memo(
                             marginTop: 'inc100',
                         }}
                     />
-                ) : error ? (
-                    <div>Something went wrong, please try again</div>
-                ) : null}
+                )}
 
                 {!isValidating && (
                     <>
-                        {!!resultsToShow.length && (
-                            // Needs to be wrapped in a div because Safari isn't the best with grid...
-                            // https://stackoverflow.com/questions/44770074/css-grid-row-height-safari-bug
-                            <div>
-                                <div
-                                    data-testid="search-results"
-                                    sx={dataStyles(layout)}
-                                >
-                                    {resultsToShow.map(item => (
-                                        <Card
-                                            key={item.slug}
-                                            sx={extraCardStyles}
-                                            hideTagsOnMobile={layout === 'list'}
-                                            {...getCardProps(
-                                                item,
-                                                layout === 'list'
-                                                    ? 'list'
-                                                    : 'medium'
-                                            )}
-                                        />
-                                    ))}
-                                </div>
+                        {error && (
+                            <div>Something went wrong, please try again</div>
+                        )}
+                        {!error && (
+                            <>
+                                {!!resultsToShow.length && (
+                                    // Needs to be wrapped in a div because Safari isn't the best with grid...
+                                    // https://stackoverflow.com/questions/44770074/css-grid-row-height-safari-bug
+                                    <div>
+                                        <div
+                                            data-testid="search-results"
+                                            sx={dataStyles(layout)}
+                                        >
+                                            {resultsToShow.map(item => (
+                                                <Card
+                                                    key={item.slug}
+                                                    sx={extraCardStyles}
+                                                    hideTagsOnMobile={
+                                                        layout === 'list'
+                                                    }
+                                                    {...getCardProps(
+                                                        item,
+                                                        layout === 'list'
+                                                            ? 'list'
+                                                            : 'medium'
+                                                    )}
+                                                />
+                                            ))}
+                                        </div>
 
-                                {showLoadMoreButton && (
-                                    <div
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            marginTop: ['inc70', null, 'inc90'],
-                                        }}
-                                    >
-                                        {!isValidating && results && (
-                                            <a
-                                                href={loadMoreHref}
-                                                onClick={onLoadMore}
+                                        {showLoadMoreButton && (
+                                            <div
+                                                sx={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    marginTop: [
+                                                        'inc70',
+                                                        null,
+                                                        'inc90',
+                                                    ],
+                                                }}
                                             >
-                                                <Button variant="secondary">
-                                                    Load more
-                                                </Button>
-                                            </a>
+                                                {!isValidating && results && (
+                                                    <a
+                                                        href={loadMoreHref}
+                                                        onClick={onLoadMore}
+                                                    >
+                                                        <Button variant="secondary">
+                                                            Load more
+                                                        </Button>
+                                                    </a>
+                                                )}
+                                            </div>
                                         )}
                                     </div>
                                 )}
-                            </div>
-                        )}
 
-                        {!resultsToShow.length && (
-                            <div
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <div>
-                                    <Image
-                                        src={
-                                            getURLPath(
-                                                '/no-results.png',
-                                                false
-                                            ) as string
-                                        }
-                                        alt="No Results"
-                                        height={500}
-                                        width={500}
-                                    />
-                                </div>
-                                <Button
-                                    hasIcon={true}
-                                    iconName={ESystemIconNames.ARROW_LEFT}
-                                    iconPosition="left"
-                                    onClick={onBack}
-                                >
-                                    Back to all {contentType.toLowerCase()}s
-                                </Button>
-                            </div>
+                                {!resultsToShow.length && (
+                                    <div
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <div>
+                                            <Image
+                                                src={
+                                                    getURLPath(
+                                                        '/no-results.png',
+                                                        false
+                                                    ) as string
+                                                }
+                                                alt="No Results"
+                                                height={500}
+                                                width={500}
+                                            />
+                                        </div>
+                                        <Button
+                                            hasIcon={true}
+                                            iconName={
+                                                ESystemIconNames.ARROW_LEFT
+                                            }
+                                            iconPosition="left"
+                                            onClick={onBack}
+                                        >
+                                            Back to all{' '}
+                                            {contentType.toLowerCase()}s
+                                        </Button>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </>
                 )}

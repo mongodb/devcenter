@@ -2,12 +2,12 @@ import theme from '@mdb/flora/theme';
 import { FlexProps, StylePropertyValue } from 'theme-ui';
 
 export const titleStyles = {
-    marginBottom: ['inc30', null, 'inc40'],
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: ['start', null, 'end'],
     flexDirection: ['column' as 'column', null, 'row' as 'row'],
     gap: 'inc30',
+    width: '100%',
 };
 
 export const searchBoxSortBarWrapperStyles = {
@@ -22,7 +22,7 @@ export const searchWrapperStyles = {
     alignContent: 'flex-start',
     display: 'flex',
     flexWrap: 'wrap' as 'wrap',
-    gap: 'inc40',
+    gap: ['inc30', null, 'inc40'],
     gridColumn: 'span 9',
     '& > *': {
         order: '1',
@@ -32,8 +32,13 @@ export const searchWrapperStyles = {
 export const searchBoxStyles = {
     flexGrow: '1',
     flexShrink: '1',
+    flexBasis: 'calc(66% - 12px)',
+    marginBottom: 'inc50',
     '& > div': {
         maxWidth: 'unset',
+    },
+    'div[aria-label="input-box"]': {
+        boxSizing: 'content-box' as 'content-box',
     },
 };
 
@@ -47,7 +52,7 @@ export const sortBoxStyles = {
     },
     gridColumn: 'span 1',
     display: ['none', null, null, 'block'],
-    flexBasis: '33%',
+    flexBasis: 'calc(33% - 12px)',
 };
 
 export const dataStyles = (layout: 'list' | 'grid') =>

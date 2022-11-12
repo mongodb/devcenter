@@ -17,11 +17,7 @@ import { CTAContainerStyles } from '../../components/hero/styles';
 import RequestContentModal, {
     requestContentModalStages,
 } from '../../components/request-content-modal';
-import Search, {
-    SearchBox,
-    SearchResults,
-    SortBox,
-} from '../../components/search';
+import { SearchBox, SearchResults, SortBox } from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import {
     sideNavStyles,
@@ -35,10 +31,14 @@ import { PillCategory } from '../../types/pill-category';
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { getURLPath, setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getMetaDescr } from '../../utils/seo';
 import useSearch from '../../hooks/search';
 import { useSearchMeta } from '../../hooks/search/meta';
-import { h5Styles } from '../../styled/layout';
+import {
+    linkStyleOverride,
+    searchWrapperStyles,
+    titleStyles,
+} from '../../components/search/styles';
+import ExpandingLink from '../../components/expanding-link';
 
 export interface TopicContentTypePageProps {
     crumbs: Crumb[];
@@ -55,7 +55,7 @@ export interface TopicContentTypePageProps {
 }
 
 const spanAllColumns = {
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
+    gridColumn: ['span 12', null, null, 'span 12', 'span 9'],
 };
 
 const getSearchTitleLink = (
@@ -224,31 +224,57 @@ export const TopicContentTypePageTemplate: NextPage<
                         />
                     )}
 
-                    <SearchBox {...searchBoxProps} />
-                    <SortBox {...sortBoxProps} />
+                    <div
+                        sx={{
+                            ...searchWrapperStyles,
+                            gridColumn: ['span 12', null, null, null, 'span 9'],
+                        }}
+                    >
+                        <div sx={titleStyles}>
+                            <TypographyScale
+                                variant="heading5"
+                                customElement="h5"
+                            >
+                                All {topicName} {pluralize(contentType)}
+                            </TypographyScale>
 
-                    {!isValidating && (
-                        <TypographyScale
-                            variant="heading5"
-                            customElement="h5"
-                            sx={{
-                                ...h5Styles,
-                                flexGrow: '1',
-                                flexBasis: '100%',
+                            <ExpandingLink
+                                {...getSearchTitleLink(
+                                    contentType,
+                                    contentTypeAggregateSlug
+                                )}
+                                hoverStyleOverrides={linkStyleOverride}
+                            />
+                        </div>
+
+                        <SearchBox
+                            {...searchBoxProps}
+                            placeholder={`Search ${topicName} ${pluralize(
+                                contentType
+                            )}`}
+                            extraStyles={{
+                                flexBasis: ['100%', null, '60%'],
+                                marginBottom: ['0', null, 'inc50'],
                             }}
-                        >
-                            All {topicName} {pluralize(contentType)}
-                        </TypographyScale>
-                    )}
+                        />
+                        <SortBox
+                            {...sortBoxProps}
+                            extraStyles={{
+                                display: 'block',
+                                flexBasis: ['100%', null, '33%'],
+                            }}
+                        />
 
-                    <SearchResults
-                        {...resultsProps}
-                        pageNumber={pageNumber}
-                        slug={topicSlug}
-                        updatePageMeta={updatePageMeta}
-                        contentType={contentType}
-                        onBack={clearAll}
-                    />
+                        <SearchResults
+                            {...resultsProps}
+                            pageNumber={pageNumber}
+                            slug={topicSlug}
+                            updatePageMeta={updatePageMeta}
+                            contentType={contentType}
+                            onBack={clearAll}
+                            layout="grid"
+                        />
+                    </div>
                 </GridLayout>
             </div>
             {contentType !== 'News & Announcements' && (
