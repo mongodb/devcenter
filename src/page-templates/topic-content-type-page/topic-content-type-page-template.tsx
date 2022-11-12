@@ -58,6 +58,17 @@ const spanAllColumns = {
     gridColumn: ['span 12', null, null, 'span 12', 'span 9'],
 };
 
+const extraSearchBoxStyles = {
+    marginBottom: ['0', null, 'inc50'],
+};
+const extraSortBoxStyles = {
+    display: 'block',
+};
+const extraSearchWrapperStyles = {
+    ...searchWrapperStyles,
+    gridColumn: ['span 12', null, null, null, 'span 9'],
+};
+
 const getSearchTitleLink = (
     contentType: PillCategory,
     contentTypeAggregateSlug: string
@@ -73,6 +84,14 @@ const getSearchTitleLink = (
         text: `All ${pluralize(contentType)}`,
     };
 };
+
+const buildPageTitle =
+    (contentType: string, topicName: string) => (pageNumber: number) => {
+        const titlePageNo = pageNumber > 1 ? `- Page ${pageNumber}` : '';
+        return `${topicName} ${pluralize(
+            contentType
+        )} ${titlePageNo} | MongoDB`;
+    };
 
 let pluralize = require('pluralize');
 
@@ -101,16 +120,11 @@ export const TopicContentTypePageTemplate: NextPage<
     const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
         pageNumber,
         topicSlug,
-        contentType
+        contentType,
+        buildPageTitle(contentType, topicName)
     );
 
-    const {
-        searchBoxProps,
-        sortBoxProps,
-        resultsProps,
-        resultsProps: { isValidating },
-        clearAll,
-    } = useSearch(
+    const { searchBoxProps, sortBoxProps, resultsProps, clearAll } = useSearch(
         pageNumber,
         initialSearchContent,
         updatePageMeta,
@@ -224,12 +238,7 @@ export const TopicContentTypePageTemplate: NextPage<
                         />
                     )}
 
-                    <div
-                        sx={{
-                            ...searchWrapperStyles,
-                            gridColumn: ['span 12', null, null, null, 'span 9'],
-                        }}
-                    >
+                    <div sx={extraSearchWrapperStyles}>
                         <div sx={titleStyles}>
                             <TypographyScale
                                 variant="heading5"
@@ -252,17 +261,11 @@ export const TopicContentTypePageTemplate: NextPage<
                             placeholder={`Search ${topicName} ${pluralize(
                                 contentType
                             )}`}
-                            extraStyles={{
-                                flexBasis: ['100%', null, '60%'],
-                                marginBottom: ['0', null, 'inc50'],
-                            }}
+                            extraStyles={extraSearchBoxStyles}
                         />
                         <SortBox
                             {...sortBoxProps}
-                            extraStyles={{
-                                display: 'block',
-                                flexBasis: ['100%', null, '33%'],
-                            }}
+                            extraStyles={extraSortBoxStyles}
                         />
 
                         <SearchResults

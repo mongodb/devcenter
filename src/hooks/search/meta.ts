@@ -7,7 +7,8 @@ let pluralize = require('pluralize');
 export const useSearchMeta = (
     pageNumber: number,
     slug: string,
-    contentType: string
+    contentType: string,
+    customBuildPageTitle: (pageNumber: number) => string
 ) => {
     const { asPath, route } = useRouter();
     const publicRuntimeConfig = getConfig().publicRuntimeConfig;
@@ -22,10 +23,15 @@ export const useSearchMeta = (
 
     const buildPageTitle = useCallback(
         (pageNumber: number) => {
-            const titlePageNo = pageNumber > 1 ? `- Page ${pageNumber}` : '';
-            return `${pluralize(contentType)} ${titlePageNo} | MongoDB`;
+            if (customBuildPageTitle) {
+                return customBuildPageTitle(pageNumber);
+            } else {
+                const titlePageNo =
+                    pageNumber > 1 ? `- Page ${pageNumber}` : '';
+                return `${pluralize(contentType)} ${titlePageNo} | MongoDB`;
+            }
         },
-        [contentType]
+        [customBuildPageTitle, contentType]
     );
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
     const updatePageMeta = useCallback(
@@ -48,18 +54,6 @@ export const useSearchMeta = (
                 '',
                 newUrl
             );
-
-            // replace(
-            //     {
-            //         pathname: slug,
-            //         ...(pageNumber <= 1 ? {} : { query: { page: pageNumber } }),
-            //     },
-            //     undefined,
-            //     {
-            //         scroll: false,
-            //         shallow: true,
-            //     }
-            // );
         },
         [buildPageTitle, defaultMetaDescr, slug]
     );

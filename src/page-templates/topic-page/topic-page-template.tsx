@@ -66,6 +66,33 @@ interface TopicPageProps {
     pageNumber: number;
 }
 
+const extraSearchBoxStyles = {
+    marginBottom: ['0', null, 'inc50'],
+};
+const extraSortBoxStyles = {
+    display: 'block',
+};
+const extraSearchWrapperStyles = {
+    ...searchWrapperStyles,
+    gridColumn: ['span 12', null, null, null, 'span 9'],
+};
+
+const buildPageTitle =
+    (contentType: string, name: string) => (pageNumber: number) => {
+        const titlePageNo = pageNumber > 1 ? ` - Page ${pageNumber} ` : '';
+        let pageTitle = `${name} ${titlePageNo} | MongoDB`;
+        if (contentType === 'languages' || contentType === 'technologies') {
+            pageTitle = `${name} and MongoDB ${titlePageNo}`;
+        } else if (contentType === 'products') {
+            if (name.toLowerCase() === 'mongodb') {
+                pageTitle = `Product ${titlePageNo} | MongoDB`;
+            } else {
+                pageTitle = `MongoDB ${name} ${titlePageNo}`;
+            }
+        }
+        return pageTitle;
+    };
+
 const TopicPageTemplate: NextPage<TopicPageProps> = ({
     crumbs,
     name,
@@ -104,16 +131,11 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
         pageNumber,
         slug,
-        contentType
+        contentType,
+        buildPageTitle(contentType, name)
     );
 
-    const {
-        searchBoxProps,
-        sortBoxProps,
-        resultsProps,
-        resultsProps: { isValidating },
-        clearAll,
-    } = useSearch(
+    const { searchBoxProps, sortBoxProps, resultsProps, clearAll } = useSearch(
         pageNumber,
         initialSearchContent,
         updatePageMeta,
@@ -126,24 +148,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             page: pageNumber.toString(),
         })
     );
-
-    // const buildPageTitle = useCallback(
-    //     (pageNumber: number) => {
-    //         const titlePageNo = pageNumber > 1 ? ` - Page ${pageNumber} ` : '';
-    //         let pageTitle = `${name} ${titlePageNo} | MongoDB`;
-    //         if (contentType === 'languages' || contentType === 'technologies') {
-    //             pageTitle = `${name} and MongoDB ${titlePageNo}`;
-    //         } else if (contentType === 'products') {
-    //             if (name.toLowerCase() === 'mongodb') {
-    //                 pageTitle = `Product ${titlePageNo} | MongoDB`;
-    //             } else {
-    //                 pageTitle = `MongoDB ${name} ${titlePageNo}`;
-    //             }
-    //         }
-    //         return pageTitle;
-    //     },
-    //     [contentType, name]
-    // );
 
     const topicsRow = topics.length > 0 ? 1 : 0;
     const featuredRow = variant === 'light' ? 0 : 1;
@@ -242,12 +246,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         </>
                     )}
 
-                    <div
-                        sx={{
-                            ...searchWrapperStyles,
-                            gridColumn: ['span 12', null, null, null, 'span 9'],
-                        }}
-                    >
+                    <div sx={extraSearchWrapperStyles}>
                         <div sx={titleStyles}>
                             <TypographyScale
                                 variant="heading5"
@@ -260,18 +259,12 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         <SearchBox
                             {...searchBoxProps}
                             placeholder={`Search ${name} Content`}
-                            extraStyles={{
-                                flexBasis: ['100%', null, '60%'],
-                                marginBottom: ['0', null, 'inc50'],
-                            }}
+                            extraStyles={extraSearchBoxStyles}
                         />
 
                         <SortBox
                             {...sortBoxProps}
-                            extraStyles={{
-                                display: 'block',
-                                flexBasis: ['100%', null, '33%'],
-                            }}
+                            extraStyles={extraSortBoxStyles}
                         />
 
                         <SearchResults
