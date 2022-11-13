@@ -273,7 +273,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                             slug={slug}
                             updatePageMeta={updatePageMeta}
                             contentType={contentType}
-                            onBack={clearAll}
                         />
                     </div>
 

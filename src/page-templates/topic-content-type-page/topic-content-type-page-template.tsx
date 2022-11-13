@@ -124,7 +124,7 @@ export const TopicContentTypePageTemplate: NextPage<
         buildPageTitle(contentType, topicName)
     );
 
-    const { searchBoxProps, sortBoxProps, resultsProps, clearAll } = useSearch(
+    const { searchBoxProps, sortBoxProps, resultsProps } = useSearch(
         pageNumber,
         initialSearchContent,
         updatePageMeta,
@@ -274,7 +274,6 @@ export const TopicContentTypePageTemplate: NextPage<
                             slug={topicSlug}
                             updatePageMeta={updatePageMeta}
                             contentType={contentType}
-                            onBack={clearAll}
                             layout="grid"
                         />
                     </div>

@@ -367,21 +367,45 @@ export const updateUrl = (
         .filter(filter => filter.type === 'ExpertiseLevel')
         .map(filter => filter.name);
 
-    router.replace(
-        {
-            pathname: router.pathname,
-            query: {
-                s: searchString,
-                product,
-                language,
-                technology,
-                contentType,
-                contributedBy,
-                expertiseLevel,
-                sortMode: sortByOptions[sortBy as SortByType],
-            },
-        },
-        undefined,
-        { scroll: false, shallow: true }
+    const all = {
+        product,
+        language,
+        technology,
+        contentType,
+        contributedBy,
+        expertiseLevel,
+    } as { [key: string]: string[] };
+    const params = new URLSearchParams({ s: searchString });
+
+    Object.keys(all).forEach(key => {
+        if (all[key].length) {
+            all[key].forEach(value => params.append(key, value));
+        }
+    });
+
+    params.append('sortMode', sortByOptions[sortBy as SortByType].toString());
+    const newUrl = `/developer${router.pathname}/?${params.toString()}`;
+    window.history.replaceState(
+        { ...window.history.state, as: newUrl, url: newUrl },
+        '',
+        newUrl
     );
+
+    // router.replace(
+    //     {
+    //         pathname: router.pathname,
+    //         query: {
+    //             s: searchString,
+    //             product,
+    //             language,
+    //             technology,
+    //             contentType,
+    //             contributedBy,
+    //             expertiseLevel,
+    //             sortMode: sortByOptions[sortBy as SortByType],
+    //         },
+    //     },
+    //     undefined,
+    //     { scroll: false, shallow: true }
+    // );
 };

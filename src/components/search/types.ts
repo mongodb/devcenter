@@ -3,6 +3,7 @@ import { PillCategory } from '../../types/pill-category';
 import { Tag } from '../../interfaces/tag';
 import { ThemeUICSSObject } from 'theme-ui';
 import { FilterItem } from '@mdb/devcenter-components';
+import { ReactElement } from 'react';
 
 interface SearchImage {
     url: string;
@@ -44,7 +45,7 @@ export interface SearchBoxProps {
 
 export interface SortBoxProps {
     extraStyles?: ThemeUICSSObject;
-    onSort: (value: string) => void;
+    onSort: (value?: string) => void;
     sortBy: string;
 }
 
@@ -57,7 +58,7 @@ export interface ResultsProps {
     slug: string;
     pageNumber: number;
     updatePageMeta?: (pageNumber: number) => void;
-    onBack: () => void;
+    noResultsFooter?: ReactElement;
     contentType: string;
     layout?: 'list' | 'grid';
     extraStyles?: ThemeUICSSObject;

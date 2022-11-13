@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs';
 import { useMemo, useState } from 'react';
 import {
     Button,
@@ -27,6 +28,7 @@ import { NextSeo } from 'next-seo';
 import { ContentTypePageProps } from './types';
 import useSearch from '../../hooks/search';
 import { searchWrapperStyles } from '../../components/search/styles';
+import { isEmptyArray } from '../../hooks/search/utils';
 
 let pluralize = require('pluralize');
 
@@ -36,6 +38,20 @@ const heroCrumbs = [
         url: '/',
     },
 ];
+
+// Debug for DEVHUB-1501 which is not yet replicable.
+// If data is empty, capture an exception for Sentry.
+const useEmptyDataDebug = (results: any, error: any) => {
+    if (isEmptyArray(results)) {
+        Sentry.withScope(scope => {
+            scope.setExtra('resultParameters', {
+                results,
+                error,
+            });
+            Sentry.captureException(new Error('Result data is empty'));
+        });
+    }
+};
 
 const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
     description,
@@ -62,7 +78,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
     const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
         pageNumber,
         slug,
-        contentType
+        pluralize(contentType)
     );
 
     const {
@@ -72,7 +88,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
         filterProps: { filters, onFilter },
         sortBoxProps,
         resultsProps,
-        resultsProps: { results, isValidating },
+        resultsProps: { results, error, isValidating },
         clearAll,
     } = useSearch(
         pageNumber,
@@ -82,6 +98,8 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
         slug,
         undefined
     );
+
+    useEmptyDataDebug(results, error);
 
     const showFeatured = !searchString && !filters.length;
     const resultsHeader =
@@ -224,7 +242,12 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                         )}
 
                         {!!filters?.length && (
-                            <div sx={{ flexBasis: '100%' }}>
+                            <div
+                                sx={{
+                                    flexBasis: '100%',
+                                    display: ['none', null, null, 'block'],
+                                }}
+                            >
                                 <FilterTagSection
                                     allFilters={filters}
                                     onClearTag={(filterTag: FilterItem) =>
@@ -264,10 +287,19 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                             slug={slug}
                             updatePageMeta={updatePageMeta}
                             contentType={contentType}
-                            onBack={clearAll}
                             extraStyles={{
                                 order: showFeatured ? '2' : '1',
                             }}
+                            noResultsFooter={
+                                <Button
+                                    hasIcon={true}
+                                    iconName={ESystemIconNames.ARROW_LEFT}
+                                    iconPosition="left"
+                                    onClick={clearAll}
+                                >
+                                    Back to all {contentType.toLowerCase()}s
+                                </Button>
+                            }
                         />
                     </div>
                 </GridLayout>

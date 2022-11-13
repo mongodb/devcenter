@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Button, ESystemIconNames } from '@mdb/flora';
+import { Button, ESystemIconNames, TypographyScale } from '@mdb/flora';
 
 import { ResultsProps } from './types';
 import { dataStyles } from './styles';
@@ -10,6 +10,8 @@ import Card, { getCardProps } from '../card';
 import { getURLPath } from '../../utils/format-url-path';
 import { DEFAULT_PAGE_SIZE } from './utils';
 import { hasEmptyFilterAndQuery } from '../../hooks/search/utils';
+
+const DefaultNoResultsFooter = <TypographyScale>No Results</TypographyScale>;
 
 // TODO: This isn't being memoized correctly.
 const SearchResults: React.FunctionComponent<ResultsProps> = memo(
@@ -22,8 +24,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = memo(
         slug,
         pageNumber,
         updatePageMeta = () => {},
-        onBack,
-        contentType,
+        noResultsFooter = DefaultNoResultsFooter,
         layout = 'list',
         extraStyles = {},
     }) => {
@@ -36,7 +37,6 @@ const SearchResults: React.FunctionComponent<ResultsProps> = memo(
         const showLoadMoreButton = currentPage < maxPage;
         const resultsToShow = results.slice(0, currentPage * DEFAULT_PAGE_SIZE);
 
-        console.log('results slug', slug);
         const loadMoreHref = hasEmptyFilterAndQuery(searchString, filters)
             ? `/developer${slug}/?page=${currentPage}`
             : '#';
@@ -167,17 +167,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = memo(
                                                 width={500}
                                             />
                                         </div>
-                                        <Button
-                                            hasIcon={true}
-                                            iconName={
-                                                ESystemIconNames.ARROW_LEFT
-                                            }
-                                            iconPosition="left"
-                                            onClick={onBack}
-                                        >
-                                            Back to all{' '}
-                                            {contentType.toLowerCase()}s
-                                        </Button>
+                                        {noResultsFooter}
                                     </div>
                                 )}
                             </>

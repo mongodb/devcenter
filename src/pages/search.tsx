@@ -162,7 +162,12 @@ const Search: NextPage<SearchProps> = ({
                         )}
 
                         {!!filters?.length && (
-                            <div sx={{ flexBasis: '100%' }}>
+                            <div
+                                sx={{
+                                    flexBasis: '100%',
+                                    display: ['none', null, null, 'block'],
+                                }}
+                            >
                                 <FilterTagSection
                                     allFilters={filters}
                                     onClearTag={(filterTag: FilterItem) =>
@@ -202,7 +207,16 @@ const Search: NextPage<SearchProps> = ({
                             slug="/search"
                             updatePageMeta={updatePageMeta}
                             contentType="Content"
-                            onBack={clearAll}
+                            noResultsFooter={
+                                <Button
+                                    hasIcon={true}
+                                    iconName={ESystemIconNames.ARROW_LEFT}
+                                    iconPosition="left"
+                                    onClick={clearAll}
+                                >
+                                    Back to all content
+                                </Button>
+                            }
                         />
                     </div>
                 </GridLayout>

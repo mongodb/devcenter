@@ -89,19 +89,21 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
                         />
                         <HorizontalRule spacing="small" />
                     </>
-                    {Object.keys(filterItems).map((key, i) => {
-                        <>
-                            <FilterGroup
-                                title={CONTENT_TYPE_NAME_MAP[key]}
-                                allFilters={filterItems[key]}
-                                activeFilters={tempFilters}
-                                onToggle={onToggle}
-                                mobile
-                                key={i}
-                            />
-                            <HorizontalRule spacing="small" />
-                        </>;
-                    })}
+                    {Object.keys(filterItems).map((key, i) =>
+                        filterItems?.[key].length ? (
+                            <>
+                                <FilterGroup
+                                    title={CONTENT_TYPE_NAME_MAP[key]}
+                                    allFilters={filterItems[key]}
+                                    activeFilters={tempFilters}
+                                    onToggle={onToggle}
+                                    mobile
+                                    key={i}
+                                />
+                                <HorizontalRule spacing="small" />
+                            </>
+                        ) : null
+                    )}
                 </div>
                 <div sx={buttonSection}>
                     <Button

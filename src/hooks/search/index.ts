@@ -77,7 +77,6 @@ const useSearch = (
         },
         [filters, router, shouldUseQueryParams, updatePageMeta]
     );
-    // }, [updatePageMeta])
 
     const onFilter = useCallback(
         (filters: FilterItem[]) => {
@@ -90,7 +89,6 @@ const useSearch = (
         },
         [router, searchString, shouldUseQueryParams, updatePageMeta]
     );
-    // }, [updatePageMeta])
 
     const onSort = useCallback(
         (sortByValue?: string) => {
@@ -108,7 +106,6 @@ const useSearch = (
         },
         [filters, router, searchString, shouldUseQueryParams, updatePageMeta]
     );
-    // }, [updatePageMeta])
 
     const debouncedOnSearch = useMemo(
         () => debounce(onSearch, 400), // Not sure what this value should be, so set to 400ms.
@@ -239,13 +236,7 @@ const useSearch = (
                 setSearchString(s);
             }
         }
-    }, [
-        filterItems,
-        getFiltersFromQueryStr,
-        router?.isReady,
-        router.query,
-        searchString,
-    ]); // Missing query dependency, but that's ok because we only need this on first page load.
+    }, []); // Missing dependencies, but that's ok because we only need this on first page load.
 
     const hasFiltersSet = !!filters.length;
     const filteredData = (() => {

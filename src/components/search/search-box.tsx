@@ -26,6 +26,11 @@ const useResetKey = (searchString?: string) => {
         setSearchStringReset(false);
     }, [searchStringReset]);
 
+    // Flicker the key value on mount to populate sitewide search field initially
+    useEffect(() => {
+        setSearchStringReset(true);
+    }, []);
+
     return searchStringReset ? { key: searchString } : {};
 };
 
@@ -37,6 +42,8 @@ const SearchBox: React.FunctionComponent<SearchBoxProps> = ({
     autoFocus,
 }) => {
     const resetKeyProps = useResetKey(searchString);
+
+    console.log(resetKeyProps);
 
     return (
         <div

@@ -2,13 +2,12 @@ import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { getMetaDescr } from '../../utils/seo';
-let pluralize = require('pluralize');
 
 export const useSearchMeta = (
     pageNumber: number,
     slug: string,
-    contentType: string,
-    customBuildPageTitle: (pageNumber: number) => string
+    title: string,
+    customBuildPageTitle?: (pageNumber: number) => string
 ) => {
     const { asPath, route } = useRouter();
     const publicRuntimeConfig = getConfig().publicRuntimeConfig;
@@ -28,11 +27,12 @@ export const useSearchMeta = (
             } else {
                 const titlePageNo =
                     pageNumber > 1 ? `- Page ${pageNumber}` : '';
-                return `${pluralize(contentType)} ${titlePageNo} | MongoDB`;
+                return `${title} ${titlePageNo} | MongoDB`;
             }
         },
-        [customBuildPageTitle, contentType]
+        [customBuildPageTitle, title]
     );
+
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
     const updatePageMeta = useCallback(
         (pageNumber = 1) => {
