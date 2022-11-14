@@ -119,18 +119,19 @@ const Search: NextPage<SearchProps> = ({
 
                         <SortBox {...sortBoxProps} />
 
-                        <TypographyScale
-                            variant="heading5"
-                            customElement="h5"
-                            sx={{
-                                ...h5Styles,
-                                flexGrow: '1',
-                                flexBasis: ['100%', null, 'auto'],
-                            }}
-                        >
-                            {resultsHeader}
-                        </TypographyScale>
-
+                        {resultsHeader && (
+                            <TypographyScale
+                                variant="heading5"
+                                customElement="h5"
+                                sx={{
+                                    ...h5Styles,
+                                    flexGrow: '1',
+                                    flexBasis: ['100%', null, 'auto'],
+                                }}
+                            >
+                                {resultsHeader}
+                            </TypographyScale>
+                        )}
                         {!!filters?.length && (
                             <div
                                 sx={{

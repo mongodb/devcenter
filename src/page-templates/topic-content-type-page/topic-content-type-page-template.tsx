@@ -1,6 +1,7 @@
 import {
     BrandedIcon,
     Button,
+    Checkbox,
     GridLayout,
     HorizontalRule,
     SideNav,
@@ -8,9 +9,7 @@ import {
 } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
-import getConfig from 'next/config';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
@@ -39,6 +38,9 @@ import {
     titleStyles,
 } from '../../components/search/styles';
 import ExpandingLink from '../../components/expanding-link';
+import { FilterItem } from '@mdb/devcenter-components';
+
+let pluralize = require('pluralize');
 
 export interface TopicContentTypePageProps {
     crumbs: Crumb[];
@@ -94,7 +96,48 @@ const buildPageTitle =
         )} ${titlePageNo} | MongoDB`;
     };
 
-let pluralize = require('pluralize');
+const ExtraCodeExampleCheckboxes = ({
+    filters,
+    onFilter,
+}: {
+    filters: FilterItem[];
+    onFilter: (filters: FilterItem[]) => void;
+}) => {
+    const onToggle = (name: string) => (checked: boolean) => {
+        const filterItem = checked
+            ? [{ name, type: 'CodeLevel', count: 0 }]
+            : [];
+
+        onFilter(filterItem);
+    };
+
+    return (
+        <div
+            sx={{
+                display: 'flex',
+                gap: 'inc40',
+                marginBottom: ['inc30', null, 'inc50'],
+            }}
+        >
+            <Checkbox
+                name="Snippet"
+                label="Code Snippets"
+                onToggle={onToggle('Snippet')}
+                checked={!!filters.find((filt: any) => filt.name === 'Snippet')}
+            />
+            <Checkbox
+                name="Full Application"
+                label="Full Applications"
+                onToggle={onToggle('Full Application')}
+                checked={
+                    !!filters.find(
+                        (filt: any) => filt.name === 'Full Application'
+                    )
+                }
+            />
+        </div>
+    );
+};
 
 export const TopicContentTypePageTemplate: NextPage<
     TopicContentTypePageProps
@@ -125,14 +168,15 @@ export const TopicContentTypePageTemplate: NextPage<
         buildPageTitle(contentType, topicName)
     );
 
-    const { searchBoxProps, sortBoxProps, resultsProps } = useSearch(
-        pageNumber,
-        initialSearchContent,
-        updatePageMeta,
-        contentType,
-        topicSlug,
-        undefined
-    );
+    const { searchBoxProps, sortBoxProps, filterProps, resultsProps } =
+        useSearch(
+            pageNumber,
+            initialSearchContent,
+            updatePageMeta,
+            contentType,
+            topicSlug,
+            undefined
+        );
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
@@ -268,6 +312,10 @@ export const TopicContentTypePageTemplate: NextPage<
                             {...sortBoxProps}
                             extraStyles={extraSortBoxStyles}
                         />
+
+                        {contentType === 'Code Example' && (
+                            <ExtraCodeExampleCheckboxes {...filterProps} />
+                        )}
 
                         <SearchResults
                             {...resultsProps}
