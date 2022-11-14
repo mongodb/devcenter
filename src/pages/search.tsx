@@ -44,12 +44,10 @@ const Search: NextPage<SearchProps> = ({
     initialSearchContent,
     pageNumber,
 }) => {
-    const { publicRuntimeConfig } = getConfig();
-    const { absoluteBasePath } = publicRuntimeConfig;
     const router = useRouter();
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-    const { pageTitle, updatePageMeta } = useSearchMeta(
+    const { pageTitle, updatePageMeta, canonicalUrl } = useSearchMeta(
         pageNumber,
         '/search',
         'Search'

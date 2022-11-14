@@ -1,8 +1,5 @@
-import { useState, useCallback } from 'react';
 import { BrandedIcon, GridLayout, SideNav, TypographyScale } from '@mdb/flora';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import getConfig from 'next/config';
 import { NextSeo } from 'next-seo';
 import { Crumb } from '../../components/breadcrumbs/types';
 import CardSection, {
@@ -29,11 +26,12 @@ import {
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getMetaDescr } from '../../utils/seo';
 import { useSearchMeta } from '../../hooks/search/meta';
 import useSearch from '../../hooks/search';
-import { h5Styles } from '../../styled/layout';
-import { searchWrapperStyles } from '../../components/search/styles';
+import {
+    searchWrapperStyles,
+    titleStyles,
+} from '../../components/search/styles';
 
 export interface TopicContentTypeProps {
     crumbs: Crumb[];
@@ -110,8 +108,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     initialSearchContent,
     pageNumber,
 }) => {
-    const router = useRouter();
-    const { publicRuntimeConfig } = getConfig();
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -129,25 +125,21 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         );
     });
 
-    const { pageTitle, metaDescr, updatePageMeta } = useSearchMeta(
-        pageNumber,
-        slug,
-        contentType,
-        buildPageTitle(contentType, name)
-    );
+    const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
+        useSearchMeta(
+            pageNumber,
+            slug,
+            contentType,
+            buildPageTitle(contentType, name)
+        );
 
-    const { searchBoxProps, sortBoxProps, resultsProps, clearAll } = useSearch(
+    const { searchBoxProps, sortBoxProps, resultsProps } = useSearch(
         pageNumber,
         initialSearchContent,
         updatePageMeta,
         undefined,
         slug,
         undefined
-    );
-    const [canonicalUrl, setCanonicalUrl] = useState(
-        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
-            page: pageNumber.toString(),
-        })
     );
 
     const topicsRow = topics.length > 0 ? 1 : 0;

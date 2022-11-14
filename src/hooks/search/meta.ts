@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
-import { getMetaDescr } from '../../utils/seo';
+import { getCanonicalUrlWithParams, getMetaDescr } from '../../utils/seo';
 import { replaceHistoryState } from './utils';
 
 export const useSearchMeta = (
@@ -11,7 +11,14 @@ export const useSearchMeta = (
     customBuildPageTitle?: (pageNumber: number) => string
 ) => {
     const { asPath, route } = useRouter();
-    const publicRuntimeConfig = getConfig().publicRuntimeConfig;
+    const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
+
+    const [canonicalUrl, setCanonicalUrl] = useState(
+        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+            page: pageNumber.toString(),
+        })
+    );
 
     const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
 
@@ -45,14 +52,25 @@ export const useSearchMeta = (
                     : defaultMetaDescr
             );
 
+            const pathWithoutParams = asPath.split('?')[0];
+            setCanonicalUrl(
+                getCanonicalUrlWithParams(
+                    absoluteBasePath,
+                    `${pathWithoutParams}?page=${pageNumber}`,
+                    {
+                        page: pageNumber.toString(),
+                    }
+                )
+            );
+
             replaceHistoryState(
                 `/developer${slug}${
                     pageNumber <= 1 ? '' : `?page=${pageNumber}`
                 }`
             );
         },
-        [buildPageTitle, defaultMetaDescr, slug]
+        [buildPageTitle, defaultMetaDescr, slug, absoluteBasePath, asPath]
     );
 
-    return { pageTitle, metaDescr, updatePageMeta };
+    return { pageTitle, metaDescr, canonicalUrl, updatePageMeta };
 };

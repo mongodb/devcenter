@@ -81,7 +81,8 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
         slug,
         pluralize(contentType)
     );
-    const { pageTitle, metaDescr, updatePageMeta } = searchMetaProps;
+    const { pageTitle, metaDescr, updatePageMeta, canonicalUrl } =
+        searchMetaProps;
     const searchProps = useSearch(
         pageNumber,
         initialSearchContent,

@@ -161,12 +161,13 @@ export const TopicContentTypePageTemplate: NextPage<
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
-    const { pageTitle, metaDescr, updatePageMeta } = useSearchMeta(
-        pageNumber,
-        topicSlug,
-        contentType,
-        buildPageTitle(contentType, topicName)
-    );
+    const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
+        useSearchMeta(
+            pageNumber,
+            topicSlug,
+            contentType,
+            buildPageTitle(contentType, topicName)
+        );
 
     const { searchBoxProps, sortBoxProps, filterProps, resultsProps } =
         useSearch(
