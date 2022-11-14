@@ -1,5 +1,4 @@
 import theme from '@mdb/flora/theme';
-import { FlexProps, StylePropertyValue } from 'theme-ui';
 
 export const titleStyles = {
     display: 'flex',
@@ -33,7 +32,7 @@ export const searchBoxStyles = {
     flexGrow: '1',
     flexShrink: '1',
     flexBasis: 'calc(66% - 12px)',
-    marginBottom: 'inc50',
+    marginBottom: ['inc20', null, 'inc50'],
     '& > div': {
         maxWidth: 'unset',
     },
@@ -75,6 +74,14 @@ export const dataStyles = (layout: 'list' | 'grid') =>
               ],
               gap: 'inc40',
           };
+
+export const resultsStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column' as 'column',
+    width: '100%',
+    marginTop: 'inc30',
+};
 
 export const loadMoreStyles = {
     marginTop: ['inc70', null, 'inc90'],

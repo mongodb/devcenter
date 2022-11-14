@@ -2,6 +2,7 @@ import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { getMetaDescr } from '../../utils/seo';
+import { replaceHistoryState } from './utils';
 
 export const useSearchMeta = (
     pageNumber: number,
@@ -44,15 +45,10 @@ export const useSearchMeta = (
                     : defaultMetaDescr
             );
 
-            // Using window.history.replaceState instead of next/router's replace because the latter
-            // causes the entire page to re-render
-            const newUrl = `/developer${slug}${
-                pageNumber <= 1 ? '' : `?page=${pageNumber}`
-            }`;
-            window.history.replaceState(
-                { ...window.history.state, as: newUrl, url: newUrl },
-                '',
-                newUrl
+            replaceHistoryState(
+                `/developer${slug}${
+                    pageNumber <= 1 ? '' : `?page=${pageNumber}`
+                }`
             );
         },
         [buildPageTitle, defaultMetaDescr, slug]

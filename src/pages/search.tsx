@@ -113,25 +113,23 @@ const Search: NextPage<SearchProps> = ({
                             placeholder="Search All"
                             autoFocus
                             extraStyles={{
-                                marginBottom: 'inc50',
+                                flexBasis: ['100%', null, null, '60%'],
                             }}
                         />
 
                         <SortBox {...sortBoxProps} />
 
-                        {!isValidating && (
-                            <TypographyScale
-                                variant="heading5"
-                                customElement="h5"
-                                sx={{
-                                    ...h5Styles,
-                                    flexGrow: '1',
-                                    flexBasis: '100%',
-                                }}
-                            >
-                                {resultsHeader}
-                            </TypographyScale>
-                        )}
+                        <TypographyScale
+                            variant="heading5"
+                            customElement="h5"
+                            sx={{
+                                ...h5Styles,
+                                flexGrow: '1',
+                                flexBasis: ['100%', null, 'auto'],
+                            }}
+                        >
+                            {resultsHeader}
+                        </TypographyScale>
 
                         {!!filters?.length && (
                             <div

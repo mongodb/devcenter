@@ -392,28 +392,17 @@ export const updateUrl = (
     });
 
     params.append('sortMode', sortByOptions[sortBy as SortByType].toString());
-    const newUrl = `/developer${router.pathname}/?${params.toString()}`;
-    window.history.replaceState(
-        { ...window.history.state, as: newUrl, url: newUrl },
-        '',
-        newUrl
-    );
+    replaceHistoryState(`/developer${router.pathname}/?${params.toString()}`);
+};
 
-    // router.replace(
-    //     {
-    //         pathname: router.pathname,
-    //         query: {
-    //             s: searchString,
-    //             product,
-    //             language,
-    //             technology,
-    //             contentType,
-    //             contributedBy,
-    //             expertiseLevel,
-    //             sortMode: sortByOptions[sortBy as SortByType],
-    //         },
-    //     },
-    //     undefined,
-    //     { scroll: false, shallow: true }
-    // );
+/* 
+    Preferred alternative to next/router's replace function because it doesn't cause a page rerender.
+    Only caveat to the page not rerendering is that the page won't react to the new query params.
+*/
+export const replaceHistoryState = (url: string) => {
+    window.history.replaceState(
+        { ...window.history.state, as: url, url },
+        '',
+        url
+    );
 };

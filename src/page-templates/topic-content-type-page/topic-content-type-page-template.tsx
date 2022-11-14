@@ -63,6 +63,7 @@ const extraSearchBoxStyles = {
 };
 const extraSortBoxStyles = {
     display: 'block',
+    flexBasis: ['100%', null, 'calc(33% - 12px)'],
 };
 const extraSearchWrapperStyles = {
     ...searchWrapperStyles,
@@ -275,6 +276,9 @@ export const TopicContentTypePageTemplate: NextPage<
                             updatePageMeta={updatePageMeta}
                             contentType={contentType}
                             layout="grid"
+                            extraStyles={{
+                                marginTop: ['inc30', null, 0],
+                            }}
                         />
                     </div>
                 </GridLayout>

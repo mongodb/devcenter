@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button, ESystemIconNames, TypographyScale } from '@mdb/flora';
 
 import { ResultsProps } from './types';
-import { dataStyles } from './styles';
+import { dataStyles, resultsStyles } from './styles';
 
 import Card, { getCardProps } from '../card';
 
@@ -62,10 +62,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = memo(
         return (
             <div
                 sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    width: '100%',
+                    ...resultsStyles,
                     ...extraStyles,
                 }}
             >

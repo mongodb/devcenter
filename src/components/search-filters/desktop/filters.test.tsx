@@ -30,12 +30,11 @@ test('renders desktop filters', () => {
     render(
         <DesktopFilters
             onFilter={() => counter++}
-            allFilters={[]}
-            l1Items={[]}
-            languageItems={languageFilterItems}
-            technologyItems={technologyFilterItems}
-            contributedByItems={[]}
-            expertiseLevelItems={[]}
+            filters={[]}
+            filterItems={[
+                { key: 'ProgrammingLanguage', value: languageFilterItems },
+                { key: 'Technology', value: technologyFilterItems },
+            ]}
         />
     );
 

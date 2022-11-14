@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Results from './results';
+import SearchResults from './results';
 import { ContentItem } from '../../interfaces/content-item';
 
 const mockData: ContentItem[] = [
@@ -24,34 +24,42 @@ jest.mock('../../../public/loading-animation.gif', () => {
     };
 });
 
+const Results = ({ results, ...rest }: any) => (
+    <SearchResults
+        results={results}
+        isValidating={false}
+        error={false}
+        layout="grid"
+        searchString=""
+        slug="/test"
+        filters={[]}
+        pageNumber={1}
+        contentType="Test"
+        {...rest}
+    />
+);
+
 describe('Search Results', () => {
     test('renders default results', () => {
-        render(<Results data={mockData} isLoading={false} hasError={false} />);
+        render(<Results results={mockData} />);
 
         const results = screen.getByTestId('search-results');
-        expect(results).toHaveStyle({ display: 'flex' });
+        expect(results).toHaveStyle({ display: 'grid' });
     });
     test('renders grid results', () => {
-        render(
-            <Results
-                data={mockData}
-                isLoading={false}
-                hasError={false}
-                layout="grid"
-            />
-        );
+        render(<Results results={mockData} />);
 
         const results = screen.getByTestId('search-results');
         expect(results).toHaveStyle({ display: 'grid' });
     });
     test('renders loading spinner', () => {
-        render(<Results data={undefined} isLoading={true} hasError={false} />);
+        render(<Results results={undefined} isValidating />);
 
         const spinner = screen.getByAltText('Loading...');
         expect(spinner).toBeInTheDocument();
     });
     test('renders error message', () => {
-        render(<Results data={undefined} isLoading={false} hasError={true} />);
+        render(<Results results={undefined} error={true} />);
 
         const error = screen.getByText(
             'Something went wrong, please try again'

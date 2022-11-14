@@ -71,10 +71,11 @@ const extraSearchBoxStyles = {
 };
 const extraSortBoxStyles = {
     display: 'block',
+    flexBasis: ['100%', null, 'calc(33% - 12px)'],
 };
 const extraSearchWrapperStyles = {
     ...searchWrapperStyles,
-    gridColumn: ['span 12', null, null, null, 'span 9'],
+    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
 };
 
 const buildPageTitle =
@@ -273,6 +274,9 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                             slug={slug}
                             updatePageMeta={updatePageMeta}
                             contentType={contentType}
+                            extraStyles={{
+                                marginTop: ['inc30', null, 0],
+                            }}
                         />
                     </div>
 
