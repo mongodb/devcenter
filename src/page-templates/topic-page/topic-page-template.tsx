@@ -29,7 +29,7 @@ import {
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getMetaDescr } from '../../utils/seo';
+import { getMetaDescr, getCanonicalUrlWithParams } from '../../utils/seo';
 
 export interface TopicContentTypeProps {
     crumbs: Crumb[];
@@ -80,6 +80,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 }) => {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;
     const contentRows =
         variant === 'heavy'
@@ -123,8 +124,13 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             ? `${defaultMetaDescr} - Page ${pageNumber}`
             : defaultMetaDescr
     );
+    const [canonicalUrl, setCanonicalUrl] = useState(
+        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+            page: pageNumber.toString(),
+        })
+    );
 
-    const updatePageTitle = useCallback(
+    const setSeoAttributes = useCallback(
         pageNumber => {
             const pageTitle = buildPageTitle(pageNumber);
             setPageTitle(pageTitle);
@@ -133,8 +139,19 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                     ? `${defaultMetaDescr} - Page ${pageNumber}`
                     : defaultMetaDescr
             );
+
+            const pathWithoutParams = asPath.split('?')[0];
+            setCanonicalUrl(
+                getCanonicalUrlWithParams(
+                    absoluteBasePath,
+                    `${pathWithoutParams}?page=${pageNumber}`,
+                    {
+                        page: pageNumber.toString(),
+                    }
+                )
+            );
         },
-        [buildPageTitle, defaultMetaDescr]
+        [absoluteBasePath, asPath, buildPageTitle, defaultMetaDescr]
     );
 
     const topicsRow = topics.length > 0 ? 1 : 0;
@@ -169,8 +186,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         tertiaryNavItems,
         'documentation'
     );
-
-    const canonicalUrl = publicRuntimeConfig.absoluteBasePath + router.asPath;
 
     return (
         <>
@@ -241,7 +256,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         tagSlug={slug}
                         pageNumber={pageNumber}
                         pageSlug={slug.split('/')}
-                        updatePageTitle={updatePageTitle}
+                        setSeoAttributes={setSeoAttributes}
                         initialSearchContent={initialSearchContent}
                         sx={{
                             gridColumn: [

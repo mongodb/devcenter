@@ -42,7 +42,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
     placeholder,
     pageNumber,
     pageSlug,
-    updatePageTitle,
+    setSeoAttributes,
     initialSearchContent,
 }) => {
     const router = useRouter();
@@ -86,7 +86,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
         setInitialPageResetFlag(true);
         setInitialSearchData(undefined);
         setCurrentPage(1);
-        updatePageTitle(1);
+        setSeoAttributes(1);
 
         const query = pageSlug
             ? {
@@ -124,7 +124,7 @@ const Search: React.FunctionComponent<SearchProps> = ({
             const nextPage = currentPage + 1;
 
             setCurrentPage(nextPage);
-            updatePageTitle(nextPage);
+            setSeoAttributes(nextPage);
 
             // Need to pass slug for dynamic pages.
             // https://github.com/vercel/next.js/discussions/8207

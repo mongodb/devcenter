@@ -7,6 +7,7 @@ import type {
 } from 'next';
 import * as Sentry from '@sentry/nextjs';
 import NextImage from 'next/image';
+import getConfig from 'next/config';
 import {
     GridLayout,
     TextInput,
@@ -56,6 +57,7 @@ import {
 } from '../hooks/search/utils';
 import { FilterTagSection } from '@mdb/devcenter-components';
 import { OverlayContext } from '../contexts/overlay';
+import { getCanonicalUrlWithParams } from '../utils/seo';
 
 export interface SearchProps {
     l1Items: FilterItem[];
@@ -78,7 +80,10 @@ const Search: NextPage<SearchProps> = ({
     initialSearchContent,
     pageNumber,
 }) => {
+    const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
     const router = useRouter();
+    const { asPath } = router;
     const { setHasOverlay } = useContext(OverlayContext);
 
     // Used for initial "all content" page.
@@ -93,6 +98,11 @@ const Search: NextPage<SearchProps> = ({
         pageNumber > 1
             ? `Search - Page ${pageNumber} | MongoDB`
             : `Search | MongoDB`
+    );
+    const [canonicalUrl, setCanonicalUrl] = useState(
+        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+            page: pageNumber.toString(),
+        })
     );
 
     // Initial search data is the search content for initial page load (provided
@@ -155,6 +165,7 @@ const Search: NextPage<SearchProps> = ({
         setInitialSearchData(undefined);
         setCurrentPage(1);
         setPageTitle(`Search | MongoDB`);
+        setCanonicalUrl(getCanonicalUrlWithParams(absoluteBasePath, asPath));
 
         router.replace(
             {
@@ -193,6 +204,18 @@ const Search: NextPage<SearchProps> = ({
                     shallow: true,
                 }
             );
+
+            const pathWithoutParams = asPath.split('?')[0];
+            setCanonicalUrl(
+                getCanonicalUrlWithParams(
+                    absoluteBasePath,
+                    `${pathWithoutParams}?page=${nextPage}`,
+                    {
+                        page: nextPage.toString(),
+                    }
+                )
+            );
+
             setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
         } else {
             setResultsToShow(resultsToShow + 10);
@@ -315,6 +338,7 @@ const Search: NextPage<SearchProps> = ({
         <>
             <NextSeo
                 title={pageTitle}
+                canonical={canonicalUrl}
                 noindex={router.asPath === '/search/' ? false : true}
             />
             <Hero name="Search" />

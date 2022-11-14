@@ -53,7 +53,7 @@ import {
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
-import { getMetaDescr } from '../../utils/seo';
+import { getCanonicalUrlWithParams, getMetaDescr } from '../../utils/seo';
 import {
     sortByOptions,
     DEFAULT_PAGE_SIZE,
@@ -80,6 +80,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 }) => {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;
 
     const totalResults = initialSearchContent
@@ -152,6 +153,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         [contentType]
     );
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+    const [canonicalUrl, setCanonicalUrl] = useState(
+        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+            page: pageNumber.toString(),
+        })
+    );
 
     const clearPagination = () => {
         setInitialPageResetFlag(true);
@@ -159,6 +165,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setCurrentPage(1);
         setPageTitle(buildPageTitle(1));
         setMetaDescr(defaultMetaDescr);
+        setCanonicalUrl(getCanonicalUrlWithParams(absoluteBasePath, asPath));
 
         router.replace(
             {
@@ -211,6 +218,17 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     scroll: false,
                     shallow: true,
                 }
+            );
+
+            const pathWithoutParams = asPath.split('?')[0];
+            setCanonicalUrl(
+                getCanonicalUrlWithParams(
+                    absoluteBasePath,
+                    `${pathWithoutParams}?page=${nextPage}`,
+                    {
+                        page: nextPage.toString(),
+                    }
+                )
             );
             setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
         } else {
@@ -400,7 +418,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     return (
         <>
-            <NextSeo title={pageTitle} description={metaDescr} />
+            <NextSeo
+                description={metaDescr}
+                {...(canonicalUrl ? { canonical: canonicalUrl } : {})}
+                title={pageTitle}
+            />
             <Hero
                 crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
                 name={pluralize(contentType)}
