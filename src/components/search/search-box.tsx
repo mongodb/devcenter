@@ -52,7 +52,6 @@ const SearchBox: React.FunctionComponent<SearchBoxProps> = ({
             }}
         >
             <TextInput
-                // The below line allows the back button on no resutls to clear the
                 {...resetKeyProps}
                 name="search-text-input"
                 label={placeholder}

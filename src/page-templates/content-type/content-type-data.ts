@@ -51,9 +51,7 @@ export const getContentTypePageData = async (
         contentType,
         filterItems,
         featured,
-        extraFeatured: {
-            ...extra,
-        },
+        extraFeatured: extra,
         description,
         initialSearchContent,
         pageNumber,
