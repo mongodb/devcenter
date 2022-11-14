@@ -200,6 +200,7 @@ export const getFilters = async (
 
     const sortFunction = (prev: FilterItem, next: FilterItem) =>
         (next.count || 0) - (prev.count || 0);
+
     filterItems.forEach(item => {
         if (item.subFilters?.length) {
             item.subFilters.sort(
@@ -208,14 +209,16 @@ export const getFilters = async (
         }
     });
 
-    let mappedFilterItems: { [name: string]: FilterItem[] } = {};
+    const orderedFilterItems = [];
 
     Object.keys(CONTENT_TYPE_NAME_MAP).forEach(key => {
         const items = filterItems
             .filter(({ type }) => type === key)
             .sort(sortFunction);
 
-        mappedFilterItems = { ...mappedFilterItems, [key]: items };
+        if (!!items.length) {
+            orderedFilterItems.push({ key, value: items });
+        }
     });
 
     // Parse the code levels from the subitmes of the Code Example content type filter.
@@ -227,9 +230,14 @@ export const getFilters = async (
             )?.[0]
             ?.subFilters?.sort(sortFunction) || [];
 
-    mappedFilterItems = { ...mappedFilterItems, ExampleType: codeLevelItems };
+    if (!!codeLevelItems.length && contentType === 'Code Example') {
+        orderedFilterItems.unshift({
+            key: 'ExampleType',
+            value: codeLevelItems,
+        });
+    }
 
-    return mappedFilterItems;
+    return orderedFilterItems;
 };
 
 const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {

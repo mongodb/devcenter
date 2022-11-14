@@ -9,7 +9,7 @@ import React, { ReactElement } from 'react';
 export interface ContentTypePageProps {
     description: string;
     contentType: PillCategory;
-    filterItems: { [name: string]: FilterItem[] };
+    filterItems: { key: string; value: FilterItem[] }[];
     featured: ContentItem[];
     extraFeatured: {
         featuredLanguages?: ShowcaseCardItem[];

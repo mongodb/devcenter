@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { NextSeo } from 'next-seo';
 import type {
     NextPage,
@@ -6,15 +6,11 @@ import type {
     GetServerSidePropsContext,
 } from 'next';
 import * as Sentry from '@sentry/nextjs';
-import NextImage from 'next/image';
-import getConfig from 'next/config';
 import {
     GridLayout,
-    TextInput,
     ESystemIconNames,
     Button,
     TypographyScale,
-    Select,
 } from '@mdb/flora';
 
 import { FilterItem } from '@mdb/devcenter-components';
@@ -26,43 +22,19 @@ import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { h5Styles, pageWrapper } from '../styled/layout';
 
 import { SearchItem } from '../components/search/types';
-import {
-    resultsStringAndTagsStyles,
-    desktopFiltersStyles,
-} from '../page-templates/content-type/styles';
-import {
-    searchBoxStyles,
-    searchBoxSortBarWrapperStyles,
-    sortBoxStyles,
-    searchWrapperStyles,
-} from '../components/search/styles';
-import {
-    sortByOptions,
-    DEFAULT_PAGE_SIZE,
-    isValidPage,
-} from '../components/search/utils';
-
-import { Grid } from 'theme-ui';
-
-import Results from '../components/search/results';
+import { desktopFiltersStyles } from '../page-templates/content-type/styles';
+import { searchWrapperStyles } from '../components/search/styles';
+import { isValidPage } from '../components/search/utils';
 import { useRouter } from 'next/router';
-import { getURLPath } from '../utils/format-url-path';
 import { parsePageNumber } from '../utils/page-type-factory';
 import useSearch from '../hooks/search';
-import {
-    createInitialSearchData,
-    hasEmptyFilterAndQuery,
-    getFilters,
-    getResultData,
-    getResultIsValidating,
-} from '../hooks/search/utils';
+import { getFilters } from '../hooks/search/utils';
 import { FilterTagSection } from '@mdb/devcenter-components';
-import { OverlayContext } from '../contexts/overlay';
 import { useSearchMeta } from '../hooks/search/meta';
 import { SearchBox, SearchResults, SortBox } from '../components/search';
 
 export interface SearchProps {
-    filterItems: { [name: string]: FilterItem[] };
+    filterItems: { key: string; value: FilterItem[] }[];
     initialSearchContent: SearchItem[];
     pageNumber: number;
 }

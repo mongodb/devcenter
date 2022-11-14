@@ -15,5 +15,5 @@ export interface FiltersProps {
     className?: string;
     onFilter: (filters: FilterItem[]) => void;
     filters: FilterItem[];
-    filterItems: { [title: string]: FilterItem[] };
+    filterItems: { key: string; value: FilterItem[] }[];
 }

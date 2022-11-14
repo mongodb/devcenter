@@ -24,7 +24,7 @@ const useSearch = (
     updatePageMeta: (pageNumber?: number) => void = () => {},
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
-    filterItems?: { [name: string]: FilterItem[] } // This is needed for URL filter/search updates.
+    filterItems?: { key: string; value: FilterItem[] }[] // This is needed for URL filter/search updates.
 ) => {
     const shouldUseQueryParams = !!filterItems;
 
@@ -119,14 +119,24 @@ const useSearch = (
     }, [debouncedOnSearch]);
 
     const getFiltersFromQueryStr = useCallback(() => {
-        const {
-            L1Product: l1Items,
-            ContentType: contentTypeItems,
-            ProgrammingLanguage: languageItems,
-            Technology: technologyItems,
-            AuthorType: contributedByItems,
-            ExpertiseLevel: expertiseLevelItems,
-        } = filterItems as { [type: string]: FilterItem[] };
+        const l1Items = filterItems?.find(
+            item => item.key === 'L1Product'
+        )?.value;
+        const contentTypeItems = filterItems?.find(
+            item => item.key === 'ContentType'
+        )?.value;
+        const languageItems = filterItems?.find(
+            item => item.key === 'ProgrammingLanguage'
+        )?.value;
+        const technologyItems = filterItems?.find(
+            item => item.key === 'Technology'
+        )?.value;
+        const contributedByItems = filterItems?.find(
+            item => item.key === 'AuthorType'
+        )?.value;
+        const expertiseLevelItems = filterItems?.find(
+            item => item.key === 'ExpertiseLevel'
+        )?.value;
 
         const {
             product,
@@ -169,11 +179,11 @@ const useSearch = (
         };
 
         let allNewFilters: FilterItem[] = [];
-        if (product) {
+        if (product && l1Items) {
             const productFilters: FilterItem[] = buildFilters(product, l1Items);
             allNewFilters = allNewFilters.concat(productFilters);
         }
-        if (contentType) {
+        if (contentType && contentTypeItems) {
             const contentTypeFilters: FilterItem[] = buildFilters(
                 contentType,
                 contentTypeItems
@@ -181,7 +191,7 @@ const useSearch = (
             allNewFilters = allNewFilters.concat(contentTypeFilters);
         }
         // For the rest, just map it to the corresponding item.
-        if (language) {
+        if (language && languageItems) {
             // Technically can either come in as a string of a string[], so convert to a string[]
             // and loop over by default.
             const languages =
@@ -191,7 +201,7 @@ const useSearch = (
             );
             allNewFilters = allNewFilters.concat(languageFilters);
         }
-        if (technology) {
+        if (technology && technologyItems) {
             const technologies =
                 typeof technology === 'object' ? technology : [technology];
             const technologyFilters = technologyItems.filter(tech =>
@@ -199,7 +209,7 @@ const useSearch = (
             );
             allNewFilters = allNewFilters.concat(technologyFilters);
         }
-        if (contributedBy) {
+        if (contributedBy && contributedByItems) {
             const contributedBys =
                 typeof contributedBy === 'object'
                     ? contributedBy
@@ -209,7 +219,7 @@ const useSearch = (
             );
             allNewFilters = allNewFilters.concat(contributedByFilters);
         }
-        if (expertiseLevel) {
+        if (expertiseLevel && expertiseLevelItems) {
             const expertiseLevels =
                 typeof expertiseLevel === 'object'
                     ? expertiseLevel

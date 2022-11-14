@@ -39,17 +39,15 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = memo(
 
         return (
             <div className={className}>
-                {Object.keys(filterItems).map((key, i) =>
-                    filterItems?.[key].length ? (
-                        <FilterGroup
-                            title={CONTENT_TYPE_NAME_MAP[key]}
-                            allFilters={filterItems[key]}
-                            activeFilters={filters}
-                            onToggle={onToggle}
-                            key={i}
-                        />
-                    ) : null
-                )}
+                {filterItems.map(({ key, value }) => (
+                    <FilterGroup
+                        title={CONTENT_TYPE_NAME_MAP[key]}
+                        allFilters={value}
+                        activeFilters={filters}
+                        onToggle={onToggle}
+                        key={key}
+                    />
+                ))}
             </div>
         );
     }
