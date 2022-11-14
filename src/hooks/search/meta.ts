@@ -58,5 +58,5 @@ export const useSearchMeta = (
         [buildPageTitle, defaultMetaDescr, slug]
     );
 
-    return [pageTitle, metaDescr, updatePageMeta];
+    return { pageTitle, metaDescr, updatePageMeta };
 };

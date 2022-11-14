@@ -117,7 +117,7 @@ export const TopicContentTypePageTemplate: NextPage<
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
 
-    const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
+    const { pageTitle, metaDescr, updatePageMeta } = useSearchMeta(
         pageNumber,
         topicSlug,
         contentType,

@@ -236,7 +236,7 @@ const useSearch = (
                 setSearchString(s);
             }
         }
-    }, []); // Missing dependencies, but that's ok because we only need this on first page load.
+    }, [router?.isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
 
     const hasFiltersSet = !!filters.length;
     const filteredData = (() => {

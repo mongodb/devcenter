@@ -128,7 +128,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         );
     });
 
-    const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
+    const { pageTitle, metaDescr, updatePageMeta } = useSearchMeta(
         pageNumber,
         slug,
         contentType,

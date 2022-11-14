@@ -13,6 +13,7 @@ import { useEffect } from 'react';
     and facilitate the back button clearing the search input in the 404 state,
     while also preventing rerender on every search
 */
+
 const useResetKey = (searchString?: string) => {
     const [searchStringReset, setSearchStringReset] = useState(false);
 
@@ -42,8 +43,6 @@ const SearchBox: React.FunctionComponent<SearchBoxProps> = ({
     autoFocus,
 }) => {
     const resetKeyProps = useResetKey(searchString);
-
-    console.log(resetKeyProps);
 
     return (
         <div

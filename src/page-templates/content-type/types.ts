@@ -4,6 +4,7 @@ import { ContentItem } from '../../interfaces/content-item';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';
 import { ITopicCard } from '../../components/topic-card/types';
 import { SearchItem } from '../../components/search/types';
+import React, { ReactElement } from 'react';
 
 export interface ContentTypePageProps {
     description: string;
@@ -18,4 +19,5 @@ export interface ContentTypePageProps {
     initialSearchContent?: SearchItem[];
     pageNumber: number;
     slug: string;
+    children: (searchProps: any, searchMetaProps: any) => ReactElement;
 }

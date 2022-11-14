@@ -66,6 +66,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
     initialSearchContent,
     pageNumber,
     slug,
+    children,
 }) => {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
@@ -75,12 +76,20 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
 
-    const [pageTitle, metaDescr, updatePageMeta] = useSearchMeta(
+    const searchMetaProps = useSearchMeta(
         pageNumber,
         slug,
         pluralize(contentType)
     );
-
+    const { pageTitle, metaDescr, updatePageMeta } = searchMetaProps;
+    const searchProps = useSearch(
+        pageNumber,
+        initialSearchContent,
+        updatePageMeta,
+        contentType,
+        slug,
+        undefined
+    );
     const {
         searchBoxProps,
         searchBoxProps: { searchString },
@@ -90,14 +99,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
         resultsProps,
         resultsProps: { results, error, isValidating },
         clearAll,
-    } = useSearch(
-        pageNumber,
-        initialSearchContent,
-        updatePageMeta,
-        contentType,
-        slug,
-        undefined
-    );
+    } = searchProps;
 
     useEmptyDataDebug(results, error);
 
@@ -172,136 +174,142 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                         )}
                     </div>
 
-                    <div sx={searchWrapperStyles}>
-                        <SearchBox
-                            {...searchBoxProps}
-                            placeholder={`Search ${pluralize(contentType)}`}
-                            extraStyles={{
-                                flexBasis: showFeatured
-                                    ? '100%'
-                                    : ['100%', null, null, '60%'],
-                            }}
-                        />
-
-                        {showFeatured && (
-                            <>
-                                <FeaturedCardSection
-                                    content={featured}
-                                    sx={{
-                                        marginBottom: [
-                                            'section20',
-                                            null,
-                                            'section50',
-                                        ],
-                                    }}
-                                    title={`Featured ${pluralize(contentType)}`}
-                                />
-
-                                {!!featuredLanguages?.length && (
-                                    <LanguagesSection
-                                        title={`${contentType}s by Programming Language`}
-                                        items={featuredLanguages}
-                                    />
-                                )}
-                                {!!featuredTechnologies?.length && (
-                                    <TechnologiesSection
-                                        title={`${contentType}s by Technology`}
-                                        items={featuredTechnologies}
-                                    />
-                                )}
-                                {!!featuredProducts?.length && (
-                                    <ProductsSection
-                                        title={`${contentType}s by Product`}
-                                        items={featuredProducts}
-                                    />
-                                )}
-                            </>
-                        )}
-
-                        <SortBox
-                            {...sortBoxProps}
-                            extraStyles={{
-                                order: showFeatured ? '2' : '1',
-                            }}
-                        />
-
-                        {(!isValidating || showFeatured) && (
-                            <TypographyScale
-                                variant="heading5"
-                                customElement="h5"
-                                sx={{
-                                    ...h5Styles,
-                                    flexGrow: '1',
+                    {!children && (
+                        <div sx={searchWrapperStyles}>
+                            <SearchBox
+                                {...searchBoxProps}
+                                placeholder={`Search ${pluralize(contentType)}`}
+                                extraStyles={{
                                     flexBasis: showFeatured
-                                        ? 'auto'
-                                        : ['100%', null, 'auto'],
+                                        ? '100%'
+                                        : ['100%', null, null, '60%'],
                                 }}
-                            >
-                                {resultsHeader}
-                            </TypographyScale>
-                        )}
+                            />
 
-                        {!!filters?.length && (
-                            <div
-                                sx={{
-                                    flexBasis: '100%',
-                                    display: ['none', null, null, 'block'],
+                            {showFeatured && (
+                                <>
+                                    <FeaturedCardSection
+                                        content={featured}
+                                        sx={{
+                                            marginBottom: [
+                                                'section20',
+                                                null,
+                                                'section50',
+                                            ],
+                                        }}
+                                        title={`Featured ${pluralize(
+                                            contentType
+                                        )}`}
+                                    />
+
+                                    {!!featuredLanguages?.length && (
+                                        <LanguagesSection
+                                            title={`${contentType}s by Programming Language`}
+                                            items={featuredLanguages}
+                                        />
+                                    )}
+                                    {!!featuredTechnologies?.length && (
+                                        <TechnologiesSection
+                                            title={`${contentType}s by Technology`}
+                                            items={featuredTechnologies}
+                                        />
+                                    )}
+                                    {!!featuredProducts?.length && (
+                                        <ProductsSection
+                                            title={`${contentType}s by Product`}
+                                            items={featuredProducts}
+                                        />
+                                    )}
+                                </>
+                            )}
+
+                            <SortBox
+                                {...sortBoxProps}
+                                extraStyles={{
+                                    order: showFeatured ? '2' : '1',
                                 }}
-                            >
-                                <FilterTagSection
-                                    allFilters={filters}
-                                    onClearTag={(filterTag: FilterItem) =>
-                                        onFilter(
-                                            filters.filter(
-                                                item => item !== filterTag
-                                            )
-                                        )
-                                    }
-                                    onClearAll={() => onFilter([])}
-                                />
-                            </div>
-                        )}
+                            />
 
-                        <Button
-                            hasIcon
-                            iconPosition="right"
-                            iconStrokeWeight="medium"
-                            iconName={ESystemIconNames.FILTER_HAMBURGER}
-                            onClick={() => setMobileFiltersOpen(true)}
-                            customWrapperStyles={{
-                                display: ['block', null, null, 'none'],
-                                flexBasis: ['100%', null, 'auto'],
-                            }}
-                            customStyles={{
-                                display: ['flex', null, null, 'none'],
-                                justifyContent: 'center',
-                            }}
-                        >
-                            Filter & Sort
-                            {!!filters.length && ` (${filters.length})`}
-                        </Button>
-
-                        <SearchResults
-                            {...resultsProps}
-                            pageNumber={pageNumber}
-                            slug={slug}
-                            updatePageMeta={updatePageMeta}
-                            contentType={contentType}
-                            extraStyles={{
-                                order: showFeatured ? '2' : '1',
-                            }}
-                            noResultsFooter={
-                                <Button
-                                    hasIcon={true}
-                                    iconName={ESystemIconNames.ARROW_LEFT}
-                                    iconPosition="left"
-                                    onClick={clearAll}
+                            {(!isValidating || showFeatured) && (
+                                <TypographyScale
+                                    variant="heading5"
+                                    customElement="h5"
+                                    sx={{
+                                        ...h5Styles,
+                                        flexGrow: '1',
+                                        flexBasis: showFeatured
+                                            ? 'auto'
+                                            : ['100%', null, 'auto'],
+                                    }}
                                 >
-                                    Back to all {contentType.toLowerCase()}s
-                                </Button>
-                            }
-                        />
-                    </div>
+                                    {resultsHeader}
+                                </TypographyScale>
+                            )}
+
+                            {!!filters?.length && (
+                                <div
+                                    sx={{
+                                        flexBasis: '100%',
+                                        display: ['none', null, null, 'block'],
+                                    }}
+                                >
+                                    <FilterTagSection
+                                        allFilters={filters}
+                                        onClearTag={(filterTag: FilterItem) =>
+                                            onFilter(
+                                                filters.filter(
+                                                    item => item !== filterTag
+                                                )
+                                            )
+                                        }
+                                        onClearAll={() => onFilter([])}
+                                    />
+                                </div>
+                            )}
+
+                            <Button
+                                hasIcon
+                                iconPosition="right"
+                                iconStrokeWeight="medium"
+                                iconName={ESystemIconNames.FILTER_HAMBURGER}
+                                onClick={() => setMobileFiltersOpen(true)}
+                                customWrapperStyles={{
+                                    display: ['block', null, null, 'none'],
+                                    flexBasis: ['100%', null, 'auto'],
+                                }}
+                                customStyles={{
+                                    display: ['flex', null, null, 'none'],
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                Filter & Sort
+                                {!!filters.length && ` (${filters.length})`}
+                            </Button>
+
+                            <SearchResults
+                                {...resultsProps}
+                                pageNumber={pageNumber}
+                                slug={slug}
+                                updatePageMeta={updatePageMeta}
+                                contentType={contentType}
+                                extraStyles={{
+                                    order: showFeatured ? '2' : '1',
+                                }}
+                                noResultsFooter={
+                                    <Button
+                                        hasIcon={true}
+                                        iconName={ESystemIconNames.ARROW_LEFT}
+                                        iconPosition="left"
+                                        onClick={clearAll}
+                                    >
+                                        Back to all {contentType.toLowerCase()}s
+                                    </Button>
+                                }
+                            />
+                        </div>
+                    )}
+
+                    {children && children(searchProps, searchMetaProps)}
                 </GridLayout>
             </div>
 

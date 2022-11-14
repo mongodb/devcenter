@@ -77,7 +77,7 @@ const Search: NextPage<SearchProps> = ({
     const router = useRouter();
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-    const [pageTitle, _, updatePageMeta] = useSearchMeta(
+    const { pageTitle, updatePageMeta } = useSearchMeta(
         pageNumber,
         '/search',
         'Search'
