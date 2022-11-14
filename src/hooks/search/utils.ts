@@ -261,41 +261,6 @@ export const isEmptyArray = (results: any) => {
     return !results || (Array.isArray(results) && results.length === 0);
 };
 
-// TODO: Refactor.
-export const getResultData = (
-    data: ContentItem[],
-    initialSearchData: ContentItem[] | undefined,
-    searchString: string,
-    allFilters: FilterItem[],
-    initialPageNumber: number,
-    initialPageResetFlag: boolean,
-    sortBy: string
-) => {
-    return initialSearchData &&
-        hasEmptyFilterAndQuery(searchString, allFilters) &&
-        (!sortBy || sortBy === '' || sortBy === 'Most Recent')
-        ? initialSearchData
-        : data.slice(
-              !initialPageResetFlag && initialPageNumber > 1
-                  ? (initialPageNumber - 1) * DEFAULT_PAGE_SIZE
-                  : 0
-          );
-};
-
-export const getResultIsValidating = (
-    initialSearchData: ContentItem[] | undefined,
-    searchString: string,
-    allFilters: FilterItem[],
-    isValidating: boolean,
-    sortBy: string
-) => {
-    return initialSearchData &&
-        hasEmptyFilterAndQuery(searchString, allFilters) &&
-        (!sortBy || sortBy === '' || sortBy === 'Most Recent')
-        ? false
-        : isValidating;
-};
-
 export const itemInFilters = (
     { tags }: ContentItem,
     allFilters: FilterItem[]
