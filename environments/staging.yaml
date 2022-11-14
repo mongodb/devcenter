@@ -9,7 +9,6 @@ env:
   NEXTAUTH_URL: https://mongodbcom-cdn.staging.corp.mongodb.com/developer/api/auth/
 
 envSecrets:
-  DEVHUB_URL: devcenter-secrets
   NEXTAUTH_SECRET: devcenter-secrets
   NPM_EMAIL: devcenter-secrets
   NPM_AUTH: devcenter-secrets
