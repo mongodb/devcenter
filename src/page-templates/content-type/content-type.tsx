@@ -233,8 +233,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
 
                             {(!isValidating || showFeatured) && (
                                 <TypographyScale
-                                    variant="heading5"
-                                    customElement="h5"
+                                    variant="heading2"
                                     sx={{
                                         ...h5Styles,
                                         flexGrow: '1',
