@@ -4,7 +4,6 @@ export const CONTENT_ROUTE = '/[...slug]';
 export const CONTENT_TYPE_ROUTES = [
     '/articles',
     '/code-examples',
-    '/languages',
     '/quickstarts',
     '/news',
     '/podcasts',
