@@ -1,4 +1,4 @@
-import { FilterItem } from '../../components/search-filters';
+import { FilterItem } from '@mdb/devcenter-components';
 import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';

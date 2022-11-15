@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { FilterItem } from '../types';
+import { FilterItem } from '@mdb/devcenter-components';
 import MobileFilters from './filters';
 
 const languageFilterItems: FilterItem[] = [];
@@ -12,8 +12,6 @@ Array(4)
         languageFilterItems.push({
             name: `Language ${index}`,
             type: 'ProgrammingLanguage',
-            subItems: [],
-            count: 0,
         })
     );
 const technologyFilterItems: FilterItem[] = [];
@@ -24,8 +22,6 @@ Array(4)
         technologyFilterItems.push({
             name: `Technology ${index}`,
             type: 'Technology',
-            subItems: [],
-            count: 0,
         })
     );
 

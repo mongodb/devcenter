@@ -39,6 +39,7 @@ const featuredConfig = (lang: MetaInfo) => {
                 linkIconDisableExpand: true, // Doesn't seem to work
             },
         },
+        flashCard: true,
         imageryType: (imageSrc ? 'image' : 'none') as ImageryType,
         title: lang.tagName,
         text: lang.description,
@@ -85,6 +86,7 @@ const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
                             linkIconDisableExpand: true, // Doesn't seem to work
                         },
                     },
+                    flashCard: true,
                     imageryType: (imageSrc ? 'image' : 'none') as ImageryType,
                     title: lang.tagName,
                     text: lang.description,

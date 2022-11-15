@@ -23,11 +23,7 @@ import RequestContentModal, {
 } from '../../components/request-content-modal';
 import { CTAContainerStyles } from '../../components/hero/styles';
 
-import {
-    FilterItem,
-    DesktopFilters,
-    MobileFilters,
-} from '../../components/search-filters';
+import { DesktopFilters, MobileFilters } from '../../components/search-filters';
 
 import { ContentTypePageProps } from './types';
 import { desktopFiltersStyles, resultsStringAndTagsStyles } from './styles';
@@ -48,7 +44,7 @@ import ProductsSection from './products-section';
 import { getURLPath } from '../../utils/format-url-path';
 import useSearch from '../../hooks/search';
 import { hasEmptyFilterAndQuery, isEmptyArray } from '../../hooks/search/utils';
-import FilterTagSection from '../../components/search-filters/filter-tag-section';
+import { FilterTagSection, FilterItem } from '@mdb/devcenter-components';
 import {
     createInitialSearchData,
     getResultData,
@@ -57,7 +53,7 @@ import {
 
 import { shouldRenderRequestButton } from './utils';
 import { SearchItem } from '../../components/search/types';
-import { getMetaDescr } from '../../utils/seo';
+import { getCanonicalUrlWithParams, getMetaDescr } from '../../utils/seo';
 import {
     sortByOptions,
     DEFAULT_PAGE_SIZE,
@@ -84,6 +80,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 }) => {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;
 
     const totalResults = initialSearchContent
@@ -156,6 +153,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         [contentType]
     );
     const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
+    const [canonicalUrl, setCanonicalUrl] = useState(
+        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
+            page: pageNumber.toString(),
+        })
+    );
 
     const clearPagination = () => {
         setInitialPageResetFlag(true);
@@ -163,6 +165,7 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
         setCurrentPage(1);
         setPageTitle(buildPageTitle(1));
         setMetaDescr(defaultMetaDescr);
+        setCanonicalUrl(getCanonicalUrlWithParams(absoluteBasePath, asPath));
 
         router.replace(
             {
@@ -215,6 +218,17 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
                     scroll: false,
                     shallow: true,
                 }
+            );
+
+            const pathWithoutParams = asPath.split('?')[0];
+            setCanonicalUrl(
+                getCanonicalUrlWithParams(
+                    absoluteBasePath,
+                    `${pathWithoutParams}?page=${nextPage}`,
+                    {
+                        page: nextPage.toString(),
+                    }
+                )
             );
             setResultsToShow(currentPage * DEFAULT_PAGE_SIZE + 10);
         } else {
@@ -335,11 +349,10 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
             </div>
             {hasFiltersSet && (
                 <FilterTagSection
+                    sx={{ display: ['none', null, null, 'flex'] }}
                     allFilters={allFilters}
-                    filterTagsExpanded={filterTagsExpanded}
-                    setFilterTagsExpanded={setFilterTagsExpanded}
-                    onFilterTagClose={onFilterTagClose}
-                    clearFilters={() => setAllFilters([])}
+                    onClearTag={onFilterTagClose}
+                    onClearAll={() => setAllFilters([])}
                 />
             )}
         </div>
@@ -405,7 +418,11 @@ const ContentTypePage: NextPage<ContentTypePageProps> = ({
 
     return (
         <>
-            <NextSeo title={pageTitle} description={metaDescr} />
+            <NextSeo
+                description={metaDescr}
+                {...(canonicalUrl ? { canonical: canonicalUrl } : {})}
+                title={pageTitle}
+            />
             <Hero
                 crumbs={[{ text: 'MongoDB Developer Center', url: '/' }]}
                 name={pluralize(contentType)}

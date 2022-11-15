@@ -1,13 +1,6 @@
-import { TagType } from '../../types/tag-type';
+import { FilterItem } from '@mdb/devcenter-components';
 
-export interface FilterItem {
-    name: string;
-    type?: TagType;
-    subItems: FilterItem[];
-    count: number;
-}
-
-export interface FilterGroupProps {
+export interface RadioFilterGroupProps {
     className?: string;
     title?: string;
     items: FilterItem[];

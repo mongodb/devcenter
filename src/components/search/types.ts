@@ -34,7 +34,7 @@ export interface SearchProps {
     placeholder: string;
     pageNumber: number; // current page number
     pageSlug?: string[];
-    updatePageTitle: (pageNumber: number) => void;
+    setSeoAttributes: (pageNumber: number) => void;
     initialSearchContent?: SearchItem[]; // search content received from initial render
 }
 

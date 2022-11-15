@@ -11,7 +11,11 @@ import { customCache } from '../utils/emotion';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
 import { OverlayProvider } from '../contexts/overlay';
-import { getMetaDescr, getCanonicalUrl } from '../utils/seo';
+import {
+    getMetaDescr,
+    getCanonicalUrl,
+    shouldDefineDefaultCanonical,
+} from '../utils/seo';
 
 interface CustomProps {
     session?: Session;
@@ -20,11 +24,15 @@ interface CustomProps {
 function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const router = useRouter();
     const { publicRuntimeConfig } = getConfig();
+    const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;
 
     let pagePath = route === '/_error' ? null : asPath;
+    // Attributes for SEO may be overridden at the component-level if needed with NextSeo.
     let pageDescription = getMetaDescr(publicRuntimeConfig, route, asPath);
-    let canonicalUrl = getCanonicalUrl(publicRuntimeConfig, route, asPath);
+    let canonicalUrl = shouldDefineDefaultCanonical(route)
+        ? getCanonicalUrl(absoluteBasePath, asPath)
+        : null;
 
     return (
         <>

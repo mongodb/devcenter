@@ -1,6 +1,5 @@
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest, NextResponse, userAgent } from 'next/server';
-import { rewrites } from '../config/rewrites';
 import { logRequestData } from './utils/logger';
 
 const middleware = async (req: NextRequest) => {
@@ -86,30 +85,6 @@ const middleware = async (req: NextRequest) => {
         } else {
             req.nextUrl.pathname = '/';
             const res = NextResponse.redirect(req.nextUrl);
-            logRequestData(pathname, req.method, res.status);
-            return res;
-        }
-    }
-
-    // Rewrites are done in this middleware due to
-    // existing issue with SSG and dynamic routing
-    // when using built-in rewrites configuration.
-    for (const rewrite of rewrites) {
-        let destination: string | null = null;
-
-        if (rewrite.regex) {
-            const regex = new RegExp(rewrite.regex);
-            if (regex.test(pathname)) {
-                destination = `${process.env.DEVHUB_URL}${pathname}`;
-            }
-        }
-
-        if (pathname == rewrite.source || pathname == `${rewrite.source}/`) {
-            destination = rewrite.destination;
-        }
-
-        if (destination) {
-            const res = NextResponse.rewrite(destination);
             logRequestData(pathname, req.method, res.status);
             return res;
         }

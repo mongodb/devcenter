@@ -4,7 +4,7 @@ import { NextRouter } from 'next/router';
 import getAllSearchContent from '../../api-requests/get-all-search-content';
 import { PillCategory } from '../../types/pill-category';
 import { SearchItem } from '../../components/search/types';
-import { FilterItem } from '../../components/search-filters';
+import { FilterItem } from '@mdb/devcenter-components';
 import { Tag } from '../../interfaces/tag';
 import { ContentItem } from '../../interfaces/content-item';
 import { Image } from '../../interfaces/image';
@@ -85,8 +85,8 @@ export const getFilters = async (
                 const l2FilterItem: FilterItem = {
                     type: tag.type,
                     name: tag.name,
+                    subFilters: [],
                     count: allFilters || type === contentType ? 1 : 0,
-                    subItems: [],
                 };
                 const l1 = tags.filter(tag => tag.type === 'L1Product')[0]; // There should always be an L1 on a piece with an L2 tag.
                 const l1FilterItem = filterItems.find(
@@ -94,25 +94,28 @@ export const getFilters = async (
                 );
                 if (l1FilterItem) {
                     // If L1 exists, check if L2 is attached to it yet.
-                    const existingL2 = l1FilterItem.subItems.find(
-                        subItem =>
-                            l2FilterItem.name === subItem.name &&
-                            l2FilterItem.type === subItem.type
+                    const existingL2 = l1FilterItem.subFilters?.find(
+                        subFilter =>
+                            l2FilterItem.name === subFilter.name &&
+                            l2FilterItem.type === subFilter.type
                     );
                     if (existingL2) {
                         // If L2 is already attached, only bump the count (if the content type matches).
-                        if (allFilters || type === contentType) {
+                        if (
+                            (allFilters || type === contentType) &&
+                            existingL2.count
+                        ) {
                             existingL2.count++;
                         }
                         return;
                     }
-                    return l1FilterItem.subItems.push(l2FilterItem); // If L2 is not yet attached, attach it.
+                    return l1FilterItem.subFilters?.push(l2FilterItem); // If L2 is not yet attached, attach it.
                 } else {
                     // If the L1 doesn't exist, neither does the L2, so create L1 and add new L2 to it.
                     const l1FilterItem: FilterItem = {
                         type: l1.type,
                         name: l1.name,
-                        subItems: [l2FilterItem],
+                        subFilters: [l2FilterItem],
                         count: allFilters || type === contentType ? 1 : 0,
                     };
                     return filterItems.push(l1FilterItem);
@@ -123,7 +126,7 @@ export const getFilters = async (
                     type: tag.type,
                     name: tag.name,
                     count: allFilters || type === contentType ? 1 : 0,
-                    subItems: [],
+                    subFilters: [],
                 };
                 const codeExampleFilterItem = filterItems.find(
                     item =>
@@ -133,25 +136,30 @@ export const getFilters = async (
                 if (codeExampleFilterItem) {
                     // If code examples tag already exists, check if this code level is attached.
                     const existingCodeLevel =
-                        codeExampleFilterItem.subItems.find(
-                            subItem =>
-                                codeLevelItem.name === subItem.name &&
+                        codeExampleFilterItem.subFilters?.find(
+                            subFilter =>
+                                codeLevelItem.name === subFilter.name &&
                                 codeLevelItem.type === codeLevelItem.type
                         );
                     if (existingCodeLevel) {
                         // If code level is already attached, only bump the count (if the content type matches).
-                        if (allFilters || type === contentType) {
+                        if (
+                            (allFilters || type === contentType) &&
+                            existingCodeLevel.count
+                        ) {
                             existingCodeLevel.count++;
                         }
                         return;
                     }
-                    return codeExampleFilterItem.subItems.push(codeLevelItem);
+                    return codeExampleFilterItem.subFilters?.push(
+                        codeLevelItem
+                    );
                 } else {
                     // If the Code Example tag doesn't exist, neither does the L2, so create L1 and add new L2 to it.
                     const codeExampleFilterItem: FilterItem = {
                         type: 'ContentType',
                         name: 'Code Example',
-                        subItems: [codeLevelItem],
+                        subFilters: [codeLevelItem],
                         count: allFilters || type === contentType ? 1 : 0,
                     };
                     return filterItems.push(codeExampleFilterItem);
@@ -164,7 +172,10 @@ export const getFilters = async (
                 );
                 if (existingItem) {
                     // If it exists, increment count only if the content type matches.
-                    if (allFilters || type === contentType) {
+                    if (
+                        (allFilters || type === contentType) &&
+                        existingItem.count
+                    ) {
                         existingItem.count++;
                     }
                     return;
@@ -174,7 +185,7 @@ export const getFilters = async (
                         type: tag.type,
                         name: tag.name,
                         count: allFilters || type === contentType ? 1 : 0,
-                        subItems: [],
+                        subFilters: [],
                     };
                     return filterItems.push(filterItem);
                 }
@@ -185,37 +196,42 @@ export const getFilters = async (
     // Sort everything by count.
 
     // Sort sub items.
+
+    const sortFunction = (prev: FilterItem, next: FilterItem) =>
+        (next.count || 0) - (prev.count || 0);
     filterItems.forEach(item => {
-        if (item.subItems.length) {
-            item.subItems.sort((prev, next) => next.count - prev.count);
+        if (item.subFilters?.length) {
+            item.subFilters.sort(
+                (prev, next) => (next.count || 0) - (prev.count || 0)
+            );
         }
     });
 
     const l1Items = filterItems
         .filter(({ type }) => type === 'L1Product')
-        .sort((prev, next) => next.count - prev.count);
+        .sort(sortFunction);
     const languageItems = filterItems
         .filter(({ type }) => type === 'ProgrammingLanguage')
-        .sort((prev, next) => next.count - prev.count);
+        .sort(sortFunction);
     const technologyItems = filterItems
         .filter(({ type }) => type === 'Technology')
-        .sort((prev, next) => next.count - prev.count);
+        .sort(sortFunction);
     const contributedByItems = filterItems
         .filter(({ type }) => type === 'AuthorType')
-        .sort((prev, next) => next.count - prev.count);
+        .sort(sortFunction);
     const contentTypeItems = filterItems
         .filter(({ type }) => type === 'ContentType')
-        .sort((prev, next) => next.count - prev.count);
+        .sort(sortFunction);
     const expertiseLevelItems = filterItems
         .filter(({ type }) => type === 'ExpertiseLevel')
-        .sort((prev, next) => next.count - prev.count);
+        .sort(sortFunction);
 
     // Parse the code levels from the subitmes of the Code Example content type filter.
     const codeLevelItems = filterItems
         .filter(
             item => item.type === 'ContentType' && item.name === 'Code Example'
         )[0]
-        .subItems.sort((prev, next) => next.count - prev.count);
+        .subFilters?.sort(sortFunction);
 
     return {
         l1Items,
@@ -261,7 +277,7 @@ export const getResultData = (
 ) => {
     return initialSearchData &&
         hasEmptyFilterAndQuery(searchString, allFilters) &&
-        (!sortBy || sortBy === '')
+        (!sortBy || sortBy === '' || sortBy === 'Most Recent')
         ? initialSearchData
         : data.slice(
               !initialPageResetFlag && initialPageNumber > 1
@@ -279,7 +295,7 @@ export const getResultIsValidating = (
 ) => {
     return initialSearchData &&
         hasEmptyFilterAndQuery(searchString, allFilters) &&
-        (!sortBy || sortBy === '')
+        (!sortBy || sortBy === '' || sortBy === 'Most Recent')
         ? false
         : isValidating;
 };

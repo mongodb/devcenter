@@ -610,6 +610,11 @@
         "permanent": true
     },
     {
+        "source": "/article/build-serverless-applications-sst-mongodb-atlas/",
+        "destination": "/products/atlas/build-serverless-applications-sst-mongodb-atlas/",
+        "permanent": true
+    },
+    {
         "source": "/community/apply-to-speak/",
         "destination": "/products/mongodb/news/",
         "permanent": true
@@ -647,6 +652,76 @@
     {
         "source": "/community/virtual-presentation/",
         "destination": "https://www.mongodb.com/blog/post/virtual-presentations",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/",
+        "destination": "https://www.mongodb.com/community/forums/champions/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/arkadiusz-borucki/",
+        "destination": "https://www.mongodb.com/community/forums/champions-arkadiusz-borucki/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/chris-dellaway/",
+        "destination": "https://www.mongodb.com/community/forums/champions-chris-dellaway/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/dani-monteiro/",
+        "destination": "https://www.mongodb.com/community/forums/champions-dani-monteiro/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/hans-peter-grahsl/",
+        "destination": "https://www.mongodb.com/community/forums/champions-hans-peter-grahsl/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/jai-hirsch/",
+        "destination": "https://www.mongodb.com/community/forums/champions-jai-hirsch/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/jay-wooten/",
+        "destination": "https://www.mongodb.com/community/forums/champions-jay-wooten/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/leandro-domingues/",
+        "destination": "https://www.mongodb.com/community/forums/champions-leandro-domingues/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/lina-lora/",
+        "destination": "https://www.mongodb.com/community/forums/champions-lina-lora/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/malak-abu%20hammad/",
+        "destination": "https://www.mongodb.com/community/forums/champions-malak-abu-hammad/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/michael-h%C3%B6ller/",
+        "destination": "https://www.mongodb.com/community/forums/champions-michael-holler/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/nuri-halperin/",
+        "destination": "https://www.mongodb.com/community/forums/champions-nuri-halperin/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/rajesh-nair/",
+        "destination": "https://www.mongodb.com/community/forums/champions-rajesh-nair/",
+        "permanent": true
+    },
+    {
+        "source": "/community-champions/rodrigo-nascimento/",
+        "destination": "https://www.mongodb.com/community/forums/champions-rodrigo-nascimento/",
         "permanent": true
     },
     {
@@ -2212,6 +2287,11 @@
     {
         "source": "/videos/twitch/parsing-gdelt-web-data---mongodb-world-hackathon-series/",
         "destination": "/videos/",
+        "permanent": true
+    },
+    {
+        "source": "/products/atlas/cloudflare-worker-rest-api-realm/",
+        "destination": "/products/atlas/cloudflare-worker-rest-api/",
         "permanent": true
     }
 ]
