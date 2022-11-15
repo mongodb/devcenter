@@ -1922,10 +1922,10 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.15.tgz#74defdd055ea5dc0c0fd3e22ba5d7174ed29a956"
   integrity sha1-dN790FXqXcDA/T4iul1xdO0pqVY=
 
-"@mdb/devcenter-components@0.1.2":
-  version "0.1.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/devcenter-components/-/@mdb/devcenter-components-0.1.2.tgz#0983780e063ca0c0e2a455abc106873ca33c5b13"
-  integrity sha512-4zNpMtF8yP0R0cq9O7rLSR/wIKmJ9NtGHM4DhteajUcFE4pj9ZAQOm7eXbwbhNfHv6r4lgGYr8W45crT5Ne1eQ==
+"@mdb/devcenter-components@0.1.3":
+  version "0.1.3"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/devcenter-components/-/@mdb/devcenter-components-0.1.3.tgz#45a68716fdde38aab26a38235e6bab8c62b8a67e"
+  integrity sha512-tWsvKOfFc04Za4Sx4hEldQ+jSF5WlBwJor+wzUYg+XTL6vBbzZ+BnGGUZLGvtANzjYqWw5FjK2cGEtHAPZWwlA==
 
 "@mdb/flora@1.1.0":
   version "1.1.0"
