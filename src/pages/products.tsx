@@ -39,6 +39,7 @@ const featuredConfig = (prod: L1Product) => {
                 linkIconDisableExpand: true, // Doesn't seem to work
             },
         },
+        flashCard: true,
         imageryType: (iconName ? 'icon' : 'none') as ImageryType,
         title: prod.tagName,
         text: prod.description,
@@ -119,6 +120,7 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                                     linkIconDisableExpand: true, // Doesn't seem to work
                                 },
                             },
+                            flashCard: true,
                             imageryType: (iconName
                                 ? 'icon'
                                 : 'none') as ImageryType,
