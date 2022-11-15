@@ -77,7 +77,6 @@ const configVals = {
             ...IMAGE_PATTERNS,
         ],
         path: `${basePath}/_next/image`,
-        unoptimized: true,
     },
     compiler: {
         styledComponents: true,
