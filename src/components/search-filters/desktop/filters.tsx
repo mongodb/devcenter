@@ -1,9 +1,8 @@
-import { memo } from 'react';
+import { useCallback, memo } from 'react';
 import { FiltersProps } from '../types';
 
 import { FilterGroup, FilterItem } from '@mdb/devcenter-components';
 import { CONTENT_TYPE_NAME_MAP } from '../../../data/constants';
-import { useCallback } from 'react';
 
 const DesktopFilters: React.FunctionComponent<FiltersProps> = memo(
     ({ className, onFilter, filters, filterItems }) => {

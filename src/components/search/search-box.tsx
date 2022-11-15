@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ESystemIconNames, TextInput } from '@mdb/flora';
 import { SearchBoxProps } from './types';
 import { searchBoxStyles } from './styles';
-import { useEffect } from 'react';
 
 /*
     This is a workaround due to a shortcoming of flora's TextInput component.

@@ -31,6 +31,9 @@ const SearchResults: React.FunctionComponent<ResultsProps> = memo(
         const maxPage = Math.ceil(
             Math.max(results.length, 1) / DEFAULT_PAGE_SIZE
         );
+
+        // Some of this pagination logic will have to be moved
+        // to useSearch when the backend rebuild is completed
         const [currentPage, setCurrentPage] = useState(
             Math.min(pageNumber, maxPage)
         );
