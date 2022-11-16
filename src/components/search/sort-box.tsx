@@ -1,6 +1,6 @@
 import { Select } from '@mdb/flora';
 import { sortBoxStyles } from './styles';
-import { SortBoxProps } from './types';
+import { defaultSortByType, SortBoxProps } from './types';
 import { sortByOptions } from './utils';
 
 const SortBox: React.FunctionComponent<SortBoxProps> = ({
@@ -16,7 +16,7 @@ const SortBox: React.FunctionComponent<SortBoxProps> = ({
         label="Sort by"
         name="sort-by-dropdown"
         options={Object.keys(sortByOptions)}
-        value={sortBy}
+        value={sortBy || defaultSortByType}
         onSelect={onSort}
     />
 );

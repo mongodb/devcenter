@@ -9,175 +9,173 @@ import Card, { getCardProps } from '../card';
 
 import { getURLPath } from '../../utils/format-url-path';
 import { DEFAULT_PAGE_SIZE } from './utils';
-import { hasEmptyFilterAndQuery } from '../../hooks/search/utils';
+import { hasEmptySearchCriteria } from '../../hooks/search/utils';
 
 const DefaultNoResultsFooter = <TypographyScale>No Results</TypographyScale>;
 
 // TODO: This isn't being memoized correctly.
-const SearchResults: React.FunctionComponent<ResultsProps> = memo(
-    ({
-        results = [],
-        isValidating,
-        error,
-        searchString,
-        filters,
-        slug,
-        pageNumber,
-        updatePageMeta = () => {},
-        noResultsFooter = DefaultNoResultsFooter,
-        layout = 'list',
-        extraStyles = {},
-    }) => {
-        const maxPage = Math.ceil(
-            Math.max(results.length, 1) / DEFAULT_PAGE_SIZE
-        );
+const SearchResults: React.FunctionComponent<ResultsProps> = ({
+    results = [],
+    isValidating,
+    error,
+    slug,
+    pageNumber,
+    emptySearchCriteria,
+    updatePageMeta = () => {},
+    noResultsFooter = DefaultNoResultsFooter,
+    layout = 'list',
+    extraStyles = {},
+}) => {
+    const maxPage = Math.ceil(Math.max(results.length, 1) / DEFAULT_PAGE_SIZE);
 
-        // Some of this pagination logic will have to be moved
-        // to useSearch when the backend rebuild is completed
-        const [currentPage, setCurrentPage] = useState(
-            Math.min(pageNumber, maxPage)
-        );
-        const showLoadMoreButton = currentPage < maxPage;
-        const resultsToShow = results.slice(0, currentPage * DEFAULT_PAGE_SIZE);
+    // Some of this pagination logic will have to be moved
+    // to useSearch when the backend rebuild is completed
+    const [startPage, setStartPage] = useState(pageNumber);
+    const [currentPage, setCurrentPage] = useState(pageNumber);
 
-        const loadMoreHref = hasEmptyFilterAndQuery(searchString, filters)
-            ? `/developer${slug}/?page=${currentPage}`
-            : '#';
+    const showLoadMoreButton = currentPage < maxPage;
+    const resultsToShow = results.slice(
+        (startPage - 1) * DEFAULT_PAGE_SIZE,
+        currentPage * DEFAULT_PAGE_SIZE
+    );
 
-        useEffect(() => {
+    const loadMoreHref = emptySearchCriteria
+        ? `/developer${slug}/?page=${currentPage}`
+        : '#';
+
+    useEffect(() => {
+        if (!emptySearchCriteria) {
+            setStartPage(1);
             setCurrentPage(1);
-        }, [results]);
+        }
+    }, [pageNumber, emptySearchCriteria]);
 
-        const onLoadMore = (event: React.MouseEvent<HTMLAnchorElement>) => {
-            event.preventDefault();
-            setCurrentPage(currentPage + 1);
+    useEffect(() => {
+        setCurrentPage(startPage);
+    }, [results]);
 
-            // If search query and filters are empty, then assume
-            // we are traversing all content with pagination.
-            if (hasEmptyFilterAndQuery(searchString, filters)) {
-                updatePageMeta(currentPage + 1);
-            }
-        };
+    const onLoadMore = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        setCurrentPage(currentPage + 1);
 
-        const extraCardStyles =
-            layout === 'list' ? { width: '100%' } : { height: '100%' };
+        // If search query and filters are empty, then assume
+        // we are traversing all content with pagination.
+        if (emptySearchCriteria) {
+            updatePageMeta(currentPage + 1);
+        }
+    };
 
-        return (
-            <div
-                sx={{
-                    ...resultsStyles,
-                    ...extraStyles,
-                }}
-            >
-                {isValidating && (
-                    <Image
-                        alt="Loading..."
-                        width={116}
-                        height={116}
-                        src={
-                            getURLPath(
-                                '/loading-animation.gif',
-                                false
-                            ) as string
-                        }
-                        sx={{
-                            marginTop: 'inc100',
-                        }}
-                    />
-                )}
+    const extraCardStyles =
+        layout === 'list' ? { width: '100%' } : { height: '100%' };
 
-                {!isValidating && (
-                    <>
-                        {error && (
-                            <div>Something went wrong, please try again</div>
-                        )}
-                        {!error && (
-                            <>
-                                {!!resultsToShow.length && (
-                                    // Needs to be wrapped in a div because Safari isn't the best with grid...
-                                    // https://stackoverflow.com/questions/44770074/css-grid-row-height-safari-bug
-                                    <div>
-                                        <div
-                                            data-testid="search-results"
-                                            sx={dataStyles(layout)}
-                                        >
-                                            {resultsToShow.map(item => (
-                                                <Card
-                                                    key={item.slug}
-                                                    sx={extraCardStyles}
-                                                    hideTagsOnMobile={
-                                                        layout === 'list'
-                                                    }
-                                                    {...getCardProps(
-                                                        item,
-                                                        layout === 'list'
-                                                            ? 'list'
-                                                            : 'medium'
-                                                    )}
-                                                />
-                                            ))}
-                                        </div>
+    return (
+        <div
+            sx={{
+                ...resultsStyles,
+                ...extraStyles,
+            }}
+        >
+            {isValidating && (
+                <Image
+                    alt="Loading..."
+                    width={116}
+                    height={116}
+                    src={getURLPath('/loading-animation.gif', false) as string}
+                    sx={{
+                        marginTop: 'inc100',
+                    }}
+                />
+            )}
 
-                                        {showLoadMoreButton && (
-                                            <div
-                                                sx={{
-                                                    display: 'flex',
-                                                    justifyContent: 'center',
-                                                    marginTop: [
-                                                        'inc70',
-                                                        null,
-                                                        'inc90',
-                                                    ],
-                                                }}
-                                            >
-                                                {!isValidating && results && (
-                                                    <a
-                                                        href={loadMoreHref}
-                                                        onClick={onLoadMore}
-                                                    >
-                                                        <Button variant="secondary">
-                                                            Load more
-                                                        </Button>
-                                                    </a>
-                                                )}
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
-                                {!resultsToShow.length && (
+            {!isValidating && (
+                <>
+                    {error && <div>Something went wrong, please try again</div>}
+                    {!error && (
+                        <>
+                            {!!resultsToShow.length && (
+                                // Needs to be wrapped in a div because Safari isn't the best with grid...
+                                // https://stackoverflow.com/questions/44770074/css-grid-row-height-safari-bug
+                                <div>
                                     <div
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
+                                        data-testid="search-results"
+                                        sx={dataStyles(layout)}
                                     >
-                                        <div>
-                                            <Image
-                                                src={
-                                                    getURLPath(
-                                                        '/no-results.png',
-                                                        false
-                                                    ) as string
+                                        {resultsToShow.map(item => (
+                                            <Card
+                                                key={item.slug}
+                                                sx={extraCardStyles}
+                                                hideTagsOnMobile={
+                                                    layout === 'list'
                                                 }
-                                                alt="No Results"
-                                                height={500}
-                                                width={500}
+                                                {...getCardProps(
+                                                    item,
+                                                    layout === 'list'
+                                                        ? 'list'
+                                                        : 'medium'
+                                                )}
                                             />
-                                        </div>
-                                        {noResultsFooter}
+                                        ))}
                                     </div>
-                                )}
-                            </>
-                        )}
-                    </>
-                )}
-            </div>
-        );
-    }
-);
+
+                                    {showLoadMoreButton && (
+                                        <div
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                marginTop: [
+                                                    'inc70',
+                                                    null,
+                                                    'inc90',
+                                                ],
+                                            }}
+                                        >
+                                            {!isValidating && results && (
+                                                <a
+                                                    href={loadMoreHref}
+                                                    onClick={onLoadMore}
+                                                >
+                                                    <Button variant="secondary">
+                                                        Load more
+                                                    </Button>
+                                                </a>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {!resultsToShow.length && (
+                                <div
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <div>
+                                        <Image
+                                            src={
+                                                getURLPath(
+                                                    '/no-results.png',
+                                                    false
+                                                ) as string
+                                            }
+                                            alt="No Results"
+                                            height={500}
+                                            width={500}
+                                        />
+                                    </div>
+                                    {noResultsFooter}
+                                </div>
+                            )}
+                        </>
+                    )}
+                </>
+            )}
+        </div>
+    );
+};
 
 SearchResults.displayName = 'SearchResults';
 

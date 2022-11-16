@@ -64,7 +64,7 @@ export const useSearchMeta = (
             );
 
             replaceHistoryState(
-                `/developer${slug}${
+                `/developer${slug.endsWith('/') ? slug : `${slug}/`}${
                     pageNumber <= 1 ? '' : `?page=${pageNumber}`
                 }`
             );

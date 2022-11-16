@@ -164,7 +164,7 @@ export const TopicContentTypePageTemplate: NextPage<
     const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
         useSearchMeta(
             pageNumber,
-            topicSlug,
+            topicSlug + contentTypeSlug,
             contentType,
             buildPageTitle(contentType, topicName)
         );
@@ -321,7 +321,7 @@ export const TopicContentTypePageTemplate: NextPage<
                         <SearchResults
                             {...resultsProps}
                             pageNumber={pageNumber}
-                            slug={topicSlug}
+                            slug={topicSlug + contentTypeSlug}
                             updatePageMeta={updatePageMeta}
                             contentType={contentType}
                             layout="grid"

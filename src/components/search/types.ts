@@ -53,8 +53,6 @@ export interface ResultsProps {
     results: ContentItem[] | undefined;
     isValidating: boolean;
     error: boolean;
-    searchString: string;
-    filters: FilterItem[];
     slug: string;
     pageNumber: number;
     updatePageMeta?: (pageNumber: number) => void;
@@ -62,6 +60,7 @@ export interface ResultsProps {
     contentType: string;
     layout?: 'list' | 'grid';
     extraStyles?: ThemeUICSSObject;
+    emptySearchCriteria: boolean;
 }
 export interface SearchItem {
     type: PillCategory;
@@ -77,3 +76,4 @@ export interface SearchItem {
 // add back when Most Popular is implemented
 // export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
 export type SortByType = 'Most Recent' | 'Highest Rated';
+export const defaultSortByType: SortByType = 'Most Recent';

@@ -5,6 +5,7 @@ import { FilterItem } from '@mdb/devcenter-components';
 import {
     createInitialSearchData,
     fetcher,
+    hasEmptySearchCriteria,
     itemInFilters,
     updateUrl,
 } from './utils';
@@ -14,7 +15,11 @@ import {
     DEFAULT_PAGE_SIZE,
     SearchQueryParams,
 } from '../../components/search/utils';
-import { SearchItem, SortByType } from '../../components/search/types';
+import {
+    defaultSortByType,
+    SearchItem,
+    SortByType,
+} from '../../components/search/types';
 
 // Hook that contains the majority of the logic for our search functionality across the site.
 
@@ -38,13 +43,13 @@ const useSearch = (
 
     const [searchString, setSearchString] = useState('');
     const [filters, setFilters] = useState<FilterItem[]>([]);
-    const [sortBy, setSortBy] = useState<SortByType>('Most Recent');
+    const [sortBy, setSortBy] = useState<SortByType | ''>('');
 
     const queryParams: SearchQueryParams = {
         searchString,
         contentType,
         tagSlug,
-        sortBy,
+        sortBy: sortBy || defaultSortByType,
     };
 
     const key = buildSearchQuery(queryParams);
@@ -61,7 +66,7 @@ const useSearch = (
                 searchString: '',
                 contentType,
                 tagSlug,
-                sortBy: 'Most Recent',
+                sortBy: defaultSortByType,
             })]: createInitialSearchData(initialSearchContent, initialPage),
         },
     });
@@ -261,10 +266,16 @@ const useSearch = (
         }
     })();
 
+    const emptySearchCriteria = hasEmptySearchCriteria(
+        searchString,
+        filters,
+        sortBy
+    );
+
     const clearAll = () => {
         setSearchString('');
         setFilters([]);
-        setSortBy('Most Recent');
+        setSortBy(defaultSortByType);
         updatePageMeta();
     };
 
@@ -285,8 +296,7 @@ const useSearch = (
             results: filteredData,
             error,
             isValidating,
-            searchString,
-            filters,
+            emptySearchCriteria,
         },
         clearAll,
     };

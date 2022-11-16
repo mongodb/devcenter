@@ -3,7 +3,7 @@ import { NextRouter } from 'next/router';
 
 import getAllSearchContent from '../../api-requests/get-all-search-content';
 import { PillCategory } from '../../types/pill-category';
-import { SearchItem } from '../../components/search/types';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
 import { FilterItem } from '@mdb/devcenter-components';
 import { Tag } from '../../interfaces/tag';
 import { ContentItem } from '../../interfaces/content-item';
@@ -250,11 +250,16 @@ const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
     );
 };
 
-export const hasEmptyFilterAndQuery = (
+export const hasEmptySearchCriteria = (
     searchString: string,
-    allFilters: FilterItem[]
+    allFilters: FilterItem[],
+    sortBy: string
 ) => {
-    return (!searchString || searchString == '') && allFilters.length == 0;
+    return (
+        (!searchString || searchString == '') &&
+        allFilters.length == 0 &&
+        !sortBy
+    );
 };
 
 export const isEmptyArray = (results: any) => {
@@ -313,7 +318,7 @@ export const updateUrl = (
     sortBy?: SortByType
 ) => {
     if (!sortBy) {
-        sortBy = 'Most Recent';
+        sortBy = defaultSortByType;
     }
     // Have to preserve the filters here as well.
     const product = filters

@@ -7,7 +7,7 @@ import allContent from '../../service/get-all-content.preval';
 import allSearchContent from '../../service/get-all-search-content.preval';
 import { getFeaturedForContent } from '../../service/get-featured-for-content';
 import { getFeaturedLangProdTech } from './utils';
-import { SearchItem } from '../../components/search/types';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
 
 export const getContentTypePageData = async (
     contentType: PillCategory,
@@ -23,7 +23,7 @@ export const getContentTypePageData = async (
         initialSearchContent = await getSearchContent({
             searchString: '',
             contentType: contentType,
-            sortBy: 'Most Recent',
+            sortBy: defaultSortByType,
         });
     } catch (e) {
         Sentry.captureException(e);
