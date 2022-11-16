@@ -63,7 +63,6 @@ const Search: NextPage<SearchProps> = ({
         resultsProps: { results, isValidating },
         clearAll,
     } = useSearch(
-        pageNumber,
         initialSearchContent,
         updatePageMeta,
         undefined,

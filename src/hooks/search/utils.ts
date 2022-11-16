@@ -11,25 +11,8 @@ import { Image } from '../../interfaces/image';
 import { Author } from '../../interfaces/author';
 import { getURLPath } from '../../utils/format-url-path';
 import { SortByType } from '../../components/search/types';
-import {
-    sortByOptions,
-    DEFAULT_PAGE_SIZE,
-} from '../../components/search/utils';
+import { sortByOptions } from '../../components/search/utils';
 import { CONTENT_TYPE_NAME_MAP } from '../../data/constants';
-
-export const createInitialSearchData = (
-    initialSearchContent: SearchItem[] | undefined,
-    pageNumber: number
-) => {
-    if (!!initialSearchContent && Array.isArray(initialSearchContent)) {
-        const initialSearchData = initialSearchContent.map(
-            searchItemToContentItem
-        );
-
-        const start = pageNumber > 1 ? (pageNumber - 1) * DEFAULT_PAGE_SIZE : 0;
-        return initialSearchData.slice(start, pageNumber * DEFAULT_PAGE_SIZE);
-    }
-};
 
 export const searchItemToContentItem = ({
     type,
@@ -250,16 +233,11 @@ const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
     );
 };
 
-export const hasEmptySearchCriteria = (
+export const hasEmptyFilterAndQuery = (
     searchString: string,
-    allFilters: FilterItem[],
-    sortBy: string
+    allFilters: FilterItem[]
 ) => {
-    return (
-        (!searchString || searchString == '') &&
-        allFilters.length == 0 &&
-        !sortBy
-    );
+    return (!searchString || searchString == '') && allFilters.length == 0;
 };
 
 export const isEmptyArray = (results: any) => {

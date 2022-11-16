@@ -170,14 +170,7 @@ export const TopicContentTypePageTemplate: NextPage<
         );
 
     const { searchBoxProps, sortBoxProps, filterProps, resultsProps } =
-        useSearch(
-            pageNumber,
-            initialSearchContent,
-            updatePageMeta,
-            contentType,
-            topicSlug,
-            undefined
-        );
+        useSearch(initialSearchContent, updatePageMeta, contentType, topicSlug);
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 

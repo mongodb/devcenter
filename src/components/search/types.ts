@@ -53,6 +53,9 @@ export interface ResultsProps {
     results: ContentItem[] | undefined;
     isValidating: boolean;
     error: boolean;
+    searchString: string;
+    filters: FilterItem[];
+    sortBy: string;
     slug: string;
     pageNumber: number;
     updatePageMeta?: (pageNumber: number) => void;
@@ -60,7 +63,6 @@ export interface ResultsProps {
     contentType: string;
     layout?: 'list' | 'grid';
     extraStyles?: ThemeUICSSObject;
-    emptySearchCriteria: boolean;
 }
 export interface SearchItem {
     type: PillCategory;

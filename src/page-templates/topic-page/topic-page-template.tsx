@@ -134,12 +134,10 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         );
 
     const { searchBoxProps, sortBoxProps, resultsProps } = useSearch(
-        pageNumber,
         initialSearchContent,
         updatePageMeta,
         undefined,
-        slug,
-        undefined
+        slug
     );
 
     const topicsRow = topics.length > 0 ? 1 : 0;

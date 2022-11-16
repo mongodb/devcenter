@@ -3,16 +3,14 @@ import debounce from 'lodash.debounce';
 import useSWR from 'swr';
 import { FilterItem } from '@mdb/devcenter-components';
 import {
-    createInitialSearchData,
     fetcher,
-    hasEmptySearchCriteria,
     itemInFilters,
+    searchItemToContentItem,
     updateUrl,
 } from './utils';
 import { useRouter } from 'next/router';
 import {
     buildSearchQuery,
-    DEFAULT_PAGE_SIZE,
     SearchQueryParams,
 } from '../../components/search/utils';
 import {
@@ -24,7 +22,6 @@ import {
 // Hook that contains the majority of the logic for our search functionality across the site.
 
 const useSearch = (
-    pageNumber: number,
     initialSearchContent?: SearchItem[],
     updatePageMeta: (pageNumber?: number) => void = () => {},
     contentType?: string, // Filter on backend by contentType tag specifically.
@@ -34,12 +31,6 @@ const useSearch = (
     const shouldUseQueryParams = !!filterItems;
 
     const router = useRouter();
-    const totalInitialResults = initialSearchContent
-        ? initialSearchContent.length
-        : DEFAULT_PAGE_SIZE;
-    const initialMaxPage = Math.ceil(totalInitialResults / DEFAULT_PAGE_SIZE);
-    const initialPage =
-        pageNumber && pageNumber > initialMaxPage ? initialMaxPage : pageNumber;
 
     const [searchString, setSearchString] = useState('');
     const [filters, setFilters] = useState<FilterItem[]>([]);
@@ -60,15 +51,7 @@ const useSearch = (
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
         shouldRetryOnError: false,
-        fallback: {
-            // default search query when loading a page
-            [buildSearchQuery({
-                searchString: '',
-                contentType,
-                tagSlug,
-                sortBy: defaultSortByType,
-            })]: createInitialSearchData(initialSearchContent, initialPage),
-        },
+        fallbackData: (initialSearchContent || []).map(searchItemToContentItem),
     });
 
     const onSearch = useCallback(
@@ -266,12 +249,6 @@ const useSearch = (
         }
     })();
 
-    const emptySearchCriteria = hasEmptySearchCriteria(
-        searchString,
-        filters,
-        sortBy
-    );
-
     const clearAll = () => {
         setSearchString('');
         setFilters([]);
@@ -295,8 +272,11 @@ const useSearch = (
         resultsProps: {
             results: filteredData,
             error,
-            isValidating,
-            emptySearchCriteria,
+            // Disable loading state when running server-side so results show when JS is disabled
+            isValidating: typeof window === 'undefined' ? false : isValidating,
+            searchString,
+            filters,
+            sortBy,
         },
         clearAll,
     };

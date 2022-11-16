@@ -9,7 +9,7 @@ import Card, { getCardProps } from '../card';
 
 import { getURLPath } from '../../utils/format-url-path';
 import { DEFAULT_PAGE_SIZE } from './utils';
-import { hasEmptySearchCriteria } from '../../hooks/search/utils';
+import { hasEmptyFilterAndQuery } from '../../hooks/search/utils';
 
 const DefaultNoResultsFooter = <TypographyScale>No Results</TypographyScale>;
 
@@ -18,10 +18,12 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
     results = [],
     isValidating,
     error,
+    updatePageMeta = () => {},
+    searchString,
+    filters,
+    sortBy,
     slug,
     pageNumber,
-    emptySearchCriteria,
-    updatePageMeta = () => {},
     noResultsFooter = DefaultNoResultsFooter,
     layout = 'list',
     extraStyles = {},
@@ -39,16 +41,16 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
         currentPage * DEFAULT_PAGE_SIZE
     );
 
-    const loadMoreHref = emptySearchCriteria
+    const loadMoreHref = hasEmptyFilterAndQuery(searchString, filters)
         ? `/developer${slug}/?page=${currentPage}`
         : '#';
 
     useEffect(() => {
-        if (!emptySearchCriteria) {
+        if (!hasEmptyFilterAndQuery(searchString, filters) || sortBy) {
             setStartPage(1);
             setCurrentPage(1);
         }
-    }, [pageNumber, emptySearchCriteria]);
+    }, [pageNumber, filters, searchString, sortBy]);
 
     useEffect(() => {
         setCurrentPage(startPage);
@@ -60,7 +62,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
 
         // If search query and filters are empty, then assume
         // we are traversing all content with pagination.
-        if (emptySearchCriteria) {
+        if (hasEmptyFilterAndQuery(searchString, filters)) {
             updatePageMeta(currentPage + 1);
         }
     };

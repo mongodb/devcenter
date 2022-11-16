@@ -84,12 +84,10 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
     const { pageTitle, metaDescr, updatePageMeta, canonicalUrl } =
         searchMetaProps;
     const searchProps = useSearch(
-        pageNumber,
         initialSearchContent,
         updatePageMeta,
         contentType,
-        slug,
-        undefined
+        slug
     );
     const {
         searchBoxProps,
