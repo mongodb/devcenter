@@ -42,7 +42,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
     );
 
     const loadMoreHref = hasEmptyFilterAndQuery(searchString, filters)
-        ? `/developer${slug}/?page=${currentPage}`
+        ? `/developer${slug}/?page=${currentPage + 1}`
         : '#';
 
     useEffect(() => {
