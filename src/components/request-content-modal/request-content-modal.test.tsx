@@ -6,16 +6,6 @@ import { RequestContentModalContext } from '../../contexts/request-content-modal
 import RequestContentModal from '.';
 
 describe('RequestContentModal', () => {
-    function renderModal(stage: any, contentCategory: any) {
-        const setModalStage = jest.fn();
-        render(
-            <RequestContentModalContext.Provider
-                value={{ modalStage: stage, setModalStage }}
-            >
-                <RequestContentModal contentCategory={contentCategory} />
-            </RequestContentModalContext.Provider>
-        );
-    }
     it('renders text request modal', async () => {
         const setModalStage = jest.fn();
         render(
