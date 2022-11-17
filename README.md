@@ -61,7 +61,7 @@ Try to name your branch for the corresponding Jira ticket you are working on. Fo
 
 ### Unit tests
 
-We use Jest to unit test our components. In the `src/components` directory, each component should have its own directory containing a file ending in `.test-api.tsx` that contains all test cases for that component.
+We use Jest to unit test our components. In the `src/components` directory, each component should have its own directory containing a file ending in `.test.tsx` that contains all test cases for that component.
 
 Run `yarn test` to run unit tests.
 
