@@ -3,7 +3,7 @@ import { NextRouter } from 'next/router';
 
 import getAllSearchContent from '../../api-requests/get-all-search-content';
 import { PillCategory } from '../../types/pill-category';
-import { SearchItem } from '../../components/search/types';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
 import { FilterItem } from '@mdb/devcenter-components';
 import { Tag } from '../../interfaces/tag';
 import { ContentItem } from '../../interfaces/content-item';
@@ -11,24 +11,8 @@ import { Image } from '../../interfaces/image';
 import { Author } from '../../interfaces/author';
 import { getURLPath } from '../../utils/format-url-path';
 import { SortByType } from '../../components/search/types';
-import {
-    sortByOptions,
-    DEFAULT_PAGE_SIZE,
-} from '../../components/search/utils';
-
-export const createInitialSearchData = (
-    initialSearchContent: SearchItem[] | undefined,
-    pageNumber: number
-) => {
-    if (!!initialSearchContent && Array.isArray(initialSearchContent)) {
-        const initialSearchData = initialSearchContent.map(
-            searchItemToContentItem
-        );
-
-        const start = pageNumber > 1 ? (pageNumber - 1) * DEFAULT_PAGE_SIZE : 0;
-        return initialSearchData.slice(start, pageNumber * DEFAULT_PAGE_SIZE);
-    }
-};
+import { sortByOptions } from '../../components/search/utils';
+import { CONTENT_TYPE_NAME_MAP } from '../../data/constants';
 
 export const searchItemToContentItem = ({
     type,
@@ -199,6 +183,7 @@ export const getFilters = async (
 
     const sortFunction = (prev: FilterItem, next: FilterItem) =>
         (next.count || 0) - (prev.count || 0);
+
     filterItems.forEach(item => {
         if (item.subFilters?.length) {
             item.subFilters.sort(
@@ -207,41 +192,35 @@ export const getFilters = async (
         }
     });
 
-    const l1Items = filterItems
-        .filter(({ type }) => type === 'L1Product')
-        .sort(sortFunction);
-    const languageItems = filterItems
-        .filter(({ type }) => type === 'ProgrammingLanguage')
-        .sort(sortFunction);
-    const technologyItems = filterItems
-        .filter(({ type }) => type === 'Technology')
-        .sort(sortFunction);
-    const contributedByItems = filterItems
-        .filter(({ type }) => type === 'AuthorType')
-        .sort(sortFunction);
-    const contentTypeItems = filterItems
-        .filter(({ type }) => type === 'ContentType')
-        .sort(sortFunction);
-    const expertiseLevelItems = filterItems
-        .filter(({ type }) => type === 'ExpertiseLevel')
-        .sort(sortFunction);
+    const orderedFilterItems = [];
+
+    Object.keys(CONTENT_TYPE_NAME_MAP).forEach(key => {
+        const items = filterItems
+            .filter(({ type }) => type === key)
+            .sort(sortFunction);
+
+        if (!!items.length) {
+            orderedFilterItems.push({ key, value: items });
+        }
+    });
 
     // Parse the code levels from the subitmes of the Code Example content type filter.
-    const codeLevelItems = filterItems
-        .filter(
-            item => item.type === 'ContentType' && item.name === 'Code Example'
-        )[0]
-        .subFilters?.sort(sortFunction);
+    const codeLevelItems =
+        filterItems
+            .filter(
+                item =>
+                    item.type === 'ContentType' && item.name === 'Code Example'
+            )?.[0]
+            ?.subFilters?.sort(sortFunction) || [];
 
-    return {
-        l1Items,
-        languageItems,
-        technologyItems,
-        contributedByItems,
-        contentTypeItems,
-        expertiseLevelItems,
-        codeLevelItems,
-    };
+    if (!!codeLevelItems.length && contentType === 'Code Example') {
+        orderedFilterItems.unshift({
+            key: 'ExampleType',
+            value: codeLevelItems,
+        });
+    }
+
+    return orderedFilterItems;
 };
 
 const itemInFilterGroup = (tags: Tag[], filters: FilterItem[]) => {
@@ -263,41 +242,6 @@ export const hasEmptyFilterAndQuery = (
 
 export const isEmptyArray = (results: any) => {
     return !results || (Array.isArray(results) && results.length === 0);
-};
-
-// TODO: Refactor.
-export const getResultData = (
-    data: ContentItem[],
-    initialSearchData: ContentItem[] | undefined,
-    searchString: string,
-    allFilters: FilterItem[],
-    initialPageNumber: number,
-    initialPageResetFlag: boolean,
-    sortBy: string
-) => {
-    return initialSearchData &&
-        hasEmptyFilterAndQuery(searchString, allFilters) &&
-        (!sortBy || sortBy === '' || sortBy === 'Most Recent')
-        ? initialSearchData
-        : data.slice(
-              !initialPageResetFlag && initialPageNumber > 1
-                  ? (initialPageNumber - 1) * DEFAULT_PAGE_SIZE
-                  : 0
-          );
-};
-
-export const getResultIsValidating = (
-    initialSearchData: ContentItem[] | undefined,
-    searchString: string,
-    allFilters: FilterItem[],
-    isValidating: boolean,
-    sortBy: string
-) => {
-    return initialSearchData &&
-        hasEmptyFilterAndQuery(searchString, allFilters) &&
-        (!sortBy || sortBy === '' || sortBy === 'Most Recent')
-        ? false
-        : isValidating;
 };
 
 export const itemInFilters = (
@@ -352,7 +296,7 @@ export const updateUrl = (
     sortBy?: SortByType
 ) => {
     if (!sortBy) {
-        sortBy = 'Most Recent';
+        sortBy = defaultSortByType;
     }
     // Have to preserve the filters here as well.
     const product = filters
@@ -379,21 +323,34 @@ export const updateUrl = (
         .filter(filter => filter.type === 'ExpertiseLevel')
         .map(filter => filter.name);
 
-    router.replace(
-        {
-            pathname: router.pathname,
-            query: {
-                s: searchString,
-                product,
-                language,
-                technology,
-                contentType,
-                contributedBy,
-                expertiseLevel,
-                sortMode: sortByOptions[sortBy as SortByType],
-            },
-        },
-        undefined,
-        { scroll: false, shallow: true }
+    const all = {
+        product,
+        language,
+        technology,
+        contentType,
+        contributedBy,
+        expertiseLevel,
+    } as { [key: string]: string[] };
+    const params = new URLSearchParams({ s: searchString });
+
+    Object.keys(all).forEach(key => {
+        if (all[key].length) {
+            all[key].forEach(value => params.append(key, value));
+        }
+    });
+
+    params.append('sortMode', sortByOptions[sortBy as SortByType].toString());
+    replaceHistoryState(`/developer${router.pathname}/?${params.toString()}`);
+};
+
+/* 
+    Preferred alternative to next/router's replace function because it doesn't cause a page rerender.
+    Only caveat to the page not rerendering is that the page won't react to the new query params.
+*/
+export const replaceHistoryState = (url: string) => {
+    window.history.replaceState(
+        { ...window.history.state, as: url, url },
+        '',
+        url
     );
 };

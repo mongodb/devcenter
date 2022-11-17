@@ -31,12 +31,11 @@ test('renders mobile filters', () => {
     render(
         <MobileFilters
             onFilter={() => filterCounter++}
-            allFilters={[]}
-            l1Items={[]}
-            languageItems={languageFilterItems}
-            technologyItems={technologyFilterItems}
-            contributedByItems={[]}
-            expertiseLevelItems={[]}
+            filters={[]}
+            filterItems={[
+                { key: 'ProgrammingLanguage', value: languageFilterItems },
+                { key: 'Technology', value: technologyFilterItems },
+            ]}
             closeModal={() => closeCounter++}
             sortBy=""
             onSort={() => {}}

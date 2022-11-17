@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { TopicCardProps } from '../../components/topic-card/types';
 import { ContentItem } from '../../interfaces/content-item';
-import { SearchItem } from '../../components/search/types';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
 import { getSideNav } from '../../service/get-side-nav';
 import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
@@ -29,7 +29,7 @@ export const getTopicPageData = async (
         initialSearchContent = await getSearchContent({
             searchString: '',
             tagSlug: slugString,
-            sortBy: 'Most Recent',
+            sortBy: defaultSortByType,
         });
     } catch (e) {
         Sentry.captureException(e);

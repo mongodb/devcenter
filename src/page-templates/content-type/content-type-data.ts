@@ -7,7 +7,7 @@ import allContent from '../../service/get-all-content.preval';
 import allSearchContent from '../../service/get-all-search-content.preval';
 import { getFeaturedForContent } from '../../service/get-featured-for-content';
 import { getFeaturedLangProdTech } from './utils';
-import { SearchItem } from '../../components/search/types';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
 
 export const getContentTypePageData = async (
     contentType: PillCategory,
@@ -23,17 +23,17 @@ export const getContentTypePageData = async (
         initialSearchContent = await getSearchContent({
             searchString: '',
             contentType: contentType,
-            sortBy: 'Most Recent',
+            sortBy: defaultSortByType,
         });
     } catch (e) {
         Sentry.captureException(e);
     }
 
     // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
-    const { contentTypeItems, ...filters } = await getFilters(
-        contentType,
-        allSearchContent
-    );
+    const filterItems = (
+        await getFilters(contentType, allSearchContent)
+    ).filter(item => item.key !== 'ContentType');
+
     const metaInfoForTopic = await getMetaInfoForTopic(slug);
     const description = metaInfoForTopic?.description
         ? metaInfoForTopic.description
@@ -49,10 +49,10 @@ export const getContentTypePageData = async (
 
     return {
         contentType,
-        ...filters,
+        filterItems,
         featured,
+        extraFeatured: extra,
         description,
-        ...extra,
         initialSearchContent,
         pageNumber,
         slug,
