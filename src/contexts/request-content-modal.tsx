@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { requestContentModalStages } from '../components/request-content-modal';
 
-const RequestContentModalContext = createContext<{
+export const RequestContentModalContext = createContext<{
     modalStage: requestContentModalStages;
     setModalStage: (stage: requestContentModalStages) => void;
 }>({
