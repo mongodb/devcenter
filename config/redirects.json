@@ -2293,5 +2293,10 @@
         "source": "/products/atlas/cloudflare-worker-rest-api-realm/",
         "destination": "/products/atlas/cloudflare-worker-rest-api/",
         "permanent": true
+    },
+    {
+        "source": "/products/atlas/query-multiple-databases-with-atlas-data-lake/",
+        "destination": "/products/atlas/query-multiple-databases-with-atlas-data-federation/",
+        "permanent": true
     }
 ]
