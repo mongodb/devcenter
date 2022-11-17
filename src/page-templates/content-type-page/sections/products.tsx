@@ -1,27 +1,23 @@
 import { useState } from 'react';
 
-import {
-    TypographyScale,
-    Link,
-    ThirdPartyLogo,
-    EThirdPartyLogoVariant,
-} from '@mdb/flora';
+import { TypographyScale, Link, BrandedIcon } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { Grid } from 'theme-ui';
-import ShowcaseCard from '../../components/showcase-card';
-import { ShowcaseCardItem } from '../../components/showcase-card/types';
+import ShowcaseCard from '../../../components/showcase-card';
+import { ShowcaseCardItem } from '../../../components/showcase-card/types';
 
-interface LanguagesSectionProps {
+interface ProductsSectionProps {
     title: string;
     items: ShowcaseCardItem[];
 }
 
-const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
+const ProductsSection: React.FunctionComponent<ProductsSectionProps> = ({
     title,
     items,
 }) => {
     const [itemsExpanded, setItemsExpanded] = useState(false);
-    const itemsToDisplay = itemsExpanded ? undefined : 4;
+    const itemsToDisplay = itemsExpanded ? undefined : 3;
+
     return (
         <div
             sx={{
@@ -45,31 +41,30 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
                     px: ['inc40', null, 'unset'],
                 }}
             >
-                {items.map(({ titleLink, imageString }) => {
+                {items.map(({ titleLink, imageString, cta, links }) => {
                     const image = imageString ? (
-                        <ThirdPartyLogo
-                            href={titleLink.url}
-                            variant={imageString as EThirdPartyLogoVariant}
-                        />
+                        <BrandedIcon name={imageString} />
                     ) : null;
                     return (
                         <ShowcaseCard
                             key={titleLink.text}
-                            alignment="center"
+                            alignment="left"
                             image={image}
                             titleLink={titleLink}
+                            cta={cta}
                             sx={{
                                 boxSizing: 'border-box' as 'border-box',
-                                width: ['33vw', null, 'auto'],
+                                width: ['66vw', null, 'auto'],
                             }}
-                            wholeCardHref={titleLink.url}
+                            links={links}
                         />
                     );
                 })}
             </Grid>
+
             <div sx={{ display: ['none', null, 'block'] }}>
                 <Grid
-                    columns={4}
+                    columns={[3]}
                     sx={{
                         gap: ['inc30', null, 'inc40'],
                         marginBottom: 'inc40',
@@ -77,33 +72,29 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
                 >
                     {items
                         .slice(0, itemsToDisplay)
-                        .map(({ titleLink, imageString }) => {
+                        .map(({ titleLink, imageString, cta, links }) => {
                             const image = imageString ? (
-                                <ThirdPartyLogo
-                                    href={titleLink.url}
-                                    variant={
-                                        imageString as EThirdPartyLogoVariant
-                                    }
-                                />
+                                <BrandedIcon name={imageString} />
                             ) : null;
                             return (
                                 <ShowcaseCard
                                     key={titleLink.text}
-                                    alignment="center"
+                                    alignment="left"
                                     image={image}
                                     titleLink={titleLink}
+                                    cta={cta}
                                     sx={{ width: '100%' }}
-                                    wholeCardHref={titleLink.url}
+                                    links={links}
                                 />
                             );
                         })}
                 </Grid>
-                {items.length > 4 && (
+                {items.length > 3 && (
                     <Link
                         onClick={() => setItemsExpanded(!itemsExpanded)}
                         sx={{ display: 'block', mx: 'auto' }}
                     >
-                        {itemsExpanded ? 'Less' : 'More'} languages
+                        {itemsExpanded ? 'Less' : 'More'} Products
                     </Link>
                 )}
             </div>
@@ -111,4 +102,4 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
     );
 };
 
-export default LanguagesSection;
+export default ProductsSection;

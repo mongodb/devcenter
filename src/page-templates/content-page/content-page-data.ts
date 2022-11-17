@@ -7,8 +7,7 @@ import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { getRelatedContent } from '../../utils/get-related-content';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { Crumb } from '../../components/breadcrumbs/types';
-import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
-import { determineVideoOrPodcast } from './content-page-template';
+import { appendDocumentationLinkToSideNav } from '../../utils/page-template-helpers';
 import { getContentItemFromSlug } from '../../service/get-content-by-slug';
 import allContentPreval from '../../service/get-all-content.preval';
 
@@ -29,7 +28,9 @@ export const getContentPageData = async (slug: string[]) => {
     }
     if (!contentItem) return null;
 
-    const vidOrPod = determineVideoOrPodcast(contentItem.collectionType);
+    const vidOrPod =
+        contentItem.collectionType === 'Video' ||
+        contentItem.collectionType === 'Podcast';
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
 
     //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag

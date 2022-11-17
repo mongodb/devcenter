@@ -17,13 +17,13 @@ import { TopicCardsContainer } from '../../components/topic-card';
 import { iconStyles } from '../../components/topic-card/styles';
 import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
 import { ContentItem } from '../../interfaces/content-item';
-import { topicWithIcon } from '../../page-templates/content-type/technologies-section';
+import { topicWithIcon } from '../content-type-page/sections/technologies';
 import {
     PillCategory,
     pillCategoryToSlug,
     PillCategoryValues,
 } from '../../types/pill-category';
-import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
+import { addExternalIconToSideNav } from '../../utils/page-template-helpers';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
 import { useSearchMeta } from '../../hooks/search/meta';
@@ -180,6 +180,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                 canonical={canonicalUrl}
                 {...(metaDescr ? { description: metaDescr } : {})}
             />
+            <h1>Topic Page</h1>
             <Hero
                 crumbs={crumbs}
                 name={name}

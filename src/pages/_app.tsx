@@ -11,6 +11,7 @@ import { customCache } from '../utils/emotion';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
 import { OverlayProvider } from '../contexts/overlay';
+import { RequestContentModalProvider } from '../contexts/request-content-modal';
 import {
     getMetaDescr,
     getCanonicalUrl,
@@ -55,11 +56,13 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 <CacheProvider value={customCache(theme)}>
                     <ThemeProvider theme={theme}>
                         <OverlayProvider>
-                            <Layout pagePath={pagePath}>
-                                <ErrorBoundary>
-                                    <Component {...pageProps} />
-                                </ErrorBoundary>
-                            </Layout>
+                            <RequestContentModalProvider>
+                                <Layout pagePath={pagePath}>
+                                    <ErrorBoundary>
+                                        <Component {...pageProps} />
+                                    </ErrorBoundary>
+                                </Layout>
+                            </RequestContentModalProvider>
                         </OverlayProvider>
                     </ThemeProvider>
                 </CacheProvider>

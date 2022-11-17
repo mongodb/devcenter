@@ -6,9 +6,12 @@ import ThankYou from './dialogs/thank-you';
 import { RequestContentModalProps, ContentRequest } from './types';
 import axios from 'axios';
 import { getURLPath } from '../../utils/format-url-path';
+import { useRequestContentModal } from '../../contexts/request-content-modal';
 
 const RequestContentModal: React.FunctionComponent<RequestContentModalProps> =
-    memo(({ modalStage, setModalStage, contentCategory }) => {
+    memo(({ contentCategory }) => {
+        const { modalStage, setModalStage } = useRequestContentModal();
+
         const onSubmit = (
             topic: string,
             description: string,

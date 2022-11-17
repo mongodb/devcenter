@@ -9,13 +9,10 @@ import {
 } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
-import { useState, useCallback } from 'react';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
-import RequestContentModal, {
-    requestContentModalStages,
-} from '../../components/request-content-modal';
+import RequestContentModal from '../../components/request-content-modal';
 import { SearchBox, SearchResults, SortBox } from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import {
@@ -27,7 +24,6 @@ import { TopicCardsContainer } from '../../components/topic-card';
 import { iconStyles } from '../../components/topic-card/styles';
 import { ITopicCard } from '../../components/topic-card/types';
 import { PillCategory } from '../../types/pill-category';
-import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { getURLPath, setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
 import useSearch from '../../hooks/search';
@@ -39,6 +35,11 @@ import {
 } from '../../components/search/styles';
 import ExpandingLink from '../../components/expanding-link';
 import { FilterItem } from '@mdb/devcenter-components';
+import {
+    getRequestBtnText,
+    addExternalIconToSideNav,
+} from '../../utils/page-template-helpers';
+import { useRequestContentModal } from '../../contexts/request-content-modal';
 
 let pluralize = require('pluralize');
 
@@ -154,12 +155,9 @@ export const TopicContentTypePageTemplate: NextPage<
     initialSearchContent,
     pageNumber,
 }) => {
-    const requestButtonText = `Request ${
-        /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
-    } ${contentType}`; // Regex to tell if it starts with a vowel.
+    const requestButtonText = getRequestBtnText(contentType);
 
-    const [requestContentModalStage, setRequestContentModalStage] =
-        useState<requestContentModalStages>('closed');
+    const { setModalStage } = useRequestContentModal();
 
     const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
         useSearchMeta(
@@ -219,7 +217,7 @@ export const TopicContentTypePageTemplate: NextPage<
             {contentType !== 'News & Announcements' && (
                 <div sx={CTAContainerStyles}>
                     <Button
-                        onClick={() => setRequestContentModalStage('text')}
+                        onClick={() => setModalStage('text')}
                         variant="secondary"
                     >
                         {requestButtonText}
@@ -236,6 +234,7 @@ export const TopicContentTypePageTemplate: NextPage<
                 canonical={canonicalUrl}
                 {...(metaDescr ? { description: metaDescr } : {})}
             />
+            <h1>Topic Content Type Page</h1>
             <div
                 sx={{
                     paddingBottom: 'inc160',
@@ -326,11 +325,7 @@ export const TopicContentTypePageTemplate: NextPage<
                 </GridLayout>
             </div>
             {contentType !== 'News & Announcements' && (
-                <RequestContentModal
-                    setModalStage={setRequestContentModalStage}
-                    modalStage={requestContentModalStage}
-                    contentCategory={contentType}
-                />
+                <RequestContentModal contentCategory={contentType} />
             )}
         </>
     );

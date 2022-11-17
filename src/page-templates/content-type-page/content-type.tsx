@@ -14,13 +14,11 @@ import { FeaturedCardSection } from '../../components/card-section';
 
 import { DesktopFilters, MobileFilters } from '../../components/search-filters';
 
-import LanguagesSection from './languages-section';
-import TechnologiesSection from './technologies-section';
-import ProductsSection from './products-section';
+import LanguagesSection from './sections/languages';
+import TechnologiesSection from './sections/technologies';
+import ProductsSection from './sections/products';
 import Hero from '../../components/hero';
-import RequestContentModal, {
-    requestContentModalStages,
-} from '../../components/request-content-modal';
+import RequestContentModal from '../../components/request-content-modal';
 import { useSearchMeta } from '../../hooks/search/meta';
 import { shouldRenderRequestButton } from './utils';
 import { CTAContainerStyles } from '../../components/hero/styles';
@@ -29,6 +27,8 @@ import { ContentTypePageProps } from './types';
 import useSearch from '../../hooks/search';
 import { searchWrapperStyles } from '../../components/search/styles';
 import { isEmptyArray } from '../../hooks/search/utils';
+import { getRequestBtnText } from '../../utils/page-template-helpers';
+import { useRequestContentModal } from '../../contexts/request-content-modal';
 
 let pluralize = require('pluralize');
 
@@ -70,12 +70,9 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
 }) => {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-    const [requestContentModalStage, setRequestContentModalStage] =
-        useState<requestContentModalStages>('closed');
-    const requestButtonText = `Request ${
-        /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
-    } ${contentType}`; // Regex to tell if it starts with a vowel.
+    const requestButtonText = getRequestBtnText(contentType);
 
+    const { setModalStage } = useRequestContentModal();
     const searchMetaProps = useSearchMeta(
         pageNumber,
         slug,
@@ -121,14 +118,14 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                 <div sx={CTAContainerStyles}>
                     <Button
                         variant="secondary"
-                        onClick={() => setRequestContentModalStage('text')}
+                        onClick={() => setModalStage('text')}
                         size="large"
                     >
                         {requestButtonText}
                     </Button>
                 </div>
             ) : null,
-        [contentType, requestButtonText]
+        [contentType, requestButtonText] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     return (
@@ -138,14 +135,13 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                 {...(canonicalUrl ? { canonical: canonicalUrl } : {})}
                 title={pageTitle}
             />
+            <h1>Content Type Page</h1>
             <Hero
                 crumbs={heroCrumbs}
                 name={pluralize(contentType)}
                 description={description}
                 ctas={heroCTAs}
             />
-
-            {/* Main content body */}
             <div sx={pageWrapper}>
                 <GridLayout
                     sx={{
@@ -310,12 +306,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                     {children && children(searchProps, searchMetaProps)}
                 </GridLayout>
             </div>
-
-            <RequestContentModal
-                setModalStage={setRequestContentModalStage}
-                modalStage={requestContentModalStage}
-                contentCategory={contentType}
-            />
+            <RequestContentModal contentCategory={contentType} />
         </>
     );
 };

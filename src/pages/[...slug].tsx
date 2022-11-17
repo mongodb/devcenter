@@ -3,15 +3,17 @@ import type {
     GetServerSideProps,
     GetServerSidePropsContext,
 } from 'next';
-import { getContentPageData } from '../page-templates/main-content-page/content-page-data';
+import { getContentPageData } from '../page-templates/content-page/content-page-data';
 import { getTopicContentTypePageData } from '../page-templates/topic-content-type-page/topic-content-type-page-data';
-import DynamicContentTemplate from '../page-templates/dynamic-content-page/dynamic-content-page-template';
 import { getTopicPageData } from '../page-templates/topic-page/topic-page-data';
 import { PageParams } from '../interfaces/page-params';
 import { PageType } from '../types/page-type';
 import { DynamicPageType } from '../types/page-type-factory';
 import { pageTypeFactory, parsePageNumber } from '../utils/page-type-factory';
 import { isValidPage } from '../components/search/utils';
+import ContentPageTemplate from '../page-templates/content-page/content-page-template';
+import TopicContentTypePageTemplate from '../page-templates/topic-content-type-page/topic-content-type-page-template';
+import TopicPageTemplate from '../page-templates/topic-page/topic-page-template';
 
 interface ContentPageProps {
     pageType: PageType;
@@ -22,7 +24,16 @@ const DynamicContentPage: NextPage<ContentPageProps> = ({
     pageType,
     pageData,
 }) => {
-    return <DynamicContentTemplate pageType={pageType} pageData={pageData} />;
+    switch (pageType) {
+        case PageType.Content:
+            return <ContentPageTemplate {...pageData} />;
+        case PageType.Topic:
+            return <TopicPageTemplate {...pageData} />;
+        case PageType.TopicContentType:
+            return <TopicContentTypePageTemplate {...pageData} />;
+        default:
+            return null;
+    }
 };
 
 export default DynamicContentPage;
