@@ -1,6 +1,7 @@
 import {
     BrandedIcon,
     Button,
+    Checkbox,
     GridLayout,
     HorizontalRule,
     SideNav,
@@ -8,16 +9,14 @@ import {
 } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
-import getConfig from 'next/config';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
 import RequestContentModal, {
     requestContentModalStages,
 } from '../../components/request-content-modal';
-import Search from '../../components/search';
+import { SearchBox, SearchResults, SortBox } from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import {
     sideNavStyles,
@@ -31,7 +30,17 @@ import { PillCategory } from '../../types/pill-category';
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { getURLPath, setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getMetaDescr, getCanonicalUrlWithParams } from '../../utils/seo';
+import useSearch from '../../hooks/search';
+import { useSearchMeta } from '../../hooks/search/meta';
+import {
+    linkStyleOverride,
+    searchWrapperStyles,
+    titleStyles,
+} from '../../components/search/styles';
+import ExpandingLink from '../../components/expanding-link';
+import { FilterItem } from '@mdb/devcenter-components';
+
+let pluralize = require('pluralize');
 
 export interface TopicContentTypePageProps {
     crumbs: Crumb[];
@@ -48,7 +57,19 @@ export interface TopicContentTypePageProps {
 }
 
 const spanAllColumns = {
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
+    gridColumn: ['span 12', null, null, 'span 12', 'span 9'],
+};
+
+const extraSearchBoxStyles = {
+    marginBottom: ['0', null, 'inc50'],
+};
+const extraSortBoxStyles = {
+    display: 'block',
+    flexBasis: ['100%', null, 'calc(33% - 12px)'],
+};
+const extraSearchWrapperStyles = {
+    ...searchWrapperStyles,
+    gridColumn: ['span 12', null, null, null, 'span 9'],
 };
 
 const getSearchTitleLink = (
@@ -67,7 +88,56 @@ const getSearchTitleLink = (
     };
 };
 
-let pluralize = require('pluralize');
+const buildPageTitle =
+    (contentType: string, topicName: string) => (pageNumber: number) => {
+        const titlePageNo = pageNumber > 1 ? `- Page ${pageNumber}` : '';
+        return `${topicName} ${pluralize(
+            contentType
+        )} ${titlePageNo} | MongoDB`;
+    };
+
+const ExtraCodeExampleCheckboxes = ({
+    filters,
+    onFilter,
+}: {
+    filters: FilterItem[];
+    onFilter: (filters: FilterItem[]) => void;
+}) => {
+    const onToggle = (name: string) => (checked: boolean) => {
+        const filterItem = checked
+            ? [{ name, type: 'CodeLevel', count: 0 }]
+            : [];
+
+        onFilter(filterItem);
+    };
+
+    return (
+        <div
+            sx={{
+                display: 'flex',
+                gap: 'inc40',
+                marginBottom: ['inc30', null, 'inc50'],
+            }}
+        >
+            <Checkbox
+                name="Snippet"
+                label="Code Snippets"
+                onToggle={onToggle('Snippet')}
+                checked={!!filters.find((filt: any) => filt.name === 'Snippet')}
+            />
+            <Checkbox
+                name="Full Application"
+                label="Full Applications"
+                onToggle={onToggle('Full Application')}
+                checked={
+                    !!filters.find(
+                        (filt: any) => filt.name === 'Full Application'
+                    )
+                }
+            />
+        </div>
+    );
+};
 
 export const TopicContentTypePageTemplate: NextPage<
     TopicContentTypePageProps
@@ -84,63 +154,23 @@ export const TopicContentTypePageTemplate: NextPage<
     initialSearchContent,
     pageNumber,
 }) => {
-    const router = useRouter();
-    const { publicRuntimeConfig } = getConfig();
-    const { absoluteBasePath } = publicRuntimeConfig;
-    const { asPath, route } = router;
     const requestButtonText = `Request ${
         /^[aeiou]/gi.test(contentType) ? 'an' : 'a'
     } ${contentType}`; // Regex to tell if it starts with a vowel.
 
-    const buildPageTitle = useCallback(
-        (pageNumber: number) => {
-            const titlePageNo = pageNumber > 1 ? `- Page ${pageNumber}` : '';
-            return `${topicName} ${pluralize(
-                contentType
-            )} ${titlePageNo} | MongoDB`;
-        },
-        [contentType, topicName]
-    );
-
-    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-    const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
-    const [metaDescr, setMetaDescr] = useState(
-        defaultMetaDescr && pageNumber > 1
-            ? `${defaultMetaDescr} - Page ${pageNumber}`
-            : defaultMetaDescr
-    );
-    const [canonicalUrl, setCanonicalUrl] = useState(
-        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
-            page: pageNumber.toString(),
-        })
-    );
-
-    const setSeoAttributes = useCallback(
-        pageNumber => {
-            const pageTitle = buildPageTitle(pageNumber);
-            setPageTitle(pageTitle);
-            setMetaDescr(
-                defaultMetaDescr && pageNumber > 1
-                    ? `${defaultMetaDescr} - Page ${pageNumber}`
-                    : defaultMetaDescr
-            );
-
-            const pathWithoutParams = asPath.split('?')[0];
-            setCanonicalUrl(
-                getCanonicalUrlWithParams(
-                    absoluteBasePath,
-                    `${pathWithoutParams}?page=${pageNumber}`,
-                    {
-                        page: pageNumber.toString(),
-                    }
-                )
-            );
-        },
-        [absoluteBasePath, asPath, buildPageTitle, defaultMetaDescr]
-    );
-
     const [requestContentModalStage, setRequestContentModalStage] =
         useState<requestContentModalStages>('closed');
+
+    const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
+        useSearchMeta(
+            pageNumber,
+            topicSlug + contentTypeSlug,
+            contentType,
+            buildPageTitle(contentType, topicName)
+        );
+
+    const { searchBoxProps, sortBoxProps, filterProps, resultsProps } =
+        useSearch(initialSearchContent, updatePageMeta, contentType, topicSlug);
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
@@ -246,25 +276,53 @@ export const TopicContentTypePageTemplate: NextPage<
                             }}
                         />
                     )}
-                    <Search
-                        titleElement="h1"
-                        title={`All ${topicName} ${pluralize(contentType)}`}
-                        placeholder={`Search ${topicName} ${pluralize(
-                            contentType
-                        )}`}
-                        tagSlug={topicSlug}
-                        contentType={contentType}
-                        pageNumber={pageNumber}
-                        pageSlug={(topicSlug + contentTypeSlug).split('/')}
-                        setSeoAttributes={setSeoAttributes}
-                        initialSearchContent={initialSearchContent}
-                        resultsLayout="grid"
-                        titleLink={getSearchTitleLink(
-                            contentType,
-                            contentTypeAggregateSlug
+
+                    <div sx={extraSearchWrapperStyles}>
+                        <div sx={titleStyles}>
+                            <TypographyScale
+                                variant="heading5"
+                                customElement="h5"
+                            >
+                                All {topicName} {pluralize(contentType)}
+                            </TypographyScale>
+
+                            <ExpandingLink
+                                {...getSearchTitleLink(
+                                    contentType,
+                                    contentTypeAggregateSlug
+                                )}
+                                hoverStyleOverrides={linkStyleOverride}
+                            />
+                        </div>
+
+                        <SearchBox
+                            {...searchBoxProps}
+                            placeholder={`Search ${topicName} ${pluralize(
+                                contentType
+                            )}`}
+                            extraStyles={extraSearchBoxStyles}
+                        />
+                        <SortBox
+                            {...sortBoxProps}
+                            extraStyles={extraSortBoxStyles}
+                        />
+
+                        {contentType === 'Code Example' && (
+                            <ExtraCodeExampleCheckboxes {...filterProps} />
                         )}
-                        sx={spanAllColumns}
-                    />
+
+                        <SearchResults
+                            {...resultsProps}
+                            pageNumber={pageNumber}
+                            slug={topicSlug + contentTypeSlug}
+                            updatePageMeta={updatePageMeta}
+                            contentType={contentType}
+                            layout="grid"
+                            extraStyles={{
+                                marginTop: ['inc30', null, 0],
+                            }}
+                        />
+                    </div>
                 </GridLayout>
             </div>
             {contentType !== 'News & Announcements' && (

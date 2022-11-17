@@ -1,12 +1,12 @@
 import theme from '@mdb/flora/theme';
 
 export const titleStyles = {
-    marginBottom: ['inc30', null, 'inc40'],
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: ['start', null, 'end'],
     flexDirection: ['column' as 'column', null, 'row' as 'row'],
     gap: 'inc30',
+    width: '100%',
 };
 
 export const searchBoxSortBarWrapperStyles = {
@@ -16,17 +16,42 @@ export const searchBoxSortBarWrapperStyles = {
     rowGap: 'inc30',
 };
 
+export const searchWrapperStyles = {
+    alignItems: 'flex-start',
+    alignContent: 'flex-start',
+    display: 'flex',
+    flexWrap: 'wrap' as 'wrap',
+    gap: ['inc30', null, 'inc40'],
+    gridColumn: 'span 9',
+    '& > *': {
+        order: '1',
+    },
+};
+
 export const searchBoxStyles = {
+    flexGrow: '1',
+    flexShrink: '1',
+    flexBasis: 'calc(66% - 12px)',
+    marginBottom: ['inc20', null, 'inc50'],
     '& > div': {
-        width: '100%',
         maxWidth: 'unset',
     },
-    gridColumn: ['span 1', null, 'span 3', 'span 2'],
+    'div[aria-label="input-box"]': {
+        boxSizing: 'content-box' as 'content-box',
+    },
 };
 
 export const sortBoxStyles = {
+    '&, & > button, & span': {
+        width: '100%',
+        maxWidth: 'unset',
+    },
+    '& > button#sort-by-dropdown': {
+        height: '84px',
+    },
     gridColumn: 'span 1',
     display: ['none', null, null, 'block'],
+    flexBasis: 'calc(33% - 12px)',
 };
 
 export const dataStyles = (layout: 'list' | 'grid') =>
@@ -49,6 +74,14 @@ export const dataStyles = (layout: 'list' | 'grid') =>
               ],
               gap: 'inc40',
           };
+
+export const resultsStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column' as 'column',
+    width: '100%',
+    marginTop: 'inc30',
+};
 
 export const loadMoreStyles = {
     marginTop: ['inc70', null, 'inc90'],
