@@ -56,7 +56,9 @@ export const useSearchMeta = (
             setCanonicalUrl(
                 getCanonicalUrlWithParams(
                     absoluteBasePath,
-                    `${pathWithoutParams}?page=${pageNumber}`,
+                    pageNumber <= 1
+                        ? asPath
+                        : `${pathWithoutParams}?page=${pageNumber}`,
                     {
                         page: pageNumber.toString(),
                     }
