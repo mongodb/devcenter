@@ -14,6 +14,7 @@ import {
     linkWrapperStyles,
 } from './styles';
 import { getURLPath } from '../../utils/format-url-path';
+import { copySelection } from '@testing-library/user-event/dist/types/utils';
 
 const isNewsAndArticle = (title: string) => {
     return title.toLowerCase() === 'News & Announcements'.toLowerCase();
@@ -24,6 +25,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
     title,
     direction = 'row',
     href,
+    extraStyles = {},
 }) => {
     const [hoverStyles, setHoverStyles] = useState<ThemeUICSSObject>({});
 
@@ -64,6 +66,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                 .replace(' ', '-')}-card-section`}
             sx={{
                 gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
+                ...extraStyles,
             }}
         >
             <div sx={sectionHeadingTopStyles}>

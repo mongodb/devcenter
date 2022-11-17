@@ -18,4 +18,5 @@ export interface CardProps {
     variant: CardVariant;
     slug: string;
     hideTagsOnMobile?: boolean;
+    location?: string;
 }

@@ -9,6 +9,7 @@ export const PillCategoryValues = [
     'Podcast',
     'Video',
     'User Group Meetup',
+    'Event',
 ] as const;
 
 export type PillCategory = typeof PillCategoryValues[number];
@@ -22,4 +23,5 @@ export const pillCategoryToSlug = new Map<PillCategory, string>([
     ['News & Announcements', '/news'],
     ['Podcast', '/podcasts'],
     ['Video', '/videos'],
+    ['Event', '/events'],
 ]);

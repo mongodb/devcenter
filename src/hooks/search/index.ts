@@ -20,6 +20,7 @@ import {
     SortByType,
 } from '../../components/search/types';
 import { DEBOUNCE_WAIT } from '../../data/constants';
+import { mockResults } from '../../mockdata/mock-events-data';
 
 // Hook that contains the majority of the logic for our search functionality across the site.
 
@@ -48,13 +49,20 @@ const useSearch = (
     const key = buildSearchQuery(queryParams);
 
     // TODO: Refactor to useSWRInfinite and implement client-side pagination.
-    const { data, error, isValidating } = useSWR(key, fetcher, {
-        // revalidateIfStale: false,
+    let { data, error, isValidating } = useSWR(key, fetcher, {
+        revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
         shouldRetryOnError: false,
         fallbackData: (initialSearchContent || []).map(searchItemToContentItem),
     });
+
+    // TODO: Remove and change let back to const on line 50
+    if (contentType === 'Event') {
+        data = mockResults;
+        error = null;
+        isValidating = false;
+    }
 
     const onSearch = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,6 +169,7 @@ const useSearch = (
             sortBy,
         },
         resultsProps: {
+            unfilteredResults: data,
             results: filteredData,
             error,
             // Disable loading state when running server-side so results show when JS is disabled

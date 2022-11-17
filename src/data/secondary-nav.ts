@@ -100,7 +100,7 @@ export const secondaryNavData = [
     { name: 'Documentation', slug: 'https://www.mongodb.com/docs/' },
     { name: 'Articles', slug: '/articles' },
     { name: 'Tutorials', slug: '/tutorials' },
-    { name: 'Quickstarts', slug: '/quickstarts' },
+    { name: 'Events', slug: '/events' },
     { name: 'Code Examples', slug: '/code-examples' },
     {
         name: 'Podcasts',

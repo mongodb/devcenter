@@ -30,6 +30,12 @@ export interface SortBoxProps {
     sortBy: string;
 }
 
+export interface LocationBoxProps {
+    location?: string;
+    onLocationChange: any;
+    extraStyles?: ThemeUICSSObject;
+}
+
 export interface ResultsProps {
     results: ContentItem[] | undefined;
     isValidating: boolean;

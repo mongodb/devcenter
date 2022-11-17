@@ -1,22 +1,11 @@
 import * as Sentry from '@sentry/nextjs';
 import { useMemo, useState } from 'react';
-import {
-    Button,
-    ESystemIconNames,
-    GridLayout,
-    TypographyScale,
-} from '@mdb/flora';
-import { h5Styles, pageWrapper } from '../../styled/layout';
-import { SearchBox, SearchResults, SortBox } from '../../components/search';
+import { Button, GridLayout } from '@mdb/flora';
+import { pageWrapper } from '../../styled/layout';
 import { desktopFiltersStyles } from './styles';
-import { FilterItem, FilterTagSection } from '@mdb/devcenter-components';
-import { FeaturedCardSection } from '../../components/card-section';
 
 import { DesktopFilters, MobileFilters } from '../../components/search-filters';
 
-import LanguagesSection from './sections/languages';
-import TechnologiesSection from './sections/technologies';
-import ProductsSection from './sections/products';
 import Hero from '../../components/hero';
 import RequestContentModal from '../../components/request-content-modal';
 import { useSearchMeta } from '../../hooks/search/meta';
@@ -25,10 +14,10 @@ import { CTAContainerStyles } from '../../components/hero/styles';
 import { NextSeo } from 'next-seo';
 import { ContentTypePageProps } from './types';
 import useSearch from '../../hooks/search';
-import { searchWrapperStyles } from '../../components/search/styles';
 import { isEmptyArray } from '../../hooks/search/utils';
 import { getRequestBtnText } from '../../utils/page-template-helpers';
 import { useRequestContentModal } from '../../contexts/request-content-modal';
+import ContentTypeBody from './content-type-body';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
@@ -47,21 +36,19 @@ const useEmptyDataDebug = (results: any, error: any) => {
     }
 };
 
-const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
-    description,
-    contentType,
-    filterItems,
-    featured,
-    extraFeatured: {
-        featuredProducts,
-        featuredLanguages,
-        featuredTechnologies,
-    },
-    initialSearchContent,
-    pageNumber,
-    slug,
-    children,
-}) => {
+const ContentTypePage: React.FunctionComponent<
+    ContentTypePageProps
+> = props => {
+    const {
+        description,
+        contentType,
+        filterItems,
+        initialSearchContent,
+        pageNumber,
+        slug,
+        children,
+    } = props;
+
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     const requestButtonText = getRequestBtnText(contentType);
@@ -81,30 +68,12 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
         slug
     );
     const {
-        searchBoxProps,
-        searchBoxProps: { searchString },
         filterProps,
-        filterProps: { filters, onFilter },
         sortBoxProps,
-        resultsProps,
-        resultsProps: { results, error, isValidating },
-        clearAll,
+        resultsProps: { results, error },
     } = searchProps;
 
     useEmptyDataDebug(results, error);
-
-    const showFeatured = !searchString && !filters.length;
-    const resultsHeader =
-        (showFeatured
-            ? `All ${pluralize(contentType)}`
-            : !results
-            ? ''
-            : results.length === 1
-            ? '1 Result'
-            : `${results.length} Results`) +
-        (searchString && results && !filters.length
-            ? ` for "${searchString}"`
-            : '');
 
     const heroCTAs = useMemo(
         () =>
@@ -121,6 +90,8 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
             ) : null,
         [contentType, requestButtonText] // eslint-disable-line react-hooks/exhaustive-deps
     );
+
+    const BodyComponent = children || ContentTypeBody;
 
     return (
         <>
@@ -167,142 +138,12 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                         )}
                     </div>
 
-                    {!children && (
-                        <div sx={searchWrapperStyles}>
-                            <SearchBox
-                                {...searchBoxProps}
-                                placeholder={`Search ${pluralize(contentType)}`}
-                                extraStyles={{
-                                    flexBasis: showFeatured
-                                        ? '100%'
-                                        : ['100%', null, null, '60%'],
-                                }}
-                            />
-
-                            {showFeatured && (
-                                <div sx={{ width: '100%' }}>
-                                    <FeaturedCardSection
-                                        content={featured}
-                                        sx={{
-                                            marginBottom: [
-                                                'section20',
-                                                null,
-                                                'section50',
-                                            ],
-                                        }}
-                                        title={`Featured ${pluralize(
-                                            contentType
-                                        )}`}
-                                        featuredCardType="middle"
-                                    />
-
-                                    {!!featuredLanguages?.length && (
-                                        <LanguagesSection
-                                            title={`${contentType}s by Programming Language`}
-                                            items={featuredLanguages}
-                                        />
-                                    )}
-                                    {!!featuredTechnologies?.length && (
-                                        <TechnologiesSection
-                                            title={`${contentType}s by Technology`}
-                                            items={featuredTechnologies}
-                                        />
-                                    )}
-                                    {!!featuredProducts?.length && (
-                                        <ProductsSection
-                                            title={`${contentType}s by Product`}
-                                            items={featuredProducts}
-                                        />
-                                    )}
-                                </div>
-                            )}
-
-                            <SortBox
-                                {...sortBoxProps}
-                                extraStyles={{
-                                    order: showFeatured ? '2' : '1',
-                                }}
-                            />
-
-                            {(!isValidating || showFeatured) && (
-                                <TypographyScale
-                                    variant="heading2"
-                                    sx={{
-                                        ...h5Styles,
-                                        flexGrow: '1',
-                                        flexBasis: showFeatured
-                                            ? 'auto'
-                                            : ['100%', null, 'auto'],
-                                    }}
-                                >
-                                    {resultsHeader}
-                                </TypographyScale>
-                            )}
-
-                            {!!filters?.length && (
-                                <div
-                                    sx={{
-                                        flexBasis: '100%',
-                                        display: ['none', null, null, 'block'],
-                                    }}
-                                >
-                                    <FilterTagSection
-                                        allFilters={filters}
-                                        onClearTag={(filterTag: FilterItem) =>
-                                            onFilter(
-                                                filters.filter(
-                                                    item => item !== filterTag
-                                                )
-                                            )
-                                        }
-                                        onClearAll={() => onFilter([])}
-                                    />
-                                </div>
-                            )}
-
-                            <Button
-                                hasIcon
-                                iconPosition="right"
-                                iconStrokeWeight="medium"
-                                iconName={ESystemIconNames.FILTER_HAMBURGER}
-                                onClick={() => setMobileFiltersOpen(true)}
-                                customWrapperStyles={{
-                                    display: ['block', null, null, 'none'],
-                                    flexBasis: ['100%', null, 'auto'],
-                                }}
-                                customStyles={{
-                                    display: ['flex', null, null, 'none'],
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                Filter & Sort
-                                {!!filters.length && ` (${filters.length})`}
-                            </Button>
-
-                            <SearchResults
-                                {...resultsProps}
-                                pageNumber={pageNumber}
-                                slug={slug}
-                                updatePageMeta={updatePageMeta}
-                                contentType={contentType}
-                                extraStyles={{
-                                    order: showFeatured ? '2' : '1',
-                                }}
-                                noResultsFooter={
-                                    <Button
-                                        hasIcon={true}
-                                        iconName={ESystemIconNames.ARROW_LEFT}
-                                        iconPosition="left"
-                                        onClick={clearAll}
-                                    >
-                                        Back to all {contentType.toLowerCase()}s
-                                    </Button>
-                                }
-                            />
-                        </div>
-                    )}
-
-                    {children && children(searchProps, searchMetaProps)}
+                    <BodyComponent
+                        searchProps={searchProps}
+                        searchMetaProps={searchMetaProps}
+                        setMobileFiltersOpen={setMobileFiltersOpen}
+                        {...props}
+                    />
                 </GridLayout>
             </div>
             <RequestContentModal contentCategory={contentType} />

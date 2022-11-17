@@ -52,8 +52,8 @@ export const getSecondaryNavMenu = async () => {
     };
 
     const quickstartMenu: SecondaryNavMenu = {
-        name: 'Quickstarts',
-        slug: '/quickstart',
+        name: 'Events',
+        slug: '/events',
     };
 
     const codeExamplesMenu: SecondaryNavMenu = {

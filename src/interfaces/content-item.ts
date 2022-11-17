@@ -30,4 +30,5 @@ export interface ContentItem {
     githubUrl?: string;
     liveSiteUrl?: string;
     seo?: SEO;
+    location?: string;
 }

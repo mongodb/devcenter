@@ -1,3 +1,4 @@
+import { ThemeUICSSObject } from 'theme-ui';
 import { ContentItem } from '../../interfaces/content-item';
 
 export interface CardSectionProps {
@@ -5,6 +6,7 @@ export interface CardSectionProps {
     title: string;
     direction?: 'row' | 'column';
     href?: string;
+    extraStyles?: ThemeUICSSObject;
 }
 
 export interface FeaturedCardSectionProps {

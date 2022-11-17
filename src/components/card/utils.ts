@@ -47,6 +47,7 @@ export const getCardProps = (
         title,
         image,
         slug,
+        location,
     }: ContentItem,
     variant: CardVariant
 ): CardProps => {
@@ -61,6 +62,7 @@ export const getCardProps = (
         thumbnail: image,
         variant,
         slug,
+        location,
     };
 
     return cardProps;
