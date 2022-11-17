@@ -1,6 +1,12 @@
-function Page({ data }) {
-    return <h1>{data}</h1>;
+import { NextPage } from 'next';
+
+interface PageProps {
+    data: string;
 }
+
+const Page: NextPage<PageProps> = ({ data }) => {
+    return <h1>{data}</h1>;
+};
 
 // This gets called on every request
 export async function getServerSideProps() {
