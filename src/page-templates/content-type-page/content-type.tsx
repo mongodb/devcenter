@@ -135,7 +135,6 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                 {...(canonicalUrl ? { canonical: canonicalUrl } : {})}
                 title={pageTitle}
             />
-            <h1>Content Type Page</h1>
             <Hero
                 crumbs={heroCrumbs}
                 name={pluralize(contentType)}

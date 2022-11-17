@@ -234,7 +234,6 @@ export const TopicContentTypePageTemplate: NextPage<
                 canonical={canonicalUrl}
                 {...(metaDescr ? { description: metaDescr } : {})}
             />
-            <h1>Topic Content Type Page</h1>
             <div
                 sx={{
                     paddingBottom: 'inc160',

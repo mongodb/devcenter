@@ -173,25 +173,14 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     };
 
     const ratingSection = (
-        <div
-            sx={{
-                display: 'flex',
-                justifyContent: 'end',
-                alignItems: 'center',
-            }}
-        >
+        <div sx={styles.ratingSection}>
             <span>Rate this {normalizeCategory(category)}</span>
             <ContentRating stars={ratingStars} onRate={onRate} />
         </div>
     );
 
-    const renderExternalExamples = (st: ThemeUICSSObject = {}) => (
-        <div
-            sx={{
-                ...styles.externalExamples,
-                ...st,
-            }}
-        >
+    const renderExternalExamples = (addtlStyles: ThemeUICSSObject = {}) => (
+        <div sx={{ ...styles.externalExamples, ...addtlStyles }}>
             {githubUrl && (
                 <Button
                     hasIcon
@@ -476,7 +465,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     )
                 }
             />
-            <h1>Main Content Page</h1>
             <div sx={styles.wrapper}>
                 <GridLayout sx={{ rowGap: 0 }}>
                     <div sx={sideNavStyles(5)}>

@@ -180,7 +180,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                 canonical={canonicalUrl}
                 {...(metaDescr ? { description: metaDescr } : {})}
             />
-            <h1>Topic Page</h1>
             <Hero
                 crumbs={crumbs}
                 name={name}

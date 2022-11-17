@@ -82,6 +82,12 @@ const footerActions = {
     marginTop: ['inc30', null, null, 'inc40'],
 };
 
+const ratingSection = {
+    display: 'flex',
+    justifyContent: 'end',
+    alignItems: 'center',
+};
+
 const requestBtn = {
     display: 'block',
     margin: '0 auto',
@@ -119,6 +125,7 @@ const styles = {
     floatingMenu,
     wrapper,
     section,
+    ratingSection,
     bodySection,
     defaultHeaderGrid,
     vidOrPodHeaderGrid,
