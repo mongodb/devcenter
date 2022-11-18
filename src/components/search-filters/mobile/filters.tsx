@@ -14,10 +14,11 @@ import { FiltersProps } from '../types';
 import RadioFilterGroup from '../radio-filter-group';
 import { buttonSection, filtersModal, titleSection } from './styles';
 import { CONTENT_TYPE_NAME_MAP } from '../../../data/constants';
+import { defaultSortByType } from '../../search/types';
 
 interface MobileFiltersProps extends FiltersProps {
     closeModal: () => void;
-    sortBy: any;
+    sortBy?: string;
     onSort: (sortByValue: string) => void;
 }
 
@@ -81,7 +82,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
                         <RadioFilterGroup
                             title="Sort by"
                             items={[]}
-                            sortBy={sortBy}
+                            sortBy={sortBy || defaultSortByType}
                             setSort={onSort}
                             filters={tempFilters}
                             isMobile

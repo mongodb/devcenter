@@ -186,7 +186,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                             />
 
                             {showFeatured && (
-                                <>
+                                <div sx={{ width: '100%' }}>
                                     <FeaturedCardSection
                                         content={featured}
                                         sx={{
@@ -219,7 +219,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                                             items={featuredProducts}
                                         />
                                     )}
-                                </>
+                                </div>
                             )}
 
                             <SortBox
