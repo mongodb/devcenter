@@ -1,6 +1,9 @@
 import { ContentItem } from '../../interfaces/content-item';
 import { PillCategory } from '../../types/pill-category';
 import { Tag } from '../../interfaces/tag';
+import { ThemeUICSSObject } from 'theme-ui';
+import { FilterItem } from '@mdb/devcenter-components';
+import { ReactElement } from 'react';
 
 interface SearchImage {
     url: string;
@@ -13,12 +16,6 @@ interface SearchAuthor {
     calculated_slug: string;
 }
 
-export interface ResultsProps {
-    data: ContentItem[] | undefined;
-    isLoading: boolean;
-    hasError: boolean;
-    layout?: 'list' | 'grid';
-}
 export interface SearchProps {
     titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
     className?: string;
@@ -38,6 +35,35 @@ export interface SearchProps {
     initialSearchContent?: SearchItem[]; // search content received from initial render
 }
 
+export interface SearchBoxProps {
+    placeholder?: string;
+    searchString?: string;
+    onSearch: any;
+    autoFocus?: boolean;
+    extraStyles?: ThemeUICSSObject;
+}
+
+export interface SortBoxProps {
+    extraStyles?: ThemeUICSSObject;
+    onSort: (value?: string) => void;
+    sortBy: string;
+}
+
+export interface ResultsProps {
+    results: ContentItem[] | undefined;
+    isValidating: boolean;
+    error: boolean;
+    searchString: string;
+    filters: FilterItem[];
+    sortBy: string;
+    slug: string;
+    pageNumber: number;
+    updatePageMeta?: (pageNumber: number) => void;
+    noResultsFooter?: ReactElement;
+    contentType: string;
+    layout?: 'list' | 'grid';
+    extraStyles?: ThemeUICSSObject;
+}
 export interface SearchItem {
     type: PillCategory;
     authors: SearchAuthor[];
@@ -52,3 +78,4 @@ export interface SearchItem {
 // add back when Most Popular is implemented
 // export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
 export type SortByType = 'Most Recent' | 'Highest Rated';
+export const defaultSortByType: SortByType = 'Most Recent';

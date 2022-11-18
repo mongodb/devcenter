@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import {
     ESystemIconNames,
     ButtonIcon,
@@ -13,186 +13,121 @@ import { FiltersProps } from '../types';
 
 import RadioFilterGroup from '../radio-filter-group';
 import { buttonSection, filtersModal, titleSection } from './styles';
+import { CONTENT_TYPE_NAME_MAP } from '../../../data/constants';
+import { defaultSortByType } from '../../search/types';
 
 interface MobileFiltersProps extends FiltersProps {
     closeModal: () => void;
-    sortBy: any;
+    sortBy?: string;
     onSort: (sortByValue: string) => void;
 }
 
-const MobileFilters: React.FunctionComponent<MobileFiltersProps> = ({
-    sortBy,
-    onSort,
-    className,
-    onFilter,
-    allFilters,
-    l1Items,
-    languageItems,
-    technologyItems,
-    contributedByItems,
-    expertiseLevelItems,
-    contentTypeItems = [],
-    codeLevelItems = [],
-    closeModal,
-}) => {
-    const [tempFilters, setTempFilters] = useState<FilterItem[]>(allFilters);
-    const onToggle = (checked: boolean, filter: FilterItem) => {
-        if (checked) {
-            if (filter.subFilters?.length) {
-                const subFiltersToAdd = filter.subFilters.filter(
-                    subFilter =>
-                        !tempFilters.find(
+const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
+    ({
+        className,
+        filterItems,
+        filters,
+        onFilter,
+        onSort,
+        sortBy,
+        closeModal,
+    }) => {
+        const [tempFilters, setTempFilters] = useState<FilterItem[]>(filters);
+
+        const onToggle = useCallback(
+            (checked: boolean, filter: FilterItem) => {
+                if (checked) {
+                    if (filter.subFilters?.length) {
+                        const subFiltersToAdd = filter.subFilters.filter(
+                            subFilter =>
+                                !tempFilters.find(
+                                    ({ name, type }) =>
+                                        name === subFilter.name &&
+                                        type === subFilter.type
+                                )
+                        );
+                        setTempFilters(
+                            tempFilters.concat(filter).concat(subFiltersToAdd)
+                        );
+                    } else {
+                        setTempFilters(tempFilters.concat(filter));
+                    }
+                } else {
+                    setTempFilters(
+                        tempFilters.filter(
                             ({ name, type }) =>
-                                name === subFilter.name &&
-                                type === subFilter.type
+                                !(name === filter.name && type === filter.type)
                         )
-                );
-                setTempFilters(
-                    tempFilters.concat(filter).concat(subFiltersToAdd)
-                );
-            } else {
-                setTempFilters(tempFilters.concat(filter));
-            }
-        } else {
-            setTempFilters(
-                tempFilters.filter(
-                    ({ name, type }) =>
-                        !(name === filter.name && type === filter.type)
-                )
-            );
-        }
-    };
+                    );
+                }
+            },
+            [tempFilters]
+        );
 
-    return (
-        <div className={className} sx={filtersModal}>
-            <div sx={{ padding: 'inc50', marginBottom: '120px' }}>
-                <div sx={titleSection}>
-                    <TypographyScale>Filter & Sort</TypographyScale>
-                    <ButtonIcon
-                        iconName={ESystemIconNames.CLOSE}
-                        variant="outline"
-                        keepMobileOutline={true}
-                        iconStrokeWeight="medium"
-                        onClick={() => closeModal()}
-                    />
-                </div>
-                <HorizontalRule spacing="small" />
-                <>
-                    <RadioFilterGroup
-                        title="Sort by"
-                        items={[]}
-                        sortBy={sortBy}
-                        setSort={onSort}
-                        filters={tempFilters}
-                        isMobile
-                    />
+        return (
+            <div className={className} sx={filtersModal}>
+                <div sx={{ padding: 'inc50', marginBottom: '120px' }}>
+                    <div sx={titleSection}>
+                        <TypographyScale>Filter & Sort</TypographyScale>
+                        <ButtonIcon
+                            iconName={ESystemIconNames.CLOSE}
+                            variant="outline"
+                            keepMobileOutline={true}
+                            iconStrokeWeight="medium"
+                            onClick={() => closeModal()}
+                        />
+                    </div>
                     <HorizontalRule spacing="small" />
-                </>
-                {!!codeLevelItems.length && (
                     <>
-                        <FilterGroup
-                            title="Example Type"
-                            allFilters={codeLevelItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
+                        <RadioFilterGroup
+                            title="Sort by"
+                            items={[]}
+                            sortBy={sortBy || defaultSortByType}
+                            setSort={onSort}
+                            filters={tempFilters}
+                            isMobile
                         />
                         <HorizontalRule spacing="small" />
                     </>
-                )}
-                {!!languageItems.length && (
-                    <>
-                        <FilterGroup
-                            title="Language"
-                            allFilters={languageItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-                {!!technologyItems.length && (
-                    <>
-                        <FilterGroup
-                            title="Technology"
-                            allFilters={technologyItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-                {!!contentTypeItems.length && (
-                    <>
-                        <FilterGroup
-                            title="Content Type"
-                            allFilters={contentTypeItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-                {!!l1Items.length && (
-                    <>
-                        <FilterGroup
-                            title="Products"
-                            allFilters={l1Items}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-
-                {!!expertiseLevelItems.length && (
-                    <>
-                        <FilterGroup
-                            title="Expertise Level"
-                            allFilters={expertiseLevelItems}
-                            activeFilters={tempFilters}
-                            onToggle={onToggle}
-                            mobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
-                )}
-
-                {!!contributedByItems.length && (
-                    <FilterGroup
-                        title="Contributed By"
-                        allFilters={contributedByItems}
-                        activeFilters={tempFilters}
-                        onToggle={onToggle}
-                        mobile
-                    />
-                )}
+                    {filterItems.map(({ key, value }) => (
+                        <>
+                            <FilterGroup
+                                title={CONTENT_TYPE_NAME_MAP[key]}
+                                allFilters={value}
+                                activeFilters={tempFilters}
+                                onToggle={onToggle}
+                                mobile
+                                key={key}
+                            />
+                            <HorizontalRule spacing="small" />
+                        </>
+                    ))}
+                </div>
+                <div sx={buttonSection}>
+                    <Button
+                        variant="secondary"
+                        onClick={() => {
+                            onFilter([]);
+                            setTempFilters([]);
+                        }}
+                    >
+                        Clear
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            onFilter(tempFilters);
+                            closeModal();
+                        }}
+                    >
+                        Apply{' '}
+                        {tempFilters.length ? `(${tempFilters.length})` : ''}
+                    </Button>
+                </div>
             </div>
-            <div sx={buttonSection}>
-                <Button
-                    variant="secondary"
-                    onClick={() => {
-                        onFilter([]);
-                        setTempFilters([]);
-                    }}
-                >
-                    Clear
-                </Button>
-                <Button
-                    onClick={() => {
-                        onFilter(tempFilters);
-                        closeModal();
-                    }}
-                >
-                    Apply {tempFilters.length ? `(${tempFilters.length})` : ''}
-                </Button>
-            </div>
-        </div>
-    );
-};
+        );
+    }
+);
+
+MobileFilters.displayName = 'MobileFilters';
 
 export default MobileFilters;

@@ -1260,7 +1260,7 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/memoize/-/memoize-0.8.0.tgz#f580f9beb67176fa57aae70b08ed510e1b18980f"
   integrity sha1-9YD5vrZxdvpXqucLCO1RDhsYmA8=
 
-"@emotion/react@11.9.0", "@emotion/react@^11.1.1":
+"@emotion/react@11.9.0":
   version "11.9.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/react/-/react-11.9.0.tgz#b6d42b1db3bd7511e7a7c4151dc8bc82e14593b8"
   integrity sha1-ttQrHbO9dRHnp8QVHci8guFFk7g=
@@ -1328,7 +1328,7 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/sheet/-/sheet-1.2.0.tgz#771b1987855839e214fc1741bde43089397f7be5"
   integrity sha1-dxsZh4VYOeIU/BdBveQwiTl/e+U=
 
-"@emotion/styled@11.8.1", "@emotion/styled@^11.0.0":
+"@emotion/styled@11.8.1":
   version "11.8.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/styled/-/styled-11.8.1.tgz#856f6f63aceef0eb783985fa2322e2bf66d04e17"
   integrity sha1-hW9vY6zu8Ot4OYX6IyLiv2bQThc=
@@ -1927,20 +1927,20 @@
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/devcenter-components/-/@mdb/devcenter-components-0.1.3.tgz#45a68716fdde38aab26a38235e6bab8c62b8a67e"
   integrity sha512-tWsvKOfFc04Za4Sx4hEldQ+jSF5WlBwJor+wzUYg+XTL6vBbzZ+BnGGUZLGvtANzjYqWw5FjK2cGEtHAPZWwlA==
 
-"@mdb/flora@1.1.0":
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-1.1.0.tgz#b118a04652c42ccc02cb519a4005bc9cbd12fc15"
-  integrity sha512-I73ged2pQyZXnyCd9JmZYF7k2FWYJ7tfU3n82u8nwKgl1hLrKaSXaQkBq+xWEfioXBcqcoaq4Zk1cZmmQG4KQA==
+"@mdb/flora@1.1.3":
+  version "1.1.3"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-1.1.3.tgz#15f904641a73c904b69ad926f504da43a42a1105"
+  integrity sha512-opSEDpDxAtrubLY2S9/lh1/WC4m+5pgtaKEj8QpZFoyvkx8qMxpBwA0gp5MTVnP+uOD2akkuGnpcm+op8cmjbw==
   dependencies:
     "@imgix/js-core" "^3.2.1"
     codemirror "^5.62.2"
     codemirror-ssr "0.0.6"
     lazysizes "^5.3.2"
 
-"@mdx-js/react@^1.6.22":
+"@mdx-js/react@1.6.22":
   version "1.6.22"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdx-js/react/-/react-1.6.22.tgz#ae09b4744fddc74714ee9f9d6f17a66e77c43573"
-  integrity sha1-rgm0dE/dx0cU7p+dbxembnfENXM=
+  resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.6.22.tgz#ae09b4744fddc74714ee9f9d6f17a66e77c43573"
+  integrity sha512-TDoPum4SHdfPiGSAaRBw7ECyI8VaHpK8GJugbJIJuqyh6kzw9ZLJZW3HGL3NNrJGxcAixUvqROm+YuQOo5eXtg==
 
 "@next/bundle-analyzer@12.0.8":
   version "12.0.8"
@@ -2371,76 +2371,66 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-"@theme-ui/color-modes@0.10.0":
-  version "0.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@theme-ui/color-modes/-/color-modes-0.10.0.tgz#85071f16d7d4458f3dab5a7af8b9ea459da4dcd0"
-  integrity sha1-hQcfFtfURY89q1p6+LnqRZ2k3NA=
+"@theme-ui/color-modes@0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@theme-ui/color-modes/-/color-modes-0.13.1.tgz#c445bfeefa6c689502260923a1c3c4f1e1ad7793"
+  integrity sha512-10J8/FIcJz1bSTmB4hY2tHunSgnj3N9foDolOfN67vlDdCrw3Q1oL4aMqzxzdq43K6XoNh/Th9C7JlnGpPUMfQ==
   dependencies:
-    "@emotion/react" "^11.1.1"
-    "@theme-ui/core" "0.10.0"
-    "@theme-ui/css" "0.10.0"
+    "@theme-ui/core" "0.13.1"
+    "@theme-ui/css" "0.13.1"
     deepmerge "^4.2.2"
 
-"@theme-ui/components@0.10.0":
-  version "0.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@theme-ui/components/-/components-0.10.0.tgz#c1aa9cade71e5a6cf7c19f9e0ade900122ef23f9"
-  integrity sha1-waqcreceWmz3wZ+eCt6QASLvI/k=
+"@theme-ui/components@0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@theme-ui/components/-/components-0.13.1.tgz#fe2a3dfd8b9e36774225d6bb5f68cbf4984ad7c7"
+  integrity sha512-gPsyUlsSrErqKLr69hp5n1iD6Pqr0pVKC3RaMq1i9nZRQaRBUn0+7cd7muhvEYbUcgC5jbDm6n0jnul5qWRObA==
   dependencies:
-    "@emotion/react" "^11.1.1"
-    "@emotion/styled" "^11.0.0"
     "@styled-system/color" "^5.1.2"
     "@styled-system/should-forward-prop" "^5.1.2"
     "@styled-system/space" "^5.1.2"
-    "@theme-ui/css" "0.10.0"
-    "@types/styled-system" "^5.1.10"
+    "@theme-ui/css" "0.13.1"
+    "@types/styled-system" "^5.1.13"
 
-"@theme-ui/core@0.10.0":
-  version "0.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@theme-ui/core/-/core-0.10.0.tgz#2373d53368da5fa561915414ade070a9de0e9678"
-  integrity sha1-I3PVM2jaX6VhkVQUreBwqd4Olng=
+"@theme-ui/core@0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@theme-ui/core/-/core-0.13.1.tgz#1e3ddb899a1b862ca80f00f68243524dc0076820"
+  integrity sha512-Mbf4XfNHBy7H1brRe4aegGRTRyvLCsFcpC0qrx0yGCJPDSg9cRpaM6cZ+BCoshRG8fGD727bIyxo2i2co+y8Bw==
   dependencies:
-    "@emotion/react" "^11.1.1"
-    "@theme-ui/css" "0.10.0"
-    "@theme-ui/parse-props" "0.10.0"
+    "@theme-ui/css" "0.13.1"
+    "@theme-ui/parse-props" "0.13.1"
     deepmerge "^4.2.2"
 
-"@theme-ui/css@0.10.0":
-  version "0.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@theme-ui/css/-/css-0.10.0.tgz#871f63334fb138491406c32f8347d53b19846a9b"
-  integrity sha1-hx9jM0+xOEkUBsMvg0fVOxmEaps=
+"@theme-ui/css@0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@theme-ui/css/-/css-0.13.1.tgz#872e80a03af89c8bde21be29dbfd02f53b0b6f83"
+  integrity sha512-O85gC3SLKM7HhFYBTnTuhfLdieY+kZCnSuYG+P5quf3XFJEZTYtpwucoU2NDNALSOAoSgfGb7pgTB9cmNHRB5Q==
   dependencies:
-    "@emotion/react" "^11.1.1"
-    csstype "^3.0.5"
+    csstype "^3.0.10"
 
-"@theme-ui/mdx@0.10.0":
-  version "0.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@theme-ui/mdx/-/mdx-0.10.0.tgz#14124cb194df8023f7253391900d8d17a6011a92"
-  integrity sha1-FBJMsZTfgCP3JTORkA2NF6YBGpI=
+"@theme-ui/mdx@0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@theme-ui/mdx/-/mdx-0.13.1.tgz#23fe6e42352038bb516cca2fc2539177127a60a3"
+  integrity sha512-P4jtqB9iJQcy0qiD4c30QVYEMxvPwhfegPte/ifcOr8NR4dO/gTP9jkbGN7DgXGvIkNitzCNZjjrQT9IcbPAJg==
   dependencies:
-    "@emotion/react" "^11.1.1"
-    "@emotion/styled" "^11.0.0"
-    "@mdx-js/react" "^1.6.22"
-    "@theme-ui/core" "0.10.0"
-    "@theme-ui/css" "0.10.0"
+    "@theme-ui/core" "0.13.1"
+    "@theme-ui/css" "0.13.1"
 
-"@theme-ui/parse-props@0.10.0":
-  version "0.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@theme-ui/parse-props/-/parse-props-0.10.0.tgz#8d2f4f3b3edafd925c3872ddd559e2b62006f43f"
-  integrity sha1-jS9POz7a/ZJcOHLd1VnitiAG9D8=
+"@theme-ui/parse-props@0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@theme-ui/parse-props/-/parse-props-0.13.1.tgz#c1171ff02356ea630094fa44ced8682ef89f2653"
+  integrity sha512-+IU0yP0UxBF1JYIkPphsElzdEeZy7/KRAjly6nDNLlB8CfddfS+ET+JrK1BMQjDKSso796atVw+f+32hp0ZrAg==
   dependencies:
-    "@emotion/react" "^11.1.1"
-    "@theme-ui/css" "0.10.0"
+    "@theme-ui/css" "0.13.1"
 
-"@theme-ui/theme-provider@0.10.0":
-  version "0.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@theme-ui/theme-provider/-/theme-provider-0.10.0.tgz#16586af579bef804f1e4997a131134d2465bfd5d"
-  integrity sha1-Flhq9Xm++ATx5Jl6ExE00kZb/V0=
+"@theme-ui/theme-provider@0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@theme-ui/theme-provider/-/theme-provider-0.13.1.tgz#a00595f7579cd9ee447332f6b640853cc7041f22"
+  integrity sha512-4bXBYr1xTR7QTNXQ41x87xjwbQeJjsw2AtQiyCE80QWOija+E+sbtLyPJQrRxs+z7Z2WxbSt0nlWewirlyx8EQ==
   dependencies:
-    "@emotion/react" "^11.1.1"
-    "@theme-ui/color-modes" "0.10.0"
-    "@theme-ui/core" "0.10.0"
-    "@theme-ui/css" "0.10.0"
-    "@theme-ui/mdx" "0.10.0"
+    "@theme-ui/color-modes" "0.13.1"
+    "@theme-ui/core" "0.13.1"
+    "@theme-ui/css" "0.13.1"
+    "@theme-ui/mdx" "0.13.1"
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -2649,10 +2639,10 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha1-IPGClPeX8iCbX2XI47XI6CYdEnw=
 
-"@types/styled-system@^5.1.10":
+"@types/styled-system@^5.1.13":
   version "5.1.15"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/styled-system/-/styled-system-5.1.15.tgz#075f969cc028a895dba916c07708e2fe828d7077"
-  integrity sha1-B1+WnMAoqJXbqRbAdwji/oKNcHc=
+  resolved "https://registry.yarnpkg.com/@types/styled-system/-/styled-system-5.1.15.tgz#075f969cc028a895dba916c07708e2fe828d7077"
+  integrity sha512-1uls4wipZn8FtYFZ7upRVFDoEeOXTQTs2zuyOZPn02T6rjIxtvj2P2lG5qsxXHhKuKsu3thveCZrtaeLE/ibLg==
   dependencies:
     csstype "^3.0.2"
 
@@ -3324,8 +3314,8 @@ base64-js@^1.3.1:
 
 big.js@^5.2.2:
   version "5.2.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
-  integrity sha1-ZfCvOC9Xi83HQr2cKB6cstd2gyg=
+  resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
+  integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
 bintrees@1.0.2:
   version "1.0.2"
@@ -3803,7 +3793,12 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^3.0.2, csstype@^3.0.5:
+csstype@^3.0.10:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
+  integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
+
+csstype@^3.0.2:
   version "3.0.11"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/csstype/-/csstype-3.0.11.tgz#d66700c5eacfac1940deb4e3ee5642792d85cd33"
   integrity sha1-1mcAxerPrBlA3rTj7lZCeS2FzTM=
@@ -4033,8 +4028,8 @@ emoji-regex@^9.2.2:
 
 emojis-list@^3.0.0:
   version "3.0.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/emojis-list/-/emojis-list-3.0.0.tgz#5570662046ad29e2e916e71aae260abdff4f6a78"
-  integrity sha1-VXBmIEatKeLpFucariYKvf9Pang=
+  resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-3.0.0.tgz#5570662046ad29e2e916e71aae260abdff4f6a78"
+  integrity sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==
 
 end-of-stream@^1.1.0, end-of-stream@^1.4.1:
   version "1.4.4"
@@ -5983,9 +5978,9 @@ loader-runner@^4.2.0:
   integrity sha1-wbShY7mfYUgwNTsWdV5xSawjFOE=
 
 loader-utils@^2.0.0:
-  version "2.0.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/loader-utils/-/loader-utils-2.0.2.tgz#d6e3b4fb81870721ae4e0868ab11dd638368c129"
-  integrity sha1-1uO0+4GHByGuTghoqxHdY4NowSk=
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.4.tgz#8b5cb38b5c34a9a018ee1fc0e6a066d1dfcc528c"
+  integrity sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==
   dependencies:
     big.js "^5.2.2"
     emojis-list "^3.0.0"
@@ -8087,17 +8082,17 @@ text-table@^0.2.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-theme-ui@0.10.0:
-  version "0.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/theme-ui/-/theme-ui-0.10.0.tgz#4fce8fbe7ad008ec07b383eaf5f468b0317fcfa1"
-  integrity sha1-T86PvnrQCOwHs4Pq9fRosDF/z6E=
+theme-ui@0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.13.1.tgz#33845b52ab97822617a33de59c3e3267dc00398a"
+  integrity sha512-9GGY68GUEHZSwmaCHJ75c2vl0oe90JLarMJgKh59pu38nzc15Ubqg5QqEqp0lLGubKBe4EQZtriatO+V7734SA==
   dependencies:
-    "@theme-ui/color-modes" "0.10.0"
-    "@theme-ui/components" "0.10.0"
-    "@theme-ui/core" "0.10.0"
-    "@theme-ui/css" "0.10.0"
-    "@theme-ui/mdx" "0.10.0"
-    "@theme-ui/theme-provider" "0.10.0"
+    "@theme-ui/color-modes" "0.13.1"
+    "@theme-ui/components" "0.13.1"
+    "@theme-ui/core" "0.13.1"
+    "@theme-ui/css" "0.13.1"
+    "@theme-ui/mdx" "0.13.1"
+    "@theme-ui/theme-provider" "0.13.1"
 
 thenify-all@^1.0.0:
   version "1.6.0"

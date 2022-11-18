@@ -43,7 +43,16 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
                     id="navScrollFadeRight"
                 />
             </div>
-            <div sx={{ display: ['block', null, null, 'none'] }}>
+            <div
+                sx={{
+                    display: ['block', null, null, 'none'],
+                    'nav > div': {
+                        position: 'static',
+                        width: 'auto',
+                        overflow: 'hidden',
+                    },
+                }}
+            >
                 <SideNav
                     currentUrl="#"
                     items={mobileItems}

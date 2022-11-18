@@ -1,8 +1,5 @@
-import { useState, useCallback } from 'react';
-import { BrandedIcon, GridLayout, SideNav } from '@mdb/flora';
+import { BrandedIcon, GridLayout, SideNav, TypographyScale } from '@mdb/flora';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import getConfig from 'next/config';
 import { NextSeo } from 'next-seo';
 import { Crumb } from '../../components/breadcrumbs/types';
 import CardSection, {
@@ -11,7 +8,7 @@ import CardSection, {
 import Hero from '../../components/hero';
 import { CTA } from '../../components/hero/types';
 import { createTopicPageCTAS } from '../../components/hero/utils';
-import Search from '../../components/search';
+import { SearchBox, SearchResults, SortBox } from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
@@ -29,7 +26,12 @@ import {
 import { addExternalIconToSideNav } from '../../utils/add-documentation-link-to-side-nav';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
 import { productToLogo } from '../../utils/product-to-logo';
-import { getMetaDescr, getCanonicalUrlWithParams } from '../../utils/seo';
+import { useSearchMeta } from '../../hooks/search/meta';
+import useSearch from '../../hooks/search';
+import {
+    searchWrapperStyles,
+    titleStyles,
+} from '../../components/search/styles';
 
 export interface TopicContentTypeProps {
     crumbs: Crumb[];
@@ -62,6 +64,34 @@ interface TopicPageProps {
     pageNumber: number;
 }
 
+const extraSearchBoxStyles = {
+    marginBottom: ['0', null, 'inc50'],
+};
+const extraSortBoxStyles = {
+    display: 'block',
+    flexBasis: ['100%', null, 'calc(33% - 12px)'],
+};
+const extraSearchWrapperStyles = {
+    ...searchWrapperStyles,
+    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
+};
+
+const buildPageTitle =
+    (contentType: string, name: string) => (pageNumber: number) => {
+        const titlePageNo = pageNumber > 1 ? ` - Page ${pageNumber} ` : '';
+        let pageTitle = `${name} ${titlePageNo} | MongoDB`;
+        if (contentType === 'languages' || contentType === 'technologies') {
+            pageTitle = `${name} and MongoDB ${titlePageNo}`;
+        } else if (contentType === 'products') {
+            if (name.toLowerCase() === 'mongodb') {
+                pageTitle = `Product ${titlePageNo} | MongoDB`;
+            } else {
+                pageTitle = `MongoDB ${name} ${titlePageNo}`;
+            }
+        }
+        return pageTitle;
+    };
+
 const TopicPageTemplate: NextPage<TopicPageProps> = ({
     crumbs,
     name,
@@ -78,10 +108,6 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     initialSearchContent,
     pageNumber,
 }) => {
-    const router = useRouter();
-    const { publicRuntimeConfig } = getConfig();
-    const { absoluteBasePath } = publicRuntimeConfig;
-    const { asPath, route } = router;
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -99,59 +125,19 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         );
     });
 
-    const buildPageTitle = useCallback(
-        (pageNumber: number) => {
-            const titlePageNo = pageNumber > 1 ? ` - Page ${pageNumber} ` : '';
-            let pageTitle = `${name} ${titlePageNo} | MongoDB`;
-            if (contentType === 'languages' || contentType === 'technologies') {
-                pageTitle = `${name} and MongoDB ${titlePageNo}`;
-            } else if (contentType === 'products') {
-                if (name.toLowerCase() === 'mongodb') {
-                    pageTitle = `Product ${titlePageNo} | MongoDB`;
-                } else {
-                    pageTitle = `MongoDB ${name} ${titlePageNo}`;
-                }
-            }
-            return pageTitle;
-        },
-        [contentType, name]
-    );
+    const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
+        useSearchMeta(
+            pageNumber,
+            slug,
+            contentType,
+            buildPageTitle(contentType, name)
+        );
 
-    const [pageTitle, setPageTitle] = useState(buildPageTitle(pageNumber));
-    const defaultMetaDescr = getMetaDescr(publicRuntimeConfig, route, asPath);
-    const [metaDescr, setMetaDescr] = useState(
-        defaultMetaDescr && pageNumber > 1
-            ? `${defaultMetaDescr} - Page ${pageNumber}`
-            : defaultMetaDescr
-    );
-    const [canonicalUrl, setCanonicalUrl] = useState(
-        getCanonicalUrlWithParams(absoluteBasePath, asPath, {
-            page: pageNumber.toString(),
-        })
-    );
-
-    const setSeoAttributes = useCallback(
-        pageNumber => {
-            const pageTitle = buildPageTitle(pageNumber);
-            setPageTitle(pageTitle);
-            setMetaDescr(
-                defaultMetaDescr && pageNumber > 1
-                    ? `${defaultMetaDescr} - Page ${pageNumber}`
-                    : defaultMetaDescr
-            );
-
-            const pathWithoutParams = asPath.split('?')[0];
-            setCanonicalUrl(
-                getCanonicalUrlWithParams(
-                    absoluteBasePath,
-                    `${pathWithoutParams}?page=${pageNumber}`,
-                    {
-                        page: pageNumber.toString(),
-                    }
-                )
-            );
-        },
-        [absoluteBasePath, asPath, buildPageTitle, defaultMetaDescr]
+    const { searchBoxProps, sortBoxProps, resultsProps } = useSearch(
+        initialSearchContent,
+        updatePageMeta,
+        undefined,
+        slug
     );
 
     const topicsRow = topics.length > 0 ? 1 : 0;
@@ -250,24 +236,39 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                                 })}
                         </>
                     )}
-                    <Search
-                        title={`All ${name} Content`}
-                        placeholder={`Search ${name} Content`}
-                        tagSlug={slug}
-                        pageNumber={pageNumber}
-                        pageSlug={slug.split('/')}
-                        setSeoAttributes={setSeoAttributes}
-                        initialSearchContent={initialSearchContent}
-                        sx={{
-                            gridColumn: [
-                                'span 6',
-                                null,
-                                'span 8',
-                                'span 12',
-                                '4 / span 9',
-                            ],
-                        }}
-                    />
+
+                    <div sx={extraSearchWrapperStyles}>
+                        <div sx={titleStyles}>
+                            <TypographyScale
+                                variant="heading5"
+                                customElement="h5"
+                            >
+                                All {name} Content
+                            </TypographyScale>
+                        </div>
+
+                        <SearchBox
+                            {...searchBoxProps}
+                            placeholder={`Search ${name} Content`}
+                            extraStyles={extraSearchBoxStyles}
+                        />
+
+                        <SortBox
+                            {...sortBoxProps}
+                            extraStyles={extraSortBoxStyles}
+                        />
+
+                        <SearchResults
+                            {...resultsProps}
+                            pageNumber={pageNumber}
+                            slug={slug}
+                            updatePageMeta={updatePageMeta}
+                            contentType={contentType}
+                            extraStyles={{
+                                marginTop: ['inc30', null, 0],
+                            }}
+                        />
+                    </div>
 
                     {variant === 'light' && relatedTopics.length > 0 && (
                         <TopicCardsContainer

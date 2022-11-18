@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 
+const disallowedPages = ['index.tsx', 'test-api.tsx'];
+
 const getURLs = () =>
     fs
         .readdirSync('src/pages', { withFileTypes: true })
@@ -8,7 +10,7 @@ const getURLs = () =>
             dirent =>
                 dirent.isFile() &&
                 !(dirent.name.startsWith('_') || dirent.name.startsWith('[')) &&
-                !dirent.name.includes('index')
+                disallowedPages.indexOf(dirent.name) === -1
         )
         .map(
             dirent =>

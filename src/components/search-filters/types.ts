@@ -14,12 +14,6 @@ export interface RadioFilterGroupProps {
 export interface FiltersProps {
     className?: string;
     onFilter: (filters: FilterItem[]) => void;
-    allFilters: FilterItem[];
-    l1Items: FilterItem[];
-    languageItems: FilterItem[];
-    technologyItems: FilterItem[];
-    contributedByItems: FilterItem[];
-    expertiseLevelItems: FilterItem[];
-    contentTypeItems?: FilterItem[];
-    codeLevelItems?: FilterItem[];
+    filters: FilterItem[];
+    filterItems: { key: string; value: FilterItem[] }[];
 }

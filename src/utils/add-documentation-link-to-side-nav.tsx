@@ -37,6 +37,7 @@ export const addExternalIconToSideNav = (
     tertiaryNavItems.forEach(item => {
         if (item.title.toLowerCase() === linkTitle.toLowerCase()) {
             item.icon = icon;
+            item.target = '_blank';
         }
     });
     return tertiaryNavItems;

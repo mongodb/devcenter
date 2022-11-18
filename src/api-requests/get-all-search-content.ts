@@ -3,7 +3,7 @@ import {
     buildSearchQuery,
     SearchQueryParams,
 } from '../components/search/utils';
-import { SearchItem } from '../components/search/types';
+import { defaultSortByType, SearchItem } from '../components/search/types';
 
 export const getSearchContent = async (
     queryParams: SearchQueryParams
@@ -33,7 +33,7 @@ export const getSearchContent = async (
 export const getAllSearchContent = async (): Promise<SearchItem[]> => {
     const queryParams: SearchQueryParams = {
         searchString: '',
-        sortBy: 'Most Recent',
+        sortBy: defaultSortByType,
     };
     return await getSearchContent(queryParams);
 };
