@@ -49,6 +49,9 @@ export const sortBoxStyles = {
     '& > button#sort-by-dropdown': {
         height: '84px',
     },
+    'div[role="dropdown"]': {
+        width: 'calc(100% - 48px)',
+    },
     gridColumn: 'span 1',
     display: ['none', null, null, 'block'],
     flexBasis: 'calc(33% - 12px)',
