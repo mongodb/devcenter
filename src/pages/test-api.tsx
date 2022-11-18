@@ -13,7 +13,7 @@ export async function getServerSideProps() {
     //Fetch data from external API
     let data = "couldn't make call to kanopy";
 
-    await fetch(`http://devcenter-backend-web-app/api/test`)
+    await fetch(`https://devcenter-backend-web-app/api/test`)
         .then(async res => {
             console.log(res);
             data = await res.json();
