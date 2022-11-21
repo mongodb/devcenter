@@ -30,7 +30,7 @@ envSecrets:
 
 autoscaling:
   minReplicas: 4
-  maxReplicas: 8
+  maxReplicas: 12
   metrics:
     - type: Resource
       resource:
