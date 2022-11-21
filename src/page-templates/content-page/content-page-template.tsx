@@ -251,95 +251,89 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         </div>
     );
 
-    function VideoOrPodcastContent() {
-        return (
-            <>
-                <div sx={styles.section}>
-                    {displayTitle}
-                    <div sx={styles.vidOrPodHeaderGrid}>
-                        <TypographyScale
-                            variant="body3"
-                            color="secondary"
-                            customStyles={{
-                                display: 'block',
-                                marginBottom: 0,
-                                gridArea: 'authordate',
-                            }}
-                        >
-                            {displayDate}
-                        </TypographyScale>
-                        {tags && (
-                            <TagSection tags={tags} sx={{ gridArea: 'tags' }} />
-                        )}
-                        {displaySocialButtons}
-                    </div>
+    const VideoOrPodcastContent = () => (
+        <>
+            <div sx={styles.section}>
+                {displayTitle}
+                <div sx={styles.vidOrPodHeaderGrid}>
+                    <TypographyScale
+                        variant="body3"
+                        color="secondary"
+                        customStyles={{
+                            display: 'block',
+                            marginBottom: 0,
+                            gridArea: 'authordate',
+                        }}
+                    >
+                        {displayDate}
+                    </TypographyScale>
+                    {tags && (
+                        <TagSection tags={tags} sx={{ gridArea: 'tags' }} />
+                    )}
+                    {displaySocialButtons}
                 </div>
-                <div sx={styles.section}>
-                    <div sx={styles.image}>
-                        {category === 'Video' ? (
-                            <VideoEmbed
-                                name="youtube"
-                                argument={[
-                                    { value: parseUndefinedValue(videoId) },
-                                ]}
-                            />
-                        ) : (
-                            <PodcastPlayer
-                                podcastFileUrl={parseUndefinedValue(
-                                    podcastFileUrl
-                                )}
-                            />
-                        )}
-                    </div>
-                    {!previewMode && ratingSection}
+            </div>
+            <div sx={styles.section}>
+                <div sx={styles.image}>
+                    {category === 'Video' ? (
+                        <VideoEmbed
+                            name="youtube"
+                            argument={[{ value: parseUndefinedValue(videoId) }]}
+                        />
+                    ) : (
+                        <PodcastPlayer
+                            podcastFileUrl={parseUndefinedValue(podcastFileUrl)}
+                        />
+                    )}
                 </div>
-                <div sx={styles.bodySection}>
-                    <>
+                {!previewMode && ratingSection}
+            </div>
+            <div sx={styles.bodySection}>
+                <>
+                    <TypographyScale
+                        variant="body1"
+                        sx={{
+                            ...styles.vidOrPodContent,
+                            marginBottom: ['inc20', null, null, 'inc40'],
+                        }}
+                    >
+                        {parse(parseUndefinedValue(description))}
+                    </TypographyScale>
+                    {relevantLinks && (
                         <TypographyScale
                             variant="body1"
                             sx={{
                                 ...styles.vidOrPodContent,
-                                marginBottom: ['inc20', null, null, 'inc40'],
-                            }}
-                        >
-                            {parse(parseUndefinedValue(description))}
-                        </TypographyScale>
-                        {relevantLinks && (
-                            <TypographyScale
-                                variant="body1"
-                                sx={{
-                                    ...styles.vidOrPodContent,
-                                    display: 'block',
-                                    marginTop: 'inc40',
-                                }}
-                            >
-                                {parse(parseUndefinedValue(relevantLinks))}
-                            </TypographyScale>
-                        )}
-                        <Link
-                            linkIcon="arrow"
-                            href={
-                                category === 'Video'
-                                    ? '/developer/videos'
-                                    : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624'
-                            }
-                            sx={{
                                 display: 'block',
                                 marginTop: 'inc40',
                             }}
                         >
-                            {category === 'Video'
-                                ? 'All MongoDB Videos'
-                                : 'All MongoDB Podcasts'}
-                        </Link>
-                    </>
-                </div>
-                {contentFooter}
-            </>
-        );
-    }
+                            {parse(parseUndefinedValue(relevantLinks))}
+                        </TypographyScale>
+                    )}
+                    <Link
+                        linkIcon="arrow"
+                        href={
+                            category === 'Video'
+                                ? '/developer/videos'
+                                : 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624'
+                        }
+                        sx={{
+                            display: 'block',
+                            marginTop: 'inc40',
+                        }}
+                    >
+                        {category === 'Video'
+                            ? 'All MongoDB Videos'
+                            : 'All MongoDB Podcasts'}
+                    </Link>
+                </>
+            </div>
+            {contentFooter}
+        </>
+    );
 
-    function DefaultContent() {
+    const DefaultContent = () => {
         const isCodeExample = category === 'Code Example';
         const contentAst: any = parseMarkdownToAST(content || '');
         const headingNodes = getTableOfContents(
@@ -434,7 +428,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 </div>
             </>
         );
-    }
+    };
 
     return (
         <>
