@@ -1720,7 +1720,7 @@
   dependencies:
     "@leafygreen-ui/emotion" "^4.0.3"
 
-"@leafygreen-ui/leafygreen-provider@3.1.0":
+"@leafygreen-ui/leafygreen-provider@^3.1.0":
   version "3.1.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/leafygreen-provider/-/leafygreen-provider-3.1.0.tgz#5f36e5e6e6203e9cf64ba7bad342ed1fa433a32c"
   integrity sha512-ZfmBV8O8RvUgOOYeV6aMOyYnqKdT/ovEwo4AZVChBvvB7IzNbGkEFgQPLcvqk4dhOJ0Kwg8bWeijD0gSZ9FB3g==
@@ -1764,7 +1764,7 @@
     lodash "^4.17.21"
     react-transition-group "^4.4.1"
 
-"@leafygreen-ui/mongo-nav@10.0.1":
+"@leafygreen-ui/mongo-nav@^10.0.1":
   version "10.0.1"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/mongo-nav/-/mongo-nav-10.0.1.tgz#2c50dc5ec00259f8b731909b9a2a5caa8c3522c5"
   integrity sha512-Qn1esEv9QhsumJLVnxUDuA0qcrFKg+hJwDhBYamcTh5xFdsJmQxrnno9BKgy6QhsqMTx74ZNMHEC9dcQ019hEA==
