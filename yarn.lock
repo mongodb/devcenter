@@ -1042,7 +1042,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.18.3", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
   version "7.18.9"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@babel/runtime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
   integrity sha1-tPz85V2z0uXggNJJD2CKO59Af0o=
@@ -1271,19 +1271,6 @@
     "@emotion/serialize" "^1.0.3"
     "@emotion/utils" "^1.1.0"
     "@emotion/weak-memoize" "^0.2.5"
-    hoist-non-react-statics "^3.3.1"
-
-"@emotion/react@^11.4.0":
-  version "11.10.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@emotion/react/-/react-11.10.0.tgz#53c577f063f26493f68a05188fb87528d912ff2e"
-  integrity sha1-U8V38GPyZJP2igUYj7h1KNkS/y4=
-  dependencies:
-    "@babel/runtime" "^7.18.3"
-    "@emotion/babel-plugin" "^11.10.0"
-    "@emotion/cache" "^11.10.0"
-    "@emotion/serialize" "^1.1.0"
-    "@emotion/utils" "^1.2.0"
-    "@emotion/weak-memoize" "^0.3.0"
     hoist-non-react-statics "^3.3.1"
 
 "@emotion/serialize@^1.0.2", "@emotion/serialize@^1.0.3":
@@ -1663,259 +1650,232 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@leafygreen-ui/a11y@^1.2.2":
-  version "1.3.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/a11y/-/a11y-1.3.0.tgz#936767e77341e6aae9afbb20836dcd90051e02ae"
-  integrity sha1-k2dn53NB5qrpr7sgg23NkAUeAq4=
+"@leafygreen-ui/a11y@^1.3.3":
+  version "1.3.4"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/a11y/-/a11y-1.3.4.tgz#aa145719db5457103c6339017304c3eae42c7085"
+  integrity sha512-KZxxoUqqOM5yjOgs3Tzy2MsNgWmlt9lJSazvOhUK2OzxsReTaqZsy58v6n5cTWxjjx63m41GYfT2MbKJIl9qsg==
   dependencies:
-    "@leafygreen-ui/emotion" "^4.0.0"
-    "@leafygreen-ui/hooks" "^7.0.0"
-    "@leafygreen-ui/lib" "^9.0.0"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/lib" "^10.0.0"
 
-"@leafygreen-ui/badge@^5.0.0":
-  version "5.0.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/badge/-/badge-5.0.1.tgz#fd4a1848f80afe7a2ba75540bc737a031192a99b"
-  integrity sha1-/UoYSPgK/norp1VAvHN6AxGSqZs=
+"@leafygreen-ui/badge@^6.1.1":
+  version "6.1.2"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/badge/-/badge-6.1.2.tgz#4a08ee47784770a2b0a447e9a7026b839b3035e8"
+  integrity sha512-TNewojOMiHrSkxLc9vGIwxxBLBwOvprY0EkjySvO8aTZWSbo5PFGKpajy8nsNC9TGO6cWgr7FIzHLzfKVSPgmw==
   dependencies:
-    "@leafygreen-ui/lib" "^9.3.0"
-    "@leafygreen-ui/palette" "^3.4.0"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/tokens" "^1.3.4"
 
-"@leafygreen-ui/box@^3.0.7":
-  version "3.0.7"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/box/-/box-3.0.7.tgz#cc39458eb3cacba2a8c7a5d3c7c2459f050f81c7"
-  integrity sha1-zDlFjrPKy6Kox6XTx8JFnwUPgcc=
+"@leafygreen-ui/box@^3.1.1":
+  version "3.1.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/box/-/box-3.1.1.tgz#3d2cc09ac5105e19d2a49da2f2065b45cc8e4722"
+  integrity sha512-zA6Ors7GV19DTVLqhQdg3jvypUNlyNJNVrS2XytmsPvR5XJuh5saNLmi9zw1aNsN7hETUCxj4JH1QxDEgaYTqg==
+
+"@leafygreen-ui/button@^16.1.1":
+  version "16.1.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/button/-/button-16.1.1.tgz#77ddac49d2daeaf3577fb8341543a61636ace68c"
+  integrity sha512-Co46MQYwH45oC3yvrrMjiLotC+unLDdqcIAeITYeX4sChagyyTjEjm9l4SrLGahFdv77Y6ndfxvCzO/gNp55xA==
   dependencies:
-    "@leafygreen-ui/lib" "^9.3.0"
-    lodash "^4.17.21"
+    "@leafygreen-ui/box" "^3.1.1"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/ripple" "^1.1.5"
+    "@leafygreen-ui/tokens" "^1.3.4"
 
-"@leafygreen-ui/button@^15.0.0":
-  version "15.0.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/button/-/button-15.0.2.tgz#6a8a6acade32153fa01cc5d3cdbc0ea7ef85a830"
-  integrity sha1-aopqyt4yFT+gHMXTzbwOp++FqDA=
-  dependencies:
-    "@leafygreen-ui/box" "^3.0.7"
-    "@leafygreen-ui/emotion" "^4.0.0"
-    "@leafygreen-ui/lib" "^9.3.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-    "@leafygreen-ui/ripple" "^1.1.1"
-    "@leafygreen-ui/tokens" "^1.3.1"
-
-"@leafygreen-ui/emotion@^4.0.0":
-  version "4.0.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/emotion/-/emotion-4.0.0.tgz#49ce6c4a10dea037f5a9c20621f4dc1f10d915ed"
-  integrity sha1-Sc5sShDeoDf1qcIGIfTcHxDZFe0=
+"@leafygreen-ui/emotion@^4.0.3":
+  version "4.0.3"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/emotion/-/emotion-4.0.3.tgz#f93cf9c4471551f3d54e21670e80e6e6c019550a"
+  integrity sha512-GXVHswpN68rwBv7s1FKDIBserh2WYRsXfuRSWk9Nq5SKyl74JVuvEfMIwrJLNzAy0+G3j+vskCGkH22dgPCPhA==
   dependencies:
     "@emotion/css" "^11.1.3"
-    "@emotion/react" "^11.4.0"
     "@emotion/server" "^11.4.0"
 
-"@leafygreen-ui/hooks@^7.0.0", "@leafygreen-ui/hooks@^7.1.0", "@leafygreen-ui/hooks@^7.3.0":
-  version "7.3.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/hooks/-/hooks-7.3.0.tgz#039b9caa60fa1913a78fc1e7264edfb21e3ccf4e"
-  integrity sha1-A5ucqmD6GROnj8HnJk7fsh48z04=
+"@leafygreen-ui/hooks@^7.3.3":
+  version "7.3.3"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/hooks/-/hooks-7.3.3.tgz#9b545acaaac59861687af744912f4b9abd8fd72b"
+  integrity sha512-I/gru6fwr9d3e6gCd2TWvAxqCBFSxgcBOlQdTXdhWEknqm8mnHGgxUayfvj0Qkz7TwJLdwKoxdo6Kk1qbOzSVg==
   dependencies:
     lodash "^4.17.21"
 
-"@leafygreen-ui/icon-button@^11.0.0", "@leafygreen-ui/icon-button@^11.0.2":
-  version "11.0.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/icon-button/-/icon-button-11.0.2.tgz#ec9856ad745063b3e61e106bd2fbe661141bf236"
-  integrity sha1-7JhWrXRQY7PmHhBr0vvmYRQb8jY=
+"@leafygreen-ui/icon-button@^13.2.1":
+  version "13.2.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/icon-button/-/icon-button-13.2.1.tgz#810fa9dd452222c05a917e6e64d7c037103ac369"
+  integrity sha512-b65YPrKLOPBVdSffzGnSPufD+BYQRNYFP7LDAvQ106qk2FMuakfCni+Hz3Ls9Ap1K/B96IMM/lLWt4EO0OSy5A==
   dependencies:
-    "@leafygreen-ui/a11y" "^1.2.2"
-    "@leafygreen-ui/box" "^3.0.7"
-    "@leafygreen-ui/emotion" "^4.0.0"
-    "@leafygreen-ui/lib" "^9.3.0"
-    "@leafygreen-ui/palette" "^3.4.0"
+    "@leafygreen-ui/a11y" "^1.3.3"
+    "@leafygreen-ui/box" "^3.1.1"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/tokens" "^1.3.4"
 
-"@leafygreen-ui/icon@^11.9.0":
-  version "11.10.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/icon/-/icon-11.10.1.tgz#052b192ae79cc7e38b8df5e8f0654c403d0fffd2"
-  integrity sha1-BSsZKuecx+OLjfXo8GVMQD0P/9I=
+"@leafygreen-ui/icon@^11.11.1":
+  version "11.12.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/icon/-/icon-11.12.0.tgz#69229d0e15f5ea6b47d2202af913d3c20cb4e645"
+  integrity sha512-CKd618GdW+VhXsrogEKBkeOpXcrdjyuh1Ch8/EhUys83nSalXUclFHWxuwEnGM5iEUItj7Fb1QDXL+NOHtCDDA==
   dependencies:
-    "@leafygreen-ui/lib" "^9.2.0"
+    "@leafygreen-ui/emotion" "^4.0.3"
 
-"@leafygreen-ui/interaction-ring@^3.0.0":
-  version "3.0.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/interaction-ring/-/interaction-ring-3.0.0.tgz#c0d5fcecad5fa42dcd7c68ca312d1c96d8dd948a"
-  integrity sha1-wNX87K1fpC3NfGjKMS0cltjdlIo=
+"@leafygreen-ui/leafygreen-provider@3.1.0":
+  version "3.1.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/leafygreen-provider/-/leafygreen-provider-3.1.0.tgz#5f36e5e6e6203e9cf64ba7bad342ed1fa433a32c"
+  integrity sha512-ZfmBV8O8RvUgOOYeV6aMOyYnqKdT/ovEwo4AZVChBvvB7IzNbGkEFgQPLcvqk4dhOJ0Kwg8bWeijD0gSZ9FB3g==
   dependencies:
-    "@leafygreen-ui/emotion" "^4.0.0"
-    "@leafygreen-ui/lib" "^9.0.0"
-    "@leafygreen-ui/palette" "^3.3.1"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/lib" "^10.0.0"
 
-"@leafygreen-ui/leafygreen-provider@2.3.0":
-  version "2.3.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/leafygreen-provider/-/leafygreen-provider-2.3.0.tgz#58f91f4041666d54160833feb525c15229d7db57"
-  integrity sha1-WPkfQEFmbVQWCDP+tSXBUinX21c=
+"@leafygreen-ui/lib@^10.0.0":
+  version "10.0.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/lib/-/lib-10.0.0.tgz#082155cbea1698ea1feb20ebbf9eec8f4b45ddc7"
+  integrity sha512-l9W05IYJ/Bmyu5TayuadlsSR1DTF3W05o8Lk6HQk1qK+1xMLMwrxysbwzI6jKb6wAALU9/1dmw9kLDKE2n+EWg==
   dependencies:
-    "@leafygreen-ui/hooks" "^7.0.0"
-    "@leafygreen-ui/lib" "^9.4.0"
+    lodash "^4.17.21"
 
-"@leafygreen-ui/lib@^9.0.0", "@leafygreen-ui/lib@^9.2.0", "@leafygreen-ui/lib@^9.2.1", "@leafygreen-ui/lib@^9.3.0", "@leafygreen-ui/lib@^9.4.0":
-  version "9.4.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/lib/-/lib-9.4.0.tgz#1fe4fe833ef151b68ed93ffd22a5c1635d253c0c"
-  integrity sha1-H+T+gz7xUbaO2T/9IqXBY10lPAw=
+"@leafygreen-ui/lib@^9.5.1", "@leafygreen-ui/lib@^9.5.2":
+  version "9.5.2"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/lib/-/lib-9.5.2.tgz#c80d7920e819c89ee544866b1046667fe99ea8d3"
+  integrity sha512-soC5ZSnhqoqbFv9b2kAe+1s7nUnAcdcBzrI0yIJZymExCJsZnmI3VWjLTUbViuTrsO1GfnmLDdsUeDr3ezTOOg==
   dependencies:
-    "@leafygreen-ui/emotion" "^4.0.0"
+    lodash "^4.17.21"
+
+"@leafygreen-ui/logo@^6.3.0":
+  version "6.3.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/logo/-/logo-6.3.0.tgz#8860ccb81a52f3d9f2244bc8ee7a83663da300b4"
+  integrity sha512-hxAevbD/wfOjobRp7rVhqPyV/oFRUgwLuUdPn+JG1cBT/ALIeqz7fRz4jE6SyNc3ZXSWvphw/zHaKQSExVcXQQ==
+
+"@leafygreen-ui/menu@^16.1.1":
+  version "16.1.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/menu/-/menu-16.1.1.tgz#2d9d231cae9b43c4d3a96fed305b929afdff2480"
+  integrity sha512-tKnatNSC5IbVXnki7zfGjroUBjEe34Mf8PXCS4UF195kGiodyq+nE0d9C7mYBWk+VoB7l12NUFO81e3ORTM14A==
+  dependencies:
+    "@leafygreen-ui/box" "^3.1.1"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/icon" "^11.11.1"
+    "@leafygreen-ui/icon-button" "^13.2.1"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/popover" "^9.1.1"
+    "@leafygreen-ui/tokens" "^1.3.4"
+    lodash "^4.17.21"
+    react-transition-group "^4.4.1"
+
+"@leafygreen-ui/mongo-nav@10.0.1":
+  version "10.0.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/mongo-nav/-/mongo-nav-10.0.1.tgz#2c50dc5ec00259f8b731909b9a2a5caa8c3522c5"
+  integrity sha512-Qn1esEv9QhsumJLVnxUDuA0qcrFKg+hJwDhBYamcTh5xFdsJmQxrnno9BKgy6QhsqMTx74ZNMHEC9dcQ019hEA==
+  dependencies:
+    "@leafygreen-ui/a11y" "^1.3.3"
+    "@leafygreen-ui/badge" "^6.1.1"
+    "@leafygreen-ui/button" "^16.1.1"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/icon" "^11.11.1"
+    "@leafygreen-ui/icon-button" "^13.2.1"
+    "@leafygreen-ui/lib" "^9.5.2"
+    "@leafygreen-ui/logo" "^6.3.0"
+    "@leafygreen-ui/menu" "^16.1.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/tabs" "^9.2.1"
+    "@leafygreen-ui/text-input" "^10.2.1"
+    "@leafygreen-ui/tokens" "^1.3.4"
+    "@leafygreen-ui/tooltip" "^7.1.3"
+    "@leafygreen-ui/typography" "^13.2.1"
     facepaint "^1.2.1"
     lodash "^4.17.21"
-    polished "^4.1.3"
-    prop-types "^15.0.0"
 
-"@leafygreen-ui/logo@^6.1.0":
-  version "6.1.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/logo/-/logo-6.1.2.tgz#f199650b405c52b95ef80226bfd964cac73999c7"
-  integrity sha1-8ZllC0BcUrle+AImv9lkysc5mcc=
+"@leafygreen-ui/palette@^3.4.4":
+  version "3.4.4"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/palette/-/palette-3.4.4.tgz#d5a8fd85b4eaa27d8a61ffa70288f8f3451e5670"
+  integrity sha512-ed71/pOusm9/I/7hTox38L5a/6UTk2nJr+b6ihQO/rh1oDblBvq48ID6wbJhmH/wif/SkSOAKPzXR9rKIu9uYg==
 
-"@leafygreen-ui/menu@^13.1.0":
-  version "13.1.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/menu/-/menu-13.1.1.tgz#6761e93c673f0f9166288eb726a9354fff092574"
-  integrity sha1-Z2HpPGc/D5FmKI63Jqk1T/8JJXQ=
+"@leafygreen-ui/popover@^9.1.1":
+  version "9.1.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/popover/-/popover-9.1.1.tgz#62731a9c067bf00501d0f32962a9d3aeae72649c"
+  integrity sha512-ENoy0jWn0z3T6nwtWVO/98yFpAx2Tg95S8njFP1TNGsprhqWH/ZBjXo7HucZbGojwI4gNaZ+2y8FF0yImEhPwg==
   dependencies:
-    "@leafygreen-ui/box" "^3.0.7"
-    "@leafygreen-ui/hooks" "^7.3.0"
-    "@leafygreen-ui/icon-button" "^11.0.2"
-    "@leafygreen-ui/lib" "^9.3.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-    "@leafygreen-ui/popover" "^8.0.0"
-    "@leafygreen-ui/tokens" "^1.3.1"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/portal" "^4.0.6"
     react-transition-group "^4.4.1"
 
-"@leafygreen-ui/mongo-nav@9.2.0":
-  version "9.2.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/mongo-nav/-/mongo-nav-9.2.0.tgz#12ecabe071b8956d56e675269e1fe83dfb4eb6bb"
-  integrity sha1-Euyr4HG4lW1W5nUmnh/oPftOtrs=
+"@leafygreen-ui/portal@^4.0.6":
+  version "4.0.7"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/portal/-/portal-4.0.7.tgz#af1db0bb81a825e9461c9d455cc676e4e7deb4c3"
+  integrity sha512-n4KHnIAbRsuj6a8LDrKilq9ita4S3dNsZ5nRt5hnPpkW7mrnrgyGOo6ciRsdIkUJo9+rkO+c+Nvl3A6htCiNKg==
   dependencies:
-    "@leafygreen-ui/a11y" "^1.2.2"
-    "@leafygreen-ui/badge" "^5.0.0"
-    "@leafygreen-ui/button" "^15.0.0"
-    "@leafygreen-ui/hooks" "^7.3.0"
-    "@leafygreen-ui/icon" "^11.9.0"
-    "@leafygreen-ui/icon-button" "^11.0.0"
-    "@leafygreen-ui/lib" "^9.2.1"
-    "@leafygreen-ui/logo" "^6.1.0"
-    "@leafygreen-ui/menu" "^13.1.0"
-    "@leafygreen-ui/palette" "^3.3.1"
-    "@leafygreen-ui/tabs" "^7.0.0"
-    "@leafygreen-ui/text-input" "^9.0.0"
-    "@leafygreen-ui/tokens" "^1.3.0"
-    "@leafygreen-ui/tooltip" "^7.0.1"
-    "@leafygreen-ui/typography" "^11.0.0"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/lib" "^10.0.0"
+
+"@leafygreen-ui/ripple@^1.1.5":
+  version "1.1.5"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/ripple/-/ripple-1.1.5.tgz#88286f90af3dafcf47ba103bd1663dbe74974ce5"
+  integrity sha512-xwIYHtSnNSU/+Wd7gKWPDJvUgbwA2q9xTtycWq0zukRv4+FN/RHwCzvA4XoSRyHbJ9xb3gC+p+Gjjk9YzZn9Ng==
+
+"@leafygreen-ui/tabs@^9.2.1":
+  version "9.2.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tabs/-/tabs-9.2.1.tgz#872eca91fb2c403b5fdf7a71866b021c2d673eca"
+  integrity sha512-4mV0YeRW7tJ81q4tOcDhYkBMsEJA5bfgH3K79W/peKaD0r7BrkKdRr8OE3Iqx02ENIlOyRHlPcNivUsswZLR4g==
+  dependencies:
+    "@leafygreen-ui/a11y" "^1.3.3"
+    "@leafygreen-ui/box" "^3.1.1"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/portal" "^4.0.6"
+    "@leafygreen-ui/tokens" "1.3.4"
+
+"@leafygreen-ui/text-input@^10.2.1":
+  version "10.2.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/text-input/-/text-input-10.2.1.tgz#366a1d182846b0096a4067692538c29a14e8ae10"
+  integrity sha512-eDjFYUdel8AnrQm4SFXqgZ7HM1283qQRtGaoTCM0Uihd/BoG2IKeJBh8z1FSvmsl97R6MUzHstoY/AWlxqTouA==
+  dependencies:
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/icon" "^11.11.1"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/tokens" "^1.3.4"
+    "@leafygreen-ui/typography" "^13.2.1"
+
+"@leafygreen-ui/tokens@1.3.4", "@leafygreen-ui/tokens@^1.3.4":
+  version "1.3.4"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tokens/-/tokens-1.3.4.tgz#58a8d633f6b978cd23011f3f9c9a6c637089ca6b"
+  integrity sha512-CL+uVHSi79md30XFIZlTWg54wTv9gpNxdjCzysEfzlCVoTPE4xLKukmNbLmY0yv+MurII/NA5m7R9hJ/lVMgeg==
+  dependencies:
+    "@leafygreen-ui/palette" "^3.4.4"
+
+"@leafygreen-ui/tooltip@^7.1.3":
+  version "7.1.3"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tooltip/-/tooltip-7.1.3.tgz#37f3907a87ef7a9c5fbcb9d3bf7be4ccc8224aa2"
+  integrity sha512-t6hsJSyt/vUAb1rQN9VrvCvk/vOhcf5AvAkZo0sgzZzFd58WTrCn3hXDpeUdG+zEIL7q9hZbnudYM0OPE/FJEA==
+  dependencies:
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/hooks" "^7.3.3"
+    "@leafygreen-ui/icon" "^11.11.1"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/popover" "^9.1.1"
+    "@leafygreen-ui/tokens" "^1.3.4"
+    "@leafygreen-ui/typography" "^13.2.1"
     lodash "^4.17.21"
 
-"@leafygreen-ui/palette@^3.2.2", "@leafygreen-ui/palette@^3.3.1", "@leafygreen-ui/palette@^3.3.2", "@leafygreen-ui/palette@^3.4.0":
-  version "3.4.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/palette/-/palette-3.4.0.tgz#91eeba277cc90954271600b1e2983550bbe3a748"
-  integrity sha1-ke66J3zJCVQnFgCx4pg1ULvjp0g=
-
-"@leafygreen-ui/popover@^8.0.0":
-  version "8.0.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/popover/-/popover-8.0.1.tgz#aa95ca80c4998a0a73e3749f340569ed3add116e"
-  integrity sha1-qpXKgMSZigpz43SfNAVp7TrdEW4=
+"@leafygreen-ui/typography@^13.2.1":
+  version "13.2.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/typography/-/typography-13.2.1.tgz#e7a67f34054906ef4dee02361b75dc9cc7f1a3c0"
+  integrity sha512-5DABF0NkyH0JNZnv4YUgYxMxIojrylSwW8jg2nVMD96ZynH+vKYDUFRWef6GztqaiqSnXZjn65wQcg2v9C0nUg==
   dependencies:
-    "@leafygreen-ui/hooks" "^7.0.0"
-    "@leafygreen-ui/lib" "^9.2.1"
-    "@leafygreen-ui/portal" "^4.0.0"
-    lodash "^4.17.21"
-    react-transition-group "^4.4.1"
-
-"@leafygreen-ui/popover@^9.0.0":
-  version "9.0.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/popover/-/popover-9.0.0.tgz#d1fd5be8e760ebb18ac75e9933f3773d7e07940a"
-  integrity sha1-0f1b6Odg67GKx16ZM/N3PX4HlAo=
-  dependencies:
-    "@leafygreen-ui/hooks" "^7.0.0"
-    "@leafygreen-ui/lib" "^9.4.0"
-    "@leafygreen-ui/portal" "^4.0.0"
-    lodash "^4.17.21"
-    react-transition-group "^4.4.1"
-
-"@leafygreen-ui/portal@^4.0.0", "@leafygreen-ui/portal@^4.0.3":
-  version "4.0.3"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/portal/-/portal-4.0.3.tgz#3513b766097f6e1077138552a33c81745fdaca71"
-  integrity sha1-NRO3Zgl/bhB3E4VSozyBdF/aynE=
-  dependencies:
-    "@leafygreen-ui/hooks" "^7.3.0"
-    "@leafygreen-ui/lib" "^9.3.0"
-
-"@leafygreen-ui/ripple@^1.1.1":
-  version "1.1.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/ripple/-/ripple-1.1.2.tgz#c153bf8b8a4fafd7316965cd2232f8dd70fdbeda"
-  integrity sha1-wVO/i4pPr9cxaWXNIjL43XD9vto=
-  dependencies:
-    "@leafygreen-ui/palette" "^3.2.2"
-    polished "^4.1.3"
-
-"@leafygreen-ui/tabs@^7.0.0":
-  version "7.0.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tabs/-/tabs-7.0.1.tgz#241936472fec6eb9aaafa9d6edfbd43ce9976c5f"
-  integrity sha1-JBk2Ry/sbrmqr6nW7fvUPOmXbF8=
-  dependencies:
-    "@leafygreen-ui/a11y" "^1.2.2"
-    "@leafygreen-ui/box" "^3.0.7"
-    "@leafygreen-ui/hooks" "^7.3.0"
-    "@leafygreen-ui/lib" "^9.3.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-    "@leafygreen-ui/portal" "^4.0.3"
-    "@leafygreen-ui/tokens" "1.3.1"
-
-"@leafygreen-ui/text-input@^9.0.0":
-  version "9.0.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/text-input/-/text-input-9.0.0.tgz#1f45f86d8e4af5c8320e0bd78dd867ddc94eea56"
-  integrity sha1-H0X4bY5K9cgyDgvXjdhn3clO6lY=
-  dependencies:
-    "@leafygreen-ui/hooks" "^7.1.0"
-    "@leafygreen-ui/icon" "^11.9.0"
-    "@leafygreen-ui/interaction-ring" "^3.0.0"
-    "@leafygreen-ui/lib" "^9.2.1"
-    "@leafygreen-ui/palette" "^3.3.2"
-    "@leafygreen-ui/tokens" "^1.3.0"
-    "@leafygreen-ui/typography" "^11.0.0"
-
-"@leafygreen-ui/tokens@1.3.1", "@leafygreen-ui/tokens@^1.3.0", "@leafygreen-ui/tokens@^1.3.1":
-  version "1.3.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tokens/-/tokens-1.3.1.tgz#24a59fcb3d3b67a7148eb92cb72a520bd9fa1cdb"
-  integrity sha1-JKWfyz07Z6cUjrkstypSC9n6HNs=
-  dependencies:
-    "@leafygreen-ui/lib" "^9.3.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-
-"@leafygreen-ui/tooltip@^7.0.1":
-  version "7.1.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tooltip/-/tooltip-7.1.0.tgz#04b58787c8b60516b79a84eac013d8c6e18f13b3"
-  integrity sha1-BLWHh8i2BRa3moTqwBPYxuGPE7M=
-  dependencies:
-    "@leafygreen-ui/emotion" "^4.0.0"
-    "@leafygreen-ui/hooks" "^7.0.0"
-    "@leafygreen-ui/icon" "^11.9.0"
-    "@leafygreen-ui/lib" "^9.4.0"
-    "@leafygreen-ui/palette" "^3.3.2"
-    "@leafygreen-ui/popover" "^9.0.0"
-    "@leafygreen-ui/tokens" "^1.3.1"
-    "@leafygreen-ui/typography" "^13.1.0"
-    lodash "^4.17.21"
-
-"@leafygreen-ui/typography@^11.0.0":
-  version "11.0.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/typography/-/typography-11.0.2.tgz#b4747b85e1b4c5c8175698b9378a24861f884290"
-  integrity sha1-tHR7heG0xcgXVpi5N4okhh+IQpA=
-  dependencies:
-    "@leafygreen-ui/box" "^3.0.7"
-    "@leafygreen-ui/icon" "^11.9.0"
-    "@leafygreen-ui/lib" "^9.3.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-    "@leafygreen-ui/tokens" "^1.3.1"
-
-"@leafygreen-ui/typography@^13.1.0":
-  version "13.1.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/typography/-/typography-13.1.0.tgz#fc5ce152e71b8c7f14463d634cb2766e4d849927"
-  integrity sha1-/FzhUucbjH8URj1jTLJ2bk2EmSc=
-  dependencies:
-    "@leafygreen-ui/box" "^3.0.7"
-    "@leafygreen-ui/icon" "^11.9.0"
-    "@leafygreen-ui/lib" "^9.4.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-    "@leafygreen-ui/tokens" "^1.3.1"
+    "@leafygreen-ui/box" "^3.1.1"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/icon" "^11.11.1"
+    "@leafygreen-ui/lib" "^9.5.1"
+    "@leafygreen-ui/palette" "^3.4.4"
+    "@leafygreen-ui/tokens" "^1.3.4"
 
 "@mdb/consistent-nav@1.2.15":
   version "1.2.15"
@@ -6931,13 +6891,6 @@ pluralize@8.0.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/pluralize/-/pluralize-8.0.0.tgz#1a6fa16a38d12a1901e0320fa017051c539ce3b1"
   integrity sha1-Gm+hajjRKhkB4DIPoBcFHFOc47E=
 
-polished@^4.1.3:
-  version "4.2.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/polished/-/polished-4.2.2.tgz#2529bb7c3198945373c52e34618c8fe7b1aa84d1"
-  integrity sha1-JSm7fDGYlFNzxS40YYyP57GqhNE=
-  dependencies:
-    "@babel/runtime" "^7.17.8"
-
 postcss-value-parser@^4.0.2:
   version "4.2.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
@@ -7050,7 +7003,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.0.0, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha1-Z9h78aaU9IQ1zzMsJK8QIUoxQLU=
