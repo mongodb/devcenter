@@ -2,8 +2,6 @@ name: Pull Request Checks
 on:
     pull_request:
         branches: [main]
-    push:
-        branches: [mm/percy]
 env:
     NPM_AUTH: ${{ secrets.ARTIFACTORY_NPM_AUTH }}
     NPM_EMAIL: ${{ secrets.ARTIFACTORY_NPM_EMAIL }}
