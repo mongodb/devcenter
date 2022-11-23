@@ -3,5 +3,5 @@ import { runPercy } from '../utils';
 
 test(
     'Search visual regression testing',
-    runPercy('/developer/search', 'Search')
+    runPercy('/developer/search', 'Search', 'search')
 );

@@ -20,5 +20,5 @@ test('All News & Announcements Page has correct titles', async ({ page }) => {
 
 test(
     'News & Announcements visual regression testing',
-    runPercy('/developer/news', 'News & Announcements')
+    runPercy('/developer/news', 'News & Announcements', 'news')
 );

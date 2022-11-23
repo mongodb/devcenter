@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 const percySnapshot = require('@percy/playwright');
+const path = require('path');
 
 export const allLinksHaveHref = async (links, href) => {
     const linksCount = await links.count();
@@ -33,9 +34,20 @@ const removeRelated = () => {
     }
 };
 
+const mockSearchApi = async (page, mockName) => {
+    const mockPath = `./playwright-tests/mocks/${mockName}.json`;
+    await page.route('**/api/search/**', route =>
+        route.fulfill({ path: mockPath })
+    );
+};
+
 export const runPercy =
-    (url, pageName) =>
+    (url, pageName, mockName?) =>
     async ({ page }) => {
+        if (mockName) {
+            await mockSearchApi(page, mockName);
+        }
+
         await page.goto(url, { waitUntil: 'networkidle' });
         await page.evaluate(async () => {
             const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
