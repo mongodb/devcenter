@@ -6,7 +6,7 @@ import { getSideNav } from '../../service/get-side-nav';
 import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
-import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
+import { appendDocumentationLinkToSideNav } from '../../utils/page-template-helpers';
 import { getFeaturedForContent } from '../../service/get-featured-for-content';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
 import allContentPreval from '../../service/get-all-content.preval';

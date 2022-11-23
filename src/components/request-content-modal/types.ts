@@ -9,8 +9,6 @@ export interface ContentRequest {
 }
 
 export interface RequestContentModalProps {
-    setModalStage: (stage: modalStages) => void;
-    modalStage: modalStages;
     contentCategory: PillCategory;
 }
 
