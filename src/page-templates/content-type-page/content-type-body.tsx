@@ -4,9 +4,9 @@ import { FeaturedCardSection } from '../../components/card-section';
 import { SearchBox, SearchResults, SortBox } from '../../components/search';
 import { searchWrapperStyles } from '../../components/search/styles';
 import { h5Styles } from '../../styled/layout';
-import LanguagesSection from './languages-section';
-import ProductsSection from './products-section';
-import TechnologiesSection from './technologies-section';
+import LanguagesSection from './sections/languages';
+import ProductsSection from './sections/products';
+import TechnologiesSection from './sections/technologies';
 import { ContentTypePageProps } from './types';
 
 let pluralize = require('pluralize');
@@ -21,7 +21,7 @@ interface ContentTypeBodyProps {
     };
     searchMetaProps: any;
     mobileFiltersOpen: boolean;
-    setMobileFiltersOpen: (isOpen: boolean) => void;
+    children: React.ReactNode;
 }
 
 const ContentTypeBody: React.FunctionComponent<
@@ -37,7 +37,6 @@ const ContentTypeBody: React.FunctionComponent<
         clearAll,
     },
     searchMetaProps: { updatePageMeta },
-    setMobileFiltersOpen,
     featured,
     extraFeatured: {
         featuredLanguages,
@@ -47,6 +46,7 @@ const ContentTypeBody: React.FunctionComponent<
     contentType,
     pageNumber,
     slug,
+    children,
 }) => {
     const showFeatured = !searchString && !filters.length;
 
@@ -148,25 +148,6 @@ const ContentTypeBody: React.FunctionComponent<
                 </div>
             )}
 
-            <Button
-                hasIcon
-                iconPosition="right"
-                iconStrokeWeight="medium"
-                iconName={ESystemIconNames.FILTER_HAMBURGER}
-                onClick={() => setMobileFiltersOpen(true)}
-                customWrapperStyles={{
-                    display: ['block', null, null, 'none'],
-                    flexBasis: ['100%', null, 'auto'],
-                }}
-                customStyles={{
-                    display: ['flex', null, null, 'none'],
-                    justifyContent: 'center',
-                }}
-            >
-                Filter & Sort
-                {!!filters.length && ` (${filters.length})`}
-            </Button>
-
             <SearchResults
                 {...resultsProps}
                 pageNumber={pageNumber}
@@ -174,7 +155,7 @@ const ContentTypeBody: React.FunctionComponent<
                 updatePageMeta={updatePageMeta}
                 contentType={contentType}
                 extraStyles={{
-                    order: showFeatured ? '2' : '1',
+                    order: showFeatured ? '4' : '3',
                 }}
                 noResultsFooter={
                     <Button
@@ -187,6 +168,8 @@ const ContentTypeBody: React.FunctionComponent<
                     </Button>
                 }
             />
+
+            {children}
         </div>
     );
 };

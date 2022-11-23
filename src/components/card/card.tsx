@@ -42,21 +42,14 @@ const Card: React.FunctionComponent<CardProps> = ({
     variant,
     slug,
     hideTagsOnMobile = true,
+    secondaryTag = null,
 }) => {
     const truncatedDescription =
         description && parse(description ? description : '');
     const displayDate = formatDateToDisplayDateFormat(
         getLatestDate(contentDate, updatedDate)
     );
-    let secondaryTagElement = null;
-    if (tags && pillCategory === 'Code Example') {
-        const codeLevelTag = tags.find(tag => tag.type === 'CodeLevel');
-        if (codeLevelTag && codeLevelTag.name) {
-            secondaryTagElement = (
-                <SecondaryTag codeLevel={codeLevelTag.name as CodeLevel} />
-            );
-        }
-    }
+
     return (
         <div
             sx={cardWrapperStyles}
@@ -130,7 +123,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                         text={pillCategory}
                         size="small"
                     />
-                    {secondaryTagElement}
+                    {secondaryTag}
                     <TypographyScale
                         variant="heading3"
                         sx={{

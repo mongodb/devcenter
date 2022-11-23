@@ -150,7 +150,7 @@ const mockFeatured = [
                 type: 'L1Product',
             },
         ],
-        title: 'Mock Event',
+        title: 'MongoDB.local San Francisco',
         codeType: null,
         githubUrl: null,
         liveSiteUrl: null,
@@ -175,6 +175,7 @@ const mockFeatured = [
             url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/pink2_3220fb1c27_112dfb7ace.webp',
             alt: 'random alt',
         },
+        location: 'San Francisco, United States | IN-PERSON',
     },
     {
         collectionType: 'Event',
@@ -211,7 +212,7 @@ const mockFeatured = [
                 type: 'L1Product',
             },
         ],
-        title: 'Mock Event',
+        title: 'MonogDB @ Datadog Dash 2022',
         codeType: null,
         githubUrl: null,
         liveSiteUrl: null,
@@ -236,6 +237,7 @@ const mockFeatured = [
             url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/pink2_3220fb1c27_112dfb7ace.webp',
             alt: 'random alt',
         },
+        location: 'San Francisco, United States | IN-PERSON',
     },
     {
         collectionType: 'Event',
@@ -272,7 +274,7 @@ const mockFeatured = [
                 type: 'L1Product',
             },
         ],
-        title: 'Mock Event',
+        title: 'RomeMUG Meetup#3 MongoDB per il Content Management & Ops Manager e dintorni',
         codeType: null,
         githubUrl: null,
         liveSiteUrl: null,
@@ -297,6 +299,7 @@ const mockFeatured = [
             url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/pink2_3220fb1c27_112dfb7ace.webp',
             alt: 'random alt',
         },
+        location: 'San Francisco, United States | IN-PERSON',
     },
 ];
 

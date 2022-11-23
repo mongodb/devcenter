@@ -4,9 +4,9 @@ import type {
     GetServerSidePropsContext,
 } from 'next';
 
-import ContentTypePage from '../page-templates/content-type';
-import { ContentTypePageProps } from '../page-templates/content-type/types';
-import { getContentTypePageData } from '../page-templates/content-type/content-type-data';
+import ContentTypePage from '../page-templates/content-type-page';
+import { ContentTypePageProps } from '../page-templates/content-type-page/types';
+import { getContentTypePageData } from '../page-templates/content-type-page/content-type-data';
 import { parsePageNumber } from '../utils/page-type-factory';
 import { isValidPage } from '../components/search/utils';
 import {
@@ -16,9 +16,32 @@ import {
     SortBox,
 } from '../components/search';
 import { searchWrapperStyles } from '../components/search/styles';
-import { Button, ESystemIconNames } from '@mdb/flora';
+import {
+    Button,
+    ESystemIconNames,
+    HorizontalRule,
+    TypographyScale,
+} from '@mdb/flora';
 import { mockFeatured } from '../mockdata/mock-events-data';
-import CardSection, { FeaturedCardSection } from '../components/card-section';
+import { Grid } from 'theme-ui';
+import Card, { getCardProps } from '../components/card';
+import {
+    cardListStyles,
+    cardSectionListStyles,
+} from '../components/card-section/styles';
+import { Location } from '../components/icons';
+import SecondaryTag from '../components/card/secondary-tag';
+import { h5Styles } from '../styled/layout';
+
+const extraSearchResultsStyles = (showFeatured: boolean) => ({
+    order: showFeatured ? '4' : '3',
+});
+const extraSearchResultsHeadingStyles = (showFeatured: boolean) => ({
+    ...h5Styles,
+    flexGrow: '1',
+    flexBasis: showFeatured ? 'auto' : ['100%', null, 'auto'],
+    order: '2',
+});
 interface EventsPageComponentProps {
     searchProps: any;
     searchMetaProps: any;
@@ -30,58 +53,91 @@ const EventsPageComponent: React.FunctionComponent<
     EventsPageComponentProps & ContentTypePageProps
 > = ({
     searchProps: {
-        searchProps,
+        searchBoxProps,
+        searchBoxProps: { searchString },
         sortBoxProps,
         filterProps: { filters },
         resultsProps,
+        resultsProps: { isValidating, results },
     },
     searchMetaProps: { updatePageMeta },
-    mobileFiltersOpen,
     setMobileFiltersOpen,
     featured,
     pageNumber,
+    children,
 }) => {
-    console.log(resultsProps.results);
+    const showFeatured = !searchString && !filters.length;
+
     return (
         <div sx={searchWrapperStyles}>
             <SearchBox
-                {...searchProps}
+                {...searchBoxProps}
                 placeholder="Search Events"
-                extraStyles={{ flexBasis: ['100%', null, null, '60%'] }}
+                extraStyles={{ flexBasis: ['100%', null, 'calc(66% - 12px)'] }}
             />
 
             <LocationBox />
 
-            <CardSection
-                content={featured}
-                title="Featured Events"
-                extraStyles={{ width: '100%' }}
-            />
-
-            <Button
-                hasIcon
-                iconPosition="right"
-                iconStrokeWeight="medium"
-                iconName={ESystemIconNames.FILTER_HAMBURGER}
-                onClick={() => setMobileFiltersOpen(true)}
-                customWrapperStyles={{
-                    display: ['block', null, null, 'none'],
-                    flexBasis: ['100%', null, 'auto'],
-                }}
-                customStyles={{
-                    display: ['flex', null, null, 'none'],
-                    justifyContent: 'center',
-                }}
-            >
-                Filter & Sort
-                {!!filters.length && ` (${filters.length})`}
-            </Button>
+            {showFeatured && (
+                <Grid
+                    columns={3}
+                    sx={{ ...cardSectionListStyles('row'), width: '100%' }}
+                >
+                    {featured.slice(0, 3).map((item, i) => (
+                        <Card
+                            key={i}
+                            {...{
+                                ...getCardProps(item, 'medium'),
+                                tags: undefined,
+                            }}
+                            secondaryTag={
+                                item.location ? (
+                                    <SecondaryTag icon={<Location />}>
+                                        {item.location.toUpperCase()}
+                                    </SecondaryTag>
+                                ) : undefined
+                            }
+                            sx={{ ...cardListStyles('row'), div: { gap: '0' } }}
+                        />
+                    ))}
+                </Grid>
+            )}
 
             <SearchResults
                 {...resultsProps}
                 pageNumber={pageNumber}
                 updatePageMeta={updatePageMeta}
+                extraStyles={extraSearchResultsStyles(showFeatured)}
             />
+
+            <HorizontalRule spacing="large" />
+
+            <SearchResults
+                {...resultsProps}
+                pageNumber={pageNumber}
+                updatePageMeta={updatePageMeta}
+                extraStyles={extraSearchResultsStyles(showFeatured)}
+            />
+
+            <HorizontalRule spacing="large" />
+
+            {(!isValidating || showFeatured) && (
+                <TypographyScale
+                    variant="heading2"
+                    sx={extraSearchResultsHeadingStyles(showFeatured)}
+                >
+                    All Events
+                </TypographyScale>
+            )}
+
+            <SearchResults
+                {...resultsProps}
+                pageNumber={pageNumber}
+                updatePageMeta={updatePageMeta}
+                extraStyles={extraSearchResultsStyles(showFeatured)}
+            />
+
+            {children}
         </div>
     );
 };

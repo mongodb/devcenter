@@ -1,6 +1,10 @@
+import theme from '@mdb/flora/theme';
+
 import { CardProps, CardVariant } from './types';
 import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
+import SecondaryTag from './secondary-tag';
+import { FullApplication, Snippet } from '../icons';
 
 export const getLatestDate = (contentDate: string, updatedDate?: string) => {
     let latestDate = new Date(contentDate);
@@ -62,8 +66,31 @@ export const getCardProps = (
         thumbnail: image,
         variant,
         slug,
-        location,
     };
+
+    if (tags && category === 'Code Example') {
+        const codeLevelTag = tags.find(tag => tag.type === 'CodeLevel');
+        if (codeLevelTag && codeLevelTag.name) {
+            const iconStyles = {
+                strokeWidth: 2,
+                fill: theme.colors.text.secondary,
+            };
+
+            cardProps.secondaryTag = (
+                <SecondaryTag
+                    icon={
+                        codeLevelTag.name === 'Snippet' ? (
+                            <Snippet sx={iconStyles} />
+                        ) : (
+                            <FullApplication sx={iconStyles} />
+                        )
+                    }
+                >
+                    {codeLevelTag.name.toUpperCase()}
+                </SecondaryTag>
+            );
+        }
+    }
 
     return cardProps;
 };

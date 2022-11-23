@@ -2,6 +2,7 @@ import { PillCategory } from '../../types/pill-category';
 import { Tag } from '../../interfaces/tag';
 import { Author } from '../../interfaces/author';
 import { Image } from '../../interfaces/image';
+import React, { ReactElement } from 'react';
 
 export type CardVariant = 'small' | 'medium' | 'large' | 'list' | 'related';
 
@@ -18,5 +19,5 @@ export interface CardProps {
     variant: CardVariant;
     slug: string;
     hideTagsOnMobile?: boolean;
-    location?: string;
+    secondaryTag?: React.ReactNode;
 }
