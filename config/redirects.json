@@ -2298,5 +2298,10 @@
         "source": "/products/atlas/query-multiple-databases-with-atlas-data-lake/",
         "destination": "/products/atlas/query-multiple-databases-with-atlas-data-federation/",
         "permanent": true
+    },
+    {
+        "source": "/products/mongodb/generate-mql-with-mognosh-and-openai/",
+        "destination": "/products/mongodb/generate-mql-with-mongosh-and-openai/",
+        "permanent": true
     }
 ]
