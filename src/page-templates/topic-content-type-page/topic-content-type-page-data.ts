@@ -10,7 +10,7 @@ import allContentPreval from '../../service/get-all-content.preval';
 import allContentTypes from '../../service/get-all-content-types.preval';
 import { getSideNav } from '../../service/get-side-nav';
 import { PillCategory, pillCategoryToSlug } from '../../types/pill-category';
-import { appendDocumentationLinkToSideNav } from '../../utils/add-documentation-link-to-side-nav';
+import { appendDocumentationLinkToSideNav } from '../../utils/page-template-helpers';
 
 export const getTopicContentTypePageData = async (
     l1_l2: string,

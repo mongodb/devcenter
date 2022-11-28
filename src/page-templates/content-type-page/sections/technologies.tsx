@@ -1,8 +1,11 @@
-import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
+import {
+    ITopicCard,
+    TopicCardProps,
+} from '../../../components/topic-card/types';
 import { ThirdPartyLogo, BrandedIcon } from '@mdb/flora';
-import { iconStyles } from '../../components/topic-card/styles';
-import { TopicCardsContainer } from '../../components/topic-card';
-import { technologyToLogo } from '../../utils/technology-to-logo';
+import { iconStyles } from '../../../components/topic-card/styles';
+import { TopicCardsContainer } from '../../../components/topic-card';
+import { technologyToLogo } from '../../../utils/technology-to-logo';
 
 interface TechnologiesSectionProps {
     title: string;

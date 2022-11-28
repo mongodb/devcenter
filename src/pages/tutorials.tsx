@@ -4,9 +4,9 @@ import type {
     GetServerSidePropsContext,
 } from 'next';
 
-import ContentTypePage from '../page-templates/content-type';
-import { ContentTypePageProps } from '../page-templates/content-type/types';
-import { getContentTypePageData } from '../page-templates/content-type/content-type-data';
+import ContentTypePage from '../page-templates/content-type-page';
+import { ContentTypePageProps } from '../page-templates/content-type-page/types';
+import { getContentTypePageData } from '../page-templates/content-type-page/content-type-data';
 import { parsePageNumber } from '../utils/page-type-factory';
 import { isValidPage } from '../components/search/utils';
 
