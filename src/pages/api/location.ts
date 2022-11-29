@@ -6,9 +6,8 @@ async function locationSearchHandler(
     res: NextApiResponse
 ) {
     try {
-        // TODO: api keys in env vars
         const request = await fetch(
-            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${req.query.search}&types=(regions)&key=AIzaSyC-a347T-kafCnLscFPxHvaKzbY0hwJVmI`
+            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${req.query.search}&types=(regions)&key=${process.env.GOOGLE_PLACES_API_KEY}`
         );
 
         const { predictions = [], error_message = '' } = await request.json();
