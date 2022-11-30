@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import { useMemo, useState } from 'react';
-import { Button, ESystemIconNames, GridLayout } from '@mdb/flora';
+import { Button, GridLayout } from '@mdb/flora';
 import { pageWrapper } from '../../styled/layout';
 import { desktopFiltersStyles } from './styles';
 
@@ -69,7 +69,6 @@ const ContentTypePage: React.FunctionComponent<
     );
     const {
         filterProps,
-        filterProps: { filters },
         sortBoxProps,
         resultsProps: { results, error },
     } = searchProps;
@@ -142,28 +141,9 @@ const ContentTypePage: React.FunctionComponent<
                     <BodyComponent
                         searchProps={searchProps}
                         searchMetaProps={searchMetaProps}
+                        setMobileFiltersOpen={setMobileFiltersOpen}
                         {...props}
-                    >
-                        <Button
-                            hasIcon
-                            iconPosition="right"
-                            iconStrokeWeight="medium"
-                            iconName={ESystemIconNames.FILTER_HAMBURGER}
-                            onClick={() => setMobileFiltersOpen(true)}
-                            customWrapperStyles={{
-                                display: ['block', null, null, 'none'],
-                                flexBasis: ['100%', null, 'auto'],
-                                order: '2',
-                            }}
-                            customStyles={{
-                                display: ['flex', null, null, 'none'],
-                                justifyContent: 'center',
-                            }}
-                        >
-                            Filter & Sort
-                            {!!filters.length && ` (${filters.length})`}
-                        </Button>
-                    </BodyComponent>
+                    />
                 </GridLayout>
             </div>
             <RequestContentModal contentCategory={contentType} />

@@ -11,6 +11,7 @@ import {
     descriptionStyles,
     cardHeaderStyles,
     thumbnailWrapperStyles,
+    thumbnailStyles,
 } from './styles';
 import {
     hasThumbnail,
@@ -20,14 +21,76 @@ import {
     getLatestDate,
 } from './utils';
 import TagSection from '../tag-section';
-import { CardProps } from './types';
+import { CardProps, CardVariant } from './types';
 import parse from 'html-react-parser';
 import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 import { getURLPath } from '../../utils/format-url-path';
-import SecondaryTag from './secondary-tag';
-import { CodeLevel } from '../../types/tag-type';
 import { h5Styles, h6Styles } from '../../styled/layout';
+import EventIcon from '../event-icon';
+import { PillCategory } from '../../types/pill-category';
+
+const CardThumbnail = ({
+    thumbnail: { url = '', alt = '', city = '' } = {},
+    pillCategory,
+    variant,
+}: {
+    thumbnail?: {
+        url?: string;
+        alt?: string;
+        city?: string;
+    };
+    pillCategory: PillCategory;
+    variant: CardVariant;
+}) => {
+    const playButtonUrl = getURLPath('/play-button.svg', false) as string;
+
+    const defaultThumbnail = (
+        <Image
+            alt={alt || 'alt not provided'}
+            src={url as string}
+            sx={thumbnailStyles}
+            layout="fill"
+        />
+    );
+
+    const customThumbnails = {
+        Podcast: (
+            <Image
+                alt="Play Button"
+                src={playButtonUrl}
+                sx={thumbnailStyles}
+                layout="fill"
+            />
+        ),
+        Event: url ? defaultThumbnail : <EventIcon text={city} />,
+        Video: (
+            <>
+                {defaultThumbnail}
+                <div
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        height: '100%',
+                    }}
+                >
+                    <Image
+                        alt="Play Button"
+                        src={playButtonUrl}
+                        width={60}
+                        height={60}
+                    />
+                </div>
+            </>
+        ),
+    } as { [category: string]: JSX.Element };
+
+    return hasThumbnail(variant, pillCategory) ? (
+        <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
+            {customThumbnails[pillCategory] || defaultThumbnail}
+        </div>
+    ) : null;
+};
 
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
@@ -70,52 +133,12 @@ const Card: React.FunctionComponent<CardProps> = ({
                 aria-label={title}
             />
             <div sx={cardHeaderStyles(variant, pillCategory)}>
-                {((thumbnail && thumbnail.url) || pillCategory === 'Podcast') &&
-                    hasThumbnail(variant, pillCategory) && (
-                        <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
-                            <Image
-                                alt={
-                                    pillCategory === 'Podcast'
-                                        ? 'Play Button'
-                                        : thumbnail?.alt || 'alt not provided'
-                                }
-                                src={
-                                    pillCategory === 'Podcast'
-                                        ? (getURLPath(
-                                              '/play-button.svg',
-                                              false
-                                          ) as string)
-                                        : (thumbnail?.url as string)
-                                }
-                                sx={{
-                                    borderRadius: 'inc30',
-                                    objectFit: 'cover',
-                                }}
-                                layout="fill"
-                            />
-                            {pillCategory === 'Video' && (
-                                <div
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        height: '100%',
-                                    }}
-                                >
-                                    <Image
-                                        alt={'Play Button'}
-                                        src={
-                                            getURLPath(
-                                                '/play-button.svg',
-                                                false
-                                            ) as string
-                                        }
-                                        width={60}
-                                        height={60}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    )}
+                <CardThumbnail
+                    thumbnail={thumbnail}
+                    pillCategory={pillCategory}
+                    variant={variant}
+                />
+
                 <div>
                     <Pill
                         sx={pillStyles(pillCategory)}

@@ -27,6 +27,11 @@ export const pillStyles = (pillCategory: PillCategory) => ({
     letterSpacing: ['2.5px', null, null, '3px'],
 });
 
+export const thumbnailStyles = {
+    borderRadius: 'inc30',
+    objectFit: 'cover' as 'cover',
+};
+
 export const thumbnailWrapperStyles = (
     variant: CardVariant,
     category: PillCategory

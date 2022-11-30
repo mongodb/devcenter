@@ -307,9 +307,9 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                             extraStyles={extraSearchBoxStyles}
                         />
 
-                        {contentType === 'Events' && <LocationBox />}
+                        {contentType === 'Event' && <LocationBox />}
 
-                        {contentType !== 'Events' && (
+                        {contentType !== 'Event' && (
                             <SortBox
                                 {...sortBoxProps}
                                 extraStyles={extraSortBoxStyles}

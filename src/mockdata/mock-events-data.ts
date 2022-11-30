@@ -37,7 +37,8 @@ const mockResults = [
         contentDate: '2022-10-24T19:00:00.000Z',
         image: {
             alt: 'Easy deployment of MEAN stack',
-            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/easy_deployment_mean_stack_fc5b1fe0a4.png',
+            url: '',
+            city: 'London',
         },
         authors: [],
         slug: '/events/mock-event-1',
@@ -78,7 +79,8 @@ const mockResults = [
         contentDate: '2022-10-24T19:00:00.000Z',
         image: {
             alt: 'Easy deployment of MEAN stack',
-            url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/easy_deployment_mean_stack_fc5b1fe0a4.png',
+            url: '',
+            city: 'New York City',
         },
         authors: [],
         slug: '/events/mock-event-2',

@@ -110,7 +110,7 @@ const EventsPageComponent: React.FunctionComponent<
                 extraStyles={extraSearchResultsStyles(showFeatured)}
             />
 
-            <HorizontalRule spacing="large" />
+            <HorizontalRule sx={{ order: '4' }} spacing="large" />
 
             <SearchResults
                 {...resultsProps}
@@ -119,7 +119,7 @@ const EventsPageComponent: React.FunctionComponent<
                 extraStyles={extraSearchResultsStyles(showFeatured)}
             />
 
-            <HorizontalRule spacing="large" />
+            <HorizontalRule sx={{ order: '4' }} spacing="large" />
 
             {(!isValidating || showFeatured) && (
                 <TypographyScale
