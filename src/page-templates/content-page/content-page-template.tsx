@@ -187,7 +187,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     href={githubUrl}
                     target="_blank"
                     variant="secondary"
-                    iconName={ESystemIconNames.EXTERNAL}
+                    iconName={ESystemIconNames.SOCIAL_GITHUB}
                     sx={{ width: 'auto' }}
                 >
                     View Code
