@@ -37,6 +37,9 @@ export const getTopicPageData = async (
 
     let tertiaryNavItems = await getSideNav(slugString, allContentPreval);
 
+    // console.log('TERTIARY NAV ITEMS')
+    // console.log(tertiaryNavItems)
+
     tertiaryNavItems = appendDocumentationLinkToSideNav(
         tertiaryNavItems,
         metaInfoForTopic

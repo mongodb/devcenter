@@ -13,7 +13,12 @@ import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
 import RequestContentModal from '../../components/request-content-modal';
-import { SearchBox, SearchResults, SortBox } from '../../components/search';
+import {
+    LocationBox,
+    SearchBox,
+    SearchResults,
+    SortBox,
+} from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import {
     sideNavStyles,
@@ -226,6 +231,8 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
         </GridLayout>
     );
 
+    console.log(contentType);
+
     return (
         <>
             <NextSeo
@@ -299,10 +306,15 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                             )}`}
                             extraStyles={extraSearchBoxStyles}
                         />
-                        <SortBox
-                            {...sortBoxProps}
-                            extraStyles={extraSortBoxStyles}
-                        />
+
+                        {contentType === 'Events' && <LocationBox />}
+
+                        {contentType !== 'Events' && (
+                            <SortBox
+                                {...sortBoxProps}
+                                extraStyles={extraSortBoxStyles}
+                            />
+                        )}
 
                         {contentType === 'Code Example' && (
                             <ExtraCodeExampleCheckboxes {...filterProps} />

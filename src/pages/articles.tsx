@@ -21,7 +21,6 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const pageNumber = parsePageNumber(query.page);
     const data = await getContentTypePageData('Article', pageNumber);
-    console.log(JSON.stringify(data));
     if (
         data?.initialSearchContent &&
         data?.initialSearchContent.length > 0 &&

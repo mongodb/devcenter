@@ -10,14 +10,19 @@ const mockResults = [
                 type: 'Product',
             },
             {
+                name: 'Event',
+                slug: '/events',
+                type: 'ContentType',
+            },
+            {
                 name: 'Docs',
                 slug: '/author-types/mongodb',
                 type: 'EventType',
             },
             {
-                name: 'Realm',
-                type: 'L1Product',
-                slug: '/products/realm',
+                name: 'JavaScript',
+                type: 'ProgrammingLanguage',
+                slug: '/languages/javascript',
             },
             {
                 name: 'Search',
@@ -25,17 +30,16 @@ const mockResults = [
                 slug: '/products/atlas/search',
             },
         ],
-        category: 'MongoDB Event',
+        category: 'Event',
         description:
             'Educational breakout sessions, an announcement-packed keynote presentation, customer stories, free 1:1 Ask the Experts consulting sessions, networking opportunities, and more.',
         location: 'San Francisco, United States | IN-PERSON',
         contentDate: '2022-10-24T19:00:00.000Z',
         image: {
-            alternativeText: 'Easy deployment of MEAN stack',
+            alt: 'Easy deployment of MEAN stack',
             url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/easy_deployment_mean_stack_fc5b1fe0a4.png',
         },
         authors: [],
-        score: {},
         slug: '/events/mock-event-1',
     },
     {
@@ -47,6 +51,11 @@ const mockResults = [
                 type: 'Product',
             },
             {
+                name: 'Event',
+                slug: '/events',
+                type: 'ContentType',
+            },
+            {
                 name: 'Docs',
                 slug: '/author-types/mongodb',
                 type: 'EventType',
@@ -62,17 +71,16 @@ const mockResults = [
                 slug: '/products/atlas/search',
             },
         ],
-        category: 'MongoDB Event',
+        category: 'Event',
         description:
             'MongoDB is thrilled to be a Gold Sponsor at Dash 2022 in New York City this year. Dash is an annual conference about building and scaling the next generation of applications, infrastructure, security, and technical teams. Be sure to visit our booth and our speaking session.',
         location: 'New York City, United States | Hybrid',
         contentDate: '2022-10-24T19:00:00.000Z',
         image: {
-            alternativeText: 'Easy deployment of MEAN stack',
+            alt: 'Easy deployment of MEAN stack',
             url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/easy_deployment_mean_stack_fc5b1fe0a4.png',
         },
         authors: [],
-        score: {},
         slug: '/events/mock-event-2',
     },
     {
@@ -84,6 +92,11 @@ const mockResults = [
                 type: 'Product',
             },
             {
+                name: 'Event',
+                slug: '/events',
+                type: 'ContentType',
+            },
+            {
                 name: 'Docs',
                 slug: '/author-types/mongodb',
                 type: 'EventType',
@@ -99,17 +112,16 @@ const mockResults = [
                 slug: '/products/atlas/search',
             },
         ],
-        category: 'MongoDB Event',
+        category: 'Event',
         description:
             'RomeMUG è lieta di annunciarvi il terzo meetup rigorosamente in presenza  Thursday, September 8, 2022 1:00 PM presso il The Hub - LVenture Group di Roma Termini. L’evento includerà due lightning talk con demo, bevande e swag marchiati MongoDB! 🎁',
         location: 'San Francisco, United States | IN-PERSON',
         contentDate: '2022-10-24T19:00:00.000Z',
         image: {
-            alternativeText: 'Easy deployment of MEAN stack',
+            alt: 'Easy deployment of MEAN stack',
             url: 'https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/easy_deployment_mean_stack_fc5b1fe0a4.png',
         },
         authors: [],
-        score: {},
         slug: '/events/mock-event-3',
     },
 ] as ContentItem[];

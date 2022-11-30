@@ -63,6 +63,8 @@ import {
     sideNavStyles,
     sideNavTitleStyles,
 } from '../../components/tertiary-nav/styles';
+import { FullApplication, Snippet } from '../../components/icons';
+import { iconStyles } from '../../components/topic-card/styles';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -395,7 +397,17 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             />
                         )}
                         {codeType && (
-                            <SecondaryTag codeLevel={codeType as CodeLevel} />
+                            <SecondaryTag
+                                icon={
+                                    codeType === 'Snippet' ? (
+                                        <Snippet sx={iconStyles} />
+                                    ) : (
+                                        <FullApplication sx={iconStyles} />
+                                    )
+                                }
+                            >
+                                {codeType.toUpperCase()}
+                            </SecondaryTag>
                         )}
                         {getSocialButtons(true)}
                     </div>
