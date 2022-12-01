@@ -1,0 +1,602 @@
+[
+    {
+        "authors": [
+            {
+                "name": "Robert Walters",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Rob_Walters_4f11c00123.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "type": "Tutorial",
+        "description": "Learn how to extract load and transform MongoDB data using Airbyte.",
+        "date": "2022-11-16T20:00:00.000Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/airbyte_Blog_Cover_4fd09d81ad.png",
+            "alternativeText": "Airbyte and MongoDB"
+        },
+        "tags": [
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "name": "MOCK - ELT MongoDB Data Using Airbyte",
+        "score": {},
+        "slug": "/products/atlas/elt-mongodb-data-airbyte"
+    },
+    {
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/fullstack_app_react_app_services_graphql_c6f56d5635.png"
+        },
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "name": "Deploy and Host Your React Web App on MongoDB Atlas App Services",
+        "description": "This Atlas App Services tutorial shows you how to host websites and single-page applications like React in just 5 steps.",
+        "date": "2022-11-15T20:00:00.000Z",
+        "tags": [
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Tutorial",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "score": {},
+        "slug": "/products/atlas/host-react-app-using-atlas-app-services"
+    },
+    {
+        "date": "2022-11-15T20:00:00.000Z",
+        "tags": [
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "name": "Using MongoDB with Apache Airflow",
+        "description": "Learn how to integrate MongoDB within your Airflow DAGs.",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/airflow_Blog_Cover_9ddc7c1d1e.png",
+            "alternativeText": "Using MongoDB with Apache Airflow"
+        },
+        "authors": [
+            {
+                "name": "Robert Walters",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Rob_Walters_4f11c00123.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "type": "Tutorial",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "score": {},
+        "slug": "/products/mongodb/mongodb-apache-airflow"
+    },
+    {
+        "name": "How to Set Up HashiCorp Vault KMIP Secrets Engine with MongoDB CSFLE or Queryable Encryption",
+        "image": {
+            "alternativeText": "lock and stars",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/security_22a83917fd_0ae816301b.webp"
+        },
+        "type": "Tutorial",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 8
+        },
+        "description": "In this blog, learn how to use Hashicorp Vault KMIP Secrets Engine with CSFLE and Queryable Encryption to have a standardized way of managing encryption keys.",
+        "date": "2022-11-14T20:00:00.000Z",
+        "authors": [
+            {
+                "name": "Pierre Petersson",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Pierre_Petersson_profile_pic_1e22bab431.jpeg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Python",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/python"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "score": {},
+        "slug": "/products/atlas/hashicorp-vault-kmip-secrets-engine-mongodb"
+    },
+    {
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/fullstack_app_react_app_services_graphql_c6f56d5635.png",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "type": "Tutorial",
+        "rating_metrics": {
+            "average": 4,
+            "median": 4,
+            "count": 1
+        },
+        "name": "Implement Analytics Dashboard in React Using Custom Resolvers for Atlas GraphQL API",
+        "description": "Learn how to create charts to show insights based on user data in React.",
+        "date": "2022-11-11T16:47:11.600Z",
+        "tags": [
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "score": {},
+        "slug": "/products/atlas/analytics-in-react-using-atlas-graphql-api"
+    },
+    {
+        "date": "2022-11-09T20:00:00.000Z",
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "rating_metrics": {
+            "median": null,
+            "count": 0,
+            "average": null
+        },
+        "type": "Tutorial",
+        "name": "Create an Analytics Dashboard Using Atlas GraphQL API’s Custom Resolvers",
+        "description": "Learn how to utilize MongoDB Aggregation Pipelines via a GraphQL API and perform advanced analytics on the data stored in our database.",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/fullstack_app_react_app_services_graphql_c6f56d5635.png",
+            "alternativeText": ""
+        },
+        "tags": [
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "score": {},
+        "slug": "/products/atlas/analytics-using-atlas-graphql-api-custom-resolver"
+    },
+    {
+        "name": "Ep 137 Startup Spotlight: Devless with Robert Blackburn",
+        "image": {
+            "url": "https://files.casted.us/0d169241-a857-4296-8ee1-8c2db961ade0.png"
+        },
+        "description": "<p>In this episode, we're joined by Robert Blackburn of Blackburn labs. Robert talks to Mike Lynn about his journey to founding Blackburn labs and how Blackburn labs came to developing their Devless platform - a locode, nocode platform that came together on the back of the work they were doing for existing clients and a way to help those clients out. Robert chats with Mike about their solutions, their clients and their tech stack and his advice for anybody else looking to get into the software business.</p><p><br></p>",
+        "type": "Podcast",
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "authors": [],
+        "date": "2022-11-08T13:00:00.500Z",
+        "tags": [
+            {
+                "name": "Podcast",
+                "type": "ContentType",
+                "slug": "/podcasts"
+            }
+        ],
+        "score": {},
+        "slug": "/podcasts/ep-137-startup-spotlight--devless-with-robert-blackburn"
+    },
+    {
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "name": "Build a Totally Serverless REST API with MongoDB Atlas",
+        "date": "2022-11-04T16:59:16.107Z",
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/green_20502a3a50_83edd692a8.webp"
+        },
+        "authors": [
+            {
+                "name": "Nic Raboy",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/nraboy_2f37801be7.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Serverless",
+                "type": "Technology",
+                "slug": "/technologies/serverless"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            }
+        ],
+        "description": "Learn how to go totally serverless in both the database and application by using MongoDB Atlas serverless instances and the MongoDB Atlas App Services.",
+        "type": "Tutorial",
+        "score": {},
+        "slug": "/products/atlas/build-totally-serverless-rest-api-mongodb-atlas"
+    },
+    {
+        "type": "Tutorial",
+        "name": "Getting Started with MongoDB Atlas and Azure Functions using Node.js",
+        "description": "In this tutorial, we’re going to see just how easy it is to interact with MongoDB Atlas using Azure functions.",
+        "date": "2022-11-03T19:00:00.000Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/pink2_3220fb1c27_112dfb7ace_be7c5dab16.webp",
+            "alternativeText": "MongoDB Atlas and Azure functions"
+        },
+        "authors": [
+            {
+                "name": "Nic Raboy",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/nraboy_2f37801be7.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Azure",
+                "type": "Technology",
+                "slug": "/technologies/azure"
+            },
+            {
+                "name": "Nodejs",
+                "type": "Technology",
+                "slug": "/technologies/nodejs"
+            },
+            {
+                "name": "Partner",
+                "type": "AuthorType",
+                "slug": "/author-types/partner"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "median": null,
+            "count": 0,
+            "average": null
+        },
+        "score": {},
+        "slug": "/products/atlas/getting-started-mongodb-atlas-azure-functions-nodejs"
+    },
+    {
+        "name": "Integrate Atlas Application Services Logs into Datadog on AWS",
+        "description": "With the Log Forwarding feature, it's now possible to send Atlas Application Services logs to Datadog. This blog outlines the configuration steps necessary as well as strategies for customizing the view to suit the need.",
+        "date": "2022-11-02T19:00:00.000Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Datadog_12e2af9c92.png",
+            "alternativeText": "Integrate Atlas Application Services"
+        },
+        "authors": [
+            {
+                "name": "Babu Srinivasan",
+                "image": {}
+            },
+            {
+                "name": "Abilash Ravikumar",
+                "image": {}
+            }
+        ],
+        "rating_metrics": {
+            "count": 0,
+            "average": null,
+            "median": null
+        },
+        "tags": [
+            {
+                "name": "AWS",
+                "type": "Technology",
+                "slug": "/technologies/aws"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            }
+        ],
+        "type": "Tutorial",
+        "score": {},
+        "slug": "/products/atlas/integrate-atlas-application-services-logs-datadog-aws"
+    },
+    {
+        "date": "2022-11-01T16:43:33.699Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/image3_bbdcd97f5a.png",
+            "alternativeText": ""
+        },
+        "name": "Implement Update and Delete Operations in React Using the Atlas GraphQL API ",
+        "description": "This MongoDB Atlas GraphQL API tutorial explains how to implement Update and Delete operations in a React app.",
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Tutorial",
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "score": {},
+        "slug": "/products/atlas/update-delete-operations-using-atlas-graphql-api"
+    }
+]

@@ -13,5 +13,6 @@ const config: PlaywrightTestConfig = {
         screenshot: 'only-on-failure',
     },
     outputDir: './playwright-artifacts',
+    timeout: 120 * 1000,
 };
 export default config;
