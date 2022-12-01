@@ -1,7 +1,8 @@
 import debounce from 'lodash.debounce';
 import { ComboBox, ESystemIconNames } from '@mdb/flora';
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 
+import { DEBOUNCE_WAIT } from '../../data/constants';
 import { getURLPath } from '../../utils/format-url-path';
 
 type Option = string | { icon: string; label: string };
@@ -28,17 +29,19 @@ export default function LocationSearch({
     }: {
         coords: GeolocationCoordinates;
     }) {
-        const req = await fetch(
-            `${getURLPath('api/geocode')}?latlng=${latitude},${longitude}`
-        );
-        const { error, results } = await req.json();
+        if (latitude && longitude) {
+            const req = await fetch(
+                `${getURLPath('api/geocode')}?latlng=${latitude},${longitude}`
+            );
+            const { error, results } = await req.json();
 
-        if (error) {
-            // There is no visual error handling planned to display to user, so just log it in the console
-            console.warn(error);
-            setValue('');
-        } else {
-            setValue(results[0]?.formatted_address);
+            if (error) {
+                // There is no visual error handling planned to display to user, so just log it in the console
+                console.warn(error);
+                setValue('');
+            } else {
+                setValue(results[0]?.formatted_address);
+            }
         }
     }
 
@@ -71,7 +74,7 @@ export default function LocationSearch({
             }
 
             setIsLoading(false);
-        }, 500),
+        }, DEBOUNCE_WAIT),
         []
     );
 
