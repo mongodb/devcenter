@@ -18,6 +18,7 @@ import {
     SearchItem,
     SortByType,
 } from '../../components/search/types';
+import { DEBOUNCE_WAIT } from '../../data/constants';
 
 // Hook that contains the majority of the logic for our search functionality across the site.
 
@@ -96,7 +97,7 @@ const useSearch = (
     );
 
     const debouncedOnSearch = useMemo(
-        () => debounce(onSearch, 400), // Not sure what this value should be, so set to 400ms.
+        () => debounce(onSearch, DEBOUNCE_WAIT),
         [onSearch]
     );
     // Stop the invocation of the debounced function after unmounting.
