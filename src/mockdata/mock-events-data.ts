@@ -71,6 +71,11 @@ const mockResults = [
                 type: 'L2Product',
                 slug: '/products/atlas/search',
             },
+            {
+                name: 'JavaScript',
+                type: 'ProgrammingLanguage',
+                slug: '/languages/javascript',
+            },
         ],
         category: 'Event',
         description:
@@ -80,7 +85,7 @@ const mockResults = [
         image: {
             alt: 'Easy deployment of MEAN stack',
             url: '',
-            city: 'New York City',
+            city: 'Thiruvananthapuram',
         },
         authors: [],
         slug: '/events/mock-event-2',
@@ -112,6 +117,11 @@ const mockResults = [
                 name: 'Search',
                 type: 'L2Product',
                 slug: '/products/atlas/search',
+            },
+            {
+                name: 'JavaScript',
+                type: 'ProgrammingLanguage',
+                slug: '/languages/javascript',
             },
         ],
         category: 'Event',

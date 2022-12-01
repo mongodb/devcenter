@@ -105,6 +105,7 @@ export const thumbnailWrapperStyles = (
                     mobileDimensions = tabletDimensions = '48px';
                     desktopDimensions = '64px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions =
                         tabletDimensions =

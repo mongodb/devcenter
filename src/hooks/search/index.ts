@@ -38,6 +38,7 @@ const useSearch = (
     const [searchString, setSearchString] = useState('');
     const [filters, setFilters] = useState<FilterItem[]>([]);
     const [sortBy, setSortBy] = useState<SortByType | ''>('');
+    const [location, setLocation] = useState('');
 
     const queryParams: SearchQueryParams = {
         searchString,
@@ -103,6 +104,14 @@ const useSearch = (
             }
         },
         [filters, router, searchString, shouldUseQueryParams, updatePageMeta]
+    );
+
+    const onLocationChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            updatePageMeta();
+            setLocation(event.target.value);
+        },
+        [updatePageMeta]
     );
 
     const debouncedOnSearch = useMemo(
@@ -177,6 +186,10 @@ const useSearch = (
             searchString,
             filters,
             sortBy,
+        },
+        locationProps: {
+            location,
+            onLocationChange,
         },
         clearAll,
     };

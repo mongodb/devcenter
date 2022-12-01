@@ -27,7 +27,7 @@ import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 import { getURLPath } from '../../utils/format-url-path';
 import { h5Styles, h6Styles } from '../../styled/layout';
-import EventIcon from '../event-icon';
+import EventIcon from '../icons/event-icon';
 import { PillCategory } from '../../types/pill-category';
 
 const CardThumbnail = ({

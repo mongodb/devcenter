@@ -171,8 +171,13 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
             buildPageTitle(contentType, topicName)
         );
 
-    const { searchBoxProps, sortBoxProps, filterProps, resultsProps } =
-        useSearch(initialSearchContent, updatePageMeta, contentType, topicSlug);
+    const {
+        searchBoxProps,
+        sortBoxProps,
+        filterProps,
+        resultsProps,
+        locationProps,
+    } = useSearch(initialSearchContent, updatePageMeta, contentType, topicSlug);
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
@@ -230,8 +235,6 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
             )}
         </GridLayout>
     );
-
-    console.log(contentType);
 
     return (
         <>
@@ -307,7 +310,9 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                             extraStyles={extraSearchBoxStyles}
                         />
 
-                        {contentType === 'Event' && <LocationBox />}
+                        {contentType === 'Event' && (
+                            <LocationBox {...locationProps} />
+                        )}
 
                         {contentType !== 'Event' && (
                             <SortBox

@@ -23,7 +23,6 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     series
      */
 
-    console.log(JSON.stringify(allEvents));
     const podcastSeries = await getAllPodcastSeries();
     const videoSeries = await getAllVideoSeries();
     const articleSeries = await getAllArticleSeries();

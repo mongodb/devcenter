@@ -40,8 +40,6 @@ export const getTopicContentTypePageData = async (
         })
         .map((contentTypeTag: ContentTypeTag) => contentTypeTag.contentType)[0];
 
-    console.log(l1_l2, topic, slug, pageNumber);
-
     let initialSearchContent: SearchItem[] | null = null;
     try {
         initialSearchContent = await getSearchContent({

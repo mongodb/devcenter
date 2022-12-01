@@ -52,7 +52,6 @@ export const getServerSideProps: GetServerSideProps = async (
     }: { pageType: PageType; pageParams: PageParams } = dynamicPageType;
     let data: any | null = {};
 
-    console.log('dynamicPageType', dynamicPageType);
     let pageNumber: number;
     switch (pageType) {
         case PageType.Content:

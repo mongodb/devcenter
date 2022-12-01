@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { thumbnailStyles } from '../card/styles';
+import { thumbnailStyles } from '../../card/styles';
 
 const PILL_PADDING = 13;
 const RIGHT_MARGIN = 16;
+const ICON_SIZE = 180;
 
 const EventIcon = ({ text }: { text?: string }) => {
     const [textWidth, setTextWidth] = useState(0);
@@ -28,19 +29,20 @@ const EventIcon = ({ text }: { text?: string }) => {
         };
     }, [textEl]);
 
-    const textX = 180 - RIGHT_MARGIN - PILL_PADDING - textWidth;
+    const calculatedRightMargin =
+        textWidth > ICON_SIZE - RIGHT_MARGIN * 2 ? 0 : RIGHT_MARGIN;
+    const textX = ICON_SIZE - calculatedRightMargin - PILL_PADDING - textWidth;
     const rectX = textX - PILL_PADDING;
     const rectWidth = textWidth + PILL_PADDING * 2 - 2;
 
     return (
         <div sx={thumbnailStyles}>
             <svg
-                viewBox="0 0 180 180"
+                viewBox={`0 0 ${ICON_SIZE} ${ICON_SIZE}`}
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <rect width="180" height="180" fill="#C0C0C0" />
-                <rect width="180" height="180" rx="8" fill="white" />
+                <rect width={ICON_SIZE} height={ICON_SIZE} fill="white" />
                 <path
                     d="M37.0471 40.1401C37.0456 44.5759 35.2874 48.8296 32.159 51.9662C29.0306 55.1028 24.7881 56.8656 20.3639 56.8671C15.9397 56.8687 11.6972 58.6315 8.56879 61.7681C5.44042 64.9047 3.68222 69.1584 3.68066 73.5942V123.784C3.68066 132.657 7.19605 141.166 13.4535 147.44C19.7109 153.714 28.1978 157.238 37.0471 157.238C45.8965 157.238 54.3833 153.714 60.6408 147.44C66.8982 141.166 70.4136 132.657 70.4136 123.784C70.4167 114.914 73.9319 106.408 80.1867 100.135C86.4416 93.8622 94.9244 90.3355 103.771 90.3301C108.153 90.3301 112.492 89.4648 116.54 87.7835C120.588 86.1023 124.266 83.6381 127.365 80.5316C130.463 77.4251 132.921 73.7371 134.598 69.6783C136.275 65.6195 137.138 61.2692 137.138 56.876C137.138 52.4827 136.275 48.1325 134.598 44.0736C132.921 40.0148 130.463 36.3269 127.365 33.2204C124.266 30.1139 120.588 27.6496 116.54 25.9684C112.492 24.2872 108.153 23.4219 103.771 23.4219H53.7215C49.3004 23.4258 45.0615 25.1884 41.9352 28.3228C38.809 31.4573 37.051 35.7073 37.0471 40.1401Z"
                     fill="#F9EBFF"
