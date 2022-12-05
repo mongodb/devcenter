@@ -35,6 +35,8 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
         ? getCanonicalUrl(absoluteBasePath, asPath)
         : null;
 
+    console.log('test');
+
     return (
         <>
             <Head>
