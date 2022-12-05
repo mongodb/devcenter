@@ -12,9 +12,9 @@ import { ContentTypePageProps } from './types';
 let pluralize = require('pluralize');
 
 interface ContentTypeBodyProps {
-    searchProps: {
-        searchBoxProps: any;
-        sortBoxProps: any;
+    allSearchProps: {
+        searchProps: any;
+        sortProps: any;
         filterProps: any;
         resultsProps: any;
         clearAll: any;
@@ -27,10 +27,10 @@ interface ContentTypeBodyProps {
 const ContentTypeBody: React.FunctionComponent<
     ContentTypePageProps & ContentTypeBodyProps
 > = ({
-    searchProps: {
-        searchBoxProps,
-        searchBoxProps: { searchString },
-        sortBoxProps,
+    allSearchProps: {
+        searchProps,
+        searchProps: { searchString },
+        sortProps,
         filterProps: { filters, onFilter },
         resultsProps,
         resultsProps: { results, isValidating },
@@ -65,7 +65,7 @@ const ContentTypeBody: React.FunctionComponent<
     return (
         <div sx={searchWrapperStyles}>
             <SearchBox
-                {...searchBoxProps}
+                {...searchProps}
                 placeholder={`Search ${pluralize(contentType)}`}
                 extraStyles={{
                     flexBasis: showFeatured
@@ -106,7 +106,7 @@ const ContentTypeBody: React.FunctionComponent<
             )}
 
             <SortBox
-                {...sortBoxProps}
+                {...sortProps}
                 extraStyles={{
                     order: showFeatured ? '2' : '1',
                 }}

@@ -31,8 +31,16 @@ export interface SortBoxProps {
 }
 
 export interface LocationBoxProps {
-    location?: string;
-    onLocationChange: any;
+    locationQuery?: string;
+    onLocationQuery: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    locationSelection?: any;
+    onLocationSelect: (option: any) => void;
+    results: {
+        data: any;
+        isValidating: boolean;
+        error: any;
+    };
+    displayOptions: (string | { icon: string; label: string })[];
     extraStyles?: ThemeUICSSObject;
 }
 

@@ -5,6 +5,9 @@ async function locationSearchHandler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    console.log(process.env.GOOGLE_PLACES_API_KEY);
+    console.log(req.query);
+    console.log(req.query.search);
     try {
         const request = await fetch(
             `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${req.query.search}&types=(regions)&key=${process.env.GOOGLE_PLACES_API_KEY}`

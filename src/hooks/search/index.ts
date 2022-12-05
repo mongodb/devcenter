@@ -3,10 +3,15 @@ import debounce from 'lodash.debounce';
 import useSWR from 'swr';
 import { FilterItem } from '@mdb/devcenter-components';
 import {
+<<<<<<< HEAD
     fetcher,
     getFiltersFromQueryStr,
     itemInFilters,
+=======
+    searchFetcher,
+>>>>>>> 4fca657 (Refactor useSearch and incorporate location search in events page)
     searchItemToContentItem,
+    swrOptions,
     updateUrl,
 } from './utils';
 import { useRouter } from 'next/router';
@@ -14,13 +19,12 @@ import {
     buildSearchQuery,
     SearchQueryParams,
 } from '../../components/search/utils';
-import {
-    defaultSortByType,
-    SearchItem,
-    SortByType,
-} from '../../components/search/types';
-import { DEBOUNCE_WAIT } from '../../data/constants';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
 import { mockResults } from '../../mockdata/mock-events-data';
+import useSort from './sort';
+import useLocationSearch from './location';
+import useSearchString from './search-string';
+import useFilter from './filter';
 
 // Hook that contains the majority of the logic for our search functionality across the site.
 
@@ -31,30 +35,57 @@ const useSearch = (
     tagSlug?: string, // Filter on backend by tag.
     filterItems?: { key: string; value: FilterItem[] }[] // This is needed for URL filter/search updates.
 ) => {
-    const shouldUseQueryParams = !!filterItems;
-
     const router = useRouter();
 
-    const [searchString, setSearchString] = useState('');
-    const [filters, setFilters] = useState<FilterItem[]>([]);
-    const [sortBy, setSortBy] = useState<SortByType | ''>('');
-    const [location, setLocation] = useState('');
+    const {
+        searchProps,
+        searchProps: { searchString },
+        clearSearch,
+    } = useSearchString(updatePageMeta);
 
-    const queryParams: SearchQueryParams = {
-        searchString,
+    const { locationProps, clearLocation } = useLocationSearch(updatePageMeta);
+
+    const {
+        sortProps,
+        sortProps: { sortBy },
+        clearSort,
+    } = useSort(updatePageMeta);
+
+    const {
+        filterProps,
+        filterProps: { filters },
+        filterData,
+        clearFilters,
+    } = useFilter(updatePageMeta, filterItems);
+
+    useEffect(() => {
+        const shouldUseQueryParams = !!filterItems;
+
+        if (shouldUseQueryParams) {
+            updateUrl(router.pathname, filters, searchString, sortBy);
+        }
+    }, [router.pathname, filters, searchString, sortBy, filterItems]);
+
+    const clearAll = useCallback(() => {
+        clearSearch();
+        clearLocation();
+        clearSort();
+        clearFilters();
+        updatePageMeta();
+    }, [clearSearch, clearLocation, clearSort, clearFilters, updatePageMeta]);
+
+    const searchQueryParams: SearchQueryParams = {
+        searchString: searchProps.searchString,
         contentType,
         tagSlug,
-        sortBy: sortBy || defaultSortByType,
+        sortBy: sortProps.sortBy || defaultSortByType,
     };
 
-    const key = buildSearchQuery(queryParams);
+    const searchKey = buildSearchQuery(searchQueryParams);
 
     // TODO: Refactor to useSWRInfinite and implement client-side pagination.
-    let { data, error, isValidating } = useSWR(key, fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-        shouldRetryOnError: false,
+    let { data, error, isValidating } = useSWR(searchKey, searchFetcher, {
+        ...swrOptions,
         fallbackData: (initialSearchContent || []).map(searchItemToContentItem),
     });
 
@@ -65,133 +96,24 @@ const useSearch = (
         isValidating = false;
     }
 
-    const onSearch = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            updatePageMeta();
-            setSearchString(event.target.value);
-
-            if (shouldUseQueryParams) {
-                updateUrl(router.pathname, filters, event.target.value);
-            }
-        },
-        [filters, router, shouldUseQueryParams, updatePageMeta]
-    );
-
-    const onFilter = useCallback(
-        (filters: FilterItem[]) => {
-            updatePageMeta();
-            setFilters(filters);
-
-            if (shouldUseQueryParams) {
-                updateUrl(router.pathname, filters, searchString);
-            }
-        },
-        [router, searchString, shouldUseQueryParams, updatePageMeta]
-    );
-
-    const onSort = useCallback(
-        (sortByValue?: string) => {
-            updatePageMeta();
-            setSortBy(sortByValue as SortByType);
-
-            if (shouldUseQueryParams) {
-                updateUrl(
-                    router.pathname,
-                    filters,
-                    searchString,
-                    sortByValue as SortByType
-                );
-            }
-        },
-        [filters, router, searchString, shouldUseQueryParams, updatePageMeta]
-    );
-
-    const onLocationChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            updatePageMeta();
-            setLocation(event.target.value);
-        },
-        [updatePageMeta]
-    );
-
-    const debouncedOnSearch = useMemo(
-        () => debounce(onSearch, DEBOUNCE_WAIT),
-        [onSearch]
-    );
-    // Stop the invocation of the debounced function after unmounting.
-    useEffect(() => {
-        return () => {
-            debouncedOnSearch.cancel();
-        };
-    }, [debouncedOnSearch]);
-
-    // Populate the search/filters with query params on page load/param change if we have a router and filters defined.
-    useEffect(() => {
-        if (router?.isReady) {
-            const { s } = router.query;
-
-            if (filterItems) {
-                const allNewFilters = getFiltersFromQueryStr(
-                    router.query,
-                    filterItems
-                );
-                setFilters(allNewFilters);
-            }
-
-            if (s && typeof s === 'string' && s !== searchString) {
-                setSearchString(s);
-            }
-        }
-    }, [router?.isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
-
-    const hasFiltersSet = !!filters.length;
-    const filteredData = (() => {
-        if (!data) {
-            return [];
-        } else if (!hasFiltersSet) {
-            return data;
-        } else {
-            return data.filter(item => {
-                return itemInFilters(item, filters);
-            });
-        }
-    })();
-
-    const clearAll = () => {
-        setSearchString('');
-        setFilters([]);
-        setSortBy(defaultSortByType);
-        updatePageMeta();
-    };
+    const filteredData = filterData(data);
 
     return {
-        searchBoxProps: {
-            searchString,
-            onSearch: debouncedOnSearch,
-        },
-        filterProps: {
-            onFilter,
-            filters,
-        },
-        sortBoxProps: {
-            onSort,
-            sortBy,
-        },
+        clearAll,
+        searchProps,
+        filterProps,
+        sortProps,
+        locationProps,
         resultsProps: {
             unfilteredResults: data,
             results: filteredData,
             error,
             // Disable loading state when running server-side so results show when JS is disabled
             isValidating: typeof window === 'undefined' ? false : isValidating,
-            searchString,
-            filters,
-            sortBy,
+            searchString: searchProps.searchString,
+            filters: filterProps.filters,
+            sortBy: sortProps.sortBy,
         },
-        locationProps: {
-            location,
-            onLocationChange,
-        },
-        clearAll,
     };
 };
 

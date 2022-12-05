@@ -61,7 +61,7 @@ const ContentTypePage: React.FunctionComponent<
     );
     const { pageTitle, metaDescr, updatePageMeta, canonicalUrl } =
         searchMetaProps;
-    const searchProps = useSearch(
+    const allSearchProps = useSearch(
         initialSearchContent,
         updatePageMeta,
         contentType,
@@ -69,9 +69,9 @@ const ContentTypePage: React.FunctionComponent<
     );
     const {
         filterProps,
-        sortBoxProps,
+        sortProps,
         resultsProps: { results, error },
-    } = searchProps;
+    } = allSearchProps;
 
     useEmptyDataDebug(results, error);
 
@@ -131,7 +131,7 @@ const ContentTypePage: React.FunctionComponent<
                         {mobileFiltersOpen && (
                             <MobileFilters
                                 {...filterProps}
-                                {...sortBoxProps} // Mobile filters include sorting
+                                {...sortProps} // Mobile filters include sorting
                                 filterItems={filterItems}
                                 closeModal={() => setMobileFiltersOpen(false)}
                             />
@@ -139,7 +139,7 @@ const ContentTypePage: React.FunctionComponent<
                     </div>
 
                     <BodyComponent
-                        searchProps={searchProps}
+                        allSearchProps={allSearchProps}
                         searchMetaProps={searchMetaProps}
                         setMobileFiltersOpen={setMobileFiltersOpen}
                         {...props}

@@ -46,7 +46,7 @@ const extraSearchResultsHeadingStyles = (showFeatured: boolean) => ({
     marginBottom: '0',
 });
 interface EventsPageComponentProps {
-    searchProps: any;
+    allSearchProps: any;
     searchMetaProps: any;
     mobileFiltersOpen: boolean;
     setMobileFiltersOpen: (open: boolean) => void;
@@ -55,15 +55,16 @@ interface EventsPageComponentProps {
 const EventsPageComponent: React.FunctionComponent<
     EventsPageComponentProps & ContentTypePageProps
 > = ({
-    searchProps: {
-        searchBoxProps,
-        searchBoxProps: { searchString },
-        sortBoxProps,
+    allSearchProps: {
+        searchProps,
+        searchProps: { searchString },
         filterProps: { filters, onFilter },
         resultsProps,
         resultsProps: { isValidating, results },
         locationProps,
-        locationProps: { location },
+        locationProps: {
+            locationSelection: { description: location = '' } = {},
+        },
     },
     searchMetaProps: { updatePageMeta },
     setMobileFiltersOpen,
@@ -93,7 +94,7 @@ const EventsPageComponent: React.FunctionComponent<
     return (
         <div sx={searchWrapperStyles}>
             <SearchBox
-                {...searchBoxProps}
+                {...searchProps}
                 placeholder="Search Events"
                 extraStyles={{ flexBasis: ['100%', null, 'calc(66% - 12px)'] }}
             />
@@ -123,7 +124,10 @@ const EventsPageComponent: React.FunctionComponent<
                                     </SecondaryTag>
                                 ) : undefined
                             }
-                            sx={{ ...cardListStyles('row'), div: { gap: '0' } }}
+                            sx={{
+                                ...cardListStyles('row'),
+                                div: { gap: '0', rowGap: 'inc30' },
+                            }}
                         />
                     ))}
                 </Grid>
