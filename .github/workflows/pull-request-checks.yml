@@ -37,7 +37,7 @@ jobs:
             - name: Lint
               run: yarn lint
     call-playwright-tests:
-        uses: ./.github/workflows/playwright-percy.yml@main
+        uses: ./.github/workflows/playwright-percy.yml
     jest-tests:
         runs-on: ubuntu-latest
         permissions:
