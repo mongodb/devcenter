@@ -61,6 +61,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
                                 borderBottom: '2px solid transparent;',
                             },
                             color: '#001E2B!important',
+                            fontSize: 'inc40',
                         },
                     }}
                 >
