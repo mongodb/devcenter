@@ -36,42 +36,8 @@ jobs:
               run: yarn format:check
             - name: Lint
               run: yarn lint
-    playwright-tests:
-        runs-on: ubuntu-20.04
-        steps:
-            - name: Checkout target branch
-              uses: actions/checkout@v2
-            - name: Use Node 16.x
-              uses: actions/setup-node@v2
-              with:
-                  node-version: '16.x'
-            - name: Cache node modules
-              uses: actions/cache@v2
-              id: cache
-              with:
-                  path: node_modules
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
-            - name: Install dependencies
-              if: steps.cache.outputs.cache-hit != 'true'
-              run: yarn install --frozen-lockfile
-            - name: Install Playwright
-              if: steps.cache.outputs.cache-hit == 'true'
-              run: ./node_modules/.bin/playwright install
-            - name: Build
-              run: yarn build
-            - name: Run Playwright/Percy
-              run: yarn test:e2e:visual
-              env:
-                  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-            - name: Upload test results
-              if: ${{ failure() }}
-              uses: actions/upload-artifact@v2
-              with:
-                  name: playwright-artifacts
-                  path: playwright-artifacts
-
+    call-playwright-tests:
+        uses: './.playwright-percy.yml'
     jest-tests:
         runs-on: ubuntu-latest
         permissions:
