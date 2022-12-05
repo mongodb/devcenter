@@ -14,4 +14,4 @@ env:
     NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 jobs:
     call-playwright-tests:
-        uses: ./.playwright-percy.yml@main
+        uses: ./playwright-percy.yml@main
