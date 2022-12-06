@@ -55,7 +55,7 @@ describe('Search Results', () => {
     test('renders loading spinner', () => {
         render(<Results results={undefined} isValidating />);
 
-        const spinner = screen.getByAltText('Loadingabc...');
+        const spinner = screen.getByAltText('Loading...');
         expect(spinner).toBeInTheDocument();
     });
     test('renders error message', () => {
