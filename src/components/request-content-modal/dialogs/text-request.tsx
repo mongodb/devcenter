@@ -2,7 +2,7 @@ import { TypographyScale, Button, TextArea, TextInput } from '@mdb/flora';
 
 import { TextRequestProps } from '../types';
 import { modalWrapperStyles } from '../styles';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 const helperText =
     "Please include which products, languages, and technologies you're interested in seeing as part of this content request";
