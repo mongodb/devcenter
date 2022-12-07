@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { DEBOUNCE_WAIT } from '../../data/constants';
 
-const useSearchString = callback => {
+const useSearchString = (callback: () => void) => {
     const router = useRouter();
     const [searchString, setSearchString] = useState('');
 
@@ -41,7 +41,7 @@ const useSearchString = callback => {
     return {
         searchProps: {
             searchString,
-            onSearch,
+            onSearch: debouncedOnSearch,
         },
         clearSearch: () => setSearchString(''),
     };

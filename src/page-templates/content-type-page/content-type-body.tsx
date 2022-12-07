@@ -17,7 +17,7 @@ interface ContentTypeBodyProps {
         sortProps: any;
         filterProps: any;
         resultsProps: any;
-        clearAll: any;
+        clearSearchParam: any;
     };
     searchMetaProps: any;
     mobileFiltersOpen: boolean;
@@ -34,7 +34,7 @@ const ContentTypeBody: React.FunctionComponent<
         filterProps: { filters, onFilter },
         resultsProps,
         resultsProps: { results, isValidating },
-        clearAll,
+        clearSearchParam,
     },
     searchMetaProps: { updatePageMeta },
     featured,
@@ -162,7 +162,7 @@ const ContentTypeBody: React.FunctionComponent<
                         hasIcon={true}
                         iconName={ESystemIconNames.ARROW_LEFT}
                         iconPosition="left"
-                        onClick={clearAll}
+                        onClick={clearSearchParam}
                     >
                         Back to all {contentType.toLowerCase()}s
                     </Button>

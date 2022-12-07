@@ -54,19 +54,19 @@ export const useResetKey = (value?: string) => {
     const [keyReset, setKeyReset] = useState(false);
 
     useEffect(() => {
-        if (value === '') {
+        setKeyReset(false);
+    }, [keyReset]);
+
+    useEffect(() => {
+        if (!value) {
             setKeyReset(true);
         }
     }, [value]);
-
-    useEffect(() => {
-        setKeyReset(false);
-    }, [keyReset]);
 
     // Flicker the key value on mount to populate sitewide search field initially
     useEffect(() => {
         setKeyReset(true);
     }, []);
 
-    return keyReset ? { key: value } : {};
+    return keyReset ? { key: Date.now() } : {};
 };

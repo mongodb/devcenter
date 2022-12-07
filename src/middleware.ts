@@ -17,8 +17,6 @@ const middleware = async (req: NextRequest) => {
         return res;
     }
 
-    console.log(pathname);
-
     const origin = req.headers.get('Origin') || '';
 
     const host = process.env.VERCEL_URL

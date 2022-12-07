@@ -54,14 +54,14 @@ const Search: NextPage<SearchProps> = ({
     );
 
     const {
-        searchBoxProps,
-        searchBoxProps: { searchString },
+        searchProps,
+        searchProps: { searchString },
         filterProps,
         filterProps: { filters, onFilter },
-        sortBoxProps,
+        sortProps,
         resultsProps,
         resultsProps: { results, isValidating },
-        clearAll,
+        clearSearchParam,
     } = useSearch(
         initialSearchContent,
         updatePageMeta,
@@ -106,7 +106,7 @@ const Search: NextPage<SearchProps> = ({
 
                     <div sx={searchWrapperStyles}>
                         <SearchBox
-                            {...searchBoxProps}
+                            {...searchProps}
                             placeholder="Search All"
                             autoFocus
                             extraStyles={{
@@ -114,7 +114,7 @@ const Search: NextPage<SearchProps> = ({
                             }}
                         />
 
-                        <SortBox {...sortBoxProps} />
+                        <SortBox {...sortProps} />
 
                         {resultsHeader && (
                             <TypographyScale
@@ -180,7 +180,7 @@ const Search: NextPage<SearchProps> = ({
                                     hasIcon={true}
                                     iconName={ESystemIconNames.ARROW_LEFT}
                                     iconPosition="left"
-                                    onClick={clearAll}
+                                    onClick={clearSearchParam}
                                 >
                                     Back to all content
                                 </Button>
@@ -192,7 +192,7 @@ const Search: NextPage<SearchProps> = ({
             {mobileFiltersOpen && (
                 <MobileFilters
                     {...filterProps}
-                    {...sortBoxProps} // Mobile filters include sorting
+                    {...sortProps} // Mobile filters include sorting
                     filterItems={filterItems}
                     closeModal={() => setMobileFiltersOpen(false)}
                 />

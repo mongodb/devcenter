@@ -33,6 +33,7 @@ import { Location } from '../components/icons';
 import SecondaryTag from '../components/card/secondary-tag';
 import { h5Styles } from '../styled/layout';
 import { FilterItem, FilterTagSection } from '@mdb/devcenter-components';
+import { useCallback } from 'react';
 
 const extraSearchResultsStyles = (showFeatured: boolean) => ({
     order: showFeatured ? '4' : '3',
@@ -64,16 +65,20 @@ const EventsPageComponent: React.FunctionComponent<
         locationProps,
         locationProps: {
             locationSelection: { description: location = '' } = {},
+            onLocationSelect,
         },
+        clearSearchParam,
     },
     searchMetaProps: { updatePageMeta },
     setMobileFiltersOpen,
     featured,
     pageNumber,
     children,
+    filterItems,
 }) => {
     const plural = results.length !== 1 ? 's' : '';
     const showFeatured = !searchString && !filters.length && !location;
+
     const bothCriteriaHeader = `${results.length} ${
         results.length === 1 ? 'event' : 'events'
     } for "${searchString}" near ${location}`;
@@ -91,6 +96,38 @@ const EventsPageComponent: React.FunctionComponent<
         oneCriteriaHeader += `Result${plural}`;
     }
 
+    const locationSelect = useCallback(
+        (selection: string) => {
+            if (selection === 'Virtual') {
+                const attendanceFilters = filterItems.find(
+                    ({ key }: { key: string }) => key === 'AttendanceType'
+                );
+                const virtualFilters = attendanceFilters?.value.filter(
+                    filter =>
+                        filter.name === 'Virtual' || filter.name === 'Hybrid'
+                );
+                const virtualFiltersToAdd = virtualFilters?.filter(
+                    virtualFilter =>
+                        !filters.find(
+                            (filter: FilterItem) =>
+                                filter.type === virtualFilter.type &&
+                                filter.name === virtualFilter.name
+                        )
+                );
+
+                if (virtualFiltersToAdd && virtualFiltersToAdd.length) {
+                    onFilter(filters.concat(virtualFiltersToAdd));
+
+                    // race condition with combobox's set value
+                    setTimeout(() => clearSearchParam('location'), 0);
+                }
+            }
+
+            onLocationSelect(selection);
+        },
+        [onLocationSelect, filterItems, filters, onFilter, clearSearchParam]
+    );
+
     return (
         <div sx={searchWrapperStyles}>
             <SearchBox
@@ -99,7 +136,7 @@ const EventsPageComponent: React.FunctionComponent<
                 extraStyles={{ flexBasis: ['100%', null, 'calc(66% - 12px)'] }}
             />
 
-            <LocationBox {...locationProps} />
+            <LocationBox {...locationProps} onLocationSelect={locationSelect} />
 
             {showFeatured && (
                 <Grid
@@ -178,7 +215,7 @@ const EventsPageComponent: React.FunctionComponent<
                 </div>
             )}
 
-            {(location || searchString) && (
+            {!showFeatured && (
                 <div sx={{ order: '5', width: '100%' }}>
                     <TypographyScale
                         variant="heading2"

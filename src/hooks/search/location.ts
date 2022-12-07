@@ -13,9 +13,14 @@ const DEFAULT_OPTIONS = [
     { icon: ESystemIconNames.ARROW_DOWN, label: 'Virtual' },
 ];
 
+type SelectionItem = { description: string };
+
 const useLocationSearch = (callback: () => void) => {
     const [locationQuery, setLocationQuery] = useState('');
-    const [locationSelection, setLocationSelection] = useState<ContentItem>();
+    const [locationSelection, setLocationSelection] = useState<
+        ContentItem | SelectionItem
+    >();
+    const [geolocationValidating, setGeolocationValidating] = useState(false);
 
     const results = useSWR(
         `search=${locationQuery}`,
@@ -25,7 +30,12 @@ const useLocationSearch = (callback: () => void) => {
 
     const onLocationQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLocationQuery(e.target.value);
+
+        if (!e.target.value) {
+            setLocationSelection(undefined);
+        }
     };
+
     const debouncedOnLocationQuery = debounce(onLocationQuery, DEBOUNCE_WAIT);
 
     const geolocationSuccessCb = useCallback(
@@ -35,47 +45,50 @@ const useLocationSearch = (callback: () => void) => {
             coords: GeolocationCoordinates;
         }) => {
             if (latitude && longitude) {
-                const { error, results } = await (
-                    await fetch(
-                        `${getURLPath(
-                            'api/geocode'
-                        )}?latlng=${latitude},${longitude}`
-                    )
-                ).json();
+                try {
+                    const { error, results } = await (
+                        await fetch(
+                            `${getURLPath(
+                                'api/geocode'
+                            )}?latlng=${latitude},${longitude}`
+                        )
+                    ).json();
 
-                if (error) {
-                    // There is no visual error handling planned to display to user, so just log it in the console
-                    console.warn(error);
-                    setLocationQuery('');
-                    setLocationSelection(undefined);
-                } else {
-                    setLocationQuery(results[0]?.formatted_address);
-                    setLocationSelection({
-                        ...results[0],
-                        description: results[0].formatted_address,
-                    });
+                    if (error) {
+                        // There is no visual error handling planned to display to user, so just log it in the console
+                        console.error(error);
+                        clearLocation();
+                    } else {
+                        setLocationQuery(results[0]?.formatted_address);
+                        setLocationSelection({
+                            ...results[0],
+                            description: results[0].formatted_address,
+                        });
+                    }
+                } catch (error) {
+                    console.error(error);
+                    clearLocation();
                 }
             }
+
+            setGeolocationValidating(false);
         },
         []
     );
 
     const geolocationErrorCb = useCallback(() => {
-        console.log('ERROR CB');
         console.warn(
             'Cannot get current location, as location sharing is disabled'
         );
-        setLocationQuery('');
-        setLocationSelection(undefined);
+        clearLocation();
     }, []);
 
     const onLocationSelect = useCallback(
         (selection: string) => {
             if (selection === 'Current Location') {
-                setLocationSelection(undefined);
-                setLocationQuery('');
-
                 if (navigator.geolocation) {
+                    setGeolocationValidating(true);
+
                     navigator.geolocation.getCurrentPosition(
                         geolocationSuccessCb,
                         geolocationErrorCb
@@ -85,15 +98,18 @@ const useLocationSearch = (callback: () => void) => {
                         'Geolocation functionality is not provided by this browser'
                     );
                 }
-            } else {
+            }
+
+            // If an actual location is being selected
+            if (!DEFAULT_OPTIONS.map(x => x.label).includes(selection)) {
                 const option = results?.data?.find(
                     res => res.description === selection
                 );
 
                 setLocationSelection(option);
-                setLocationQuery(selection);
             }
 
+            setLocationQuery(selection);
             callback();
         },
         [results?.data, callback, geolocationSuccessCb, geolocationErrorCb]
@@ -108,7 +124,13 @@ const useLocationSearch = (callback: () => void) => {
     const displayOptions = useMemo(
         () => results.data?.map(item => item.description) || [],
         [results]
-    );
+    ) as string[];
+
+    const clearLocation = () => {
+        setLocationQuery('');
+        setLocationSelection(undefined);
+        setGeolocationValidating(false);
+    };
 
     return {
         locationProps: {
@@ -117,11 +139,10 @@ const useLocationSearch = (callback: () => void) => {
             locationSelection,
             onLocationSelect,
             results,
-            displayOptions: displayOptions.length
-                ? displayOptions
-                : DEFAULT_OPTIONS,
+            geolocationValidating,
+            displayOptions: locationQuery ? displayOptions : DEFAULT_OPTIONS,
         },
-        clearLocation: () => setLocationQuery(''),
+        clearLocation,
     };
 };
 

@@ -46,7 +46,7 @@ const ContentTypePage: React.FunctionComponent<
         initialSearchContent,
         pageNumber,
         slug,
-        children,
+        children: ChildComponent = ContentTypeBody,
     } = props;
 
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -90,8 +90,6 @@ const ContentTypePage: React.FunctionComponent<
             ) : null,
         [contentType, requestButtonText] // eslint-disable-line react-hooks/exhaustive-deps
     );
-
-    const BodyComponent = children || ContentTypeBody;
 
     return (
         <>
@@ -138,7 +136,7 @@ const ContentTypePage: React.FunctionComponent<
                         )}
                     </div>
 
-                    <BodyComponent
+                    <ChildComponent
                         allSearchProps={allSearchProps}
                         searchMetaProps={searchMetaProps}
                         setMobileFiltersOpen={setMobileFiltersOpen}

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { ESystemIconNames, TextInput } from '@mdb/flora';
 import { SearchBoxProps } from './types';
 import { searchBoxStyles } from './styles';

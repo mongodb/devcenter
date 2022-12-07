@@ -36,49 +36,81 @@ const useSearch = (
     filterItems?: { key: string; value: FilterItem[] }[] // This is needed for URL filter/search updates.
 ) => {
     const router = useRouter();
+    const shouldUseQueryParams = !!filterItems;
+    const paramChangeCallback = useCallback(() => {
+        if (!shouldUseQueryParams) {
+            updatePageMeta();
+        }
+    }, [shouldUseQueryParams, updatePageMeta]);
 
     const {
         searchProps,
         searchProps: { searchString },
         clearSearch,
-    } = useSearchString(updatePageMeta);
-
-    const { locationProps, clearLocation } = useLocationSearch(updatePageMeta);
+    } = useSearchString(paramChangeCallback);
 
     const {
         sortProps,
         sortProps: { sortBy },
         clearSort,
-    } = useSort(updatePageMeta);
+    } = useSort(paramChangeCallback);
 
     const {
         filterProps,
         filterProps: { filters },
         filterData,
         clearFilters,
-    } = useFilter(updatePageMeta, filterItems);
+    } = useFilter(paramChangeCallback, filterItems);
+
+    const { locationProps, clearLocation } =
+        useLocationSearch(paramChangeCallback);
 
     useEffect(() => {
-        const shouldUseQueryParams = !!filterItems;
-
         if (shouldUseQueryParams) {
             updateUrl(router.pathname, filters, searchString, sortBy);
         }
-    }, [router.pathname, filters, searchString, sortBy, filterItems]);
+    }, [
+        shouldUseQueryParams,
+        router.pathname,
+        filters,
+        searchString,
+        sortBy,
+        filterItems,
+    ]);
 
-    const clearAll = useCallback(() => {
-        clearSearch();
-        clearLocation();
-        clearSort();
-        clearFilters();
-        updatePageMeta();
-    }, [clearSearch, clearLocation, clearSort, clearFilters, updatePageMeta]);
+    const clearSearchParam = useCallback(
+        (which?: 'search' | 'location' | 'sort' | 'filters') => {
+            switch (which) {
+                case 'search':
+                    clearSearch();
+                    break;
+                case 'location':
+                    clearLocation();
+                    break;
+                case 'sort':
+                    clearSort();
+                    break;
+                case 'filters':
+                    clearFilters();
+                    break;
+                default:
+                    clearSearch();
+                    clearLocation();
+                    clearSort();
+                    clearFilters();
+                    break;
+            }
+
+            updatePageMeta();
+        },
+        [clearSearch, clearLocation, clearSort, clearFilters, updatePageMeta]
+    );
 
     const searchQueryParams: SearchQueryParams = {
-        searchString: searchProps.searchString,
+        searchString,
         contentType,
         tagSlug,
-        sortBy: sortProps.sortBy || defaultSortByType,
+        sortBy: sortBy || defaultSortByType,
     };
 
     const searchKey = buildSearchQuery(searchQueryParams);
@@ -91,7 +123,7 @@ const useSearch = (
 
     // TODO: Remove and change let back to const on line 50
     if (contentType === 'Event') {
-        data = mockResults;
+        data = mockResults.map(searchItemToContentItem);
         error = null;
         isValidating = false;
     }
@@ -99,7 +131,7 @@ const useSearch = (
     const filteredData = filterData(data);
 
     return {
-        clearAll,
+        clearSearchParam,
         searchProps,
         filterProps,
         sortProps,
@@ -110,9 +142,9 @@ const useSearch = (
             error,
             // Disable loading state when running server-side so results show when JS is disabled
             isValidating: typeof window === 'undefined' ? false : isValidating,
-            searchString: searchProps.searchString,
-            filters: filterProps.filters,
-            sortBy: sortProps.sortBy,
+            searchString,
+            filters,
+            sortBy,
         },
     };
 };

@@ -121,7 +121,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             buildPageTitle(contentType, name)
         );
 
-    const { searchBoxProps, sortBoxProps, resultsProps } = useSearch(
+    const { searchProps, sortProps, resultsProps } = useSearch(
         initialSearchContent,
         updatePageMeta,
         undefined,
@@ -239,13 +239,13 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         </div>
 
                         <SearchBox
-                            {...searchBoxProps}
+                            {...searchProps}
                             placeholder={`Search ${name} Content`}
                             extraStyles={extraSearchBoxStyles}
                         />
 
                         <SortBox
-                            {...sortBoxProps}
+                            {...sortProps}
                             extraStyles={extraSortBoxStyles}
                         />
 

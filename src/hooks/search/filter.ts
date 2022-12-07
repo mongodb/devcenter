@@ -2,6 +2,7 @@ import { FilterItem } from '@mdb/devcenter-components';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { SortByType } from '../../components/search/types';
+import { ContentItem } from '../../interfaces/content-item';
 import { itemInFilters } from './utils';
 
 const useFilter = (
@@ -150,7 +151,7 @@ const useFilter = (
             } else if (!hasFiltersSet) {
                 return searchData;
             } else {
-                return searchData.filter(item => {
+                return searchData.filter((item: ContentItem) => {
                     return itemInFilters(item, filters);
                 });
             }

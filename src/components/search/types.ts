@@ -4,10 +4,12 @@ import { Tag } from '../../interfaces/tag';
 import { ThemeUICSSObject } from 'theme-ui';
 import { FilterItem } from '@mdb/devcenter-components';
 import { ReactElement } from 'react';
+import { SWRResponse } from 'swr';
 
 interface SearchImage {
     url: string;
     alternativeText: string;
+    city?: string;
 }
 
 interface SearchAuthor {
@@ -35,11 +37,8 @@ export interface LocationBoxProps {
     onLocationQuery: (e: React.ChangeEvent<HTMLInputElement>) => void;
     locationSelection?: any;
     onLocationSelect: (option: any) => void;
-    results: {
-        data: any;
-        isValidating: boolean;
-        error: any;
-    };
+    results: SWRResponse<ContentItem[], any>;
+    geolocationValidating: boolean;
     displayOptions: (string | { icon: string; label: string })[];
     extraStyles?: ThemeUICSSObject;
 }
@@ -65,6 +64,7 @@ export interface SearchItem {
     name: string;
     image: SearchImage;
     description: string;
+    location?: string;
     slug: string;
     date: string;
     tags: Tag[];

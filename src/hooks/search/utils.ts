@@ -46,6 +46,7 @@ export const searchItemToContentItem = ({
         },
         calculated_slug: auth.calculated_slug,
     }));
+
     return {
         authors: itemAuthors,
         category: type,
@@ -57,15 +58,6 @@ export const searchItemToContentItem = ({
         title: name,
         featured: false,
     };
-};
-
-export const fetcher: Fetcher<ContentItem[], string> = queryString => {
-    return fetch(
-        (getURLPath('/api/search') as string) + '?' + queryString
-    ).then(async response => {
-        const r_json: SearchItem[] = await response.json();
-        return r_json.map(searchItemToContentItem);
-    });
 };
 
 const tagToFilter = ({ name, type }: Tag): FilterItem => ({
@@ -249,7 +241,6 @@ export const locationFetcher: Fetcher<ContentItem[], string> = queryString => {
         (getURLPath('/api/location') as string) + '?' + queryString
     ).then(async response => {
         const r_json = await response.json();
-        console.log(r_json.results);
         return r_json.results;
     });
 };
@@ -337,7 +328,7 @@ export const replaceHistoryState = (url: string) => {
 };
 
 export const swrOptions = {
-    revalidateIfStale: false,
+    // revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     shouldRetryOnError: false,
