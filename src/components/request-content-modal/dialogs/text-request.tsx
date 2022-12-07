@@ -19,8 +19,8 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
     const [description, setDescription] = useState('');
     const [email, setEmail] = useState('');
 
-    const [descTyped, setDescTyped] = useState(false);
     const [topicTyped, setTopicTyped] = useState(false);
+    const [descTyped, setDescTyped] = useState(false);
 
     return (
         <div sx={modalWrapperStyles}>
