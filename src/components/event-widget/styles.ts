@@ -12,10 +12,14 @@ const title = {
 };
 
 const content = {
+    display: 'block',
     marginTop: 'inc20',
 };
 
 const button = {
+    display: 'block',
+    width: 'auto',
+    textAlign: 'center',
     marginTop: 'inc30',
 };
 

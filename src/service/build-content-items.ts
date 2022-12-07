@@ -110,3 +110,38 @@ export const mapArticlesToContentItems = (
 
     return items.filter(item => PillCategoryValues.includes(item.category));
 };
+
+export const mapEventsToContentItems = (allEvents: any) => {
+    const items: any = [];
+    allEvents.forEach(evt => {
+        // TODO: add comment for what is going on here
+        const tags = [...evt.other_tags];
+        if (evt.primary_tag?.length) {
+            const { name, calculated_slug: calculatedSlug } =
+                evt.primary_tag[0]?.l_1_product;
+            tags[0].l1Product = { name, calculatedSlug };
+        }
+        const item: any = {
+            collectionType: 'Event',
+            category: 'Event',
+            eventType: evt.type,
+            // this might be a different field, double check with Harika
+            speakers: evt.speakers,
+            content: evt.content,
+            slug: evt.calculated_slug,
+            title: evt.title,
+            // TODO: do all the below need default values, or will they come null or empty string from response?
+            startTime: evt.start_time,
+            endTime: evt.end_time,
+            location: evt.location,
+            tags: flattenTags(tags),
+            // TODO: not in current response
+            registrationLink: evt.registration_url,
+            virtualLink: evt.virtual_meetup_url,
+            virtualLinkText: evt.virtual_meetup_url_text,
+        };
+        return items.push(item);
+    });
+
+    return items;
+};

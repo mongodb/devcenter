@@ -5,6 +5,7 @@ import {
     SystemIcon,
     TypographyScale,
 } from '@mdb/flora';
+import { ThemeUICSSObject } from 'theme-ui';
 
 import styles from './styles';
 
@@ -14,6 +15,9 @@ interface EventWidgetProps {
     location?: string;
     virtualLink?: string;
     virtualLinkText?: string;
+    registrationLink?: string;
+    buttonStyles?: ThemeUICSSObject;
+    wrapperStyles?: ThemeUICSSObject;
 }
 
 export default function EventWidget({
@@ -21,10 +25,13 @@ export default function EventWidget({
     endTime,
     location = '',
     virtualLink = '',
+    buttonStyles = {},
+    wrapperStyles = {},
+    registrationLink = '',
     virtualLinkText = 'Virtual Link',
 }: EventWidgetProps) {
     return (
-        <>
+        <div sx={{ ...wrapperStyles }}>
             <div sx={styles.widget}>
                 <div sx={styles.header}>
                     {/* TODO: placeholder icon should be updated when https://jira.mongodb.org/browse/WEBSITE-13740 is ready from Flora */}
@@ -59,7 +66,15 @@ export default function EventWidget({
                     )}
                 </div>
             )}
-            <Button sx={styles.button}>Register Now</Button>
-        </>
+            {registrationLink && (
+                <Button
+                    href={registrationLink}
+                    customWrapperStyles={{ ...buttonStyles }}
+                    sx={styles.button}
+                >
+                    Register Now
+                </Button>
+            )}
+        </div>
     );
 }

@@ -62,6 +62,9 @@ import {
     sideNavStyles,
     sideNavTitleStyles,
 } from '../../components/tertiary-nav/styles';
+import { FullApplication, Snippet } from '../../components/icons';
+import { iconStyles } from '../../components/topic-card/styles';
+import EventWidget from '../../components/event-widget';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -103,8 +106,18 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         codeType,
         seo,
         relevantLinks,
+        // event specific
+        location,
+        speakers,
+        eventType,
+        startTime,
+        endTime,
+        virtualLink,
+        registrationLink,
+        virtualLinkText,
     },
 }) => {
+    console.log('tertiaryNav', tertiaryNavItems);
     const router = useRouter();
     const { asPath } = router;
     const { publicRuntimeConfig } = getConfig();
@@ -117,6 +130,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
     const requestButtonText = getRequestBtnText(category);
 
+    const isIndustryEvent = category === 'Event';
     const isVideoOrPodcastContent =
         collectionType === 'Video' || collectionType === 'Podcast';
 
@@ -130,7 +144,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         !previewMode && category !== 'News & Announcements';
 
     tertiaryNavItems = addExternalIconToSideNav(
-        tertiaryNavItems,
+        [{ title: 'Articles', url: 'devlerop/products/mongodb/articles' }],
         'documentation'
     );
 
@@ -217,7 +231,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             authors={authors}
                             tags={tags}
                         />
-                        {ratingSection}
+                        {!isIndustryEvent && ratingSection}
                     </div>
                 )}
             </div>
@@ -344,41 +358,61 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             -1
         );
 
+        const tagsSection = tags ? (
+            <TagSection
+                tags={tags}
+                sx={{
+                    gridArea: 'tags',
+                    ...(isCodeExample && {
+                        display: ['flex', null, null, null, 'none'],
+                    }),
+                }}
+            />
+        ) : null;
+
+        const defaultHeader = (
+            <div sx={styles.defaultHeaderGrid}>
+                <AuthorLockup
+                    authors={parseAuthorsToAuthorLockup(authors)}
+                    title={displayDate}
+                    expandedNames
+                    clickableLinks
+                    size="large"
+                    sx={{ gridArea: 'authordate' }}
+                />
+                {tagsSection}
+                {codeType && (
+                    <SecondaryTag
+                        icon={
+                            codeType === 'Snippet' ? (
+                                <Snippet sx={iconStyles} />
+                            ) : (
+                                <FullApplication sx={iconStyles} />
+                            )
+                        }
+                    >
+                        {codeType.toUpperCase()}
+                    </SecondaryTag>
+                )}
+                {displaySocialButtons}
+            </div>
+        );
+
+        const eventHeader = (
+            <div sx={styles.eventHeaderGrid}>
+                {tagsSection}
+                {displaySocialButtons}
+                <TypographyScale variant="body2" sx={{ gridArea: 'eventType' }}>
+                    Industry Event | {eventType}
+                </TypographyScale>
+            </div>
+        );
+
         return (
             <>
                 <div sx={styles.section}>
                     {displayTitle}
-                    <div sx={styles.defaultHeaderGrid}>
-                        <AuthorLockup
-                            authors={parseAuthorsToAuthorLockup(authors)}
-                            title={displayDate}
-                            expandedNames
-                            clickableLinks
-                            size="large"
-                            sx={{ gridArea: 'authordate' }}
-                        />
-                        {tags && (
-                            <TagSection
-                                tags={tags}
-                                sx={{
-                                    gridArea: 'tags',
-                                    ...(isCodeExample && {
-                                        display: [
-                                            'flex',
-                                            null,
-                                            null,
-                                            null,
-                                            'none',
-                                        ],
-                                    }),
-                                }}
-                            />
-                        )}
-                        {codeType && (
-                            <SecondaryTag codeLevel={codeType as CodeLevel} />
-                        )}
-                        {displaySocialButtons}
-                    </div>
+                    {isIndustryEvent ? eventHeader : defaultHeader}
                 </div>
                 <div sx={styles.section}>
                     <div sx={styles.image}>
@@ -392,22 +426,114 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             layout="fill"
                         />
                     </div>
-                    {!previewMode && ratingSection}
+                    {!previewMode && !isIndustryEvent && ratingSection}
                     {isCodeExample &&
                         (githubUrl || liveSiteUrl) &&
                         renderExternalExamples({
                             marginTop: 'inc50',
                             marginBottom: ['', null, null, '-inc40'], // negates marginTop from contentBody since externalExamples might not always be present
                         })}
+                    {isIndustryEvent && (
+                        <EventWidget
+                            startTime={new Date(startTime)}
+                            endTime={new Date(endTime)}
+                            location={location}
+                            virtualLink={virtualLink}
+                            virtualLinkText={virtualLinkText}
+                            registrationLink={registrationLink}
+                            buttonStyles={{
+                                marginTop: '-inc30', // negates marginTop from the component's internal styles
+                                width: ['100%', null, null, 'auto'],
+                                marginBottom: '-inc60', // TODO: this doesn't really work after a certain PX amt
+                            }}
+                            wrapperStyles={{
+                                display: ['block', null, null, 'none'],
+                                marginTop: 'inc40',
+                            }}
+                        />
+                    )}
                 </div>
                 <div sx={styles.bodySection}>
                     <DocumentBody content={contentAst} />
+                    {isIndustryEvent && (
+                        <>
+                            <TypographyScale
+                                variant="heading5"
+                                sx={{
+                                    marginTop: 'inc60',
+                                    marginBottom: 'inc40',
+                                }}
+                            >
+                                Speakers
+                            </TypographyScale>
+                            {speakers.map(speaker => {
+                                return (
+                                    <>
+                                        <AuthorLockup
+                                            authors={parseAuthorsToAuthorLockup(
+                                                [speaker]
+                                            )}
+                                            title={speaker.title}
+                                            size="large"
+                                        />
+                                        <TypographyScale
+                                            variant="body1"
+                                            customElement="p"
+                                            sx={{
+                                                paddingTop: 'inc20',
+                                                paddingLeft: [
+                                                    'inc80',
+                                                    '',
+                                                    null,
+                                                    'inc110',
+                                                ],
+                                                paddingBottom: ['inc60'],
+                                                '&:last-of-type': {
+                                                    paddingBottom: 0,
+                                                },
+                                            }}
+                                        >
+                                            {speaker.bio}
+                                        </TypographyScale>
+                                    </>
+                                );
+                            })}
+                            <Button
+                                href={registrationLink}
+                                sx={{
+                                    display: 'block',
+                                    textAlign: 'center',
+                                    marginTop: ['inc40', 'inc50', null],
+                                }}
+                                customWrapperStyles={{
+                                    display: ['block', null, null, 'none'],
+                                    width: ['100%', null, null, 'auto'],
+                                }}
+                            >
+                                Register Now
+                            </Button>
+                        </>
+                    )}
                     {isCodeExample &&
                         (githubUrl || liveSiteUrl) &&
                         renderExternalExamples({ marginTop: 'inc40' })}
                 </div>
                 {contentFooter}
                 <div sx={styles.floatingMenu}>
+                    {isIndustryEvent && (
+                        <EventWidget
+                            startTime={new Date(startTime)}
+                            endTime={new Date(endTime)}
+                            location={location}
+                            virtualLink={virtualLink}
+                            virtualLinkText={virtualLinkText}
+                            registrationLink={registrationLink}
+                            wrapperStyles={{
+                                position: 'sticky',
+                                top: 'inc150',
+                            }}
+                        />
+                    )}
                     {isCodeExample && tags && (
                         <div sx={{ marginBottom: 'inc90' }}>
                             <TypographyScale
