@@ -173,7 +173,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                                                         ? ESystemIconNames.CHEVRON_UP
                                                         : ESystemIconNames.CHEVRON_DOWN
                                                 }
-                                                size="small"
+                                                size="medium"
                                                 strokeWeight="large"
                                             />
                                         </FloraLink>
