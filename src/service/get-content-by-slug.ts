@@ -31,7 +31,7 @@ export const getContentItemFromSlug: (
     } else if (slug.startsWith('/podcasts')) {
         content = await getPodcastBySlug(slug);
         contentType = 'Podcast';
-    } else if (slug.includes('/events')) {
+    } else if (slug.startsWith('/events')) {
         content = mockEventData;
         contentType = 'Event';
     } else {
@@ -160,7 +160,7 @@ const mockEventData = [
         __v: 0,
         end_time: '2022-11-30T17:00:00.000Z',
         start_time: '2022-11-29T17:00:00.000Z',
-        calculated_slug: '/products/mongodb/events/test-har2',
+        calculated_slug: '/events/test-har2',
         slug: '/events/mock-event-1',
         id: '6384eed21509c54e2e383fdf',
     },
@@ -252,7 +252,7 @@ const mockEventData = [
         createdAt: '2022-11-28T17:46:27.076Z',
         updatedAt: '2022-11-28T19:57:13.483Z',
         __v: 0,
-        calculated_slug: '/products/mongodb/events/testing-strapi-publish',
+        calculated_slug: '/events/testing-strapi-publish',
         slug: '/events/mock-event',
         virtual_meetup_url:
             'https://www.mongodb.com/community/forums/t/mongodb-atlas-google-cloud-north-america-roadshow/198576',
@@ -353,7 +353,7 @@ const mockEventData = [
             'https://www.mongodb.com/community/forums/t/mongodb-atlas-google-cloud-north-america-roadshow/198576',
         virtual_meetup_url_text: 'Custom Virtual Display Link',
         registration_url: 'https://mongodbdaybengaluru.splashthat.com/',
-        calculated_slug: '/products/mongodb/events/test-har3',
+        calculated_slug: '/events/test-har3',
         slug: '/events/mock-event-2',
         id: '6384f567c9b0a750de8c0336',
     },
