@@ -3976,7 +3976,7 @@ decimal.js@^10.2.1:
   integrity sha1-2MOkRKnGd0umDKatcmHDqU/V54M=
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
+  version "0.2.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
 
