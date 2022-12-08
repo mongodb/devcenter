@@ -61,7 +61,7 @@ export const dataStyles = (layout: 'list' | 'grid') =>
               width: '100%',
               gap: ['inc40', null, 'inc50'],
           }
-        : {
+        : ({
               display: 'grid',
               gridTemplateColumns: [
                   'repeat(1, 1fr)',
@@ -70,7 +70,7 @@ export const dataStyles = (layout: 'list' | 'grid') =>
                   'repeat(3, 1fr)',
               ],
               gap: 'inc40',
-          } as ThemeUICSSObject;
+          } as ThemeUICSSObject);
 
 export const resultsStyles: ThemeUICSSObject = {
     display: 'flex',

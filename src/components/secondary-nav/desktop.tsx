@@ -48,22 +48,23 @@ const hoverLinkStyles = (isActive: boolean) => ({
     },
 });
 
-const MainLinkStyles = (isActive: boolean) => ({
-    float: 'left',
-    marginRight: [null, null, null, 'inc40', 'inc90'],
-    fontWeight: 500,
+const MainLinkStyles = (isActive: boolean) =>
+    ({
+        float: 'left',
+        marginRight: [null, null, null, 'inc40', 'inc90'],
+        fontWeight: 500,
 
-    'span.textlink-default-text-class': {
-        ...hoverLinkStyles(isActive),
-        color: theme.colors.text.default,
+        'span.textlink-default-text-class': {
+            ...hoverLinkStyles(isActive),
+            color: theme.colors.text.default,
+            ':hover': {
+                borderBottomColor: `${theme.colors.green40}`,
+            },
+        },
         ':hover': {
             borderBottomColor: `${theme.colors.green40}`,
         },
-    },
-    ':hover': {
-        borderBottomColor: `${theme.colors.green40}`,
-    },
-}) as ThemeUICSSObject;
+    } as ThemeUICSSObject);
 
 const FloraLinkStyles = (isActive: boolean) => ({
     display: 'inline-block',

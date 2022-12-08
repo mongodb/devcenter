@@ -22,19 +22,20 @@ const crumbs: Crumb[] = [
     { text: 'Developer Topics', url: '/developer/topics' },
 ];
 
-const getFlashCardStyles = (size: number, extraStyles?: ThemeUICSSObject) => ({
-    div: { minHeight: 'unset' },
-    '>div:first-of-type>div:first-of-type': {
-        // Janky, but flora doesn't support third party logos in these cards.
-        width: size,
-        height: size,
-    },
-    img: {
-        width: size,
-        height: size,
-    },
-    ...extraStyles,
-}) as ThemeUICSSObject;
+const getFlashCardStyles = (size: number, extraStyles?: ThemeUICSSObject) =>
+    ({
+        div: { minHeight: 'unset' },
+        '>div:first-of-type>div:first-of-type': {
+            // Janky, but flora doesn't support third party logos in these cards.
+            width: size,
+            height: size,
+        },
+        img: {
+            width: size,
+            height: size,
+        },
+        ...extraStyles,
+    } as ThemeUICSSObject);
 
 interface LanguagesPageProps {
     languages: MetaInfo[];
@@ -51,7 +52,7 @@ const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
                 <FlashCard
                     key={lang.slug}
                     flashCard
-                    alignment='left'
+                    alignment="left"
                     title={lang.tagName}
                     text={lang.description}
                     background={false}
@@ -59,7 +60,7 @@ const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
                         src: imageSrc,
                         variant: ESingleImageVariant.NO_RATIO,
                     }}
-                    imageryType={(imageSrc ? 'image' : 'none')}
+                    imageryType={imageSrc ? 'image' : 'none'}
                     cta={{
                         type: 'link-arrow',
                         text: 'Learn More',
@@ -107,7 +108,8 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({
                         gap={['inc50', null, null, 'inc40']}
                     >
                         {featured.map(lang => {
-                            const imageSrc = LogoPaths[languageToLogo[lang.tagName]];
+                            const imageSrc =
+                                LogoPaths[languageToLogo[lang.tagName]];
                             return (
                                 <FlashCard
                                     flashCard
@@ -119,7 +121,7 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({
                                         src: imageSrc,
                                         variant: ESingleImageVariant.NO_RATIO,
                                     }}
-                                    imageryType={(imageSrc ? 'image' : 'none')}
+                                    imageryType={imageSrc ? 'image' : 'none'}
                                     cta={{
                                         type: 'link-arrow',
                                         text: 'Explore Content',
@@ -129,7 +131,7 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({
                                         },
                                     }}
                                 />
-                            )
+                            );
                         })}
                     </Grid>
                 </div>

@@ -6,7 +6,7 @@ export const OverlayContext = createContext<{
 }>({
     hasOverlay: false,
     setHasOverlay: () => null,
-})
+});
 
 export const OverlayProvider: FunctionComponent<{ children: ReactNode }> = ({
     children,

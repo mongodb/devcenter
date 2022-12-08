@@ -5,14 +5,15 @@ import { ThemeUICSSObject } from 'theme-ui';
 import { ComponentFactory } from '../component-factory';
 import { ArticleNode } from '../../../interfaces/article-body-node';
 
-const headerCellStyles = (align: any, index: number) => ({
-    paddingTop: ['inc20', 'inc40', 'inc40', 'inc40'],
-    paddingBottom: ['inc20', 'inc40', 'inc40', 'inc40'],
-    paddingLeft: ['inc20', 'inc30', 'inc30', 'inc30'],
-    paddingRight: ['inc20', 'inc30', 'inc30', 'inc30'],
-    textAlign: align[index],
-    whiteSpace: 'nowrap',
-}) as ThemeUICSSObject;
+const headerCellStyles = (align: any, index: number) =>
+    ({
+        paddingTop: ['inc20', 'inc40', 'inc40', 'inc40'],
+        paddingBottom: ['inc20', 'inc40', 'inc40', 'inc40'],
+        paddingLeft: ['inc20', 'inc30', 'inc30', 'inc30'],
+        paddingRight: ['inc20', 'inc30', 'inc30', 'inc30'],
+        textAlign: align[index],
+        whiteSpace: 'nowrap',
+    } as ThemeUICSSObject);
 
 const headerRowStyles = {
     borderBottom: `solid ${theme.borderWidths.inc30}`,

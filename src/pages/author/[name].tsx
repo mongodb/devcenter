@@ -83,7 +83,17 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                     }}
                 >
                     <Breadcrumbs crumbs={crumbs} />
-                    <div sx={{ gridColumn: ['span 6', null, 'span 8', 'span 12', '3 /span 9'] }}>
+                    <div
+                        sx={{
+                            gridColumn: [
+                                'span 6',
+                                null,
+                                'span 8',
+                                'span 12',
+                                '3 /span 9',
+                            ],
+                        }}
+                    >
                         <SpeakerLockup
                             sx={{
                                 display: 'flex',
@@ -180,7 +190,13 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                     >
                         <div
                             sx={{
-                                gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 12'],
+                                gridColumn: [
+                                    'span 6',
+                                    null,
+                                    'span 8',
+                                    'span 12',
+                                    'span 12',
+                                ],
                                 paddingTop: 'inc70',
                             }}
                         >

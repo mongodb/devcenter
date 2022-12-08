@@ -123,9 +123,12 @@ const getL2Topics = (l1Item: MetaInfoResponse, l2: MetaInfoResponse[]) => {
     return topics;
 };
 
-const getCTAs = (primary_cta: string | undefined): CTA[] =>  primary_cta ? [
-    {
-        text: 'Learn More',
-        url: primary_cta,
-    },
-] : [];
+const getCTAs = (primary_cta: string | undefined): CTA[] =>
+    primary_cta
+        ? [
+              {
+                  text: 'Learn More',
+                  url: primary_cta,
+              },
+          ]
+        : [];

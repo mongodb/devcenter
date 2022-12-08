@@ -1,4 +1,4 @@
-import { ThemeUICSSObject } from "theme-ui";
+import { ThemeUICSSObject } from 'theme-ui';
 
 export const checkboxListStyles = {
     marginBottom: 'inc50',

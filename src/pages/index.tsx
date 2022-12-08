@@ -11,7 +11,7 @@ import {
 import Image from 'next/image';
 
 import theme from '@mdb/flora/theme';
-import {useState } from 'react';
+import { useState } from 'react';
 import ShowcaseCard from '../components/showcase-card';
 import {
     cardsLanguagesData,
@@ -22,9 +22,11 @@ import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
 import { layers, h5Styles } from '../styled/layout';
 
-const getImageSrc = (imageString: string | EThirdPartyLogoVariant) => (
-    LogoPaths[imageString as EThirdPartyLogoVariant] || `https://webimages.mongodb.com/_com_assets/icons/${imageString}.svg`
-).split('?')[0];
+const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
+    (
+        LogoPaths[imageString as EThirdPartyLogoVariant] ||
+        `https://webimages.mongodb.com/_com_assets/icons/${imageString}.svg`
+    ).split('?')[0];
 
 const HomepageSearch: React.FunctionComponent = () => {
     const router = useRouter();

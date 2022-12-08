@@ -15,7 +15,7 @@ export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
             // Need this because Safari/mobile browsers don't normally render the border radius on scroll containers without this.
             // https://stackoverflow.com/a/58283449
             sx={{
-                '.CodeMirror-simplescroll': { isolation: 'isolate' }
+                '.CodeMirror-simplescroll': { isolation: 'isolate' },
             }}
         >
             <CodeSnippet height={height} language={language} code={value} />

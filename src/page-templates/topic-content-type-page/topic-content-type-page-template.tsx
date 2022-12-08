@@ -140,9 +140,7 @@ const ExtraCodeExampleCheckboxes = ({
     );
 };
 
-const TopicContentTypePageTemplate: NextPage<
-    TopicContentTypePageProps
-> = ({
+const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
     crumbs,
     contentType,
     tertiaryNavItems,
