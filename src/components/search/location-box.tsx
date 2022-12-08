@@ -7,7 +7,6 @@ const LocationBox: React.FunctionComponent<LocationBoxProps> = ({
     locationQuery,
     onLocationQuery,
     onLocationSelect,
-    locationSelection,
     results: { isValidating } = {},
     geolocationValidating,
     displayOptions,
@@ -22,9 +21,6 @@ const LocationBox: React.FunctionComponent<LocationBoxProps> = ({
                 width: ['100%', null, 'calc(33% - 12px)'],
                 div: {
                     maxWidth: '100%',
-                },
-                'div[role="dropdown"]': {
-                    width: 'calc(100% - 48px)',
                 },
                 ...extraStyles,
             }}

@@ -170,6 +170,25 @@ const EventsPageComponent: React.FunctionComponent<
                 </Grid>
             )}
 
+            <Button
+                hasIcon
+                iconPosition="right"
+                iconStrokeWeight="medium"
+                iconName={ESystemIconNames.FILTER_HAMBURGER}
+                onClick={() => setMobileFiltersOpen(true)}
+                customWrapperStyles={{
+                    display: ['block', null, null, 'none'],
+                    flexBasis: ['100%', null, 'auto'],
+                }}
+                customStyles={{
+                    display: ['flex', null, null, 'none'],
+                    justifyContent: 'center',
+                }}
+            >
+                Filter & Sort
+                {!!filters.length && ` (${filters.length})`}
+            </Button>
+
             {!!filters?.length && (
                 <div
                     sx={{
