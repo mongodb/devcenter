@@ -47,7 +47,6 @@ const featuredConfig = (prod: L1Product) => {
 };
 
 const flashCardStyles = {
-    boxSizing: 'border-box' as 'border-box',
     div: { minHeight: 'unset' },
     py: 'inc60',
 };
@@ -134,7 +133,6 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                                 key={l2.slug}
                                 {...flashCardProps}
                                 sx={{
-                                    boxSizing: 'border-box' as 'border-box',
                                     div: { minHeight: 'unset' },
                                     padding: 0,
                                 }}

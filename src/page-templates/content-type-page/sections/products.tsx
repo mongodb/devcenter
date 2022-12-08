@@ -53,7 +53,6 @@ const ProductsSection: React.FunctionComponent<ProductsSectionProps> = ({
                             titleLink={titleLink}
                             cta={cta}
                             sx={{
-                                boxSizing: 'border-box' as 'border-box',
                                 width: ['66vw', null, 'auto'],
                             }}
                             links={links}

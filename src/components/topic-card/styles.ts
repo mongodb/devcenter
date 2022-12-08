@@ -1,7 +1,6 @@
 import theme from '@mdb/flora/theme';
 
 export const topicCardStyles = {
-    boxSizing: 'border-box' as 'border-box',
     display: 'flex',
     textAlign: ['center' as 'center', null, 'left' as 'left'],
     alignItems: 'center',

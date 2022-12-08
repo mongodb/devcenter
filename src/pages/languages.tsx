@@ -47,7 +47,6 @@ const featuredConfig = (lang: MetaInfo) => {
 };
 
 const flashCardStyles = {
-    boxSizing: 'border-box' as 'border-box',
     div: { minHeight: 'unset' },
     py: 'inc60',
     '>div:first-of-type>div:first-of-type': {
@@ -98,7 +97,6 @@ const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
                         key={lang.slug}
                         {...flashCardProps}
                         sx={{
-                            boxSizing: 'border-box' as 'border-box',
                             div: { minHeight: 'unset' },
                             '>div:first-of-type>div:first-of-type': {
                                 // Janky, but flora doesn't support third party logos in these cards.

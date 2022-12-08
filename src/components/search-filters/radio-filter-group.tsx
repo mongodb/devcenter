@@ -130,23 +130,6 @@ const RadioFilterGroup: React.FunctionComponent<RadioFilterGroupProps> = memo(
                                 name={title || 'RadioGroup'}
                                 onChange={setSort}
                                 defaultChecked={sortBy}
-                                customStyles={{
-                                    // TODO: Remove custom styling once "box-sizing: border-box" is set globally
-                                    '& *': {
-                                        boxSizing: 'border-box',
-                                    },
-                                    'span[aria-label="radio-button-container"]':
-                                        {
-                                            width: [20, null, null, 24],
-                                            height: [20, null, null, 24],
-                                        },
-                                    'span[aria-label="radio-button"]::after': {
-                                        height: [10, null, null, 12],
-                                        width: [10, null, null, 12],
-                                        top: [3, null, null, 4],
-                                        left: [3, null, null, 4],
-                                    },
-                                }}
                             >
                                 {Object.keys(sortByOptions).map(
                                     (filterType: string, index: number) => (

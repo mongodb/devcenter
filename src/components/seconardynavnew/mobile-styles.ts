@@ -18,7 +18,6 @@ export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
     }
 
     return {
-        boxSizing: 'border-box',
         bg: '#ffffff',
         display: ['block', null, null, 'none'],
         position: 'sticky',
