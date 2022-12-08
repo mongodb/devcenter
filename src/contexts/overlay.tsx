@@ -1,9 +1,12 @@
 import { useState, createContext, FunctionComponent, ReactNode } from 'react';
 
-export const OverlayContext = createContext({
+export const OverlayContext = createContext<{
+    hasOverlay: boolean;
+    setHasOverlay: (has: boolean) => void;
+}>({
     hasOverlay: false,
-    setHasOverlay: (has: boolean) => {},
-});
+    setHasOverlay: () => null,
+})
 
 export const OverlayProvider: FunctionComponent<{ children: ReactNode }> = ({
     children,

@@ -7,11 +7,9 @@ import {
     FlashCard,
     GridLayout,
     ESingleImageVariant,
-    ImageryType,
-    CTAType,
     LogoPaths,
 } from '@mdb/flora';
-import { Grid } from 'theme-ui';
+import { Grid, ThemeUICSSObject } from 'theme-ui';
 
 import { languageToLogo } from '../utils/language-to-logo';
 import { getAllMetaInfo } from '../service/get-all-meta-info';
@@ -24,42 +22,20 @@ const crumbs: Crumb[] = [
     { text: 'Developer Topics', url: '/developer/topics' },
 ];
 
-const featuredConfig = (lang: MetaInfo) => {
-    const imageSrc = LogoPaths[languageToLogo[lang.tagName]];
-    return {
-        imageConfig: {
-            src: imageSrc,
-            variant: ESingleImageVariant.NO_RATIO,
-        },
-        cta: {
-            type: 'link-arrow' as CTAType,
-            text: 'Explore Content',
-            config: {
-                href: getURLPath(lang.slug),
-                linkIconDisableExpand: true, // Doesn't seem to work
-            },
-        },
-        flashCard: true,
-        imageryType: (imageSrc ? 'image' : 'none') as ImageryType,
-        title: lang.tagName,
-        text: lang.description,
-    };
-};
-
-const flashCardStyles = {
-    boxSizing: 'border-box' as 'border-box',
+const getFlashCardStyles = (size: number, extraStyles?: ThemeUICSSObject) => ({
+    boxSizing: 'border-box',
     div: { minHeight: 'unset' },
-    py: 'inc60',
     '>div:first-of-type>div:first-of-type': {
         // Janky, but flora doesn't support third party logos in these cards.
-        width: 72,
-        height: 72,
+        width: size,
+        height: size,
     },
     img: {
-        width: 72,
-        height: 72,
+        width: size,
+        height: size,
     },
-};
+    ...extraStyles,
+}) as ThemeUICSSObject;
 
 interface LanguagesPageProps {
     languages: MetaInfo[];
@@ -68,55 +44,38 @@ interface LanguagesPageProps {
 
 const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
     languages,
-}) => {
-    return (
-        <Grid columns={[1, null, 2, 4]} gap="inc70">
-            {languages.map(lang => {
-                const imageSrc = LogoPaths[languageToLogo[lang.tagName]];
-                const flashCardProps = {
-                    imageConfig: {
+}) => (
+    <Grid columns={[1, null, 2, 4]} gap="inc70">
+        {languages.map(lang => {
+            const imageSrc = LogoPaths[languageToLogo[lang.tagName]];
+            return (
+                <FlashCard
+                    key={lang.slug}
+                    flashCard
+                    alignment='left'
+                    title={lang.tagName}
+                    text={lang.description}
+                    background={false}
+                    imageConfig={{
                         src: imageSrc,
                         variant: ESingleImageVariant.NO_RATIO,
-                    },
-                    cta: {
-                        type: 'link-arrow' as CTAType,
+                    }}
+                    imageryType={(imageSrc ? 'image' : 'none')}
+                    cta={{
+                        type: 'link-arrow',
                         text: 'Learn More',
                         config: {
                             href: getURLPath(lang.slug),
                             linkIconDisableExpand: true, // Doesn't seem to work
                         },
-                    },
-                    flashCard: true,
-                    imageryType: (imageSrc ? 'image' : 'none') as ImageryType,
-                    title: lang.tagName,
-                    text: lang.description,
-                    background: false,
-                    alignment: 'left' as 'left',
-                };
-                return (
-                    <FlashCard
-                        key={lang.slug}
-                        {...flashCardProps}
-                        sx={{
-                            boxSizing: 'border-box' as 'border-box',
-                            div: { minHeight: 'unset' },
-                            '>div:first-of-type>div:first-of-type': {
-                                // Janky, but flora doesn't support third party logos in these cards.
-                                width: 64,
-                                height: 64,
-                            },
-                            img: {
-                                width: 64,
-                                height: 64,
-                            },
-                            padding: 0,
-                        }}
-                    />
-                );
-            })}
-        </Grid>
-    );
-};
+                    }}
+                    sx={getFlashCardStyles(64, { padding: 0 })}
+                />
+            );
+        })}
+    </Grid>
+);
+
 const LanguagesPage: NextPage<LanguagesPageProps> = ({
     languages,
     featured,
@@ -148,13 +107,31 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({
                         columns={[1, null, 2, 4]}
                         gap={['inc50', null, null, 'inc40']}
                     >
-                        {featured.map(lang => (
-                            <FlashCard
-                                key={lang.slug}
-                                sx={flashCardStyles}
-                                {...featuredConfig(lang)}
-                            />
-                        ))}
+                        {featured.map(lang => {
+                            const imageSrc = LogoPaths[languageToLogo[lang.tagName]];
+                            return (
+                                <FlashCard
+                                    flashCard
+                                    key={lang.slug}
+                                    sx={getFlashCardStyles(72, { py: 'inc60' })}
+                                    title={lang.tagName}
+                                    text={lang.description}
+                                    imageConfig={{
+                                        src: imageSrc,
+                                        variant: ESingleImageVariant.NO_RATIO,
+                                    }}
+                                    imageryType={(imageSrc ? 'image' : 'none')}
+                                    cta={{
+                                        type: 'link-arrow',
+                                        text: 'Explore Content',
+                                        config: {
+                                            href: getURLPath(lang.slug),
+                                            linkIconDisableExpand: true, // Doesn't seem to work
+                                        },
+                                    }}
+                                />
+                            )
+                        })}
                     </Grid>
                 </div>
                 <div sx={{ gridColumn: ['span 6', null, 'span 8', 'span 12'] }}>

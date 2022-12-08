@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { UnifiedFooter } from '@mdb/consistent-nav';
 import { globalStyles, Main } from '../styled/layout';
 import { UnifiedNav } from '@mdb/consistent-nav';
-import SecondaryNav from './seconardynavnew/';
+import SecondaryNav from './secondary-nav';
 import { OverlayContext } from '../contexts/overlay';
 import { layers } from '../styled/layout';
 import { useEnsureImageAlts } from '../utils/seo';

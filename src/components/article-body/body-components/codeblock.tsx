@@ -13,7 +13,7 @@ export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
     // Need this because Safari/mobile browsers don't normally render the border radius on scroll containers without this.
     // https://stackoverflow.com/a/58283449
     const styling = {
-        '.CodeMirror-simplescroll': { isolation: 'isolate' as 'isolate' },
+        '.CodeMirror-simplescroll': { isolation: 'isolate' as const },
     };
     return (
         <div sx={styling}>

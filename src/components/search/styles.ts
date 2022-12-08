@@ -1,10 +1,11 @@
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
 
 export const titleStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: ['start', null, 'end'],
-    flexDirection: ['column' as 'column', null, 'row' as 'row'],
+    flexDirection: ['column', null, 'row'],
     gap: 'inc30',
     width: '100%',
 };
@@ -16,11 +17,11 @@ export const searchBoxSortBarWrapperStyles = {
     rowGap: 'inc30',
 };
 
-export const searchWrapperStyles = {
+export const searchWrapperStyles: ThemeUICSSObject = {
     alignItems: 'flex-start',
     alignContent: 'flex-start',
     display: 'flex',
-    flexWrap: 'wrap' as 'wrap',
+    flexWrap: 'wrap',
     gap: ['inc30', null, 'inc40'],
     gridColumn: 'span 9',
     '& > *': {
@@ -37,7 +38,7 @@ export const searchBoxStyles = {
         maxWidth: 'unset',
     },
     'div[aria-label="input-box"]': {
-        boxSizing: 'content-box' as 'content-box',
+        boxSizing: 'content-box',
     },
 };
 
@@ -62,7 +63,7 @@ export const dataStyles = (layout: 'list' | 'grid') =>
         ? {
               margin: 'auto',
               display: 'flex',
-              flexDirection: 'column' as 'column', // theme-ui is weird about this.
+              flexDirection: 'column',
               alignItems: 'center',
               width: '100%',
               gap: ['inc40', null, 'inc50'],
@@ -76,12 +77,12 @@ export const dataStyles = (layout: 'list' | 'grid') =>
                   'repeat(3, 1fr)',
               ],
               gap: 'inc40',
-          };
+          } as ThemeUICSSObject;
 
-export const resultsStyles = {
+export const resultsStyles: ThemeUICSSObject = {
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column' as 'column',
+    flexDirection: 'column',
     width: '100%',
     marginTop: 'inc30',
 };

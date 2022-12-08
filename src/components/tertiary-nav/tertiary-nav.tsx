@@ -57,7 +57,7 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
                     currentUrl="#"
                     items={mobileItems}
                     isMobile={true}
-                ></SideNav>
+                />
             </div>
         </>
     );

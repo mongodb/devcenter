@@ -1,3 +1,20 @@
 {
-    "extends": ["next/core-web-vitals", "plugin:react/jsx-runtime"]
+    "env": {
+        "jest": true
+    },
+    "globals": {
+        "it": true,
+        "JSX": true,
+        "expect": true,
+        "describe": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ]
 }

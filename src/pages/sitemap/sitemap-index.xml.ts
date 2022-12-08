@@ -49,5 +49,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     ]);
 };
 
-const Sitemap = () => {};
+function Sitemap() {
+    // do nothing
+};
 export default Sitemap;

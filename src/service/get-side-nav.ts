@@ -12,7 +12,7 @@ export const getSideNav = async (
         return slugsInTags.includes(inputSlug);
     });
 
-    let pluralize = require('pluralize');
+    const pluralize = require('pluralize');
 
     filteredContents.forEach((fc: ContentItem) => {
         fc.tags.forEach(tag => {

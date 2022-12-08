@@ -28,10 +28,10 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;
 
-    let pagePath = route === '/_error' ? null : asPath;
+    const pagePath = route === '/_error' ? null : asPath;
     // Attributes for SEO may be overridden at the component-level if needed with NextSeo.
-    let pageDescription = getMetaDescr(publicRuntimeConfig, route, asPath);
-    let canonicalUrl = shouldDefineDefaultCanonical(route)
+    const pageDescription = getMetaDescr(publicRuntimeConfig, route, asPath);
+    const canonicalUrl = shouldDefineDefaultCanonical(route)
         ? getCanonicalUrl(absoluteBasePath, asPath)
         : null;
 

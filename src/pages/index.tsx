@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import {
-    BrandedIcon,
     EThirdPartyLogoVariant,
     GridLayout,
     Link,
@@ -12,7 +11,7 @@ import {
 import Image from 'next/image';
 
 import theme from '@mdb/flora/theme';
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import ShowcaseCard from '../components/showcase-card';
 import {
     cardsLanguagesData,
@@ -23,12 +22,9 @@ import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
 import { layers, h5Styles } from '../styled/layout';
 
-const getImageSrc = (imageString: string | EThirdPartyLogoVariant) => {
-    const brandedIconUrl = `https://webimages.mongodb.com/_com_assets/icons/${imageString}.svg`;
-    return (
-        LogoPaths[imageString as EThirdPartyLogoVariant] || brandedIconUrl
-    ).split('?')[0];
-};
+const getImageSrc = (imageString: string | EThirdPartyLogoVariant) => (
+    LogoPaths[imageString as EThirdPartyLogoVariant] || `https://webimages.mongodb.com/_com_assets/icons/${imageString}.svg`
+).split('?')[0];
 
 const HomepageSearch: React.FunctionComponent = () => {
     const router = useRouter();
@@ -69,16 +65,16 @@ const HomepageSearch: React.FunctionComponent = () => {
     );
 };
 
-const Home: NextPage<{}> = props => {
+const Home: NextPage = () => {
     return (
         <main
             sx={{
-                overflow: 'hidden' as 'hidden',
-                position: 'relative' as 'relative',
+                overflow: 'hidden',
+                position: 'relative',
                 px: ['inc40', null, 'inc50', 'inc70'],
 
                 '> svg': {
-                    position: 'absolute' as 'absolute',
+                    position: 'absolute',
                     top: '-860px',
                     left: '-150px',
                     zIndex: layers.backdrop,
@@ -216,16 +212,16 @@ const Home: NextPage<{}> = props => {
             </GridLayout>
             <div
                 sx={{
-                    position: 'relative' as 'relative',
-
+                    position: 'relative',
                     '> svg': {
-                        position: 'absolute' as 'absolute',
+                        position: 'absolute',
                         top: '80px',
                         right: '-580px',
                         zIndex: layers.backdrop,
                     },
                 }}
             >
+                {/* TODO: both icons should be exported out of here */}
                 <svg
                     width="1706"
                     height="1706"
@@ -276,7 +272,7 @@ const Home: NextPage<{}> = props => {
                     </div>
 
                     {cardsTechnologiesData?.map(
-                        ({ titleLink, imageString, href }) => (
+                        ({ titleLink, imageString }) => (
                             <div
                                 sx={{
                                     gridColumn: [
@@ -347,8 +343,9 @@ const Home: NextPage<{}> = props => {
                         </TypographyScale>
                         <div
                             sx={{
-                                gridColumn: [null, null, null, 'span 2'],
-                                display: ['none', 'none', 'none', 'block'],
+                                // TODO: check this
+                                gridColumn: 'span 2',
+                                display: ['none', null, null, 'block'],
                             }}
                         >
                             <Link
@@ -408,7 +405,7 @@ const Home: NextPage<{}> = props => {
                         sx={{
                             gridColumn: 'span 6',
                             marginTop: theme.space.inc50,
-                            display: ['block', 'block', 'block', 'none'],
+                            display: ['block', null, null, 'none'],
                         }}
                     >
                         <Link

@@ -21,44 +21,16 @@ const RadioFilterGroup: React.FunctionComponent<RadioFilterGroupProps> = memo(
         title,
         items,
         filters,
-        setFilters = () => {},
         isMobile = false,
-        setSort = () => {},
+        setSort = () => null,
         sortBy,
     }) => {
         const [expanded, setExpanded] = useState<boolean>(
             isMobile ? false : true
         );
-        const [showAll, setShowAll] = useState<boolean>(false);
 
         const onExpand = () => {
-            setShowAll(false);
             setExpanded(!expanded);
-        };
-
-        const onCheckToggle = (checked: boolean, filter: FilterItem) => {
-            if (checked) {
-                if (filter.subFilters && filter.subFilters.length) {
-                    const subFiltersToAdd = filter.subFilters.filter(
-                        subFilter =>
-                            !filters.find(
-                                ({ name, type }) =>
-                                    name === subFilter.name &&
-                                    type === subFilter.type
-                            )
-                    );
-                    setFilters(filters.concat(filter).concat(subFiltersToAdd));
-                } else {
-                    setFilters(filters.concat(filter));
-                }
-            } else {
-                setFilters(
-                    filters.filter(
-                        ({ name, type }) =>
-                            !(name === filter.name && type === filter.type)
-                    )
-                );
-            }
         };
 
         const mobileFilterList = (() => {

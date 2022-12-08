@@ -24,9 +24,9 @@ export const getFeaturedLangProdTech = (
 ) => {
     const aggregateSlug =
         contentType === 'Tutorial' ? '/tutorials' : '/code-examples';
-    let languages: TagWithCount[] = [];
-    let technologies: TagWithCount[] = [];
-    let products: L1TagWithCount[] = [];
+    const languages: TagWithCount[] = [];
+    const technologies: TagWithCount[] = [];
+    const products: L1TagWithCount[] = [];
     content.forEach(item => {
         const languageTags = item.tags.filter(
             tag => tag.type === 'ProgrammingLanguage'

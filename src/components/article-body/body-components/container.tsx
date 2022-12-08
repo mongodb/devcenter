@@ -3,11 +3,9 @@ import { ComponentFactory } from '../component-factory';
 import { ArticleNode } from '../../../interfaces/article-body-node';
 
 export const Container = ({
-    argument,
     children,
     ...rest
 }: {
-    argument: any;
     children: ArticleNode[];
 }) => {
     return (

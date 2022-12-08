@@ -20,14 +20,8 @@ const AuthorSocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
     facebookUrl,
     linkedinUrl,
     twitterUrl,
-    youtubeUrl,
     className,
 }) => {
-    const [url, setUrl] = useState('');
-    useEffect(() => {
-        setUrl(window.location.href);
-    }, []);
-
     return (
         <div
             aria-label="share-buttons-container"
@@ -90,22 +84,6 @@ const AuthorSocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                     />
                 </a>
             )}
-            {/*
-             TODO get youtube icon
-*/}
-            {/*{youtubeUrl && <a*/}
-            {/*    sx={circleStyles}*/}
-            {/*    href={youtubeUrl}*/}
-            {/*    target="_blank"*/}
-            {/*    rel="noreferrer"*/}
-            {/*    title="Author's youtube Link"*/}
-            {/*>*/}
-            {/*    <img*/}
-            {/*        src="/developer/facebook.svg"*/}
-            {/*        alt="youtube icon"*/}
-            {/*        sx={{ width: '12px', height: '12px', display: 'block' }}*/}
-            {/*    />*/}
-            {/*</a>}*/}
         </div>
     );
 };
