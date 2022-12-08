@@ -1,4 +1,4 @@
-import { ThemeUIStyleObject } from 'theme-ui';
+import { ThemeUICSSObject, ThemeUIStyleObject } from 'theme-ui';
 import { layers } from '../../styled/layout';
 
 export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
@@ -37,7 +37,7 @@ export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
 
     '& > li': {
         py: 'inc30',
-        position: 'relative' as 'relative',
+        position: 'relative',
 
         '&:first-of-type': {
             minHeight: '30px',
@@ -94,8 +94,8 @@ export const StylesFloraLinkChevronRight = {
     },
 };
 
-export const plusOrMinusStylesForDropDowns = {
-    position: 'absolute' as 'absolute',
+export const plusOrMinusStylesForDropDowns: ThemeUICSSObject = {
+    position: 'absolute',
     right: '0',
 };
 
@@ -126,8 +126,8 @@ export const userMenuStyles: ThemeUIStyleObject = {
     marginLeft: 'auto',
 };
 
-export const DropDownStyles = {
-    position: 'relative' as 'relative',
+export const DropDownStyles: ThemeUICSSObject = {
+    position: 'relative',
 };
 
 export const StylesDropDownWrapper = {
@@ -139,9 +139,9 @@ export const StylesDropDownWrapper = {
     backgroundColor: '#fff',
     color: '#000',
 };
-export const StylesDropDownMenuList = {
-    listStyleType: 'none' as 'none',
-    whiteSpace: 'nowrap' as 'nowrap',
+export const StylesDropDownMenuList: ThemeUICSSObject = {
+    listStyleType: 'none',
+    whiteSpace: 'nowrap',
     paddingTop: 'inc30',
     paddingLeft: 0,
     // L2
@@ -171,7 +171,7 @@ export const StylesSubLinks = {
     },
 
     ul: {
-        listStyleType: 'none' as 'none',
+        listStyleType: 'none',
         paddingLeft: 'inc40',
         paddingTop: 'inc40',
         /* L4 */

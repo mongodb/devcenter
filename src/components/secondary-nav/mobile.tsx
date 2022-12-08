@@ -1,12 +1,10 @@
 import { useContext, useRef, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-import { secondaryNavData } from '../../data/secondary-nav';
-import { Link as FloraLink, TypographyScale } from '@mdb/flora';
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
-import { OverlayContext } from '../../contexts/overlay';
-import theme from '@mdb/flora/theme';
+import { ESystemIconNames, SystemIcon, Link as FloraLink, TypographyScale } from '@mdb/flora';
 
-import { ESystemIconNames, SystemIcon } from '@mdb/flora';
+import { secondaryNavData } from '../../data/secondary-nav';
+import { OverlayContext } from '../../contexts/overlay';
 import SecondaryLinksList from './nav-item';
 import {
     navWrapperStyles,

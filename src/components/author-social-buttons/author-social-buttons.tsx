@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import theme from '@mdb/flora/theme';
 interface SocialButtonsProps {

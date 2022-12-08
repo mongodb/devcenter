@@ -5,10 +5,6 @@ import theme from '@mdb/flora/theme';
 
 import ExpandingLink from '.';
 
-const facebookUrl = 'https://www.facebook.com/';
-const twitterUrl = 'https://www.twitter.com/';
-const linkedinUrl = 'https://www.linkedin.com/';
-
 test('renders expanding link with no hover override', () => {
     render(<ExpandingLink text="Atlas" href={'/products/atlas/'} />);
 

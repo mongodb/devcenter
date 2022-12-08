@@ -1,4 +1,5 @@
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
 import { PillCategory } from '../../types/pill-category';
 import { CardVariant } from './types';
 
@@ -29,7 +30,7 @@ export const pillStyles = (pillCategory: PillCategory) => ({
 export const thumbnailWrapperStyles = (
     variant: CardVariant,
     category: PillCategory
-) => {
+): ThemeUICSSObject => {
     const videoAspectRatio =
         category === 'Video' ? { aspectRatio: '16/9' } : {};
 
@@ -140,17 +141,17 @@ export const thumbnailWrapperStyles = (
     return {
         display: [mobileDisplay, null, tabletDesktopDisplay],
         flexShrink: 0,
-        position: 'relative' as 'relative',
+        position: 'relative',
         ...videoAspectRatio,
         width: [mobileDimensions, null, tabletDimensions, desktopDimensions],
         height: [mobileDimensions, null, tabletDimensions, desktopDimensions],
     };
 };
 
-export const cardWrapperStyles = {
-    position: 'relative' as 'relative',
+export const cardWrapperStyles: ThemeUICSSObject = {
+    position: 'relative',
     display: 'flex',
-    flexDirection: 'column' as 'column',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     padding: [
         theme.space.cards.paddingXXS,
@@ -174,7 +175,7 @@ export const cardWrapperStyles = {
 export const descriptionStyles = (
     variant: CardVariant,
     category: PillCategory
-) => {
+): ThemeUICSSObject => {
     let mobileDisplay;
     let tabletDesktopDisplay;
     switch (variant) {
@@ -207,22 +208,18 @@ export const descriptionStyles = (
         WebkitLineClamp: 4,
         WebkitBoxOrient: 'vertical',
         overflow: 'hidden',
-        lineBreak: 'anywhere' as 'anywhere',
+        lineBreak: 'anywhere',
     };
 };
 
 export const cardHeaderStyles = (
     variant: CardVariant,
     category: PillCategory
-) => {
+): ThemeUICSSObject => {
     const mobileFlexDirection =
-        variant === 'list' || category === 'Podcast'
-            ? ('row' as 'row')
-            : ('column' as 'column');
+        variant === 'list' || category === 'Podcast' ? 'row' : 'column';
     const tabletDesktopFlexDirection =
-        variant === 'medium' && category !== 'Podcast'
-            ? ('column' as 'column')
-            : ('row' as 'row');
+        variant === 'medium' && category !== 'Podcast' ? 'row' : 'column';
     return {
         display: 'flex',
         gap: ['inc30', null, 'inc50'],

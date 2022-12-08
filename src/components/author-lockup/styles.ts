@@ -1,3 +1,5 @@
+import { ThemeUICSSObject } from "theme-ui";
+
 export const container = {
     display: 'flex',
     alignItems: 'center',
@@ -6,15 +8,15 @@ export const container = {
 };
 
 export const profileImage = (size: 'small' | 'large') => ({
-    objectFit: 'cover' as 'cover',
-    position: 'relative' as 'relative',
+    objectFit: 'cover',
+    position: 'relative',
     borderRadius: '50%',
     width: size === 'small' ? '40px' : ['40px', null, null, '64px'], // This is how it is in flora, idk why they're not using theme vals.
     height: size === 'small' ? '40px' : ['40px', null, null, '64px'],
-});
+}) as ThemeUICSSObject;
 
 export const avatarPlaceholder = (size: 'small' | 'large') => ({
-    position: 'relative' as 'relative',
+    position: 'relative',
     backgroundColor: 'blue80',
     borderRadius: '50%',
     width: size === 'small' ? '40px' : ['40px', null, null, '64px'],
@@ -22,11 +24,11 @@ export const avatarPlaceholder = (size: 'small' | 'large') => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-});
+}) as ThemeUICSSObject;
 
-export const typographyContainer = {
+export const typographyContainer: ThemeUICSSObject = {
     display: 'flex',
-    flexDirection: 'column' as 'column',
+    flexDirection: 'column',
 };
 
 export const stackedImageStyles = (size: 'small' | 'large') => ({

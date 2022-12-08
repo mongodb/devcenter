@@ -199,7 +199,7 @@ export const getFilters = async (
             .filter(({ type }) => type === key)
             .sort(sortFunction);
 
-        if (!!items.length) {
+        if (items.length) {
             orderedFilterItems.push({ key, value: items });
         }
     });
