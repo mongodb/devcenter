@@ -19,6 +19,16 @@ describe('RequestContentModal', () => {
         const title = screen.getByText('Request a Demo App');
         expect(title).toBeInTheDocument();
 
+        const topic = screen.getByLabelText('Topic');
+        fireEvent.change(topic, { target: { value: 'Topic X' } });
+        expect(topic).toHaveValue('Topic X');
+
+        const description = screen.getByLabelText('Describe your experience');
+        fireEvent.change(description, {
+            target: { value: 'I want to learn Y about topic X' },
+        });
+        expect(description).toHaveValue('I want to learn Y about topic X');
+
         const submit = screen.getByText('Submit');
         submit.click();
 
