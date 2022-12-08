@@ -4,7 +4,7 @@
  * @returns the URL corrected with /developer, if applicable
  */
 
-export const BASE_PATH = '/developer';
+const BASE_PATH = '/developer';
 
 export const getURLPath = (url: string | undefined, trailingSlash = true) => {
     if (typeof url !== 'string') return url;

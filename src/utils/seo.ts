@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 export const CONTENT_ROUTE = '/[...slug]';
-export const CONTENT_TYPE_ROUTES = [
+const CONTENT_TYPE_ROUTES = [
     '/articles',
     '/code-examples',
     '/quickstarts',
@@ -10,7 +10,7 @@ export const CONTENT_TYPE_ROUTES = [
     '/tutorials',
     '/videos',
 ];
-export const SEARCH_ROUTE = '/search';
+const SEARCH_ROUTE = '/search';
 
 export const getMetaDescr = (config: any, route: string, asPath: string) => {
     const path =

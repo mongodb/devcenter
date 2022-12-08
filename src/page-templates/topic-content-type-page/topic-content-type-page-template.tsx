@@ -43,7 +43,7 @@ import { useRequestContentModal } from '../../contexts/request-content-modal';
 
 let pluralize = require('pluralize');
 
-export interface TopicContentTypePageProps {
+interface TopicContentTypePageProps {
     crumbs: Crumb[];
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
@@ -140,7 +140,7 @@ const ExtraCodeExampleCheckboxes = ({
     );
 };
 
-export const TopicContentTypePageTemplate: NextPage<
+const TopicContentTypePageTemplate: NextPage<
     TopicContentTypePageProps
 > = ({
     crumbs,

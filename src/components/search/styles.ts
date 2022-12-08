@@ -10,13 +10,6 @@ export const titleStyles = {
     width: '100%',
 };
 
-export const searchBoxSortBarWrapperStyles = {
-    display: 'grid',
-    marginBottom: ['inc40', null, 'inc70'],
-    columnGap: 'inc40',
-    rowGap: 'inc30',
-};
-
 export const searchWrapperStyles: ThemeUICSSObject = {
     alignItems: 'flex-start',
     alignContent: 'flex-start',
@@ -85,11 +78,6 @@ export const resultsStyles: ThemeUICSSObject = {
     flexDirection: 'column',
     width: '100%',
     marginTop: 'inc30',
-};
-
-export const loadMoreStyles = {
-    marginTop: ['inc70', null, 'inc90'],
-    mx: 'auto',
 };
 
 export const linkStyleOverride = {
