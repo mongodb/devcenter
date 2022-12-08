@@ -102,6 +102,10 @@ jobs:
               with:
                   skip-step: install
               uses: ArtiomTr/jest-coverage-report-action@v2
+              if: github.event_name == 'pull_request'
+            - name: Run Jest without coverage report
+              run: npx jest
+              if: github.event_name != 'pull_request'
     lighthouse:
         name: Lighthouse
         runs-on: ubuntu-latest

@@ -51,7 +51,7 @@ export const sortBoxStyles = {
         height: '84px',
     },
     'div[role="dropdown"]': {
-        width: 'calc(100% - 48px)',
+        width: '100%',
     },
     gridColumn: 'span 1',
     display: ['none', null, null, 'block'],

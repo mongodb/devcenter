@@ -2,7 +2,6 @@ import theme from '@mdb/flora/theme';
 import { ThemeUICSSObject } from 'theme-ui';
 
 export const topicCardStyles: ThemeUICSSObject = {
-    boxSizing: 'border-box',
     display: 'flex',
     textAlign: ['center', null, 'left'],
     alignItems: 'center',

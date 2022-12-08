@@ -23,7 +23,6 @@ const crumbs: Crumb[] = [
 ];
 
 const getFlashCardStyles = (size: number, extraStyles?: ThemeUICSSObject) => ({
-    boxSizing: 'border-box',
     div: { minHeight: 'unset' },
     '>div:first-of-type>div:first-of-type': {
         // Janky, but flora doesn't support third party logos in these cards.

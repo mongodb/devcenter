@@ -7,7 +7,6 @@ export const smallDesktopNavStyles = {
 };
 
 export const navTagStyles: ThemeUICSSObject = {
-    boxSizing: 'border-box',
     display: 'flex',
     whiteSpace: 'nowrap',
     overflowX: 'auto',

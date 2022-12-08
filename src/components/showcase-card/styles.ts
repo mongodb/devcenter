@@ -3,7 +3,6 @@ import { ThemeUICSSObject } from 'theme-ui';
 
 export const showcaseCardWrapper: ThemeUICSSObject = {
     display: 'flex',
-    boxSizing: 'border-box',
     flexDirection: 'column',
     boxShadow: 'level01',
     borderRadius: ['inc50', null, null, null, 'inc70'],
