@@ -1,29 +1,25 @@
 import { TypographyScale } from '@mdb/flora';
 import { ComponentFactory } from './component-factory';
 
-const aLinkStyles = () => {
-    return {
-        display: 'inline-block',
-        marginLeft: 'inc20',
-        span: {
-            fontSize: 'inc20',
-            lineHeight: 'inc20',
-        },
-        color: 'black40',
-        '&:hover': {
-            color: 'text.default',
-        },
-    };
+const aLinkStyles = {
+    display: 'inline-block',
+    marginLeft: 'inc20',
+    span: {
+        fontSize: 'inc20',
+        lineHeight: 'inc20',
+    },
+    color: 'black40',
+    '&:hover': {
+        color: 'text.default',
+    },
 };
 
-const unorderedListStyles = () => {
-    return {
-        listStyleType: 'none',
-        paddingLeft: 0,
-        'li:not(:last-child)': {
-            marginBottom: 'inc30',
-        },
-    };
+const unorderedListStyles = {
+    listStyleType: 'none',
+    paddingLeft: 0,
+    'li:not(:last-child)': {
+        marginBottom: 'inc30',
+    },
 };
 
 const formatText = (text: string | any) => {
@@ -49,7 +45,7 @@ export const TableOfContents = ({
             <TypographyScale variant="heading6">
                 Table of Contents
             </TypographyScale>
-            <ul sx={unorderedListStyles()}>
+            <ul sx={unorderedListStyles}>
                 {headingNodes.map(
                     ({
                         id,
@@ -74,7 +70,7 @@ export const TableOfContents = ({
                                     <a
                                         key={id}
                                         href={`#${id}`}
-                                        sx={aLinkStyles()}
+                                        sx={aLinkStyles}
                                     >
                                         {formatText(title)}
                                     </a>
