@@ -2,6 +2,7 @@
 
 import { NextApiResponse } from 'next';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const LRU = require('lru-cache');
 
 interface RateLimitOptions {

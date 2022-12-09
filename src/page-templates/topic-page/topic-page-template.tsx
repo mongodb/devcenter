@@ -32,7 +32,8 @@ import {
     titleStyles,
 } from '../../components/search/styles';
 
-let pluralize = require('pluralize');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pluralize = require('pluralize');
 
 interface TopicPageProps {
     crumbs: Crumb[];

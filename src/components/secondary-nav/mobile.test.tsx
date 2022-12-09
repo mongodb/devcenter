@@ -3,7 +3,6 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
 import Mobile from './mobile';
-import { Tag } from '../../interfaces/tag';
 
 jest.mock('next-auth/react', () => {
     const nextAuthModule = jest.requireActual('next-auth/react');

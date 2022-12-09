@@ -1,6 +1,6 @@
-import { L1ProductTag, ProgrammingLanguageTag } from './tag-type-response';
+import { GenericTagTypeResponse } from './tag-type-response';
 
 export interface PrimaryTag {
-    l1Product?: L1ProductTag;
-    programmingLanguage?: ProgrammingLanguageTag;
+    l1Product?: GenericTagTypeResponse;
+    programmingLanguage?: GenericTagTypeResponse;
 }

@@ -89,8 +89,7 @@ export const useEnsureImageAlts = (parent: HTMLElement | undefined | null) => {
                 // Try to guess an alt name from the filename, if not default to empty string
                 const src = img.getAttribute('src') as string;
                 const match =
-                    /[\/-]([^\/-]+)\.(gif|jpe?g|tiff?|png|webp|bmp|svg)/.exec(
-                        // eslint-disable-line
+                    /[/-]([^/-]+)\.(gif|jpe?g|tiff?|png|webp|bmp|svg)/.exec(
                         src
                     );
 
