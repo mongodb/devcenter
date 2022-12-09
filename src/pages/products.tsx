@@ -147,26 +147,28 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                     >
                         {featured.map(prod => {
                             const iconName = productToLogo[prod.tagName];
-                            <FlashCard
-                                flashCard
-                                key={prod.slug}
-                                title={prod.tagName}
-                                text={prod.description}
-                                iconConfig={{ name: iconName }}
-                                imageryType={iconName ? 'icon' : 'none'}
-                                cta={{
-                                    type: 'link-arrow',
-                                    text: 'Explore Content',
-                                    config: {
-                                        href: getURLPath(prod.slug),
-                                        linkIconDisableExpand: true, // Doesn't seem to work
-                                    },
-                                }}
-                                sx={{
-                                    div: { minHeight: 'unset' },
-                                    py: 'inc60',
-                                }}
-                            />;
+                            return (
+                                <FlashCard
+                                    flashCard
+                                    key={prod.slug}
+                                    title={prod.tagName}
+                                    text={prod.description}
+                                    iconConfig={{ name: iconName }}
+                                    imageryType={iconName ? 'icon' : 'none'}
+                                    cta={{
+                                        type: 'link-arrow',
+                                        text: 'Explore Content',
+                                        config: {
+                                            href: getURLPath(prod.slug),
+                                            linkIconDisableExpand: true, // Doesn't seem to work
+                                        },
+                                    }}
+                                    sx={{
+                                        div: { minHeight: 'unset' },
+                                        py: 'inc60',
+                                    }}
+                                />
+                            );
                         })}
                     </Grid>
                 </div>
