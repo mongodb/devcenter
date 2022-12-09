@@ -219,7 +219,7 @@ export const cardHeaderStyles = (
     const mobileFlexDirection =
         variant === 'list' || category === 'Podcast' ? 'row' : 'column';
     const tabletDesktopFlexDirection =
-        variant === 'medium' && category !== 'Podcast' ? 'row' : 'column';
+        variant === 'medium' && category !== 'Podcast' ? 'column' : 'row';
     return {
         display: 'flex',
         gap: ['inc30', null, 'inc50'],
