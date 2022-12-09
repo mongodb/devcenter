@@ -114,13 +114,6 @@ export const mapArticlesToContentItems = (
 export const mapEventsToContentItems = (allEvents: any) => {
     const items: any = [];
     allEvents.forEach(evt => {
-        // TODO: add comment for what is going on here
-        const tags = [...evt.other_tags];
-        if (evt.primary_tag?.length) {
-            const { name, calculated_slug: calculatedSlug } =
-                evt.primary_tag[0]?.l_1_product;
-            tags[0].l1Product = { name, calculatedSlug };
-        }
         const item: any = {
             collectionType: 'Event',
             category: 'Event',
@@ -134,7 +127,7 @@ export const mapEventsToContentItems = (allEvents: any) => {
             startTime: evt.start_time,
             endTime: evt.end_time,
             location: evt.location,
-            tags: flattenTags(tags),
+            tags: flattenTags(evt.other_tags),
             // TODO: not in current response
             registrationLink: evt.registration_url,
             virtualLink: evt.virtual_meetup_url,
