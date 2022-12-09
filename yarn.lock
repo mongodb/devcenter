@@ -2143,7 +2143,7 @@
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@percy/logger/-/logger-1.16.0.tgz#e6804d1770869266226eff77fdc2e5cf9992473b"
   integrity sha512-u9zTj6BcUmqknrcikrunRpkRr+uQlENhgK/m0Zokxtv9CgkmNzR8oLoseJjU5P4zGZEiJE/v7wnzNC1ezvS9nQ==
 
-"@percy/playwright@^1.0.4":
+"@percy/playwright@1.0.4":
   version "1.0.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@percy/playwright/-/playwright-1.0.4.tgz#82f325dc772aeef0e6fb3de402ec1ea3783160b0"
   integrity sha512-prXvaEyvM6M7vGx0YujdMmFf+rZqkQpDEK32ZOwXbMzKYhGXjyiYESa4Axhc+Pz/c0THhXZWH4/70IW0RcyCQA==
@@ -2155,10 +2155,10 @@
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@percy/sdk-utils/-/sdk-utils-1.15.0.tgz#f3bf1159574343a3e68b65755f6ea39cedf76400"
   integrity sha512-SVIn1pcWTr9Sovwrb/StcEr8K6bdfiLFVZSiFFZ3kf/ZxhK4WHLEQ0CQCiF5ipiXVAcF2QPn/nq6Ms6ZdrOU3A==
 
-"@playwright/test@^1.22.2":
+"@playwright/test@1.22.2":
   version "1.22.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@playwright/test/-/test-1.22.2.tgz#b848f25f8918140c2d0bae8e9227a40198f2dd4a"
-  integrity sha1-uEjyX4kYFAwtC66OkiekAZjy3Uo=
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@playwright/test/-/test-1.22.2.tgz#b848f25f8918140c2d0bae8e9227a40198f2dd4a"
+  integrity sha512-cCl96BEBGPtptFz7C2FOSN3PrTnJ3rPpENe+gYCMx4GNNDlN4tmo2D89y13feGKTMMAIVrXfSQ/UmaQKLy1XLA==
   dependencies:
     "@types/node" "*"
     playwright-core "1.22.2"
@@ -2797,7 +2797,7 @@
   dependencies:
     "@types/node" "*"
 
-"@typescript-eslint/eslint-plugin@^5.46.0":
+"@typescript-eslint/eslint-plugin@5.46.0":
   version "5.46.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.46.0.tgz#9a96a713b9616c783501a3c1774c9e2b40217ad0"
   integrity sha512-QrZqaIOzJAjv0sfjY4EjbXUi3ZOFpKfzntx22gPGr9pmFcTjcFw/1sS1LJhEubfAGwuLjNrPV0rH+D1/XZFy7Q==
@@ -2812,6 +2812,16 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
+"@typescript-eslint/parser@5.46.0":
+  version "5.46.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@typescript-eslint/parser/-/parser-5.46.0.tgz#002d8e67122947922a62547acfed3347cbf2c0b6"
+  integrity sha512-joNO6zMGUZg+C73vwrKXCd8usnsmOYmgW/w5ZW0pG0RGvqeznjtGDk61EqqTpNrFLUYBW2RSBFrxdAZMqA4OZA==
+  dependencies:
+    "@typescript-eslint/scope-manager" "5.46.0"
+    "@typescript-eslint/types" "5.46.0"
+    "@typescript-eslint/typescript-estree" "5.46.0"
+    debug "^4.3.4"
+
 "@typescript-eslint/parser@^5.21.0":
   version "5.32.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@typescript-eslint/parser/-/parser-5.32.0.tgz#1de243443bc6186fb153b9e395b842e46877ca5d"
@@ -2820,16 +2830,6 @@
     "@typescript-eslint/scope-manager" "5.32.0"
     "@typescript-eslint/types" "5.32.0"
     "@typescript-eslint/typescript-estree" "5.32.0"
-    debug "^4.3.4"
-
-"@typescript-eslint/parser@^5.46.0":
-  version "5.46.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@typescript-eslint/parser/-/parser-5.46.0.tgz#002d8e67122947922a62547acfed3347cbf2c0b6"
-  integrity sha512-joNO6zMGUZg+C73vwrKXCd8usnsmOYmgW/w5ZW0pG0RGvqeznjtGDk61EqqTpNrFLUYBW2RSBFrxdAZMqA4OZA==
-  dependencies:
-    "@typescript-eslint/scope-manager" "5.46.0"
-    "@typescript-eslint/types" "5.46.0"
-    "@typescript-eslint/typescript-estree" "5.46.0"
     debug "^4.3.4"
 
 "@typescript-eslint/scope-manager@5.32.0":
@@ -4418,7 +4418,7 @@ eslint-config-next@12.2.3:
     eslint-plugin-react "^7.29.4"
     eslint-plugin-react-hooks "^4.5.0"
 
-eslint-config-prettier@^8.5.0:
+eslint-config-prettier@8.5.0:
   version "8.5.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/eslint-config-prettier/-/eslint-config-prettier-8.5.0.tgz#5a81680ec934beca02c7b1a61cf8ca34b66feab1"
   integrity sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q==

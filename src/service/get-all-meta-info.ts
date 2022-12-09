@@ -97,7 +97,7 @@ const getMetaInfo = (m: MetaInfoResponse): MetaInfo => {
         tagName: m.name,
         description: m.description ? m.description : '',
         slug: m.slug,
-        ctas: getCTAs(m.primary_cta, m.secondary_cta),
+        ctas: getCTAs(m.primary_cta),
         topics: [],
         documentationLink: m.documentation_link || '',
     };

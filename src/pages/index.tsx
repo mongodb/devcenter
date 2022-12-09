@@ -145,12 +145,7 @@ const Home: NextPage = () => {
                     <TypographyScale variant="heading2" customStyles={h5Styles}>
                         Develop in your language
                     </TypographyScale>
-                    <div
-                        sx={{
-                            display: ['none', 'none', 'none', 'block'],
-                            gridColumn: [null, null, null, '11 / span 2'],
-                        }}
-                    >
+                    <div sx={{ display: ['none', null, null, 'block'] }}>
                         <Link
                             href={getURLPath('/languages')}
                             linkIcon="arrow"
@@ -160,7 +155,6 @@ const Home: NextPage = () => {
                         </Link>
                     </div>
                 </div>
-
                 {cardsLanguagesData?.map(
                     ({ titleLink, imageString, cta, links }) => (
                         <div
@@ -198,7 +192,7 @@ const Home: NextPage = () => {
                 )}
                 <div
                     sx={{
-                        display: ['block', 'block', 'block', 'none'],
+                        display: ['block', null, null, 'none'],
                         gridColumn: ['span 6', 'span 6', 'span 6', null],
                         marginTop: theme.space.inc50,
                     }}
@@ -223,7 +217,6 @@ const Home: NextPage = () => {
                     },
                 }}
             >
-                {/* TODO: both icons should be exported out of here */}
                 <svg
                     width="1706"
                     height="1706"
@@ -259,7 +252,7 @@ const Home: NextPage = () => {
                         </TypographyScale>
                         <div
                             sx={{
-                                display: ['none', 'none', 'none', 'block'],
+                                display: ['none', null, null, 'block'],
                                 gridColumn: 'span 2',
                             }}
                         >
@@ -272,7 +265,6 @@ const Home: NextPage = () => {
                             </Link>
                         </div>
                     </div>
-
                     {cardsTechnologiesData?.map(
                         ({ titleLink, imageString }) => (
                             <div
@@ -310,7 +302,7 @@ const Home: NextPage = () => {
                         sx={{
                             gridColumn: 'span 6',
                             marginTop: theme.space.inc50,
-                            display: ['block', 'block', 'block', 'none'],
+                            display: ['block', null, null, 'none'],
                         }}
                     >
                         <Link
@@ -343,13 +335,7 @@ const Home: NextPage = () => {
                         >
                             Start building with these MongoDB products
                         </TypographyScale>
-                        <div
-                            sx={{
-                                // TODO: check this
-                                gridColumn: 'span 2',
-                                display: ['none', null, null, 'block'],
-                            }}
-                        >
+                        <div sx={{ display: ['none', null, null, 'block'] }}>
                             <Link
                                 href={getURLPath('/products')}
                                 linkIcon="arrow"
@@ -359,7 +345,6 @@ const Home: NextPage = () => {
                             </Link>
                         </div>
                     </div>
-
                     {cardsProductsData?.map(
                         ({
                             titleLink,

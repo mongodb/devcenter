@@ -1,6 +1,6 @@
 import { ThemeUICSSObject } from 'theme-ui';
 
-export const checkboxListStyles = {
+export const checkboxListStyles: ThemeUICSSObject = {
     marginBottom: 'inc50',
     display: 'flex',
     flexDirection: 'column',

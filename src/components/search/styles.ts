@@ -1,7 +1,7 @@
 import theme from '@mdb/flora/theme';
 import { ThemeUICSSObject } from 'theme-ui';
 
-export const titleStyles = {
+export const titleStyles: ThemeUICSSObject = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: ['start', null, 'end'],
@@ -22,7 +22,7 @@ export const searchWrapperStyles: ThemeUICSSObject = {
     },
 };
 
-export const searchBoxStyles = {
+export const searchBoxStyles: ThemeUICSSObject = {
     flexGrow: '1',
     flexShrink: '1',
     flexBasis: 'calc(66% - 12px)',
@@ -51,7 +51,7 @@ export const sortBoxStyles = {
     flexBasis: 'calc(33% - 12px)',
 };
 
-export const dataStyles = (layout: 'list' | 'grid') =>
+export const dataStyles = (layout: 'list' | 'grid'): ThemeUICSSObject =>
     layout === 'list'
         ? {
               margin: 'auto',
@@ -61,7 +61,7 @@ export const dataStyles = (layout: 'list' | 'grid') =>
               width: '100%',
               gap: ['inc40', null, 'inc50'],
           }
-        : ({
+        : {
               display: 'grid',
               gridTemplateColumns: [
                   'repeat(1, 1fr)',
@@ -70,7 +70,7 @@ export const dataStyles = (layout: 'list' | 'grid') =>
                   'repeat(3, 1fr)',
               ],
               gap: 'inc40',
-          } as ThemeUICSSObject);
+          };
 
 export const resultsStyles: ThemeUICSSObject = {
     display: 'flex',

@@ -1,7 +1,7 @@
-import { ThemeUICSSObject, ThemeUIStyleObject } from 'theme-ui';
+import { ThemeUICSSObject } from 'theme-ui';
 import { layers } from '../../styled/layout';
 
-export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
+export const navWrapperStyles = (isOpen: boolean): ThemeUICSSObject => {
     let height = 'auto';
     const NAVBAR_HEIGHT = 56;
 
@@ -29,7 +29,7 @@ export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
     };
 };
 
-export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
+export const secondaryLinkStyles = (isOpen: boolean): ThemeUICSSObject => ({
     margin: 0,
     display: isOpen ? 'block' : 'none',
     px: 'inc40',
@@ -48,7 +48,8 @@ export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
         },
     },
 });
-export const MainLinkStyles: ThemeUIStyleObject = {
+
+export const MainLinkStyles: ThemeUICSSObject = {
     width: '100%',
     fontSize: 'inc30',
     fontWeight: 500,
@@ -116,12 +117,12 @@ export const aLinkStyles = {
     },
 };
 
-export const chevronStylesForMainLink: ThemeUIStyleObject = {
+export const chevronStylesForMainLink: ThemeUICSSObject = {
     display: 'inline',
     stroke: 'icon.system.success',
 };
 
-export const userMenuStyles: ThemeUIStyleObject = {
+export const userMenuStyles: ThemeUICSSObject = {
     minWidth: 'inc60',
     marginLeft: 'auto',
 };

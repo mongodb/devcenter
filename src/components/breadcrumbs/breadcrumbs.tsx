@@ -40,7 +40,7 @@ const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
                             strokeWeight="medium"
                             name={ESystemIconNames.CHEVRON_RIGHT}
                             sx={{ height: `calc(${theme.sizes.inc00} * 3)` }}
-                        ></SystemIcon>
+                        />
                     )}
                 </div>
             ))}

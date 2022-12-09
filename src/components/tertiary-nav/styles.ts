@@ -59,18 +59,19 @@ export const sideNavTitleStyles = {
     },
 };
 
-export const sideNavStyles = (rowCount?: number) => ({
-    display: ['none', null, null, null, 'block'],
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
-    nav: {
-        position: 'static',
-    },
-    gridRow: `span ${rowCount || 4}`,
-    'a:hover': {
-        borderLeftColor: 'green60',
-        span: {
-            fontWeight: 700,
-            color: theme.colors.text.default,
+export const sideNavStyles = (rowCount?: number) =>
+    ({
+        display: ['none', null, null, null, 'block'],
+        gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 3'],
+        nav: {
+            position: 'static',
         },
-    },
-});
+        gridRow: `span ${rowCount || 4}`,
+        'a:hover': {
+            borderLeftColor: 'green60',
+            span: {
+                fontWeight: 700,
+                color: theme.colors.text.default,
+            },
+        },
+    } as ThemeUICSSObject);
