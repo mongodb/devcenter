@@ -6,8 +6,9 @@ import { Series } from '../interfaces/series';
 import { flattenTags } from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
-import { PillCategoryValues } from '../types/pill-category';
+import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
+import { CommunityEvent } from '../interfaces/community-event';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -109,4 +110,32 @@ export const mapArticlesToContentItems = (
     });
 
     return items.filter(item => PillCategoryValues.includes(item.category));
+};
+
+export const mapCommunityEventsToContentItems = (
+    allCommunityEvents: CommunityEvent[]
+) => {
+    const items: ContentItem[] = [];
+    allCommunityEvents.forEach((event: CommunityEvent) => {
+        const item: ContentItem = {
+            collectionType: 'Event',
+            category: 'User Group Meetup',
+            // to be adjusted according to UI designs
+            contentDate:
+                new Date(event.start_time).toString() +
+                '|' +
+                new Date(event.end_time).toString(),
+            description: event.description,
+            slug: event.slug,
+            tags: event.tags,
+            title: event.title,
+            // TODO to be added to content type
+            // eventSetup: event.event_setup,
+            // location: event.location,
+            // coordinates: event.coordinates
+        };
+        items.push(item);
+    });
+
+    return items;
 };
