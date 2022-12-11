@@ -18,8 +18,7 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcasts();
     const allVideos = await getAllVideos();
     const allArticles = await getAllArticlesFromAPI(STRAPI_CLIENT);
-    //uncomment when ready to integrate events
-    //const allCommunityEvents = await getAllCommunityEvents()
+    const allCommunityEvents = await getAllCommunityEvents();
     /*
     series
      */
@@ -35,8 +34,12 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
         allArticles,
         articleSeries
     );
-    //const mappedCommunityEvents = mapCommunityEventsToContentItems(allCommunityEvents)
+    const mappedCommunityEvents =
+        mapCommunityEventsToContentItems(allCommunityEvents);
 
-    //return mappedPodcasts.concat(mappedVideos).concat(mappedArticles).concat(mappedCommunityEvents).flat();
-    return mappedPodcasts.concat(mappedVideos).concat(mappedArticles).flat();
+    return mappedPodcasts
+        .concat(mappedVideos)
+        .concat(mappedArticles)
+        .concat(mappedCommunityEvents)
+        .flat();
 };
