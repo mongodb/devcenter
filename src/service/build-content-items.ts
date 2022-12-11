@@ -120,11 +120,8 @@ export const mapCommunityEventsToContentItems = (
         const item: ContentItem = {
             collectionType: 'Event',
             category: 'User Group Meetup',
-            // to be adjusted according to UI designs
-            contentDate:
-                new Date(event.start_time).toString() +
-                '|' +
-                new Date(event.end_time).toString(),
+            // content date will be used for sorting for featured
+            contentDate: null,
             description: event.description,
             slug: event.slug,
             tags: event.tags,
@@ -133,6 +130,8 @@ export const mapCommunityEventsToContentItems = (
             // eventSetup: event.event_setup,
             // location: event.location,
             // coordinates: event.coordinates
+            // start_time: event.start_time
+            // end_time: event.end_time
         };
         items.push(item);
     });
