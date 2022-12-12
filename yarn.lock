@@ -1894,10 +1894,10 @@
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/devcenter-components/-/@mdb/devcenter-components-0.1.3.tgz#45a68716fdde38aab26a38235e6bab8c62b8a67e"
   integrity sha512-tWsvKOfFc04Za4Sx4hEldQ+jSF5WlBwJor+wzUYg+XTL6vBbzZ+BnGGUZLGvtANzjYqWw5FjK2cGEtHAPZWwlA==
 
-"@mdb/flora@1.2.0-rc.1":
-  version "1.2.0-rc.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-1.2.0-rc.1.tgz#6ea7a29fdbbfc3c395059b9f74d134f0f6a03318"
-  integrity sha512-FdzF7BUqZHNGEmjB2OXLtrBsPGm22TdyqjvDC/7A2gbvrFN6c+AVta0Ik+3PxUJBtWZhTux+Cizf/hKNlT8F4g==
+"@mdb/flora@1.3.0":
+  version "1.3.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-1.3.0.tgz#2d1b6c40544a3e4200ba3b646f420d30da1380ed"
+  integrity sha512-I+pjS6WUlTGw7+QCt0lc9AlrBQ1QQuTo8IGiVtAkwepocEeOngrdgKp4h5q09JrOYYaC2lx4elJva9vjg2bijw==
   dependencies:
     "@imgix/js-core" "^3.2.1"
     codemirror "^5.62.2"
