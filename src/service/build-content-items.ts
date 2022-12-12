@@ -121,7 +121,7 @@ export const mapCommunityEventsToContentItems = (
             collectionType: 'Event',
             category: 'User Group Meetup',
             // content date will be used for sorting for featured
-            contentDate: null,
+            contentDate: event.start_time,
             description: event.description,
             slug: event.slug,
             tags: event.tags,

@@ -32,6 +32,7 @@ const getFeaturedForTopicFromPreval = (
             articles: content['articles'],
             podcasts: content['podcasts'],
             videos: content['videos'],
+            events: content['events'],
         };
     }
 };
