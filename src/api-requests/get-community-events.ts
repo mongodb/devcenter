@@ -33,7 +33,7 @@ const getAllCommunityEvents = async (): Promise<
     }
 };
 
-const TagMap: { [key: CommunityEventTagType]: TagType } = {
+const TagMap: { [key in CommunityEventTagType]: TagType } = {
     l_1_product: 'L1Product',
     l_2_product: 'L2Product',
     technology: 'Technology',
