@@ -20,6 +20,9 @@ export const getFeaturedForTopicFromAPI = async (
                 videos: new_videos {
                     title
                 }
+                events: events {
+                    title
+                }
             }
         }
     `;
