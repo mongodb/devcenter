@@ -115,26 +115,21 @@ export const mapArticlesToContentItems = (
 export const mapCommunityEventsToContentItems = (
     allCommunityEvents: CommunityEvent[]
 ) => {
-    const items: ContentItem[] = [];
-    allCommunityEvents.forEach((event: CommunityEvent) => {
-        const item: ContentItem = {
-            collectionType: 'Event',
-            category: 'User Group Meetup',
-            // content date will be used for sorting for featured
-            contentDate: event.start_time,
-            description: event.description,
-            slug: event.slug,
-            tags: event.tags,
-            title: event.title,
-            // TODO to be added to content type
-            // eventSetup: event.event_setup,
-            // location: event.location,
-            // coordinates: event.coordinates
-            // start_time: event.start_time
-            // end_time: event.end_time
-        };
-        items.push(item);
-    });
-
-    return items;
+    return allCommunityEvents.map((event: CommunityEvent) => ({
+        collectionType: 'Event',
+        category: 'User Group Meetup',
+        // content date will be used for sorting for featured
+        // guess for cards we need to create another field rather than manipulating content Date since we need ContentDate for sorting
+        contentDate: event.start_time,
+        description: event.description,
+        slug: event.slug,
+        tags: event.tags,
+        title: event.title,
+        // TODO to be added to content type
+        // eventSetup: event.event_setup,
+        // location: event.location,
+        // coordinates: event.coordinates
+        // start_time: event.start_time
+        // end_time: event.end_time
+    })) as ContentItem[];
 };
