@@ -14,7 +14,6 @@ import { isValidPage } from '../components/search/utils';
 import ContentPageTemplate from '../page-templates/content-page/content-page-template';
 import TopicContentTypePageTemplate from '../page-templates/topic-content-type-page/topic-content-type-page-template';
 import TopicPageTemplate from '../page-templates/topic-page/topic-page-template';
-import { mockResults } from '../mockdata/mock-events-data';
 
 interface ContentPageProps {
     pageType: PageType;
@@ -87,10 +86,6 @@ export const getServerSideProps: GetServerSideProps = async (
                 pageParams.slug,
                 pageNumber
             );
-
-            if (pageParams.slug[0] === 'events') {
-                data.initialSearchContent = mockResults;
-            }
 
             if (
                 data?.initialSearchContent &&

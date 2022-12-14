@@ -306,10 +306,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
     const pageNumber = parsePageNumber(query.page);
 
-    const data = {
-        ...(await getContentTypePageData('Event', pageNumber)),
-        featured: mockFeatured, // todo: remove this
-    };
+    const data = await getContentTypePageData('Event', pageNumber);
 
     if (
         data?.initialSearchContent &&

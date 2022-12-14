@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import debounce from 'lodash.debounce';
+import { useEffect, useCallback } from 'react';
 import useSWR from 'swr';
 import { FilterItem } from '@mdb/devcenter-components';
 import {
@@ -20,7 +19,6 @@ import {
     SearchQueryParams,
 } from '../../components/search/utils';
 import { defaultSortByType, SearchItem } from '../../components/search/types';
-import { mockResults } from '../../mockdata/mock-events-data';
 import useSort from './sort';
 import useLocationSearch from './location';
 import useSearchString from './search-string';
@@ -116,17 +114,10 @@ const useSearch = (
     const searchKey = buildSearchQuery(searchQueryParams);
 
     // TODO: Refactor to useSWRInfinite and implement client-side pagination.
-    let { data, error, isValidating } = useSWR(searchKey, searchFetcher, {
+    const { data, error, isValidating } = useSWR(searchKey, searchFetcher, {
         ...swrOptions,
         fallbackData: (initialSearchContent || []).map(searchItemToContentItem),
     });
-
-    // TODO: Remove and change let back to const on line 50
-    if (contentType === 'Event') {
-        data = mockResults.map(searchItemToContentItem);
-        error = null;
-        isValidating = false;
-    }
 
     const filteredData = filterData(data);
 

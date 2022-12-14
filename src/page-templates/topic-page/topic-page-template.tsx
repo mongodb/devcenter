@@ -100,7 +100,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
                   content.filter(piece => piece.category === contentType)
-              ).filter(contentRow => contentRow.length > 2)
+              ).filter(contentRow => contentRow.length > 0)
             : [];
 
     const sortedContentRows: ContentItem[][] = [];
@@ -206,7 +206,10 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                             )}
                             {variant === 'heavy' &&
                                 sortedContentRows.map(contentRow => {
-                                    const contentType = contentRow[0].category;
+                                    const contentType =
+                                        contentRow[0].collectionType === 'Event'
+                                            ? 'Event'
+                                            : contentRow[0].category;
                                     const contentTypeSlug =
                                         pillCategoryToSlug.get(contentType);
                                     const direction =
