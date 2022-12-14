@@ -1,5 +1,4 @@
 import { ESystemIconNames, ComboBox } from '@mdb/flora';
-import { useEffect, useMemo } from 'react';
 import { LocationBoxProps } from './types';
 import { useResetKey } from './utils';
 
@@ -34,7 +33,7 @@ const LocationBox: React.FunctionComponent<LocationBoxProps> = ({
                 isLoading={isValidating || geolocationValidating}
                 noResults={!!locationQuery && displayOptions.length === 0}
                 inputName="location-search"
-                iconName={ESystemIconNames.SEARCH}
+                iconName={ESystemIconNames.LOCATION}
                 {...(geolocationValidating ? { isOpen: true } : {})}
             />
         </div>
