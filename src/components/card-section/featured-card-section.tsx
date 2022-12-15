@@ -33,9 +33,9 @@ const FeaturedCardSection: React.FunctionComponent<
             </div>
             <Grid columns={6} sx={featuredCardSectionListStyles}>
                 <Card
-                    sx={bigFeaturedCardStyles}
+                    sx={smallFeaturedCardStyles}
                     key={content[0].slug}
-                    {...getCardProps(content[0], 'large')}
+                    {...getCardProps(content[0], 'small')}
                 />
                 <Card
                     sx={smallFeaturedCardStyles}
