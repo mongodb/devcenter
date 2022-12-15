@@ -38,9 +38,10 @@ const updateFeedbackHandler = async (
         return res.json({ message: 'This is a PUT-only endpoint.' });
     }
     try {
+        const { _id, ...content } = req.body;
         const response = await axios.put(
-            process.env.REALM_API_URL + '/update_feedback',
-            req.body,
+            `${process.env.BACKEND_URL}/api/feedback/${_id}`,
+            content,
             {
                 headers: {
                     Accept: 'application/json',

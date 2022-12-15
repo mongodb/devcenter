@@ -20,7 +20,7 @@ const RequestContentModal: React.FunctionComponent<RequestContentModalProps> =
             const contentRequest: ContentRequest = {
                 topic,
                 description,
-                email,
+                email: email || null, // Convert empty string to null.
             };
 
             axios.post(

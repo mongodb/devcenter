@@ -20,8 +20,6 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
-      REALM_API_URL:
-        from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
       STRAPI_URL:
@@ -119,8 +117,6 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
-      REALM_API_URL:
-        from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
       STRAPI_URL:
@@ -209,8 +205,6 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
-      REALM_API_URL:
-        from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
       STRAPI_URL:
@@ -279,8 +273,6 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
-      REALM_API_URL:
-        from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
       STRAPI_URL:
@@ -349,8 +341,6 @@ steps:
         from_secret: NPM_AUTH
       NPM_EMAIL:
         from_secret: NPM_EMAIL
-      REALM_API_URL:
-        from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
       STRAPI_URL:
