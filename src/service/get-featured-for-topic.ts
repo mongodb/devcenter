@@ -32,6 +32,7 @@ const getFeaturedForTopicFromPreval = (
             articles: content['articles'],
             podcasts: content['podcasts'],
             videos: content['videos'],
+            events: content['events'],
         };
     }
 };
@@ -50,10 +51,11 @@ export const getFeaturedForTopic = async (
         p => p.title
     );
     const featuredVideos = (featuredForTopic?.videos || []).map(v => v.title);
-    const featured = {
+    const featuredEvents = (featuredForTopic?.events || []).map(i => i.title);
+    return {
         articles: featuredArticles ? featuredArticles : [],
         podcasts: featuredPodcasts ? featuredPodcasts : [],
         videos: featuredVideos ? featuredVideos : [],
+        events: featuredEvents ? featuredEvents : [],
     };
-    return featured;
 };

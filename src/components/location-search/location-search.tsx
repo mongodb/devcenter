@@ -7,10 +7,9 @@ import { getURLPath } from '../../utils/format-url-path';
 
 type Option = string | { icon: string; label: string };
 
-// TODO: needs to be updated with icon names that will be added by Web Team - https://jira.mongodb.org/browse/WEBSITE-13740
 const DEFAULT_OPTIONS = [
-    { icon: ESystemIconNames.ARROW_UP, label: 'Current Location' },
-    { icon: ESystemIconNames.ARROW_DOWN, label: 'Virtual' },
+    { icon: ESystemIconNames.LOCATION, label: 'Current Location' },
+    { icon: ESystemIconNames.PLAY, label: 'Virtual' },
 ];
 
 interface LocationSearchProps {
@@ -115,7 +114,7 @@ export default function LocationSearch({
             isLoading={isLoading}
             noResults={!!value && options.length === 0}
             inputName="location-search"
-            iconName={ESystemIconNames.SEARCH}
+            iconName={ESystemIconNames.LOCATION}
         />
     );
 }
