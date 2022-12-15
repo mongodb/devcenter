@@ -9,6 +9,7 @@ export const PillCategoryValues = [
     'Podcast',
     'Video',
     'Event',
+    'User Group Meetup',
 ] as const;
 
 export type PillCategory = typeof PillCategoryValues[number];

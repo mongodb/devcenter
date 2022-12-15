@@ -4,7 +4,6 @@ import { layers } from '../../styled/layout';
 
 export const navContainerStyles: ThemeUICSSObject = {
     display: 'flex',
-    boxSizing: 'border-box',
     mx: 'auto',
     paddingTop: 'elementXSmall',
     paddingBottom: 'elementXSmall',

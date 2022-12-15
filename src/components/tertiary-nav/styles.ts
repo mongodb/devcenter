@@ -6,7 +6,6 @@ export const smallDesktopNavStyles = {
 };
 
 export const navTagStyles = {
-    boxSizing: 'border-box' as 'border-box',
     display: 'flex',
     whiteSpace: 'nowrap' as 'nowrap',
     overflowX: 'auto' as 'auto',

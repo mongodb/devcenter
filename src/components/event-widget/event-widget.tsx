@@ -34,8 +34,7 @@ export default function EventWidget({
         <div sx={{ ...wrapperStyles }}>
             <div sx={styles.widget}>
                 <div sx={styles.header}>
-                    {/* TODO: placeholder icon should be updated when https://jira.mongodb.org/browse/WEBSITE-13740 is ready from Flora */}
-                    <SystemIcon name={ESystemIconNames.APP_WINDOW} />
+                    <SystemIcon name={ESystemIconNames.CALENDAR} />
                     <TypographyScale sx={styles.title} variant="heading6">
                         When
                     </TypographyScale>
@@ -48,8 +47,7 @@ export default function EventWidget({
             {(location || virtualLink) && (
                 <div sx={styles.widget}>
                     <div sx={styles.header}>
-                        {/* TODO: placeholder icon should be updated when https://jira.mongodb.org/browse/WEBSITE-13740 is ready from Flora */}
-                        <SystemIcon name={ESystemIconNames.HEART} />
+                        <SystemIcon name={ESystemIconNames.LOCATION} />
                         <TypographyScale sx={styles.title} variant="heading6">
                             Location
                         </TypographyScale>

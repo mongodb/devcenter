@@ -59,7 +59,6 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
                             image={image}
                             titleLink={titleLink}
                             sx={{
-                                boxSizing: 'border-box' as 'border-box',
                                 width: ['33vw', null, 'auto'],
                             }}
                             wholeCardHref={titleLink.url}
