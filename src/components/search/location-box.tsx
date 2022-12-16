@@ -1,4 +1,5 @@
 import { ESystemIconNames, ComboBox } from '@mdb/flora';
+import { locationBoxStyles } from './styles';
 import { LocationBoxProps } from './types';
 import { useResetKey } from './utils';
 
@@ -17,10 +18,7 @@ const LocationBox: React.FunctionComponent<LocationBoxProps> = ({
         <div
             {...resetKeyProps}
             sx={{
-                width: ['100%', null, 'calc(33% - 12px)'],
-                div: {
-                    maxWidth: '100%',
-                },
+                ...locationBoxStyles,
                 ...extraStyles,
             }}
         >

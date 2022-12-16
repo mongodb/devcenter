@@ -12,7 +12,8 @@ export interface ContentItem {
     collectionType?: CollectionType;
     authors?: Author[];
     category: PillCategory;
-    contentDate: string;
+    subCategory?: string;
+    contentDate: string | [string, string];
     updateDate?: string;
     description?: string;
     content?: string;

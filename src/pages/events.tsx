@@ -22,18 +22,10 @@ import {
     HorizontalRule,
     TypographyScale,
 } from '@mdb/flora';
-import { mockFeatured } from '../mockdata/mock-events-data';
-import { Grid } from 'theme-ui';
-import Card, { getCardProps } from '../components/card';
-import {
-    cardListStyles,
-    cardSectionListStyles,
-} from '../components/card-section/styles';
-import { Location } from '../components/icons';
-import SecondaryTag from '../components/card/secondary-tag';
 import { h5Styles } from '../styled/layout';
 import { FilterItem, FilterTagSection } from '@mdb/devcenter-components';
 import { useCallback } from 'react';
+import { FeaturedCardSection } from '../components/card-section';
 
 const extraSearchResultsStyles = (showFeatured: boolean) => ({
     order: showFeatured ? '4' : '3',
@@ -128,6 +120,8 @@ const EventsPageComponent: React.FunctionComponent<
         [onLocationSelect, filterItems, filters, onFilter, clearSearchParam]
     );
 
+    console.log(results);
+
     return (
         <div sx={searchWrapperStyles}>
             <SearchBox
@@ -139,35 +133,19 @@ const EventsPageComponent: React.FunctionComponent<
             <LocationBox {...locationProps} onLocationSelect={locationSelect} />
 
             {showFeatured && (
-                <Grid
-                    columns={3}
-                    sx={{
-                        ...cardSectionListStyles('row'),
-                        width: '100%',
-                        marginBottom: 'inc50',
-                    }}
-                >
-                    {featured.slice(0, 3).map((item, i) => (
-                        <Card
-                            key={i}
-                            {...{
-                                ...getCardProps(item, 'medium'),
-                                tags: undefined,
-                            }}
-                            secondaryTag={
-                                item.location ? (
-                                    <SecondaryTag icon={<Location />}>
-                                        {item.location.toUpperCase()}
-                                    </SecondaryTag>
-                                ) : undefined
-                            }
-                            sx={{
-                                ...cardListStyles('row'),
-                                div: { gap: '0', rowGap: 'inc30' },
-                            }}
-                        />
-                    ))}
-                </Grid>
+                <div sx={{ width: '100%' }}>
+                    <FeaturedCardSection
+                        content={featured.map(item => ({
+                            ...item,
+                            category: item.subCategory,
+                        }))}
+                        sx={{
+                            marginBottom: ['section20', null, 'section50'],
+                        }}
+                        title="Featured Events"
+                        smallLayout
+                    />
+                </div>
             )}
 
             <Button

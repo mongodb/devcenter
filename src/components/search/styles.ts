@@ -30,8 +30,15 @@ export const searchBoxStyles: ThemeUICSSObject = {
     '& > div': {
         maxWidth: 'unset',
     },
-    'div[aria-label="input-box"]': {
-        boxSizing: 'content-box',
+    'span[aria-label="left-icon"]': {
+        height: 'inc20',
+        margin: '0',
+        marginRight: 'inc20',
+
+        svg: {
+            height: 'inc20',
+            width: 'inc20',
+        },
     },
 };
 
@@ -51,7 +58,28 @@ export const sortBoxStyles = {
     flexBasis: 'calc(33% - 12px)',
 };
 
+<<<<<<< HEAD
 export const dataStyles = (layout: 'list' | 'grid'): ThemeUICSSObject =>
+=======
+export const locationBoxStyles = {
+    width: ['100%', null, 'calc(33% - 12px)'],
+    div: {
+        maxWidth: '100%',
+    },
+    'span[aria-label="left-icon"]': {
+        height: 'inc20',
+        margin: '0',
+        marginRight: 'inc20',
+
+        svg: {
+            height: 'inc20',
+            width: 'inc20',
+        },
+    },
+};
+
+export const dataStyles = (layout: 'list' | 'grid') =>
+>>>>>>> 8dd6594 (Add industry events)
     layout === 'list'
         ? {
               margin: 'auto',

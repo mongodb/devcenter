@@ -5,22 +5,12 @@ import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
 import SecondaryTag from './secondary-tag';
 import { FullApplication, Snippet } from '../icons';
-
-export const getLatestDate = (contentDate: string, updatedDate?: string) => {
-    let latestDate = new Date(contentDate);
-
-    if (!updatedDate) {
-        return latestDate;
-    }
-
-    const _updatedDate = new Date(updatedDate);
-
-    if (_updatedDate > latestDate) {
-        latestDate = _updatedDate;
-    }
-
-    return latestDate;
-};
+import { ESystemIconNames, SystemIcon } from '@mdb/flora';
+import {
+    formatDateRange,
+    formatDateToDisplayDateFormat,
+    getLatestDate,
+} from '../../utils/format-date';
 
 export const hasThumbnail = (variant: CardVariant, category: PillCategory) =>
     variant !== 'related' &&
@@ -40,6 +30,19 @@ export const hasAuthorLockup = (variant: CardVariant, category: PillCategory) =>
     ['large', 'list'].includes(variant) &&
     ['Article', 'Tutorial', 'Code Example', 'Quickstart'].includes(category);
 
+const parseContentDate = (
+    contentDate: string | [string, string],
+    updateDate?: string
+) => {
+    if (Array.isArray(contentDate)) {
+        return formatDateRange(contentDate[0], contentDate[1]);
+    }
+
+    return formatDateToDisplayDateFormat(
+        getLatestDate(contentDate, updateDate)
+    );
+};
+
 export const getCardProps = (
     {
         authors,
@@ -55,10 +58,15 @@ export const getCardProps = (
     }: ContentItem,
     variant: CardVariant
 ): CardProps => {
+    const locationTag = (location: string) => (
+        <SecondaryTag icon={<SystemIcon name={ESystemIconNames.LOCATION} />}>
+            {location}
+        </SecondaryTag>
+    );
+
     const cardProps: CardProps = {
         authors,
-        contentDate,
-        updateDate,
+        displayDate: parseContentDate(contentDate, updateDate),
         description,
         title,
         pillCategory: category,
@@ -66,6 +74,7 @@ export const getCardProps = (
         thumbnail: image,
         variant,
         slug,
+        ...(location ? { secondaryTag: locationTag(location) } : {}),
     };
 
     if (tags && category === 'Code Example') {

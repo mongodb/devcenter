@@ -18,7 +18,6 @@ import {
     hasTags,
     hasDescription,
     hasAuthorLockup,
-    getLatestDate,
 } from './utils';
 import TagSection from '../tag-section';
 import { CardProps, CardVariant } from './types';
@@ -94,8 +93,7 @@ const CardThumbnail = ({
 
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
-    contentDate,
-    updateDate: updatedDate,
+    displayDate,
     className,
     description,
     title,
@@ -109,9 +107,6 @@ const Card: React.FunctionComponent<CardProps> = ({
 }) => {
     const truncatedDescription =
         description && parse(description ? description : '');
-    const displayDate = formatDateToDisplayDateFormat(
-        getLatestDate(contentDate, updatedDate)
-    );
 
     return (
         <div

@@ -28,6 +28,8 @@ export const searchItemToContentItem = ({
     description,
     slug,
     date,
+    start_time,
+    end_time,
     tags,
 }: SearchItem): ContentItem => {
     const itemImage: Image | undefined =
@@ -47,10 +49,12 @@ export const searchItemToContentItem = ({
         calculated_slug: auth.calculated_slug,
     }));
 
+    const contentDate = start_time && end_time ? [start_time, end_time] : date;
+
     return {
         authors: itemAuthors,
         category: type,
-        contentDate: date,
+        contentDate,
         description,
         image: itemImage,
         slug: slug,

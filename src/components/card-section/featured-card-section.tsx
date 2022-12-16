@@ -8,6 +8,7 @@ import {
     sectionHeadingTopStyles,
     bigFeaturedCardStyles,
     smallFeaturedCardStyles,
+    featuredSmallCardSectionListStyles,
 } from './styles';
 import { getCardProps } from '../card';
 import { h5Styles } from '../../styled/layout';
@@ -59,6 +60,6 @@ const FeaturedCardSection: React.FunctionComponent<
                 />
             </Grid>
         </div>
-    );
-};
+    ) : null;
+
 export default FeaturedCardSection;

@@ -10,15 +10,16 @@ import {
     mapPodcastsToContentItems,
     mapVideosToContentItems,
     mapArticlesToContentItems,
-    mapCommunityEventsToContentItems,
+    mapEventsToContentItems,
 } from './build-content-items';
-import { getAllCommunityEvents } from './get-all-community-events';
+import { getAllCommunityEvents, getAllIndustryEvents } from './get-all-events';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcasts();
     const allVideos = await getAllVideos();
     const allArticles = await getAllArticlesFromAPI(STRAPI_CLIENT);
     const allCommunityEvents = await getAllCommunityEvents();
+    const allIndustryEvents = await getAllIndustryEvents();
     /*
     series
      */
@@ -35,12 +36,14 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
         allArticles,
         articleSeries
     );
-    const mappedCommunityEvents =
-        mapCommunityEventsToContentItems(allCommunityEvents);
+    const mappedEvents = mapEventsToContentItems(
+        allCommunityEvents,
+        allIndustryEvents
+    );
 
     return mappedPodcasts
         .concat(mappedVideos)
         .concat(mappedArticles)
-        .concat(mappedCommunityEvents)
+        .concat(mappedEvents)
         .flat();
 };

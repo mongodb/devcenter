@@ -23,7 +23,7 @@ const useLocationSearch = (callback: () => void) => {
     const [geolocationValidating, setGeolocationValidating] = useState(false);
 
     const results = useSWR(
-        `search=${locationQuery}`,
+        locationQuery ? `search=${locationQuery}` : null,
         locationFetcher,
         swrOptions
     );

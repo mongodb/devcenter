@@ -67,6 +67,8 @@ export interface SearchItem {
     location?: string;
     slug: string;
     date: string;
+    start_time?: string;
+    end_time?: string;
     tags: Tag[];
 }
 

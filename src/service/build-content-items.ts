@@ -8,7 +8,7 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
 import { PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
-import { CommunityEvent } from '../interfaces/community-event';
+import { CommunityEvent, IndustryEvent } from '../interfaces/community-event';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -112,24 +112,44 @@ export const mapArticlesToContentItems = (
     return items.filter(item => PillCategoryValues.includes(item.category));
 };
 
-export const mapCommunityEventsToContentItems = (
-    allCommunityEvents: CommunityEvent[]
+export const mapEventsToContentItems = (
+    allCommunityEvents: CommunityEvent[],
+    allIndustryEvents: IndustryEvent[]
 ) => {
-    return allCommunityEvents.map((event: CommunityEvent) => ({
-        collectionType: 'Event',
-        category: 'User Group Meetup',
-        // content date will be used for sorting for featured
-        // guess for cards we need to create another field rather than manipulating content Date since we need ContentDate for sorting
-        contentDate: event.start_time,
-        description: event.description,
-        slug: event.slug,
-        tags: event.tags,
-        title: event.title,
-        // TODO to be added to content type
-        // eventSetup: event.event_setup,
-        // location: event.location,
-        // coordinates: event.coordinates
-        // start_time: event.start_time
-        // end_time: event.end_time
-    })) as ContentItem[];
+    const mappedCommunityEvents = allCommunityEvents.map(
+        (event: CommunityEvent) => ({
+            collectionType: 'Event',
+            category: 'Event',
+            subCategory: 'User Group Meetup',
+            // content date will be used for sorting for featured
+            // guess for cards we need to create another field rather than manipulating content Date since we need ContentDate for sorting
+            contentDate: [event.start_time, event.end_time],
+            description: event.description,
+            slug: event.slug,
+            tags: event.tags,
+            title: event.title,
+            // TODO to be added to content type
+            // eventSetup: event.event_setup,
+            location: event.location,
+            // coordinates: event.coordinates
+            // start_time: event.start_time
+            // end_time: event.end_time
+        })
+    ) as ContentItem[];
+
+    const mappedIndustryEvents = allIndustryEvents.map(
+        (event: IndustryEvent) => ({
+            collectionType: 'Event',
+            category: 'Event',
+            subCategory: 'Industry Event',
+            contentDate: [event.start_time, event.end_time],
+            description: event.description,
+            slug: event.slug,
+            tags: flattenTags([event.otherTags]),
+            title: event.title,
+            location: event.location,
+        })
+    ) as ContentItem[];
+
+    return [...mappedCommunityEvents, ...mappedIndustryEvents];
 };
