@@ -28,6 +28,9 @@ export const getContentPageData = async (slug: string[]) => {
     }
     if (!contentItem) return null;
 
+    console.log('CONTENT ITEM', contentItem);
+
+    // can probably refactor with the below to be else ifs, don't need the once used variable, etc.
     const vidOrPod =
         contentItem.collectionType === 'Video' ||
         contentItem.collectionType === 'Podcast';

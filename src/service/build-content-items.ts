@@ -112,32 +112,29 @@ export const mapArticlesToContentItems = (
     return items.filter(item => PillCategoryValues.includes(item.category));
 };
 
-export const mapEventsToContentItems = (allEvents: any) => {
-    const items: any = [];
-    allEvents.forEach(evt => {
-        const item: any = {
-            collectionType: 'Event',
-            category: 'Event',
-            eventType: evt.type,
-            // this might be a different field, double check with Harika
-            speakers: evt.speakers,
-            content: evt.content,
-            slug: evt.calculated_slug,
-            title: evt.title,
-            // TODO: do all the below need default values, or will they come null or empty string from response?
-            startTime: evt.start_time,
-            endTime: evt.end_time,
-            location: evt.location,
-            tags: flattenTags(evt.other_tags),
-            // TODO: not in current response
-            registrationLink: evt.registration_url,
-            virtualLink: evt.virtual_meetup_url,
-            virtualLinkText: evt.virtual_meetup_url_text,
-        };
-        return items.push(item);
-    });
+const util = require('util');
 
-    return items;
+export const mapIndustryEventToContentItem = (evt: any) => {
+    // console.log(util.inspect(evt.otherTags, {showHidden: false, depth: null, colors: true}));
+    return {
+        collectionType: 'Event',
+        category: 'Event',
+        eventType: evt.type,
+        // this might be a different field, double check with Harika
+        authors: evt.authors,
+        content: evt.content,
+        slug: evt.calculatedSlug,
+        title: evt.title,
+        // TODO: do all the below need default values, or will they come null or empty string from response?
+        startTime: evt.start_time,
+        endTime: evt.end_time,
+        location: evt.location,
+        tags: flattenTags([evt.otherTags]),
+        // TODO: not in current response
+        registrationLink: evt.registration_url || '',
+        virtualLink: evt.virtual_meetup_url || '',
+        virtualLinkText: evt.virtual_meetup_url_text || '',
+    };
 };
 
 export const mapCommunityEventsToContentItems = (

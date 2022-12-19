@@ -8,7 +8,7 @@ export const PillCategoryValues = [
     'Tutorial',
     'Podcast',
     'Video',
-    'Event',
+    'Industry Event',
     'User Group Meetup',
 ] as const;
 
