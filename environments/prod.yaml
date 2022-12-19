@@ -20,6 +20,7 @@ envSecrets:
   PREVIEW_WEBHOOK_TOKEN: devcenter-secrets # Only production needs to have this.
   PROMETHEUS_AUTH_USER: devcenter-secrets
   PROMETHEUS_AUTH_PASS: devcenter-secrets
+  REALM_API_URL: devcenter-secrets
   BACKEND_URL: devcenter-secrets
   REALM_SEARCH_URL: devcenter-secrets
   REVALIDATE_TOKEN: devcenter-secrets
