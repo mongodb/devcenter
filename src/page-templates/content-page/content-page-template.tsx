@@ -130,7 +130,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
     const displayDate = constructDateDisplay(
         isVideoOrPodcastContent,
-        contentDate,
+        contentDate as string,
         updateDate
     );
 

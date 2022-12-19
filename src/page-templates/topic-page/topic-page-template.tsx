@@ -108,7 +108,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     contentRows.forEach(contentRow => {
         sortedContentRows.push(
             contentRow.sort((a, b) =>
-                b.contentDate.localeCompare(a.contentDate)
+                (b.contentDate as string).localeCompare(a.contentDate as string)
             )
         );
     });

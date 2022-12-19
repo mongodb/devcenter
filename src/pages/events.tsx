@@ -26,6 +26,7 @@ import { h5Styles } from '../styled/layout';
 import { FilterItem, FilterTagSection } from '@mdb/devcenter-components';
 import { useCallback } from 'react';
 import { FeaturedCardSection } from '../components/card-section';
+import { PillCategory } from '../types/pill-category';
 
 const extraSearchResultsStyles = (showFeatured: boolean) => ({
     order: showFeatured ? '4' : '3',
@@ -137,7 +138,7 @@ const EventsPageComponent: React.FunctionComponent<
                     <FeaturedCardSection
                         content={featured.map(item => ({
                             ...item,
-                            category: item.subCategory,
+                            category: item.subCategory as PillCategory,
                         }))}
                         sx={{
                             marginBottom: ['section20', null, 'section50'],

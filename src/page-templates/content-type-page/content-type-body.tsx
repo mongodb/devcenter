@@ -21,6 +21,7 @@ interface ContentTypeBodyProps {
     };
     searchMetaProps: any;
     mobileFiltersOpen: boolean;
+    setMobileFiltersOpen: (open: boolean) => void;
     children: React.ReactNode;
 }
 

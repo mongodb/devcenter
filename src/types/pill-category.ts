@@ -1,6 +1,8 @@
 export const PillCategoryValues = [
     /* order determines how categories appear in topic landing pages */
     'Event',
+    'User Group Meetup',
+    'Industry Event',
     'News & Announcements',
     'Article',
     'Demo App',

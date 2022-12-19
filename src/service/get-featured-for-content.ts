@@ -16,7 +16,15 @@ export const getFeaturedForContent = async (
     if (featured.length < 3) {
         const extraFeatured = content
             .filter(item => !featured.find(({ slug }) => slug === item.slug))
-            .sort((a, b) => b.contentDate.localeCompare(a.contentDate))
+            .sort((a, b) => {
+                const contentDate1 = Array.isArray(a.contentDate)
+                    ? a.contentDate[0]
+                    : a.contentDate;
+                const contentDate2 = Array.isArray(b.contentDate)
+                    ? b.contentDate[0]
+                    : b.contentDate;
+                return contentDate1.localeCompare(contentDate2);
+            })
             .slice(0, 3 - featured.length);
         featured = featured.concat(extraFeatured);
     }

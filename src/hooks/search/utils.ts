@@ -49,7 +49,9 @@ export const searchItemToContentItem = ({
         calculated_slug: auth.calculated_slug,
     }));
 
-    const contentDate = start_time && end_time ? [start_time, end_time] : date;
+    const contentDate = (
+        start_time && end_time ? [start_time, end_time] : date
+    ) as string | [string, string];
 
     return {
         authors: itemAuthors,
