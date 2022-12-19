@@ -1,0 +1,586 @@
+[
+    {
+        "name": "MOCK - MongoDB ORMs, ODMs, and Libraries",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/pink2_3220fb1c27_112dfb7ace.webp",
+            "alternativeText": "MongoDB ODMs, ORMs, and Libraries"
+        },
+        "authors": [
+            {
+                "name": "Alex Bevilacqua",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/image_a6cbc34a66.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Ruby",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/ruby"
+            },
+            {
+                "name": "Python",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/python"
+            },
+            {
+                "name": "Java",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/java"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            }
+        ],
+        "rating_metrics": {
+            "average": 3.3,
+            "median": 3,
+            "count": 10
+        },
+        "description": "MongoDB has a number of ORMs, ODMs, and Libraries that simplify the interaction between your application and your MongoDB cluster. Build faster with the best database for Ruby, Python, Java, Node.js, and PHP using these libraries, ORMs, and ODMs.",
+        "date": "2022-10-31T19:00:00.000Z",
+        "type": "Article",
+        "score": {},
+        "slug": "/products/mongodb/mongodb-orms-odms-libraries"
+    },
+    {
+        "name": "Easy Deployment of MEAN Stack with MongoDB Atlas, Cloud Run, and HashiCorp Terraform",
+        "authors": [],
+        "tags": [
+            {
+                "name": "Nodejs",
+                "type": "Technology",
+                "slug": "/technologies/nodejs"
+            },
+            {
+                "name": "GCP",
+                "type": "Technology",
+                "slug": "/technologies/gcp"
+            },
+            {
+                "name": "Partner",
+                "type": "AuthorType",
+                "slug": "/author-types/partner"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "description": "Learn about using HashiCorp Terraform to make it easier to provision resources to run the MEAN stack on Cloud Run with MongoDB Atlas as your database. ",
+        "date": "2022-10-24T19:00:00.000Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/easy_deployment_mean_stack_fc5b1fe0a4.png",
+            "alternativeText": "Easy deployment of MEAN stack"
+        },
+        "type": "Article",
+        "score": {},
+        "slug": "/products/atlas/easy-deployment-mean-stack"
+    },
+    {
+        "name": "Technical Preview of a Realm Flipper Plugin",
+        "description": "Click here for a brief introduction to the Realm Flipper plugin for React Native developers.",
+        "authors": [
+            {
+                "name": "Kenneth Geisshirt",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/kneth_400x400_0397e0d689.jpeg",
+                    "alternativeText": "Kenneth Geisshirt"
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "React Native",
+                "type": "Technology",
+                "slug": "/technologies/react-native"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "date": "2022-10-20T19:00:00.000Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/logo_e2e8d7cca4.svg",
+            "alternativeText": ""
+        },
+        "type": "Article",
+        "rating_metrics": {
+            "count": 2,
+            "average": 5,
+            "median": 5
+        },
+        "score": {},
+        "slug": "/languages/javascript/introducing-realm-flipper-plugin"
+    },
+    {
+        "date": "2022-10-17T19:00:00.000Z",
+        "tags": [
+            {
+                "name": "React Native",
+                "type": "Technology",
+                "slug": "/technologies/react-native"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            }
+        ],
+        "type": "Article",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "name": "Realm JavaScript v11: A Step Forward for React Native — Hermes Support, Realm React, Flipper, and Much More",
+        "description": "Today, we are pleased to announce the release of Realm JavaScript version 11— a complete re-imagining of the SDK and its APIs to be more idiomatic for React Native and JavaScript developers everywhere.",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/realm_47fd342154.png",
+            "alternativeText": "realm"
+        },
+        "authors": [
+            {
+                "name": "Ian Ward",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ian_ward_bcd2b75a82.jpeg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "score": {},
+        "slug": "/products/realm/realm-javascript-v11-react-native"
+    },
+    {
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ruby_2375abbcdd.svg",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Alex Bevilacqua",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/image_a6cbc34a66.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Ruby",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/ruby"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            }
+        ],
+        "name": "Why Use MongoDB with Ruby",
+        "description": "Find out what makes MongoDB a great fit for your next Ruby on Rails application! ",
+        "date": "2022-09-30T16:00:00.000Z",
+        "type": "Article",
+        "rating_metrics": {
+            "count": 0,
+            "average": null,
+            "median": null
+        },
+        "score": {},
+        "slug": "/products/mongodb/why-use-mongodb-with-ruby"
+    },
+    {
+        "description": "Learn more about Queryable Encryption and how it could keep one of literature's legendary heroes safe.",
+        "type": "Article",
+        "name": "How Queryable Encryption Can Keep James Bond Safe",
+        "date": "2022-09-29T19:00:00.000Z",
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/atlas_search_23491a0605.webp"
+        },
+        "authors": [
+            {
+                "name": "Ashni Mehta",
+                "image": {}
+            }
+        ],
+        "tags": [
+            {
+                "name": "Java",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/java"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            }
+        ],
+        "rating_metrics": {
+            "count": 2,
+            "average": 5,
+            "median": 5
+        },
+        "score": {},
+        "slug": "/products/mongodb/queryable-encryption-james-bond"
+    },
+    {
+        "name": "Storing Roblox Game Data in MongoDB Atlas Using Rongo",
+        "description": "This article will walk you through the process of using Rongo, a custom SDK built with the Atlas Data API to store data from Roblox Games to MongoDB Atlas. In this article, you’ll learn how to create a script to save data.",
+        "date": "2022-08-31T13:43:44.962Z",
+        "type": "Article",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Rongo_Article_Banner_5ac3fd9ce2.png",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Caden Scott",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/cadenscott_ca4ad80800.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Community",
+                "type": "AuthorType",
+                "slug": "/author-types/community"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "Data API",
+                "type": "L2Product",
+                "slug": "/products/atlas/data-api"
+            }
+        ],
+        "rating_metrics": {
+            "average": 3.857142857142857,
+            "median": 5,
+            "count": 7
+        },
+        "score": {},
+        "slug": "/products/atlas/use-rongo-store-roblox-game-data-in-atlas"
+    },
+    {
+        "authors": [
+            {
+                "name": "Rachelle Palmer",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_rachelle_palmer_764ebcb48f.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "name": "Optimizing your Online Archive for Query Performance",
+        "description": "Do's and Don'ts around optimization of your data archival strategy",
+        "date": "2022-08-30T21:54:33.707Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/og_pink_pattern_8fc486865f.png",
+            "alternativeText": ""
+        },
+        "tags": [
+            {
+                "name": "AWS",
+                "type": "Technology",
+                "slug": "/technologies/aws"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "Online Archive",
+                "type": "L2Product",
+                "slug": "/products/atlas/online-archive"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Article",
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "score": {},
+        "slug": "/products/atlas/online-archive-query-performance"
+    },
+    {
+        "date": "2022-08-25T11:00:00.000Z",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "name": "Keeping Your Costs Down with MongoDB Atlas Serverless Instances",
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/og_pink_pattern_8fc486865f.png"
+        },
+        "authors": [
+            {
+                "name": "Mark Smith",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Photo_Avatar_Circular_c231d12f14.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Serverless",
+                "type": "Technology",
+                "slug": "/technologies/serverless"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Article",
+        "description": "A guide to the things you need to think about when using the new MongoDB Atlas serverless instances to keep your usage costs down. The great thing is that all this advice will help keep your costs low on traditional MongoDB clusters too!",
+        "score": {},
+        "slug": "/products/atlas/keep-mongodb-serverless-costs-low"
+    },
+    {
+        "name": "Exact Matches in Atlas Search: Beginners Guide",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/atlas_search_plp_hero_eccd82baf9.svg",
+            "alternativeText": ""
+        },
+        "authors": [],
+        "tags": [
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Advanced",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/advanced"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "Search",
+                "type": "L2Product",
+                "slug": "/products/atlas/search"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Article",
+        "description": "This tutorial will focus on the different ways users can achieve exact matches as well as the pros and cons of each.",
+        "date": "2022-08-19T17:35:34.375Z",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "score": {},
+        "slug": "/products/atlas/atlas-search-exact-match"
+    },
+    {
+        "description": "Shifting from a pre-provisioned to a serverless database can be challenging. Learn how to optimize your database and save money with these best practices.",
+        "authors": [
+            {
+                "name": "Vishal Dhiman",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Image_from_i_OS_f83040a337.jpg",
+                    "alternativeText": "Vishal Dhiman"
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Serverless",
+                "type": "Technology",
+                "slug": "/technologies/serverless"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            }
+        ],
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 5
+        },
+        "type": "Article",
+        "name": "Serverless Instances Billing 101: How to Optimize Your Bill with Indexing",
+        "date": "2022-07-29T16:00:00.000Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/schema_design_patterns_f97ef02d86.png",
+            "alternativeText": ""
+        },
+        "score": {},
+        "slug": "/products/atlas/serverless-instances-billing-optimize-bill-indexing"
+    }
+]

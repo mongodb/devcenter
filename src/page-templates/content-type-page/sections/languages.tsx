@@ -8,8 +8,8 @@ import {
 } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { Grid } from 'theme-ui';
-import ShowcaseCard from '../../components/showcase-card';
-import { ShowcaseCardItem } from '../../components/showcase-card/types';
+import ShowcaseCard from '../../../components/showcase-card';
+import { ShowcaseCardItem } from '../../../components/showcase-card/types';
 
 interface LanguagesSectionProps {
     title: string;
@@ -59,7 +59,6 @@ const LanguagesSection: React.FunctionComponent<LanguagesSectionProps> = ({
                             image={image}
                             titleLink={titleLink}
                             sx={{
-                                boxSizing: 'border-box' as 'border-box',
                                 width: ['33vw', null, 'auto'],
                             }}
                             wholeCardHref={titleLink.url}

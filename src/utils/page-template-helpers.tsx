@@ -1,6 +1,10 @@
-import { TertiaryNavItem } from '../components/tertiary-nav/types';
-import { MetaInfo } from '../interfaces/meta-info';
 import { ESystemIconNames, SystemIcon } from '@mdb/flora';
+import { MetaInfo } from '../interfaces/meta-info';
+import { PillCategory } from '../types/pill-category';
+import { TertiaryNavItem } from '../components/tertiary-nav/types';
+
+export const getRequestBtnText = (category: PillCategory) =>
+    `Request ${/^[aeiou]/gi.test(category) ? 'an' : 'a'} ${category}`; // Regex to tell if it starts with a vowel.
 
 export const appendDocumentationLinkToSideNav = (
     tertiaryNavItems: TertiaryNavItem[],

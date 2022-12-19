@@ -1,36 +1,48 @@
-import { render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+
+import { RequestContentModalContext } from '../../contexts/request-content-modal';
 
 import RequestContentModal from '.';
 
 describe('RequestContentModal', () => {
-    it('renders text request modal', () => {
-        let nextStage;
+    it('renders text request modal', async () => {
+        const setModalStage = jest.fn();
         render(
-            <RequestContentModal
-                contentCategory="Demo App"
-                setModalStage={stage => {
-                    nextStage = stage;
-                }}
-                modalStage="text"
-            />
+            <RequestContentModalContext.Provider
+                value={{ modalStage: 'text', setModalStage }}
+            >
+                <RequestContentModal contentCategory="Demo App" />
+            </RequestContentModalContext.Provider>
         );
 
         const title = screen.getByText('Request a Demo App');
         expect(title).toBeInTheDocument();
 
+        const topic = screen.getByLabelText('Topic');
+        fireEvent.change(topic, { target: { value: 'Topic X' } });
+        expect(topic).toHaveValue('Topic X');
+
+        const description = screen.getByLabelText('Describe your experience');
+        fireEvent.change(description, {
+            target: { value: 'I want to learn Y about topic X' },
+        });
+        expect(description).toHaveValue('I want to learn Y about topic X');
+
         const submit = screen.getByText('Submit');
         submit.click();
-        expect(nextStage).toEqual('thanks');
+
+        expect(setModalStage).toHaveBeenCalledTimes(1);
+        expect(setModalStage).toHaveBeenCalledWith('thanks');
     });
 
     it('renders text request modal with correct grammar', () => {
         render(
-            <RequestContentModal
-                contentCategory="Article"
-                setModalStage={() => {}}
-                modalStage="text"
-            />
+            <RequestContentModalContext.Provider
+                value={{ modalStage: 'text', setModalStage: jest.fn() }}
+            >
+                <RequestContentModal contentCategory="Article" />
+            </RequestContentModalContext.Provider>
         );
 
         const title = screen.getByText('Request an Article');
@@ -38,15 +50,13 @@ describe('RequestContentModal', () => {
     });
 
     it('renders thank you modal', () => {
-        let nextStage;
+        const setModalStage = jest.fn();
         render(
-            <RequestContentModal
-                contentCategory="Demo App"
-                setModalStage={stage => {
-                    nextStage = stage;
-                }}
-                modalStage="thanks"
-            />
+            <RequestContentModalContext.Provider
+                value={{ modalStage: 'thanks', setModalStage }}
+            >
+                <RequestContentModal contentCategory="Article" />
+            </RequestContentModalContext.Provider>
         );
 
         const title = screen.getByText('Thanks for your request!');
@@ -54,17 +64,13 @@ describe('RequestContentModal', () => {
 
         const submit = screen.getByText('Close');
         submit.click();
-        expect(nextStage).toEqual('closed');
+
+        expect(setModalStage).toHaveBeenCalledTimes(1);
+        expect(setModalStage).toHaveBeenCalledWith('closed');
     });
 
     it("doesn't render anything when closed", () => {
-        render(
-            <RequestContentModal
-                contentCategory="Demo App"
-                setModalStage={() => {}}
-                modalStage="closed"
-            />
-        );
+        render(<RequestContentModal contentCategory="Demo App" />);
         const requestTitle = screen.queryByText('Request an Article');
         expect(requestTitle).toBeNull();
 

@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { TypographyScale, Link, BrandedIcon } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { Grid } from 'theme-ui';
-import ShowcaseCard from '../../components/showcase-card';
-import { ShowcaseCardItem } from '../../components/showcase-card/types';
+import ShowcaseCard from '../../../components/showcase-card';
+import { ShowcaseCardItem } from '../../../components/showcase-card/types';
 
 interface ProductsSectionProps {
     title: string;
@@ -53,7 +53,6 @@ const ProductsSection: React.FunctionComponent<ProductsSectionProps> = ({
                             titleLink={titleLink}
                             cta={cta}
                             sx={{
-                                boxSizing: 'border-box' as 'border-box',
                                 width: ['66vw', null, 'auto'],
                             }}
                             links={links}

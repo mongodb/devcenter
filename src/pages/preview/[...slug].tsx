@@ -9,7 +9,7 @@ import React from 'react';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
-import ContentPageTemplate from '../../page-templates/main-content-page/content-page-template';
+import ContentPageTemplate from '../../page-templates/content-page/content-page-template';
 import { getPreviewContent } from '../../service/get-preview-content';
 
 let pluralize = require('pluralize');

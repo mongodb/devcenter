@@ -112,10 +112,6 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
                                 <li
                                     sx={{
                                         position: 'relative',
-
-                                        '&:last-child': {
-                                            display: 'none',
-                                        },
                                     }}
                                     key={name}
                                 >

@@ -22,7 +22,7 @@ import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { h5Styles, pageWrapper } from '../styled/layout';
 
 import { SearchItem } from '../components/search/types';
-import { desktopFiltersStyles } from '../page-templates/content-type/styles';
+import { desktopFiltersStyles } from '../page-templates/content-type-page/styles';
 import { searchWrapperStyles } from '../components/search/styles';
 import { isValidPage } from '../components/search/utils';
 import { useRouter } from 'next/router';
