@@ -194,6 +194,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                                         title={`Featured ${pluralize(
                                             contentType
                                         )}`}
+                                        featuredCardType="middle"
                                     />
 
                                     {!!featuredLanguages?.length && (
