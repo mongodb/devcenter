@@ -19,6 +19,9 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
     const [description, setDescription] = useState('');
     const [email, setEmail] = useState('');
 
+    const [topicTyped, setTopicTyped] = useState(false);
+    const [descTyped, setDescTyped] = useState(false);
+
     return (
         <div sx={modalWrapperStyles}>
             <TypographyScale
@@ -44,7 +47,11 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
                     name="topic"
                     label="Topic"
                     value={topic}
-                    onChange={e => setTopic(e.target.value)}
+                    onChange={e => {
+                        setTopic(e.target.value);
+                        setTopicTyped(true);
+                    }}
+                    invalid={!topic && topicTyped}
                 />
             </div>
 
@@ -53,9 +60,13 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
                     name="description"
                     label="Describe your experience"
                     value={description}
-                    onChange={e => setDescription(e.target.value)}
+                    onChange={e => {
+                        setDescription(e.target.value);
+                        setDescTyped(true);
+                    }}
                     helper={helperText}
                     textAreaStyles={{ resize: 'vertical' }}
+                    invalid={!description && descTyped}
                 />
             </div>
             <div
@@ -68,14 +79,21 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
             >
                 <TextInput
                     name="email"
-                    label="Email"
+                    label="Email (optional)"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                 />
             </div>
             <div sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
-                    onClick={() => onContinue(topic, description, email)}
+                    onClick={() => {
+                        if (topic && description) {
+                            onContinue(topic, description, email);
+                        } else {
+                            setTopicTyped(true);
+                            setDescTyped(true);
+                        }
+                    }}
                     size="small"
                 >
                     Submit

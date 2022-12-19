@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { allLinksHaveHref } from '../utils';
+import { allLinksHaveHref, runPercy } from '../utils';
 
 test('Homepage has correct titles', async ({ page }) => {
     await page.goto('/developer');
@@ -39,3 +39,5 @@ test('Homepage links are correct', async ({ page }) => {
     await allLinksHaveHref(allTechLinks, '/developer/technologies/');
     await allLinksHaveHref(allProductsLinks, '/developer/products/');
 });
+
+test('Homepage visual regression testing', runPercy('/developer', 'Homepage'));

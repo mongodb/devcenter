@@ -1,0 +1,661 @@
+[
+    {
+        "type": "Quickstart",
+        "name": "MOCK - How to Connect MongoDB Atlas to Vercel Using the New Integration",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/thumbnail_2_c7cbe3776f.png",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Jesse Hall",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/1614285150606_e_1631145600_and_v_beta_and_t_RT_Zaw_XM_7_T7sx_Wm_Lu_T4e_LBC_Ps_I_Bn_OD_Yov_R_Vb_M0d_P99_Q0_a89b9f93ca",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Vercel",
+                "type": "Technology",
+                "slug": "/technologies/vercel"
+            },
+            {
+                "name": "Nodejs",
+                "type": "Technology",
+                "slug": "/technologies/nodejs"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            }
+        ],
+        "rating_metrics": {
+            "average": 2.95,
+            "median": 3,
+            "count": 20
+        },
+        "description": "Getting a MongoDB Atlas database created and linked to your Vercel project has never been easier. In this tutorial, we’ll get everything set up—including a starter Next.js application—in just minutes.",
+        "date": "2022-06-07T04:05:30.009Z",
+        "score": {},
+        "slug": "/products/atlas/how-to-connect-mongodb-atlas-to-vercel-using-the-new-integration"
+    },
+    {
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Welcome_Banner_300x300_6870f27720.png"
+        },
+        "authors": [
+            {
+                "name": "Mark Smith",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Photo_Avatar_Circular_c231d12f14.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "type": "Quickstart",
+        "rating_metrics": {
+            "count": 0,
+            "average": null,
+            "median": null
+        },
+        "name": "An Introduction to GDELT Data",
+        "description": "What is the GDELT dataset and how to work with it and MongoDB and participate in the MongoDB World Hackathon '22",
+        "date": "2022-04-12T09:15:40.686Z",
+        "tags": [
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "score": {},
+        "slug": "/products/mongodb/introduction-to-gdelt-data"
+    },
+    {
+        "type": "Quickstart",
+        "rating_metrics": {
+            "average": 4.205882352941177,
+            "median": 5,
+            "count": 34
+        },
+        "description": "In this article, we’ll learn how Mongoose, a library for MongoDB, can help you to structure and access your data with ease. Many who learn MongoDB get introduced to it through the very popular library, Mongoose. Mongoose is described as “elegant MongoDB object modeling for Node.js.\"",
+        "date": "2022-04-07T19:48:22.732Z",
+        "authors": [
+            {
+                "name": "Jesse Hall",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/1614285150606_e_1631145600_and_v_beta_and_t_RT_Zaw_XM_7_T7sx_Wm_Lu_T4e_LBC_Ps_I_Bn_OD_Yov_R_Vb_M0d_P99_Q0_a89b9f93ca",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "name": "Getting Started with MongoDB & Mongoose",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/MDB_and_Mongoose_Article_1_1_b61e421a90.png",
+            "alternativeText": ""
+        },
+        "score": {},
+        "slug": "/languages/javascript/getting-started-with-mongodb-and-mongoose"
+    },
+    {
+        "description": "Video showing how to build your first iOS app using SwiftUI and Realm",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_9510a23556.png",
+            "alternativeText": ""
+        },
+        "tags": [
+            {
+                "name": "iOS",
+                "type": "Technology",
+                "slug": "/technologies/ios"
+            },
+            {
+                "name": "Swift",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/swift"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Quickstart",
+        "rating_metrics": {
+            "median": 5,
+            "count": 1,
+            "average": 5
+        },
+        "name": "From Zero to Mobile Developer in 40 Minutes",
+        "date": "2022-04-04T11:00:00.249Z",
+        "authors": [
+            {
+                "name": "Andrew Morgan",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Andrew_Morgan_f9a7e7f949.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "score": {},
+        "slug": "/products/realm/realm-zero-to-mobile-dev"
+    },
+    {
+        "name": "Get Started with Rust and MongoDB",
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Rust_Banner_1280x720_1b55c28d7b.png"
+        },
+        "authors": [
+            {
+                "name": "Jorge D. Ortiz-Fuentes",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/jorge_ortiz_fuentes_color_sq_9b7c5b037d.jpg",
+                    "alternativeText": ""
+                }
+            },
+            {
+                "name": "Mark Smith",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Photo_Avatar_Circular_c231d12f14.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "description": "Learn how to perform CRUD operations using Rust for MongoDB databases.",
+        "date": "2022-02-10T17:15:09.629Z",
+        "tags": [
+            {
+                "name": "Rust",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/rust"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Quickstart",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "score": {},
+        "slug": "/languages/rust/rust-mongodb-crud-tutorial"
+    },
+    {
+        "description": "Query, group, and join data in MongoDB using aggregation pipelines with Rust.",
+        "date": "2022-02-05T16:57:51.235Z",
+        "authors": [
+            {
+                "name": "Mark Smith",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Photo_Avatar_Circular_c231d12f14.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "name": "Getting Started with Aggregation Pipelines in Rust",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Rust_Banner_1280x720_1b55c28d7b.png",
+            "alternativeText": ""
+        },
+        "tags": [
+            {
+                "name": "Rust",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/rust"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Advanced",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/advanced"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "Aggregation Framework",
+                "type": "L2Product",
+                "slug": "/products/mongodb/aggregation-framework"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Quickstart",
+        "score": {},
+        "slug": "/languages/rust/rust-quickstart-aggregation"
+    },
+    {
+        "tags": [
+            {
+                "name": "Full Application",
+                "type": "CodeLevel"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "name": "Realm Web SDK Tutorial",
+        "description": "Send MongoDB Atlas queries directly from the web browser with the Realm Web SDK.",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/realm_logo_c6a77e1b1f.jpg",
+            "alternativeText": ""
+        },
+        "date": "2022-02-05T16:13:31.818Z",
+        "authors": [
+            {
+                "name": "Maxime Beugnet",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/conf_headshop_c37a4e9ae1.jpg",
+                    "alternativeText": "Maxime Beugnet"
+                }
+            }
+        ],
+        "type": "Quickstart",
+        "score": {},
+        "slug": "/languages/javascript/realm-web-sdk"
+    },
+    {
+        "rating_metrics": {
+            "average": 4,
+            "median": 4,
+            "count": 1
+        },
+        "type": "Quickstart",
+        "name": "Getting Started with MongoDB and Starlette",
+        "description": "Getting Started with MongoDB and Starlette",
+        "date": "2022-02-05T16:01:03.885Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Python_Banner_1280x720_ab74d31ebe.png",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Aaron Bassett",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_aaron_3cf817075b.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Python",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/python"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "score": {},
+        "slug": "/languages/python/python-quickstart-starlette"
+    },
+    {
+        "description": "Getting started with MongoDB and Sanic",
+        "authors": [
+            {
+                "name": "Aaron Bassett",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_aaron_3cf817075b.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Python",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/python"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            }
+        ],
+        "type": "Quickstart",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "name": "Getting Started with MongoDB and Sanic",
+        "date": "2022-02-05T15:57:41.398Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Python_Banner_1280x720_ab74d31ebe.png",
+            "alternativeText": ""
+        },
+        "score": {},
+        "slug": "/languages/python/python-quickstart-sanic"
+    },
+    {
+        "name": "Getting Started with MongoDB and FastAPI",
+        "description": "Getting started with MongoDB and FastAPI",
+        "date": "2022-02-05T15:53:35.751Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Python_Banner_1280x720_ab74d31ebe.png",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Aaron Bassett",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_aaron_3cf817075b.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Django",
+                "type": "Technology",
+                "slug": "/technologies/django"
+            },
+            {
+                "name": "FastApi",
+                "type": "Technology",
+                "slug": "/technologies/fastapi"
+            },
+            {
+                "name": "Python",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/python"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            }
+        ],
+        "type": "Quickstart",
+        "rating_metrics": {
+            "average": 3,
+            "median": 3,
+            "count": 21
+        },
+        "score": {},
+        "slug": "/languages/python/python-quickstart-fastapi"
+    },
+    {
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Python_Banner_1280x720_ab74d31ebe.png",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Mark Smith",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Photo_Avatar_Circular_c231d12f14.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "type": "Quickstart",
+        "date": "2022-02-05T14:37:53.576Z",
+        "description": "Store data securely in MongoDB using Client-Side Field-Level Encryption",
+        "tags": [
+            {
+                "name": "Python",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/python"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Quickstart",
+                "type": "ContentType",
+                "slug": "/quickstarts"
+            },
+            {
+                "name": "Advanced",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/advanced"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "Security",
+                "type": "L2Product",
+                "slug": "/products/mongodb/security"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "name": "Store Sensitive Data With Python & MongoDB Client-Side Field Level Encryption",
+        "score": {},
+        "slug": "/languages/python/python-quickstart-fle"
+    }
+]

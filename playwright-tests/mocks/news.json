@@ -1,0 +1,624 @@
+[
+    {
+        "date": "2022-07-02T10:49:07.449Z",
+        "authors": [
+            {
+                "name": "Rachelle Palmer",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_rachelle_palmer_764ebcb48f.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Spring",
+                "type": "Technology",
+                "slug": "/technologies/spring"
+            },
+            {
+                "name": "Java",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/java"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "News & Announcements",
+        "rating_metrics": {
+            "average": 3,
+            "median": 3,
+            "count": 1
+        },
+        "name": "MOCK - The 2022 MongoDB Java Developer Survey",
+        "description": "MongoDB is conducted a survey for Java developers",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Java_Emblem_4069eda9a5.jpeg",
+            "alternativeText": "java logo"
+        },
+        "score": {},
+        "slug": "/languages/java/java-survey-2022"
+    },
+    {
+        "rating_metrics": {
+            "average": 4.75,
+            "median": 5,
+            "count": 4
+        },
+        "date": "2022-06-23T21:30:11.101Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/jruby_logo_standard_logo_stroke_large_400x400_e932cf5777.png",
+            "alternativeText": "JRuby logo"
+        },
+        "authors": [
+            {
+                "name": "Rachelle Palmer",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_rachelle_palmer_764ebcb48f.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "name": "A Plan for MongoDB and JRuby",
+        "description": "MongoDB supports JRuby",
+        "tags": [
+            {
+                "name": "Ruby",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/ruby"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "News & Announcements",
+        "score": {},
+        "slug": "/languages/ruby/mongodb-jruby"
+    },
+    {
+        "name": "A Better MongoDB Aggregation Experience via Compass",
+        "date": "2022-06-21T20:19:12.637Z",
+        "authors": [
+            {
+                "name": "Rachelle Palmer",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_rachelle_palmer_764ebcb48f.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "type": "News & Announcements",
+        "description": "MongoDB Compass is one of the most popular database GUIs",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/mongodb_compass_fc0be6bbb1.svg",
+            "alternativeText": ""
+        },
+        "tags": [
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Compass",
+                "type": "L1Product",
+                "slug": "/products/compass"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "count": 0,
+            "average": null,
+            "median": null
+        },
+        "score": {},
+        "slug": "/products/compass/mongodb-compass-aggregation-improvements"
+    },
+    {
+        "name": "MongoDB PHP Extension 1.13.0 Released",
+        "tags": [
+            {
+                "name": "PHP",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/php"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "authors": [
+            {
+                "name": "Rachelle Palmer",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_rachelle_palmer_764ebcb48f.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "type": "News & Announcements",
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "description": "Announcing our latest release of the PHP Extension 1.13.0!",
+        "date": "2022-05-24T17:28:39.583Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/PHP_Banner_1280x720_9be611cf92.png",
+            "alternativeText": ""
+        },
+        "score": {},
+        "slug": "/languages/php/php113-release"
+    },
+    {
+        "description": "Learn how to use Atlas Device Sync with Android.",
+        "authors": [
+            {
+                "name": "Mohit Sharma",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Pics_5b31243eab.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Android",
+                "type": "Technology",
+                "slug": "/technologies/android"
+            },
+            {
+                "name": "Kotlin",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/kotlin"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            }
+        ],
+        "name": "Introduction to Atlas Device Sync for Android",
+        "date": "2022-02-18T15:34:42.142Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/realm_image_c731226e37.png",
+            "alternativeText": ""
+        },
+        "type": "News & Announcements",
+        "rating_metrics": {
+            "count": 0,
+            "average": null,
+            "median": null
+        },
+        "score": {},
+        "slug": "/products/realm/introduction-realm-sync-android"
+    },
+    {
+        "type": "News & Announcements",
+        "description": "Introduction to Modern Databases, a new free course with materials and resources for educators.",
+        "date": "2022-02-03T00:53:01.813Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/docs_00338910b8.png",
+            "alternativeText": ""
+        },
+        "tags": [
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Advanced",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/advanced"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "name": "MongoDB Academia - Introduction to Modern Databases",
+        "authors": [
+            {
+                "name": "Julianna Chen",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_julianna_chen_948b36e361.png",
+                    "alternativeText": ""
+                }
+            },
+            {
+                "name": "Eoin Brazil",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/bio_eoin_brazil_f2678fbc19.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "score": {},
+        "slug": "/products/mongodb/introduction-to-modern-databases-mongodb-academia"
+    },
+    {
+        "name": "Introducing the Realm Flutter SDK",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/flutter_2c7dded9f8.png",
+            "alternativeText": ""
+        },
+        "type": "News & Announcements",
+        "rating_metrics": {
+            "median": 5,
+            "count": 1,
+            "average": 5
+        },
+        "description": "Announcing the next installment of the Realm Flutter SDK – now with support for Windows, macOS, iOS, and Android.",
+        "date": "2022-01-31T15:51:12.464Z",
+        "authors": [
+            {
+                "name": "Ian Ward",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ian_ward_bcd2b75a82.jpeg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Flutter",
+                "type": "Technology",
+                "slug": "/technologies/flutter"
+            },
+            {
+                "name": "Dart",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/dart"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            },
+            {
+                "name": "SDK",
+                "type": "L2Product",
+                "slug": "/products/realm/sdk"
+            }
+        ],
+        "score": {},
+        "slug": "/products/realm/introducing-realm-flutter-sdk"
+    },
+    {
+        "authors": [
+            {
+                "name": "Robert Walters",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Rob_Walters_4f11c00123.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Kubernetes",
+                "type": "Technology",
+                "slug": "/technologies/kubernetes"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Ops Manager",
+                "type": "L1Product",
+                "slug": "/products/ops-manager"
+            },
+            {
+                "name": "Advanced",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/advanced"
+            }
+        ],
+        "name": "Introducing the MongoDB Enterprise Operator for Kubernetes and OpenShift",
+        "description": "Introducing a Kubernetes Operator (beta) that integrates with Ops Manager, the enterprise management platform for MongoDB.",
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/dev_tools_ea2ad647ed.png"
+        },
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "date": "2022-01-27T15:39:38.406Z",
+        "type": "News & Announcements",
+        "score": {},
+        "slug": "/products/ops-manager/enterprise-operator-kubernetes-openshift"
+    },
+    {
+        "name": "Introducing Flexible Sync (Preview) – The Next Iteration of Realm Sync",
+        "date": "2022-01-24T16:09:53.228Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ATF_720x720_17fd9d891f.png",
+            "alternativeText": ""
+        },
+        "tags": [
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Sync",
+                "type": "L2Product",
+                "slug": "/products/realm/sync"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "News & Announcements",
+        "description": "Realm Flexible Sync (now in preview) gives developers new options for syncing data to your apps",
+        "authors": [
+            {
+                "name": "Andrew Morgan",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Andrew_Morgan_f9a7e7f949.jpg",
+                    "alternativeText": ""
+                }
+            },
+            {
+                "name": "Ian Ward",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ian_ward_bcd2b75a82.jpeg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "rating_metrics": {
+            "average": 1,
+            "median": 1,
+            "count": 1
+        },
+        "score": {},
+        "slug": "/products/realm/realm-flexible-sync"
+    },
+    {
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/virtual_presentation_e0b50d58bf.png",
+            "alternativeText": ""
+        },
+        "type": "News & Announcements",
+        "date": "2022-01-17T16:17:10.454Z",
+        "authors": [
+            {
+                "name": "Dominic Frei",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/profile_picture_round_ea8334f2fa.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Unity",
+                "type": "Technology",
+                "slug": "/technologies/unity"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "SDK",
+                "type": "L2Product",
+                "slug": "/products/realm/sdk"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "name": "Introduction to the Realm SDK for Unity3D",
+        "description": "In this video, Dominic Frei, iOS engineer on the Realm team, will introduce you to the Realm SDK for Unity3D",
+        "score": {},
+        "slug": "/products/realm/intro-to-realm-sdk-for-unity3d"
+    },
+    {
+        "type": "News & Announcements",
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "name": "Introducing GraphQL Support in MongoDB Atlas with Stitch",
+        "authors": [
+            {
+                "name": "Nic Raboy",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/nraboy_2f37801be7.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "News & Announcements",
+                "type": "ContentType",
+                "slug": "/news"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            }
+        ],
+        "description": "Learn how to interact with MongoDB through GraphQL directly in Stitch, without the need for a backend web service.",
+        "date": "2022-01-17T15:15:05.254Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/graphql_4d437bcd4e.png",
+            "alternativeText": ""
+        },
+        "score": {},
+        "slug": "/products/atlas/graphql-support-atlas-stitch"
+    }
+]

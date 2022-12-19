@@ -9,8 +9,6 @@ export const filtersModal = {
     height: '100%',
     zIndex: layers.modal,
     bg: 'black00',
-
-    boxSizing: 'border-box' as 'border-box',
     overflow: 'scroll',
     display: 'flex',
     flexDirection: 'column' as 'column',

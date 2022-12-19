@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
-import { Global } from '@emotion/react';
+import { Global, css } from '@emotion/react';
+import emotionNormalize from 'emotion-normalize';
 import getConfig from 'next/config';
 import { useSession } from 'next-auth/react';
 import { UnifiedFooter } from '@mdb/consistent-nav';
@@ -48,7 +49,12 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
 
     return (
         <div ref={ref => setLayoutRef(ref)}>
-            <Global styles={globalStyles(!!hasOverlay)} />
+            <Global
+                styles={css`
+                    ${emotionNormalize}
+                    ${globalStyles(!!hasOverlay)}
+                `}
+            />
             <div sx={navStyles}>
                 <UnifiedNav
                     position="static"

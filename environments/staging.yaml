@@ -25,6 +25,7 @@ envSecrets:
   SENTRY_DSN: devcenter-secrets
   STRAPI_URL: devcenter-secrets
   STRAPI_API_TOKEN: devcenter-secrets
+  GOOGLE_PLACES_API_KEY: devcenter-secrets
 
 autoscaling:
   minReplicas: 2

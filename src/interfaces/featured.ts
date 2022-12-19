@@ -6,10 +6,12 @@ export interface Featured {
     articles: string[];
     podcasts: string[];
     videos: string[];
+    events: string[];
 }
 
 export interface FeaturedResponse {
     articles: FeaturedItem[] | null;
     podcasts: FeaturedItem[] | null;
     videos: FeaturedItem[] | null;
+    events: FeaturedItem[] | null;
 }

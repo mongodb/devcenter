@@ -19,31 +19,3 @@ export const getAllFeaturedInfoFromAPI = async (
 
     return data.featured.content;
 };
-
-export const getAllFeaturedFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
-): Promise<FeaturedResponse[]> => {
-    const query = gql`
-        query Featured {
-            featured @rest(type: "Featured", path: "/featured-content") {
-                content {
-                    articles: new_articles {
-                        title: name
-                    }
-                    podcasts: podcasts {
-                        title
-                    }
-                    videos: new_videos {
-                        title
-                    }
-                }
-            }
-        }
-    `;
-    const {
-        data,
-    }: ApolloQueryResult<{ featured: { content: FeaturedResponse[] } }> =
-        await client.query({ query });
-
-    return data.featured.content;
-};

@@ -1,5 +1,7 @@
 name: Pull Request Checks
 on:
+    push:
+        branches: [main]
     pull_request:
         branches: [main]
 env:
@@ -61,14 +63,17 @@ jobs:
               run: ./node_modules/.bin/playwright install
             - name: Build
               run: yarn build
-            - name: Run Playwright
-              run: yarn test:e2e
+            - name: Run Playwright/Percy
+              run: yarn test:e2e:visual
+              env:
+                  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
             - name: Upload test results
               if: ${{ failure() }}
               uses: actions/upload-artifact@v2
               with:
                   name: playwright-artifacts
                   path: playwright-artifacts
+
     jest-tests:
         runs-on: ubuntu-latest
         permissions:
@@ -97,6 +102,10 @@ jobs:
               with:
                   skip-step: install
               uses: ArtiomTr/jest-coverage-report-action@v2
+              if: github.event_name == 'pull_request'
+            - name: Run Jest without coverage report
+              run: npx jest
+              if: github.event_name != 'pull_request'
     lighthouse:
         name: Lighthouse
         runs-on: ubuntu-latest

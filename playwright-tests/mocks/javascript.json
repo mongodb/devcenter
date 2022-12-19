@@ -1,0 +1,706 @@
+[
+    {
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/fullstack_app_react_app_services_graphql_c6f56d5635.png",
+            "alternativeText": ""
+        },
+        "type": "Tutorial",
+        "tags": [
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "name": "MOCK - Deploy and Host Your React Web App on MongoDB Atlas App Services",
+        "description": "This Atlas App Services tutorial shows you how to host websites and single-page applications like React in just 5 steps.",
+        "date": "2022-11-15T20:00:00.000Z",
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "score": {},
+        "slug": "/products/atlas/host-react-app-using-atlas-app-services"
+    },
+    {
+        "rating_metrics": {
+            "count": 1,
+            "average": 4,
+            "median": 4
+        },
+        "name": "Implement Analytics Dashboard in React Using Custom Resolvers for Atlas GraphQL API",
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Tutorial",
+        "description": "Learn how to create charts to show insights based on user data in React.",
+        "date": "2022-11-11T16:47:11.600Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/fullstack_app_react_app_services_graphql_c6f56d5635.png",
+            "alternativeText": ""
+        },
+        "score": {},
+        "slug": "/products/atlas/analytics-in-react-using-atlas-graphql-api"
+    },
+    {
+        "description": "Learn how to utilize MongoDB Aggregation Pipelines via a GraphQL API and perform advanced analytics on the data stored in our database.",
+        "date": "2022-11-09T20:00:00.000Z",
+        "rating_metrics": {
+            "median": null,
+            "count": 0,
+            "average": null
+        },
+        "name": "Create an Analytics Dashboard Using Atlas GraphQL API’s Custom Resolvers",
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/fullstack_app_react_app_services_graphql_c6f56d5635.png"
+        },
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "type": "Tutorial",
+        "score": {},
+        "slug": "/products/atlas/analytics-using-atlas-graphql-api-custom-resolver"
+    },
+    {
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/green_20502a3a50_83edd692a8.webp",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Nic Raboy",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/nraboy_2f37801be7.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Serverless",
+                "type": "Technology",
+                "slug": "/technologies/serverless"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            }
+        ],
+        "type": "Tutorial",
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "description": "Learn how to go totally serverless in both the database and application by using MongoDB Atlas serverless instances and the MongoDB Atlas App Services.",
+        "name": "Build a Totally Serverless REST API with MongoDB Atlas",
+        "date": "2022-11-04T16:59:16.107Z",
+        "score": {},
+        "slug": "/products/atlas/build-totally-serverless-rest-api-mongodb-atlas"
+    },
+    {
+        "name": "Implement Update and Delete Operations in React Using the Atlas GraphQL API ",
+        "description": "This MongoDB Atlas GraphQL API tutorial explains how to implement Update and Delete operations in a React app.",
+        "date": "2022-11-01T16:43:33.699Z",
+        "type": "Tutorial",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/image3_bbdcd97f5a.png",
+            "alternativeText": ""
+        },
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "score": {},
+        "slug": "/products/atlas/update-delete-operations-using-atlas-graphql-api"
+    },
+    {
+        "type": "Tutorial",
+        "name": "Create a Data Pipeline for MongoDB Change Stream Using Pub/Sub BigQuery Subscription",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/green2_e8016e6f30_d2ab987f18.webp",
+            "alternativeText": ""
+        },
+        "tags": [
+            {
+                "name": "GCP",
+                "type": "Technology",
+                "slug": "/technologies/gcp"
+            },
+            {
+                "name": "Nodejs",
+                "type": "Technology",
+                "slug": "/technologies/nodejs"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "Change Streams",
+                "type": "L2Product",
+                "slug": "/products/mongodb/change-streams"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "authors": [
+            {
+                "name": "Venkatesh Shanbhag",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/profile_2757d73f0e.jpeg",
+                    "alternativeText": ""
+                }
+            },
+            {
+                "name": "Stanimira Vlaeva",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/IMG_20190509_085545_b276df24e5.jpg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 2
+        },
+        "description": "Learn how to set up a data pipeline from your MongoDB database to BigQuery using change streams and Google Cloud Pub/Sub.",
+        "date": "2022-10-28T21:24:28.113Z",
+        "score": {},
+        "slug": "/products/mongodb/stream-data-mongodb-bigquery-subscription"
+    },
+    {
+        "tags": [
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            }
+        ],
+        "type": "Tutorial",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "description": "This MongoDB Atlas GraphQL API tutorial will explain how to implement Create and Read operations in a React app.\n",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/fullstack_app_react_app_services_graphql_8128059ae6.png",
+            "alternativeText": "Atlas GraphQL API with React.js"
+        },
+        "authors": [
+            {
+                "name": "Sourabh Bagrecha",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/E01_C4_Q4_H3_CL_U01_M2_LU_2_KT_5_ec006fc0a7ec_512_dcf6ae7d7f.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "name": "Implement Read and Create Operations in React Using the Atlas GraphQL API CRUD",
+        "date": "2022-10-24T19:00:00.000Z",
+        "score": {},
+        "slug": "/products/atlas/create-read-operations-using-atlas-graphql-api"
+    },
+    {
+        "tags": [
+            {
+                "name": "React Native",
+                "type": "Technology",
+                "slug": "/technologies/react-native"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 2
+        },
+        "description": "Click here for a brief introduction to the Realm Flipper plugin for React Native developers.",
+        "date": "2022-10-20T19:00:00.000Z",
+        "type": "Article",
+        "name": "Technical Preview of a Realm Flipper Plugin",
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/logo_e2e8d7cca4.svg"
+        },
+        "authors": [
+            {
+                "name": "Kenneth Geisshirt",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/kneth_400x400_0397e0d689.jpeg",
+                    "alternativeText": "Kenneth Geisshirt"
+                }
+            }
+        ],
+        "score": {},
+        "slug": "/languages/javascript/introducing-realm-flipper-plugin"
+    },
+    {
+        "description": "Today, we are pleased to announce the release of Realm JavaScript version 11— a complete re-imagining of the SDK and its APIs to be more idiomatic for React Native and JavaScript developers everywhere.",
+        "authors": [
+            {
+                "name": "Ian Ward",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ian_ward_bcd2b75a82.jpeg",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "React Native",
+                "type": "Technology",
+                "slug": "/technologies/react-native"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Article",
+                "type": "ContentType",
+                "slug": "/articles"
+            },
+            {
+                "name": "Realm",
+                "type": "L1Product",
+                "slug": "/products/realm"
+            }
+        ],
+        "name": "Realm JavaScript v11: A Step Forward for React Native — Hermes Support, Realm React, Flipper, and Much More",
+        "date": "2022-10-17T19:00:00.000Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/realm_47fd342154.png",
+            "alternativeText": "realm"
+        },
+        "type": "Article",
+        "rating_metrics": {
+            "average": 5,
+            "median": 5,
+            "count": 1
+        },
+        "score": {},
+        "slug": "/products/realm/realm-javascript-v11-react-native"
+    },
+    {
+        "tags": [
+            {
+                "name": "React",
+                "type": "Technology",
+                "slug": "/technologies/react"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "MongoDB",
+                "type": "L1Product",
+                "slug": "/products/mongodb"
+            },
+            {
+                "name": "Change Streams",
+                "type": "L2Product",
+                "slug": "/products/mongodb/change-streams"
+            },
+            {
+                "name": "English",
+                "type": "SpokenLanguage",
+                "slug": "/spoken-languages/english"
+            }
+        ],
+        "description": "In many applications nowadays, you want data to be displayed in real-time. Whether an IoT sensor reporting a value, a stock value that you want to track, or a chat application, you will want the data to automatically update your UI. This is possible using MongoDB Change Streams with the Realm Web SDK.",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Real_Time_Collaborations_2x_7c6a91c75d.png",
+            "alternativeText": ""
+        },
+        "date": "2022-10-04T18:57:34.502Z",
+        "authors": [
+            {
+                "name": "Joel Lord",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/profile_no_bg_1200x1200_19bfa0c1d9.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "type": "Tutorial",
+        "rating_metrics": {
+            "average": 4.833333333333333,
+            "median": 5,
+            "count": 6
+        },
+        "name": "Real Time Data in a React JavaScript Front-End with Change Streams",
+        "score": {},
+        "slug": "/products/mongodb/real-time-data-javascript"
+    },
+    {
+        "date": "2022-10-04T14:03:20.884Z",
+        "authors": [
+            {
+                "name": "Ethan Steininger",
+                "image": {
+                    "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/ethan_00068113c5.png",
+                    "alternativeText": ""
+                }
+            }
+        ],
+        "tags": [
+            {
+                "name": "Snippet",
+                "type": "CodeLevel"
+            },
+            {
+                "name": "GraphQL",
+                "type": "Technology",
+                "slug": "/technologies/graphql"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "MongoDB",
+                "type": "AuthorType",
+                "slug": "/author-types/mongodb"
+            },
+            {
+                "name": "Tutorial",
+                "type": "ContentType",
+                "slug": "/tutorials"
+            },
+            {
+                "name": "Introductory",
+                "type": "ExpertiseLevel",
+                "slug": "/expertise-levels/introductory"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "Search",
+                "type": "L2Product",
+                "slug": "/products/atlas/search"
+            }
+        ],
+        "name": "Flexible Querying with Atlas Search",
+        "description": "Atlas Search provides the ability to execute a performant query that spans multiple indexes in your data store. It's very rare, however, that MongoDB’s query planner selects a plan that involves multiple indexes. We’ll walk through a scenario in which this becomes a requirement. ",
+        "type": "Tutorial",
+        "rating_metrics": {
+            "median": 5,
+            "count": 2,
+            "average": 5
+        },
+        "image": {
+            "alternativeText": "",
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Screen_Shot_2022_10_04_at_10_06_46_AM_8064e67893.png"
+        },
+        "score": {},
+        "slug": "/products/atlas/flexible-querying-with-atlas-search"
+    }
+]

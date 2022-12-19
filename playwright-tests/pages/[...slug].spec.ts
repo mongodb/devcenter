@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { runPercy } from '../utils';
 
 test.describe.configure({ mode: 'parallel' });
 
@@ -82,6 +83,10 @@ test('request content flow on content page works', async ({ page }) => {
         page.waitForSelector('h5:text("Request a Tutorial")'),
         page.locator('button:text("Request a Tutorial")').click(),
     ]);
+    await page.locator('input[name=topic]').fill('Topic X');
+    await page
+        .locator('textarea[name=description]')
+        .fill('I want to learn Y about topic X');
     await Promise.all([
         page.waitForSelector('"Thanks for your request!"'),
         page.locator('button:text("Submit")').click(),
@@ -204,3 +209,8 @@ test('5 star rating flow on content page', async ({ page }) => {
         page.locator('button:text("Next")').click(),
     ]);
 });
+
+test(
+    'Content page visual regression testing',
+    runPercy(PAGE_URL, 'Content Page')
+);
