@@ -39,6 +39,19 @@ const updateFeedbackHandler = async (
     }
     try {
         const { _id, ...content } = req.body;
+        // Need to make sure this is a valid ObjectID and not some random input.
+        const regHex = /^[0-9a-fA-F]{24}$/;
+        if (!regHex.test(_id)) {
+            res = res.status(400);
+            logRequestData(req.url, req.method, res.statusCode, req.headers);
+
+            return res.json({
+                error: {
+                    message:
+                        'Bad Request: "_id" value in request body must be a valid ObjectID.',
+                },
+            });
+        }
         const response = await axios.put(
             `${process.env.BACKEND_URL}/api/feedback/${_id}`,
             content,
