@@ -24,7 +24,7 @@ import { DEBOUNCE_WAIT } from '../../data/constants';
 
 const useSearch = (
     initialSearchContent?: SearchItem[],
-    updatePageMeta: (pageNumber?: number) => void = () => {},
+    updatePageMeta: (pageNumber?: number) => void = () => null,
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
     filterItems?: { key: string; value: FilterItem[] }[] // This is needed for URL filter/search updates.
@@ -142,7 +142,7 @@ const useSearch = (
         ) => {
             const items =
                 typeof filterType === 'object' ? filterType : [filterType];
-            let filtersList: FilterItem[] = [];
+            const filtersList: FilterItem[] = [];
 
             // Gotta look for L1s and L2s that match.
             items.forEach(item => {
@@ -226,7 +226,7 @@ const useSearch = (
         if (router?.isReady) {
             const { s } = router.query;
 
-            if (!!filterItems) {
+            if (filterItems) {
                 const allNewFilters = getFiltersFromQueryStr();
                 setFilters(allNewFilters);
             }

@@ -1,5 +1,5 @@
 import { ContentItem } from '../interfaces/content-item';
-import { Featured, FeaturedItem } from '../interfaces/featured';
+import { Featured } from '../interfaces/featured';
 import { getFeaturedForContent } from './get-featured-for-content';
 import * as getFeaturedForTopicModule from './get-featured-for-topic';
 

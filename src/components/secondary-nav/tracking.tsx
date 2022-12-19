@@ -37,7 +37,7 @@ export const trackSecondaryNavLink = (e: Event) => {
     }
 };
 
-export const trackSecondaryNavToggle = (open: Boolean) => {
+export const trackSecondaryNavToggle = (open: boolean) => {
     if (window?.segment) {
         window.segment.track(`Secondary Nav ${open ? 'Open' : 'Close'}`, {
             category: 'navigation',

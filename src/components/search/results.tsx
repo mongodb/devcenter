@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Button, ESystemIconNames, TypographyScale } from '@mdb/flora';
+import { Button, TypographyScale } from '@mdb/flora';
 
 import { ResultsProps } from './types';
 import { dataStyles, resultsStyles } from './styles';
@@ -18,7 +18,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
     results = [],
     isValidating,
     error,
-    updatePageMeta = () => {},
+    updatePageMeta = () => null,
     searchString,
     filters,
     sortBy,

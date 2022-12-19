@@ -10,8 +10,8 @@ export const getTopicPagePathMappings = async () => {
         .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
         .map(tag => tag.slug);
 
-    let topicContentTypePaths: any = {};
-    let topicPaths: any = {};
+    const topicContentTypePaths: any = {};
+    const topicPaths: any = {};
 
     for (const distinctSlug of distinctSlugs) {
         const parsedSlug = distinctSlug.startsWith('/')

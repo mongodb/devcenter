@@ -73,11 +73,11 @@ const footer: ThemeUICSSObject = {
     ...section,
 };
 
-const footerActions = {
+const footerActions: ThemeUICSSObject = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: ['start', null, 'center'],
-    flexDirection: ['column' as 'column', null, 'row' as 'row'],
+    flexDirection: ['column', null, 'row'],
     gap: 'inc30',
     marginTop: ['inc30', null, null, 'inc40'],
 };

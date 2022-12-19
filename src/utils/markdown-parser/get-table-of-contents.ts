@@ -3,8 +3,8 @@ export const getTableOfContents = (
     key: string,
     value: string,
     maxDepth: number,
-    minDepth: number = 1,
-    minHeadingSize: number = 2
+    minDepth = 1,
+    minHeadingSize = 2
 ) => {
     const results: any = [];
     const searchNode = (node: any, sectionDepth: number) => {

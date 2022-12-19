@@ -25,7 +25,7 @@ interface DropDownItem3 {
 }
 
 const aLinkStyles = {
-    display: 'inline' as 'inline',
+    display: 'inline',
     alignItems: 'center',
     fontSize: 'inc20',
     fontFamily: 'euclid-circular-a',
@@ -185,7 +185,7 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
 
 const StylesDropDownWrapper = {
     '.dropdown-titles': {
-        display: 'inline-block' as 'inline-block',
+        display: 'inline-block',
         fontSize: 'inc40',
         marginBottom: 'inc40',
     },

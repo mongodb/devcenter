@@ -6,7 +6,6 @@ export const Heading = ({
     depth,
     children,
     id,
-    ...rest
 }: {
     depth: string;
     children: ArticleNode[];

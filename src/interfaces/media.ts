@@ -1,9 +1,4 @@
-import {
-    L1ProductTag,
-    L2ProductTag,
-    ProgrammingLanguageTag,
-    TechnologyTag,
-} from './tag-type-response';
+import { GenericTagTypeResponse } from './tag-type-response';
 import { OtherTags } from './other-tags';
 import { SEO } from './seo';
 
@@ -14,10 +9,10 @@ export interface Media {
     slug: string;
     relevantLinks?: string;
     thumbnailUrl?: string;
-    l1Product?: L1ProductTag;
-    l2Product?: L2ProductTag;
-    technology?: TechnologyTag[];
-    programmingLanguage?: ProgrammingLanguageTag[];
+    l1Product?: GenericTagTypeResponse;
+    l2Product?: GenericTagTypeResponse;
+    technology?: GenericTagTypeResponse[];
+    programmingLanguage?: GenericTagTypeResponse[];
     otherTags: OtherTags;
     seo: SEO;
 }

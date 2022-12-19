@@ -4,7 +4,7 @@ import { ContentItem } from '../../interfaces/content-item';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';
 import { ITopicCard } from '../../components/topic-card/types';
 import { SearchItem } from '../../components/search/types';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 export interface ContentTypePageProps {
     description: string;

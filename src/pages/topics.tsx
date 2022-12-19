@@ -5,7 +5,7 @@ import { getURLPath } from '../utils/format-url-path';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 import { TypographyScale } from '@mdb/flora';
-import { h4Styles, h5Styles, h6Styles, pageWrapper } from '../styled/layout';
+import { h5Styles, h6Styles, pageWrapper } from '../styled/layout';
 
 interface Topic {
     title: string;
@@ -218,7 +218,7 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
 
 export default Topic;
 
-export const getStaticProps: GetStaticProps = async ({}) => {
+export const getStaticProps: GetStaticProps = async () => {
     const metaInfo = await getAllMetaInfo();
     return {
         props: { topics: metaInfo },
