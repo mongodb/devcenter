@@ -23,11 +23,11 @@ const FeaturedCardSection: React.FunctionComponent<
     if (content.length < 3) {
         return null;
     }
-    let cardStyle =
+    const cardStyle =
         featuredCardType === 'middle'
             ? smallFeaturedCardStyles
             : bigFeaturedCardStyles;
-    let cardSize =
+    const cardSize =
         featuredCardType === 'middle'
             ? getCardProps(content[0], 'small')
             : getCardProps(content[0], 'large');
