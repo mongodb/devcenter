@@ -6,6 +6,11 @@ import { DEBOUNCE_WAIT } from '../../data/constants';
 import { ContentItem } from '../../interfaces/content-item';
 import { getURLPath } from '../../utils/format-url-path';
 import { locationFetcher, swrOptions } from './utils';
+import haversine from 'haversine-distance';
+import { Coordinates } from '../../interfaces/coordinates';
+
+// 10 miles in meters
+const MAX_LOCATION_RADIUS = 16093.4;
 
 // TODO: needs to be updated with icon names that will be added by Web Team - https://jira.mongodb.org/browse/WEBSITE-13740
 const DEFAULT_OPTIONS = [
@@ -17,9 +22,7 @@ type SelectionItem = { description: string };
 
 const useLocationSearch = (callback: () => void) => {
     const [locationQuery, setLocationQuery] = useState('');
-    const [locationSelection, setLocationSelection] = useState<
-        ContentItem | SelectionItem
-    >();
+    const [locationSelection, setLocationSelection] = useState<any>();
     const [geolocationValidating, setGeolocationValidating] = useState(false);
 
     const results = useSWR(
@@ -84,7 +87,7 @@ const useLocationSearch = (callback: () => void) => {
     }, []);
 
     const onLocationSelect = useCallback(
-        (selection: string) => {
+        async (selection: string) => {
             if (selection === 'Current Location') {
                 if (navigator.geolocation) {
                     setGeolocationValidating(true);
@@ -106,13 +109,56 @@ const useLocationSearch = (callback: () => void) => {
                     res => res.description === selection
                 );
 
-                setLocationSelection(option);
+                if (option && option.place_id) {
+                    try {
+                        const { result } = await (
+                            await fetch(
+                                `${getURLPath(
+                                    'api/location-details'
+                                )}?place_id=${option.place_id}`
+                            )
+                        ).json();
+
+                        setLocationSelection({
+                            ...result,
+                            description: option.description,
+                        });
+                    } catch (error) {
+                        console.error(error);
+                        clearLocation();
+                    }
+                }
             }
 
             setLocationQuery(selection);
             callback();
         },
         [results?.data, callback, geolocationSuccessCb, geolocationErrorCb]
+    );
+
+    const filterDataByLocation = useCallback(
+        (data: ContentItem[]) => {
+            const {
+                geometry: { location } = {},
+            }: {
+                geometry?: {
+                    location?: Coordinates;
+                };
+            } = locationSelection || {};
+
+            if (!location) {
+                return data;
+            }
+
+            return data.filter(({ coordinates }) => {
+                if (!coordinates) return false;
+
+                const distance = haversine(location, coordinates);
+
+                return distance < MAX_LOCATION_RADIUS;
+            });
+        },
+        [locationSelection]
     );
 
     useEffect(() => {
@@ -142,6 +188,7 @@ const useLocationSearch = (callback: () => void) => {
             geolocationValidating,
             displayOptions: locationQuery ? displayOptions : DEFAULT_OPTIONS,
         },
+        filterDataByLocation,
         clearLocation,
     };
 };

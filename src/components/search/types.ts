@@ -5,6 +5,7 @@ import { ThemeUICSSObject } from 'theme-ui';
 import { FilterItem } from '@mdb/devcenter-components';
 import { ReactElement } from 'react';
 import { SWRResponse } from 'swr';
+import { Coordinates } from '../../interfaces/coordinates';
 
 interface SearchImage {
     url: string;
@@ -62,7 +63,7 @@ export interface SearchItem {
     type: PillCategory;
     authors: SearchAuthor[];
     name: string;
-    image: SearchImage;
+    image?: SearchImage;
     description: string;
     location?: string;
     slug: string;
@@ -70,6 +71,8 @@ export interface SearchItem {
     start_time?: string;
     end_time?: string;
     tags: Tag[];
+    event_setup?: string;
+    coordinates?: Coordinates;
 }
 
 // add back when Most Popular is implemented

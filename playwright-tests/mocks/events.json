@@ -1,6 +1,6 @@
 [
     {
-        "date": null,
+        "date": "",
         "image": {
             "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Database_Charts_2x_bf4ff7dd5b_c3963ff3ca.webp",
             "alternativeText": "data evolution"
@@ -47,7 +47,7 @@
         ],
         "start_time": "2023-02-20T23:30:00+00:00",
         "authors": [],
-        "date": null,
+        "date": "",
         "type": "Event",
         "coordinates": {
             "lat": 54.5259614,
@@ -65,7 +65,7 @@
         "description": "",
         "start_time": "2023-02-13T23:30:00+00:00",
         "end_time": "2023-02-13T23:30:00+00:00",
-        "date": null,
+        "date": "",
         "location": "London,United Kingdom",
         "event_setup": "InPerson",
         "name": "PHP UK",
@@ -98,7 +98,7 @@
     {
         "start_time": "2023-01-15T23:30:00+00:00",
         "end_time": "2023-01-15T23:30:00+00:00",
-        "date": null,
+        "date": "",
         "type": "Event",
         "coordinates": {
             "lat": 54.5259614,
@@ -137,7 +137,7 @@
         ],
         "start_time": "2023-01-10T23:00:00+00:00",
         "end_time": "2023-01-10T23:00:00+00:00",
-        "date": null,
+        "date": "",
         "event_setup": "InPerson",
         "authors": [],
         "type": "Event",
@@ -154,7 +154,7 @@
         "slug": "https://www.mongodb.com/community/forums/t/197757"
     },
     {
-        "date": null,
+        "date": "",
         "coordinates": {
             "lat": 12.9715987,
             "lng": 77.5945627

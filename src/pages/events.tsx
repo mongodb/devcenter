@@ -27,9 +27,11 @@ import { FilterItem, FilterTagSection } from '@mdb/devcenter-components';
 import { useCallback } from 'react';
 import { FeaturedCardSection } from '../components/card-section';
 import { PillCategory } from '../types/pill-category';
+import { SearchItem } from '../components/search/types';
 
 const extraSearchResultsStyles = (showFeatured: boolean) => ({
     order: showFeatured ? '4' : '3',
+    marginBottom: 'inc30',
 });
 const extraSearchResultsHeadingStyles = (showFeatured: boolean) => ({
     ...h5Styles,
@@ -54,7 +56,7 @@ const EventsPageComponent: React.FunctionComponent<
         searchProps: { searchString },
         filterProps: { filters, onFilter },
         resultsProps,
-        resultsProps: { isValidating, results },
+        resultsProps: { isValidating, allResults, unfilteredResults, results },
         locationProps,
         locationProps: {
             locationSelection: { description: location = '' } = {},
@@ -72,22 +74,45 @@ const EventsPageComponent: React.FunctionComponent<
     const plural = results.length !== 1 ? 's' : '';
     const showFeatured = !searchString && !filters.length && !location;
 
-    const bothCriteriaHeader = `${results.length} ${
-        results.length === 1 ? 'event' : 'events'
-    } for "${searchString}" near ${location}`;
     let oneCriteriaHeader = `${results.length} `;
 
     if (filters.length) {
         oneCriteriaHeader += `Result${plural}`;
     } else if (location && searchString) {
-        oneCriteriaHeader += `event${plural} match${
+        oneCriteriaHeader += `other result${plural} match${
             plural ? '' : 'es'
-        } "${location}"`;
+        } "${searchString}"`;
     } else if (location) {
         oneCriteriaHeader += `event${plural} near "${location}"`;
     } else if (searchString) {
-        oneCriteriaHeader += `Result${plural}`;
+        oneCriteriaHeader += `Result${plural} for "${searchString}"`;
     }
+
+    const twoCriteriaHeader = `${results.length} ${
+        results.length === 1 ? 'event' : 'events'
+    } for "${searchString}" near ${location}`;
+
+    const showTwoCriteriaResults = location && searchString && !filters.length;
+    const twoCriteriaResults = results;
+
+    const showOneCriteriaResults = !showFeatured;
+    const oneCriteriaResults = showTwoCriteriaResults
+        ? unfilteredResults
+        : results;
+
+    const showAllOtherResults = !isValidating;
+    // Always want to show all events, except when only a location
+    // is specified where we want to show all virtual events
+    const allOtherResults =
+        location && !searchString
+            ? allResults.filter((res: SearchItem) =>
+                  res.tags.some(
+                      tag =>
+                          tag.type === 'AttendanceType' &&
+                          tag.name === 'Virtual'
+                  )
+              )
+            : allResults;
 
     const locationSelect = useCallback(
         (selection: string) => {
@@ -121,10 +146,15 @@ const EventsPageComponent: React.FunctionComponent<
         [onLocationSelect, filterItems, filters, onFilter, clearSearchParam]
     );
 
-    console.log(results);
-
     return (
-        <div sx={searchWrapperStyles}>
+        <div
+            sx={{
+                ...searchWrapperStyles,
+                gap: 'normal',
+                rowGap: 'inc70',
+                columnGap: 'inc40',
+            }}
+        >
             <SearchBox
                 {...searchProps}
                 placeholder="Search Events"
@@ -140,9 +170,6 @@ const EventsPageComponent: React.FunctionComponent<
                             ...item,
                             category: item.subCategory as PillCategory,
                         }))}
-                        sx={{
-                            marginBottom: ['section20', null, 'section50'],
-                        }}
                         title="Featured Events"
                         smallLayout
                     />
@@ -189,82 +216,82 @@ const EventsPageComponent: React.FunctionComponent<
                 </div>
             )}
 
-            {location && searchString && !filters.length && (
-                <div sx={{ order: '5', width: '100%' }}>
-                    <TypographyScale
-                        variant="heading2"
-                        sx={{
-                            ...extraSearchResultsHeadingStyles(showFeatured),
-                            marginBottom: 'inc50',
-                        }}
-                    >
-                        {bothCriteriaHeader}
-                    </TypographyScale>
-                    <SearchResults
-                        {...resultsProps}
-                        pageNumber={pageNumber}
-                        updatePageMeta={updatePageMeta}
-                        extraStyles={extraSearchResultsStyles(showFeatured)}
-                    />
-                    <HorizontalRule
-                        sx={{ marginTop: 'inc100' }}
-                        spacing="large"
-                    />
-                </div>
-            )}
-
-            {!showFeatured && (
-                <div sx={{ order: '5', width: '100%' }}>
-                    <TypographyScale
-                        variant="heading2"
-                        sx={{
-                            ...extraSearchResultsHeadingStyles(showFeatured),
-                            marginBottom: 'inc50',
-                        }}
-                    >
-                        {oneCriteriaHeader}
-                    </TypographyScale>
-                    <SearchResults
-                        {...resultsProps}
-                        pageNumber={pageNumber}
-                        updatePageMeta={updatePageMeta}
-                        extraStyles={extraSearchResultsStyles(showFeatured)}
-                    />
-                    <HorizontalRule
-                        sx={{ marginTop: 'inc100' }}
-                        spacing="large"
-                    />
-                </div>
-            )}
-
-            {!filters.length && (
+            {showTwoCriteriaResults && (
                 <>
-                    {(!isValidating || showFeatured) && (
+                    <div sx={{ order: '5', width: '100%' }}>
                         <TypographyScale
                             variant="heading2"
-                            sx={{
-                                ...extraSearchResultsHeadingStyles(
-                                    showFeatured
-                                ),
-                                order: '6',
-                            }}
+                            sx={extraSearchResultsHeadingStyles(showFeatured)}
                         >
-                            {location && !searchString
-                                ? 'Other Virtual Events'
-                                : 'All Events'}
+                            {twoCriteriaHeader}
                         </TypographyScale>
-                    )}
+                        {!!results.length && (
+                            <SearchResults
+                                {...resultsProps}
+                                results={twoCriteriaResults}
+                                pageNumber={pageNumber}
+                                updatePageMeta={updatePageMeta}
+                                extraStyles={extraSearchResultsStyles(
+                                    showFeatured
+                                )}
+                            />
+                        )}
+                    </div>
+                    {!results.length && <HorizontalRule sx={{ order: '5' }} />}
+                </>
+            )}
+
+            {showOneCriteriaResults && (
+                <>
+                    <div sx={{ order: '5', width: '100%' }}>
+                        {!isValidating && (
+                            <TypographyScale
+                                variant="heading2"
+                                sx={extraSearchResultsHeadingStyles(
+                                    showFeatured
+                                )}
+                            >
+                                {oneCriteriaHeader}
+                            </TypographyScale>
+                        )}
+                        {!!results.length && (
+                            <SearchResults
+                                {...resultsProps}
+                                results={oneCriteriaResults}
+                                pageNumber={pageNumber}
+                                updatePageMeta={updatePageMeta}
+                                extraStyles={extraSearchResultsStyles(
+                                    showFeatured
+                                )}
+                            />
+                        )}
+                    </div>
+                    {!results.length && <HorizontalRule sx={{ order: '5' }} />}
+                </>
+            )}
+
+            {showAllOtherResults && (
+                <div sx={{ order: '6', width: '100%' }}>
+                    <TypographyScale
+                        variant="heading2"
+                        sx={extraSearchResultsHeadingStyles(showFeatured)}
+                    >
+                        {location && !searchString
+                            ? 'Other Virtual Events'
+                            : 'All Events'}
+                    </TypographyScale>
 
                     <SearchResults
                         {...resultsProps}
+                        results={allOtherResults}
+                        isValidating={
+                            allResults.length === 0 ? isValidating : false
+                        }
                         pageNumber={pageNumber}
                         updatePageMeta={updatePageMeta}
-                        extraStyles={{
-                            ...extraSearchResultsStyles(showFeatured),
-                            order: '6',
-                        }}
+                        extraStyles={extraSearchResultsStyles(showFeatured)}
                     />
-                </>
+                </div>
             )}
 
             {children}

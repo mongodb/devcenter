@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import useSWR from 'swr';
 import { FilterItem } from '@mdb/devcenter-components';
 import {
@@ -23,9 +23,26 @@ import useSort from './sort';
 import useLocationSearch from './location';
 import useSearchString from './search-string';
 import useFilter from './filter';
+import { ContentItem } from '../../interfaces/content-item';
 
-// Hook that contains the majority of the logic for our search functionality across the site.
+// Credit https://github.com/reduxjs/redux/blob/d794c56f78eccb56ba3c67971c26df8ee34dacc1/src/compose.ts#L46
+const compose = (...funcs: Function[]) => {
+    if (funcs.length === 0) {
+        return <T>(arg: T) => arg;
+    }
 
+    if (funcs.length === 1) {
+        return funcs[0];
+    }
+
+    return funcs.reduce(
+        (a, b) =>
+            (...args: any) =>
+                a(b(...args))
+    );
+};
+
+// Hook that contains the majority of the logic for our search functionality across the site
 const useSearch = (
     initialSearchContent?: SearchItem[],
     updatePageMeta: (pageNumber?: number) => void = () => null,
@@ -33,6 +50,7 @@ const useSearch = (
     tagSlug?: string, // Filter on backend by tag.
     filterItems?: { key: string; value: FilterItem[] }[] // This is needed for URL filter/search updates.
 ) => {
+    const [allResults, setAllResults] = useState<ContentItem[]>();
     const router = useRouter();
     const shouldUseQueryParams = !!filterItems;
     const paramChangeCallback = useCallback(() => {
@@ -60,7 +78,7 @@ const useSearch = (
         clearFilters,
     } = useFilter(paramChangeCallback, filterItems);
 
-    const { locationProps, clearLocation } =
+    const { locationProps, clearLocation, filterDataByLocation } =
         useLocationSearch(paramChangeCallback);
 
     useEffect(() => {
@@ -119,6 +137,29 @@ const useSearch = (
         fallbackData: (initialSearchContent || []).map(searchItemToContentItem),
     });
 
+    // Populate all results with either the result of useSWR if searchString starts out empty,
+    // or with a one-time fetch to the search endpoint with an empty query
+    useEffect(() => {
+        if (!allResults) {
+            if (searchString === '' && data && data.length > 0) {
+                setAllResults(data);
+            } else {
+                (
+                    searchFetcher(
+                        buildSearchQuery({
+                            searchString: '',
+                            contentType,
+                            tagSlug,
+                            sortBy: defaultSortByType,
+                        })
+                    ) as Promise<ContentItem[]>
+                ).then((response: ContentItem[]) => {
+                    setAllResults(response);
+                });
+            }
+        }
+    }, [searchString, allResults, data, contentType, tagSlug]);
+
     const filteredData = filterData(data);
 
     return {
@@ -128,6 +169,7 @@ const useSearch = (
         sortProps,
         locationProps,
         resultsProps: {
+            allResults: allResults || [],
             unfilteredResults: data,
             results: filteredData,
             error,

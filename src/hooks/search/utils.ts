@@ -31,6 +31,9 @@ export const searchItemToContentItem = ({
     start_time,
     end_time,
     tags,
+    location,
+    event_setup,
+    coordinates,
 }: SearchItem): ContentItem => {
     const itemImage: Image | undefined =
         // Sometimes the image url can be an object with an "$undefined" key.
@@ -40,6 +43,7 @@ export const searchItemToContentItem = ({
                   alt: image.alternativeText,
               }
             : undefined;
+
     const itemAuthors: Author[] = authors.map(auth => ({
         name: auth.name,
         image: {
@@ -53,6 +57,14 @@ export const searchItemToContentItem = ({
         start_time && end_time ? [start_time, end_time] : date
     ) as string | [string, string];
 
+    if (event_setup) {
+        tags.push({
+            name: event_setup,
+            type: 'AttendanceType',
+            slug: '',
+        });
+    }
+
     return {
         authors: itemAuthors,
         category: type,
@@ -63,6 +75,8 @@ export const searchItemToContentItem = ({
         tags,
         title: name,
         featured: false,
+        location,
+        coordinates,
     };
 };
 
@@ -242,7 +256,7 @@ export const searchFetcher: Fetcher<ContentItem[], string> = queryString => {
     });
 };
 
-export const locationFetcher: Fetcher<ContentItem[], string> = queryString => {
+export const locationFetcher: Fetcher<any[], string> = queryString => {
     return fetch(
         (getURLPath('/api/location') as string) + '?' + queryString
     ).then(async response => {

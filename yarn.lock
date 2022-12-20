@@ -2143,7 +2143,7 @@
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@percy/logger/-/logger-1.16.0.tgz#e6804d1770869266226eff77fdc2e5cf9992473b"
   integrity sha512-u9zTj6BcUmqknrcikrunRpkRr+uQlENhgK/m0Zokxtv9CgkmNzR8oLoseJjU5P4zGZEiJE/v7wnzNC1ezvS9nQ==
 
-"@percy/playwright@^1.0.4":
+"@percy/playwright@1.0.4":
   version "1.0.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@percy/playwright/-/playwright-1.0.4.tgz#82f325dc772aeef0e6fb3de402ec1ea3783160b0"
   integrity sha512-prXvaEyvM6M7vGx0YujdMmFf+rZqkQpDEK32ZOwXbMzKYhGXjyiYESa4Axhc+Pz/c0THhXZWH4/70IW0RcyCQA==
@@ -5160,6 +5160,11 @@ has@^1.0.3:
   integrity sha1-ci18v8H2qoJB8W3YFOAR4fQeh5Y=
   dependencies:
     function-bind "^1.1.1"
+
+haversine-distance@1.2.1:
+  version "1.2.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/haversine-distance/-/haversine-distance-1.2.1.tgz#3b3a053890504925505273e96eba359042dc514b"
+  integrity sha512-rQpG89d6NlAis0eqOSFXDqNU/GZcMPlHNVMqTSzD16niD9s1fDK8T6kwrK0WJ7OMU+iRNy3cgGYnNQihMqmaHg==
 
 hex-rgb@4.3.0:
   version "4.3.0"

@@ -7,6 +7,7 @@ import { PrimaryTag } from './primary-tag';
 import { CollectionType } from '../types/collection-type';
 import { CodeLevel } from '../types/tag-type';
 import { SEO } from './seo';
+import { Coordinates } from './coordinates';
 
 export interface ContentItem {
     collectionType?: CollectionType;
@@ -32,4 +33,5 @@ export interface ContentItem {
     liveSiteUrl?: string;
     seo?: SEO;
     location?: string;
+    coordinates?: Coordinates;
 }

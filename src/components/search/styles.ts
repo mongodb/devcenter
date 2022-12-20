@@ -26,7 +26,7 @@ export const searchBoxStyles: ThemeUICSSObject = {
     flexGrow: '1',
     flexShrink: '1',
     flexBasis: 'calc(66% - 12px)',
-    marginBottom: ['inc20', null, 'inc50'],
+    marginBottom: ['inc20', null, 'inc40'],
     '& > div': {
         maxWidth: 'unset',
     },
@@ -48,7 +48,7 @@ export const sortBoxStyles = {
         maxWidth: 'unset',
     },
     '& > button#sort-by-dropdown': {
-        height: '84px',
+        height: '80px',
     },
     'div[role="dropdown"]': {
         width: '100%',
@@ -58,9 +58,6 @@ export const sortBoxStyles = {
     flexBasis: 'calc(33% - 12px)',
 };
 
-<<<<<<< HEAD
-export const dataStyles = (layout: 'list' | 'grid'): ThemeUICSSObject =>
-=======
 export const locationBoxStyles = {
     width: ['100%', null, 'calc(33% - 12px)'],
     div: {
@@ -78,8 +75,7 @@ export const locationBoxStyles = {
     },
 };
 
-export const dataStyles = (layout: 'list' | 'grid') =>
->>>>>>> 8dd6594 (Add industry events)
+export const dataStyles = (layout: 'list' | 'grid'): ThemeUICSSObject =>
     layout === 'list'
         ? {
               margin: 'auto',

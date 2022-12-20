@@ -100,7 +100,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
                   content.filter(piece => piece.category === contentType)
-              ).filter(contentRow => contentRow.length > 0)
+              ).filter(contentRow => contentRow.length > 2)
             : [];
 
     const sortedContentRows: ContentItem[][] = [];
