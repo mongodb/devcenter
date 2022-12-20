@@ -19,12 +19,12 @@ interface SocialButtonsProps {
 
 const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
     heading,
-    description,
     className,
     authors = [],
     tags = [],
 }) => {
     const [url, setUrl] = useState('');
+
     useEffect(() => {
         setUrl(window.location.href);
     }, []);

@@ -19,5 +19,3 @@ export const CONTENT_TYPE_NAME_MAP: { [type: string]: string } = {
 };
 
 export const DEBOUNCE_WAIT = 400; // in milliseconds
-
-export const DOCS_UNIVERSAL_LINK = 'https://www.mongodb.com/docs/';

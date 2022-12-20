@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
-import { ThemeUIStyleObject } from 'theme-ui';
+import { ThemeUICSSObject } from 'theme-ui';
 
 import {
     ESystemIconNames,
@@ -23,19 +23,19 @@ import {
     trackSecondaryNavToggle,
 } from './tracking';
 
-const linkWrapperStyles = {
-    position: 'relative' as 'relative',
+const linkWrapperStyles: ThemeUICSSObject = {
+    position: 'relative',
     padding: 0,
 };
 
-const StyledSecondaryLinks: ThemeUIStyleObject | undefined = {
+const StyledSecondaryLinks: ThemeUICSSObject | undefined = {
     padding: 0,
     margin: 0,
     overflow: 'visible',
     '> li:not(:last-child)': {
         marginRight: [null, null, null, 'inc30', '40px'],
     },
-    whiteSpace: 'nowrap' as 'nowrap',
+    whiteSpace: 'nowrap',
 };
 
 const hoverLinkStyles = (isActive: boolean) => ({
@@ -48,22 +48,23 @@ const hoverLinkStyles = (isActive: boolean) => ({
     },
 });
 
-const MainLinkStyles = (isActive: boolean) => ({
-    float: 'left' as 'left',
-    marginRight: [null, null, null, 'inc40', 'inc90'],
-    fontWeight: 500,
+const MainLinkStyles = (isActive: boolean) =>
+    ({
+        float: 'left',
+        marginRight: [null, null, null, 'inc40', 'inc90'],
+        fontWeight: 500,
 
-    'span.textlink-default-text-class': {
-        ...hoverLinkStyles(isActive),
-        color: theme.colors.text.default,
+        'span.textlink-default-text-class': {
+            ...hoverLinkStyles(isActive),
+            color: theme.colors.text.default,
+            ':hover': {
+                borderBottomColor: `${theme.colors.green40}`,
+            },
+        },
         ':hover': {
             borderBottomColor: `${theme.colors.green40}`,
         },
-    },
-    ':hover': {
-        borderBottomColor: `${theme.colors.green40}`,
-    },
-});
+    } as ThemeUICSSObject);
 
 const FloraLinkStyles = (isActive: boolean) => ({
     display: 'inline-block',

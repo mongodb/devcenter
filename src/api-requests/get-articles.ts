@@ -2,7 +2,7 @@ import { ApolloQueryResult, gql } from '@apollo/client';
 import { UnderlyingClient } from '../types/client-factory';
 import { Article } from '../interfaces/article';
 
-export const articleFields = `authors {
+const articleFields = `authors {
                     name
                     bio
                     image {

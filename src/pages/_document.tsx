@@ -25,8 +25,7 @@ export default class MyDocument extends Document {
                         rel="preload"
                         href="https://cdn.optimizely.com/js/22247140071.js"
                         as="script"
-                    ></link>
-
+                    />
                     <link
                         rel="preload"
                         href="/developer/fonts/EuclidCircularA-Regular-WebXL.woff2"

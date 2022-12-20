@@ -1,9 +1,10 @@
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
 
-export const breadcrumbsContainerStyles = {
+export const breadcrumbsContainerStyles: ThemeUICSSObject = {
     alignItems: 'center',
     display: 'flex',
-    flexWrap: 'wrap' as 'wrap',
+    flexWrap: 'wrap',
     gap: 'elementXSmall',
     gridColumn: ['span 6', null, 'span 8', 'span 12'],
 };

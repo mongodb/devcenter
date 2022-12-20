@@ -1,19 +1,23 @@
-import type { NextPage, GetStaticPaths, GetStaticProps } from 'next';
+import { Grid } from 'theme-ui';
 import { NextSeo } from 'next-seo';
 import * as Sentry from '@sentry/nextjs';
 import { ParsedUrlQuery } from 'querystring';
+import type { NextPage, GetStaticPaths, GetStaticProps } from 'next';
+import { GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
+
 import { getAuthor } from '../../service/get-all-authors';
 import allAuthorsPreval from '../../service/get-all-authors.preval';
+
 import { Author, Image } from '../../interfaces/author';
-import { flattenTags } from '../../utils/flatten-tags';
-import { GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
-import Card, { getCardProps } from '../../components/card';
 import { ContentItem } from '../../interfaces/content-item';
-import { Grid } from 'theme-ui';
+
+import { flattenTags } from '../../utils/flatten-tags';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
-import AuthorSocialButtons from '../../components/author-social-buttons';
+
 import Breadcrumbs from '../../components/breadcrumbs';
+import Card, { getCardProps } from '../../components/card';
 import { Crumb } from '../../components/breadcrumbs/types';
+import AuthorSocialButtons from '../../components/author-social-buttons';
 
 const crumbs: Crumb[] = [{ text: 'MongoDB Developer Center', url: '/' }];
 interface AuthorPageProps {
@@ -29,25 +33,6 @@ interface AuthorPageProps {
     calculated_slug: string;
     articles: ContentItem[];
 }
-
-const middleSectionStyles = {
-    gridColumn: ['span 6', null, 'span 8', 'span 12', '3 /span 9'],
-};
-const eyebrowStyles = {
-    gridColumn: ['span 6', null, 'span 8', 'span 12'],
-    marginBottom: ['inc70', null, null, 'inc100'],
-};
-
-const contentStyles = {
-    gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 12'],
-    paddingTop: 'inc70',
-};
-
-const speakerStyles = {
-    display: 'flex',
-    justifyContent: 'center',
-    marginBottom: ['inc40'],
-};
 
 const getTitleAndLocation = (
     title: string | undefined,
@@ -74,29 +59,10 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
     facebook,
     twitter,
     youtube,
-    calculated_slug,
     articles,
 }) => {
     const titleAndLocation = getTitleAndLocation(title, location);
     const hasSocial = facebook || twitter || linkedin || youtube;
-
-    // const LENGTH = articles.length;
-    // const DATA = articles;
-    // const LIMIT = 8;
-    // const SHOW_MORE_INITIAL_STATE = LENGTH > LIMIT;
-    //
-    // const [showMore, setShowMore] = useState(SHOW_MORE_INITIAL_STATE);
-    // const [list, setList] = useState(DATA.slice(0, LIMIT));
-    // const [index, setIndex] = useState(LIMIT);
-    //
-    // const loadMore = () => {
-    //     const newIndex = index + LIMIT;
-    //     const newShowMore = newIndex <= LENGTH - 1;
-    //     const newList = list.concat(DATA.slice(index, newIndex));
-    //     setIndex(newIndex);
-    //     setList(newList);
-    //     setShowMore(newShowMore);
-    // };
     return (
         <>
             <NextSeo
@@ -117,9 +83,23 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                     }}
                 >
                     <Breadcrumbs crumbs={crumbs} />
-                    <div sx={middleSectionStyles}>
+                    <div
+                        sx={{
+                            gridColumn: [
+                                'span 6',
+                                null,
+                                'span 8',
+                                'span 12',
+                                '3 /span 9',
+                            ],
+                        }}
+                    >
                         <SpeakerLockup
-                            sx={speakerStyles}
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: ['inc40'],
+                            }}
                             profileImage={{
                                 src: image
                                     ? image.url
@@ -208,7 +188,18 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                             rowGap: 0,
                         }}
                     >
-                        <div sx={contentStyles}>
+                        <div
+                            sx={{
+                                gridColumn: [
+                                    'span 6',
+                                    null,
+                                    'span 8',
+                                    'span 12',
+                                    'span 12',
+                                ],
+                                paddingTop: 'inc70',
+                            }}
+                        >
                             <TypographyScale
                                 variant="heading5"
                                 sx={{
@@ -229,22 +220,6 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                                     />
                                 ))}
                             </Grid>
-                            {/*<div*/}
-                            {/*    sx={{*/}
-                            {/*        display: 'flex',*/}
-                            {/*        justifyContent: 'center',*/}
-                            {/*        marginTop: ['inc70', null, 'inc90'],*/}
-                            {/*    }}*/}
-                            {/*>*/}
-                            {/*    {showMore && (*/}
-                            {/*        <Button*/}
-                            {/*            onClick={loadMore}*/}
-                            {/*            variant="secondary"*/}
-                            {/*        >*/}
-                            {/*            Load more*/}
-                            {/*        </Button>*/}
-                            {/*    )}*/}
-                            {/*</div>*/}
                         </div>
                     </GridLayout>
                 </div>
@@ -284,7 +259,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         };
     }
 
-    let authorContentItems: any[] = [];
+    const authorContentItems: any[] = [];
     for (const article of author.articles as any) {
         const item: ContentItem = {
             collectionType: 'Article',

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const Feed = require('feed').Feed;
 const fs = require('fs');
 const https = require('https');

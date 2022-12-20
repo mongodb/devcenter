@@ -19,7 +19,6 @@ import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { topicWithIcon } from '../content-type-page/sections/technologies';
 import {
-    PillCategory,
     pillCategoryToSlug,
     PillCategoryValues,
 } from '../../types/pill-category';
@@ -33,19 +32,8 @@ import {
     titleStyles,
 } from '../../components/search/styles';
 
-export interface TopicContentTypeProps {
-    crumbs: Crumb[];
-    contentType: PillCategory;
-    tertiaryNavItems: TertiaryNavItem[];
-    topicName: string;
-    topicSlug: string;
-    contentTypeSlug: string;
-    contentTypeAggregateSlug: string;
-    description: string;
-    subTopics: ITopicCard[];
-}
-
-let pluralize = require('pluralize');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pluralize = require('pluralize');
 
 interface TopicPageProps {
     crumbs: Crumb[];

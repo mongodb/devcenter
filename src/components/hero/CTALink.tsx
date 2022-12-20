@@ -5,10 +5,10 @@ import theme from '@mdb/flora/theme';
 
 import { CTA } from './types';
 import { CTALinkStyles } from './styles';
-import { ThemeUIStyleObject } from 'theme-ui';
+import { ThemeUICSSObject } from 'theme-ui';
 
 const CTALink: React.FunctionComponent<CTA> = ({ text, url, customCSS }) => {
-    const [hoverStyles, setHoverStyles] = useState<ThemeUIStyleObject>({});
+    const [hoverStyles, setHoverStyles] = useState<ThemeUICSSObject>({});
 
     const onLinkEnter = () =>
         setHoverStyles({

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { TypographyScale, Link } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
-import { Grid, ThemeUIStyleObject } from 'theme-ui';
+import { Grid, ThemeUICSSObject } from 'theme-ui';
 
 import Card, { getCardProps } from '../card';
 import { CardSectionProps } from './types';
@@ -25,7 +25,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
     direction = 'row',
     href,
 }) => {
-    const [hoverStyles, setHoverStyles] = useState<ThemeUIStyleObject>({});
+    const [hoverStyles, setHoverStyles] = useState<ThemeUICSSObject>({});
 
     const onLinkEnter = () =>
         setHoverStyles({

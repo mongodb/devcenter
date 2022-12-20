@@ -1,7 +1,7 @@
-import { ThemeUIStyleObject } from 'theme-ui';
+import { ThemeUICSSObject } from 'theme-ui';
 import { layers } from '../../styled/layout';
 
-export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
+export const navWrapperStyles = (isOpen: boolean): ThemeUICSSObject => {
     let height = 'auto';
     const NAVBAR_HEIGHT = 56;
 
@@ -29,7 +29,7 @@ export const navWrapperStyles = (isOpen: boolean): ThemeUIStyleObject => {
     };
 };
 
-export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
+export const secondaryLinkStyles = (isOpen: boolean): ThemeUICSSObject => ({
     margin: 0,
     display: isOpen ? 'block' : 'none',
     px: 'inc40',
@@ -37,7 +37,7 @@ export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
 
     '& > li': {
         py: 'inc30',
-        position: 'relative' as 'relative',
+        position: 'relative',
 
         '&:first-of-type': {
             minHeight: '30px',
@@ -48,7 +48,8 @@ export const secondaryLinkStyles = (isOpen: boolean): ThemeUIStyleObject => ({
         },
     },
 });
-export const MainLinkStyles: ThemeUIStyleObject = {
+
+export const MainLinkStyles: ThemeUICSSObject = {
     width: '100%',
     fontSize: 'inc30',
     fontWeight: 500,
@@ -94,8 +95,8 @@ export const StylesFloraLinkChevronRight = {
     },
 };
 
-export const plusOrMinusStylesForDropDowns = {
-    position: 'absolute' as 'absolute',
+export const plusOrMinusStylesForDropDowns: ThemeUICSSObject = {
+    position: 'absolute',
     right: '0',
 };
 
@@ -116,18 +117,18 @@ export const aLinkStyles = {
     },
 };
 
-export const chevronStylesForMainLink: ThemeUIStyleObject = {
+export const chevronStylesForMainLink: ThemeUICSSObject = {
     display: 'inline',
     stroke: 'icon.system.success',
 };
 
-export const userMenuStyles: ThemeUIStyleObject = {
+export const userMenuStyles: ThemeUICSSObject = {
     minWidth: 'inc60',
     marginLeft: 'auto',
 };
 
-export const DropDownStyles = {
-    position: 'relative' as 'relative',
+export const DropDownStyles: ThemeUICSSObject = {
+    position: 'relative',
 };
 
 export const StylesDropDownWrapper = {
@@ -139,9 +140,9 @@ export const StylesDropDownWrapper = {
     backgroundColor: '#fff',
     color: '#000',
 };
-export const StylesDropDownMenuList = {
-    listStyleType: 'none' as 'none',
-    whiteSpace: 'nowrap' as 'nowrap',
+export const StylesDropDownMenuList: ThemeUICSSObject = {
+    listStyleType: 'none',
+    whiteSpace: 'nowrap',
     paddingTop: 'inc30',
     paddingLeft: 0,
     // L2
@@ -171,7 +172,7 @@ export const StylesSubLinks = {
     },
 
     ul: {
-        listStyleType: 'none' as 'none',
+        listStyleType: 'none',
         paddingLeft: 'inc40',
         paddingTop: 'inc40',
         /* L4 */

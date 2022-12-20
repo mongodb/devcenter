@@ -5,9 +5,7 @@ export const getMetaInfoForTopic = async (
     topicSlug: string,
     allMetaInfoResponse?: MetaInfo[]
 ) => {
-    let allMetaInfo = allMetaInfoResponse
-        ? allMetaInfoResponse
-        : allMetaInfoPreval;
+    const allMetaInfo = allMetaInfoResponse ?? allMetaInfoPreval;
     const metaInfoForTopicName = allMetaInfo.filter(m => m.slug == topicSlug);
     return metaInfoForTopicName.length > 0 ? metaInfoForTopicName[0] : null;
 };

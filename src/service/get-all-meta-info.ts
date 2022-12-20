@@ -12,7 +12,6 @@ import { CTA } from '../components/hero/types';
 import { ITopicCard } from '../components/topic-card/types';
 import { getDistinctTags } from './get-distinct-tags';
 import { TagType } from '../types/tag-type';
-import { DOCS_UNIVERSAL_LINK } from '../data/constants';
 
 export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
     const existingTags = await getDistinctTags();
@@ -98,7 +97,7 @@ const getMetaInfo = (m: MetaInfoResponse): MetaInfo => {
         tagName: m.name,
         description: m.description ? m.description : '',
         slug: m.slug,
-        ctas: getCTAs(m.primary_cta, m.secondary_cta),
+        ctas: getCTAs(m.primary_cta),
         topics: [],
         documentationLink: m.documentation_link || '',
     };
@@ -124,37 +123,12 @@ const getL2Topics = (l1Item: MetaInfoResponse, l2: MetaInfoResponse[]) => {
     return topics;
 };
 
-const getCTAs = (
-    primary_cta: string | undefined,
-    secondary_cta: string | undefined
-): CTA[] => {
-    // if (primary_cta && secondary_cta) {
-    //     return [
-    //         {
-    //             text: 'Download Now',
-    //             url: primary_cta,
-    //         },
-    //         {
-    //             text: 'Secondary CTA',
-    //             url: secondary_cta,
-    //         },
-    //     ];
-    // }
-    if (primary_cta) {
-        return [
-            {
-                text: 'Learn More',
-                url: primary_cta,
-            },
-        ];
-    }
-    // if (secondary_cta) {
-    //     return [
-    //         {
-    //             text: 'Secondary CTA',
-    //             url: secondary_cta,
-    //         },
-    //     ];
-    // }
-    return [];
-};
+const getCTAs = (primary_cta: string | undefined): CTA[] =>
+    primary_cta
+        ? [
+              {
+                  text: 'Learn More',
+                  url: primary_cta,
+              },
+          ]
+        : [];
