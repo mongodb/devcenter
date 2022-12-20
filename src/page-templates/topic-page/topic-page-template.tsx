@@ -211,7 +211,10 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                                 />
                             )}
                             {variant !== 'light' && featured.length > 0 && (
-                                <FeaturedCardSection content={featured} />
+                                <FeaturedCardSection
+                                    content={featured}
+                                    featuredCardType="large"
+                                />
                             )}
                             {variant === 'heavy' &&
                                 sortedContentRows.map(contentRow => {
