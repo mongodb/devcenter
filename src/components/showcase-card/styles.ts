@@ -1,8 +1,9 @@
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
 
-export const showcaseCardWrapper = {
+export const showcaseCardWrapper: ThemeUICSSObject = {
     display: 'flex',
-    flexDirection: 'column' as 'column',
+    flexDirection: 'column',
     boxShadow: 'level01',
     borderRadius: ['inc50', null, null, null, 'inc70'],
     borderStyle: 'solid',
@@ -19,5 +20,5 @@ export const showcaseCardWrapper = {
         borderColor: theme.colors.card.default.borderDarker,
         boxShadow: 'level03',
     },
-    position: 'relative' as 'relative',
+    position: 'relative',
 };

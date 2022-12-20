@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import Desktop from './desktop';
-import { Tag } from '../../interfaces/tag';
 
 jest.mock('next-auth/react', () => {
     const nextAuthModule = jest.requireActual('next-auth/react');
@@ -14,12 +13,6 @@ jest.mock('next-auth/react', () => {
         }),
     };
 });
-
-const tags: Tag[] = [
-    { name: 'Python', type: 'ProgrammingLanguage', slug: '/languages/python/' },
-    { name: 'Atlas', type: 'L1Product', slug: '/products/atlas/' },
-    { name: 'Article', type: 'ContentType', slug: '/articles/' },
-];
 
 test('renders active path', () => {
     render(<Desktop activePath="/articles/" />);

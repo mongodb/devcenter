@@ -71,7 +71,7 @@ const ContentRating: React.FunctionComponent<ContentRatingProps> = ({
                                     src="/developer/rating-star.svg"
                                     width={iconHeight}
                                     height={iconHeight}
-                                ></Image>
+                                />
                             </div>
                         )}
                     </div>

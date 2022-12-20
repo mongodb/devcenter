@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { ThemeUICSSObject } from 'theme-ui';
 import { CodeSnippet } from '@mdb/flora';
+
 import { getFloraLanguage } from '../../../utils/get-flora-language';
 import {
     getCodeHeight,
@@ -15,7 +17,8 @@ export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
     // This seems to be a CodeMirror issue, but is especially apparent here without line wrapping.
     // Basically this will force the component to rerender after 1 second, which allows it to recalculate the line length.
     // https://github.com/codemirror/codemirror5/issues/5639 describes a similar issue.
-    const [_, setReady] = useState(false);
+
+    const [, setReady] = useState(false);
     useEffect(() => {
         setTimeout(() => {
             setReady(true);
@@ -24,8 +27,8 @@ export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
 
     // Need this because Safari/mobile browsers don't normally render the border radius on scroll containers without this.
     // https://stackoverflow.com/a/58283449
-    const styling = {
-        '.CodeMirror-simplescroll': { isolation: 'isolate' as 'isolate' },
+    const styling: ThemeUICSSObject = {
+        '.CodeMirror-simplescroll': { isolation: 'isolate' },
     };
     return (
         <div sx={styling}>

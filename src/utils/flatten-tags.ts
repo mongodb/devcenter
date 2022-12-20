@@ -1,27 +1,5 @@
-import { PrimaryTag } from '../interfaces/primary-tag';
 import { OtherTags } from '../interfaces/other-tags';
 import { Tag } from '../interfaces/tag';
-
-const parsePrimaryTag = (primaryTag: PrimaryTag) => {
-    const tags: Tag[] = [];
-    const l1Product = primaryTag.l1Product;
-    const programmingLanguage = primaryTag.programmingLanguage;
-    if (l1Product) {
-        tags.push({
-            name: l1Product.name,
-            slug: l1Product.calculatedSlug,
-            type: 'L1Product',
-        });
-    }
-    if (programmingLanguage) {
-        tags.push({
-            name: programmingLanguage.name,
-            slug: programmingLanguage.calculatedSlug,
-            type: 'ProgrammingLanguage',
-        });
-    }
-    return tags;
-};
 
 const parseOtherTags = (otherTags: OtherTags) => {
     const tags: Tag[] = [];
@@ -100,7 +78,7 @@ const parseOtherTags = (otherTags: OtherTags) => {
 };
 
 const removeDuplicates = (inArray: Tag[]) => {
-    let arr = inArray.concat(); // create a clone from inArray so not to change input array
+    const arr = inArray.concat(); // create a clone from inArray so not to change input array
     //create the first cycle of the loop starting from element 0 or n
     for (let i = 0; i < arr.length; ++i) {
         //create the second cycle of the loop from element n+1

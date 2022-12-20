@@ -38,7 +38,7 @@ test('renders mobile filters', () => {
             ]}
             closeModal={() => closeCounter++}
             sortBy=""
-            onSort={() => {}}
+            onSort={() => null}
         />
     );
 

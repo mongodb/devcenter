@@ -1,5 +1,3 @@
-import { ImageLoaderProps } from 'next/dist/client/image';
-
 import { CardProps, CardVariant } from './types';
 import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';

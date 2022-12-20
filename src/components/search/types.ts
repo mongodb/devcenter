@@ -16,25 +16,6 @@ interface SearchAuthor {
     calculated_slug: string;
 }
 
-export interface SearchProps {
-    titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
-    className?: string;
-    tagSlug?: string;
-    title: string;
-    contentType?: string;
-    filters?: string[];
-    resultsLayout?: 'list' | 'grid';
-    titleLink?: {
-        text: string;
-        href: string;
-    };
-    placeholder: string;
-    pageNumber: number; // current page number
-    pageSlug?: string[];
-    setSeoAttributes: (pageNumber: number) => void;
-    initialSearchContent?: SearchItem[]; // search content received from initial render
-}
-
 export interface SearchBoxProps {
     placeholder?: string;
     searchString?: string;

@@ -2,7 +2,7 @@ import React from 'react';
 import { TypographyScale, VerticalSectionSpacing } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { ComponentFactory } from '../component-factory';
-import { ThemeUIStyleObject } from 'theme-ui';
+import { ThemeUICSSObject } from 'theme-ui';
 import { ArticleNode } from '../../../interfaces/article-body-node';
 
 import { Pin, MenuBoxed, Alert } from '../../icons';
@@ -23,7 +23,7 @@ const baseCardStyles = {
     borderLeftWidth: '3px',
 };
 
-const iconStyles = (cardColor: string): ThemeUIStyleObject => ({
+const iconStyles = (cardColor: string): ThemeUICSSObject => ({
     position: 'relative',
     top: [
         `calc(${theme.sizes.inc20} / 2)`,

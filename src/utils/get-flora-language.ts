@@ -39,7 +39,7 @@ const SUPPORTED_LANGUAGES: languageOptions = {
 };
 
 export const getFloraLanguage = (inputLang: string): LanguageModeType => {
-    let language = !!inputLang ? inputLang.toLowerCase() : 'none';
+    const language = inputLang ? inputLang.toLowerCase() : 'none';
     if (Object.keys(SUPPORTED_LANGUAGES).includes(language)) {
         return SUPPORTED_LANGUAGES[language];
     } else {

@@ -1,4 +1,4 @@
-import { TypographyScale, Button, Link } from '@mdb/flora';
+import { TypographyScale, Button } from '@mdb/flora';
 
 import { modalWrapperStyles } from '../styles';
 

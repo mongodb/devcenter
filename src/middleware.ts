@@ -101,7 +101,7 @@ export default withAuth(middleware, {
         signIn: '/auth/signin',
     },
     callbacks: {
-        authorized: ({ token }) => {
+        authorized: () => {
             return true;
         },
     },

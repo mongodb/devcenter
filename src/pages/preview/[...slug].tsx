@@ -1,18 +1,10 @@
-import type {
-    GetServerSidePropsContext,
-    GetStaticProps,
-    GetStaticPropsContext,
-    NextPage,
-} from 'next';
-import { ParsedUrlQuery } from 'querystring';
+import type { NextPage } from 'next';
 import React from 'react';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import ContentPageTemplate from '../../page-templates/content-page/content-page-template';
 import { getPreviewContent } from '../../service/get-preview-content';
-
-let pluralize = require('pluralize');
 
 interface ContentPageProps {
     crumbs: Crumb[];

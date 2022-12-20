@@ -1,7 +1,8 @@
+import { ThemeUICSSObject } from 'theme-ui';
 import { layers } from '../../../styled/layout';
 
-export const filtersModal = {
-    position: 'fixed' as 'fixed',
+export const filtersModal: ThemeUICSSObject = {
+    position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
@@ -11,7 +12,7 @@ export const filtersModal = {
     bg: 'black00',
     overflow: 'scroll',
     display: 'flex',
-    flexDirection: 'column' as 'column',
+    flexDirection: 'column',
 };
 
 export const titleSection = {
@@ -21,12 +22,12 @@ export const titleSection = {
     alignItems: 'center',
 };
 
-export const buttonSection = {
+export const buttonSection: ThemeUICSSObject = {
     display: 'flex',
     gap: 'inc20',
     boxShadow: 'level02',
     width: '100%',
-    position: 'fixed' as 'fixed',
+    position: 'fixed',
     bottom: 0,
     left: 0,
     justifyContent: 'center',

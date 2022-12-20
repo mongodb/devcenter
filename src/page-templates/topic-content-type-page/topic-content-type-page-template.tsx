@@ -41,9 +41,10 @@ import {
 } from '../../utils/page-template-helpers';
 import { useRequestContentModal } from '../../contexts/request-content-modal';
 
-let pluralize = require('pluralize');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pluralize = require('pluralize');
 
-export interface TopicContentTypePageProps {
+interface TopicContentTypePageProps {
     crumbs: Crumb[];
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
@@ -140,9 +141,7 @@ const ExtraCodeExampleCheckboxes = ({
     );
 };
 
-export const TopicContentTypePageTemplate: NextPage<
-    TopicContentTypePageProps
-> = ({
+const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
     crumbs,
     contentType,
     tertiaryNavItems,

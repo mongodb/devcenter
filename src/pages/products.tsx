@@ -1,23 +1,24 @@
+import { Grid } from 'theme-ui';
+import Link from 'next/link';
 import { NextPage, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
-import Hero from '../components/hero';
-import { Crumb } from '../components/breadcrumbs/types';
 import {
     TypographyScale,
     FlashCard,
     GridLayout,
-    ImageryType,
-    CTAType,
     SystemIcon,
     ESystemIconNames,
 } from '@mdb/flora';
-import { Grid } from 'theme-ui';
 
-import Link from 'next/link';
+import Hero from '../components/hero';
+import { Crumb } from '../components/breadcrumbs/types';
+
+import { getURLPath } from '../utils/format-url-path';
 import { productToLogo } from '../utils/product-to-logo';
+
 import { getAllMetaInfo } from '../service/get-all-meta-info';
 import { MetaInfo } from '../interfaces/meta-info';
-import { getURLPath } from '../utils/format-url-path';
+
 import { h4Styles, h5Styles } from '../styled/layout';
 
 const crumbs: Crumb[] = [
@@ -25,31 +26,6 @@ const crumbs: Crumb[] = [
     { text: 'Developer Topics', url: '/developer/topics' },
 ];
 
-const featuredConfig = (prod: L1Product) => {
-    const iconName = productToLogo[prod.tagName];
-    return {
-        iconConfig: {
-            name: iconName,
-        },
-        cta: {
-            type: 'link-arrow' as CTAType,
-            text: 'Explore Content',
-            config: {
-                href: getURLPath(prod.slug),
-                linkIconDisableExpand: true, // Doesn't seem to work
-            },
-        },
-        flashCard: true,
-        imageryType: (iconName ? 'icon' : 'none') as ImageryType,
-        title: prod.tagName,
-        text: prod.description,
-    };
-};
-
-const flashCardStyles = {
-    div: { minHeight: 'unset' },
-    py: 'inc60',
-};
 interface L1Product {
     tagName: string;
     slug: string;
@@ -65,6 +41,7 @@ interface L1LinkProps {
     name: string;
     slug: string;
 }
+
 const L1Link: React.FunctionComponent<L1LinkProps> = ({ name, slug }) => (
     <Link href={slug} passHref key={slug}>
         <a
@@ -107,31 +84,24 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                 <Grid columns={[1, null, 2, 4]} gap="inc70">
                     {l2s.map(l2 => {
                         const iconName = productToLogo[l2.tagName];
-                        const flashCardProps = {
-                            iconConfig: {
-                                name: iconName,
-                            },
-                            cta: {
-                                type: 'link-arrow' as CTAType,
-                                text: 'Learn More',
-                                config: {
-                                    href: getURLPath(l2.slug),
-                                    linkIconDisableExpand: true, // Doesn't seem to work
-                                },
-                            },
-                            flashCard: true,
-                            imageryType: (iconName
-                                ? 'icon'
-                                : 'none') as ImageryType,
-                            title: l2.tagName,
-                            text: l2.description,
-                            background: false,
-                            alignment: 'left' as 'left',
-                        };
                         return (
                             <FlashCard
+                                flashCard
                                 key={l2.slug}
-                                {...flashCardProps}
+                                alignment="left"
+                                background={false}
+                                title={l2.tagName}
+                                text={l2.description}
+                                iconConfig={{ name: iconName }}
+                                imageryType={iconName ? 'icon' : 'none'}
+                                cta={{
+                                    type: 'link-arrow',
+                                    text: 'Learn More',
+                                    config: {
+                                        href: getURLPath(l2.slug),
+                                        linkIconDisableExpand: true, // Doesn't seem to work
+                                    },
+                                }}
                                 sx={{
                                     div: { minHeight: 'unset' },
                                     padding: 0,
@@ -146,6 +116,7 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
         </div>
     );
 };
+
 const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
     <>
         <NextSeo title={'All Products | MongoDB'} />
@@ -174,13 +145,31 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                         columns={[1, null, 2, 4]}
                         gap={['inc50', null, null, 'inc40']}
                     >
-                        {featured.map(prod => (
-                            <FlashCard
-                                key={prod.slug}
-                                sx={flashCardStyles}
-                                {...featuredConfig(prod)}
-                            />
-                        ))}
+                        {featured.map(prod => {
+                            const iconName = productToLogo[prod.tagName];
+                            return (
+                                <FlashCard
+                                    flashCard
+                                    key={prod.slug}
+                                    title={prod.tagName}
+                                    text={prod.description}
+                                    iconConfig={{ name: iconName }}
+                                    imageryType={iconName ? 'icon' : 'none'}
+                                    cta={{
+                                        type: 'link-arrow',
+                                        text: 'Explore Content',
+                                        config: {
+                                            href: getURLPath(prod.slug),
+                                            linkIconDisableExpand: true, // Doesn't seem to work
+                                        },
+                                    }}
+                                    sx={{
+                                        div: { minHeight: 'unset' },
+                                        py: 'inc60',
+                                    }}
+                                />
+                            );
+                        })}
                     </Grid>
                 </div>
                 <div sx={{ gridColumn: ['span 6', null, 'span 8', 'span 12'] }}>

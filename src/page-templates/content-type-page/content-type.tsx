@@ -30,14 +30,8 @@ import { isEmptyArray } from '../../hooks/search/utils';
 import { getRequestBtnText } from '../../utils/page-template-helpers';
 import { useRequestContentModal } from '../../contexts/request-content-modal';
 
-let pluralize = require('pluralize');
-
-const heroCrumbs = [
-    {
-        text: 'MongoDB Developer Center',
-        url: '/',
-    },
-];
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pluralize = require('pluralize');
 
 // Debug for DEVHUB-1501 which is not yet replicable.
 // If data is empty, capture an exception for Sentry.
@@ -136,7 +130,12 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                 title={pageTitle}
             />
             <Hero
-                crumbs={heroCrumbs}
+                crumbs={[
+                    {
+                        text: 'MongoDB Developer Center',
+                        url: '/',
+                    },
+                ]}
                 name={pluralize(contentType)}
                 description={description}
                 ctas={heroCTAs}

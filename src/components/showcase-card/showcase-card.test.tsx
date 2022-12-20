@@ -9,6 +9,7 @@ test('renders showcase card', () => {
             titleLink={{ text: 'Atlas', url: '/products/atlas/' }}
             alignment="left"
             description="Some description"
+            // eslint-disable-next-line @next/next/no-img-element
             image={<img alt="some alt" src="https://www.example.com" />}
             cta={{ text: 'Some CTA', url: 'https://www.mongodb.com' }}
             links={[

@@ -6,7 +6,7 @@ import { Series } from '../interfaces/series';
 import { flattenTags } from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
-import { PillCategory, PillCategoryValues } from '../types/pill-category';
+import { PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
 import { CommunityEvent } from '../interfaces/community-event';
 

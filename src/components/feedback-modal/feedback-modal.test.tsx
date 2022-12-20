@@ -5,9 +5,10 @@ import FeedbackModal from '.';
 import { PillCategory } from '../../types/pill-category';
 
 const feedbackProps = {
-    setModalStage: () => {},
+    setModalStage: () => null,
     contentCategory: 'Demo App' as PillCategory,
     slug: 'product/atlas/d1',
+    feedbackId: 'id-1',
 };
 
 test('renders bad review checkbox modal', () => {
