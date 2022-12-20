@@ -14,7 +14,12 @@ import { h5Styles } from '../../styled/layout';
 
 const FeaturedCardSection: React.FunctionComponent<
     FeaturedCardSectionProps
-> = ({ content, className, title = 'Featured', featuredCardType }) => {
+> = ({
+    content,
+    className,
+    title = 'Featured',
+    featuredCardType = 'large',
+}) => {
     if (content.length < 3) {
         return null;
     }
