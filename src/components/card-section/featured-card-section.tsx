@@ -14,10 +14,24 @@ import { h5Styles } from '../../styled/layout';
 
 const FeaturedCardSection: React.FunctionComponent<
     FeaturedCardSectionProps
-> = ({ content, className, title = 'Featured' }) => {
+> = ({
+    content,
+    className,
+    title = 'Featured',
+    featuredCardType = 'large',
+}) => {
     if (content.length < 3) {
         return null;
     }
+    const cardStyle =
+        featuredCardType === 'middle'
+            ? smallFeaturedCardStyles
+            : bigFeaturedCardStyles;
+    const cardSize =
+        featuredCardType === 'middle'
+            ? getCardProps(content[0], 'small')
+            : getCardProps(content[0], 'large');
+
     return (
         <div
             data-testid="featured-card-section"
@@ -32,11 +46,7 @@ const FeaturedCardSection: React.FunctionComponent<
                 </TypographyScale>
             </div>
             <Grid columns={6} sx={featuredCardSectionListStyles}>
-                <Card
-                    sx={bigFeaturedCardStyles}
-                    key={content[0].slug}
-                    {...getCardProps(content[0], 'large')}
-                />
+                <Card sx={cardStyle} key={content[0].slug} {...cardSize} />
                 <Card
                     sx={smallFeaturedCardStyles}
                     key={content[1].slug}
