@@ -13,7 +13,7 @@ export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
     // https://github.com/codemirror/codemirror5/issues/5639 describes a similar issue.
 
     // We're utilizing the Intersection Observer API (https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
-    // to force the component to rerender when the Code Block elemtn comes into the viewport.
+    // to force the component to rerender when the Code Block element comes into the viewport.
 
     const [, forceUpdate] = useReducer(x => x + 1, 0); // https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate
     const wrapper = useRef<HTMLDivElement>(null);
@@ -23,7 +23,7 @@ export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
             entries: IntersectionObserverEntry[],
             observer: IntersectionObserver
         ) => {
-            // When this gets called with the element intersecting the vieport, we rerender and disconnect the observer.
+            // When this gets called with the element intersecting the viewport, we rerender and disconnect the observer.
             // We are only ever registering 1 element to the observer, so we can disconnnect whenever this gets called with an entry.
             if (entries.length && entries[0].isIntersecting) {
                 forceUpdate();
