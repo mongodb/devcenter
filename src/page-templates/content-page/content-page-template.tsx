@@ -38,7 +38,6 @@ import { VideoEmbed } from '../../components/article-body/body-components/video-
 // context
 import { useRequestContentModal } from '../../contexts/request-content-modal';
 // types
-import { CodeLevel } from '../../types/tag-type';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { IRating } from '../../components/feedback-modal/types';

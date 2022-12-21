@@ -9,6 +9,7 @@ import { setPrimaryTag } from './set-primary-tag';
 import { PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
 import { CommunityEvent, IndustryEvent } from '../interfaces/community-event';
+import { Tag } from '../interfaces/tag';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -116,6 +117,12 @@ export const mapEventsToContentItems = (
     allCommunityEvents: CommunityEvent[],
     allIndustryEvents: IndustryEvent[]
 ) => {
+    const eventContentTypeTag = {
+        name: 'Event',
+        slug: '/events',
+        type: 'ContentType',
+    } as Tag;
+
     const mappedCommunityEvents = allCommunityEvents.map(
         (event: CommunityEvent) => ({
             collectionType: 'Event',
@@ -126,7 +133,7 @@ export const mapEventsToContentItems = (
             contentDate: [event.start_time, event.end_time],
             description: event.description,
             slug: event.slug,
-            tags: event.tags,
+            tags: event.tags.concat(eventContentTypeTag),
             title: event.title,
             // TODO to be added to content type
             // eventSetup: event.event_setup,
@@ -145,7 +152,7 @@ export const mapEventsToContentItems = (
             contentDate: [event.start_time, event.end_time],
             description: event.description,
             slug: event.slug,
-            tags: flattenTags([event.otherTags]),
+            tags: flattenTags([event.otherTags]).concat(eventContentTypeTag),
             title: event.title,
             location: event.location,
         })

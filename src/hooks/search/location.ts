@@ -18,8 +18,6 @@ const DEFAULT_OPTIONS = [
     { icon: ESystemIconNames.ARROW_DOWN, label: 'Virtual' },
 ];
 
-type SelectionItem = { description: string };
-
 const useLocationSearch = (callback: () => void) => {
     const [locationQuery, setLocationQuery] = useState('');
     const [locationSelection, setLocationSelection] = useState<any>();

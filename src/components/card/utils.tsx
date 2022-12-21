@@ -47,6 +47,7 @@ export const getCardProps = (
     {
         authors,
         category,
+        subCategory,
         contentDate,
         updateDate,
         description,
@@ -69,7 +70,8 @@ export const getCardProps = (
         displayDate: parseContentDate(contentDate, updateDate),
         description,
         title,
-        pillCategory: category,
+        contentType: category,
+        pillCategory: subCategory || category,
         tags,
         thumbnail: image,
         variant,

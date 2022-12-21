@@ -14,7 +14,6 @@ import {
     linkWrapperStyles,
 } from './styles';
 import { getURLPath } from '../../utils/format-url-path';
-import { copySelection } from '@testing-library/user-event/dist/types/utils';
 
 const isNewsAndArticle = (title: string) => {
     return title.toLowerCase() === 'News & Announcements'.toLowerCase();

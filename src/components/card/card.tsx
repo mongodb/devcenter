@@ -22,7 +22,6 @@ import {
 import TagSection from '../tag-section';
 import { CardProps, CardVariant } from './types';
 import parse from 'html-react-parser';
-import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 import { getURLPath } from '../../utils/format-url-path';
 import { h5Styles, h6Styles } from '../../styled/layout';
@@ -31,7 +30,7 @@ import { PillCategory } from '../../types/pill-category';
 
 const CardThumbnail = ({
     thumbnail: { url = '', alt = '', city = '' } = {},
-    pillCategory,
+    contentType,
     variant,
 }: {
     thumbnail?: {
@@ -39,7 +38,7 @@ const CardThumbnail = ({
         alt?: string;
         city?: string;
     };
-    pillCategory: PillCategory;
+    contentType: PillCategory;
     variant: CardVariant;
 }) => {
     const playButtonUrl = getURLPath('/play-button.svg', false) as string;
@@ -84,9 +83,9 @@ const CardThumbnail = ({
         ),
     } as { [category: string]: JSX.Element };
 
-    return hasThumbnail(variant, pillCategory) ? (
-        <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
-            {customThumbnails[pillCategory] || defaultThumbnail}
+    return hasThumbnail(variant, contentType) ? (
+        <div sx={thumbnailWrapperStyles(variant, contentType)}>
+            {customThumbnails[contentType] || defaultThumbnail}
         </div>
     ) : null;
 };
@@ -97,7 +96,8 @@ const Card: React.FunctionComponent<CardProps> = ({
     className,
     description,
     title,
-    pillCategory,
+    contentType,
+    pillCategory = contentType,
     tags,
     thumbnail,
     variant,
@@ -127,16 +127,16 @@ const Card: React.FunctionComponent<CardProps> = ({
                 }}
                 aria-label={title}
             />
-            <div sx={cardHeaderStyles(variant, pillCategory)}>
+            <div sx={cardHeaderStyles(variant, contentType)}>
                 <CardThumbnail
                     thumbnail={thumbnail}
-                    pillCategory={pillCategory}
+                    contentType={contentType}
                     variant={variant}
                 />
 
                 <div>
                     <Pill
-                        sx={pillStyles(pillCategory)}
+                        sx={pillStyles(contentType)}
                         variant="identifier"
                         text={pillCategory}
                         size="small"
@@ -159,10 +159,10 @@ const Card: React.FunctionComponent<CardProps> = ({
                     >
                         {title}
                     </TypographyScale>
-                    {hasDescription(variant, pillCategory) && (
+                    {hasDescription(variant, contentType) && (
                         <TypographyScale
                             variant="body2"
-                            sx={descriptionStyles(variant, pillCategory)}
+                            sx={descriptionStyles(variant, contentType)}
                         >
                             <Truncate lines={4} ellipsis={<span>...</span>}>
                                 {truncatedDescription}
@@ -196,7 +196,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                     </TypographyScale>
                     {authors &&
                         !!authors.length &&
-                        hasAuthorLockup(variant, pillCategory) && (
+                        hasAuthorLockup(variant, contentType) && (
                             <AuthorLockup
                                 sx={{
                                     display: ['none', null, 'flex'],

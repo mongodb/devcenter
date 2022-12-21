@@ -13,5 +13,5 @@ export interface FeaturedCardSectionProps {
     content: ContentItem[];
     title?: string;
     className?: string;
-    featuredCardType: 'middle' | 'large';
+    featuredCardType?: 'middle' | 'large';
 }

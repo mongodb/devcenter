@@ -1,38 +1,25 @@
+// 20221220173740
+// https://us-east-1.aws.data.mongodb-api.com/app/devhub-search-service-stage-rqnmi/endpoint/search_devcenter?s=&contentType=Event&sortMode=0
+
 [
     {
-        "date": "",
-        "image": {
-            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/Database_Charts_2x_bf4ff7dd5b_c3963ff3ca.webp",
-            "alternativeText": "data evolution"
+        "date": "2023-02-20T23:30:00+00:00",
+        "type": "Event",
+        "location": "North America",
+        "event_setup": "InPerson",
+        "description": "",
+        "start_time": "2023-02-20T23:30:00+00:00",
+        "authors": [],
+        "coordinates": {
+            "lat": 54.5259614,
+            "lng": -105.2551187
         },
         "rating_metrics": {
             "average": null,
             "median": null,
             "count": 0
         },
-        "event_setup": "Virtual",
-        "name": "Event 101",
-        "end_time": "2022-12-21T17:00:00.000Z",
-        "authors": [],
-        "description": "some event description",
-        "type": "Event",
-        "tags": [
-            {
-                "name": "Industry Event",
-                "type": "eventType",
-                "slug": "/events"
-            }
-        ],
-        "start_time": "2022-12-21T17:00:00.000Z",
-        "score": {},
-        "slug": "/events/event-101"
-    },
-    {
         "name": "Confoo",
-        "end_time": "2023-02-20T23:30:00+00:00",
-        "location": "North America",
-        "event_setup": "InPerson",
-        "description": "",
         "tags": [
             {
                 "name": "Serverless",
@@ -41,34 +28,24 @@
             },
             {
                 "name": "User Group Meetup",
-                "type": "eventType",
+                "type": "EventType",
+                "slug": "/events"
+            },
+            {
+                "name": "InPerson",
+                "type": "EventAttendance",
                 "slug": "/events"
             }
         ],
-        "start_time": "2023-02-20T23:30:00+00:00",
-        "authors": [],
-        "date": "",
-        "type": "Event",
-        "coordinates": {
-            "lat": 54.5259614,
-            "lng": -105.2551187
-        },
-        "rating_metrics": {
-            "count": 0,
-            "average": null,
-            "median": null
-        },
+        "end_time": "2023-02-20T23:30:00+00:00",
         "score": {},
         "slug": "https://www.mongodb.com/community/forums/t/197763"
     },
     {
-        "description": "",
-        "start_time": "2023-02-13T23:30:00+00:00",
-        "end_time": "2023-02-13T23:30:00+00:00",
-        "date": "",
-        "location": "London,United Kingdom",
+        "authors": [],
+        "date": "2023-02-13T23:30:00+00:00",
+        "type": "Event",
         "event_setup": "InPerson",
-        "name": "PHP UK",
         "tags": [
             {
                 "name": "PHP",
@@ -77,109 +54,185 @@
             },
             {
                 "name": "User Group Meetup",
-                "type": "eventType",
+                "type": "EventType",
+                "slug": "/events"
+            },
+            {
+                "name": "InPerson",
+                "type": "EventAttendance",
                 "slug": "/events"
             }
         ],
-        "authors": [],
-        "type": "Event",
-        "coordinates": {
-            "lat": 51.5072178,
-            "lng": -0.1275862
-        },
+        "start_time": "2023-02-13T23:30:00+00:00",
+        "end_time": "2023-02-13T23:30:00+00:00",
+        "location": "London,United Kingdom",
         "rating_metrics": {
             "average": null,
             "median": null,
             "count": 0
+        },
+        "name": "PHP UK",
+        "description": "",
+        "coordinates": {
+            "lat": 51.5072178,
+            "lng": -0.1275862
         },
         "score": {},
         "slug": "https://www.mongodb.com/community/forums/t/197766"
     },
     {
-        "start_time": "2023-01-15T23:30:00+00:00",
-        "end_time": "2023-01-15T23:30:00+00:00",
-        "date": "",
-        "type": "Event",
-        "coordinates": {
-            "lat": 54.5259614,
-            "lng": -105.2551187
-        },
+        "description": "",
         "authors": [],
         "location": "North America",
+        "coordinates": {
+            "lng": -105.2551187,
+            "lat": 54.5259614
+        },
+        "event_setup": "InPerson",
+        "tags": [
+            {
+                "name": "User Group Meetup",
+                "type": "EventType",
+                "slug": "/events"
+            },
+            {
+                "name": "InPerson",
+                "type": "EventAttendance",
+                "slug": "/events"
+            }
+        ],
+        "start_time": "2023-01-15T23:30:00+00:00",
+        "end_time": "2023-01-15T23:30:00+00:00",
+        "date": "2023-01-15T23:30:00+00:00",
+        "type": "Event",
         "rating_metrics": {
             "average": null,
             "median": null,
             "count": 0
         },
-        "event_setup": "InPerson",
         "name": "THAT Conference TX",
-        "description": "",
-        "tags": [
-            {
-                "name": "User Group Meetup",
-                "type": "eventType",
-                "slug": "/events"
-            }
-        ],
         "score": {},
         "slug": "https://www.mongodb.com/community/forums/t/197761"
     },
     {
-        "location": "North America",
-        "name": "CodeMash",
-        "description": "",
         "tags": [
             {
                 "name": "User Group Meetup",
-                "type": "eventType",
+                "type": "EventType",
+                "slug": "/events"
+            },
+            {
+                "name": "InPerson",
+                "type": "EventAttendance",
                 "slug": "/events"
             }
         ],
-        "start_time": "2023-01-10T23:00:00+00:00",
         "end_time": "2023-01-10T23:00:00+00:00",
-        "date": "",
-        "event_setup": "InPerson",
         "authors": [],
-        "type": "Event",
+        "date": "2023-01-10T23:00:00+00:00",
         "coordinates": {
             "lat": 54.5259614,
             "lng": -105.2551187
         },
         "rating_metrics": {
-            "count": 0,
             "average": null,
-            "median": null
+            "median": null,
+            "count": 0
         },
+        "location": "North America",
+        "event_setup": "InPerson",
+        "name": "CodeMash",
+        "description": "",
+        "start_time": "2023-01-10T23:00:00+00:00",
+        "type": "Event",
         "score": {},
         "slug": "https://www.mongodb.com/community/forums/t/197757"
     },
     {
-        "date": "",
+        "event_setup": "InPerson",
+        "description": "",
+        "end_time": "2022-12-16T23:00:00+00:00",
+        "date": "2022-12-16T23:00:00+00:00",
+        "location": "Bengaluru,India",
         "coordinates": {
             "lat": 12.9715987,
             "lng": 77.5945627
         },
-        "start_time": "2022-12-16T23:00:00+00:00",
-        "end_time": "2022-12-16T23:00:00+00:00",
-        "authors": [],
-        "type": "Event",
-        "event_setup": "InPerson",
-        "name": "Bengaluru MUG - Build Applications Faster and Better with MongoDB and OutSystems!",
-        "description": "",
-        "tags": [
-            {
-                "name": "User Group Meetup",
-                "type": "eventType",
-                "slug": "/events"
-            }
-        ],
-        "location": "Bengaluru,India",
         "rating_metrics": {
             "average": null,
             "median": null,
             "count": 0
         },
+        "name": "Bengaluru MUG - Build Applications Faster and Better with MongoDB and OutSystems!",
+        "tags": [
+            {
+                "name": "User Group Meetup",
+                "type": "EventType",
+                "slug": "/events"
+            },
+            {
+                "name": "InPerson",
+                "type": "EventAttendance",
+                "slug": "/events"
+            }
+        ],
+        "start_time": "2022-12-16T23:00:00+00:00",
+        "authors": [],
+        "type": "Event",
         "score": {},
         "slug": "https://www.mongodb.com/community/forums/t/202303"
+    },
+    {
+        "end_time": "2023-01-18T17:00:00.000Z",
+        "type": "Event",
+        "coordinates": {
+            "lat": 40.7620791,
+            "lng": -73.98460990000001
+        },
+        "event_setup": "InPerson",
+        "start_time": "2022-12-13T17:00:00.000Z",
+        "location": "1633 Broadway 38th floor, New York, NY 10019",
+        "rating_metrics": {
+            "average": null,
+            "median": null,
+            "count": 0
+        },
+        "name": "Event 102",
+        "description": "Lorem lpsum Dolor Sit Amet",
+        "tags": [
+            {
+                "name": "Android",
+                "type": "Technology",
+                "slug": "/technologies/android"
+            },
+            {
+                "name": "JavaScript",
+                "type": "ProgrammingLanguage",
+                "slug": "/languages/javascript"
+            },
+            {
+                "name": "Atlas",
+                "type": "L1Product",
+                "slug": "/products/atlas"
+            },
+            {
+                "name": "Industry Event",
+                "type": "EventType",
+                "slug": "/events"
+            },
+            {
+                "name": "InPerson",
+                "type": "EventAttendance",
+                "slug": "/events"
+            }
+        ],
+        "authors": [],
+        "date": "2022-12-13T17:00:00.000Z",
+        "image": {
+            "url": "https://mongodb-devhub-cms.s3.us-west-1.amazonaws.com/v3ks_Sg_N3_Wr5_YK_6z8_Rr_Tx_Ciqf_0eb1f9d9cc.png",
+            "alternativeText": ""
+        },
+        "score": {},
+        "slug": "/events/event-102"
     }
 ]

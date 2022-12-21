@@ -32,7 +32,6 @@ export const searchItemToContentItem = ({
     end_time,
     tags,
     location,
-    event_setup,
     coordinates,
 }: SearchItem): ContentItem => {
     const itemImage: Image | undefined =
@@ -57,17 +56,13 @@ export const searchItemToContentItem = ({
         start_time && end_time ? [start_time, end_time] : date
     ) as string | [string, string];
 
-    if (event_setup) {
-        tags.push({
-            name: event_setup,
-            type: 'AttendanceType',
-            slug: '',
-        });
-    }
+    const subCategory = (tags?.find(tag => tag?.type === 'EventType')?.name ||
+        undefined) as PillCategory;
 
     return {
         authors: itemAuthors,
         category: type,
+        subCategory,
         contentDate,
         description,
         image: itemImage,
@@ -245,7 +240,7 @@ export const itemInFilters = (
             filter => filter.name === tag.name && filter.type === tag.type
         )
     );
-}
+};
 
 export const searchFetcher: Fetcher<ContentItem[], string> = queryString => {
     return fetch(

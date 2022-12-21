@@ -13,7 +13,7 @@ export interface ContentItem {
     collectionType?: CollectionType;
     authors?: Author[];
     category: PillCategory;
-    subCategory?: string;
+    subCategory?: PillCategory;
     contentDate: string | [string, string];
     updateDate?: string;
     description?: string;

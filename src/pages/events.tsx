@@ -9,12 +9,7 @@ import { ContentTypePageProps } from '../page-templates/content-type-page/types'
 import { getContentTypePageData } from '../page-templates/content-type-page/content-type-data';
 import { parsePageNumber } from '../utils/page-type-factory';
 import { isValidPage } from '../components/search/utils';
-import {
-    LocationBox,
-    SearchBox,
-    SearchResults,
-    SortBox,
-} from '../components/search';
+import { LocationBox, SearchBox, SearchResults } from '../components/search';
 import { searchWrapperStyles } from '../components/search/styles';
 import {
     Button,
@@ -26,12 +21,14 @@ import { h5Styles } from '../styled/layout';
 import { FilterItem, FilterTagSection } from '@mdb/devcenter-components';
 import { useCallback } from 'react';
 import { FeaturedCardSection } from '../components/card-section';
-import { PillCategory } from '../types/pill-category';
 import { SearchItem } from '../components/search/types';
 
 const extraSearchResultsStyles = (showFeatured: boolean) => ({
     order: showFeatured ? '4' : '3',
     marginBottom: 'inc30',
+    '> div': {
+        width: '100%',
+    },
 });
 const extraSearchResultsHeadingStyles = (showFeatured: boolean) => ({
     ...h5Styles,
@@ -108,7 +105,7 @@ const EventsPageComponent: React.FunctionComponent<
             ? allResults.filter((res: SearchItem) =>
                   res.tags.some(
                       tag =>
-                          tag.type === 'AttendanceType' &&
+                          tag.type === 'EventAttendance' &&
                           tag.name === 'Virtual'
                   )
               )
@@ -151,7 +148,7 @@ const EventsPageComponent: React.FunctionComponent<
             sx={{
                 ...searchWrapperStyles,
                 gap: 'normal',
-                rowGap: 'inc70',
+                rowGap: ['inc40', null, 'inc70'],
                 columnGap: 'inc40',
             }}
         >
@@ -166,12 +163,9 @@ const EventsPageComponent: React.FunctionComponent<
             {showFeatured && (
                 <div sx={{ width: '100%' }}>
                     <FeaturedCardSection
-                        content={featured.map(item => ({
-                            ...item,
-                            category: item.subCategory as PillCategory,
-                        }))}
+                        content={featured}
                         title="Featured Events"
-                        smallLayout
+                        featuredCardType="middle"
                     />
                 </div>
             )}
@@ -194,27 +188,6 @@ const EventsPageComponent: React.FunctionComponent<
                 Filter & Sort
                 {!!filters.length && ` (${filters.length})`}
             </Button>
-
-            {!!filters?.length && (
-                <div
-                    sx={{
-                        flexBasis: '100%',
-                        display: ['none', null, null, 'block'],
-                    }}
-                >
-                    <FilterTagSection
-                        allFilters={filters}
-                        onClearTag={(filterTag: FilterItem) =>
-                            onFilter(
-                                filters.filter(
-                                    (item: FilterItem) => item !== filterTag
-                                )
-                            )
-                        }
-                        onClearAll={() => onFilter([])}
-                    />
-                </div>
-            )}
 
             {showTwoCriteriaResults && (
                 <>
@@ -254,6 +227,31 @@ const EventsPageComponent: React.FunctionComponent<
                                 {oneCriteriaHeader}
                             </TypographyScale>
                         )}
+
+                        {!!filters?.length && (
+                            <div
+                                sx={{
+                                    flexBasis: '100%',
+                                    display: ['none', null, null, 'block'],
+                                    marginTop: 'inc20',
+                                    marginBottom: 'inc40',
+                                }}
+                            >
+                                <FilterTagSection
+                                    allFilters={filters}
+                                    onClearTag={(filterTag: FilterItem) =>
+                                        onFilter(
+                                            filters.filter(
+                                                (item: FilterItem) =>
+                                                    item !== filterTag
+                                            )
+                                        )
+                                    }
+                                    onClearAll={() => onFilter([])}
+                                />
+                            </div>
+                        )}
+
                         {!!results.length && (
                             <SearchResults
                                 {...resultsProps}

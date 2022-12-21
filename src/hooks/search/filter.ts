@@ -1,7 +1,6 @@
 import { FilterItem } from '@mdb/devcenter-components';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import { SortByType } from '../../components/search/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { itemInFilters } from './utils';
 
@@ -55,7 +54,7 @@ const useFilter = (
         ) => {
             const items =
                 typeof filterType === 'object' ? filterType : [filterType];
-            let filtersList: FilterItem[] = [];
+            const filtersList: FilterItem[] = [];
 
             // Gotta look for L1s and L2s that match.
             items.forEach(item => {
@@ -136,7 +135,7 @@ const useFilter = (
 
     useEffect(() => {
         if (router?.isReady) {
-            if (!!filterItems) {
+            if (filterItems) {
                 const allNewFilters = getFiltersFromQueryStr();
                 setFilters(allNewFilters);
             }

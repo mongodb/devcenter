@@ -8,8 +8,7 @@ import LanguagesSection from './sections/languages';
 import ProductsSection from './sections/products';
 import TechnologiesSection from './sections/technologies';
 import { ContentTypePageProps } from './types';
-
-let pluralize = require('pluralize');
+import pluralize from 'pluralize';
 
 interface ContentTypeBodyProps {
     allSearchProps: {
@@ -84,6 +83,7 @@ const ContentTypeBody: React.FunctionComponent<
                             marginBottom: ['section20', null, 'section50'],
                         }}
                         title={`Featured ${pluralize(contentType)}`}
+                        featuredCardType="middle"
                     />
 
                     {!!featuredLanguages?.length && (

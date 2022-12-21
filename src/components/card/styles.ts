@@ -29,7 +29,7 @@ export const pillStyles = (pillCategory: PillCategory) => ({
 
 export const thumbnailStyles = {
     borderRadius: 'inc30',
-    objectFit: 'cover' as 'cover',
+    objectFit: 'cover',
 };
 
 export const thumbnailWrapperStyles = (
@@ -79,6 +79,7 @@ export const thumbnailWrapperStyles = (
                 case 'Podcast':
                     mobileDimensions = '48px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions = '64px';
                     break;
@@ -127,6 +128,7 @@ export const thumbnailWrapperStyles = (
                 case 'Podcast':
                     mobileDimensions = '48px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions = '64px';
                     break;

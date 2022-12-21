@@ -8,6 +8,7 @@ export type TagType =
     | 'SpokenLanguage'
     | 'ContentType'
     | 'CodeLevel'
-    | 'AttendanceType';
+    | 'EventType'
+    | 'EventAttendance';
 
 export type CodeLevel = 'Full Application' | 'Snippet';

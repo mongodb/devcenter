@@ -26,6 +26,7 @@ import useFilter from './filter';
 import { ContentItem } from '../../interfaces/content-item';
 
 // Credit https://github.com/reduxjs/redux/blob/d794c56f78eccb56ba3c67971c26df8ee34dacc1/src/compose.ts#L46
+// eslint-disable-next-line @typescript-eslint/ban-types
 const compose = (...funcs: Function[]) => {
     if (funcs.length === 0) {
         return <T>(arg: T) => arg;
@@ -160,7 +161,7 @@ const useSearch = (
         }
     }, [searchString, allResults, data, contentType, tagSlug]);
 
-    const filteredData = filterData(data);
+    const filteredData = compose(filterData, filterDataByLocation)(data);
 
     return {
         clearSearchParam,

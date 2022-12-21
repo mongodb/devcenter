@@ -2684,6 +2684,11 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha1-L4u0QUNNFjs1+4/9zNcTiSf/uMA=
 
+"@types/pluralize@^0.0.29":
+  version "0.0.29"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/pluralize/-/pluralize-0.0.29.tgz#6ffa33ed1fc8813c469b859681d09707eb40d03c"
+  integrity sha512-BYOID+l2Aco2nBik+iYS4SZX0Lf20KPILP5RGmM1IgzdwNdTs0eebiFriOPcej1sX9mLnSoiNte5zcFxssgpGA==
+
 "@types/prettier@^2.1.5":
   version "2.6.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/prettier/-/prettier-2.6.0.tgz#efcbd41937f9ae7434c714ab698604822d890759"

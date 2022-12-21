@@ -9,6 +9,7 @@ export const L1L2_TOPIC_PAGE_TYPES: TagType[] = [
     'ExpertiseLevel',
 ];
 
+<<<<<<< HEAD
 interface FilterItemModel {
     displayName: string;
     type: string;
@@ -16,6 +17,19 @@ interface FilterItemModel {
     subFilters?: TagType[];
     query?: string;
 }
+=======
+export const CONTENT_TYPE_NAME_MAP: { [type: string]: string } = {
+    EventAttendance: 'Attendance Type',
+    EventType: 'Event Type',
+    ProgrammingLanguage: 'Language',
+    Technology: 'Technology',
+    ContentType: 'Content Type',
+    L1Product: 'Products',
+    ExpertiseLevel: 'Expertise Level',
+    AuthorType: 'Contributed By',
+    ExampleType: 'Example Type',
+};
+>>>>>>> 9381cae (Fix some styles and filtering logic, remove old location search component)
 
 export const DEBOUNCE_WAIT = 400; // in milliseconds
 

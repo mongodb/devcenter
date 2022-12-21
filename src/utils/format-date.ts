@@ -103,10 +103,11 @@ export const formatDateRange = (start: string, end: string) => {
                 month: 'short',
                 day: 'numeric',
             }) + ' - ';
-        output += startDate.toLocaleString('default', {
-            hour: 'numeric',
-            hour12: true,
-        });
+        output +=
+            startDate.toLocaleString('default', {
+                hour: 'numeric',
+                hour12: true,
+            }) + ' | ';
         output +=
             endDate.toLocaleString('default', {
                 year: 'numeric',

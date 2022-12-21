@@ -2,7 +2,7 @@ import { PillCategory } from '../../types/pill-category';
 import { Tag } from '../../interfaces/tag';
 import { Author } from '../../interfaces/author';
 import { Image } from '../../interfaces/image';
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 export type CardVariant = 'small' | 'medium' | 'large' | 'list' | 'related';
 
@@ -12,6 +12,7 @@ export interface CardProps {
     className?: string;
     description?: string;
     title: string;
+    contentType: PillCategory;
     pillCategory: PillCategory;
     tags?: Tag[];
     thumbnail?: Image;
