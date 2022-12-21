@@ -21,7 +21,7 @@ export const mapPodcastsToContentItems = (
             category: 'Podcast',
             contentDate: p.publishDate,
             slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
-            tags: flattenTags([p.otherTags]),
+            tags: flattenTags(p.otherTags),
             title: p.title,
             seo: p.seo,
         };
@@ -50,7 +50,7 @@ export const mapVideosToContentItems = (
             category: 'Video',
             contentDate: v.publishDate,
             slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
-            tags: flattenTags([v.otherTags]),
+            tags: flattenTags(v.otherTags),
             title: v.title,
             seo: v.seo,
             relevantLinks: v?.relevantLinks || '',
@@ -80,9 +80,7 @@ export const mapArticlesToContentItems = (
     /*
     very important - filter out articles that have no calculated slug
      */
-    const filteredArticles = allArticles.filter(
-        a => a['calculatedSlug'] != null
-    );
+    const filteredArticles = allArticles.filter(a => a.calculatedSlug);
     filteredArticles.forEach((a: Article) => {
         const item: ContentItem = {
             collectionType: 'Article',
@@ -112,30 +110,15 @@ export const mapArticlesToContentItems = (
     return items.filter(item => PillCategoryValues.includes(item.category));
 };
 
-const util = require('util');
-
-export const mapIndustryEventToContentItem = (evt: any) => {
-    // console.log(util.inspect(evt.otherTags, {showHidden: false, depth: null, colors: true}));
-    return {
-        collectionType: 'Event',
-        category: 'Event',
-        eventType: evt.type,
-        // this might be a different field, double check with Harika
-        authors: evt.authors,
-        content: evt.content,
-        slug: evt.calculatedSlug,
-        title: evt.title,
-        // TODO: do all the below need default values, or will they come null or empty string from response?
-        startTime: evt.start_time,
-        endTime: evt.end_time,
-        location: evt.location,
-        tags: flattenTags([evt.otherTags]),
-        // TODO: not in current response
-        registrationLink: evt.registration_url || '',
-        virtualLink: evt.virtual_meetup_url || '',
-        virtualLinkText: evt.virtual_meetup_url_text || '',
-    };
-};
+export const mapIndustryEventToContentItem = (event: any) => ({
+    ...event,
+    collectionType: 'Event',
+    category: 'Event',
+    slug: event.calculatedSlug.startsWith('/')
+        ? event.calculatedSlug.substring(1)
+        : event.calculatedSlug,
+    tags: flattenTags(event.otherTags),
+});
 
 export const mapCommunityEventsToContentItems = (
     allCommunityEvents: CommunityEvent[]

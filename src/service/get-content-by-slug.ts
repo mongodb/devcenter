@@ -33,7 +33,6 @@ export const getContentItemFromSlug: (
         content = await getPodcastBySlug(slug);
         contentType = 'Podcast';
     } else if (slug.startsWith('/events')) {
-        // TODO: just do all the mapping in the GraphQL, so there's no need to do the mapping below
         content = await getEventBySlugFromAPI(STRAPI_CLIENT, slug);
         contentType = 'Event';
     } else {
@@ -61,10 +60,9 @@ export const getContentItemFromSlug: (
             allVideoSeries
         );
         return mappedVideos[0];
-    } else if ((contentType = 'Event')) {
-        // console.log(mapIndustryEventToContentItem(content));
+    } else if (contentType === 'Event') {
         return mapIndustryEventToContentItem(content);
     }
 
-    return content;
+    return null;
 };

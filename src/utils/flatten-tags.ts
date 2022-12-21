@@ -4,7 +4,6 @@ import { Tag } from '../interfaces/tag';
 const parseOtherTags = (otherTags: OtherTags) => {
     const tags: Tag[] = [];
     if (!otherTags) return tags;
-    console.log('other tags', otherTags);
 
     const contentType = otherTags.contentType;
     const technology = otherTags.technology;
@@ -93,12 +92,13 @@ const removeDuplicates = (inArray: Tag[]) => {
     return arr;
 };
 
-export const flattenTags = (otherTags: OtherTags[]): Tag[] => {
+export const flattenTags = (otherTags: OtherTags | OtherTags[]): Tag[] => {
     if (!otherTags) {
         return [];
     }
-    console.log('other tags', otherTags);
-    const flattenedOtherTags = parseOtherTags(otherTags[0]);
-    console.log('flattened', flattenedOtherTags);
-    return removeDuplicates([...flattenedOtherTags]);
+
+    const flattenedTags = parseOtherTags(
+        Array.isArray(otherTags) ? otherTags[0] : otherTags
+    );
+    return removeDuplicates(flattenedTags);
 };

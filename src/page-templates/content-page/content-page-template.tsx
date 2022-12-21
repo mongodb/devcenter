@@ -62,8 +62,6 @@ import {
     sideNavStyles,
     sideNavTitleStyles,
 } from '../../components/tertiary-nav/styles';
-import { FullApplication, Snippet } from '../../components/icons';
-import { iconStyles } from '../../components/topic-card/styles';
 import EventWidget from '../../components/event-widget';
 
 interface ContentPageProps {
@@ -116,7 +114,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         virtualLinkText,
     },
 }) => {
-    console.log('tertiaryNav', tertiaryNavItems);
     const router = useRouter();
     const { asPath } = router;
     const { publicRuntimeConfig } = getConfig();
@@ -143,7 +140,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         !previewMode && category !== 'News & Announcements';
 
     tertiaryNavItems = addExternalIconToSideNav(
-        [{ title: 'Articles', url: 'devlerop/products/mongodb/articles' }],
+        tertiaryNavItems,
         'documentation'
     );
 
@@ -380,19 +377,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     sx={{ gridArea: 'authordate' }}
                 />
                 {tagsSection}
-                {codeType && (
-                    <SecondaryTag
-                        icon={
-                            codeType === 'Snippet' ? (
-                                <Snippet sx={iconStyles} />
-                            ) : (
-                                <FullApplication sx={iconStyles} />
-                            )
-                        }
-                    >
-                        {codeType.toUpperCase()}
-                    </SecondaryTag>
-                )}
+                {codeType && <SecondaryTag codeLevel={codeType as CodeLevel} />}
                 {displaySocialButtons}
             </div>
         );
