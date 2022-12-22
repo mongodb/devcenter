@@ -76,6 +76,6 @@ export interface SearchItem {
 }
 
 // add back when Most Popular is implemented
-// export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
-export type SortByType = 'Most Recent' | 'Highest Rated';
-export const defaultSortByType: SortByType = 'Most Recent';
+// export type SortByType = 'Newest' | 'Most Popular' | 'Highest Rated';
+export type SortByType = 'Newest' | 'Highest Rated';
+export const defaultSortByType: SortByType = 'Newest';

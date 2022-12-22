@@ -4,7 +4,7 @@ import { SortByType } from './types';
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const sortByOptions: { [key in SortByType]: number } = {
-    'Most Recent': 0,
+    Newest: 0,
     // 'Most Popular': 1, // add back when Most Popular is implemented
     'Highest Rated': 2,
 };

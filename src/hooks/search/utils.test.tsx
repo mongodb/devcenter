@@ -116,7 +116,6 @@ describe('getFilters', () => {
             type,
             name: 'Test',
         })) as Tag[];
-
         const mockSearchData = mockSearchDataFactory(tags);
 
         const filterItemValues = (

@@ -8,8 +8,6 @@ export const L1L2_TOPIC_PAGE_TYPES: TagType[] = [
     'Technology',
     'ExpertiseLevel',
 ];
-
-<<<<<<< HEAD
 interface FilterItemModel {
     displayName: string;
     type: string;
@@ -17,63 +15,54 @@ interface FilterItemModel {
     subFilters?: TagType[];
     query?: string;
 }
-=======
-export const CONTENT_TYPE_NAME_MAP: { [type: string]: string } = {
-    EventAttendance: 'Attendance Type',
-    EventType: 'Event Type',
-    ProgrammingLanguage: 'Language',
-    Technology: 'Technology',
-    ContentType: 'Content Type',
-    L1Product: 'Products',
-    ExpertiseLevel: 'Expertise Level',
-    AuthorType: 'Contributed By',
-    ExampleType: 'Example Type',
-};
->>>>>>> 9381cae (Fix some styles and filtering logic, remove old location search component)
-
-export const DEBOUNCE_WAIT = 400; // in milliseconds
 
 export const FILTER_ITEM_MODEL: FilterItemModel[] = [
     {
+        displayName: 'Example Type',
+        type: 'CodeLevel',
+        forContentType: 'Code Example',
+    },
+    {
+        displayName: 'Attendance Type',
+        type: 'EventAttendance',
+        forContentType: 'Event',
+    },
+    {
+        displayName: 'Event Type',
+        type: 'EventType',
+        forContentType: 'Event',
+    },
+    {
         displayName: 'Language',
         type: 'ProgrammingLanguage',
-        query: 'language',
     },
     {
         displayName: 'Technology',
         type: 'Technology',
-        query: 'technology',
     },
     {
         displayName: 'Content Type',
         type: 'ContentType',
         forContentType: '',
-        subFilters: ['CodeLevel'],
-        query: 'contentType',
+        subFilters: ['EventType', 'CodeLevel'],
     },
     {
         displayName: 'Products',
         type: 'L1Product',
         subFilters: ['L2Product'],
-        query: 'product',
     },
     {
         displayName: 'Expertise Level',
         type: 'ExpertiseLevel',
-        query: 'expertiseLevel',
     },
     {
         displayName: 'Contributed By',
         type: 'AuthorType',
-        query: 'contributedBy',
-    },
-    {
-        displayName: 'Example Type',
-        type: 'CodeLevel',
-        forContentType: 'Code Example',
-        query: 'exampleType',
     },
 ];
+
+
+export const DEBOUNCE_WAIT = 400; // in milliseconds
 
 /*
     Doing some preprocessing on the filter item model below to 

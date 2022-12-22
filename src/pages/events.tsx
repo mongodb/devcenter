@@ -69,6 +69,7 @@ const EventsPageComponent: React.FunctionComponent<
     filterItems,
 }) => {
     const plural = results.length !== 1 ? 's' : '';
+
     const showFeatured = !searchString && !filters.length && !location;
 
     let oneCriteriaHeader = `${results.length} `;

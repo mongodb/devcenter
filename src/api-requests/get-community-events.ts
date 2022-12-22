@@ -13,7 +13,8 @@ import { TagType } from '../types/tag-type';
 const getAllCommunityEvents = async (): Promise<
     CommunityEventApiResponse[]
 > => {
-    const url = `${process.env.REALM_API_URL}/community_events`;
+    // TODO: Change back to /community_events
+    const url = `${process.env.REALM_API_URL}/community_events_dev`;
     const options = {
         method: 'GET',
         headers: {

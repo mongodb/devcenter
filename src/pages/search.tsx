@@ -225,7 +225,6 @@ export const getServerSideProps: GetServerSideProps = async (
         Sentry.captureException(e);
     }
 
-    // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
     const filters = await getFilters(
         undefined,
         !!initialSearchContent && Array.isArray(initialSearchContent)
