@@ -1,5 +1,6 @@
-import path from 'path';
-import fs from 'fs';
+/* eslint-disable */
+const path = require('path');
+const fs = require('fs');
 
 const disallowedPages = ['index.tsx', 'test-api.tsx'];
 
