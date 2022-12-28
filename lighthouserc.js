@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
 const disallowedPages = ['index.tsx', 'test-api.tsx'];
 
@@ -44,6 +44,7 @@ module.exports = {
                 'inspector-issues': 'warn',
                 'offscreen-images': 'warn',
                 'non-composited-animations': 'warn',
+                'no-document-write': 'warn',
                 'unsized-images': 'warn',
                 'unused-css-rules': 'warn',
                 'unused-javascript': 'warn',
