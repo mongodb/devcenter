@@ -138,7 +138,7 @@ export const mapEventsToContentItems = (
             // TODO to be added to content type
             // eventSetup: event.event_setup,
             location: event.location,
-            // coordinates: event.coordinates
+            coordinates: event.coordinates,
             // start_time: event.start_time
             // end_time: event.end_time
         })

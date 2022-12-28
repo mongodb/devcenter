@@ -75,6 +75,24 @@ export const searchItemToContentItem = ({
     };
 };
 
+export const searchFetcher: Fetcher<ContentItem[], string> = queryString => {
+    return fetch(
+        (getURLPath('/api/search') as string) + '?' + queryString
+    ).then(async response => {
+        const r_json: SearchItem[] = await response.json();
+        return r_json.map(searchItemToContentItem);
+    });
+};
+
+export const locationFetcher: Fetcher<any[], string> = queryString => {
+    return fetch(
+        (getURLPath('/api/location') as string) + '?' + queryString
+    ).then(async response => {
+        const r_json = await response.json();
+        return r_json.results;
+    });
+};
+
 const tagToFilter = ({ name, type }: Tag): FilterItem => ({
     name,
     type,
@@ -240,24 +258,6 @@ export const itemInFilters = (
             filter => filter.name === tag.name && filter.type === tag.type
         )
     );
-};
-
-export const searchFetcher: Fetcher<ContentItem[], string> = queryString => {
-    return fetch(
-        (getURLPath('/api/search') as string) + '?' + queryString
-    ).then(async response => {
-        const r_json: SearchItem[] = await response.json();
-        return r_json.map(searchItemToContentItem);
-    });
-};
-
-export const locationFetcher: Fetcher<any[], string> = queryString => {
-    return fetch(
-        (getURLPath('/api/location') as string) + '?' + queryString
-    ).then(async response => {
-        const r_json = await response.json();
-        return r_json.results;
-    });
 };
 
 export const updateUrl = (

@@ -116,6 +116,7 @@ describe('getFilters', () => {
             type,
             name: 'Test',
         })) as Tag[];
+
         const mockSearchData = mockSearchDataFactory(tags);
 
         const filterItemValues = (
@@ -344,7 +345,6 @@ describe('getFiltersFromQueryString', () => {
         const query = querystring.parse(
             'language=Java&language=Python&language=JavaScript'
         ) as ParsedUrlQuery;
-
         const filters = getFiltersFromQueryStr(query, mockFilterItems);
 
         expect(filters.length).toBe(3);

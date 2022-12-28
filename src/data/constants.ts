@@ -16,53 +16,61 @@ interface FilterItemModel {
     query?: string;
 }
 
+export const DEBOUNCE_WAIT = 400; // in milliseconds
+
 export const FILTER_ITEM_MODEL: FilterItemModel[] = [
-    {
-        displayName: 'Example Type',
-        type: 'CodeLevel',
-        forContentType: 'Code Example',
-    },
-    {
-        displayName: 'Attendance Type',
-        type: 'EventAttendance',
-        forContentType: 'Event',
-    },
-    {
-        displayName: 'Event Type',
-        type: 'EventType',
-        forContentType: 'Event',
-    },
     {
         displayName: 'Language',
         type: 'ProgrammingLanguage',
+        query: 'language',
     },
     {
         displayName: 'Technology',
         type: 'Technology',
+        query: 'technology',
     },
     {
         displayName: 'Content Type',
         type: 'ContentType',
         forContentType: '',
         subFilters: ['EventType', 'CodeLevel'],
+        query: 'contentType',
     },
     {
         displayName: 'Products',
         type: 'L1Product',
         subFilters: ['L2Product'],
+        query: 'product',
     },
     {
         displayName: 'Expertise Level',
         type: 'ExpertiseLevel',
+        query: 'expertiseLevel',
     },
     {
         displayName: 'Contributed By',
         type: 'AuthorType',
+        query: 'contributedBy',
+    },
+    {
+        displayName: 'Example Type',
+        type: 'CodeLevel',
+        forContentType: 'Code Example',
+        query: 'exampleType',
+    },
+    {
+        displayName: 'Attendance Type',
+        type: 'EventAttendance',
+        forContentType: 'Event',
+        query: 'attendanceType',
+    },
+    {
+        displayName: 'Event Type',
+        type: 'EventType',
+        forContentType: 'Event',
+        query: 'eventType',
     },
 ];
-
-
-export const DEBOUNCE_WAIT = 400; // in milliseconds
 
 /*
     Doing some preprocessing on the filter item model below to 
