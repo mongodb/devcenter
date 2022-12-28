@@ -2,7 +2,6 @@ import { useCallback, memo } from 'react';
 import { FiltersProps } from '../types';
 
 import { FilterGroup, FilterItem } from '@mdb/devcenter-components';
-import { CONTENT_TYPE_NAME_MAP } from '../../../data/constants';
 
 const DesktopFilters: React.FunctionComponent<FiltersProps> = memo(
     ({ className, onFilter, filters, filterItems }) => {
@@ -40,7 +39,7 @@ const DesktopFilters: React.FunctionComponent<FiltersProps> = memo(
             <div className={className}>
                 {filterItems.map(({ key, value }) => (
                     <FilterGroup
-                        title={CONTENT_TYPE_NAME_MAP[key]}
+                        title={key}
                         allFilters={value}
                         activeFilters={filters}
                         onToggle={onToggle}
