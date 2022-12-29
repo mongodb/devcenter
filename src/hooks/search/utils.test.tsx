@@ -345,7 +345,7 @@ describe('getFiltersFromQueryString', () => {
         const query = querystring.parse(
             'language=Java&language=Python&language=JavaScript'
         ) as ParsedUrlQuery;
-        console.log(query);
+
         const filters = getFiltersFromQueryStr(query, mockFilterItems);
 
         expect(filters.length).toBe(3);
