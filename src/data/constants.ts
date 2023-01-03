@@ -1,4 +1,4 @@
-import { PillCategory } from '../types/pill-category';
+import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { TagType } from '../types/tag-type';
 
 export const L1L2_TOPIC_PAGE_TYPES: TagType[] = [
@@ -11,28 +11,47 @@ export const L1L2_TOPIC_PAGE_TYPES: TagType[] = [
 interface FilterItemModel {
     displayName: string;
     type: string;
-    forContentType?: PillCategory | '';
+    contentTypeFilter?: (PillCategory | 'Search')[];
     subFilters?: TagType[];
     query?: string;
 }
 
 export const DEBOUNCE_WAIT = 400; // in milliseconds
 
+const allContentTypes = [...PillCategoryValues, 'Search'] as (
+    | PillCategory
+    | 'Search'
+)[];
+
 export const FILTER_ITEM_MODEL: FilterItemModel[] = [
+    {
+        displayName: 'Attendance Type',
+        type: 'EventAttendance',
+        contentTypeFilter: ['Event'],
+        query: 'attendanceType',
+    },
+    {
+        displayName: 'Event Type',
+        type: 'EventType',
+        contentTypeFilter: ['Event'],
+        query: 'eventType',
+    },
     {
         displayName: 'Language',
         type: 'ProgrammingLanguage',
         query: 'language',
+        contentTypeFilter: allContentTypes,
     },
     {
         displayName: 'Technology',
         type: 'Technology',
         query: 'technology',
+        contentTypeFilter: allContentTypes,
     },
     {
         displayName: 'Content Type',
         type: 'ContentType',
-        forContentType: '',
+        contentTypeFilter: ['Search'],
         subFilters: ['EventType', 'CodeLevel'],
         query: 'contentType',
     },
@@ -41,34 +60,25 @@ export const FILTER_ITEM_MODEL: FilterItemModel[] = [
         type: 'L1Product',
         subFilters: ['L2Product'],
         query: 'product',
+        contentTypeFilter: allContentTypes,
     },
     {
         displayName: 'Expertise Level',
         type: 'ExpertiseLevel',
         query: 'expertiseLevel',
+        contentTypeFilter: allContentTypes,
     },
     {
         displayName: 'Contributed By',
         type: 'AuthorType',
         query: 'contributedBy',
+        contentTypeFilter: allContentTypes.filter(value => value !== 'Event'),
     },
     {
         displayName: 'Example Type',
         type: 'CodeLevel',
-        forContentType: 'Code Example',
+        contentTypeFilter: ['Code Example'],
         query: 'exampleType',
-    },
-    {
-        displayName: 'Attendance Type',
-        type: 'EventAttendance',
-        forContentType: 'Event',
-        query: 'attendanceType',
-    },
-    {
-        displayName: 'Event Type',
-        type: 'EventType',
-        forContentType: 'Event',
-        query: 'eventType',
     },
 ];
 

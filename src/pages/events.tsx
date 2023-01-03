@@ -14,6 +14,7 @@ import { searchWrapperStyles } from '../components/search/styles';
 import {
     Button,
     ESystemIconNames,
+    GridLayout,
     HorizontalRule,
     TypographyScale,
 } from '@mdb/flora';
@@ -21,11 +22,14 @@ import { h5Styles } from '../styled/layout';
 import { FilterItem, FilterTagSection } from '@mdb/devcenter-components';
 import { useCallback } from 'react';
 import { FeaturedCardSection } from '../components/card-section';
-import { SearchItem } from '../components/search/types';
+import { DesktopFilters, MobileFilters } from '../components/search-filters';
+import { desktopFiltersStyles } from '../page-templates/content-type-page/styles';
+import { SearchMetaProps, SearchProps } from '../hooks/search/types';
+import { ContentItem } from '../interfaces/content-item';
 
 const extraSearchResultsStyles = (showFeatured: boolean) => ({
     order: showFeatured ? '4' : '3',
-    marginBottom: 'inc30',
+    marginBottom: 'inc70',
     '> div': {
         width: '100%',
     },
@@ -39,8 +43,8 @@ const extraSearchResultsHeadingStyles = (showFeatured: boolean) => ({
     marginBottom: '0',
 });
 interface EventsPageComponentProps {
-    allSearchProps: any;
-    searchMetaProps: any;
+    searchProps: SearchProps;
+    searchMetaProps: SearchMetaProps;
     mobileFiltersOpen: boolean;
     setMobileFiltersOpen: (open: boolean) => void;
 }
@@ -48,9 +52,10 @@ interface EventsPageComponentProps {
 const EventsPageComponent: React.FunctionComponent<
     EventsPageComponentProps & ContentTypePageProps
 > = ({
-    allSearchProps: {
-        searchProps,
-        searchProps: { searchString },
+    searchProps: {
+        searchStringProps,
+        searchStringProps: { searchString },
+        filterProps,
         filterProps: { filters, onFilter },
         resultsProps,
         resultsProps: { isValidating, allResults, unfilteredResults, results },
@@ -62,11 +67,14 @@ const EventsPageComponent: React.FunctionComponent<
         clearSearchParam,
     },
     searchMetaProps: { updatePageMeta },
+    mobileFiltersOpen,
     setMobileFiltersOpen,
     featured,
     pageNumber,
     children,
     filterItems,
+    slug,
+    contentType,
 }) => {
     const plural = results.length !== 1 ? 's' : '';
 
@@ -103,11 +111,11 @@ const EventsPageComponent: React.FunctionComponent<
     // is specified where we want to show all virtual events
     const allOtherResults =
         location && !searchString
-            ? allResults.filter((res: SearchItem) =>
+            ? allResults.filter((res: ContentItem) =>
                   res.tags.some(
                       tag =>
                           tag.type === 'EventAttendance' &&
-                          tag.name === 'Virtual'
+                          (tag.name === 'Virtual' || tag.name === 'Hybrid')
                   )
               )
             : allResults;
@@ -116,7 +124,7 @@ const EventsPageComponent: React.FunctionComponent<
         (selection: string) => {
             if (selection === 'Virtual') {
                 const attendanceFilters = filterItems.find(
-                    ({ key }: { key: string }) => key === 'AttendanceType'
+                    ({ key }: { key: string }) => key === 'Attendance Type'
                 );
                 const virtualFilters = attendanceFilters?.value.filter(
                     filter =>
@@ -145,162 +153,206 @@ const EventsPageComponent: React.FunctionComponent<
     );
 
     return (
-        <div
+        <GridLayout
             sx={{
-                ...searchWrapperStyles,
-                gap: 'normal',
-                rowGap: ['inc40', null, 'inc70'],
-                columnGap: 'inc40',
+                rowGap: 0,
             }}
         >
-            <SearchBox
-                {...searchProps}
-                placeholder="Search Events"
-                extraStyles={{ flexBasis: ['100%', null, 'calc(66% - 12px)'] }}
-            />
-
-            <LocationBox {...locationProps} onLocationSelect={locationSelect} />
-
-            {showFeatured && (
-                <div sx={{ width: '100%' }}>
-                    <FeaturedCardSection
-                        content={featured}
-                        title="Featured Events"
-                        featuredCardType="middle"
-                    />
-                </div>
-            )}
-
-            <Button
-                hasIcon
-                iconPosition="right"
-                iconStrokeWeight="medium"
-                iconName={ESystemIconNames.FILTER_HAMBURGER}
-                onClick={() => setMobileFiltersOpen(true)}
-                customWrapperStyles={{
-                    display: ['block', null, null, 'none'],
-                    flexBasis: ['100%', null, 'auto'],
-                }}
-                customStyles={{
-                    display: ['flex', null, null, 'none'],
-                    justifyContent: 'center',
+            <div
+                sx={{
+                    gridColumn: 'span 3',
                 }}
             >
-                Filter & Sort
-                {!!filters.length && ` (${filters.length})`}
-            </Button>
+                <DesktopFilters
+                    {...filterProps}
+                    sx={desktopFiltersStyles}
+                    filterItems={filterItems}
+                />
 
-            {showTwoCriteriaResults && (
-                <>
-                    <div sx={{ order: '5', width: '100%' }}>
-                        <TypographyScale
-                            variant="heading2"
-                            sx={extraSearchResultsHeadingStyles(showFeatured)}
-                        >
-                            {twoCriteriaHeader}
-                        </TypographyScale>
-                        {!!results.length && (
-                            <SearchResults
-                                {...resultsProps}
-                                results={twoCriteriaResults}
-                                pageNumber={pageNumber}
-                                updatePageMeta={updatePageMeta}
-                                extraStyles={extraSearchResultsStyles(
-                                    showFeatured
-                                )}
-                            />
-                        )}
+                {mobileFiltersOpen && (
+                    <MobileFilters
+                        {...filterProps}
+                        filterItems={filterItems}
+                        closeModal={() => setMobileFiltersOpen(false)}
+                    />
+                )}
+            </div>
+
+            <div
+                sx={{
+                    ...searchWrapperStyles,
+                    gap: 'normal',
+                    rowGap: ['inc40', null, 'inc70'],
+                    columnGap: 'inc40',
+                }}
+            >
+                <SearchBox
+                    {...searchStringProps}
+                    placeholder="Search Events"
+                    extraStyles={{
+                        flexBasis: ['100%', null, 'calc(66% - 12px)'],
+                        marginBottom: 0,
+                    }}
+                />
+
+                <LocationBox
+                    {...locationProps}
+                    onLocationSelect={locationSelect}
+                />
+
+                {showFeatured && (
+                    <div sx={{ width: '100%', marginBottom: 'inc70' }}>
+                        <FeaturedCardSection
+                            content={featured}
+                            title="Featured Events"
+                            featuredCardType="middle"
+                        />
                     </div>
-                    {!results.length && <HorizontalRule sx={{ order: '5' }} />}
-                </>
-            )}
+                )}
 
-            {showOneCriteriaResults && (
-                <>
-                    <div sx={{ order: '5', width: '100%' }}>
-                        {!isValidating && (
+                <Button
+                    hasIcon
+                    iconPosition="right"
+                    iconStrokeWeight="medium"
+                    iconName={ESystemIconNames.FILTER_HAMBURGER}
+                    onClick={() => setMobileFiltersOpen(true)}
+                    customWrapperStyles={{
+                        display: ['block', null, null, 'none'],
+                        flexBasis: ['100%', null, 'auto'],
+                    }}
+                    customStyles={{
+                        display: ['flex', null, null, 'none'],
+                        justifyContent: 'center',
+                    }}
+                >
+                    Filter
+                    {!!filters.length && ` (${filters.length})`}
+                </Button>
+
+                {showTwoCriteriaResults && (
+                    <>
+                        <div sx={{ order: '5', width: '100%' }}>
                             <TypographyScale
                                 variant="heading2"
                                 sx={extraSearchResultsHeadingStyles(
                                     showFeatured
                                 )}
                             >
-                                {oneCriteriaHeader}
+                                {twoCriteriaHeader}
                             </TypographyScale>
-                        )}
-
-                        {!!filters?.length && (
-                            <div
-                                sx={{
-                                    flexBasis: '100%',
-                                    display: ['none', null, null, 'block'],
-                                    marginTop: 'inc20',
-                                    marginBottom: 'inc40',
-                                }}
-                            >
-                                <FilterTagSection
-                                    allFilters={filters}
-                                    onClearTag={(filterTag: FilterItem) =>
-                                        onFilter(
-                                            filters.filter(
-                                                (item: FilterItem) =>
-                                                    item !== filterTag
-                                            )
-                                        )
-                                    }
-                                    onClearAll={() => onFilter([])}
+                            {!!results.length && (
+                                <SearchResults
+                                    {...resultsProps}
+                                    results={twoCriteriaResults}
+                                    pageNumber={pageNumber}
+                                    updatePageMeta={updatePageMeta}
+                                    extraStyles={extraSearchResultsStyles(
+                                        showFeatured
+                                    )}
+                                    slug={slug}
+                                    contentType={contentType}
                                 />
-                            </div>
+                            )}
+                        </div>
+                        {!results.length && (
+                            <HorizontalRule sx={{ order: '5' }} />
                         )}
+                    </>
+                )}
 
-                        {!!results.length && (
-                            <SearchResults
-                                {...resultsProps}
-                                results={oneCriteriaResults}
-                                pageNumber={pageNumber}
-                                updatePageMeta={updatePageMeta}
-                                extraStyles={extraSearchResultsStyles(
-                                    showFeatured
-                                )}
-                            />
+                {showOneCriteriaResults && (
+                    <>
+                        <div sx={{ order: '5', width: '100%' }}>
+                            {!isValidating && (
+                                <TypographyScale
+                                    variant="heading2"
+                                    sx={extraSearchResultsHeadingStyles(
+                                        showFeatured
+                                    )}
+                                >
+                                    {oneCriteriaHeader}
+                                </TypographyScale>
+                            )}
+
+                            {!!filters?.length && (
+                                <div
+                                    sx={{
+                                        flexBasis: '100%',
+                                        display: ['none', null, null, 'block'],
+                                        marginTop: 'inc20',
+                                        marginBottom: 'inc40',
+                                    }}
+                                >
+                                    <FilterTagSection
+                                        allFilters={filters}
+                                        onClearTag={(filterTag: FilterItem) =>
+                                            onFilter(
+                                                filters.filter(
+                                                    (item: FilterItem) =>
+                                                        item !== filterTag
+                                                )
+                                            )
+                                        }
+                                        onClearAll={() => onFilter([])}
+                                    />
+                                </div>
+                            )}
+
+                            {!!results.length && (
+                                <SearchResults
+                                    {...resultsProps}
+                                    results={oneCriteriaResults}
+                                    pageNumber={pageNumber}
+                                    updatePageMeta={updatePageMeta}
+                                    extraStyles={extraSearchResultsStyles(
+                                        showFeatured
+                                    )}
+                                    slug={slug}
+                                    contentType={contentType}
+                                />
+                            )}
+                        </div>
+                        {!results.length && (
+                            <HorizontalRule sx={{ order: '5' }} />
                         )}
+                    </>
+                )}
+
+                {showAllOtherResults && (
+                    <div sx={{ order: '6', width: '100%' }}>
+                        <TypographyScale
+                            variant="heading2"
+                            sx={extraSearchResultsHeadingStyles(showFeatured)}
+                        >
+                            {location && !searchString
+                                ? 'Other Virtual Events'
+                                : 'All Events'}
+                        </TypographyScale>
+
+                        <SearchResults
+                            {...resultsProps}
+                            results={allOtherResults}
+                            isValidating={
+                                allResults.length === 0 ? isValidating : false
+                            }
+                            pageNumber={pageNumber}
+                            updatePageMeta={updatePageMeta}
+                            extraStyles={extraSearchResultsStyles(showFeatured)}
+                            slug={slug}
+                            contentType={contentType}
+                        />
                     </div>
-                    {!results.length && <HorizontalRule sx={{ order: '5' }} />}
-                </>
-            )}
+                )}
 
-            {showAllOtherResults && (
-                <div sx={{ order: '6', width: '100%' }}>
-                    <TypographyScale
-                        variant="heading2"
-                        sx={extraSearchResultsHeadingStyles(showFeatured)}
-                    >
-                        {location && !searchString
-                            ? 'Other Virtual Events'
-                            : 'All Events'}
-                    </TypographyScale>
-
-                    <SearchResults
-                        {...resultsProps}
-                        results={allOtherResults}
-                        isValidating={
-                            allResults.length === 0 ? isValidating : false
-                        }
-                        pageNumber={pageNumber}
-                        updatePageMeta={updatePageMeta}
-                        extraStyles={extraSearchResultsStyles(showFeatured)}
-                    />
-                </div>
-            )}
-
-            {children}
-        </div>
+                {children}
+            </div>
+        </GridLayout>
     );
 };
 
 const EventsPage: NextPage<ContentTypePageProps> = props => (
     <ContentTypePage {...props}>
-        {props => <EventsPageComponent {...props} />}
+        {(props: any) => <EventsPageComponent {...props} />}
     </ContentTypePage>
 );
 

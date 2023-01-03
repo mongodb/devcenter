@@ -54,8 +54,8 @@ const Search: NextPage<SearchProps> = ({
     );
 
     const {
-        searchProps,
-        searchProps: { searchString },
+        searchStringProps,
+        searchStringProps: { searchString },
         filterProps,
         filterProps: { filters, onFilter },
         sortProps,
@@ -106,7 +106,7 @@ const Search: NextPage<SearchProps> = ({
 
                     <div sx={searchWrapperStyles}>
                         <SearchBox
-                            {...searchProps}
+                            {...searchStringProps}
                             placeholder="Search All"
                             autoFocus
                             extraStyles={{

@@ -4,8 +4,8 @@ import { Tag } from '../../interfaces/tag';
 import { ThemeUICSSObject } from 'theme-ui';
 import { FilterItem } from '@mdb/devcenter-components';
 import { ReactElement } from 'react';
-import { SWRResponse } from 'swr';
 import { Coordinates } from '../../interfaces/coordinates';
+import { LocationOptions } from '../../hooks/search/types';
 
 interface SearchImage {
     url: string;
@@ -22,35 +22,35 @@ interface SearchAuthor {
 export interface SearchBoxProps {
     placeholder?: string;
     searchString?: string;
-    onSearch: any;
+    onSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
     autoFocus?: boolean;
     extraStyles?: ThemeUICSSObject;
 }
 
 export interface SortBoxProps {
     extraStyles?: ThemeUICSSObject;
-    onSort: (value?: string) => void;
-    sortBy: string;
+    onSort: (value: SortByType | '') => void;
+    sortBy?: SortByType | '';
 }
 
 export interface LocationBoxProps {
     locationQuery?: string;
     onLocationQuery: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    locationSelection?: any;
-    onLocationSelect: (option: any) => void;
-    results: SWRResponse<ContentItem[], any>;
+    locationSelection?: google.maps.places.PlaceResult;
+    onLocationSelect: (selection: string) => void;
+    locationValidating: boolean;
     geolocationValidating: boolean;
-    displayOptions: (string | { icon: string; label: string })[];
+    displayOptions: LocationOptions[];
     extraStyles?: ThemeUICSSObject;
 }
 
 export interface ResultsProps {
     results: ContentItem[] | undefined;
     isValidating: boolean;
-    error: boolean;
+    error: string;
     searchString: string;
     filters: FilterItem[];
-    sortBy: string;
+    sortBy?: SortByType | '';
     slug: string;
     pageNumber: number;
     updatePageMeta?: (pageNumber: number) => void;

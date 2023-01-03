@@ -30,7 +30,7 @@ export const pillStyles = (pillCategory: PillCategory) => ({
 export const thumbnailStyles = {
     borderRadius: 'inc30',
     objectFit: 'cover',
-};
+} as ThemeUICSSObject;
 
 export const thumbnailWrapperStyles = (
     variant: CardVariant,
@@ -45,15 +45,23 @@ export const thumbnailWrapperStyles = (
     switch (variant) {
         case 'large':
             tabletDesktopDisplay = 'block';
-            mobileDisplay = category === 'Tutorial' ? 'none' : 'block';
+            mobileDisplay =
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'medium':
             mobileDisplay = tabletDesktopDisplay =
-                category === 'Tutorial' ? 'none' : 'block';
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'small':
             tabletDesktopDisplay = 'none';
-            mobileDisplay = category === 'Tutorial' ? 'none' : 'block';
+            mobileDisplay =
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'list':
             mobileDisplay = tabletDesktopDisplay = 'block';

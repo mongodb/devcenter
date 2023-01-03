@@ -2,13 +2,7 @@ import { useEffect, useCallback, useState } from 'react';
 import useSWR from 'swr';
 import { FilterItem } from '@mdb/devcenter-components';
 import {
-<<<<<<< HEAD
-    fetcher,
-    getFiltersFromQueryStr,
-    itemInFilters,
-=======
     searchFetcher,
->>>>>>> 4fca657 (Refactor useSearch and incorporate location search in events page)
     searchItemToContentItem,
     swrOptions,
     updateUrl,
@@ -24,6 +18,7 @@ import useLocationSearch from './location';
 import useSearchString from './search-string';
 import useFilter from './filter';
 import { ContentItem } from '../../interfaces/content-item';
+import { SearchParamType, SearchProps } from './types';
 
 // Credit https://github.com/reduxjs/redux/blob/d794c56f78eccb56ba3c67971c26df8ee34dacc1/src/compose.ts#L46
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -50,7 +45,7 @@ const useSearch = (
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
     filterItems?: { key: string; value: FilterItem[] }[] // This is needed for URL filter/search updates.
-) => {
+): SearchProps => {
     const [allResults, setAllResults] = useState<ContentItem[]>();
     const router = useRouter();
     const shouldUseQueryParams = !!filterItems;
@@ -61,8 +56,8 @@ const useSearch = (
     }, [shouldUseQueryParams, updatePageMeta]);
 
     const {
-        searchProps,
-        searchProps: { searchString },
+        searchStringProps,
+        searchStringProps: { searchString },
         clearSearch,
     } = useSearchString(paramChangeCallback);
 
@@ -96,7 +91,7 @@ const useSearch = (
     ]);
 
     const clearSearchParam = useCallback(
-        (which?: 'search' | 'location' | 'sort' | 'filters') => {
+        (which?: SearchParamType) => {
             switch (which) {
                 case 'search':
                     clearSearch();
@@ -165,13 +160,13 @@ const useSearch = (
 
     return {
         clearSearchParam,
-        searchProps,
+        searchStringProps,
         filterProps,
         sortProps,
         locationProps,
         resultsProps: {
             allResults: allResults || [],
-            unfilteredResults: data,
+            unfilteredResults: data || [],
             results: filteredData,
             error,
             // Disable loading state when running server-side so results show when JS is disabled

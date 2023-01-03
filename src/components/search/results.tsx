@@ -97,7 +97,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
                             {!!resultsToShow.length && (
                                 // Needs to be wrapped in a div because Safari isn't the best with grid...
                                 // https://stackoverflow.com/questions/44770074/css-grid-row-height-safari-bug
-                                <div>
+                                <div sx={{ width: '100%' }}>
                                     <div
                                         data-testid="search-results"
                                         sx={dataStyles(layout)}

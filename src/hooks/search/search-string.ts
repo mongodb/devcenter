@@ -39,7 +39,7 @@ const useSearchString = (callback: () => void) => {
     }, [router?.isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
 
     return {
-        searchProps: {
+        searchStringProps: {
             searchString,
             onSearch: debouncedOnSearch,
         },

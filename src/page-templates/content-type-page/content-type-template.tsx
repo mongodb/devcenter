@@ -1,10 +1,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { useMemo, useState } from 'react';
-import { Button, GridLayout } from '@mdb/flora';
+import { Button } from '@mdb/flora';
 import { pageWrapper } from '../../styled/layout';
-import { desktopFiltersStyles } from './styles';
-
-import { DesktopFilters, MobileFilters } from '../../components/search-filters';
 
 import Hero from '../../components/hero';
 import RequestContentModal from '../../components/request-content-modal';
@@ -42,7 +39,6 @@ const ContentTypePage: React.FunctionComponent<
     const {
         description,
         contentType,
-        filterItems,
         initialSearchContent,
         pageNumber,
         slug,
@@ -61,17 +57,15 @@ const ContentTypePage: React.FunctionComponent<
     );
     const { pageTitle, metaDescr, updatePageMeta, canonicalUrl } =
         searchMetaProps;
-    const allSearchProps = useSearch(
+    const searchProps = useSearch(
         initialSearchContent,
         updatePageMeta,
         contentType,
         slug
     );
     const {
-        filterProps,
-        sortProps,
         resultsProps: { results, error },
-    } = allSearchProps;
+    } = searchProps;
 
     useEmptyDataDebug(results, error);
 
@@ -110,39 +104,13 @@ const ContentTypePage: React.FunctionComponent<
                 ctas={heroCTAs}
             />
             <div sx={pageWrapper}>
-                <GridLayout
-                    sx={{
-                        rowGap: 0,
-                    }}
-                >
-                    <div
-                        sx={{
-                            gridColumn: 'span 3',
-                        }}
-                    >
-                        <DesktopFilters
-                            {...filterProps}
-                            sx={desktopFiltersStyles}
-                            filterItems={filterItems}
-                        />
-
-                        {mobileFiltersOpen && (
-                            <MobileFilters
-                                {...filterProps}
-                                {...sortProps} // Mobile filters include sorting
-                                filterItems={filterItems}
-                                closeModal={() => setMobileFiltersOpen(false)}
-                            />
-                        )}
-                    </div>
-
-                    <ChildComponent
-                        allSearchProps={allSearchProps}
-                        searchMetaProps={searchMetaProps}
-                        setMobileFiltersOpen={setMobileFiltersOpen}
-                        {...props}
-                    />
-                </GridLayout>
+                <ChildComponent
+                    searchProps={searchProps}
+                    searchMetaProps={searchMetaProps}
+                    mobileFiltersOpen={mobileFiltersOpen}
+                    setMobileFiltersOpen={setMobileFiltersOpen}
+                    {...props}
+                />
             </div>
             <RequestContentModal contentCategory={contentType} />
         </>

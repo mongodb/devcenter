@@ -7,7 +7,7 @@ const LocationBox: React.FunctionComponent<LocationBoxProps> = ({
     locationQuery,
     onLocationQuery,
     onLocationSelect,
-    results: { isValidating } = {},
+    locationValidating,
     geolocationValidating,
     displayOptions,
     extraStyles = {},
@@ -25,10 +25,10 @@ const LocationBox: React.FunctionComponent<LocationBoxProps> = ({
             <ComboBox
                 value={locationQuery}
                 label="Location"
-                options={displayOptions}
+                options={displayOptions as { icon: string; label: string }[]}
                 onChange={onLocationQuery}
                 onSelect={onLocationSelect}
-                isLoading={isValidating || geolocationValidating}
+                isLoading={locationValidating || geolocationValidating}
                 noResults={!!locationQuery && displayOptions.length === 0}
                 inputName="location-search"
                 iconName={ESystemIconNames.LOCATION}

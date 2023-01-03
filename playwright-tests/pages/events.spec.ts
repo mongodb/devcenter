@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { runPercy } from '../utils';
+import { mockApiRoute, runPercy } from '../utils';
 
 const EVENTS_PAGE = '/developer/events';
 
@@ -11,6 +11,9 @@ test('Events page has correct title', async ({ page }) => {
 
 test('Events page has correct logic to display featured', async ({ page }) => {
     await page.goto(EVENTS_PAGE);
+
+    await mockApiRoute(page, '**/api/location/**', 'location');
+
     await expect(
         page.locator('div[data-testid="featured-card-section"] h2')
     ).toHaveText('Featured Events');
@@ -24,7 +27,6 @@ test('Events page has correct logic to display featured', async ({ page }) => {
     await page.locator('id=location-search').click();
     await page.locator('id=location-search').type('test');
 
-    await page.waitForResponse('**/api/location/**');
     await page.locator('div[role="dropdown"] li:nth-child(1)').click();
 
     await expect(

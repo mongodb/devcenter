@@ -128,24 +128,25 @@ export const mapEventsToContentItems = (
             collectionType: 'Event',
             category: 'Event',
             subCategory: 'User Group Meetup',
-            // content date will be used for sorting for featured
-            // guess for cards we need to create another field rather than manipulating content Date since we need ContentDate for sorting
             contentDate: [event.start_time, event.end_time],
             description: event.description,
             slug: event.slug,
             tags: event.tags.concat(eventContentTypeTag),
             title: event.title,
-            // TODO to be added to content type
-            // eventSetup: event.event_setup,
             location: event.location,
             coordinates: event.coordinates,
-            // start_time: event.start_time
-            // end_time: event.end_time
         })
     ) as ContentItem[];
 
-    const mappedIndustryEvents = allIndustryEvents.map(
-        (event: IndustryEvent) => ({
+    const mappedIndustryEvents = allIndustryEvents
+        .filter(
+            // Filter out past industry events
+            (event: IndustryEvent) =>
+                event.end_time &&
+                !isNaN(Date.parse(event.end_time)) &&
+                new Date(event.end_time) > new Date()
+        )
+        .map((event: IndustryEvent) => ({
             collectionType: 'Event',
             category: 'Event',
             subCategory: 'Industry Event',
@@ -155,8 +156,7 @@ export const mapEventsToContentItems = (
             tags: flattenTags([event.otherTags]).concat(eventContentTypeTag),
             title: event.title,
             location: event.location,
-        })
-    ) as ContentItem[];
+        })) as ContentItem[];
 
     return [...mappedCommunityEvents, ...mappedIndustryEvents];
 };

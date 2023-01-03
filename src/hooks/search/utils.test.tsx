@@ -11,7 +11,6 @@ import {
 import { MOCK_ARTICLE_TAGS } from '../../mockdata/mock-tags';
 import { SearchItem } from '../../components/search/types';
 import { FilterItem } from '@mdb/devcenter-components';
-import { FILTER_ITEM_MODEL } from '../../data/constants';
 import querystring, { ParsedUrlQuery } from 'querystring';
 
 test('correctly checks if array is empty', () => {
@@ -109,23 +108,6 @@ describe('getFilters', () => {
 
         expect(filterItemsCodeExampleContentType.length).toBe(1);
         expect(filterItemsArticleContentType.length).toBe(0);
-    });
-
-    test('All types of filters are displayed when content type is empty (e.g. sitewide search)', async () => {
-        const tags = FILTER_ITEM_MODEL.map(({ type }) => ({
-            type,
-            name: 'Test',
-        })) as Tag[];
-
-        const mockSearchData = mockSearchDataFactory(tags);
-
-        const filterItemValues = (
-            await getFilters(undefined, mockSearchData)
-        ).flatMap(item => item.value);
-
-        FILTER_ITEM_MODEL.forEach(({ type }) => {
-            expect(filterItemValues.some(x => x.type === type)).toBeTruthy();
-        });
     });
 
     test('CodeLevel filters are scrubbed out of all content type tags except Code Examples', async () => {

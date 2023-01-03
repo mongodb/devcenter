@@ -150,6 +150,8 @@ export const getFilters = async (
     contentType?: PillCategory,
     allSearchContent?: SearchItem[]
 ) => {
+    const pageType = (contentType || 'Search') as PillCategory | 'Search';
+
     const allContent: SearchItem[] =
         allSearchContent || (await getAllSearchContent());
 
@@ -164,10 +166,9 @@ export const getFilters = async (
             const itemModel = FILTER_ITEM_TYPE_MAP[tag.type || ''];
 
             const checkForContentType =
-                ((itemModel?.forContentType &&
-                    itemModel?.forContentType !== contentType) ||
-                    (contentType && itemModel?.forContentType === '')) &&
-                contentType !== undefined; // All filters should be shown on sitewide search
+                itemModel?.contentTypeFilter &&
+                !itemModel?.contentTypeFilter.includes(pageType);
+            contentType !== undefined; // All filters should be shown on sitewide search
 
             const id = itemId(tag);
             const itemFreq = itemFreqMap[id];
@@ -222,25 +223,42 @@ export const getFilters = async (
 
     fixForImproperlyTaggedContent(filterItems);
 
+    const topDisplayItems: { key: string; value: FilterItem[] }[] = [];
+
     // Sort by count and convert to an object that the Filter components are able to display
-    return FILTER_ITEM_MODEL.flatMap(model => {
+    const filterDisplayItems = FILTER_ITEM_MODEL.flatMap(model => {
         const matchingItems = filterItems.filter(
             item => item.type === model.type
         );
 
         sortFilterItems(matchingItems);
 
+        if (
+            matchingItems.length &&
+            model?.contentTypeFilter &&
+            pageType !== 'Search' &&
+            model.contentTypeFilter.includes(pageType)
+        ) {
+            topDisplayItems.push({
+                key: model.displayName,
+                value: matchingItems,
+            });
+            return [];
+        }
+
         return matchingItems.length
             ? [{ key: model.displayName, value: matchingItems }]
             : [];
     });
+
+    return topDisplayItems.concat(filterDisplayItems);
 };
 
 export const hasEmptyFilterAndQuery = (
     searchString: string,
     allFilters: FilterItem[]
 ) => {
-    return (!searchString || searchString == '') && allFilters.length == 0;
+    return !searchString && allFilters.length == 0;
 };
 
 export const isEmptyArray = (results: any) => {

@@ -108,7 +108,14 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     contentRows.forEach(contentRow => {
         sortedContentRows.push(
             contentRow.sort((a, b) =>
-                (b.contentDate as string).localeCompare(a.contentDate as string)
+                (Array.isArray(b.contentDate)
+                    ? b.contentDate[0]
+                    : b.contentDate
+                ).localeCompare(
+                    (Array.isArray(a.contentDate)
+                        ? a.contentDate[0]
+                        : a.contentDate) as string
+                )
             )
         );
     });
@@ -121,7 +128,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             buildPageTitle(contentType, name)
         );
 
-    const { searchProps, sortProps, resultsProps } = useSearch(
+    const { searchStringProps, sortProps, resultsProps } = useSearch(
         initialSearchContent,
         updatePageMeta,
         undefined,
@@ -242,7 +249,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         </div>
 
                         <SearchBox
-                            {...searchProps}
+                            {...searchStringProps}
                             placeholder={`Search ${name} Content`}
                             extraStyles={extraSearchBoxStyles}
                         />

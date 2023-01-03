@@ -8,22 +8,23 @@ import { getURLPath } from '../../utils/format-url-path';
 import { locationFetcher, swrOptions } from './utils';
 import haversine from 'haversine-distance';
 import { Coordinates } from '../../interfaces/coordinates';
+import { LocationOptions } from './types';
 
 // 10 miles in meters
 const MAX_LOCATION_RADIUS = 16093.4;
 
 // TODO: needs to be updated with icon names that will be added by Web Team - https://jira.mongodb.org/browse/WEBSITE-13740
 const DEFAULT_OPTIONS = [
-    { icon: ESystemIconNames.ARROW_UP, label: 'Current Location' },
-    { icon: ESystemIconNames.ARROW_DOWN, label: 'Virtual' },
-];
+    { icon: ESystemIconNames.LOCATION, label: 'Current Location' },
+    { icon: ESystemIconNames.PLAY, label: 'Virtual' },
+] as LocationOptions[];
 
 const useLocationSearch = (callback: () => void) => {
     const [locationQuery, setLocationQuery] = useState('');
     const [locationSelection, setLocationSelection] = useState<any>();
     const [geolocationValidating, setGeolocationValidating] = useState(false);
 
-    const results = useSWR(
+    const { data: locationResults, isValidating: locationValidating } = useSWR(
         locationQuery ? `search=${locationQuery}` : null,
         locationFetcher,
         swrOptions
@@ -103,7 +104,7 @@ const useLocationSearch = (callback: () => void) => {
 
             // If an actual location is being selected
             if (!DEFAULT_OPTIONS.map(x => x.label).includes(selection)) {
-                const option = results?.data?.find(
+                const option = locationResults?.find(
                     res => res.description === selection
                 );
 
@@ -131,7 +132,7 @@ const useLocationSearch = (callback: () => void) => {
             setLocationQuery(selection);
             callback();
         },
-        [results?.data, callback, geolocationSuccessCb, geolocationErrorCb]
+        [locationResults, callback, geolocationSuccessCb, geolocationErrorCb]
     );
 
     const filterDataByLocation = useCallback(
@@ -166,9 +167,13 @@ const useLocationSearch = (callback: () => void) => {
     }, [debouncedOnLocationQuery]);
 
     const displayOptions = useMemo(
-        () => results.data?.map(item => item.description) || [],
-        [results]
-    ) as string[];
+        () =>
+            locationResults?.map(item => ({
+                icon: undefined,
+                label: item.description,
+            })) || [],
+        [locationResults]
+    ) as LocationOptions[];
 
     const clearLocation = () => {
         setLocationQuery('');
@@ -182,7 +187,8 @@ const useLocationSearch = (callback: () => void) => {
             onLocationQuery: debouncedOnLocationQuery,
             locationSelection,
             onLocationSelect,
-            results,
+            locationResults,
+            locationValidating,
             geolocationValidating,
             displayOptions: locationQuery ? displayOptions : DEFAULT_OPTIONS,
         },
