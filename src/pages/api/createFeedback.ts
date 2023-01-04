@@ -32,7 +32,7 @@ const feedbackHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     try {
         const response = await axios.post<{ _id: number }>(
-            process.env.REALM_API_URL + '/create_feedback',
+            `${process.env.BACKEND_URL}/api/feedback`,
             req.body,
             {
                 headers: {

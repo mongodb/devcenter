@@ -2,7 +2,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import getConfig from 'next/config';
 import parse from 'html-react-parser';
@@ -48,6 +48,7 @@ import { normalizeCategory } from './util';
 import { getCanonicalUrl } from '../../utils/seo';
 import { getURLPath } from '../../utils/format-url-path';
 import { constructDateDisplay } from '../../utils/format-date';
+import { getTweetText } from '../../components/social-buttons/utils';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import { parseMarkdownToAST } from '../../utils/markdown-parser/parse-markdown-to-ast';
 import { getTableOfContents } from '../../utils/markdown-parser/get-table-of-contents';
@@ -111,9 +112,14 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     const { setModalStage } = useRequestContentModal();
 
     const [ratingStars, setRatingStars] = useState(0);
+    const [pageUrl, setPageUrl] = useState('');
     const [feedbackId, setFeedbackId] = useState<string>('');
     const [feedbackModalStage, setFeedbackModalStage] =
         useState<feedbackModalStages>('closed');
+
+    useEffect(() => {
+        setPageUrl(window.location.href);
+    }, []);
 
     const requestButtonText = getRequestBtnText(category);
 
@@ -144,18 +150,37 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         </TypographyScale>
     );
 
-    const displaySocialButtons = !previewMode ? (
-        <SocialButtons
-            description={parseUndefinedValue(description)}
-            heading={title}
-            authors={authors}
-            tags={tags}
-            sx={{
-                gridArea: 'social',
-                justifySelf: ['start', null, 'end'],
-            }}
-        />
-    ) : null;
+    const getSocialButtons = (isHeaderBtns = false) => {
+        if (previewMode) {
+            return null;
+        }
+
+        const tweetBody = getTweetText(authors, title, tags);
+
+        return (
+            <SocialButtons
+                copyUrl={pageUrl}
+                facebook={{
+                    url: `https://www.facebook.com/sharer.php?u=${pageUrl}`,
+                    title: 'Share on Facebook',
+                }}
+                twitter={{
+                    url: `https://twitter.com/intent/tweet?url=${pageUrl}&text=${tweetBody}`,
+                    title: 'Share on Twitter',
+                }}
+                linkedIn={{
+                    url: `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}&title=${title}&summary=${title}&source=MongoDB`,
+                    title: 'Share on LinkedIn',
+                }}
+                sx={{
+                    ...(isHeaderBtns && {
+                        gridArea: 'social',
+                        justifySelf: ['start', null, 'end'],
+                    }),
+                }}
+            />
+        );
+    };
 
     const onRate = (stars: number) => {
         const body: IRating = {
@@ -211,12 +236,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 <HorizontalRule />
                 {!previewMode && (
                     <div sx={styles.footerActions}>
-                        <SocialButtons
-                            description={parseUndefinedValue(description)}
-                            heading={title}
-                            authors={authors}
-                            tags={tags}
-                        />
+                        {getSocialButtons()}
                         {ratingSection}
                     </div>
                 )}
@@ -270,7 +290,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     {tags && (
                         <TagSection tags={tags} sx={{ gridArea: 'tags' }} />
                     )}
-                    {displaySocialButtons}
+                    {getSocialButtons(true)}
                 </div>
             </div>
             <div sx={styles.section}>
@@ -377,7 +397,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         {codeType && (
                             <SecondaryTag codeLevel={codeType as CodeLevel} />
                         )}
-                        {displaySocialButtons}
+                        {getSocialButtons(true)}
                     </div>
                 </div>
                 <div sx={styles.section}>

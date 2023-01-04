@@ -13,7 +13,6 @@ const authorFields = `
     linkedin
     facebook
     twitter
-    youtube
     calculated_slug
     articles: new_articles {
         description
