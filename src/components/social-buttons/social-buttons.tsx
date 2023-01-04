@@ -44,12 +44,12 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                             ...styles.copyLinkBtn,
                             ...styles.circle,
                         }}
-                        title="Copy Link"
+                        title="Copy link"
                         onClick={onCopyLinkClick}
                     >
                         <Image
                             src="/developer/link.svg"
-                            alt="Copy Link"
+                            alt="Copy link"
                             width={12}
                             height={12}
                         />

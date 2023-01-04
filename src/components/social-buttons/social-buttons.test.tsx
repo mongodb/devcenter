@@ -62,7 +62,7 @@ describe('Social Share Buttons', () => {
         render(<SocialButtons copyUrl={copyUrl} />);
 
         act(() => {
-            fireEvent.click(screen.getByTitle('Copy Link'));
+            fireEvent.click(screen.getByTitle('Copy link'));
         });
 
         const tooltip = screen.getByText('Link Copied!');
