@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { ThemeUIStyleObject } from 'theme-ui';
+import { ThemeUICSSObject } from 'theme-ui';
 
 import { Link } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 import { getURLPath } from '../../utils/format-url-path';
 
-const linkStyles = {
-    position: 'relative' as 'relative',
+const linkStyles: ThemeUICSSObject = {
+    position: 'relative',
     transitionDuration: theme.motion.linkAnimation,
     transitionProperty: 'right',
     right: '0',
@@ -14,7 +14,7 @@ const linkStyles = {
 interface ExpandingLinkProps {
     text: string;
     href: string;
-    hoverStyleOverrides?: ThemeUIStyleObject;
+    hoverStyleOverrides?: ThemeUICSSObject;
 }
 
 const ExpandingLink: React.FunctionComponent<ExpandingLinkProps> = ({
@@ -22,7 +22,7 @@ const ExpandingLink: React.FunctionComponent<ExpandingLinkProps> = ({
     href,
     hoverStyleOverrides,
 }) => {
-    const [hoverStyles, setHoverStyles] = useState<ThemeUIStyleObject>({});
+    const [hoverStyles, setHoverStyles] = useState<ThemeUICSSObject>({});
 
     const onLinkEnter = () =>
         setHoverStyles(

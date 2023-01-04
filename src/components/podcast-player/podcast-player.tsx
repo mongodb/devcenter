@@ -18,7 +18,7 @@ const PodcastPlayer: React.FunctionComponent<IProps> = ({ podcastFileUrl }) => {
                 scrolling="no"
                 style={{ border: 'none', background: '#000' }}
                 src={casted_slug_url}
-            ></iframe>
+            />
             <Script
                 id="castedscr"
                 strategy="afterInteractive"
@@ -27,7 +27,7 @@ const PodcastPlayer: React.FunctionComponent<IProps> = ({ podcastFileUrl }) => {
                       window.addEventListener("message", function(message){if(message.origin === "https://podcasts.mongodb.com" ) { if( message.data.event) { if(message.data.event === "castedSizeUpdate") { var casted_episode_player = document.getElementById('casted-embed-' + message.data.payload.slug); if(casted_episode_player) { casted_episode_player.height = message.data.payload.height;if(casted_episode_player.contentWindow) {casted_episode_player.contentWindow.postMessage({ event: "castedStopUpdate" }, "https://podcasts.mongodb.com");}}}}}}, false)
                     `,
                 }}
-            ></Script>
+            />
         </div>
     );
 };

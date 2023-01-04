@@ -46,7 +46,7 @@ class Prometheus {
 }
 
 declare global {
-    var prometheus: Prometheus | undefined;
+    var prometheus: Prometheus | undefined; // eslint-disable-line
 }
 
 export const prometheus = global.prometheus || new Prometheus();

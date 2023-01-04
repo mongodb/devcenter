@@ -1,25 +1,23 @@
 import React from 'react';
-import { ComponentFactory } from '../component-factory';
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
+
+import { ComponentFactory } from '../component-factory';
 import { ArticleNode } from '../../../interfaces/article-body-node';
 
-const headerCellStyles = (align: any, index: number) => {
-    const alignment = align[index];
-    return {
+const headerCellStyles = (align: any, index: number) =>
+    ({
         paddingTop: ['inc20', 'inc40', 'inc40', 'inc40'],
         paddingBottom: ['inc20', 'inc40', 'inc40', 'inc40'],
         paddingLeft: ['inc20', 'inc30', 'inc30', 'inc30'],
         paddingRight: ['inc20', 'inc30', 'inc30', 'inc30'],
-        textAlign: alignment,
-        whiteSpace: 'nowrap' as 'nowrap',
-    };
-};
+        textAlign: align[index],
+        whiteSpace: 'nowrap',
+    } as ThemeUICSSObject);
 
-const headerRowStyles = () => {
-    return {
-        borderBottom: `solid ${theme.borderWidths.inc30}`,
-        borderBottomColor: theme.colors.blue80,
-    };
+const headerRowStyles = {
+    borderBottom: `solid ${theme.borderWidths.inc30}`,
+    borderBottomColor: theme.colors.blue80,
 };
 
 const getNestedValue = (p: any, o: any) => {

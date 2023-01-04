@@ -3,7 +3,6 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
 import Mobile from './mobile';
-import { Tag } from '../../interfaces/tag';
 
 jest.mock('next-auth/react', () => {
     const nextAuthModule = jest.requireActual('next-auth/react');
@@ -15,12 +14,6 @@ jest.mock('next-auth/react', () => {
         }),
     };
 });
-
-const tags: Tag[] = [
-    { name: 'Python', type: 'ProgrammingLanguage', slug: '/languages/python/' },
-    { name: 'Atlas', type: 'L1Product', slug: '/products/atlas/' },
-    { name: 'Article', type: 'ContentType', slug: '/articles/' },
-];
 
 test('renders mobile dropdown', () => {
     render(<Mobile />);

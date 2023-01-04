@@ -11,7 +11,8 @@ import { appendDocumentationLinkToSideNav } from '../../utils/page-template-help
 import { getContentItemFromSlug } from '../../service/get-content-by-slug';
 import allContentPreval from '../../service/get-all-content.preval';
 
-let pluralize = require('pluralize');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pluralize = require('pluralize');
 
 export const getContentPageData = async (slug: string[]) => {
     const slugStr = slug.join('/');

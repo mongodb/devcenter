@@ -1,10 +1,11 @@
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
 
-export const topicCardStyles = {
+export const topicCardStyles: ThemeUICSSObject = {
     display: 'flex',
-    textAlign: ['center' as 'center', null, 'left' as 'left'],
+    textAlign: ['center', null, 'left'],
     alignItems: 'center',
-    flexDirection: ['column' as 'column', null, 'row' as 'row'],
+    flexDirection: ['column', null, 'row'],
     gap: ['inc30', null, 'inc20'],
     border: `1px solid ${theme.colors.card.default.border}`,
     borderRadius: 'inc40',
