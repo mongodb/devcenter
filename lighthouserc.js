@@ -1,3 +1,4 @@
+/* eslint-disable */
 const path = require('path');
 const fs = require('fs');
 
@@ -44,6 +45,7 @@ module.exports = {
                 'inspector-issues': 'warn',
                 'offscreen-images': 'warn',
                 'non-composited-animations': 'warn',
+                'no-document-write': 'warn',
                 'unsized-images': 'warn',
                 'unused-css-rules': 'warn',
                 'unused-javascript': 'warn',
