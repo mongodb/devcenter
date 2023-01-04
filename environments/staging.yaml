@@ -5,8 +5,8 @@ service:
 env:
   ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
   APP_ENV: staging
-  HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
-  NEXTAUTH_URL: https://mongodbcom-cdn.staging.corp.mongodb.com/developer/api/auth/
+  HOST_URL: devhub-1591-preview.devrel.staging.corp.mongodb.com
+  NEXTAUTH_URL: https://devhub-1591-preview.devrel.staging.corp.mongodb.com/developer/api/auth/
 
 envSecrets:
   NEXTAUTH_SECRET: devcenter-secrets
@@ -29,8 +29,8 @@ envSecrets:
   GOOGLE_PLACES_API_KEY: devcenter-secrets
 
 autoscaling:
-  minReplicas: 2
-  maxReplicas: 4
+  minReplicas: 1
+  maxReplicas: 1
   metrics:
     - type: Resource
       resource:
@@ -57,36 +57,4 @@ resources:
 ingress:
   enabled: true
   path: /developer
-  hosts: ["devcenter-frontend.devrel.staging.corp.mongodb.com"]
-
-metrics:
-  enabled: true
-  interval: 30s
-  path: /developer/api/metrics/
-  basicAuth:
-    username:
-      key: PROMETHEUS_AUTH_USER
-      name: devcenter-secrets
-    password:
-      key: PROMETHEUS_AUTH_PASS
-      name: devcenter-secrets
-
-prometheusRules:
-  - alert: ServiceDown
-    expr: sum(up{namespace="devrel", job=~"devcenter-frontend-web-app"}) == 0
-    for: 2m
-    labels:
-      email_to: devhubplatform@mongodb.com
-      severity: critical
-    annotations:
-      summary: "Service is down"
-      description: "All instances of job {{ $labels.job }} are down"
-  - alert: PodContainerNotReady
-    expr: kube_pod_container_status_ready{namespace="devrel", container=~"devcenter-frontend"} == 0
-    for: 5m
-    labels:
-      email_to: devhubplatform@mongodb.com
-      severity: critical
-    annotations:
-      summary: "Container readiness check failed"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} container has not been ready for 5 minutes"
+  hosts: ["devhub-1591-preview.devrel.staging.corp.mongodb.com"]
