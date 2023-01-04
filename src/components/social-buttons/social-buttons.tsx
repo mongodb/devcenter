@@ -1,92 +1,115 @@
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useState } from 'react';
 
-import { Author } from '../../interfaces/author';
+import styles from './styles';
 
-import { circleStyles } from './styles';
-import CopyLink from './copy-link';
-import { Tag } from '../../interfaces/tag';
-
-import { getTweetText } from './utils';
+interface SocialMediaPlatform {
+    url: string;
+    title: string;
+}
 
 interface SocialButtonsProps {
-    heading: string;
-    description: string;
     className?: string;
-    authors?: Author[];
-    tags?: Tag[];
+    copyUrl?: string;
+    facebook?: SocialMediaPlatform;
+    twitter?: SocialMediaPlatform;
+    linkedIn?: SocialMediaPlatform;
 }
 
 const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
-    heading,
     className,
-    authors = [],
-    tags = [],
+    linkedIn,
+    twitter,
+    facebook,
+    copyUrl = '',
 }) => {
-    const [url, setUrl] = useState('');
+    const [showTooltip, setShowTooltip] = useState(false);
 
-    useEffect(() => {
-        setUrl(window.location.href);
-    }, []);
-
-    const tweetText = getTweetText(authors, heading, tags);
+    const onCopyLinkClick = () => {
+        navigator.clipboard.writeText(copyUrl);
+        setShowTooltip(true);
+        setTimeout(() => setShowTooltip(false), 2000);
+    };
 
     return (
         <div
             aria-label="share-buttons-container"
-            sx={{
-                display: 'flex',
-                gap: 'inc30',
-                span: {
-                    display: 'block !important', // Override next/image default styling
-                },
-            }}
+            sx={styles.container}
             className={className}
         >
-            <CopyLink url={url} />
-            <a
-                sx={circleStyles}
-                href={`https://www.facebook.com/sharer.php?u=${url}`}
-                target="_blank"
-                rel="noreferrer"
-                title="Share on Facebook"
-            >
-                <Image
-                    src="/developer/facebook.svg"
-                    alt="facebook icon"
-                    width={12}
-                    height={12}
-                />
-            </a>
-            <a
-                sx={circleStyles}
-                target="_blank"
-                rel="noreferrer"
-                href={`https://twitter.com/intent/tweet?url=${url}&text=${tweetText}`}
-                title="Share on Twitter"
-            >
-                <Image
-                    src="/developer/twitter.svg"
-                    alt="twitter icon"
-                    width={12}
-                    height={12}
-                />
-            </a>
-            <a
-                sx={circleStyles}
-                target="_blank"
-                rel="noreferrer"
-                // The summary param should be description, we can do that once we figure the description field out.
-                href={`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${heading}&summary=${heading}&source=MongoDB`}
-                title="Share on LinkedIn"
-            >
-                <Image
-                    src="/developer/linkedin.svg"
-                    alt="linkedin icon"
-                    width={12}
-                    height={12}
-                />
-            </a>
+            {copyUrl && (
+                <div sx={{ position: 'relative' }}>
+                    <button
+                        sx={{
+                            ...styles.copyLinkBtn,
+                            ...styles.circle,
+                        }}
+                        title="Copy Link"
+                        onClick={onCopyLinkClick}
+                    >
+                        <Image
+                            src="/developer/link.svg"
+                            alt="Copy Link"
+                            width={12}
+                            height={12}
+                        />
+                    </button>
+                    {showTooltip && (
+                        <div sx={styles.tooltipWrapper}>
+                            <div sx={styles.tooltipArrow} />
+                            <div sx={styles.tooltipBody}>Link Copied!</div>
+                        </div>
+                    )}
+                </div>
+            )}
+            {facebook?.url && (
+                <a
+                    sx={styles.circle}
+                    href={facebook.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={facebook.title}
+                >
+                    <Image
+                        src="/developer/facebook.svg"
+                        alt="Facebook Icon"
+                        width={12}
+                        height={12}
+                    />
+                </a>
+            )}
+            {twitter?.url && (
+                <a
+                    sx={styles.circle}
+                    target="_blank"
+                    rel="noreferrer"
+                    href={twitter.url}
+                    title={twitter.title}
+                >
+                    <Image
+                        src="/developer/twitter.svg"
+                        alt="twitter icon"
+                        width={12}
+                        height={12}
+                    />
+                </a>
+            )}
+            {linkedIn?.url && (
+                <a
+                    sx={styles.circle}
+                    target="_blank"
+                    rel="noreferrer"
+                    href={linkedIn.url}
+                    title={linkedIn.title}
+                >
+                    <Image
+                        src="/developer/linkedin.svg"
+                        alt="linkedin icon"
+                        width={12}
+                        height={12}
+                    />
+                </a>
+            )}
         </div>
     );
 };
