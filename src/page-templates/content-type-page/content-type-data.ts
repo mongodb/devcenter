@@ -29,10 +29,7 @@ export const getContentTypePageData = async (
         Sentry.captureException(e);
     }
 
-    // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
-    const filterItems = (
-        await getFilters(contentType, allSearchContent)
-    ).filter(item => item.key !== 'ContentType');
+    const filterItems = await getFilters(contentType, allSearchContent);
 
     const metaInfoForTopic = await getMetaInfoForTopic(slug);
     const description = metaInfoForTopic?.description

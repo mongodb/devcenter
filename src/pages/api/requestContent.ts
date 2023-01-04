@@ -39,7 +39,7 @@ const requestContentHandler = async (
     }
     try {
         const response = await axios.post(
-            process.env.REALM_API_URL + '/request_devhub_content',
+            `${process.env.BACKEND_URL}/api/request_content`,
             req.body,
             {
                 headers: {

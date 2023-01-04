@@ -35,7 +35,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
     );
 
     // Social Buttons, top and bottom
-    expect(await page.locator('a[title="Copy link"]').count()).toEqual(2);
+    expect(await page.locator('button[title="Copy link"]').count()).toEqual(2);
 
     // Tags
     expect(
