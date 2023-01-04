@@ -13,7 +13,6 @@ import { FiltersProps } from '../types';
 
 import RadioFilterGroup from '../radio-filter-group';
 import { buttonSection, filtersModal, titleSection } from './styles';
-import { CONTENT_TYPE_NAME_MAP } from '../../../data/constants';
 import { defaultSortByType } from '../../search/types';
 
 interface MobileFiltersProps extends FiltersProps {
@@ -92,7 +91,7 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
                     {filterItems.map(({ key, value }) => (
                         <>
                             <FilterGroup
-                                title={CONTENT_TYPE_NAME_MAP[key]}
+                                title={key}
                                 allFilters={value}
                                 activeFilters={tempFilters}
                                 onToggle={onToggle}
