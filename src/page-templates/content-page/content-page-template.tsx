@@ -106,6 +106,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         seo,
         relevantLinks,
         // event specific
+        speakers,
         location,
         eventType,
         startTime,
@@ -470,7 +471,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             >
                                 Speakers
                             </TypographyScale>
-                            {authors.map(speaker => {
+                            {speakers.map(speaker => {
                                 return (
                                     <>
                                         <AuthorLockup

@@ -2,7 +2,7 @@ import { ApolloQueryResult, gql } from '@apollo/client';
 import { UnderlyingClient } from '../types/client-factory';
 
 const eventFields = `
-    authors {
+    speakers: authors {
         name
         bio
         image {
