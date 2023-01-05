@@ -40,6 +40,7 @@ export const technologyToLogo: { [key: string]: EThirdPartyLogoVariant } = {
     Spark: EThirdPartyLogoVariant.SPARK,
     Spring: EThirdPartyLogoVariant.SPRING,
     Svelte: EThirdPartyLogoVariant.SVELTE,
+    Terraform: EThirdPartyLogoVariant.TERRAFORM,
     TLS: EThirdPartyLogoVariant.TLS,
     Unity: EThirdPartyLogoVariant.UNITY,
     Vercel: EThirdPartyLogoVariant.VERCEL,

@@ -17,7 +17,7 @@ import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import Breadcrumbs from '../../components/breadcrumbs';
 import Card, { getCardProps } from '../../components/card';
 import { Crumb } from '../../components/breadcrumbs/types';
-import AuthorSocialButtons from '../../components/author-social-buttons';
+import SocialButtons from '../../components/social-buttons';
 
 const crumbs: Crumb[] = [{ text: 'MongoDB Developer Center', url: '/' }];
 interface AuthorPageProps {
@@ -29,7 +29,6 @@ interface AuthorPageProps {
     linkedin?: string;
     facebook?: string;
     twitter?: string;
-    youtube?: string;
     calculated_slug: string;
     articles: ContentItem[];
 }
@@ -55,14 +54,13 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
     image,
     location,
     title,
-    linkedin,
-    facebook,
-    twitter,
-    youtube,
+    linkedin = '',
+    facebook = '',
+    twitter = '',
     articles,
 }) => {
     const titleAndLocation = getTitleAndLocation(title, location);
-    const hasSocial = facebook || twitter || linkedin || youtube;
+    const hasSocial = facebook || twitter || linkedin;
     return (
         <>
             <NextSeo
@@ -150,25 +148,29 @@ const AuthorPage: NextPage<AuthorPageProps> = ({
                         )}
                     </div>
                     {hasSocial && (
-                        <div
+                        <SocialButtons
                             sx={{
                                 gridColumn: [
                                     'span 6',
                                     null,
                                     'span 8',
                                     'span 12',
-                                    'span 12',
                                 ],
                                 marginBottom: 'inc40',
                             }}
-                        >
-                            <AuthorSocialButtons
-                                facebookUrl={facebook}
-                                linkedinUrl={linkedin}
-                                twitterUrl={twitter}
-                                youtubeUrl={youtube}
-                            />
-                        </div>
+                            facebook={{
+                                url: facebook,
+                                title: "Author's Facebook Link",
+                            }}
+                            twitter={{
+                                url: twitter,
+                                title: "Author's Twitter Link",
+                            }}
+                            linkedIn={{
+                                url: linkedin,
+                                title: "Author's LinkedIn Link",
+                            }}
+                        />
                     )}
                 </GridLayout>
             </div>
@@ -291,7 +293,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         linkedin: author.linkedin,
         facebook: author.facebook,
         twitter: author.twitter,
-        youtube: author.youtube,
         articles: authorContentItems,
         calculated_slug: author.calculated_slug,
     };

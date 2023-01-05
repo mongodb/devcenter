@@ -2,7 +2,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import getConfig from 'next/config';
 import parse from 'html-react-parser';
@@ -48,6 +48,7 @@ import { normalizeCategory } from './util';
 import { getCanonicalUrl } from '../../utils/seo';
 import { getURLPath } from '../../utils/format-url-path';
 import { constructDateDisplay } from '../../utils/format-date';
+import { getTweetText } from '../../components/social-buttons/utils';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import { parseMarkdownToAST } from '../../utils/markdown-parser/parse-markdown-to-ast';
 import { getTableOfContents } from '../../utils/markdown-parser/get-table-of-contents';
@@ -62,7 +63,6 @@ import {
     sideNavStyles,
     sideNavTitleStyles,
 } from '../../components/tertiary-nav/styles';
-import EventWidget from '../../components/event-widget';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -104,14 +104,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         codeType,
         seo,
         relevantLinks,
-        // event specific
-        location,
-        eventType,
-        startTime,
-        endTime,
-        virtualLink,
-        registrationLink,
-        virtualLinkText,
     },
 }) => {
     const router = useRouter();
@@ -120,13 +112,17 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     const { setModalStage } = useRequestContentModal();
 
     const [ratingStars, setRatingStars] = useState(0);
+    const [pageUrl, setPageUrl] = useState('');
     const [feedbackId, setFeedbackId] = useState<string>('');
     const [feedbackModalStage, setFeedbackModalStage] =
         useState<feedbackModalStages>('closed');
 
+    useEffect(() => {
+        setPageUrl(window.location.href);
+    }, []);
+
     const requestButtonText = getRequestBtnText(category);
 
-    const isIndustryEvent = category === 'Event';
     const isVideoOrPodcastContent =
         collectionType === 'Video' || collectionType === 'Podcast';
 
@@ -154,18 +150,37 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         </TypographyScale>
     );
 
-    const displaySocialButtons = !previewMode ? (
-        <SocialButtons
-            description={parseUndefinedValue(description)}
-            heading={title}
-            authors={authors}
-            tags={tags}
-            sx={{
-                gridArea: 'social',
-                justifySelf: ['start', null, 'end'],
-            }}
-        />
-    ) : null;
+    const getSocialButtons = (isHeaderBtns = false) => {
+        if (previewMode) {
+            return null;
+        }
+
+        const tweetBody = getTweetText(authors, title, tags);
+
+        return (
+            <SocialButtons
+                copyUrl={pageUrl}
+                facebook={{
+                    url: `https://www.facebook.com/sharer.php?u=${pageUrl}`,
+                    title: 'Share on Facebook',
+                }}
+                twitter={{
+                    url: `https://twitter.com/intent/tweet?url=${pageUrl}&text=${tweetBody}`,
+                    title: 'Share on Twitter',
+                }}
+                linkedIn={{
+                    url: `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}&title=${title}&summary=${title}&source=MongoDB`,
+                    title: 'Share on LinkedIn',
+                }}
+                sx={{
+                    ...(isHeaderBtns && {
+                        gridArea: 'social',
+                        justifySelf: ['start', null, 'end'],
+                    }),
+                }}
+            />
+        );
+    };
 
     const onRate = (stars: number) => {
         const body: IRating = {
@@ -221,13 +236,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 <HorizontalRule />
                 {!previewMode && (
                     <div sx={styles.footerActions}>
-                        <SocialButtons
-                            description={parseUndefinedValue(description)}
-                            heading={title}
-                            authors={authors}
-                            tags={tags}
-                        />
-                        {!isIndustryEvent && ratingSection}
+                        {getSocialButtons()}
+                        {ratingSection}
                     </div>
                 )}
             </div>
@@ -280,7 +290,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     {tags && (
                         <TagSection tags={tags} sx={{ gridArea: 'tags' }} />
                     )}
-                    {displaySocialButtons}
+                    {getSocialButtons(true)}
                 </div>
             </div>
             <div sx={styles.section}>
@@ -354,49 +364,41 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             -1
         );
 
-        const tagsSection = tags ? (
-            <TagSection
-                tags={tags}
-                sx={{
-                    gridArea: 'tags',
-                    ...(isCodeExample && {
-                        display: ['flex', null, null, null, 'none'],
-                    }),
-                }}
-            />
-        ) : null;
-
-        const defaultHeader = (
-            <div sx={styles.defaultHeaderGrid}>
-                <AuthorLockup
-                    authors={parseAuthorsToAuthorLockup(authors)}
-                    title={displayDate}
-                    expandedNames
-                    clickableLinks
-                    size="large"
-                    sx={{ gridArea: 'authordate' }}
-                />
-                {tagsSection}
-                {codeType && <SecondaryTag codeLevel={codeType as CodeLevel} />}
-                {displaySocialButtons}
-            </div>
-        );
-
-        const eventHeader = (
-            <div sx={styles.eventHeaderGrid}>
-                {tagsSection}
-                {displaySocialButtons}
-                <TypographyScale variant="body2" sx={{ gridArea: 'eventType' }}>
-                    Industry Event | {eventType}
-                </TypographyScale>
-            </div>
-        );
-
         return (
             <>
                 <div sx={styles.section}>
                     {displayTitle}
-                    {isIndustryEvent ? eventHeader : defaultHeader}
+                    <div sx={styles.defaultHeaderGrid}>
+                        <AuthorLockup
+                            authors={parseAuthorsToAuthorLockup(authors)}
+                            title={displayDate}
+                            expandedNames
+                            clickableLinks
+                            size="large"
+                            sx={{ gridArea: 'authordate' }}
+                        />
+                        {tags && (
+                            <TagSection
+                                tags={tags}
+                                sx={{
+                                    gridArea: 'tags',
+                                    ...(isCodeExample && {
+                                        display: [
+                                            'flex',
+                                            null,
+                                            null,
+                                            null,
+                                            'none',
+                                        ],
+                                    }),
+                                }}
+                            />
+                        )}
+                        {codeType && (
+                            <SecondaryTag codeLevel={codeType as CodeLevel} />
+                        )}
+                        {getSocialButtons(true)}
+                    </div>
                 </div>
                 <div sx={styles.section}>
                     <div sx={styles.image}>
@@ -410,114 +412,22 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             layout="fill"
                         />
                     </div>
-                    {!previewMode && !isIndustryEvent && ratingSection}
+                    {!previewMode && ratingSection}
                     {isCodeExample &&
                         (githubUrl || liveSiteUrl) &&
                         renderExternalExamples({
                             marginTop: 'inc50',
                             marginBottom: ['', null, null, '-inc40'], // negates marginTop from contentBody since externalExamples might not always be present
                         })}
-                    {isIndustryEvent && (
-                        <EventWidget
-                            startTime={new Date(startTime)}
-                            endTime={new Date(endTime)}
-                            location={location}
-                            virtualLink={virtualLink}
-                            virtualLinkText={virtualLinkText}
-                            registrationLink={registrationLink}
-                            buttonStyles={{
-                                marginTop: '-inc30', // negates marginTop from the component's internal styles
-                                width: ['100%', null, null, 'auto'],
-                                marginBottom: '-inc60', // TODO: this doesn't really work after a certain PX amt
-                            }}
-                            wrapperStyles={{
-                                display: ['block', null, null, 'none'],
-                                marginTop: 'inc40',
-                            }}
-                        />
-                    )}
                 </div>
                 <div sx={styles.bodySection}>
                     <DocumentBody content={contentAst} />
-                    {isIndustryEvent && (
-                        <>
-                            <TypographyScale
-                                variant="heading5"
-                                sx={{
-                                    marginTop: 'inc60',
-                                    marginBottom: 'inc40',
-                                }}
-                            >
-                                Speakers
-                            </TypographyScale>
-                            {authors.map(speaker => {
-                                return (
-                                    <>
-                                        <AuthorLockup
-                                            authors={parseAuthorsToAuthorLockup(
-                                                [speaker]
-                                            )}
-                                            title={speaker.title}
-                                            size="large"
-                                        />
-                                        <TypographyScale
-                                            variant="body1"
-                                            customElement="p"
-                                            sx={{
-                                                paddingTop: 'inc20',
-                                                paddingLeft: [
-                                                    'inc80',
-                                                    '',
-                                                    null,
-                                                    'inc110',
-                                                ],
-                                                paddingBottom: ['inc60'],
-                                                '&:last-of-type': {
-                                                    paddingBottom: 0,
-                                                },
-                                            }}
-                                        >
-                                            {speaker.bio}
-                                        </TypographyScale>
-                                    </>
-                                );
-                            })}
-                            <Button
-                                href={registrationLink}
-                                sx={{
-                                    display: 'block',
-                                    textAlign: 'center',
-                                    marginTop: ['inc40', 'inc50', null],
-                                }}
-                                customWrapperStyles={{
-                                    display: ['block', null, null, 'none'],
-                                    width: ['100%', null, null, 'auto'],
-                                }}
-                            >
-                                Register Now
-                            </Button>
-                        </>
-                    )}
                     {isCodeExample &&
                         (githubUrl || liveSiteUrl) &&
                         renderExternalExamples({ marginTop: 'inc40' })}
                 </div>
                 {contentFooter}
                 <div sx={styles.floatingMenu}>
-                    {isIndustryEvent && (
-                        <EventWidget
-                            startTime={new Date(startTime)}
-                            endTime={new Date(endTime)}
-                            location={location}
-                            virtualLink={virtualLink}
-                            virtualLinkText={virtualLinkText}
-                            registrationLink={registrationLink}
-                            wrapperStyles={{
-                                position: 'sticky',
-                                top: 'inc150',
-                            }}
-                        />
-                    )}
                     {isCodeExample && tags && (
                         <div sx={{ marginBottom: 'inc90' }}>
                             <TypographyScale

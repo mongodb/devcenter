@@ -45,6 +45,7 @@ export const CodeTabs = ({ children }: any) => {
             <CodePanel
                 snippets={snippets}
                 height={getCodeHeight(maxNumberOfLines)}
+                lineWrapping={false}
             />
         )
     );

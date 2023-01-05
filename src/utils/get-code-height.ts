@@ -1,9 +1,5 @@
 export const getCodeHeight = (numLines: number) => {
-    return numLines <= 8
-        ? 'small'
-        : numLines > 8 && numLines <= 12
-        ? 'medium'
-        : 'large';
+    return numLines <= 20 ? 'auto' : 'large';
 };
 
 export const getNumberOfLines = (value: string) => {
