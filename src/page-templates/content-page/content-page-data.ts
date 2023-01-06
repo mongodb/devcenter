@@ -14,6 +14,35 @@ import allContentPreval from '../../service/get-all-content.preval';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
 
+function mapEventsRelatedContentFromCMS(relatedContent: any) {
+    const categoryMapper = {
+        newVideos: 'Video',
+        podcast: 'Podcast',
+        newArticles: 'Article',
+        industryEvents: 'Industry Event',
+    } as { [k: string]: string };
+
+    const content = [];
+
+    for (const item in relatedContent) {
+        if (Array.isArray(relatedContent[item])) {
+            content.push(
+                ...relatedContent[item].map((c: ContentItem) => ({
+                    ...c,
+                    category: categoryMapper[item],
+                }))
+            );
+        } else {
+            content.push({
+                ...relatedContent[item],
+                category: categoryMapper[item],
+            });
+        }
+    }
+
+    return content;
+}
+
 export const getContentPageData = async (slug: string[]) => {
     const slugStr = slug.join('/');
     let contentItem: ContentItem | null;
@@ -29,6 +58,7 @@ export const getContentPageData = async (slug: string[]) => {
     }
     if (!contentItem) return null;
 
+    const isEventContent = contentItem.collectionType === 'Event';
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
 
     //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag
@@ -48,7 +78,7 @@ export const getContentPageData = async (slug: string[]) => {
         if (contentItem.primaryTag?.l1Product) {
             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
         }
-    } else if (contentItem.collectionType === 'Event') {
+    } else if (isEventContent) {
         // Events do not come with a "primary tag" fields, so a search for "L1Product" needs to be done in the standard tags field
         const eventL1Product = contentItem.tags.find(
             tag => tag.type === 'L1Product'
@@ -80,13 +110,17 @@ export const getContentPageData = async (slug: string[]) => {
         metaInfoForTopic
     );
 
+    const relatedContent = isEventContent
+        ? mapEventsRelatedContentFromCMS(contentItem.relatedContent)
+        : getRelatedContent(sideNavFilterSlug, contentItem.slug);
+
     const data = {
         crumbs,
         contentItem,
         tertiaryNavItems,
         topicSlug: sideNavFilterSlug,
         topicName: metaInfoForTopic?.tagName || '',
-        relatedContent: getRelatedContent(sideNavFilterSlug, contentItem.slug),
+        relatedContent,
     };
 
     return data;

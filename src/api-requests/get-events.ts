@@ -44,6 +44,24 @@ const eventFields = `
         }
     }
     calculatedSlug: calculated_slug
+    relatedContent: related_content {
+        newArticles: new_articles {
+            title: name
+            contentDate: originalPublishDate
+        }
+        newVideos: new_videos {
+            title
+            contentDate: originalPublishDate
+        }
+        industryEvents: industry_events {
+            title
+            test: 
+        }
+        podcast {
+            title
+            contentDate: originalPublishDate
+        }
+    }
 `;
 
 export const getEventBySlugFromAPI = async (
