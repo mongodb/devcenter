@@ -27,6 +27,7 @@ Also, ensure the following environment variables are set:
 ```
 HOST_URL=devcenter-local.mongodb.com:3000
 NEXTAUTH_URL=http://devcenter-local.mongodb.com:3000/developer/api/auth/
+ACCOUNT_PORTAL_URL=https://account-qa.mongodb.com
 NEXTAUTH_SECRET=<secret>
 OKTA_CLIENT_ID=<secret>
 OKTA_CLIENT_SECRET=<secret>
