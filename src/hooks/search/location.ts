@@ -7,13 +7,11 @@ import { ContentItem } from '../../interfaces/content-item';
 import { getURLPath } from '../../utils/format-url-path';
 import { locationFetcher, swrOptions } from './utils';
 import haversine from 'haversine-distance';
-import { Coordinates } from '../../interfaces/coordinates';
-import { LocationOptions } from './types';
+import { LocationOptions, LocationSelection } from './types';
 
 // 10 miles in meters
 const MAX_LOCATION_RADIUS = 16093.4;
 
-// TODO: needs to be updated with icon names that will be added by Web Team - https://jira.mongodb.org/browse/WEBSITE-13740
 const DEFAULT_OPTIONS = [
     { icon: ESystemIconNames.LOCATION, label: 'Current Location' },
     { icon: ESystemIconNames.PLAY, label: 'Virtual' },
@@ -21,7 +19,8 @@ const DEFAULT_OPTIONS = [
 
 const useLocationSearch = (callback: () => void) => {
     const [locationQuery, setLocationQuery] = useState('');
-    const [locationSelection, setLocationSelection] = useState<any>();
+    const [locationSelection, setLocationSelection] =
+        useState<LocationSelection>();
     const [geolocationValidating, setGeolocationValidating] = useState(false);
 
     const { data: locationResults, isValidating: locationValidating } = useSWR(
@@ -137,13 +136,9 @@ const useLocationSearch = (callback: () => void) => {
 
     const filterDataByLocation = useCallback(
         (data: ContentItem[]) => {
-            const {
-                geometry: { location } = {},
-            }: {
-                geometry?: {
-                    location?: Coordinates;
-                };
-            } = locationSelection || {};
+            // Places typings think lat/lng are functions when they are actually just values, so we convert to unknown first
+            const location = locationSelection?.geometry
+                ?.location as unknown as google.maps.LatLngLiteral;
 
             if (!location) {
                 return data;

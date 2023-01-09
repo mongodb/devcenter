@@ -56,15 +56,10 @@ export const getCardProps = (
         image,
         slug,
         location,
+        eventSetup,
     }: ContentItem,
     variant: CardVariant
 ): CardProps => {
-    const locationTag = (location: string) => (
-        <SecondaryTag icon={<SystemIcon name={ESystemIconNames.LOCATION} />}>
-            {location}
-        </SecondaryTag>
-    );
-
     const cardProps: CardProps = {
         authors,
         displayDate: parseContentDate(contentDate, updateDate),
@@ -76,30 +71,59 @@ export const getCardProps = (
         thumbnail: image,
         variant,
         slug,
-        ...(location ? { secondaryTag: locationTag(location) } : {}),
     };
 
-    if (tags && category === 'Code Example') {
-        const codeLevelTag = tags.find(tag => tag.type === 'CodeLevel');
-        if (codeLevelTag && codeLevelTag.name) {
-            const iconStyles = {
-                strokeWidth: 2,
-                fill: theme.colors.text.secondary,
-            };
+    if (tags) {
+        if (category === 'Code Example') {
+            const codeLevelTag = tags.find(tag => tag.type === 'CodeLevel');
+            if (codeLevelTag && codeLevelTag.name) {
+                const iconStyles = {
+                    strokeWidth: 2,
+                    fill: theme.colors.text.secondary,
+                };
 
-            cardProps.secondaryTag = (
-                <SecondaryTag
-                    icon={
-                        codeLevelTag.name === 'Snippet' ? (
-                            <Snippet sx={iconStyles} />
-                        ) : (
-                            <FullApplication sx={iconStyles} />
-                        )
-                    }
-                >
-                    {codeLevelTag.name.toUpperCase()}
-                </SecondaryTag>
+                cardProps.secondaryTag = (
+                    <SecondaryTag
+                        icon={
+                            codeLevelTag.name === 'Snippet' ? (
+                                <Snippet sx={iconStyles} />
+                            ) : (
+                                <FullApplication sx={iconStyles} />
+                            )
+                        }
+                    >
+                        {codeLevelTag.name.toUpperCase()}
+                    </SecondaryTag>
+                );
+            }
+        } else if (category === 'Event') {
+            const attendanceTag = tags.find(
+                tag => tag.type === 'EventAttendance'
             );
+            const attendanceType = eventSetup || attendanceTag?.name;
+
+            if (location || attendanceType) {
+                const hyphenatedAttendanceType =
+                    attendanceType
+                        ?.trim()
+                        .replace(/([A-Z])/g, '-$1')
+                        .replace(/^-?(.+)-?$/g, '$1') || '';
+
+                cardProps.secondaryTag = (
+                    <SecondaryTag
+                        icon={
+                            <SystemIcon
+                                sx={{ minWidth: 'inc10' }}
+                                name={ESystemIconNames.LOCATION}
+                            />
+                        }
+                    >
+                        {`${location}${
+                            location && hyphenatedAttendanceType ? ' | ' : ''
+                        }${hyphenatedAttendanceType}`.toUpperCase()}
+                    </SecondaryTag>
+                );
+            }
         }
     }
 

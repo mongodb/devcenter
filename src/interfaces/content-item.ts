@@ -8,6 +8,7 @@ import { CollectionType } from '../types/collection-type';
 import { CodeLevel } from '../types/tag-type';
 import { SEO } from './seo';
 import { Coordinates } from './coordinates';
+import { EventSetup } from './community-event';
 
 export interface ContentItem {
     collectionType?: CollectionType;
@@ -33,5 +34,6 @@ export interface ContentItem {
     liveSiteUrl?: string;
     seo?: SEO;
     location?: string;
+    eventSetup?: EventSetup;
     coordinates?: Coordinates;
 }

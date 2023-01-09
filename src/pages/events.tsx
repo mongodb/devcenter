@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type {
     NextPage,
     GetServerSideProps,
@@ -76,11 +77,32 @@ const EventsPageComponent: React.FunctionComponent<
     slug,
     contentType,
 }) => {
-    const plural = results.length !== 1 ? 's' : '';
-
     const showFeatured = !searchString && !filters.length && !location;
 
-    let oneCriteriaHeader = `${results.length} `;
+    const twoCriteriaResults = results;
+    const showTwoCriteriaResults = location && searchString && !filters.length;
+    const twoCriteriaHeader = `${results.length} event${
+        results.length !== 1 ? 's' : ''
+    } for "${searchString}" near ${location}`;
+
+    const otherResultsAnyLocation = useMemo(
+        () =>
+            unfilteredResults.filter(
+                item => !results.some(res => res.slug === item.slug)
+            ),
+        [results, unfilteredResults]
+    );
+    // If there's a search string and a location inputted, display whatever's left of the search query without the location filter underneath
+    // If only one of the search string or location are inputted, then we just display the results
+    const oneCriteriaResults = showTwoCriteriaResults
+        ? otherResultsAnyLocation
+        : results;
+    // Hide if no filtering/querying inputted, or if both search string & location inputted and loading is showing (so we don't show two loaders at once)
+    const showOneCriteriaResults =
+        !(isValidating && showTwoCriteriaResults) && !showFeatured;
+
+    let oneCriteriaHeader = `${oneCriteriaResults.length} `;
+    const plural = oneCriteriaResults.length !== 1 ? 's' : '';
 
     if (filters.length) {
         oneCriteriaHeader += `Result${plural}`;
@@ -93,18 +115,6 @@ const EventsPageComponent: React.FunctionComponent<
     } else if (searchString) {
         oneCriteriaHeader += `Result${plural} for "${searchString}"`;
     }
-
-    const twoCriteriaHeader = `${results.length} ${
-        results.length === 1 ? 'event' : 'events'
-    } for "${searchString}" near ${location}`;
-
-    const showTwoCriteriaResults = location && searchString && !filters.length;
-    const twoCriteriaResults = results;
-
-    const showOneCriteriaResults = !showFeatured;
-    const oneCriteriaResults = showTwoCriteriaResults
-        ? unfilteredResults
-        : results;
 
     const showAllOtherResults = !isValidating;
     // Always want to show all events, except when only a location
@@ -232,14 +242,16 @@ const EventsPageComponent: React.FunctionComponent<
                 {showTwoCriteriaResults && (
                     <>
                         <div sx={{ order: '5', width: '100%' }}>
-                            <TypographyScale
-                                variant="heading2"
-                                sx={extraSearchResultsHeadingStyles(
-                                    showFeatured
-                                )}
-                            >
-                                {twoCriteriaHeader}
-                            </TypographyScale>
+                            {!isValidating && (
+                                <TypographyScale
+                                    variant="heading2"
+                                    sx={extraSearchResultsHeadingStyles(
+                                        showFeatured
+                                    )}
+                                >
+                                    {twoCriteriaHeader}
+                                </TypographyScale>
+                            )}
                             {!!results.length && (
                                 <SearchResults
                                     {...resultsProps}
@@ -262,6 +274,13 @@ const EventsPageComponent: React.FunctionComponent<
 
                 {showOneCriteriaResults && (
                     <>
+                        {/* We only want to display this horizontal rule when search string & location are inputted and "other results" is empty */}
+                        {showTwoCriteriaResults &&
+                            !!twoCriteriaResults.length &&
+                            !oneCriteriaResults.length && (
+                                <HorizontalRule sx={{ order: '5' }} />
+                            )}
+
                         <div sx={{ order: '5', width: '100%' }}>
                             {!isValidating && (
                                 <TypographyScale
@@ -298,7 +317,7 @@ const EventsPageComponent: React.FunctionComponent<
                                 </div>
                             )}
 
-                            {!!results.length && (
+                            {!!oneCriteriaResults.length && (
                                 <SearchResults
                                     {...resultsProps}
                                     results={oneCriteriaResults}
@@ -312,7 +331,7 @@ const EventsPageComponent: React.FunctionComponent<
                                 />
                             )}
                         </div>
-                        {!results.length && (
+                        {!oneCriteriaResults.length && (
                             <HorizontalRule sx={{ order: '5' }} />
                         )}
                     </>

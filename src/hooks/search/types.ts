@@ -11,6 +11,9 @@ export interface LocationOptions {
     label: string;
 }
 
+export type LocationSelection = google.maps.places.PlaceResult & {
+    description?: string;
+};
 export interface SearchProps {
     clearSearchParam: (which?: SearchParamType) => void;
     searchStringProps: {
@@ -28,9 +31,7 @@ export interface SearchProps {
     locationProps: {
         locationQuery: string;
         onLocationQuery: (event: ChangeEvent<HTMLInputElement>) => void;
-        locationSelection: google.maps.places.PlaceResult & {
-            description: string;
-        };
+        locationSelection?: LocationSelection;
         onLocationSelect: (selection: string) => void;
         locationResults?: google.maps.places.AutocompletePrediction[];
         locationValidating: boolean;

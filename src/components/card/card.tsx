@@ -1,6 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { TypographyScale, Pill, HorizontalRule } from '@mdb/flora';
+import {
+    TypographyScale,
+    Pill,
+    HorizontalRule,
+    SystemIcon,
+    ESystemIconNames,
+} from '@mdb/flora';
 import Truncate from 'react-truncate';
 
 import AuthorLockup from '../author-lockup';
@@ -90,6 +96,18 @@ const CardThumbnail = ({
     ) : null;
 };
 
+const externalLinkIcon = (
+    <div
+        sx={{
+            fill: 'blue60',
+            stroke: 'blue60',
+            display: 'inline',
+        }}
+    >
+        <SystemIcon name={ESystemIconNames.EXTERNAL} inheritColor />
+    </div>
+);
+
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
     displayDate,
@@ -107,6 +125,12 @@ const Card: React.FunctionComponent<CardProps> = ({
 }) => {
     const truncatedDescription =
         description && parse(description ? description : '');
+
+    const isExternalLink =
+        typeof window === 'undefined'
+            ? false
+            : new URL(document.baseURI).origin !==
+              new URL(slug, document.baseURI).origin;
 
     return (
         <div
@@ -126,6 +150,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                     top: 0,
                 }}
                 aria-label={title}
+                {...(isExternalLink ? { target: '_blank' } : {})}
             />
             <div sx={cardHeaderStyles(variant, contentType)}>
                 <CardThumbnail
@@ -157,7 +182,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                             }),
                         }}
                     >
-                        {title}
+                        {title} {isExternalLink ? externalLinkIcon : ''}
                     </TypographyScale>
                     {hasDescription(variant, contentType) && (
                         <TypographyScale

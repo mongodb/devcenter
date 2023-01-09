@@ -3,4 +3,3 @@ export * from './Pin';
 export * from './Alert';
 export * from './FullApplication';
 export * from './Snippet';
-export * from './Location';

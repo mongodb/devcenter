@@ -135,6 +135,7 @@ export const mapEventsToContentItems = (
             title: event.title,
             location: event.location,
             coordinates: event.coordinates,
+            eventSetup: event.event_setup,
         })
     ) as ContentItem[];
 
@@ -156,6 +157,7 @@ export const mapEventsToContentItems = (
             tags: flattenTags([event.otherTags]).concat(eventContentTypeTag),
             title: event.title,
             location: event.location,
+            eventSetup: event.type,
         })) as ContentItem[];
 
     return [...mappedCommunityEvents, ...mappedIndustryEvents];
