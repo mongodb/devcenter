@@ -20,7 +20,6 @@ const ThankYou: React.FunctionComponent<{
             <TypographyScale variant="body2" sx={subtitleStyles}>
                 {subtitle}
             </TypographyScale>
-            {/* TODO: Does this need a wrapper div? */}
             <div sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button size="small" onClick={closeModal}>
                     Close

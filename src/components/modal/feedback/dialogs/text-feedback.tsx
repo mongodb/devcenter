@@ -8,7 +8,7 @@ import {
 } from '@mdb/flora';
 
 import { TextFeedbackProps } from '../types';
-import { modalWrapperStyles } from '../../styles';
+import { modalWrapperStyles } from '../../shared/styles';
 
 const TextFeedback: React.FunctionComponent<TextFeedbackProps> = ({
     onContinue,

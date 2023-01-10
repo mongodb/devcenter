@@ -69,7 +69,7 @@ const RequestContentModal: React.FunctionComponent<RequestContentModalProps> =
                 ),
             };
 
-            return modals[type] ?? <></>;
+            return modals[type] ?? null;
         };
 
         return <form sx={{ width: '100%' }}>{renderModal(modalStage)}</form>;

@@ -13,6 +13,7 @@ import {
     ITextFeedback,
     FEEDBACK_MODAL_STAGE,
 } from './types';
+import { Link } from '@mdb/flora';
 
 const updateFeedback = (body: ITextFeedback | ICheckboxFeedback) =>
     axios.put(getURLPath('/api/updateFeedback') as string, body, {
@@ -63,20 +64,13 @@ const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
             [FEEDBACK_MODAL_STAGE.THANKS]: (
                 <ThankYou
                     title="We appreciate your feedback."
-                    // TODO: Double check this comment about Flora
                     subtitle={
                         <>
                             We&apos;d love to chat with you and answer your
                             questions in our online{' '}
-                            {/* The Flora Link component is not designed for inline use (it has an underline that increases the box size when inline). */}
-                            <a
-                                href="https://www.mongodb.com/community"
-                                target="_blank"
-                                rel="noreferrer"
-                                sx={{ color: 'blue60' }}
-                            >
+                            <Link href="https://www.mongodb.com/community">
                                 MongoDB Community
-                            </a>
+                            </Link>
                             . It&apos;s where people who develop MongoDB hang
                             out with people who develop with MongoDB.
                         </>
@@ -87,7 +81,7 @@ const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
             ),
         };
 
-        return modals[type] ?? <></>;
+        return modals[type] ?? null;
     };
 
     return <form sx={{ width: '100%' }}>{renderModal(modalState)}</form>;

@@ -55,12 +55,12 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 refetchInterval={0}
             >
                 <ModalProvider>
-                    <ModalRoot />
                     <CacheProvider value={customCache(theme)}>
                         <ThemeProvider theme={theme}>
                             <OverlayProvider>
                                 <Layout pagePath={pagePath}>
                                     <ErrorBoundary>
+                                        <ModalRoot />
                                         <Component {...pageProps} />
                                     </ErrorBoundary>
                                 </Layout>

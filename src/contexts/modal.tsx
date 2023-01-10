@@ -6,7 +6,7 @@ export const ModalContext = createContext<{
     openModal: (modal: JSX.Element) => void;
 }>({
     component: null,
-    closeModal: () => <></>,
+    closeModal: () => null,
     openModal: modal => modal,
 });
 

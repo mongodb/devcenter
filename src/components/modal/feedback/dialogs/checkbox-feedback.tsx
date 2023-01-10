@@ -8,8 +8,8 @@ import {
     BrandedIcon,
 } from '@mdb/flora';
 
-import { checkboxListStyles, modalWrapperStyles } from '../../styles';
 import { CheckboxFeedbackProps } from '../types';
+import { modalWrapperStyles } from '../../shared/styles';
 
 const CheckboxFeedback: React.FunctionComponent<CheckboxFeedbackProps> = ({
     onContinue,
@@ -61,7 +61,14 @@ const CheckboxFeedback: React.FunctionComponent<CheckboxFeedbackProps> = ({
             >
                 {subtitle}
             </TypographyScale>
-            <div sx={checkboxListStyles}>
+            <div
+                sx={{
+                    marginBottom: 'inc50',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'inc30',
+                }}
+            >
                 {Object.keys(comments).map(comment => {
                     return (
                         <Checkbox

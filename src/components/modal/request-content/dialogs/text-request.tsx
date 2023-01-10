@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { TypographyScale, Button, TextArea, TextInput } from '@mdb/flora';
 
 import { TextRequestProps } from '../types';
-import { modalWrapperStyles } from '../../styles';
+import { modalWrapperStyles } from '../../shared/styles';
 
 import { getRequestBtnText } from '../../../../utils/page-template-helpers';
 
