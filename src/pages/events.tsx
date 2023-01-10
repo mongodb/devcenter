@@ -210,7 +210,7 @@ const EventsPageComponent: React.FunctionComponent<
                     onLocationSelect={locationSelect}
                 />
 
-                {showFeatured && (
+                {showFeatured && featured.length >= 3 && (
                     <div sx={{ width: '100%', marginBottom: 'inc70' }}>
                         <FeaturedCardSection
                             content={featured}

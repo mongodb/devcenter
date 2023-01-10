@@ -8,7 +8,7 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
 import { PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
-import { CommunityEvent, IndustryEvent } from '../interfaces/community-event';
+import { CommunityEvent, IndustryEvent } from '../interfaces/event';
 import { Tag } from '../interfaces/tag';
 
 export const mapPodcastsToContentItems = (
@@ -139,15 +139,8 @@ export const mapEventsToContentItems = (
         })
     ) as ContentItem[];
 
-    const mappedIndustryEvents = allIndustryEvents
-        .filter(
-            // Filter out past industry events
-            (event: IndustryEvent) =>
-                event.end_time &&
-                !isNaN(Date.parse(event.end_time)) &&
-                new Date(event.end_time) > new Date()
-        )
-        .map((event: IndustryEvent) => ({
+    const mappedIndustryEvents = allIndustryEvents.map(
+        (event: IndustryEvent) => ({
             collectionType: 'Event',
             category: 'Event',
             subCategory: 'Industry Event',
@@ -158,7 +151,8 @@ export const mapEventsToContentItems = (
             title: event.title,
             location: event.location,
             eventSetup: event.type,
-        })) as ContentItem[];
+        })
+    ) as ContentItem[];
 
     return [...mappedCommunityEvents, ...mappedIndustryEvents];
 };

@@ -1,4 +1,6 @@
+import { Author } from './author';
 import { Coordinates } from './coordinates';
+import { Image } from './image';
 import { OtherTags } from './other-tags';
 import { Tag } from './tag';
 
@@ -40,9 +42,32 @@ export interface CommunityEvent {
     slug: string;
 }
 
+export interface IndustryEventApiResponse {
+    type: string;
+    authors: Author[];
+    registration_url: string;
+    start_time: string;
+    slug: string;
+    end_time: string;
+    location: string;
+    title: string;
+    content: string;
+    coordinates: Coordinates;
+    description: string;
+    published_at: string;
+    other_tags: OtherTags;
+    createdAt: string;
+    updatedAt: string;
+    image: Image;
+    updated_by: Author;
+    calculated_slug: string;
+    virtual_meetup_url: string;
+    virtual_meetup_url_text: string;
+}
+
 export interface IndustryEvent {
     type: string;
-    authors: string[];
+    authors: Author[];
     coordinates: Coordinates;
     content: string;
     title: string;

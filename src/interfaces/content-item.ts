@@ -8,7 +8,7 @@ import { CollectionType } from '../types/collection-type';
 import { CodeLevel } from '../types/tag-type';
 import { SEO } from './seo';
 import { Coordinates } from './coordinates';
-import { EventSetup } from './community-event';
+import { EventSetup } from './event';
 
 export interface ContentItem {
     collectionType?: CollectionType;

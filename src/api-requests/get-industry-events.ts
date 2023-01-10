@@ -1,5 +1,5 @@
 import { ApolloQueryResult, gql } from '@apollo/client';
-import { IndustryEvent } from '../interfaces/community-event';
+import { IndustryEvent } from '../interfaces/event';
 import { UnderlyingClient } from '../types/client-factory';
 
 export const industryEventsFields = `
@@ -49,12 +49,12 @@ export const industryEventsFields = `
  * Returns a list of all industry events.
  * @param client -  The Apollo REST client that will be used to make the request.
  */
-const getAllIndustryEventsFromAPI = async (
+export const getAllIndustryEventsFromApi = async (
     client: UnderlyingClient<'ApolloREST'>
 ): Promise<IndustryEvent[]> => {
     const query = gql`
         query IndustryEvents {
-            industryEvents @rest(type: "IndustryEvent", path: "/industry-events") {
+            industryEvents @rest(type: "IndustryEvent", path: "/upcoming-industry-events") {
                 ${industryEventsFields}
             }
         }
@@ -64,5 +64,3 @@ const getAllIndustryEventsFromAPI = async (
 
     return data.industryEvents;
 };
-
-export default getAllIndustryEventsFromAPI;
