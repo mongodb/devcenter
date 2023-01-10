@@ -18,7 +18,7 @@ import LanguagesSection from './sections/languages';
 import TechnologiesSection from './sections/technologies';
 import ProductsSection from './sections/products';
 import Hero from '../../components/hero';
-import RequestContentModal from '../../components/request-content-modal';
+import RequestContentModal from '../../components/modal/request-content';
 import { useSearchMeta } from '../../hooks/search/meta';
 import { shouldRenderRequestButton } from './utils';
 import { CTAContainerStyles } from '../../components/hero/styles';
@@ -28,7 +28,7 @@ import useSearch from '../../hooks/search';
 import { searchWrapperStyles } from '../../components/search/styles';
 import { isEmptyArray } from '../../hooks/search/utils';
 import { getRequestBtnText } from '../../utils/page-template-helpers';
-import { useRequestContentModal } from '../../contexts/request-content-modal';
+import { useModalContext } from '../../contexts/modal';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
@@ -66,7 +66,7 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
 
     const requestButtonText = getRequestBtnText(contentType);
 
-    const { setModalStage } = useRequestContentModal();
+    const { openModal } = useModalContext();
     const searchMetaProps = useSearchMeta(
         pageNumber,
         slug,
@@ -111,9 +111,15 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
             shouldRenderRequestButton(contentType) ? (
                 <div sx={CTAContainerStyles}>
                     <Button
-                        variant="secondary"
-                        onClick={() => setModalStage('text')}
                         size="large"
+                        variant="secondary"
+                        onClick={() =>
+                            openModal(
+                                <RequestContentModal
+                                    contentCategory={contentType}
+                                />
+                            )
+                        }
                     >
                         {requestButtonText}
                     </Button>
@@ -305,7 +311,6 @@ const ContentTypePage: React.FunctionComponent<ContentTypePageProps> = ({
                     {children && children(searchProps, searchMetaProps)}
                 </GridLayout>
             </div>
-            <RequestContentModal contentCategory={contentType} />
         </>
     );
 };

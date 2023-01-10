@@ -8,7 +8,7 @@ import {
     BrandedIcon,
 } from '@mdb/flora';
 
-import { checkboxListStyles, modalWrapperStyles } from '../styles';
+import { checkboxListStyles, modalWrapperStyles } from '../../styles';
 import { CheckboxFeedbackProps } from '../types';
 
 const CheckboxFeedback: React.FunctionComponent<CheckboxFeedbackProps> = ({

@@ -11,12 +11,13 @@ import { customCache } from '../utils/emotion';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
 import { OverlayProvider } from '../contexts/overlay';
-import { RequestContentModalProvider } from '../contexts/request-content-modal';
 import {
     getMetaDescr,
     getCanonicalUrl,
     shouldDefineDefaultCanonical,
 } from '../utils/seo';
+import ModalRoot from '../components/modal';
+import { ModalProvider } from '../contexts/modal';
 
 interface CustomProps {
     session?: Session;
@@ -53,19 +54,20 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 refetchOnWindowFocus={true}
                 refetchInterval={0}
             >
-                <CacheProvider value={customCache(theme)}>
-                    <ThemeProvider theme={theme}>
-                        <OverlayProvider>
-                            <RequestContentModalProvider>
+                <ModalProvider>
+                    <ModalRoot />
+                    <CacheProvider value={customCache(theme)}>
+                        <ThemeProvider theme={theme}>
+                            <OverlayProvider>
                                 <Layout pagePath={pagePath}>
                                     <ErrorBoundary>
                                         <Component {...pageProps} />
                                     </ErrorBoundary>
                                 </Layout>
-                            </RequestContentModalProvider>
-                        </OverlayProvider>
-                    </ThemeProvider>
-                </CacheProvider>
+                            </OverlayProvider>
+                        </ThemeProvider>
+                    </CacheProvider>
+                </ModalProvider>
             </SessionProvider>
         </>
     );

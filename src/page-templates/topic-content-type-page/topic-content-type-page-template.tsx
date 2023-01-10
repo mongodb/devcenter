@@ -12,7 +12,7 @@ import { NextSeo } from 'next-seo';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
-import RequestContentModal from '../../components/request-content-modal';
+import RequestContentModal from '../../components/modal/request-content';
 import { SearchBox, SearchResults, SortBox } from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import {
@@ -39,7 +39,7 @@ import {
     getRequestBtnText,
     addExternalIconToSideNav,
 } from '../../utils/page-template-helpers';
-import { useRequestContentModal } from '../../contexts/request-content-modal';
+import { useModalContext } from '../../contexts/modal';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
@@ -156,7 +156,7 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
 }) => {
     const requestButtonText = getRequestBtnText(contentType);
 
-    const { setModalStage } = useRequestContentModal();
+    const { openModal } = useModalContext();
 
     const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
         useSearchMeta(
@@ -216,8 +216,14 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
             {contentType !== 'News & Announcements' && (
                 <div sx={CTAContainerStyles}>
                     <Button
-                        onClick={() => setModalStage('text')}
                         variant="secondary"
+                        onClick={() =>
+                            openModal(
+                                <RequestContentModal
+                                    contentCategory={contentType}
+                                />
+                            )
+                        }
                     >
                         {requestButtonText}
                     </Button>
@@ -322,9 +328,6 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                     </div>
                 </GridLayout>
             </div>
-            {contentType !== 'News & Announcements' && (
-                <RequestContentModal contentCategory={contentType} />
-            )}
         </>
     );
 };

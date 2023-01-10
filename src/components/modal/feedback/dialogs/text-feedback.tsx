@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     TypographyScale,
     Button,
@@ -7,8 +8,7 @@ import {
 } from '@mdb/flora';
 
 import { TextFeedbackProps } from '../types';
-import { modalWrapperStyles } from '../styles';
-import { useState } from 'react';
+import { modalWrapperStyles } from '../../styles';
 
 const TextFeedback: React.FunctionComponent<TextFeedbackProps> = ({
     onContinue,

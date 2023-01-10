@@ -1,6 +1,9 @@
-import { PillCategory } from '../../types/pill-category';
+import { PillCategory } from '../../../types/pill-category';
 
-export type modalStages = 'closed' | 'text' | 'thanks';
+export enum REQUEST_MODAL_STAGE {
+    TEXT = 'TEXT',
+    THANKS = 'THANKS',
+}
 
 export interface ContentRequest {
     topic: string;

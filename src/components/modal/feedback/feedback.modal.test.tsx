@@ -2,18 +2,22 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import FeedbackModal from '.';
-import { PillCategory } from '../../types/pill-category';
+import { FEEDBACK_MODAL_STAGE } from './types';
+
+import { PillCategory } from '../../../types/pill-category';
 
 const feedbackProps = {
-    setModalStage: () => null,
     contentCategory: 'Demo App' as PillCategory,
-    slug: 'product/atlas/d1',
     feedbackId: 'id-1',
 };
 
 test('renders bad review checkbox modal', () => {
     render(
-        <FeedbackModal {...feedbackProps} stars={1} modalStage="checkbox" />
+        <FeedbackModal
+            {...feedbackProps}
+            stars={1}
+            initialStage={FEEDBACK_MODAL_STAGE.CHECKBOX}
+        />
     );
 
     const title = screen.getByText("We're sorry to hear that.");
@@ -27,7 +31,11 @@ test('renders bad review checkbox modal', () => {
 
 test('renders good review checkbox modal', () => {
     render(
-        <FeedbackModal {...feedbackProps} stars={5} modalStage="checkbox" />
+        <FeedbackModal
+            {...feedbackProps}
+            stars={5}
+            initialStage={FEEDBACK_MODAL_STAGE.CHECKBOX}
+        />
     );
 
     const title = screen.getByText('Thanks for the feedback!');
@@ -38,7 +46,13 @@ test('renders good review checkbox modal', () => {
 });
 
 test('renders bad review text modal', () => {
-    render(<FeedbackModal {...feedbackProps} stars={1} modalStage="text" />);
+    render(
+        <FeedbackModal
+            {...feedbackProps}
+            stars={1}
+            initialStage={FEEDBACK_MODAL_STAGE.TEXT}
+        />
+    );
 
     const title = screen.getByText('How could this be better?');
     expect(title).toBeInTheDocument();
@@ -51,14 +65,26 @@ test('renders bad review text modal', () => {
 });
 
 test('renders good review text modal', () => {
-    render(<FeedbackModal {...feedbackProps} stars={5} modalStage="text" />);
+    render(
+        <FeedbackModal
+            {...feedbackProps}
+            stars={5}
+            initialStage={FEEDBACK_MODAL_STAGE.TEXT}
+        />
+    );
 
     const title = screen.getByText('Thanks for the feedback!');
     expect(title).toBeInTheDocument();
 });
 
 test('renders thank you modal', () => {
-    render(<FeedbackModal {...feedbackProps} stars={5} modalStage="thanks" />);
+    render(
+        <FeedbackModal
+            {...feedbackProps}
+            stars={5}
+            initialStage={FEEDBACK_MODAL_STAGE.THANKS}
+        />
+    );
 
     const title = screen.getByText('We appreciate your feedback.');
     expect(title).toBeInTheDocument();
