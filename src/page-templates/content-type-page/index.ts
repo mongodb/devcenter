@@ -1,3 +1,3 @@
-import ContentTypePage from './content-type';
+import ContentTypePage from './content-type-template';
 
 export default ContentTypePage;

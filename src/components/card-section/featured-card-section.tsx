@@ -61,4 +61,5 @@ const FeaturedCardSection: React.FunctionComponent<
         </div>
     );
 };
+
 export default FeaturedCardSection;

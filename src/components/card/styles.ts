@@ -27,6 +27,11 @@ export const pillStyles = (pillCategory: PillCategory) => ({
     letterSpacing: ['2.5px', null, null, '3px'],
 });
 
+export const thumbnailStyles = {
+    borderRadius: 'inc30',
+    objectFit: 'cover',
+} as ThemeUICSSObject;
+
 export const thumbnailWrapperStyles = (
     variant: CardVariant,
     category: PillCategory
@@ -40,15 +45,23 @@ export const thumbnailWrapperStyles = (
     switch (variant) {
         case 'large':
             tabletDesktopDisplay = 'block';
-            mobileDisplay = category === 'Tutorial' ? 'none' : 'block';
+            mobileDisplay =
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'medium':
             mobileDisplay = tabletDesktopDisplay =
-                category === 'Tutorial' ? 'none' : 'block';
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'small':
             tabletDesktopDisplay = 'none';
-            mobileDisplay = category === 'Tutorial' ? 'none' : 'block';
+            mobileDisplay =
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'list':
             mobileDisplay = tabletDesktopDisplay = 'block';
@@ -74,6 +87,7 @@ export const thumbnailWrapperStyles = (
                 case 'Podcast':
                     mobileDimensions = '48px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions = '64px';
                     break;
@@ -100,6 +114,7 @@ export const thumbnailWrapperStyles = (
                     mobileDimensions = tabletDimensions = '48px';
                     desktopDimensions = '64px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions =
                         tabletDimensions =
@@ -121,6 +136,7 @@ export const thumbnailWrapperStyles = (
                 case 'Podcast':
                     mobileDimensions = '48px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions = '64px';
                     break;

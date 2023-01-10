@@ -37,6 +37,7 @@ export const getContentTypePageData = async (
         : '';
 
     const content = allContent.filter(item => item.category === contentType);
+
     const featured = await getFeaturedForContent(content, slug, true);
 
     const extra =
