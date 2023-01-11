@@ -21,6 +21,9 @@ import {
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
 import { layers, h5Styles } from '../styled/layout';
+import { useModalContext } from '../contexts/modal';
+
+import PersonalizationModal from '../components/modal/personalization';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -68,6 +71,7 @@ const HomepageSearch: React.FunctionComponent = () => {
 };
 
 const Home: NextPage = () => {
+    const { openModal } = useModalContext();
     return (
         <main
             sx={{
@@ -83,6 +87,9 @@ const Home: NextPage = () => {
                 },
             }}
         >
+            <button onClick={() => openModal(<PersonalizationModal />)}>
+                Open Modal
+            </button>
             <svg
                 id="svg-top"
                 width="1800"
