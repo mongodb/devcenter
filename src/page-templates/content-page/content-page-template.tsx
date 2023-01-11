@@ -2,7 +2,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import getConfig from 'next/config';
 import parse from 'html-react-parser';
@@ -239,8 +239,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         </div>
     );
 
-    // console.log('contentDate in template', contentDate);
-
     const contentFooter = (
         <div sx={styles.footer}>
             <div>
@@ -262,16 +260,13 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         Related
                     </TypographyScale>
                     <Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>
-                        {relatedContent.map(piece => {
-                            // console.log('piece', piece);
-                            return (
-                                <Card
-                                    sx={{ height: '100%' }}
-                                    key={piece.slug}
-                                    {...getCardProps(piece, 'related')}
-                                />
-                            );
-                        })}
+                        {relatedContent.map(piece => (
+                            <Card
+                                sx={{ height: '100%' }}
+                                key={piece.slug}
+                                {...getCardProps(piece, 'related')}
+                            />
+                        ))}
                     </Grid>
                 </div>
             )}
@@ -487,39 +482,36 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             >
                                 Speakers
                             </TypographyScale>
-                            {authors?.map(author => {
-                                // TODO: need to add a key here
-                                return (
-                                    <>
-                                        <AuthorLockup
-                                            authors={parseAuthorsToAuthorLockup(
-                                                [author]
-                                            )}
-                                            title={author.title}
-                                            size="large"
-                                        />
-                                        <TypographyScale
-                                            variant="body1"
-                                            customElement="p"
-                                            sx={{
-                                                paddingTop: 'inc20',
-                                                paddingLeft: [
-                                                    'inc80',
-                                                    '',
-                                                    null,
-                                                    'inc110',
-                                                ],
-                                                paddingBottom: ['inc60'],
-                                                '&:last-of-type': {
-                                                    paddingBottom: 0,
-                                                },
-                                            }}
-                                        >
-                                            {author.bio}
-                                        </TypographyScale>
-                                    </>
-                                );
-                            })}
+                            {authors?.map(author => (
+                                <Fragment key={author.title}>
+                                    <AuthorLockup
+                                        authors={parseAuthorsToAuthorLockup([
+                                            author,
+                                        ])}
+                                        title={author.title}
+                                        size="large"
+                                    />
+                                    <TypographyScale
+                                        variant="body1"
+                                        customElement="p"
+                                        sx={{
+                                            paddingTop: 'inc20',
+                                            paddingLeft: [
+                                                'inc80',
+                                                '',
+                                                null,
+                                                'inc110',
+                                            ],
+                                            paddingBottom: ['inc60'],
+                                            '&:last-of-type': {
+                                                paddingBottom: 0,
+                                            },
+                                        }}
+                                    >
+                                        {author.bio}
+                                    </TypographyScale>
+                                </Fragment>
+                            ))}
                             <Button
                                 href={registrationLink}
                                 sx={{
