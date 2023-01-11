@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import { SortByType } from './types';
 
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const sortByOptions: { [key in SortByType]: number } = {
-    'Most Recent': 0,
+    Newest: 0,
     // 'Most Popular': 1, // add back when Most Popular is implemented
     'Highest Rated': 2,
 };
@@ -37,4 +38,35 @@ export const isValidPage = (totalResults: number, pageNumber: number) => {
         pageNumber <= Math.ceil(totalResults / DEFAULT_PAGE_SIZE) &&
         pageNumber > 0
     );
+};
+
+/*
+    This is a workaround due to a shortcoming of flora's TextInput component.
+    TextInput isn't able to act as a fully controlled component, so the only
+    way to clear it is by passing a key prop which effectively force-rerenders it.
+    However, if the key is always passed, it will be rerendered on every search.
+    Therefore, the idea here is to "flicker" the key value on and off to reset
+    and facilitate the back button clearing the search input in the 404 state,
+    while also preventing rerender on every search
+*/
+
+export const useResetKey = (value?: string) => {
+    const [keyReset, setKeyReset] = useState(false);
+
+    useEffect(() => {
+        setKeyReset(false);
+    }, [keyReset]);
+
+    useEffect(() => {
+        if (!value) {
+            setKeyReset(true);
+        }
+    }, [value]);
+
+    // Flicker the key value on mount to populate sitewide search field initially
+    useEffect(() => {
+        setKeyReset(true);
+    }, []);
+
+    return keyReset ? { key: Date.now() } : {};
 };

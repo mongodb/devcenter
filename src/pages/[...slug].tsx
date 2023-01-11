@@ -86,6 +86,7 @@ export const getServerSideProps: GetServerSideProps = async (
                 pageParams.slug,
                 pageNumber
             );
+
             if (
                 data?.initialSearchContent &&
                 !isValidPage(data?.initialSearchContent.length, pageNumber)

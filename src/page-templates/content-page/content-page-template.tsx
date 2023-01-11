@@ -39,7 +39,6 @@ import { VideoEmbed } from '../../components/article-body/body-components/video-
 // context
 import { useRequestContentModal } from '../../contexts/request-content-modal';
 // types
-import { CodeLevel } from '../../types/tag-type';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { IRating } from '../../components/feedback-modal/types';
@@ -64,6 +63,8 @@ import {
     sideNavStyles,
     sideNavTitleStyles,
 } from '../../components/tertiary-nav/styles';
+import { FullApplication, Snippet } from '../../components/icons';
+import { iconStyles } from '../../components/topic-card/styles';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -139,7 +140,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
     const displayDate = constructDateDisplay(
         isVideoOrPodcastContent,
-        contentDate,
+        contentDate as string,
         updateDate
     );
 
@@ -398,7 +399,19 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     sx={{ gridArea: 'authordate' }}
                 />
                 {tagsSection}
-                {codeType && <SecondaryTag codeLevel={codeType as CodeLevel} />}
+                {codeType && (
+                    <SecondaryTag
+                        icon={
+                            codeType === 'Snippet' ? (
+                                <Snippet sx={iconStyles} />
+                            ) : (
+                                <FullApplication sx={iconStyles} />
+                            )
+                        }
+                    >
+                        {codeType.toUpperCase()}
+                    </SecondaryTag>
+                )}
                 {getSocialButtons(true)}
             </div>
         );

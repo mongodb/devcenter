@@ -1,0 +1,177 @@
+{
+    "results": [
+        {
+            "description": "NYC, NY, USA",
+            "matched_substrings": [
+                {
+                    "length": 3,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJOwg_06VPwokRYv534QaPC8g",
+            "reference": "ChIJOwg_06VPwokRYv534QaPC8g",
+            "structured_formatting": {
+                "main_text": "NYC",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 3,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "NY, USA"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "NYC"
+                },
+                {
+                    "offset": 5,
+                    "value": "NY"
+                },
+                {
+                    "offset": 9,
+                    "value": "USA"
+                }
+            ],
+            "types": ["locality", "political", "geocode"]
+        },
+        {
+            "description": "Yonkers, NY, USA",
+            "matched_substrings": [
+                {
+                    "length": 7,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJoa9DCQjAwokRotrYpIRzlr4",
+            "reference": "ChIJoa9DCQjAwokRotrYpIRzlr4",
+            "structured_formatting": {
+                "main_text": "Yonkers",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 7,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "NY, USA"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "Yonkers"
+                },
+                {
+                    "offset": 9,
+                    "value": "NY"
+                },
+                {
+                    "offset": 13,
+                    "value": "USA"
+                }
+            ],
+            "types": ["locality", "political", "geocode"]
+        },
+        {
+            "description": "Nyckelby, Sweden",
+            "matched_substrings": [
+                {
+                    "length": 3,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJQw1wLkh8Z0YRZkDSUGLnR34",
+            "reference": "ChIJQw1wLkh8Z0YRZkDSUGLnR34",
+            "structured_formatting": {
+                "main_text": "Nyckelby",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 3,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "Sweden"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "Nyckelby"
+                },
+                {
+                    "offset": 10,
+                    "value": "Sweden"
+                }
+            ],
+            "types": ["locality", "political", "geocode"]
+        },
+        {
+            "description": "Nyckleby, Sweden",
+            "matched_substrings": [
+                {
+                    "length": 3,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJWdv1z0o_RUYRrX5agZGFFA4",
+            "reference": "ChIJWdv1z0o_RUYRrX5agZGFFA4",
+            "structured_formatting": {
+                "main_text": "Nyckleby",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 3,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "Sweden"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "Nyckleby"
+                },
+                {
+                    "offset": 10,
+                    "value": "Sweden"
+                }
+            ],
+            "types": ["locality", "political", "geocode"]
+        },
+        {
+            "description": "Guanacaste Province, Nicoya, Costa Rica",
+            "matched_substrings": [
+                {
+                    "length": 6,
+                    "offset": 21
+                }
+            ],
+            "place_id": "ChIJYVOCb9K2n48R8-QboBYU3Ms",
+            "reference": "ChIJYVOCb9K2n48R8-QboBYU3Ms",
+            "structured_formatting": {
+                "main_text": "Nicoya",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 6,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "Guanacaste Province, Costa Rica"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "Guanacaste Province"
+                },
+                {
+                    "offset": 21,
+                    "value": "Nicoya"
+                },
+                {
+                    "offset": 29,
+                    "value": "Costa Rica"
+                }
+            ],
+            "types": ["locality", "political", "geocode"]
+        }
+    ],
+    "error": ""
+}

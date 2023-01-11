@@ -108,7 +108,14 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     contentRows.forEach(contentRow => {
         sortedContentRows.push(
             contentRow.sort((a, b) =>
-                b.contentDate.localeCompare(a.contentDate)
+                (Array.isArray(b.contentDate)
+                    ? b.contentDate[0]
+                    : b.contentDate
+                ).localeCompare(
+                    (Array.isArray(a.contentDate)
+                        ? a.contentDate[0]
+                        : a.contentDate) as string
+                )
             )
         );
     });
@@ -121,7 +128,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
             buildPageTitle(contentType, name)
         );
 
-    const { searchBoxProps, sortBoxProps, resultsProps } = useSearch(
+    const { searchStringProps, sortProps, resultsProps } = useSearch(
         initialSearchContent,
         updatePageMeta,
         undefined,
@@ -206,7 +213,10 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                             )}
                             {variant === 'heavy' &&
                                 sortedContentRows.map(contentRow => {
-                                    const contentType = contentRow[0].category;
+                                    const contentType =
+                                        contentRow[0].collectionType === 'Event'
+                                            ? 'Event'
+                                            : contentRow[0].category;
                                     const contentTypeSlug =
                                         pillCategoryToSlug.get(contentType);
                                     const direction =
@@ -239,13 +249,13 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         </div>
 
                         <SearchBox
-                            {...searchBoxProps}
+                            {...searchStringProps}
                             placeholder={`Search ${name} Content`}
                             extraStyles={extraSearchBoxStyles}
                         />
 
                         <SortBox
-                            {...sortBoxProps}
+                            {...sortProps}
                             extraStyles={extraSortBoxStyles}
                         />
 

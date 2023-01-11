@@ -1,4 +1,5 @@
 import { Coordinates } from './coordinates';
+import { OtherTags } from './other-tags';
 import { Tag } from './tag';
 
 export type EventSetup = 'InPerson' | 'Virtual' | 'Hybrid' | 'Unknown';
@@ -37,4 +38,22 @@ export interface CommunityEvent {
     start_time: string;
     end_time: string;
     slug: string;
+}
+
+export interface IndustryEvent {
+    type: string;
+    authors: string[];
+    coordinates: Coordinates;
+    content: string;
+    title: string;
+    published_at: string;
+    otherTags: OtherTags;
+    created_at: string;
+    updated_at: string;
+    calculated_slug: string;
+    description: string;
+    end_time: string;
+    location: string;
+    slug: string;
+    start_time: string;
 }

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
     BrandedIcon,
     Button,
@@ -13,7 +14,12 @@ import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
 import RequestContentModal from '../../components/request-content-modal';
-import { SearchBox, SearchResults, SortBox } from '../../components/search';
+import {
+    LocationBox,
+    SearchBox,
+    SearchResults,
+    SortBox,
+} from '../../components/search';
 import { SearchItem } from '../../components/search/types';
 import {
     sideNavStyles,
@@ -40,6 +46,7 @@ import {
     addExternalIconToSideNav,
 } from '../../utils/page-template-helpers';
 import { useRequestContentModal } from '../../contexts/request-content-modal';
+import { LocationOptions } from '../../hooks/search/types';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
@@ -166,8 +173,13 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
             buildPageTitle(contentType, topicName)
         );
 
-    const { searchBoxProps, sortBoxProps, filterProps, resultsProps } =
-        useSearch(initialSearchContent, updatePageMeta, contentType, topicSlug);
+    const {
+        searchStringProps,
+        sortProps,
+        filterProps,
+        resultsProps,
+        locationProps,
+    } = useSearch(initialSearchContent, updatePageMeta, contentType, topicSlug);
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
@@ -179,6 +191,14 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
         const href = subTopic.href + contentTypeSlug;
         return { ...subTopic, href, icon };
     });
+
+    const locationDisplayOptions = useMemo(
+        () =>
+            locationProps.displayOptions.filter(
+                option => option.label !== 'Virtual'
+            ),
+        [locationProps.displayOptions]
+    ) as LocationOptions[];
 
     tertiaryNavItems = addExternalIconToSideNav(
         tertiaryNavItems,
@@ -293,16 +313,26 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                         </div>
 
                         <SearchBox
-                            {...searchBoxProps}
+                            {...searchStringProps}
                             placeholder={`Search ${topicName} ${pluralize(
                                 contentType
                             )}`}
                             extraStyles={extraSearchBoxStyles}
                         />
-                        <SortBox
-                            {...sortBoxProps}
-                            extraStyles={extraSortBoxStyles}
-                        />
+
+                        {contentType === 'Event' && (
+                            <LocationBox
+                                {...locationProps}
+                                displayOptions={locationDisplayOptions}
+                            />
+                        )}
+
+                        {contentType !== 'Event' && (
+                            <SortBox
+                                {...sortProps}
+                                extraStyles={extraSortBoxStyles}
+                            />
+                        )}
 
                         {contentType === 'Code Example' && (
                             <ExtraCodeExampleCheckboxes {...filterProps} />

@@ -52,7 +52,8 @@ export const getFeaturedForTopic = async (
         p => p.title
     );
     const featuredVideos = (featuredForTopic?.videos || []).map(v => v.title);
-    const featuredEvents = (featuredForTopic?.events || []).map(i => i.title);
+    const featuredEvents = (featuredForTopic?.events || []).map(e => e.title);
+
     return {
         articles: featuredArticles ? featuredArticles : [],
         podcasts: featuredPodcasts ? featuredPodcasts : [],

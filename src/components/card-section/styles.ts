@@ -40,6 +40,12 @@ export const featuredCardSectionListStyles = {
     gridTemplateColumns: ['repeat(3, 1fr)', null, 'repeat(6, 1fr)'],
 };
 
+export const featuredSmallCardSectionListStyles = {
+    ...cardSectionListStyles('row'),
+    width: '100%',
+    marginBottom: 'inc50',
+};
+
 export const bigFeaturedCardStyles = {
     ...cardListStyles('row'),
     gridColumn: ['span 1', null, 'span 6', 'span 4'],
