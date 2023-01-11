@@ -1,8 +1,7 @@
-import { getAllMetaInfo } from './get-all-meta-info';
+import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 
 export const getSubtopics = async (topic: string) => {
-    const metaInfo = await getAllMetaInfo();
-    const metaInfoForTopicName = metaInfo.filter(
+    const metaInfoForTopicName = allMetaInfoPreval.filter(
         m => m.tagName.toLowerCase() === topic.toLowerCase()
     );
     return metaInfoForTopicName.length > 0

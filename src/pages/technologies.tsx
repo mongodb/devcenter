@@ -6,7 +6,7 @@ import { GridLayout, LogoPaths, BrandedIcon, ThirdPartyLogo } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 
 import { technologyToLogo } from '../utils/technology-to-logo';
-import { getAllMetaInfo } from '../service/get-all-meta-info';
+import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
 import TopicCard from '../components/topic-card';
 import { iconStyles } from '../components/topic-card/styles';
@@ -87,8 +87,7 @@ export default TechnologiesPage;
 export const getStaticProps: GetStaticProps<{
     technologies: MetaInfo[];
 }> = async () => {
-    const tags = await getAllMetaInfo();
-    const technologies = tags
+    const technologies = allMetaInfoPreval
         .filter(tag => tag.category === 'Technology')
         .sort((prev, next) =>
             prev.tagName.toLowerCase().localeCompare(next.tagName.toLowerCase())
