@@ -1,4 +1,4 @@
-import allMetaInfoPreval from '../service/get-all-meta-info.preval';
+import allMetaInfoPreval from './get-all-meta-info.preval';
 
 export const getSubtopics = async (topic: string) => {
     const metaInfoForTopicName = allMetaInfoPreval.filter(
