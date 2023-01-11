@@ -218,8 +218,6 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
 
 export default Topic;
 
-export const getStaticProps: GetStaticProps = async () => {
-    return {
-        props: { topics: allMetaInfoPreval },
-    };
-};
+export const getStaticProps: GetStaticProps = async () => ({
+    props: { topics: allMetaInfoPreval },
+});
