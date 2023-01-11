@@ -73,6 +73,8 @@ export const getCardProps = (
         slug,
     };
 
+    // console.log('contentDate', contentDate);
+
     if (tags) {
         if (category === 'Code Example') {
             const codeLevelTag = tags.find(tag => tag.type === 'CodeLevel');

@@ -10,8 +10,7 @@ import { ThemeUICSSObject } from 'theme-ui';
 import styles from './styles';
 
 interface EventWidgetProps {
-    startTime: Date;
-    endTime: Date;
+    dates: string | [string, string];
     location?: string;
     virtualLink?: string;
     virtualLinkText?: string;
@@ -21,8 +20,7 @@ interface EventWidgetProps {
 }
 
 export default function EventWidget({
-    startTime,
-    endTime,
+    dates,
     location = '',
     virtualLink = '',
     buttonStyles = {},
@@ -30,6 +28,9 @@ export default function EventWidget({
     registrationLink = '',
     virtualLinkText = 'Virtual Link',
 }: EventWidgetProps) {
+    const startTime = dates[0] ? new Date(dates[0]).toLocaleString() : '';
+    const endTime = dates[1] ? `- ${new Date(dates[1]).toLocaleString()}` : '';
+
     return (
         <div sx={{ ...wrapperStyles }}>
             <div sx={styles.widget}>
@@ -39,10 +40,9 @@ export default function EventWidget({
                         When
                     </TypographyScale>
                 </div>
-                <TypographyScale
-                    variant="body3"
-                    sx={styles.content}
-                >{`${startTime.toLocaleString()} - ${endTime.toLocaleString()}`}</TypographyScale>
+                <TypographyScale variant="body3" sx={styles.content}>
+                    {startTime} {endTime}
+                </TypographyScale>
             </div>
             {(location || virtualLink) && (
                 <div sx={styles.widget}>
@@ -58,7 +58,11 @@ export default function EventWidget({
                         </TypographyScale>
                     )}
                     {virtualLink && (
-                        <Link href={virtualLink} sx={styles.content}>
+                        <Link
+                            href={virtualLink}
+                            target="_blank"
+                            sx={styles.content}
+                        >
                             {virtualLinkText}
                         </Link>
                     )}
@@ -67,6 +71,7 @@ export default function EventWidget({
             {registrationLink && (
                 <Button
                     href={registrationLink}
+                    target="_blank"
                     customWrapperStyles={{ ...buttonStyles }}
                     sx={styles.button}
                 >

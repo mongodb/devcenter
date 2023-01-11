@@ -43,6 +43,32 @@ export const industryEventsFields = `
   location
   slug
   start_time
+  registration_url
+  virtual_meetup_url
+  virtual_meetup_url_text
+  related_content {
+    newArticles: new_articles {
+        title: name
+        contentDate: originalPublishDate
+        calculated_slug
+    }
+    newVideos: new_videos {
+        title
+        contentDate: originalPublishDate
+        slug: calculated_slug
+    }
+    industryEvents: industry_events {
+        title
+        calculated_slug
+        start_time
+        end_time
+    }
+    podcasts {
+        title
+        contentDate: originalPublishDate
+        slug: calculated_slug
+    }
+}
 `;
 
 /**
@@ -63,4 +89,21 @@ export const getAllIndustryEventsFromApi = async (
         await client.query({ query });
 
     return data.industryEvents;
+};
+
+export const getIndustryEventBySlugFromAPI = async (
+    client: UnderlyingClient<'ApolloREST'>,
+    calculatedSlug: string
+): Promise<IndustryEvent | null> => {
+    const query = gql`
+        query IndustryEvents {
+            industryEvents @rest(type: "IndustryEvent", path: "/industry-events?calculated_slug=${calculatedSlug}") {
+                ${industryEventsFields}
+            }
+        }
+    `;
+    const { data }: ApolloQueryResult<{ industryEvents: IndustryEvent[] }> =
+        await client.query({ query });
+
+    return data.industryEvents.length > 0 ? data.industryEvents[0] : null;
 };

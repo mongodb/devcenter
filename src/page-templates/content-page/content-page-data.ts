@@ -14,35 +14,6 @@ import allContentPreval from '../../service/get-all-content.preval';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
 
-function mapEventsRelatedContentFromCMS(relatedContent: any) {
-    const categoryMapper = {
-        newVideos: 'Video',
-        podcast: 'Podcast',
-        newArticles: 'Article',
-        industryEvents: 'Industry Event',
-    } as { [k: string]: string };
-
-    const content = [];
-
-    for (const item in relatedContent) {
-        if (Array.isArray(relatedContent[item])) {
-            content.push(
-                ...relatedContent[item].map((c: ContentItem) => ({
-                    ...c,
-                    category: categoryMapper[item],
-                }))
-            );
-        } else {
-            content.push({
-                ...relatedContent[item],
-                category: categoryMapper[item],
-            });
-        }
-    }
-
-    return content;
-}
-
 export const getContentPageData = async (slug: string[]) => {
     const slugStr = slug.join('/');
     let contentItem: ContentItem | null;
@@ -111,7 +82,7 @@ export const getContentPageData = async (slug: string[]) => {
     );
 
     const relatedContent = isEventContent
-        ? mapEventsRelatedContentFromCMS(contentItem.relatedContent)
+        ? contentItem.relatedContent
         : getRelatedContent(sideNavFilterSlug, contentItem.slug);
 
     const data = {

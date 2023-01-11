@@ -1,7 +1,7 @@
 import { STRAPI_CLIENT } from '../config/api-client';
 import { ContentItem } from '../interfaces/content-item';
 import { getArticleBySlugFromAPI } from '../api-requests/get-articles';
-import { getEventBySlugFromAPI } from '../api-requests/get-events';
+import { getIndustryEventBySlugFromAPI } from '../api-requests/get-industry-events';
 import { getVideoBySlug } from '../service/get-all-videos';
 import { getPodcastBySlug } from '../service/get-all-podcasts';
 import allArticleSeries from './get-all-article-series.preval';
@@ -17,13 +17,14 @@ import {
 import { Article } from '../interfaces/article';
 import { Video } from '../interfaces/video';
 import { Podcast } from '../interfaces/podcast';
+import { IndustryEvent } from '../interfaces/event';
 
 export const getContentItemFromSlug: (
     slug: string
 ) => Promise<ContentItem | null> = async (slug: string) => {
     slug = '/' + slug;
-    let content: Article | Video | Podcast | any = null;
-    let contentType: CollectionType | any = null;
+    let content: Article | Video | Podcast | IndustryEvent | null = null;
+    let contentType: CollectionType | null = null;
 
     // videos always starts with /videos
     if (slug.startsWith('/videos')) {
@@ -33,7 +34,7 @@ export const getContentItemFromSlug: (
         content = await getPodcastBySlug(slug);
         contentType = 'Podcast';
     } else if (slug.startsWith('/events')) {
-        content = await getEventBySlugFromAPI(STRAPI_CLIENT, slug);
+        content = await getIndustryEventBySlugFromAPI(STRAPI_CLIENT, slug);
         contentType = 'Event';
     } else {
         content = await getArticleBySlugFromAPI(STRAPI_CLIENT, slug);
@@ -61,7 +62,7 @@ export const getContentItemFromSlug: (
         );
         return mappedVideos[0];
     } else if (contentType === 'Event') {
-        return mapIndustryEventToContentItem(content);
+        return mapIndustryEventToContentItem(content as IndustryEvent);
     }
 
     return null;

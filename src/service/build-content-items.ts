@@ -6,10 +6,11 @@ import { Series } from '../interfaces/series';
 import { flattenTags } from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
-import { PillCategoryValues } from '../types/pill-category';
+import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
 import { CommunityEvent, IndustryEvent } from '../interfaces/event';
 import { Tag } from '../interfaces/tag';
+import { IndustryEventRelatedContentFromCMS } from '../interfaces/event';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -111,27 +112,65 @@ export const mapArticlesToContentItems = (
     return items.filter(item => PillCategoryValues.includes(item.category));
 };
 
-// TODO: is this still needed?
-export const mapIndustryEventToContentItem = (event: any) => ({
-    ...event,
-    collectionType: 'Event',
-    category: 'Event',
-    slug: event.calculatedSlug.startsWith('/')
-        ? event.calculatedSlug.substring(1)
-        : event.calculatedSlug,
-    tags: flattenTags(event.otherTags),
-});
+const eventContentTypeTag = {
+    name: 'Event',
+    slug: '/events',
+    type: 'ContentType',
+} as Tag;
+
+const mapEventsRelatedContent = (
+    relatedContent: IndustryEventRelatedContentFromCMS
+) => {
+    const categoryMapper = {
+        newVideos: 'Video',
+        podcasts: 'Podcast',
+        newArticles: 'Article',
+        industryEvents: 'Industry Event',
+    } as { [field: string]: PillCategory };
+
+    const content = [];
+
+    for (const item in relatedContent) {
+        content.push(
+            ...relatedContent[item].map(piece => ({
+                title: piece.title,
+                contentDate: piece?.contentDate || [
+                    piece?.start_time,
+                    piece?.end_time,
+                ],
+                slug: piece?.calculated_slug || piece?.slug,
+                category: categoryMapper[item],
+            }))
+        );
+    }
+
+    return content;
+};
+
+export const mapIndustryEventToContentItem = (event: IndustryEvent) =>
+    ({
+        collectionType: 'Event',
+        category: 'Event',
+        subCategory: 'Industry Event',
+        contentDate: [event.start_time, event.end_time],
+        description: event.description,
+        slug: event.calculated_slug,
+        tags: flattenTags(event.otherTags).concat(eventContentTypeTag),
+        title: event.title,
+        location: event.location,
+        eventSetup: event.type,
+        authors: event.authors,
+        content: event.content,
+        registrationLink: event.registration_url,
+        virtualLink: event.virtual_meetup_url,
+        virtualLinkText: event.virtual_meetup_url_text,
+        relatedContent: mapEventsRelatedContent(event.related_content),
+    } as ContentItem);
 
 export const mapEventsToContentItems = (
     allCommunityEvents: CommunityEvent[],
     allIndustryEvents: IndustryEvent[]
 ) => {
-    const eventContentTypeTag = {
-        name: 'Event',
-        slug: '/events',
-        type: 'ContentType',
-    } as Tag;
-
     const mappedCommunityEvents = allCommunityEvents.map(
         (event: CommunityEvent) => ({
             collectionType: 'Event',
@@ -149,19 +188,8 @@ export const mapEventsToContentItems = (
     ) as ContentItem[];
 
     const mappedIndustryEvents = allIndustryEvents.map(
-        (event: IndustryEvent) => ({
-            collectionType: 'Event',
-            category: 'Event',
-            subCategory: 'Industry Event',
-            contentDate: [event.start_time, event.end_time],
-            description: event.description,
-            slug: event.slug,
-            tags: flattenTags([event.otherTags]).concat(eventContentTypeTag),
-            title: event.title,
-            location: event.location,
-            eventSetup: event.type,
-        })
-    ) as ContentItem[];
+        mapIndustryEventToContentItem
+    );
 
     return [...mappedCommunityEvents, ...mappedIndustryEvents];
 };

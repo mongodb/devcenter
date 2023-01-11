@@ -8,20 +8,20 @@ describe('[Component]: Event Widget', () => {
     const virtualLink = 'www.loremipsum.com/my-event';
     const virtualLinkText = 'Super Chill Virtual Event';
     const registrationLink = 'www.dolorsit.amet/your-event';
+
     it('renders', () => {
         const { container } = render(
             <EventWidget
-                startTime={new Date('2022-11-30T17:00:00.000Z')}
-                endTime={new Date('2022-12-01T17:00:00.000Z')}
                 location={location}
                 virtualLink={virtualLink}
                 virtualLinkText={virtualLinkText}
                 registrationLink={registrationLink}
+                dates={['2022-11-30T17:00:00.000Z', '2022-12-01T17:00:00.000Z']}
             />
         );
 
         /*
-            Only test for date formatting because of .toLocateString() usage
+            Only test for date formatting because of .toLocaleString() usage
             Exact match would cause wacky behavior of times when running tests locally vs. during build
         */
         expect(
@@ -46,14 +46,13 @@ describe('[Component]: Event Widget', () => {
     it('sets styles passed from props', () => {
         const { container } = render(
             <EventWidget
-                startTime={new Date('2022-11-30T17:00:00.000Z')}
-                endTime={new Date('2022-12-01T17:00:00.000Z')}
                 location={location}
                 virtualLink={virtualLink}
                 virtualLinkText={virtualLinkText}
                 registrationLink={registrationLink}
                 wrapperStyles={{ color: 'red' }}
                 buttonStyles={{ marginTop: '12px' }}
+                dates={['2022-11-30T17:00:00.000Z', '2022-12-01T17:00:00.000Z']}
             />
         );
 
@@ -67,8 +66,7 @@ describe('[Component]: Event Widget', () => {
     it('sets default props', () => {
         render(
             <EventWidget
-                startTime={new Date('2022-11-30T17:00:00.000Z')}
-                endTime={new Date('2022-12-01T17:00:00.000Z')}
+                dates={['2022-11-30T17:00:00.000Z', '2022-12-01T17:00:00.000Z']}
                 virtualLink={virtualLink}
             />
         );

@@ -107,11 +107,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         seo,
         relevantLinks,
         // event specific
-        speakers,
         location,
-        eventType,
-        startTime,
-        endTime,
+        eventSetup,
         virtualLink,
         registrationLink,
         virtualLinkText,
@@ -242,6 +239,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         </div>
     );
 
+    // console.log('contentDate in template', contentDate);
+
     const contentFooter = (
         <div sx={styles.footer}>
             <div>
@@ -254,23 +253,28 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 )}
             </div>
             {series && <SeriesCard series={series} currentTitle={title} />}
-            <div>
-                <TypographyScale
-                    variant="heading5"
-                    sx={{ marginBottom: 'inc30' }}
-                >
-                    Related
-                </TypographyScale>
-                <Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>
-                    {relatedContent.map(piece => (
-                        <Card
-                            sx={{ height: '100%' }}
-                            key={piece.slug}
-                            {...getCardProps(piece, 'related')}
-                        />
-                    ))}
-                </Grid>
-            </div>
+            {relatedContent.length > 0 && (
+                <div>
+                    <TypographyScale
+                        variant="heading5"
+                        sx={{ marginBottom: 'inc30' }}
+                    >
+                        Related
+                    </TypographyScale>
+                    <Grid gap={['inc30', null, 'inc40']} columns={[1, null, 2]}>
+                        {relatedContent.map(piece => {
+                            // console.log('piece', piece);
+                            return (
+                                <Card
+                                    sx={{ height: '100%' }}
+                                    key={piece.slug}
+                                    {...getCardProps(piece, 'related')}
+                                />
+                            );
+                        })}
+                    </Grid>
+                </div>
+            )}
             {hasRequestContentFlow && (
                 <Button
                     variant="secondary"
@@ -421,7 +425,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 {tagsSection}
                 {getSocialButtons(true)}
                 <TypographyScale variant="body2" sx={{ gridArea: 'eventType' }}>
-                    Industry Event | {eventType}
+                    Industry Event | {eventSetup}
                 </TypographyScale>
             </div>
         );
@@ -453,8 +457,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         })}
                     {isIndustryEvent && (
                         <EventWidget
-                            startTime={new Date(startTime)}
-                            endTime={new Date(endTime)}
+                            dates={contentDate}
                             location={location}
                             virtualLink={virtualLink}
                             virtualLinkText={virtualLinkText}
@@ -484,14 +487,15 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             >
                                 Speakers
                             </TypographyScale>
-                            {speakers.map(speaker => {
+                            {authors?.map(author => {
+                                // TODO: need to add a key here
                                 return (
                                     <>
                                         <AuthorLockup
                                             authors={parseAuthorsToAuthorLockup(
-                                                [speaker]
+                                                [author]
                                             )}
-                                            title={speaker.title}
+                                            title={author.title}
                                             size="large"
                                         />
                                         <TypographyScale
@@ -511,7 +515,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                                 },
                                             }}
                                         >
-                                            {speaker.bio}
+                                            {author.bio}
                                         </TypographyScale>
                                     </>
                                 );
@@ -540,8 +544,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 <div sx={styles.floatingMenu}>
                     {isIndustryEvent && (
                         <EventWidget
-                            startTime={new Date(startTime)}
-                            endTime={new Date(endTime)}
+                            dates={contentDate}
                             location={location}
                             virtualLink={virtualLink}
                             virtualLinkText={virtualLinkText}
