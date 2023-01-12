@@ -89,7 +89,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     previewMode,
     contentItem: {
         collectionType,
-        authors,
+        authors = [],
         category,
         contentDate,
         updateDate,
@@ -479,7 +479,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 </div>
                 <div sx={styles.bodySection}>
                     <DocumentBody content={contentAst} />
-                    {isIndustryEvent && (
+                    {isIndustryEvent && authors.length > 0 && (
                         <>
                             <TypographyScale
                                 variant="heading5"
@@ -490,7 +490,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             >
                                 Speakers
                             </TypographyScale>
-                            {authors?.map(author => (
+                            {authors.map(author => (
                                 <Fragment key={author.title}>
                                     <AuthorLockup
                                         authors={parseAuthorsToAuthorLockup([
