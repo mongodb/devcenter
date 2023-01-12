@@ -12,7 +12,7 @@ import {
 import { Grid, ThemeUICSSObject } from 'theme-ui';
 
 import { languageToLogo } from '../utils/language-to-logo';
-import { getAllMetaInfo } from '../service/get-all-meta-info';
+import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
 import { getURLPath } from '../utils/format-url-path';
 import { h4Styles, h5Styles } from '../styled/layout';
@@ -167,9 +167,7 @@ export const getStaticProps: GetStaticProps<{
     languages: MetaInfo[];
     featured: MetaInfo[];
 }> = async () => {
-    const tags = await getAllMetaInfo();
-
-    const languages = tags.filter(
+    const languages = allMetaInfoPreval.filter(
         tag => tag.category === 'ProgrammingLanguage'
     );
 
