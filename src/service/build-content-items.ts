@@ -134,10 +134,8 @@ const mapEventsRelatedContent = (
         content.push(
             ...relatedContent[item].map(piece => ({
                 title: piece.title,
-                contentDate: piece?.contentDate || [
-                    piece?.start_time,
-                    piece?.end_time,
-                ],
+                contentDate: piece?.originalPublishDate ||
+                    piece?.published_at || [piece?.start_time, piece?.end_time],
                 slug: piece?.calculated_slug || piece?.slug,
                 category: categoryMapper[item],
             }))

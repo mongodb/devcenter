@@ -70,7 +70,8 @@ export interface IndustryEventRelatedContentFromCMS {
         calculated_slug?: string;
         end_time?: string;
         start_time?: string;
-        contentDate: string | [string, string];
+        originalPublishDate?: string;
+        published_at?: string;
     }>;
 }
 

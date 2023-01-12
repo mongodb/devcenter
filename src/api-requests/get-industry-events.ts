@@ -49,12 +49,13 @@ export const industryEventsFields = `
   related_content {
     newArticles: new_articles {
         title: name
-        contentDate: originalPublishDate
+        originalPublishDate
+        published_at
         calculated_slug
     }
     newVideos: new_videos {
         title
-        contentDate: originalPublishDate
+        originalPublishDate
         slug: calculated_slug
     }
     industryEvents: industry_events {
@@ -65,7 +66,7 @@ export const industryEventsFields = `
     }
     podcasts {
         title
-        contentDate: originalPublishDate
+        originalPublishDate
         slug: calculated_slug
     }
 }

@@ -65,6 +65,7 @@ import {
 } from '../../components/tertiary-nav/styles';
 import { FullApplication, Snippet } from '../../components/icons';
 import { iconStyles } from '../../components/topic-card/styles';
+import { formatEventTypes } from '../../utils/format-text';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -374,6 +375,11 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             2,
             -1
         );
+        let displayHeaderImage = true;
+        // Industry Events do not have to show a placeholder image
+        if (isIndustryEvent && !image?.url) {
+            displayHeaderImage = false;
+        }
 
         const tagsSection = tags ? (
             <TagSection
@@ -420,7 +426,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 {tagsSection}
                 {getSocialButtons(true)}
                 <TypographyScale variant="body2" sx={{ gridArea: 'eventType' }}>
-                    Industry Event | {eventSetup}
+                    Industry Event | {formatEventTypes(eventSetup)}
                 </TypographyScale>
             </div>
         );
@@ -432,17 +438,19 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     {isIndustryEvent ? eventHeader : defaultHeader}
                 </div>
                 <div sx={styles.section}>
-                    <div sx={styles.image}>
-                        <Image
-                            alt={parseUndefinedValue(image?.alt)}
-                            src={getPlaceHolderImage(image?.url)}
-                            sx={{
-                                borderRadius: 'inc30',
-                                objectFit: 'cover',
-                            }}
-                            layout="fill"
-                        />
-                    </div>
+                    {displayHeaderImage && (
+                        <div sx={styles.image}>
+                            <Image
+                                alt={parseUndefinedValue(image?.alt)}
+                                src={getPlaceHolderImage(image?.url)}
+                                sx={{
+                                    borderRadius: 'inc30',
+                                    objectFit: 'cover',
+                                }}
+                                layout="fill"
+                            />
+                        </div>
+                    )}
                     {!previewMode && !isIndustryEvent && ratingSection}
                     {isCodeExample &&
                         (githubUrl || liveSiteUrl) &&
@@ -459,8 +467,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             registrationLink={registrationLink}
                             buttonStyles={{
                                 marginTop: '-inc30', // negates marginTop from the component's internal styles
+                                marginBottom: '-inc20', // negate spacing from content body
                                 width: ['100%', null, null, 'auto'],
-                                marginBottom: '-inc60', // TODO: this doesn't really work after a certain PX amt
                             }}
                             wrapperStyles={{
                                 display: ['block', null, null, 'none'],
