@@ -150,6 +150,10 @@ export const mapIndustryEventToContentItem = (event: IndustryEvent) =>
         collectionType: 'Event',
         category: 'Event',
         subCategory: 'Industry Event',
+        image: {
+            url: event?.image?.url || '',
+            alt: event?.image?.alt || 'MongoDB Event Image',
+        },
         contentDate: [event.start_time, event.end_time],
         description: event.description,
         slug: event.calculated_slug,

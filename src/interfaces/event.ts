@@ -47,6 +47,10 @@ export interface IndustryEvent {
     coordinates: Coordinates;
     content: string;
     title: string;
+    image: {
+        url?: string;
+        alt?: string;
+    };
     published_at: string;
     otherTags: OtherTags;
     created_at: string;

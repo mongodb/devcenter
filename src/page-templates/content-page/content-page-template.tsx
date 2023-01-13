@@ -375,17 +375,16 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             2,
             -1
         );
-        let displayHeaderImage = true;
-        // Industry Events do not have to show a placeholder image
-        if (isIndustryEvent && !image?.url) {
-            displayHeaderImage = false;
-        }
+        // Industry Events header images are optional
+        const displayHeaderImage =
+            (isIndustryEvent && image?.url) || image?.url;
 
         const tagsSection = tags ? (
             <TagSection
                 tags={tags}
                 sx={{
                     gridArea: 'tags',
+                    paddingRight: 'inc30',
                     ...(isCodeExample && {
                         display: ['flex', null, null, null, 'none'],
                     }),
