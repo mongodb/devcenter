@@ -350,7 +350,7 @@ describe('useLocationSearch', () => {
         );
     };
 
-    test('Typing an input and selecting a location option', async () => {
+    test('Typing an input and selecting a location option works as expected', async () => {
         render(<TestLocationComponent />);
 
         const input = screen.getByRole('textbox');
@@ -374,7 +374,7 @@ describe('useLocationSearch', () => {
         );
     });
 
-    test('Geolocation', async () => {
+    test('Geolocation works as expected', async () => {
         render(<TestLocationComponent />);
         const select = screen.getByRole('combobox');
         await userEvent.selectOptions(select, 'Current Location');
@@ -384,7 +384,7 @@ describe('useLocationSearch', () => {
         expect(screen.getByRole('textbox')).toHaveValue('New York, NY, USA');
     });
 
-    test('Clearing works', async () => {
+    test('Clearing works as expected', async () => {
         render(<TestLocationComponent />);
 
         const input = screen.getByRole('textbox');
