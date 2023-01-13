@@ -9,7 +9,6 @@ import {
     getAllTechnologiesMetaInfo,
 } from '../api-requests/get-all-meta-info';
 import { CTA } from '../components/hero/types';
-import { ITopicCard } from '../components/topic-card/types';
 import { getDistinctTags } from './get-distinct-tags';
 import { TagType } from '../types/tag-type';
 
@@ -104,7 +103,7 @@ const getMetaInfo = (m: MetaInfoResponse): MetaInfo => {
 };
 
 const getL2Topics = (l1Item: MetaInfoResponse, l2: MetaInfoResponse[]) => {
-    const topics: ITopicCard[] = [];
+    const topics: MetaInfoResponse[] = [];
     l2.forEach(l2Item => {
         const l1Product = l2Item.l1_product?.l_1_product;
         if (l1Product) {
@@ -112,15 +111,11 @@ const getL2Topics = (l1Item: MetaInfoResponse, l2: MetaInfoResponse[]) => {
                 l1Product.name &&
                 l1Product.name.toLowerCase() === l1Item.name.toLowerCase()
             ) {
-                topics.push({
-                    title: l2Item.name,
-                    icon: 'mdb_backup',
-                    href: l2Item.slug,
-                });
+                topics.push(l2Item);
             }
         }
     });
-    return topics;
+    return parseMetaInfoResponse(topics);
 };
 
 const getCTAs = (primary_cta: string | undefined): CTA[] =>

@@ -1,4 +1,4 @@
-import { BrandedIcon, GridLayout, SideNav, TypographyScale } from '@mdb/flora';
+import { GridLayout, SideNav, TypographyScale } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { Crumb } from '../../components/breadcrumbs/types';
@@ -13,25 +13,22 @@ import { SearchItem } from '../../components/search/types';
 import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
-import { TopicCardsContainer } from '../../components/topic-card';
-import { iconStyles } from '../../components/topic-card/styles';
-import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
+import { TopicCardsContainer } from '../../components/topic-cards-container';
 import { ContentItem } from '../../interfaces/content-item';
-import { topicWithIcon } from '../content-type-page/sections/technologies';
 import {
     pillCategoryToSlug,
     PillCategoryValues,
 } from '../../types/pill-category';
 import { addExternalIconToSideNav } from '../../utils/page-template-helpers';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
-import { productToLogo } from '../../utils/product-to-logo';
 import { useSearchMeta } from '../../hooks/search/meta';
 import useSearch from '../../hooks/search';
 import {
     searchWrapperStyles,
     titleStyles,
 } from '../../components/search/styles';
-
+import { Tag } from '../../interfaces/tag';
+import { tagToTopic } from '../../utils/tag-to-topic';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
 
@@ -41,8 +38,8 @@ interface TopicPageProps {
     slug: string;
     description: string;
     ctas: CTA[];
-    topics: ITopicCard[];
-    relatedTopics: TopicCardProps[];
+    topics: Tag[];
+    relatedTopics: Tag[];
     featured: ContentItem[];
     content: ContentItem[];
     contentType: string;
@@ -142,17 +139,8 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 
     const CTAComponents = createTopicPageCTAS(ctas);
 
-    const topicToItem = (topic: ITopicCard) => {
-        const iconName = productToLogo[topic.title];
-        const icon = iconName ? (
-            <BrandedIcon sx={iconStyles} name={iconName} />
-        ) : null;
-        return { ...topic, icon };
-    };
-
-    const topicItems = topics.map(topicToItem);
-
-    const realtedTopicsWithIcons = relatedTopics.map(topicWithIcon);
+    const topicItems = topics.map(tagToTopic);
+    const realtedTopicsWithIcons = relatedTopics.map(tagToTopic);
 
     setURLPathForNavItems(tertiaryNavItems);
 
