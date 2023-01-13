@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import useLocationSearch from './location';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
+import { useResetKey } from '../../components/search/utils';
 
 jest.mock('swr', () => {
     const mockAutocompleteResponse = [
@@ -288,7 +289,8 @@ describe('useLocationSearch', () => {
             clearLocation,
         } = useLocationSearch(mockCallback);
 
-        const [, setInputValue] = useState('');
+        const [inputValue, setInputValue] = useState('');
+        const resetKeyProps = useResetKey(locationQuery);
 
         return (
             <div>
@@ -299,13 +301,14 @@ describe('useLocationSearch', () => {
                 {!locationValidating && (
                     <>
                         <input
+                            {...resetKeyProps}
                             type="text"
                             className="query"
                             onChange={e => {
                                 onLocationQuery(e);
                                 setInputValue(e.target.value);
                             }}
-                            value={locationQuery}
+                            value={locationQuery || inputValue}
                         />
 
                         <select
@@ -332,7 +335,13 @@ describe('useLocationSearch', () => {
                             ))}
                         </ol>
 
-                        <button onClick={clearLocation} className="clear-btn">
+                        <button
+                            onClick={() => {
+                                clearLocation();
+                                setInputValue('');
+                            }}
+                            className="clear-btn"
+                        >
                             Clear
                         </button>
                     </>
@@ -384,6 +393,10 @@ describe('useLocationSearch', () => {
 
         const clearBtn = screen.getByRole('button', { name: /clear/i });
         userEvent.click(clearBtn);
+        // Wait for the reset key
+        await new Promise(res => setTimeout(res, 100));
+
+        screen.logTestingPlaygroundURL();
         expect(input).toHaveValue('');
     });
 });
