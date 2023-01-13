@@ -1,3 +1,5 @@
+import { ThemeUICSSObject } from 'theme-ui';
+
 const header = {
     display: 'flex',
     alignItems: 'center',
@@ -11,11 +13,16 @@ const title = {
     marginLeft: 'inc20',
 };
 
-const content = {
+const content: ThemeUICSSObject = {
+    display: 'block',
     marginTop: 'inc20',
+    wordBreak: 'break-word',
 };
 
-const button = {
+const button: ThemeUICSSObject = {
+    display: 'block',
+    width: 'auto',
+    textAlign: 'center',
     marginTop: 'inc30',
 };
 

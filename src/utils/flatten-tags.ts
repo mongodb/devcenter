@@ -92,10 +92,13 @@ const removeDuplicates = (inArray: Tag[]) => {
     return arr;
 };
 
-export const flattenTags = (otherTags: OtherTags[]): Tag[] => {
+export const flattenTags = (otherTags: OtherTags | OtherTags[]): Tag[] => {
     if (!otherTags) {
         return [];
     }
-    const flattenedOtherTags = parseOtherTags(otherTags[0]);
-    return removeDuplicates([...flattenedOtherTags]);
+
+    const flattenedTags = parseOtherTags(
+        Array.isArray(otherTags) ? otherTags[0] : otherTags
+    );
+    return removeDuplicates(flattenedTags);
 };
