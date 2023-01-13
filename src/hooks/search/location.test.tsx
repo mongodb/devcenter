@@ -123,7 +123,7 @@ jest.mock('lodash.debounce', () => (fn: (...args: any[]) => void) => {
         fn(...args);
     }
 
-    // @ts-expect-error Reason
+    // @ts-expect-error Need this so that the cleanup cancel call on the debounce func works
     Function.prototype.cancel = () => '';
 
     return returnFunc;
@@ -237,7 +237,7 @@ describe('useLocationSearch', () => {
         mockCallback.mockClear();
     });
 
-    // @ts-expect-error Reason
+    // @ts-expect-error Silence TS error because we're assigning URL to URL
     global.fetch = jest.fn((url: URL) =>
         Promise.resolve({
             json: () => {
@@ -396,7 +396,6 @@ describe('useLocationSearch', () => {
         // Wait for the reset key
         await new Promise(res => setTimeout(res, 100));
 
-        screen.logTestingPlaygroundURL();
         expect(input).toHaveValue('');
     });
 });
