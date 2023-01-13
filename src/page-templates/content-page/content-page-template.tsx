@@ -376,8 +376,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             -1
         );
         // Industry Events header images are optional
-        const displayHeaderImage =
-            (isIndustryEvent && image?.url) || image?.url;
+        const displayHeaderImage = !isIndustryEvent || image?.url;
 
         const tagsSection = tags ? (
             <TagSection
