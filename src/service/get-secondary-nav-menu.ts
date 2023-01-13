@@ -51,9 +51,9 @@ export const getSecondaryNavMenu = async () => {
         slug: '/tutorials',
     };
 
-    const quickstartMenu: SecondaryNavMenu = {
-        name: 'Quickstarts',
-        slug: '/quickstart',
+    const eventMenu: SecondaryNavMenu = {
+        name: 'Events',
+        slug: '/events',
     };
 
     const codeExamplesMenu: SecondaryNavMenu = {
@@ -79,7 +79,7 @@ export const getSecondaryNavMenu = async () => {
         documentationMenu,
         articlesMenu,
         tutorialsMenu,
-        quickstartMenu,
+        eventMenu,
         codeExamplesMenu,
         podcastsMenu,
         videosMenu,

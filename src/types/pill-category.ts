@@ -1,5 +1,8 @@
 export const PillCategoryValues = [
     /* order determines how categories appear in topic landing pages */
+    'Event',
+    'User Group Meetup',
+    'Industry Event',
     'News & Announcements',
     'Article',
     'Demo App',
@@ -8,7 +11,6 @@ export const PillCategoryValues = [
     'Tutorial',
     'Podcast',
     'Video',
-    'User Group Meetup',
 ] as const;
 
 export type PillCategory = typeof PillCategoryValues[number];
@@ -22,4 +24,5 @@ export const pillCategoryToSlug = new Map<PillCategory, string>([
     ['News & Announcements', '/news'],
     ['Podcast', '/podcasts'],
     ['Video', '/videos'],
+    ['Event', '/events'],
 ]);

@@ -7,20 +7,21 @@ describe('[Component]: Event Widget', () => {
     const location = '1633 Broadway 38th floor, New York, NY 10019';
     const virtualLink = 'www.loremipsum.com/my-event';
     const virtualLinkText = 'Super Chill Virtual Event';
+    const registrationLink = 'www.dolorsit.amet/your-event';
 
     it('renders', () => {
         const { container } = render(
             <EventWidget
-                startTime={new Date('2022-11-30T17:00:00.000Z')}
-                endTime={new Date('2022-12-01T17:00:00.000Z')}
                 location={location}
                 virtualLink={virtualLink}
                 virtualLinkText={virtualLinkText}
+                registrationLink={registrationLink}
+                dates={['2022-11-30T17:00:00.000Z', '2022-12-01T17:00:00.000Z']}
             />
         );
 
         /*
-            Only test for date formatting because of .toLocateString() usage
+            Only test for date formatting because of .toLocaleString() usage
             Exact match would cause wacky behavior of times when running tests locally vs. during build
         */
         expect(
@@ -33,17 +34,39 @@ describe('[Component]: Event Widget', () => {
         // sets location
         expect(screen.getByText(location)).toBeInTheDocument();
 
-        // sets link with proper attributes
-        const link = container.getElementsByTagName('a')[0];
-        expect(link).toHaveAttribute('href', virtualLink);
+        // sets link(s) with proper attributes
+        const virtualMeetupLink = container.getElementsByTagName('a')[0];
+        expect(virtualMeetupLink).toHaveAttribute('href', virtualLink);
         expect(screen.getByText(virtualLinkText)).toBeInTheDocument();
+
+        const registrationButton = container.getElementsByTagName('a')[1];
+        expect(registrationButton).toHaveAttribute('href', registrationLink);
+    });
+
+    it('sets styles passed from props', () => {
+        const { container } = render(
+            <EventWidget
+                location={location}
+                virtualLink={virtualLink}
+                virtualLinkText={virtualLinkText}
+                registrationLink={registrationLink}
+                wrapperStyles={{ color: 'red' }}
+                buttonStyles={{ marginTop: '12px' }}
+                dates={['2022-11-30T17:00:00.000Z', '2022-12-01T17:00:00.000Z']}
+            />
+        );
+
+        const wrapper = container.firstChild;
+        expect(wrapper).toHaveStyle('color: red');
+
+        const btn = container.getElementsByTagName('a')[1].parentElement; // the styles get placed on the wrapper element because its a Flora component
+        expect(btn).toHaveStyle('margin-top: 12px');
     });
 
     it('sets default props', () => {
         render(
             <EventWidget
-                startTime={new Date('2022-11-30T17:00:00.000Z')}
-                endTime={new Date('2022-12-01T17:00:00.000Z')}
+                dates={['2022-11-30T17:00:00.000Z', '2022-12-01T17:00:00.000Z']}
                 virtualLink={virtualLink}
             />
         );

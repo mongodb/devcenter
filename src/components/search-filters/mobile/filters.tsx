@@ -13,12 +13,12 @@ import { FiltersProps } from '../types';
 
 import RadioFilterGroup from '../radio-filter-group';
 import { buttonSection, filtersModal, titleSection } from './styles';
-import { defaultSortByType } from '../../search/types';
+import { defaultSortByType, SortByType } from '../../search/types';
 
 interface MobileFiltersProps extends FiltersProps {
     closeModal: () => void;
-    sortBy?: string;
-    onSort: (sortByValue: string) => void;
+    sortBy?: SortByType | '';
+    onSort?: (sortByValue: SortByType) => void;
 }
 
 const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
@@ -63,11 +63,15 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
             [tempFilters]
         );
 
+        const showSorting = !!onSort;
+
         return (
             <div className={className} sx={filtersModal}>
                 <div sx={{ padding: 'inc50', marginBottom: '120px' }}>
                     <div sx={titleSection}>
-                        <TypographyScale>Filter & Sort</TypographyScale>
+                        <TypographyScale>
+                            Filter{showSorting ? ' & Sort' : ''}
+                        </TypographyScale>
                         <ButtonIcon
                             iconName={ESystemIconNames.CLOSE}
                             variant="outline"
@@ -77,17 +81,21 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
                         />
                     </div>
                     <HorizontalRule spacing="small" />
-                    <>
-                        <RadioFilterGroup
-                            title="Sort by"
-                            items={[]}
-                            sortBy={sortBy || defaultSortByType}
-                            setSort={onSort}
-                            filters={tempFilters}
-                            isMobile
-                        />
-                        <HorizontalRule spacing="small" />
-                    </>
+                    {showSorting && (
+                        <>
+                            <RadioFilterGroup
+                                title="Sort by"
+                                items={[]}
+                                sortBy={sortBy || defaultSortByType}
+                                setSort={(value: string) =>
+                                    onSort(value as SortByType)
+                                }
+                                filters={tempFilters}
+                                isMobile
+                            />
+                            <HorizontalRule spacing="small" />
+                        </>
+                    )}
                     {filterItems.map(({ key, value }) => (
                         <>
                             <FilterGroup

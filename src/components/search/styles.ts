@@ -26,12 +26,19 @@ export const searchBoxStyles: ThemeUICSSObject = {
     flexGrow: '1',
     flexShrink: '1',
     flexBasis: 'calc(66% - 12px)',
-    marginBottom: ['inc20', null, 'inc50'],
+    marginBottom: ['inc20', null, 'inc40'],
     '& > div': {
         maxWidth: 'unset',
     },
-    'div[aria-label="input-box"]': {
-        boxSizing: 'content-box',
+    'span[aria-label="left-icon"]': {
+        height: 'inc20',
+        margin: '0',
+        marginRight: 'inc20',
+
+        svg: {
+            height: 'inc20',
+            width: 'inc20',
+        },
     },
 };
 
@@ -41,7 +48,7 @@ export const sortBoxStyles = {
         maxWidth: 'unset',
     },
     '& > button#sort-by-dropdown': {
-        height: '84px',
+        height: '80px',
     },
     'div[role="dropdown"]': {
         width: '100%',
@@ -49,6 +56,23 @@ export const sortBoxStyles = {
     gridColumn: 'span 1',
     display: ['none', null, null, 'block'],
     flexBasis: 'calc(33% - 12px)',
+};
+
+export const locationBoxStyles = {
+    width: ['100%', null, 'calc(33% - 12px)'],
+    div: {
+        maxWidth: '100%',
+    },
+    'span[aria-label="left-icon"]': {
+        height: 'inc20',
+        margin: '0',
+        marginRight: 'inc20',
+
+        svg: {
+            height: 'inc20',
+            width: 'inc20',
+        },
+    },
 };
 
 export const dataStyles = (layout: 'list' | 'grid'): ThemeUICSSObject =>

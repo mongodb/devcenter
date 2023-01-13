@@ -4,10 +4,10 @@ import { ContentItem } from '../interfaces/content-item';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
 
-export const getSideNav = async (
+export const getSideNav = (
     inputSlug: string,
     allContent: ContentItem[]
-): Promise<TertiaryNavItem[]> => {
+): TertiaryNavItem[] => {
     const tertiaryNavItems: TertiaryNavItem[] = [];
     const contents: ContentItem[] = allContent;
     const filteredContents = contents.filter(c => {

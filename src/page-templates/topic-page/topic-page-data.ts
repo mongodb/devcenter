@@ -43,7 +43,6 @@ export const getTopicPageData = async (
     );
 
     const content = await getL1L2Content(slugString, allContentPreval);
-
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
 

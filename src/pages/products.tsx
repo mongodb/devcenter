@@ -16,7 +16,7 @@ import { Crumb } from '../components/breadcrumbs/types';
 import { getURLPath } from '../utils/format-url-path';
 import { productToLogo } from '../utils/product-to-logo';
 
-import { getAllMetaInfo } from '../service/get-all-meta-info';
+import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
 
 import { h4Styles, h5Styles } from '../styled/layout';
@@ -203,10 +203,12 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
 export default ProductsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-    const tags = await getAllMetaInfo();
-
-    const l1Products = tags.filter(tag => tag.category === 'L1Product');
-    const l2Products = tags.filter(tag => tag.category === 'L2Product');
+    const l1Products = allMetaInfoPreval.filter(
+        tag => tag.category === 'L1Product'
+    );
+    const l2Products = allMetaInfoPreval.filter(
+        tag => tag.category === 'L2Product'
+    );
 
     const products: L1Product[] = l1Products.map(prod => ({
         ...prod,

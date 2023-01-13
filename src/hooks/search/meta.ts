@@ -2,6 +2,7 @@ import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { getCanonicalUrlWithParams, getMetaDescr } from '../../utils/seo';
+import { SearchMetaProps } from './types';
 import { replaceHistoryState } from './utils';
 
 export const useSearchMeta = (
@@ -9,7 +10,7 @@ export const useSearchMeta = (
     slug: string,
     title: string,
     customBuildPageTitle?: (pageNumber: number) => string
-) => {
+): SearchMetaProps => {
     const { asPath, route } = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath } = publicRuntimeConfig;

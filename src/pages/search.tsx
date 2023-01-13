@@ -54,14 +54,14 @@ const Search: NextPage<SearchProps> = ({
     );
 
     const {
-        searchBoxProps,
-        searchBoxProps: { searchString },
+        searchStringProps,
+        searchStringProps: { searchString },
         filterProps,
         filterProps: { filters, onFilter },
-        sortBoxProps,
+        sortProps,
         resultsProps,
         resultsProps: { results, isValidating },
-        clearAll,
+        clearSearchParam,
     } = useSearch(
         initialSearchContent,
         updatePageMeta,
@@ -106,7 +106,7 @@ const Search: NextPage<SearchProps> = ({
 
                     <div sx={searchWrapperStyles}>
                         <SearchBox
-                            {...searchBoxProps}
+                            {...searchStringProps}
                             placeholder="Search All"
                             autoFocus
                             extraStyles={{
@@ -114,7 +114,7 @@ const Search: NextPage<SearchProps> = ({
                             }}
                         />
 
-                        <SortBox {...sortBoxProps} />
+                        <SortBox {...sortProps} />
 
                         {resultsHeader && (
                             <TypographyScale
@@ -180,7 +180,7 @@ const Search: NextPage<SearchProps> = ({
                                     hasIcon={true}
                                     iconName={ESystemIconNames.ARROW_LEFT}
                                     iconPosition="left"
-                                    onClick={clearAll}
+                                    onClick={clearSearchParam}
                                 >
                                     Back to all content
                                 </Button>
@@ -192,7 +192,7 @@ const Search: NextPage<SearchProps> = ({
             {mobileFiltersOpen && (
                 <MobileFilters
                     {...filterProps}
-                    {...sortBoxProps} // Mobile filters include sorting
+                    {...sortProps} // Mobile filters include sorting
                     filterItems={filterItems}
                     closeModal={() => setMobileFiltersOpen(false)}
                 />
@@ -225,7 +225,6 @@ export const getServerSideProps: GetServerSideProps = async (
         Sentry.captureException(e);
     }
 
-    // Pop contentTypeItems out of here becasue we don't filter by it for these pages.
     const filters = await getFilters(
         undefined,
         !!initialSearchContent && Array.isArray(initialSearchContent)
