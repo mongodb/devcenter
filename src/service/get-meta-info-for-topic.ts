@@ -1,7 +1,7 @@
 import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
 
-export const getMetaInfoForTopic = async (
+export const getMetaInfoForTopic = (
     topicSlug: string,
     allMetaInfoResponse?: MetaInfo[]
 ) => {

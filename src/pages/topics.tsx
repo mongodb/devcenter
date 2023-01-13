@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
-import { getAllMetaInfo } from '../service/get-all-meta-info';
+import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { getURLPath } from '../utils/format-url-path';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
@@ -218,9 +218,6 @@ const Topic = ({ topics }: { topics: TopicsProps[] }) => {
 
 export default Topic;
 
-export const getStaticProps: GetStaticProps = async () => {
-    const metaInfo = await getAllMetaInfo();
-    return {
-        props: { topics: metaInfo },
-    };
-};
+export const getStaticProps: GetStaticProps = async () => ({
+    props: { topics: allMetaInfoPreval },
+});

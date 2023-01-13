@@ -8,10 +8,10 @@ const categoryToCrumb: { [key: string]: Crumb } = {
     technologies: { text: 'Technologies', url: '/technologies' },
 };
 
-export const getBreadcrumbsFromSlug = async (
+export const getBreadcrumbsFromSlug = (
     slug: string,
     allMetaInfoResponse?: MetaInfo | null
-): Promise<Crumb[]> => {
+): Crumb[] => {
     const crumbs: Crumb[] = [
         { text: 'MongoDB Developer Center', url: '/' },
         { text: 'Developer Topics', url: '/topics' },
@@ -29,7 +29,7 @@ export const getBreadcrumbsFromSlug = async (
         const crumbSlug = '/' + slugList.slice(0, i).join('/');
         const metaInfoForTopic = allMetaInfoResponse
             ? allMetaInfoResponse
-            : await getMetaInfoForTopic(crumbSlug);
+            : getMetaInfoForTopic(crumbSlug);
         if (metaInfoForTopic?.tagName) {
             crumbs.push({ text: metaInfoForTopic.tagName, url: crumbSlug });
         }

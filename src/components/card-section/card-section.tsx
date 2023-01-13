@@ -24,6 +24,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
     title,
     direction = 'row',
     href,
+    extraStyles = {},
 }) => {
     const [hoverStyles, setHoverStyles] = useState<ThemeUICSSObject>({});
 
@@ -64,6 +65,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                 .replace(' ', '-')}-card-section`}
             sx={{
                 gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
+                ...extraStyles,
             }}
         >
             <div sx={sectionHeadingTopStyles}>

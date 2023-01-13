@@ -28,7 +28,11 @@ export const searchItemToContentItem = ({
     description,
     slug,
     date,
+    start_time,
+    end_time,
     tags,
+    location,
+    coordinates,
 }: SearchItem): ContentItem => {
     const itemImage: Image | undefined =
         // Sometimes the image url can be an object with an "$undefined" key.
@@ -38,6 +42,7 @@ export const searchItemToContentItem = ({
                   alt: image.alternativeText,
               }
             : undefined;
+
     const itemAuthors: Author[] = authors.map(auth => ({
         name: auth.name,
         image: {
@@ -46,25 +51,45 @@ export const searchItemToContentItem = ({
         },
         calculated_slug: auth.calculated_slug,
     }));
+
+    const contentDate = (
+        start_time && end_time ? [start_time, end_time] : date
+    ) as string | [string, string];
+
+    const subCategory = (tags?.find(tag => tag?.type === 'EventType')?.name ||
+        undefined) as PillCategory;
+
     return {
         authors: itemAuthors,
         category: type,
-        contentDate: date,
+        subCategory,
+        contentDate,
         description,
         image: itemImage,
         slug: slug,
         tags,
         title: name,
         featured: false,
+        location,
+        coordinates,
     };
 };
 
-export const fetcher: Fetcher<ContentItem[], string> = queryString => {
+export const searchFetcher: Fetcher<ContentItem[], string> = queryString => {
     return fetch(
         (getURLPath('/api/search') as string) + '?' + queryString
     ).then(async response => {
         const r_json: SearchItem[] = await response.json();
         return r_json.map(searchItemToContentItem);
+    });
+};
+
+export const locationFetcher: Fetcher<any[], string> = queryString => {
+    return fetch(
+        (getURLPath('/api/location') as string) + '?' + queryString
+    ).then(async response => {
+        const r_json = await response.json();
+        return r_json.results;
     });
 };
 
@@ -125,6 +150,8 @@ export const getFilters = async (
     contentType?: PillCategory,
     allSearchContent?: SearchItem[]
 ) => {
+    const pageType = (contentType || 'Search') as PillCategory | 'Search';
+
     const allContent: SearchItem[] =
         allSearchContent || (await getAllSearchContent());
 
@@ -139,10 +166,9 @@ export const getFilters = async (
             const itemModel = FILTER_ITEM_TYPE_MAP[tag.type || ''];
 
             const checkForContentType =
-                ((itemModel?.forContentType &&
-                    itemModel?.forContentType !== contentType) ||
-                    (contentType && itemModel?.forContentType === '')) &&
-                contentType !== undefined; // All filters should be shown on sitewide search
+                itemModel?.contentTypeFilter &&
+                !itemModel?.contentTypeFilter.includes(pageType);
+            contentType !== undefined; // All filters should be shown on sitewide search
 
             const id = itemId(tag);
             const itemFreq = itemFreqMap[id];
@@ -197,25 +223,42 @@ export const getFilters = async (
 
     fixForImproperlyTaggedContent(filterItems);
 
+    const topDisplayItems: { key: string; value: FilterItem[] }[] = [];
+
     // Sort by count and convert to an object that the Filter components are able to display
-    return FILTER_ITEM_MODEL.flatMap(model => {
+    const filterDisplayItems = FILTER_ITEM_MODEL.flatMap(model => {
         const matchingItems = filterItems.filter(
             item => item.type === model.type
         );
 
         sortFilterItems(matchingItems);
 
+        if (
+            matchingItems.length &&
+            model?.contentTypeFilter &&
+            pageType !== 'Search' &&
+            model.contentTypeFilter.includes(pageType)
+        ) {
+            topDisplayItems.push({
+                key: model.displayName,
+                value: matchingItems,
+            });
+            return [];
+        }
+
         return matchingItems.length
             ? [{ key: model.displayName, value: matchingItems }]
             : [];
     });
+
+    return topDisplayItems.concat(filterDisplayItems);
 };
 
 export const hasEmptyFilterAndQuery = (
     searchString: string,
     allFilters: FilterItem[]
 ) => {
-    return (!searchString || searchString == '') && allFilters.length == 0;
+    return !searchString && allFilters.length == 0;
 };
 
 export const isEmptyArray = (results: any) => {
@@ -315,4 +358,11 @@ export const replaceHistoryState = (url: string) => {
         '',
         url
     );
+};
+
+export const swrOptions = {
+    // revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    shouldRetryOnError: false,
 };

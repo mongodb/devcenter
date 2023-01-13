@@ -7,12 +7,15 @@ import { PrimaryTag } from './primary-tag';
 import { CollectionType } from '../types/collection-type';
 import { CodeLevel } from '../types/tag-type';
 import { SEO } from './seo';
+import { Coordinates } from './coordinates';
+import { EventSetup, IndustryEventRelatedContent } from './event';
 
 export interface ContentItem {
     collectionType?: CollectionType;
     authors?: Author[];
     category: PillCategory;
-    contentDate: string;
+    subCategory?: PillCategory;
+    contentDate: string | [string, string];
     updateDate?: string;
     description?: string;
     content?: string;
@@ -30,4 +33,11 @@ export interface ContentItem {
     githubUrl?: string;
     liveSiteUrl?: string;
     seo?: SEO;
+    location?: string;
+    eventSetup?: EventSetup;
+    coordinates?: Coordinates;
+    registrationLink?: string;
+    virtualLink?: string;
+    virtualLinkText?: string;
+    relatedContent?: Array<IndustryEventRelatedContent>;
 }

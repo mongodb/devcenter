@@ -2,7 +2,7 @@ import {
     CommunityEvent,
     CommunityEventApiResponse,
     CommunityEventTagType,
-} from '../interfaces/community-event';
+} from '../interfaces/event';
 import * as Sentry from '@sentry/nextjs';
 import { Tag } from '../interfaces/tag';
 import { TagType } from '../types/tag-type';
