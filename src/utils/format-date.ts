@@ -63,14 +63,7 @@ export const formatDateRange = (start: string, end: string) => {
         const valid = isNaN(Date.parse(start)) ? end : start;
         const validDate = new Date(valid);
 
-        return `${validDate.toLocaleString('default', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true,
-        })} ${getTimezone(validDate)}`;
+        return `${validDate.toLocaleString()} ${getTimezone(validDate)}`;
     }
 
     const startDate = new Date(start);
