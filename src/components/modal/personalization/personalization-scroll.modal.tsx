@@ -34,9 +34,8 @@ const ScrollPersonalizationModal = () => {
     };
 
     const onCompletion = () => {
-        console.log('selected tags', selections); // eslint-disable-line
         // do your POST/PUT
-        submitPersonalizationSelections();
+        submitPersonalizationSelections(selections);
         closeModal();
     };
 

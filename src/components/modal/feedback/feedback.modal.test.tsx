@@ -78,7 +78,7 @@ test('renders good review text modal', () => {
 });
 
 test('renders thank you modal', () => {
-    render(
+    const { container } = render(
         <FeedbackModal
             {...feedbackProps}
             stars={5}
@@ -89,7 +89,7 @@ test('renders thank you modal', () => {
     const title = screen.getByText('We appreciate your feedback.');
     expect(title).toBeInTheDocument();
 
-    const linkout = screen.getByText('MongoDB Community');
+    const linkout = container.getElementsByTagName('a')[0];
     expect(linkout).toHaveAttribute(
         'href',
         'https://www.mongodb.com/community'

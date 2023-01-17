@@ -20,7 +20,7 @@ import styles from './styles';
 
 /* 
     *** Dev Notes for this component ***
-    For whatever reason, Flora does not treat their pagination with a zero based index, so the starting currentPage prop will always be "1"
+    Flora does not treat their pagination with a zero based index, so the starting currentPage prop will always be "1"
     Instead of trying to do wacky logic adding and subtracting the newIndex param in the onChangePage callback and then lining that up with our local state and passing props back to the Pagination component,
     I figured it was simpler to understand by using a "skipIndex" buffer in our config, and then initialzing our [tabIndex] local state to start at "1".
     The skipIndex will not be exposed in the UI because we set the first index to be 1, and we subtract 1 from our pages count prop in <Pagination />
@@ -51,9 +51,8 @@ const PaginatedPersonalizationModal = () => {
     };
 
     const onCompletion = () => {
-        console.log('selected tags', selections); // eslint-disable-line
         // do your POST/PUT
-        submitPersonalizationSelections();
+        submitPersonalizationSelections(selections);
         closeModal();
     };
 

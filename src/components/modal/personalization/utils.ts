@@ -28,6 +28,8 @@ export function initializePersonalizationConfig(useSkipIndex = false) {
         : [languages, technologies, products];
 }
 
-export function submitPersonalizationSelections() {
+// TODO: you will also need to pass userId here to construct the path for the PUT/POST
+// eslint-disable-next-line
+export function submitPersonalizationSelections(selections: any) {
     // do the http req here
 }

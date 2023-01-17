@@ -54,9 +54,9 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                 refetchOnWindowFocus={true}
                 refetchInterval={0}
             >
-                <ModalProvider>
-                    <CacheProvider value={customCache(theme)}>
-                        <ThemeProvider theme={theme}>
+                <CacheProvider value={customCache(theme)}>
+                    <ThemeProvider theme={theme}>
+                        <ModalProvider>
                             <OverlayProvider>
                                 <Layout pagePath={pagePath}>
                                     <ErrorBoundary>
@@ -65,9 +65,9 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                                     </ErrorBoundary>
                                 </Layout>
                             </OverlayProvider>
-                        </ThemeProvider>
-                    </CacheProvider>
-                </ModalProvider>
+                        </ModalProvider>
+                    </ThemeProvider>
+                </CacheProvider>
             </SessionProvider>
         </>
     );
