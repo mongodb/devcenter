@@ -1,3 +1,4 @@
-import PersonalizationModal from './personalization.modal';
+import PaginatedPersonalizationModal from './personalization-paginated.modal';
+import ScrollPersonalizationModal from './personalization-scroll.modal';
 
-export default PersonalizationModal;
+export { PaginatedPersonalizationModal, ScrollPersonalizationModal };

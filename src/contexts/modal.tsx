@@ -1,28 +1,42 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
+type ModalComponent = JSX.Element | null;
+type ModalProps = {
+    hideCloseBtn?: boolean;
+};
+
 export const ModalContext = createContext<{
-    component: JSX.Element | null;
+    component: ModalComponent;
+    props: ModalProps;
     closeModal: () => void;
-    openModal: (modal: JSX.Element) => void;
+    openModal: (modal: JSX.Element, props?: ModalProps) => void;
 }>({
     component: null,
+    props: {},
     closeModal: () => null,
     openModal: modal => modal,
 });
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
-    const [modal, setModal] = useState<JSX.Element | null>(null);
+    const [modal, setModal] = useState<{
+        component: ModalComponent;
+        props: ModalProps;
+    }>({
+        component: null,
+        props: {},
+    });
 
-    const openModal = (component: JSX.Element) => {
-        setModal(component);
+    const openModal = (component: JSX.Element, props = {}) => {
+        setModal({ component, props });
     };
 
-    const closeModal = () => setModal(null);
+    const closeModal = () => setModal({ component: null, props: {} });
 
     return (
         <ModalContext.Provider
             value={{
-                component: modal,
+                component: modal.component,
+                props: modal.props,
                 openModal,
                 closeModal,
             }}

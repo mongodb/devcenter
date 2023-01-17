@@ -8,7 +8,7 @@ export const globalStyles = (hasOverlay: boolean) => `
     body {
         font-family: ${theme.fonts['euclid-circular-a']};
         margin: 0;
-        overflow: ${hasOverlay ? 'hidden' : 'visible'};
+        overflow: ${hasOverlay ? 'hidden' : 'visible'} !important;
     }
     a {
         text-decoration: none;
