@@ -180,6 +180,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                 name={name}
                 description={description}
                 ctas={CTAComponents}
+                topicPage={true}
             />
             <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div

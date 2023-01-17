@@ -9,4 +9,5 @@ export interface HeroProps {
     name: string;
     description?: string;
     ctas?: JSX.Element | null;
+    topicPage?: boolean;
 }

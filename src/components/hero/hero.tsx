@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 
 import {
     TypographyScale,
@@ -10,45 +10,37 @@ import {
 
 import Breadcrumbs from '../breadcrumbs';
 import { HeroProps } from './types';
-import { heroContainerStyles } from './styles';
+import { heroContainerStyles, tooltipStyles } from './styles';
 
 const Hero: React.FunctionComponent<HeroProps> = memo(
-    ({ crumbs, name, description, ctas }) => {
-        let pageType;
-        let showFollowLink = false;
+    ({ crumbs, name, description, ctas, topicPage }) => {
+        const [showHoverTooltip, setShowHoverTooltip] = useState(false);
+        const [showClickTooltip, setShowClickTooltip] = useState(false);
 
-        //TODO: mock logged in/out state and following/not following state
+        // const [isLoggedIn, setIsLoggedIn] = useState(false);
+        const [isFollowing, setIsFollowing] = useState(false);
 
-        if (crumbs) {
-            pageType = crumbs[crumbs.length - 1].text;
+        let linkText = 'Follow';
+        let tooltipText = 'You are no longer following this topic';
+        if (isFollowing) {
+            linkText = 'Unfollow';
+            tooltipText = 'You are now following this topic';
         }
-
-        if (
-            pageType === 'Languages' ||
-            pageType === 'Technologies' ||
-            pageType === 'Products'
-        ) {
-            showFollowLink = true;
-        }
-
-        const linkStyles = {
-            '&:hover': {
-                // color: 'text.selected',
-            },
-        };
-
-        // const [showTooltip, setShowTooltip] = useState(false);
 
         const onFollowLinkClick = () => {
-            // TODO: change state
-            // setShowTooltip(true);
-            // setTimeout(() => setShowTooltip(false), 2000);
+            setIsFollowing(!isFollowing);
+            setShowHoverTooltip(false);
+            setShowClickTooltip(true);
+            setTimeout(() => setShowClickTooltip(false), 2000);
         };
+
+        console.log(showClickTooltip);
 
         return (
             <div sx={heroContainerStyles}>
                 <GridLayout sx={{ rowGap: 'inc30' }}>
                     {crumbs && <Breadcrumbs crumbs={crumbs} />}
+                    {/* adjust overflow value if tooltip position is relative */}
                     <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
                         <TypographyScale
                             customElement="h1"
@@ -58,41 +50,81 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                                 marginBottom: ['inc20', null, null, 'inc40'],
                                 display: 'flex',
                                 flexDirection: 'row',
-                                alignItems: 'center',
+                                alignContent: 'space-around',
+                                // alignItems: 'center',
                                 gap: '16px',
                             }}
                         >
                             {name}
-                            {/* <div sx={{ position: 'relative' }}>
-                            <Tooltip
-                                text={
-                                    'Receive a monthly digest and recommended content based on topics you follow!'
-                                }
-                                arrowDirection={'left-center'}
-                            > */}
-                            {showFollowLink && (
-                                <Link
-                                    // linkIconColor="#006CFA"
-                                    sx={{ linkStyles }}
-                                    onClick={onFollowLinkClick}
-                                >
-                                    <SystemIcon //TODO: fix color
-                                        name={ESystemIconNames.PLUS}
-                                        inheritColor
-                                    />
-                                    &nbsp;Follow
-                                </Link>
-                            )}
-                            {/* </Tooltip>
-                            {showTooltip && (
-                                <div sx={tooltipStyles.tooltipWrapper}>
-                                    <div sx={tooltipStyles.tooltipArrow} />
-                                    <div sx={tooltipStyles.tooltipBody}>
-                                        You are now following this topic
+                            {topicPage && (
+                                <>
+                                    <Link
+                                        onClick={onFollowLinkClick}
+                                        onMouseEnter={() =>
+                                            setShowHoverTooltip(true)
+                                        }
+                                        onMouseLeave={() =>
+                                            setShowHoverTooltip(false)
+                                        }
+                                    >
+                                        {!isFollowing && (
+                                            <SystemIcon
+                                                sx={{
+                                                    fill: 'blue60',
+                                                    stroke: 'blue60',
+                                                }}
+                                                name={ESystemIconNames.PLUS}
+                                            />
+                                        )}
+                                        &nbsp;{linkText}
+                                    </Link>
+                                    <div>
+                                        {showClickTooltip && (
+                                            <div
+                                                sx={
+                                                    tooltipStyles.tooltipWrapper
+                                                }
+                                            >
+                                                <div
+                                                    sx={
+                                                        tooltipStyles.tooltipArrow
+                                                    }
+                                                />
+                                                <div
+                                                    sx={
+                                                        tooltipStyles.tooltipBody
+                                                    }
+                                                >
+                                                    {tooltipText}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {showHoverTooltip && !isFollowing && (
+                                            <div
+                                                sx={
+                                                    tooltipStyles.tooltipWrapper
+                                                }
+                                            >
+                                                <div
+                                                    sx={
+                                                        tooltipStyles.tooltipArrow
+                                                    }
+                                                />
+                                                <div
+                                                    sx={
+                                                        tooltipStyles.tooltipBody
+                                                    }
+                                                >
+                                                    Receive a monthly digest and
+                                                    recommended content based on
+                                                    topics you follow!
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
-                                </div>
-                            )} 
-                            </div> */}
+                                </>
+                            )}
                         </TypographyScale>
                         {!!description && (
                             <TypographyScale variant="body2">
