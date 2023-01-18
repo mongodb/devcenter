@@ -27,7 +27,7 @@
         "@leafygreen-ui/mongo-nav": "10.0.1",
         "@mdb/consistent-nav": "1.2.27",
         "@mdb/devcenter-components": "0.2.0",
-        "@mdb/flora": "1.3.4-rc.0",
+        "@mdb/flora": "1.3.5",
         "@mdx-js/react": "1.6.22",
         "@percy/playwright": "1.0.4",
         "@sentry/nextjs": "7.19.0",
