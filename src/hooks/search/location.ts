@@ -23,10 +23,27 @@ const useLocationSearch = (callback: () => void) => {
         useState<LocationSelection>();
     const [geolocationValidating, setGeolocationValidating] = useState(false);
 
-    const { data: locationResults, isValidating: locationValidating } = useSWR(
+    const {
+        data: rawLocationResults = [],
+        isValidating: locationValidating,
+    }: {
+        data?: google.maps.places.AutocompletePrediction[];
+        isValidating: boolean;
+    } = useSWR(
         locationQuery ? `search=${locationQuery}` : null,
         locationFetcher,
         swrOptions
+    );
+
+    // Remove large result types since we're comparing coordinates
+    const locationResults = useMemo(
+        () =>
+            rawLocationResults?.filter(
+                res =>
+                    !res.types.includes('country') &&
+                    !res.types.includes('continent')
+            ),
+        [rawLocationResults]
     );
 
     const onLocationQuery = (e: React.ChangeEvent<HTMLInputElement>) => {

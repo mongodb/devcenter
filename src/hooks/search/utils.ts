@@ -84,7 +84,10 @@ export const searchFetcher: Fetcher<ContentItem[], string> = queryString => {
     });
 };
 
-export const locationFetcher: Fetcher<any[], string> = queryString => {
+export const locationFetcher: Fetcher<
+    google.maps.places.AutocompletePrediction[],
+    string
+> = queryString => {
     return fetch(
         (getURLPath('/api/location') as string) + '?' + queryString
     ).then(async response => {
