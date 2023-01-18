@@ -161,7 +161,7 @@ const Card: React.FunctionComponent<CardProps> = ({
 
                 <div>
                     <Pill
-                        sx={pillStyles(contentType)}
+                        sx={pillStyles}
                         variant="identifier"
                         text={pillCategory}
                         size="small"
