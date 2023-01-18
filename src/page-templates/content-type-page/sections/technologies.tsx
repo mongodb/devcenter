@@ -1,47 +1,16 @@
-import {
-    ITopicCard,
-    TopicCardProps,
-} from '../../../components/topic-card/types';
-import { ThirdPartyLogo, BrandedIcon } from '@mdb/flora';
-import { iconStyles } from '../../../components/topic-card/styles';
-import { TopicCardsContainer } from '../../../components/topic-card';
-import { technologyToLogo } from '../../../utils/technology-to-logo';
+import { TopicCardsContainer } from '../../../components/topic-cards-container';
+import { Tag } from '../../../interfaces/tag';
+import { tagToTopic } from '../../../utils/tag-to-topic';
 
 interface TechnologiesSectionProps {
     title: string;
-    items: ITopicCard[];
+    items: Tag[];
 }
-
-export const topicWithIcon = (
-    item: ITopicCard | TopicCardProps
-): TopicCardProps => {
-    const hasLogo = item.title === 'Serverless' || technologyToLogo[item.title];
-    let icon: JSX.Element | null = null;
-    if (hasLogo) {
-        // Really annoying, but we have a special case where we use a branded icon for serverless.
-        if (item.title === 'Serverless') {
-            icon = <BrandedIcon sx={iconStyles} name="atlas_serverless" />;
-        } else {
-            icon = (
-                <ThirdPartyLogo
-                    sx={iconStyles}
-                    variant={technologyToLogo[item.title]}
-                    href={item.href}
-                />
-            );
-        }
-    }
-
-    return {
-        ...item,
-        icon,
-    };
-};
 
 const TechnologiesSection: React.FunctionComponent<
     TechnologiesSectionProps
 > = ({ title, items }) => {
-    const itemsWithIcons = items.map(topicWithIcon);
+    const topicItems = items.map(tagToTopic);
     return (
         <div
             sx={{
@@ -55,7 +24,7 @@ const TechnologiesSection: React.FunctionComponent<
                 }}
             >
                 <TopicCardsContainer
-                    topics={itemsWithIcons}
+                    topics={topicItems}
                     title={title}
                     sx={{ width: '100%' }}
                 />

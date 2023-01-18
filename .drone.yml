@@ -23,7 +23,7 @@ steps:
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
-        from_secret: REALM_SEARCH_URL
+        from_secret: REALM_SEARCH_URL_STAGING
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
@@ -80,7 +80,7 @@ steps:
     image: quay.io/mongodb/drone-helm:v3
     settings:
       chart: mongodb/web-app
-      chart_version: 4.12.0
+      chart_version: 4.12.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
@@ -170,7 +170,7 @@ steps:
     image: quay.io/mongodb/drone-helm:v3
     settings:
       chart: mongodb/web-app
-      chart_version: 4.12.0
+      chart_version: 4.12.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend
@@ -212,7 +212,7 @@ steps:
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
-        from_secret: REALM_SEARCH_URL
+        from_secret: REALM_SEARCH_URL_STAGING
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
@@ -352,7 +352,7 @@ steps:
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
-        from_secret: REALM_SEARCH_URL
+        from_secret: REALM_SEARCH_URL_STAGING
       STRAPI_URL:
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
@@ -384,7 +384,7 @@ steps:
     settings:
       mode: upgrade # Not sure why we have to set this only here, but we do.
       chart: mongodb/web-app
-      chart_version: 4.12.0
+      chart_version: 4.12.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
       release: devcenter-frontend-preview-${number}

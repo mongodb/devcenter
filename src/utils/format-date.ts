@@ -63,11 +63,7 @@ export const formatDateRange = (start: string, end: string) => {
         const valid = isNaN(Date.parse(start)) ? end : start;
         const validDate = new Date(valid);
 
-        return `${validDate.toLocaleString('default', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        })} ${getTimezone(validDate)}`;
+        return `${validDate.toLocaleString()} ${getTimezone(validDate)}`;
     }
 
     const startDate = new Date(start);
@@ -86,6 +82,7 @@ export const formatDateRange = (start: string, end: string) => {
             }) + ' - ';
         output += startDate.toLocaleString('default', {
             hour: 'numeric',
+            minute: 'numeric',
             hour12: true,
         });
     } else if (dateCompare(startDate, endDate)) {
@@ -98,10 +95,12 @@ export const formatDateRange = (start: string, end: string) => {
         output +=
             startDate.toLocaleString('default', {
                 hour: 'numeric',
+                minute: 'numeric',
                 hour12: true,
             }) + ' - ';
         output += endDate.toLocaleString('default', {
             hour: 'numeric',
+            minute: 'numeric',
             hour12: true,
         });
     } else {
@@ -115,6 +114,7 @@ export const formatDateRange = (start: string, end: string) => {
         output +=
             startDate.toLocaleString('default', {
                 hour: 'numeric',
+                minute: 'numeric',
                 hour12: true,
             }) + ' | ';
         output +=
@@ -125,6 +125,7 @@ export const formatDateRange = (start: string, end: string) => {
             }) + ' - ';
         output += endDate.toLocaleString('default', {
             hour: 'numeric',
+            minute: 'numeric',
             hour12: true,
         });
     }
