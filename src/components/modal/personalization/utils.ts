@@ -1,17 +1,19 @@
 import metaInfoPreval from '../../../service/get-all-meta-info.preval';
-import { PersonlizationTagType } from './types';
+import { PersonalizationModalConfig } from './types';
 
-type configType = {
-    title: string;
-    tags: Array<PersonlizationTagType>;
-};
-
-// DEV Note: See comments in personalization-paginated.modal.tsx about need for "skipIndex" usage
-export function initializePersonalizationConfig(useSkipIndex = false) {
-    const skipIndex: configType = { title: 'Default', tags: [] };
-    const languages: configType = { title: 'Languages', tags: [] };
-    const technologies: configType = { title: 'Technologies', tags: [] };
-    const products: configType = { title: 'Products', tags: [] };
+export function initializePersonalizationConfig() {
+    const languages: PersonalizationModalConfig = {
+        title: 'Languages',
+        tags: [],
+    };
+    const technologies: PersonalizationModalConfig = {
+        title: 'Technologies',
+        tags: [],
+    };
+    const products: PersonalizationModalConfig = {
+        title: 'Products',
+        tags: [],
+    };
 
     metaInfoPreval.forEach(({ category, tagName, slug }) => {
         if (category === 'ProgrammingLanguage') {
@@ -23,9 +25,7 @@ export function initializePersonalizationConfig(useSkipIndex = false) {
         }
     });
 
-    return useSkipIndex
-        ? [skipIndex, languages, technologies, products]
-        : [languages, technologies, products];
+    return [languages, technologies, products];
 }
 
 // TODO: you will also need to pass userId here to construct the path for the PUT/POST

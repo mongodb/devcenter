@@ -3,3 +3,8 @@ export interface PersonlizationTagType {
     tagName: string;
     slug: string;
 }
+
+export type PersonalizationModalConfig = {
+    title: string;
+    tags: Array<PersonlizationTagType>;
+};

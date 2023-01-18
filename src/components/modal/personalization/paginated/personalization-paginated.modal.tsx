@@ -8,34 +8,28 @@ import {
     Pill,
 } from '@mdb/flora';
 
-import { useModalContext } from '../../../contexts/modal';
+import { useModalContext } from '../../../../contexts/modal';
 
-import { PersonlizationTagType } from './types';
+import { PersonlizationTagType } from '../types';
 import {
     initializePersonalizationConfig,
     submitPersonalizationSelections,
-} from './utils';
+} from '../utils';
 
-import styles from './styles';
+import styles from '../styles';
 
-/* 
-    *** Dev Notes for this component ***
-    Flora does not treat their pagination with a zero based index, so the starting currentPage prop will always be "1"
-    Instead of trying to do wacky logic adding and subtracting the newIndex param in the onChangePage callback and then lining that up with our local state and passing props back to the Pagination component,
-    I figured it was simpler to understand by using a "skipIndex" buffer in our config, and then initialzing our [tabIndex] local state to start at "1".
-    The skipIndex will not be exposed in the UI because we set the first index to be 1, and we subtract 1 from our pages count prop in <Pagination />
-*/
 const PaginatedPersonalizationModal = () => {
-    const paginationConfig = initializePersonalizationConfig(true);
+    const paginationConfig = initializePersonalizationConfig();
 
     const { closeModal } = useModalContext();
 
-    const [tabIndex, setTabIndex] = useState(1);
+    const [tabIndex, setTabIndex] = useState(0);
     const [selections, setSelections] = useState<Array<PersonlizationTagType>>(
         []
     );
 
-    const onPaginationChange = (newIndex: number) => setTabIndex(newIndex);
+    // Flora pagination is not zero-based, so need to always subtract 1 from the number in callback
+    const onPaginationChange = (newIndex: number) => setTabIndex(newIndex - 1);
 
     const onSelectionToggle = (
         tag: PersonlizationTagType,
@@ -51,7 +45,6 @@ const PaginatedPersonalizationModal = () => {
     };
 
     const onCompletion = () => {
-        // do your POST/PUT
         submitPersonalizationSelections(selections);
         closeModal();
     };
@@ -118,8 +111,8 @@ const PaginatedPersonalizationModal = () => {
                 <Pagination
                     inverse
                     type="dots"
-                    currentPage={tabIndex}
-                    pages={paginationConfig.length - 1}
+                    currentPage={tabIndex + 1} // Flora pagination is not zero-based
+                    pages={paginationConfig.length}
                     onChangePage={onPaginationChange}
                 />
             </div>

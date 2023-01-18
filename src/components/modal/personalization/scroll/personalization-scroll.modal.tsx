@@ -2,18 +2,18 @@ import { Fragment, useState } from 'react';
 import { Grid } from 'theme-ui';
 import { Button, TypographyScale } from '@mdb/flora';
 
-import { useModalContext } from '../../../contexts/modal';
+import { useModalContext } from '../../../../contexts/modal';
 
-import { PersonlizationTagType } from './types';
+import { PersonlizationTagType } from '../types';
 import {
     initializePersonalizationConfig,
     submitPersonalizationSelections,
-} from './utils';
+} from '../utils';
 
-import styles from './styles';
+import styles from '../styles';
 
 const ScrollPersonalizationModal = () => {
-    const tagConfig = initializePersonalizationConfig(false);
+    const tagConfig = initializePersonalizationConfig();
 
     const { closeModal } = useModalContext();
     const [selections, setSelections] = useState<Array<PersonlizationTagType>>(
@@ -34,7 +34,6 @@ const ScrollPersonalizationModal = () => {
     };
 
     const onCompletion = () => {
-        // do your POST/PUT
         submitPersonalizationSelections(selections);
         closeModal();
     };
