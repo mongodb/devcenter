@@ -19,6 +19,20 @@ interface EventWidgetProps {
     wrapperStyles?: ThemeUICSSObject;
 }
 
+const formatDate = (d: string) => {
+    const date = new Date(d);
+
+    return `${date.toLocaleDateString('default', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    })} ${date.toLocaleTimeString('default', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    })}`;
+};
+
 export default function EventWidget({
     dates,
     location = '',
@@ -28,8 +42,8 @@ export default function EventWidget({
     registrationLink = '',
     virtualLinkText = 'Virtual Link',
 }: EventWidgetProps) {
-    const startTime = dates[0] ? new Date(dates[0]).toLocaleString() : '';
-    const endTime = dates[1] ? `- ${new Date(dates[1]).toLocaleString()}` : '';
+    const startTime = dates[0] ? formatDate(dates[0]) : '';
+    const endTime = dates[1] ? `- ${formatDate(dates[1])}` : '';
 
     return (
         <div sx={{ ...wrapperStyles }}>
