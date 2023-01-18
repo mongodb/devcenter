@@ -84,7 +84,7 @@ const EventsPageComponent: React.FunctionComponent<
     slug,
     contentType,
 }) => {
-    // TODO: Refactor and remove the following three lines
+    // TODO: Refactor and remove the following three consts
     const filters = useMemo(
         () => fixInPersonFilter(filterProps.filters),
         [filterProps.filters]
