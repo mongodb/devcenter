@@ -453,12 +453,12 @@ describe('itemInFilters', () => {
         const itemWithBothTags = {
             tags: [
                 {
-                    name: 'filter1',
+                    name: 'tag1',
                     slug: 'slug',
                     type: 'type1',
                 },
                 {
-                    name: 'filter2',
+                    name: 'tag2',
                     slug: 'slug',
                     type: 'type2',
                 },
@@ -468,7 +468,7 @@ describe('itemInFilters', () => {
         const itemWithOneTag = {
             tags: [
                 {
-                    name: 'filter1',
+                    name: 'tag1',
                     slug: 'slug',
                     type: 'type1',
                 },
@@ -478,13 +478,13 @@ describe('itemInFilters', () => {
         const filters = [
             {
                 count: 0,
-                name: 'filter1',
+                name: 'tag1',
                 subFilters: [],
                 type: 'type1',
             },
             {
                 count: 0,
-                name: 'filter2',
+                name: 'tag2',
                 subFilters: [],
                 type: 'type2',
             },
@@ -498,12 +498,12 @@ describe('itemInFilters', () => {
         const itemWithBothTags = {
             tags: [
                 {
-                    name: 'filter1',
+                    name: 'tag1',
                     slug: 'slug',
                     type: 'type1',
                 },
                 {
-                    name: 'filter2',
+                    name: 'tag2',
                     slug: 'slug',
                     type: 'type1',
                 },
@@ -513,12 +513,12 @@ describe('itemInFilters', () => {
         const itemWithFirstTag = {
             tags: [
                 {
-                    name: 'filter1',
+                    name: 'tag1',
                     slug: 'slug',
                     type: 'type1',
                 },
                 {
-                    name: 'filter2',
+                    name: 'tag2',
                     slug: 'slug',
                     type: 'type2',
                 },
@@ -528,12 +528,12 @@ describe('itemInFilters', () => {
         const itemWithSecondTag = {
             tags: [
                 {
-                    name: 'filter2',
+                    name: 'tag1',
                     slug: 'slug',
                     type: 'type1',
                 },
                 {
-                    name: 'filter3',
+                    name: 'tag3',
                     slug: 'slug',
                     type: 'type3',
                 },
@@ -543,13 +543,13 @@ describe('itemInFilters', () => {
         const filters = [
             {
                 count: 0,
-                name: 'filter1',
+                name: 'tag1',
                 subFilters: [],
                 type: 'type1',
             },
             {
                 count: 0,
-                name: 'filter2',
+                name: 'tag2',
                 subFilters: [],
                 type: 'type1',
             },
@@ -558,5 +558,93 @@ describe('itemInFilters', () => {
         expect(itemInFilters(itemWithBothTags, filters)).toBe(true);
         expect(itemInFilters(itemWithFirstTag, filters)).toBe(true);
         expect(itemInFilters(itemWithSecondTag, filters)).toBe(true);
+    });
+
+    test('Two filters of the same type and one of a different type use both AND and OR logic', () => {
+        const itemWithOneTag = {
+            tags: [
+                {
+                    name: 'tag3',
+                    slug: 'slug',
+                    type: 'type2',
+                },
+            ],
+        } as unknown as ContentItem;
+
+        const itemWithSameTypeTags = {
+            tags: [
+                {
+                    name: 'tag1',
+                    slug: 'slug',
+                    type: 'type1',
+                },
+                {
+                    name: 'tag2',
+                    slug: 'slug',
+                    type: 'type1',
+                },
+            ],
+        } as unknown as ContentItem;
+
+        const itemWithDifferentTypeTags = {
+            tags: [
+                {
+                    name: 'tag1',
+                    slug: 'slug',
+                    type: 'type1',
+                },
+                {
+                    name: 'tag3',
+                    slug: 'slug',
+                    type: 'type2',
+                },
+            ],
+        } as unknown as ContentItem;
+
+        const itemWithAllTags = {
+            tags: [
+                {
+                    name: 'tag1',
+                    slug: 'slug',
+                    type: 'type1',
+                },
+                {
+                    name: 'tag2',
+                    slug: 'slug',
+                    type: 'type1',
+                },
+                {
+                    name: 'tag3',
+                    slug: 'slug',
+                    type: 'type2',
+                },
+            ],
+        } as unknown as ContentItem;
+
+        const filters = [
+            {
+                count: 0,
+                name: 'tag1',
+                subFilters: [],
+                type: 'type1',
+            },
+            {
+                count: 0,
+                name: 'tag2',
+                subFilters: [],
+                type: 'type1',
+            },
+            {
+                count: 0,
+                name: 'tag3',
+                subFilters: [],
+                type: 'type2',
+            },
+        ];
+
+        expect(itemInFilters(itemWithOneTag, filters)).toBe(false);
+        expect(itemInFilters(itemWithSameTypeTags, filters)).toBe(false);
+        expect(itemInFilters(itemWithDifferentTypeTags, filters)).toBe(true);
+        expect(itemInFilters(itemWithAllTags, filters)).toBe(true);
     });
 });
