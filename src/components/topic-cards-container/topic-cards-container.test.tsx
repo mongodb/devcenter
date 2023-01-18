@@ -1,29 +1,32 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { EThirdPartyLogoVariant, ThirdPartyLogo } from '@mdb/flora';
 import { TopicCardsContainer } from '.';
-import { ITopicCard } from './types';
+import { TopicCardProps } from '@mdb/devcenter-components';
 
 const PRODUCT_NAME = 'Atlas';
-const TOPICS: ITopicCard[] = [
+const icon = <ThirdPartyLogo variant={EThirdPartyLogoVariant.DOCKER} />;
+
+const TOPICS: TopicCardProps[] = [
     {
         title: 'Aggregation',
         href: '#',
-        icon: 'atlas_search',
+        icon,
     },
     {
         title: 'Atlas Search',
         href: '#',
-        icon: 'atlas_search',
+        icon,
     },
     {
         title: 'Charts',
         href: '#',
-        icon: 'atlas_search',
+        icon,
     },
     {
         title: 'Other Topic Here',
         href: '#',
-        icon: 'atlas_search',
+        icon,
     },
 ];
 

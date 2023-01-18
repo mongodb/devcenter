@@ -1889,10 +1889,10 @@
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.27.tgz#818e421ee4952501e57a2e42bbca8394626407a9"
   integrity sha512-SnhdhN62UEf7cRB6W9BFAF0vzJpt80LnpgbW89n+Z7ywusmeJ/iYt511mWgBWoRGcXZaNtzcifRe9yocRkXBcA==
 
-"@mdb/devcenter-components@0.1.3":
-  version "0.1.3"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/devcenter-components/-/@mdb/devcenter-components-0.1.3.tgz#45a68716fdde38aab26a38235e6bab8c62b8a67e"
-  integrity sha512-tWsvKOfFc04Za4Sx4hEldQ+jSF5WlBwJor+wzUYg+XTL6vBbzZ+BnGGUZLGvtANzjYqWw5FjK2cGEtHAPZWwlA==
+"@mdb/devcenter-components@0.2.0":
+  version "0.2.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/devcenter-components/-/@mdb/devcenter-components-0.2.0.tgz#f6277f933f3069c8653a525f609b10ce202b5d84"
+  integrity sha512-E9eXq2+DOEpc0luXQb+/LCDKX87Qunq8W6PADfC8WPs5UQoHDOVNQvK2f+3gjBCoDYZexTisdpJXOkLxxA8ebg==
 
 "@mdb/flora@1.3.4-rc.0":
   version "1.3.4-rc.0"

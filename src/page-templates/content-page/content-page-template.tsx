@@ -64,7 +64,7 @@ import {
     sideNavTitleStyles,
 } from '../../components/tertiary-nav/styles';
 import { FullApplication, Snippet } from '../../components/icons';
-import { iconStyles } from '../../components/topic-card/styles';
+import { iconStyles } from '../../components/topic-cards-container/styles';
 import { formatEventTypes } from '../../utils/format-text';
 
 interface ContentPageProps {

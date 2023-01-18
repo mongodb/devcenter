@@ -1,6 +1,5 @@
 import { CTA } from '../components/hero/types';
 import { TagType } from '../types/tag-type';
-import { ITopicCard } from '../components/topic-card/types';
 
 export interface MetaInfo {
     category: TagType;
@@ -8,7 +7,7 @@ export interface MetaInfo {
     description: string;
     slug: string;
     ctas: CTA[];
-    topics?: ITopicCard[];
+    topics?: MetaInfo[];
     documentationLink: string;
 }
 
