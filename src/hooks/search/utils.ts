@@ -139,15 +139,8 @@ const fixForImproperlyTaggedContent = (filterItems: FilterItem[]) => {
         }
     };
 
-    const fixAttendanceType = (item: FilterItem) => {
-        if (item.type === 'EventAttendance' && item.name === 'InPerson') {
-            item.name = 'In-Person';
-        }
-    };
-
     filterItems.forEach((item: FilterItem) => {
         fixCodeLevelSubFilters(item);
-        fixAttendanceType(item);
         // ...add more here if needed
     });
 };

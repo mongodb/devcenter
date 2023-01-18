@@ -50,6 +50,14 @@ interface EventsPageComponentProps {
     setMobileFiltersOpen: (open: boolean) => void;
 }
 
+// TODO: Refactor and remove references to this function
+const fixInPersonFilter = (filters: FilterItem[], hyphenate = true) =>
+    filters.map(filter =>
+        filter.name === (hyphenate ? 'InPerson' : 'In-Person')
+            ? { ...filter, name: hyphenate ? 'In-Person' : 'InPerson' }
+            : filter
+    );
+
 const EventsPageComponent: React.FunctionComponent<
     EventsPageComponentProps & ContentTypePageProps
 > = ({
@@ -57,7 +65,6 @@ const EventsPageComponent: React.FunctionComponent<
         searchStringProps,
         searchStringProps: { searchString },
         filterProps,
-        filterProps: { filters, onFilter },
         resultsProps,
         resultsProps: { isValidating, allResults, unfilteredResults, results },
         locationProps,
@@ -73,10 +80,29 @@ const EventsPageComponent: React.FunctionComponent<
     featured,
     pageNumber,
     children,
-    filterItems,
+    filterItems: rawFilterItems,
     slug,
     contentType,
 }) => {
+    // TODO: Refactor and remove the following three lines
+    const filters = useMemo(
+        () => fixInPersonFilter(filterProps.filters),
+        [filterProps.filters]
+    );
+    const onFilter = useMemo(
+        () => (filters: FilterItem[]) =>
+            filterProps.onFilter(fixInPersonFilter(filters, false)),
+        [filterProps]
+    );
+    const filterItems = useMemo(
+        () =>
+            rawFilterItems.map(item => ({
+                ...item,
+                value: fixInPersonFilter(item.value),
+            })),
+        [rawFilterItems]
+    );
+
     const showFeatured = !searchString && !filters.length && !location;
 
     const twoCriteriaResults = results;
@@ -175,13 +201,17 @@ const EventsPageComponent: React.FunctionComponent<
             >
                 <DesktopFilters
                     {...filterProps}
-                    sx={desktopFiltersStyles}
+                    filters={filters}
+                    onFilter={onFilter}
                     filterItems={filterItems}
+                    sx={desktopFiltersStyles}
                 />
 
                 {mobileFiltersOpen && (
                     <MobileFilters
                         {...filterProps}
+                        filters={filters}
+                        onFilter={onFilter}
                         filterItems={filterItems}
                         closeModal={() => setMobileFiltersOpen(false)}
                     />
