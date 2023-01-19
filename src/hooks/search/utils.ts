@@ -32,6 +32,7 @@ export const searchItemToContentItem = ({
     end_time,
     tags,
     location,
+    abbreviated_location,
     coordinates,
 }: SearchItem): ContentItem => {
     const itemImage: Image | undefined =
@@ -71,6 +72,7 @@ export const searchItemToContentItem = ({
         title: name,
         featured: false,
         location,
+        abbreviatedLocation: abbreviated_location,
         coordinates,
     };
 };

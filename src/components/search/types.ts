@@ -66,6 +66,7 @@ export interface SearchItem {
     image?: SearchImage;
     description: string;
     location?: string;
+    abbreviated_location?: string;
     slug: string;
     date: string;
     start_time?: string;

@@ -59,6 +59,7 @@ export const getCardProps = (
         image,
         slug,
         location,
+        abbreviatedLocation,
         eventSetup,
     }: ContentItem,
     variant: CardVariant
@@ -125,7 +126,7 @@ export const getCardProps = (
                             />
                         }
                     >
-                        {`${location}${
+                        {`${abbreviatedLocation || location}${
                             location && hyphenatedAttendanceType ? ' | ' : ''
                         }${hyphenatedAttendanceType}`.toUpperCase()}
                     </SecondaryTag>
