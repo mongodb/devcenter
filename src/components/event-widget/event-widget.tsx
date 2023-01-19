@@ -7,6 +7,8 @@ import {
 } from '@mdb/flora';
 import { ThemeUICSSObject } from 'theme-ui';
 
+import { formatSingleDate } from '../../utils/format-date';
+
 import styles from './styles';
 
 interface EventWidgetProps {
@@ -19,20 +21,6 @@ interface EventWidgetProps {
     wrapperStyles?: ThemeUICSSObject;
 }
 
-const formatDate = (d: string) => {
-    const date = new Date(d);
-
-    return `${date.toLocaleDateString('default', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    })} ${date.toLocaleTimeString('default', {
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
-    })}`;
-};
-
 export default function EventWidget({
     dates,
     location = '',
@@ -42,8 +30,8 @@ export default function EventWidget({
     registrationLink = '',
     virtualLinkText = 'Virtual Link',
 }: EventWidgetProps) {
-    const startTime = dates[0] ? formatDate(dates[0]) : '';
-    const endTime = dates[1] ? `- ${formatDate(dates[1])}` : '';
+    const startTime = dates[0] ? formatSingleDate(dates[0]) : '';
+    const endTime = dates[1] ? `- ${formatSingleDate(dates[1])}` : '';
 
     return (
         <div sx={{ ...wrapperStyles }}>

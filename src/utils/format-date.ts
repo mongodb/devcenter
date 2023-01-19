@@ -148,3 +148,18 @@ export const getLatestDate = (contentDate: string, updatedDate?: string) => {
 
     return latestDate;
 };
+
+// Example of return format: December 13, 2022 12:00 PM
+export const formatSingleDate = (date: string) => {
+    const dateObj = new Date(date);
+
+    return `${dateObj.toLocaleDateString('default', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    })} ${dateObj.toLocaleTimeString('default', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    })}`;
+};
