@@ -111,6 +111,7 @@ export const getFeaturedLangProdTech = (
 export function shouldRenderRequestButton(contentType: PillCategory): boolean {
     const shouldNotRenderSet: Set<PillCategory> = new Set([
         'News & Announcements',
+        'Event',
     ]);
     return !shouldNotRenderSet.has(contentType);
 }
