@@ -25,10 +25,10 @@ describe('[Component]: Event Widget', () => {
             Exact match would cause wacky behavior of times when running tests locally vs. during build
         */
         expect(
-            screen.getByText('11/30/2022', { exact: false })
+            screen.getByText('November 30, 2022', { exact: false })
         ).toBeInTheDocument();
         expect(
-            screen.getByText('12/1/2022', { exact: false })
+            screen.getByText('December 1, 2022', { exact: false })
         ).toBeInTheDocument();
 
         // sets location
