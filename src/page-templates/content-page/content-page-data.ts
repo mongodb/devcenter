@@ -50,13 +50,14 @@ export const getContentPageData = async (slug: string[]) => {
             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
         }
     } else if (isEventContent) {
-        // Events do not come with a "primary tag" fields, so a search for "L1Product" needs to be done in the standard tags field
-        const eventL1Product = contentItem.tags.find(
-            tag => tag.type === 'L1Product'
+        // Events do not come with a "primary tag" fields, so a search for "L1Product" or "ProgrammingLanguage" needs to be done in the standard tags field
+        const eventTags = contentItem.tags.find(
+            tag =>
+                tag.type === 'L1Product' || tag.type === 'ProgrammingLanguage'
         );
 
-        if (eventL1Product) {
-            sideNavFilterSlug = eventL1Product.slug;
+        if (eventTags) {
+            sideNavFilterSlug = eventTags.slug;
         }
     }
 
@@ -71,7 +72,11 @@ export const getContentPageData = async (slug: string[]) => {
 
     crumbs.push(topicContentTypeCrumb);
 
-    let tertiaryNavItems = getSideNav(sideNavFilterSlug, allContentPreval);
+    // In the rare event an event has no tags, set tertiary nav to empty to prevent parent and first child titles both displaying "Events"
+    let tertiaryNavItems =
+        sideNavFilterSlug === '/events'
+            ? []
+            : getSideNav(sideNavFilterSlug, allContentPreval);
     setURLPathForNavItems(tertiaryNavItems);
 
     const metaInfoForTopic = getMetaInfoForTopic(sideNavFilterSlug);

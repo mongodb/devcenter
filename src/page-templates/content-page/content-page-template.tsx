@@ -142,7 +142,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     );
 
     const hasRequestContentFlow =
-        !previewMode && category !== 'News & Announcements';
+        !previewMode && category !== 'News & Announcements' && !isIndustryEvent;
 
     tertiaryNavItems = addExternalIconToSideNav(
         tertiaryNavItems,
@@ -292,6 +292,21 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     }
                 >
                     {requestButtonText}
+                </Button>
+            )}
+            {isIndustryEvent && (
+                <Button
+                    variant="secondary"
+                    href={getURLPath('/events')}
+                    customWrapperStyles={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                    sx={{
+                        textAlign: 'center',
+                    }}
+                >
+                    See more events
                 </Button>
             )}
         </div>

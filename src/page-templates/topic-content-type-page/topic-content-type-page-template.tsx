@@ -230,7 +230,7 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                 </TypographyScale>
                 <TypographyScale variant="body2">{description}</TypographyScale>
             </div>
-            {contentType !== 'News & Announcements' && (
+            {contentType !== 'News & Announcements' && contentType !== 'Event' && (
                 <div sx={CTAContainerStyles}>
                     <Button
                         variant="secondary"
