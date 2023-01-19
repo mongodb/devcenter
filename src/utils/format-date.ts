@@ -79,7 +79,7 @@ export const formatDateRange = (start: string, end: string) => {
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric',
-            }) + ' - ';
+            }) + ' | ';
         output += startDate.toLocaleString('default', {
             hour: 'numeric',
             minute: 'numeric',
@@ -87,11 +87,13 @@ export const formatDateRange = (start: string, end: string) => {
         });
     } else if (dateCompare(startDate, endDate)) {
         // Same day different time, format as a time range
-        output += startDate.toLocaleString('default', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        });
+        output +=
+            startDate.toLocaleString('default', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+            }) + ' | ';
+
         output +=
             startDate.toLocaleString('default', {
                 hour: 'numeric',
