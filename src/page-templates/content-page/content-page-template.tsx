@@ -458,7 +458,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                 src={getPlaceHolderImage(image?.url)}
                                 sx={{
                                     borderRadius: 'inc30',
-                                    objectFit: 'fill',
+                                    objectFit: 'cover',
                                 }}
                                 layout="fill"
                             />
