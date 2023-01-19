@@ -45,6 +45,7 @@ import { useRequestContentModal } from '../../contexts/request-content-modal';
 import { Tag } from '../../interfaces/tag';
 import { tagToTopic } from '../../utils/tag-to-topic';
 import { LocationOptions } from '../../hooks/search/types';
+import EventResults from '../../components/event-results';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
@@ -68,7 +69,7 @@ const spanAllColumns = {
 };
 
 const extraSearchBoxStyles = {
-    marginBottom: ['0', null, 'inc50'],
+    marginBottom: '0',
 };
 const extraSortBoxStyles = {
     display: 'block',
@@ -163,21 +164,28 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
 
     const { setModalStage } = useRequestContentModal();
 
+    const searchMetaProps = useSearchMeta(
+        pageNumber,
+        topicSlug + contentTypeSlug,
+        contentType,
+        buildPageTitle(contentType, topicName)
+    );
     const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
-        useSearchMeta(
-            pageNumber,
-            topicSlug + contentTypeSlug,
-            contentType,
-            buildPageTitle(contentType, topicName)
-        );
+        searchMetaProps;
 
+    const searchProps = useSearch(
+        initialSearchContent,
+        updatePageMeta,
+        contentType,
+        topicSlug
+    );
     const {
         searchStringProps,
         sortProps,
         filterProps,
         resultsProps,
         locationProps,
-    } = useSearch(initialSearchContent, updatePageMeta, contentType, topicSlug);
+    } = searchProps;
 
     const mainGridDesktopRowsCount = subTopics.length > 0 ? 4 : 3;
 
@@ -291,7 +299,17 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                         />
                     )}
 
-                    <div sx={extraSearchWrapperStyles}>
+                    <div
+                        sx={{
+                            ...extraSearchWrapperStyles,
+                            ...(contentType === 'Event'
+                                ? {
+                                      rowGap: ['inc40', null, 'inc70'],
+                                      columnGap: 'inc40',
+                                  }
+                                : {}),
+                        }}
+                    >
                         <div sx={titleStyles}>
                             <TypographyScale
                                 variant="heading5"
@@ -318,34 +336,44 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                         />
 
                         {contentType === 'Event' && (
-                            <LocationBox
-                                {...locationProps}
-                                displayOptions={locationDisplayOptions}
-                            />
+                            <>
+                                <LocationBox
+                                    {...locationProps}
+                                    displayOptions={locationDisplayOptions}
+                                />
+
+                                <EventResults
+                                    searchProps={searchProps}
+                                    searchMetaProps={searchMetaProps}
+                                    hideHeader
+                                    gridLayout
+                                />
+                            </>
                         )}
 
                         {contentType !== 'Event' && (
-                            <SortBox
-                                {...sortProps}
-                                extraStyles={extraSortBoxStyles}
-                            />
-                        )}
+                            <>
+                                <SortBox
+                                    {...sortProps}
+                                    extraStyles={extraSortBoxStyles}
+                                />
 
-                        {contentType === 'Code Example' && (
-                            <ExtraCodeExampleCheckboxes {...filterProps} />
-                        )}
+                                {contentType === 'Code Example' && (
+                                    <ExtraCodeExampleCheckboxes
+                                        {...filterProps}
+                                    />
+                                )}
 
-                        <SearchResults
-                            {...resultsProps}
-                            pageNumber={pageNumber}
-                            slug={topicSlug + contentTypeSlug}
-                            updatePageMeta={updatePageMeta}
-                            contentType={contentType}
-                            layout="grid"
-                            extraStyles={{
-                                marginTop: ['inc30', null, 0],
-                            }}
-                        />
+                                <SearchResults
+                                    {...resultsProps}
+                                    {...searchMetaProps}
+                                    layout="grid"
+                                    extraStyles={{
+                                        marginTop: 'inc30',
+                                    }}
+                                />
+                            </>
+                        )}
                     </div>
                 </GridLayout>
             </div>
