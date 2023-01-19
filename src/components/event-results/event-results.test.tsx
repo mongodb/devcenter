@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { SearchProps } from '../../hooks/search/types';
 import { ContentItem } from '../../interfaces/content-item';
 import EventResults from './event-results';
+import { FilterItem } from '@mdb/devcenter-components';
 
 const mockEvent = {
     author: [],
@@ -246,6 +247,49 @@ describe('EventResults', () => {
             screen.getByRole('heading', { name: /all events/i })
         ).toBeInTheDocument();
         expect(screen.getAllByTestId('card-list')).toHaveLength(3); // One event in the search results, both in all results
+    });
+
+    test('When filters are selected, the results and all results are displayed regardless if other criteria are entered', () => {
+        const searchString = 'Event';
+        const locationSelection = 'NYC';
+        const filterItem = {
+            name: 'Virtual',
+            type: 'EventAttendance',
+        } as FilterItem;
+
+        const searchProps = mockSearchPropsFactory({
+            filterProps: {
+                ...searchPropsDefaults.filterProps,
+                filters: [filterItem],
+            },
+            searchStringProps: {
+                ...searchPropsDefaults.searchStringProps,
+                searchString,
+            },
+            locationProps: {
+                ...searchPropsDefaults.locationProps,
+                locationSelection: {
+                    description: locationSelection,
+                },
+            },
+            resultsProps: {
+                ...searchPropsDefaults.resultsProps,
+                allResults: [mockVirtualEvent],
+                unfilteredResults: [mockVirtualEvent],
+                results: [mockVirtualEvent],
+            },
+        });
+        render(
+            <EventResults
+                searchProps={searchProps}
+                searchMetaProps={mockSearchMetaProps}
+            />
+        );
+
+        expect(
+            screen.getByRole('heading', { name: /1 result/i })
+        ).toBeInTheDocument();
+        expect(screen.getAllByTestId('card-list')).toHaveLength(2);
     });
 
     test('Passing gridLayout prop as true changes layout to grid', () => {
