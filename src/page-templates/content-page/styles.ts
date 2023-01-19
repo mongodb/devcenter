@@ -1,4 +1,5 @@
 import { ThemeUICSSObject } from 'theme-ui';
+import theme from '@mdb/flora/theme';
 
 const wrapper = {
     paddingBottom: 'inc160',
@@ -119,6 +120,34 @@ const vidOrPodContent: ThemeUICSSObject = {
     },
 };
 
+const tooltip = {
+    tooltipWrapper: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
+        display: 'flex',
+        alignItems: 'center',
+        width: 208,
+    } as ThemeUICSSObject,
+    tooltipArrow: {
+        borderBottom: '8px solid transparent',
+        borderTop: '8px solid transparent',
+        borderRight: `8px solid ${theme.colors.background.containerInverse}`,
+    } as ThemeUICSSObject,
+    tooltipBody: {
+        bg: 'background.containerInverse',
+        color: 'text.inverse',
+        borderRadius: 'tooltips',
+        padding: ['inc10', null, null, 'inc20'],
+        textAlign: 'left',
+        fontSize: ['inc00', null, null, 'inc10'],
+        lineHeight: ['inc10', null, null, 'inc20'],
+        fontFamily: 'body',
+        boxShadow: 'level01',
+    } as ThemeUICSSObject,
+};
+
 const styles = {
     image,
     footer,
@@ -134,6 +163,7 @@ const styles = {
     externalExamples,
     requestBtn,
     footerActions,
+    tooltip,
 };
 
 export default styles;

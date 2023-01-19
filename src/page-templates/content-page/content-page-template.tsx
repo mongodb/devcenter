@@ -15,6 +15,7 @@ import {
     HorizontalRule,
     Link,
     SideNav,
+    SystemIcon,
     TypographyScale,
 } from '@mdb/flora';
 // components
@@ -61,6 +62,7 @@ import styles from './styles';
 import {
     sideNavStyles,
     sideNavTitleStyles,
+    titleFollowTopicStyles,
 } from '../../components/tertiary-nav/styles';
 import { FullApplication, Snippet } from '../../components/icons';
 import { iconStyles } from '../../components/topic-card/styles';
@@ -461,6 +463,20 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         );
     };
 
+    const [showHoverTooltip, setShowHoverTooltip] = useState(false);
+    const [isFollowing, setIsFollowing] = useState(false);
+
+    let tooltipText =
+        'Receive a monthly digest and recommended content based on topics you follow!';
+    if (isFollowing) {
+        tooltipText = 'Unfollow this topic';
+    }
+
+    const onFollowLinkClick = () => {
+        setIsFollowing(!isFollowing);
+        setShowHoverTooltip(false);
+    };
+
     return (
         <>
             <NextSeo
@@ -493,14 +509,59 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             <div sx={styles.wrapper}>
                 <GridLayout sx={{ rowGap: 0 }}>
                     <div sx={sideNavStyles(5)}>
-                        <a href={getURLPath(topicSlug)}>
-                            <TypographyScale
-                                variant="heading6"
-                                sx={sideNavTitleStyles}
+                        <div sx={titleFollowTopicStyles}>
+                            <a href={getURLPath(topicSlug)}>
+                                <TypographyScale
+                                    variant="heading6"
+                                    sx={sideNavTitleStyles}
+                                >
+                                    {topicName}
+                                </TypographyScale>
+                            </a>
+                            <Link
+                                onClick={onFollowLinkClick}
+                                onMouseEnter={() => setShowHoverTooltip(true)}
+                                onMouseLeave={() => setShowHoverTooltip(false)}
                             >
-                                {topicName}
-                            </TypographyScale>
-                        </a>
+                                {isFollowing && (
+                                    <SystemIcon
+                                        sx={{
+                                            stroke: 'blue60',
+                                            path: {
+                                                strokeWidth: 3,
+                                            },
+                                        }}
+                                        name={ESystemIconNames.CHECK}
+                                    />
+                                )}
+                                {!isFollowing && (
+                                    <SystemIcon
+                                        sx={{
+                                            fill: 'blue60',
+                                            stroke: 'blue60',
+                                        }}
+                                        name={ESystemIconNames.PLUS}
+                                    />
+                                )}
+                            </Link>
+                            <div
+                                sx={{
+                                    position: 'relative',
+                                    top: '50%',
+                                    left: 100,
+                                    transform: 'translate(-50%)',
+                                }}
+                            >
+                                {showHoverTooltip && (
+                                    <div sx={styles.tooltip.tooltipWrapper}>
+                                        <div sx={styles.tooltip.tooltipArrow} />
+                                        <div sx={styles.tooltip.tooltipBody}>
+                                            {tooltipText}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
                     <Breadcrumbs crumbs={crumbs} sx={styles.breadcrumbs} />

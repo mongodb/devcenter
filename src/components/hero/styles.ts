@@ -27,6 +27,9 @@ export const CTALinkStyles: ThemeUICSSObject = {
 export const tooltipStyles = {
     tooltipWrapper: {
         position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
         display: 'flex',
         alignItems: 'center',
         width: 208,

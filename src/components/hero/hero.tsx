@@ -34,13 +34,10 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
             setTimeout(() => setShowClickTooltip(false), 2000);
         };
 
-        console.log(showClickTooltip);
-
         return (
             <div sx={heroContainerStyles}>
                 <GridLayout sx={{ rowGap: 'inc30' }}>
                     {crumbs && <Breadcrumbs crumbs={crumbs} />}
-                    {/* adjust overflow value if tooltip position is relative */}
                     <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
                         <TypographyScale
                             customElement="h1"
@@ -78,7 +75,14 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                                         )}
                                         &nbsp;{linkText}
                                     </Link>
-                                    <div>
+                                    <div
+                                        sx={{
+                                            position: 'relative',
+                                            top: '50%',
+                                            left: 100,
+                                            transform: 'translate(-50%)',
+                                        }}
+                                    >
                                         {showClickTooltip && (
                                             <div
                                                 sx={
@@ -99,7 +103,6 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                                                 </div>
                                             </div>
                                         )}
-
                                         {showHoverTooltip && !isFollowing && (
                                             <div
                                                 sx={
