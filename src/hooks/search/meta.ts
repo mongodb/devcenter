@@ -8,9 +8,12 @@ import { replaceHistoryState } from './utils';
 export const useSearchMeta = (
     pageNumber: number,
     slug: string,
-    title: string,
-    customBuildPageTitle?: (pageNumber: number) => string
+    contentType: string,
+    customBuildPageTitle?: (pageNumber: number) => string,
+    titleOverride?: string
 ): SearchMetaProps => {
+    const title = titleOverride || contentType;
+
     const { asPath, route } = useRouter();
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath } = publicRuntimeConfig;
@@ -75,5 +78,13 @@ export const useSearchMeta = (
         [buildPageTitle, defaultMetaDescr, slug, absoluteBasePath, asPath]
     );
 
-    return { pageTitle, metaDescr, canonicalUrl, updatePageMeta };
+    return {
+        pageTitle,
+        metaDescr,
+        canonicalUrl,
+        updatePageMeta,
+        pageNumber,
+        slug,
+        contentType,
+    };
 };
