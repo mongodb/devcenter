@@ -63,11 +63,7 @@ export const formatDateRange = (start: string, end: string) => {
         const valid = isNaN(Date.parse(start)) ? end : start;
         const validDate = new Date(valid);
 
-        return `${validDate.toLocaleString('default', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        })} ${getTimezone(validDate)}`;
+        return `${validDate.toLocaleString()} ${getTimezone(validDate)}`;
     }
 
     const startDate = new Date(start);
@@ -83,25 +79,30 @@ export const formatDateRange = (start: string, end: string) => {
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric',
-            }) + ' - ';
+            }) + ' | ';
         output += startDate.toLocaleString('default', {
             hour: 'numeric',
+            minute: 'numeric',
             hour12: true,
         });
     } else if (dateCompare(startDate, endDate)) {
         // Same day different time, format as a time range
-        output += startDate.toLocaleString('default', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        });
+        output +=
+            startDate.toLocaleString('default', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+            }) + ' | ';
+
         output +=
             startDate.toLocaleString('default', {
                 hour: 'numeric',
+                minute: 'numeric',
                 hour12: true,
             }) + ' - ';
         output += endDate.toLocaleString('default', {
             hour: 'numeric',
+            minute: 'numeric',
             hour12: true,
         });
     } else {
@@ -115,6 +116,7 @@ export const formatDateRange = (start: string, end: string) => {
         output +=
             startDate.toLocaleString('default', {
                 hour: 'numeric',
+                minute: 'numeric',
                 hour12: true,
             }) + ' | ';
         output +=
@@ -125,6 +127,7 @@ export const formatDateRange = (start: string, end: string) => {
             }) + ' - ';
         output += endDate.toLocaleString('default', {
             hour: 'numeric',
+            minute: 'numeric',
             hour12: true,
         });
     }
@@ -146,4 +149,19 @@ export const getLatestDate = (contentDate: string, updatedDate?: string) => {
     }
 
     return latestDate;
+};
+
+// Example of return format: December 13, 2022 12:00 PM
+export const formatSingleDate = (date: string) => {
+    const dateObj = new Date(date);
+
+    return `${dateObj.toLocaleDateString('default', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    })} ${dateObj.toLocaleTimeString('default', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    })}`;
 };

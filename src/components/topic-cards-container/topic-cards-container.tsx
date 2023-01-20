@@ -1,7 +1,7 @@
 import { Grid } from 'theme-ui';
 import { TypographyScale } from '@mdb/flora';
 
-import TopicCard from '.';
+import { TopicCard } from '@mdb/devcenter-components';
 import { topicsGridStyles, topicsCardsContainerStyles } from './styles';
 import { TopicCardsContainerProps } from './types';
 

@@ -3,34 +3,20 @@ import { ThemeUICSSObject } from 'theme-ui';
 import { PillCategory } from '../../types/pill-category';
 import { CardVariant } from './types';
 
-interface IPillColorMap {
-    [key: string]: string;
-}
-
-const pillColorMap: IPillColorMap = {
-    Video: theme.colors.purple10,
-    Article: theme.colors.blue10,
-    'Code Example': theme.colors.yellow20,
-    Tutorial: theme.colors.green20,
-    Podcast: theme.colors.red20,
-    Quickstart: theme.colors.yellow20,
-};
-
-export const pillStyles = (pillCategory: PillCategory) => ({
+export const pillStyles: ThemeUICSSObject = {
     marginBottom: 'inc30',
-    bg: pillColorMap[pillCategory],
     // Weird values but that's what figma says for the flora pills.
     px: ['inc30', null, null, 'inc40'],
     py: ['inc10', null, null, 'inc20'],
     fontSize: ['9px', null, null, 'inc00'],
     fontWeight: '500',
     letterSpacing: ['2.5px', null, null, '3px'],
-});
+};
 
-export const thumbnailStyles = {
+export const thumbnailStyles: ThemeUICSSObject = {
     borderRadius: 'inc30',
     objectFit: 'cover',
-} as ThemeUICSSObject;
+};
 
 export const thumbnailWrapperStyles = (
     variant: CardVariant,

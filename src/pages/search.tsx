@@ -47,11 +47,14 @@ const Search: NextPage<SearchProps> = ({
     const router = useRouter();
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-    const { pageTitle, updatePageMeta, canonicalUrl } = useSearchMeta(
+    const searchMetaProps = useSearchMeta(
         pageNumber,
         '/search',
+        'Content',
+        undefined,
         'Search'
     );
+    const { pageTitle, updatePageMeta, canonicalUrl } = searchMetaProps;
 
     const {
         searchStringProps,
@@ -171,10 +174,8 @@ const Search: NextPage<SearchProps> = ({
 
                         <SearchResults
                             {...resultsProps}
-                            pageNumber={pageNumber}
+                            {...searchMetaProps}
                             slug="/search"
-                            updatePageMeta={updatePageMeta}
-                            contentType="Content"
                             noResultsFooter={
                                 <Button
                                     hasIcon={true}

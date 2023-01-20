@@ -53,7 +53,15 @@ const FeaturedCardSection: React.FunctionComponent<
                     {...getCardProps(content[1], 'small')}
                 />
                 <Card
-                    sx={smallFeaturedCardStyles}
+                    sx={{
+                        ...smallFeaturedCardStyles,
+                        display: [
+                            featuredCardType === 'middle' ? 'none' : 'flex',
+                            null,
+                            null,
+                            'flex',
+                        ],
+                    }}
                     key={content[2].slug}
                     {...getCardProps(content[2], 'small')}
                 />
