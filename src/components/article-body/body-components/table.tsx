@@ -31,7 +31,7 @@ const TableHeading = ({
     headingRow: any;
 }) => (
     <thead>
-        <tr sx={headerRowStyles }>
+        <tr sx={headerRowStyles}>
             {headingRow.map((column: ArticleNode, colIndex: number) => (
                 <th sx={headerCellStyles(align, colIndex)} key={colIndex}>
                     <ComponentFactory

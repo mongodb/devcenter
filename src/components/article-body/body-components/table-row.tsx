@@ -7,9 +7,8 @@ const rowStyles: ThemeUICSSObject = {
     borderBottomWidth: 'inc30',
     borderBottomStyle: 'solid',
     borderBottomColor: 'black20',
-    verticalAlign: 'top'
+    verticalAlign: 'top',
 };
-
 
 export const TableRow = ({
     align,
