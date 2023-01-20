@@ -84,7 +84,10 @@ export const searchFetcher: Fetcher<ContentItem[], string> = queryString => {
     });
 };
 
-export const locationFetcher: Fetcher<any[], string> = queryString => {
+export const locationFetcher: Fetcher<
+    google.maps.places.AutocompletePrediction[],
+    string
+> = queryString => {
     return fetch(
         (getURLPath('/api/location') as string) + '?' + queryString
     ).then(async response => {
@@ -141,7 +144,6 @@ const fixForImproperlyTaggedContent = (filterItems: FilterItem[]) => {
 
     filterItems.forEach((item: FilterItem) => {
         fixCodeLevelSubFilters(item);
-
         // ...add more here if needed
     });
 };
@@ -271,9 +273,26 @@ export const itemInFilters = (
 ) => {
     if (!allFilters.length) return true;
 
-    return tags.some(tag =>
-        allFilters.some(
-            filter => filter.name === tag.name && filter.type === tag.type
+    // Group tags by their type
+    const allFiltersTypeMap: { [type: string]: FilterItem[] } = {};
+
+    allFilters.forEach((filter: FilterItem) => {
+        if (filter.type) {
+            if (!allFiltersTypeMap[filter.type]) {
+                allFiltersTypeMap[filter.type] = [filter];
+            } else {
+                allFiltersTypeMap[filter.type].push(filter);
+            }
+        }
+    });
+
+    // AND filters with different types, OR filters of the same type
+    return Object.values(allFiltersTypeMap).every((filters: FilterItem[]) =>
+        tags.some(tag =>
+            filters.some(
+                (filter: FilterItem) =>
+                    filter.name === tag.name && filter.type === tag.type
+            )
         )
     );
 };

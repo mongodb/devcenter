@@ -10,39 +10,17 @@ import { ContentTypePageProps } from '../page-templates/content-type-page/types'
 import { getContentTypePageData } from '../page-templates/content-type-page/content-type-data';
 import { parsePageNumber } from '../utils/page-type-factory';
 import { isValidPage } from '../components/search/utils';
-import { LocationBox, SearchBox, SearchResults } from '../components/search';
+import { LocationBox, SearchBox } from '../components/search';
 import { searchWrapperStyles } from '../components/search/styles';
-import {
-    Button,
-    ESystemIconNames,
-    GridLayout,
-    HorizontalRule,
-    TypographyScale,
-} from '@mdb/flora';
-import { h5Styles } from '../styled/layout';
-import { FilterItem, FilterTagSection } from '@mdb/devcenter-components';
+import { Button, ESystemIconNames, GridLayout } from '@mdb/flora';
+import { FilterItem } from '@mdb/devcenter-components';
 import { useCallback } from 'react';
 import { FeaturedCardSection } from '../components/card-section';
 import { DesktopFilters, MobileFilters } from '../components/search-filters';
 import { desktopFiltersStyles } from '../page-templates/content-type-page/styles';
 import { SearchMetaProps, SearchProps } from '../hooks/search/types';
-import { ContentItem } from '../interfaces/content-item';
+import EventResults from '../components/event-results';
 
-const extraSearchResultsStyles = (showFeatured: boolean) => ({
-    order: showFeatured ? '4' : '3',
-    marginBottom: 'inc70',
-    '> div': {
-        width: '100%',
-    },
-});
-const extraSearchResultsHeadingStyles = (showFeatured: boolean) => ({
-    ...h5Styles,
-    flexGrow: '1',
-    flexBasis: showFeatured ? 'auto' : ['100%', null, 'auto'],
-    order: '2',
-    width: '100%',
-    marginBottom: '0',
-});
 interface EventsPageComponentProps {
     searchProps: SearchProps;
     searchMetaProps: SearchMetaProps;
@@ -50,16 +28,22 @@ interface EventsPageComponentProps {
     setMobileFiltersOpen: (open: boolean) => void;
 }
 
+// TODO: Refactor and remove references to this function
+const fixInPersonFilter = (filters: FilterItem[], hyphenate = true) =>
+    filters.map(filter =>
+        filter.name === (hyphenate ? 'InPerson' : 'In-Person')
+            ? { ...filter, name: hyphenate ? 'In-Person' : 'InPerson' }
+            : filter
+    );
+
 const EventsPageComponent: React.FunctionComponent<
     EventsPageComponentProps & ContentTypePageProps
 > = ({
+    searchProps,
     searchProps: {
         searchStringProps,
         searchStringProps: { searchString },
         filterProps,
-        filterProps: { filters, onFilter },
-        resultsProps,
-        resultsProps: { isValidating, allResults, unfilteredResults, results },
         locationProps,
         locationProps: {
             locationSelection: { description: location = '' } = {},
@@ -67,68 +51,33 @@ const EventsPageComponent: React.FunctionComponent<
         },
         clearSearchParam,
     },
-    searchMetaProps: { updatePageMeta },
+    searchMetaProps,
     mobileFiltersOpen,
     setMobileFiltersOpen,
     featured,
-    pageNumber,
     children,
-    filterItems,
-    slug,
-    contentType,
+    filterItems: rawFilterItems,
 }) => {
-    const showFeatured = !searchString && !filters.length && !location;
-
-    const twoCriteriaResults = results;
-    const showTwoCriteriaResults = location && searchString && !filters.length;
-    const twoCriteriaHeader = `${results.length} event${
-        results.length !== 1 ? 's' : ''
-    } for "${searchString}" near ${location}`;
-
-    const otherResultsAnyLocation = useMemo(
-        () =>
-            unfilteredResults.filter(
-                item => !results.some(res => res.slug === item.slug)
-            ),
-        [results, unfilteredResults]
+    // TODO: Refactor and remove the following three consts
+    const filters = useMemo(
+        () => fixInPersonFilter(filterProps.filters),
+        [filterProps.filters]
     );
-    // If there's a search string and a location inputted, display whatever's left of the search query without the location filter underneath
-    // If only one of the search string or location are inputted, then we just display the results
-    const oneCriteriaResults = showTwoCriteriaResults
-        ? otherResultsAnyLocation
-        : results;
-    // Hide if no filtering/querying inputted, or if both search string & location inputted and loading is showing (so we don't show two loaders at once)
-    const showOneCriteriaResults =
-        !(isValidating && showTwoCriteriaResults) && !showFeatured;
+    const onFilter = useMemo(
+        () => (filters: FilterItem[]) =>
+            filterProps.onFilter(fixInPersonFilter(filters, false)),
+        [filterProps]
+    );
+    const filterItems = useMemo(
+        () =>
+            rawFilterItems.map(item => ({
+                ...item,
+                value: fixInPersonFilter(item.value),
+            })),
+        [rawFilterItems]
+    );
 
-    let oneCriteriaHeader = `${oneCriteriaResults.length} `;
-    const plural = oneCriteriaResults.length !== 1 ? 's' : '';
-
-    if (filters.length) {
-        oneCriteriaHeader += `Result${plural}`;
-    } else if (location && searchString) {
-        oneCriteriaHeader += `other result${plural} match${
-            plural ? '' : 'es'
-        } "${searchString}"`;
-    } else if (location) {
-        oneCriteriaHeader += `event${plural} near "${location}"`;
-    } else if (searchString) {
-        oneCriteriaHeader += `Result${plural} for "${searchString}"`;
-    }
-
-    const showAllOtherResults = !isValidating;
-    // Always want to show all events, except when only a location
-    // is specified where we want to show all virtual events
-    const allOtherResults =
-        location && !searchString
-            ? allResults.filter((res: ContentItem) =>
-                  res.tags.some(
-                      tag =>
-                          tag.type === 'EventAttendance' &&
-                          (tag.name === 'Virtual' || tag.name === 'Hybrid')
-                  )
-              )
-            : allResults;
+    const showFeatured = !searchString && !filters.length && !location;
 
     const locationSelect = useCallback(
         (selection: string) => {
@@ -175,13 +124,17 @@ const EventsPageComponent: React.FunctionComponent<
             >
                 <DesktopFilters
                     {...filterProps}
-                    sx={desktopFiltersStyles}
+                    filters={filters}
+                    onFilter={onFilter}
                     filterItems={filterItems}
+                    sx={desktopFiltersStyles}
                 />
 
                 {mobileFiltersOpen && (
                     <MobileFilters
                         {...filterProps}
+                        filters={filters}
+                        onFilter={onFilter}
                         filterItems={filterItems}
                         closeModal={() => setMobileFiltersOpen(false)}
                     />
@@ -239,129 +192,10 @@ const EventsPageComponent: React.FunctionComponent<
                     {!!filters.length && ` (${filters.length})`}
                 </Button>
 
-                {showTwoCriteriaResults && (
-                    <>
-                        <div sx={{ order: '5', width: '100%' }}>
-                            {!isValidating && (
-                                <TypographyScale
-                                    variant="heading2"
-                                    sx={extraSearchResultsHeadingStyles(
-                                        showFeatured
-                                    )}
-                                >
-                                    {twoCriteriaHeader}
-                                </TypographyScale>
-                            )}
-                            {!!results.length && (
-                                <SearchResults
-                                    {...resultsProps}
-                                    results={twoCriteriaResults}
-                                    pageNumber={pageNumber}
-                                    updatePageMeta={updatePageMeta}
-                                    extraStyles={extraSearchResultsStyles(
-                                        showFeatured
-                                    )}
-                                    slug={slug}
-                                    contentType={contentType}
-                                />
-                            )}
-                        </div>
-                        {!results.length && (
-                            <HorizontalRule sx={{ order: '5' }} />
-                        )}
-                    </>
-                )}
-
-                {showOneCriteriaResults && (
-                    <>
-                        {/* We only want to display this horizontal rule when search string & location are inputted and "other results" is empty */}
-                        {showTwoCriteriaResults &&
-                            !!twoCriteriaResults.length &&
-                            !oneCriteriaResults.length && (
-                                <HorizontalRule sx={{ order: '5' }} />
-                            )}
-
-                        <div sx={{ order: '5', width: '100%' }}>
-                            {!isValidating && (
-                                <TypographyScale
-                                    variant="heading2"
-                                    sx={extraSearchResultsHeadingStyles(
-                                        showFeatured
-                                    )}
-                                >
-                                    {oneCriteriaHeader}
-                                </TypographyScale>
-                            )}
-
-                            {!!filters?.length && (
-                                <div
-                                    sx={{
-                                        flexBasis: '100%',
-                                        display: ['none', null, null, 'block'],
-                                        marginTop: 'inc20',
-                                        marginBottom: 'inc40',
-                                    }}
-                                >
-                                    <FilterTagSection
-                                        allFilters={filters}
-                                        onClearTag={(filterTag: FilterItem) =>
-                                            onFilter(
-                                                filters.filter(
-                                                    (item: FilterItem) =>
-                                                        item !== filterTag
-                                                )
-                                            )
-                                        }
-                                        onClearAll={() => onFilter([])}
-                                    />
-                                </div>
-                            )}
-
-                            {!!oneCriteriaResults.length && (
-                                <SearchResults
-                                    {...resultsProps}
-                                    results={oneCriteriaResults}
-                                    pageNumber={pageNumber}
-                                    updatePageMeta={updatePageMeta}
-                                    extraStyles={extraSearchResultsStyles(
-                                        showFeatured
-                                    )}
-                                    slug={slug}
-                                    contentType={contentType}
-                                />
-                            )}
-                        </div>
-                        {!oneCriteriaResults.length && (
-                            <HorizontalRule sx={{ order: '5' }} />
-                        )}
-                    </>
-                )}
-
-                {showAllOtherResults && (
-                    <div sx={{ order: '6', width: '100%' }}>
-                        <TypographyScale
-                            variant="heading2"
-                            sx={extraSearchResultsHeadingStyles(showFeatured)}
-                        >
-                            {location && !searchString
-                                ? 'Other Virtual Events'
-                                : 'All Events'}
-                        </TypographyScale>
-
-                        <SearchResults
-                            {...resultsProps}
-                            results={allOtherResults}
-                            isValidating={
-                                allResults.length === 0 ? isValidating : false
-                            }
-                            pageNumber={pageNumber}
-                            updatePageMeta={updatePageMeta}
-                            extraStyles={extraSearchResultsStyles(showFeatured)}
-                            slug={slug}
-                            contentType={contentType}
-                        />
-                    </div>
-                )}
+                <EventResults
+                    searchProps={searchProps}
+                    searchMetaProps={searchMetaProps}
+                />
 
                 {children}
             </div>

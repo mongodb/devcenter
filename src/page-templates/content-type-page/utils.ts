@@ -2,14 +2,10 @@ import { ContentItem } from '../../interfaces/content-item';
 import { Tag } from '../../interfaces/tag';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';
 import { languageToLogo } from '../../utils/language-to-logo';
-import { technologyToLogo } from '../../utils/technology-to-logo';
 import { productToLogo } from '../../utils/product-to-logo';
-import { ITopicCard } from '../../components/topic-card/types';
 import { PillCategory } from '../../types/pill-category';
 
 // Temporary until we find a logo to include in Flora.
-const serverlessLogo =
-    'https://webimages.mongodb.com/_com_assets/icons/atlas_serverless.svg';
 interface TagWithCount extends Tag {
     count: number;
 }
@@ -86,19 +82,10 @@ export const getFeaturedLangProdTech = (
             };
         }
     );
-    const featuredTechnologies: ITopicCard[] = technologies.map(
-        techWithCount => {
-            const { count, ...tag } = techWithCount;
-            return {
-                title: tag.name,
-                href: tag.slug + aggregateSlug,
-                icon:
-                    tag.name === 'Serverless'
-                        ? serverlessLogo
-                        : technologyToLogo[tag.name] || null,
-            };
-        }
-    );
+    const featuredTechnologies: Tag[] = technologies.map(techWithCount => {
+        const { count, ...tag } = techWithCount;
+        return tag;
+    });
     const featuredProducts: ShowcaseCardItem[] = products.map(prodWithCount => {
         const { count, ...tag } = prodWithCount;
         return {
@@ -124,6 +111,7 @@ export const getFeaturedLangProdTech = (
 export function shouldRenderRequestButton(contentType: PillCategory): boolean {
     const shouldNotRenderSet: Set<PillCategory> = new Set([
         'News & Announcements',
+        'Event',
     ]);
     return !shouldNotRenderSet.has(contentType);
 }

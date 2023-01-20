@@ -3,8 +3,8 @@ import { FilterItem } from '@mdb/devcenter-components';
 import { PillCategory } from '../../types/pill-category';
 import { ContentItem } from '../../interfaces/content-item';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';
-import { ITopicCard } from '../../components/topic-card/types';
 import { SearchItem } from '../../components/search/types';
+import { Tag } from '../../interfaces/tag';
 import { SearchMetaProps, SearchProps } from '../../hooks/search/types';
 
 export interface ContentTypePageProps {
@@ -14,7 +14,7 @@ export interface ContentTypePageProps {
     featured: ContentItem[];
     extraFeatured: {
         featuredLanguages?: ShowcaseCardItem[];
-        featuredTechnologies?: ITopicCard[];
+        featuredTechnologies?: Tag[];
         featuredProducts?: ShowcaseCardItem[];
     };
     initialSearchContent?: SearchItem[];

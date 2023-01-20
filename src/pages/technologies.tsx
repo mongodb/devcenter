@@ -3,13 +3,14 @@ import { NextSeo } from 'next-seo';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 import { GridLayout, LogoPaths, BrandedIcon, ThirdPartyLogo } from '@mdb/flora';
+import { TopicCard } from '@mdb/devcenter-components';
 import { Grid } from 'theme-ui';
 
 import { technologyToLogo } from '../utils/technology-to-logo';
-import { getAllMetaInfo } from '../service/get-all-meta-info';
+import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
-import TopicCard from '../components/topic-card';
-import { iconStyles } from '../components/topic-card/styles';
+import { iconStyles } from '../components/topic-cards-container/styles';
+import { getURLPath } from '../utils/format-url-path';
 
 const crumbs: Crumb[] = [
     { text: 'MongoDB Developer Center', url: '/developer' },
@@ -52,7 +53,7 @@ const TechnologiesSection: React.FunctionComponent<{
                     <TopicCard
                         key={tagName}
                         title={tagName}
-                        href={slug}
+                        href={getURLPath(slug)}
                         icon={icon}
                     />
                 );
@@ -87,8 +88,7 @@ export default TechnologiesPage;
 export const getStaticProps: GetStaticProps<{
     technologies: MetaInfo[];
 }> = async () => {
-    const tags = await getAllMetaInfo();
-    const technologies = tags
+    const technologies = allMetaInfoPreval
         .filter(tag => tag.category === 'Technology')
         .sort((prev, next) =>
             prev.tagName.toLowerCase().localeCompare(next.tagName.toLowerCase())

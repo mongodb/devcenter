@@ -23,7 +23,13 @@ const useLocationSearch = (callback: () => void) => {
         useState<LocationSelection>();
     const [geolocationValidating, setGeolocationValidating] = useState(false);
 
-    const { data: locationResults, isValidating: locationValidating } = useSWR(
+    const {
+        data: locationResults = [],
+        isValidating: locationValidating,
+    }: {
+        data?: google.maps.places.AutocompletePrediction[];
+        isValidating: boolean;
+    } = useSWR(
         locationQuery ? `search=${locationQuery}` : null,
         locationFetcher,
         swrOptions

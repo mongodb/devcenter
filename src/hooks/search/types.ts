@@ -54,5 +54,8 @@ export interface SearchMetaProps {
     pageTitle: string;
     metaDescr: string;
     canonicalUrl: string;
+    pageNumber: number;
+    slug: string;
+    contentType: string;
     updatePageMeta: (pageNumber?: number) => void;
 }

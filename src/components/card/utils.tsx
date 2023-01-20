@@ -32,10 +32,13 @@ export const hasAuthorLockup = (variant: CardVariant, category: PillCategory) =>
 
 const parseContentDate = (
     contentDate: string | [string, string],
-    updateDate?: string
+    updateDate?: string,
+    eventTimeFormatting?: boolean
 ) => {
     if (Array.isArray(contentDate)) {
         return formatDateRange(contentDate[0], contentDate[1]);
+    } else if (eventTimeFormatting) {
+        return formatDateRange(contentDate, contentDate);
     }
 
     return formatDateToDisplayDateFormat(
@@ -62,7 +65,11 @@ export const getCardProps = (
 ): CardProps => {
     const cardProps: CardProps = {
         authors,
-        displayDate: parseContentDate(contentDate, updateDate),
+        displayDate: parseContentDate(
+            contentDate,
+            updateDate,
+            category === 'Event'
+        ),
         description,
         title,
         contentType: category,
