@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { Link } from '@mdb/flora';
 
 import CheckboxFeedback from './dialogs/checkbox-feedback';
 import TextFeedback from './dialogs/text-feedback';
@@ -13,7 +14,6 @@ import {
     ITextFeedback,
     FEEDBACK_MODAL_STAGE,
 } from './types';
-import { Link } from '@mdb/flora';
 
 const updateFeedback = (body: ITextFeedback | ICheckboxFeedback) =>
     axios.put(getURLPath('/api/updateFeedback') as string, body, {

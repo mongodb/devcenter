@@ -1,20 +1,34 @@
 import { ThemeUICSSObject } from 'theme-ui';
 
-// TODO: depending on mobile styles, some classes might be able to just be merged into a "spacer" class
-
 // Shared
 const wrapper: ThemeUICSSObject = {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'black00',
-    height: '85vh',
+    height: '90vh',
     padding: ['inc40', null, null, 'inc70'],
     borderRadius: 'inc20',
 };
 
-const tags: ThemeUICSSObject = {
+const tagsWrapper: ThemeUICSSObject = {
     overflowY: 'scroll',
     height: 'auto',
+    gap: 16,
+    padding: '1px', // so selected card borders dont get cut off by surrounding margin
+};
+
+const tag = {
+    gridColumn: 'span 1',
+};
+
+const subtitle = {
+    display: 'block',
+    paddingTop: ['inc10', null, null, 'inc20'],
+    paddingBottom: ['inc40', null, null, 'inc60'],
+};
+
+const categoryHeader = {
+    marginBottom: 'inc30',
 };
 
 const controls: ThemeUICSSObject = {
@@ -26,44 +40,46 @@ const controls: ThemeUICSSObject = {
     width: '100%',
 };
 
+const checkbox = {
+    paddingBottom: ['inc40', null, null, 'inc60'],
+};
+
 const button = {
     marginBottom: 'inc60',
 };
 
 // Paginated Modal specific
-const paginated_badge = {
+const badge = {
     width: 'fit-content',
-    marginBottom: 'inc30',
-};
-
-const paginated_subtitle = {
-    display: 'block',
-    paddingTop: 'inc20',
-    paddingBottom: 'inc60',
+    marginBottom: ['inc20', null, null, 'inc30'],
 };
 
 // Scroll Modal specific
-const scroll_heading = {
+const scrollHeader = {
     marginBottom: 'inc60',
 };
 
-const scroll_tagSection = {
+const scrollTagSection = {
     marginBottom: 'inc70',
+    gap: 16,
 
     '&:last-of-type': {
-        marginBottom: 0,
+        marginBottom: 'inc10', // so scrolling to bottom will not cut off bottom most card
     },
 };
 
 const styles = {
     wrapper,
-    tags,
+    tagsWrapper,
+    tag,
+    subtitle,
+    categoryHeader,
     controls,
+    checkbox,
     button,
-    paginated_badge,
-    paginated_subtitle,
-    scroll_heading,
-    scroll_tagSection,
+    badge,
+    scrollHeader,
+    scrollTagSection,
 };
 
 export default styles;

@@ -9,7 +9,7 @@ import { getURLPath } from './format-url-path';
 
 export const tagToTopic = (tag: Tag): TopicCardProps => {
     let icon: JSX.Element | null = null;
-    const href = getURLPath(tag.slug);
+    const href = tag.slug ? getURLPath(tag.slug) : undefined;
 
     if (tag.type === 'Technology' && tag.name === 'Serverless') {
         icon = <BrandedIcon sx={iconStyles} name="atlas_serverless" />;

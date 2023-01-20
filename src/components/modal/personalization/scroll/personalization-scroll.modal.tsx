@@ -1,32 +1,39 @@
 import { Fragment, useState } from 'react';
 import { Grid } from 'theme-ui';
-import { Button, TypographyScale } from '@mdb/flora';
+import { Button, TypographyScale, Checkbox } from '@mdb/flora';
+import { TopicCard } from '@mdb/devcenter-components';
 
 import { useModalContext } from '../../../../contexts/modal';
 
-import { PersonlizationTagType } from '../types';
+import { Tag } from '../../../../interfaces/tag';
+import { ScrollModalProps } from '../types';
+
 import {
     initializePersonalizationConfig,
     submitPersonalizationSelections,
 } from '../utils';
+import { tagToTopic } from '../../../../utils/tag-to-topic';
 
 import styles from '../styles';
 
-const ScrollPersonalizationModal = () => {
+const ScrollPersonalizationModal = ({
+    title,
+    subtitle = '',
+    existingSelections = [],
+}: ScrollModalProps) => {
     const tagConfig = initializePersonalizationConfig();
 
     const { closeModal } = useModalContext();
-    const [selections, setSelections] = useState<Array<PersonlizationTagType>>(
-        []
-    );
+    const [isOptedIn, setIsOptedIn] = useState(true);
+    const [selections, setSelections] =
+        useState<Array<Tag>>(existingSelections);
 
-    const onSelectionToggle = (
-        tag: PersonlizationTagType,
-        wasSelected: boolean
-    ) => {
+    const onCheckboxToggle = (isChecked: boolean) => setIsOptedIn(isChecked);
+
+    const onSelectionToggle = (tag: Tag, wasSelected: boolean) => {
         if (wasSelected) {
             return setSelections(currSelections =>
-                currSelections.filter(sel => sel.tagName !== tag.tagName)
+                currSelections.filter(sel => sel.name !== tag.name)
             );
         }
 
@@ -34,63 +41,74 @@ const ScrollPersonalizationModal = () => {
     };
 
     const onCompletion = () => {
-        submitPersonalizationSelections(selections);
+        submitPersonalizationSelections({
+            preferences: selections,
+            emailPreference: isOptedIn,
+        });
         closeModal();
     };
 
     return (
         <div sx={styles.wrapper}>
-            <TypographyScale variant="heading5" sx={styles.scroll_heading}>
-                You&apos;re now following this topic. <br /> Interested in
-                following other topics?
+            <TypographyScale
+                variant="heading5"
+                sx={{ ...(!subtitle && styles.scrollHeader) }}
+            >
+                {title}
             </TypographyScale>
-            <div sx={styles.tags}>
-                {tagConfig.map(({ title, tags }) => {
-                    return (
-                        <Fragment key={title}>
-                            <TypographyScale variant="heading6">
-                                {title}
-                            </TypographyScale>
-                            <Grid columns={[3]} sx={styles.scroll_tagSection}>
-                                {tags.map(tag => {
-                                    const isSelected = !!selections.find(
-                                        prevTags =>
-                                            prevTags.tagName === tag.tagName
-                                    );
-                                    // TODO: Temp component until selectable card is ready, remove all of return below
-                                    return (
-                                        <button
-                                            key={tag.tagName}
-                                            type="button"
-                                            value={tag.tagName}
-                                            onClick={() =>
-                                                onSelectionToggle(
-                                                    tag,
-                                                    isSelected
-                                                )
-                                            }
-                                            sx={{
-                                                background: 'transparent',
-                                                border: '1px solid black',
-                                                borderRadius: '8px',
-                                                padding: '16px 32px',
-                                                marginTop: '16px',
-                                                marginRight: '16px',
-                                                ...(isSelected && {
-                                                    background: 'lightblue',
-                                                }),
-                                            }}
-                                        >
-                                            {tag.tagName}
-                                        </button>
-                                    );
-                                })}
-                            </Grid>
-                        </Fragment>
-                    );
-                })}
+            {subtitle && (
+                <TypographyScale variant="body2" sx={styles.subtitle}>
+                    {subtitle}
+                </TypographyScale>
+            )}
+            <div sx={styles.tagsWrapper}>
+                {tagConfig.map(({ title, tags }) => (
+                    <Fragment key={title}>
+                        <TypographyScale
+                            variant="heading6"
+                            sx={styles.categoryHeader}
+                        >
+                            {title}
+                        </TypographyScale>
+                        <Grid
+                            columns={[2, null, null, 3]}
+                            sx={styles.scrollTagSection}
+                        >
+                            {tags.map(tag => {
+                                const isSelected = !!selections.find(
+                                    prevTags => prevTags.name === tag.name
+                                );
+                                // do not pass slug b/c it would create a hyperlink on the card
+                                const { icon, title } = tagToTopic({
+                                    ...tag,
+                                    slug: '',
+                                });
+                                return (
+                                    <TopicCard
+                                        key={title}
+                                        icon={icon}
+                                        title={title}
+                                        sx={styles.tag}
+                                        variant="selectable"
+                                        selected={isSelected}
+                                        onSelect={() =>
+                                            onSelectionToggle(tag, isSelected)
+                                        }
+                                    />
+                                );
+                            })}
+                        </Grid>
+                    </Fragment>
+                ))}
             </div>
             <div sx={styles.controls}>
+                <Checkbox
+                    checked={isOptedIn}
+                    onToggle={onCheckboxToggle}
+                    name="scroll-modal-checkbox"
+                    label="Receive a monthly digest with new content based on topics you follow"
+                    sx={styles.checkbox}
+                />
                 <Button onClick={onCompletion}>Done</Button>
             </div>
         </div>

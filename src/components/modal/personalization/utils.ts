@@ -17,19 +17,19 @@ export function initializePersonalizationConfig() {
 
     metaInfoPreval.forEach(({ category, tagName, slug }) => {
         if (category === 'ProgrammingLanguage') {
-            languages.tags.push({ category, tagName, slug });
+            languages.tags.push({ type: category, name: tagName, slug });
         } else if (category === 'L1Product' || category === 'L2Product') {
-            products.tags.push({ category, tagName, slug });
+            products.tags.push({ type: category, name: tagName, slug });
         } else if (category === 'Technology') {
-            technologies.tags.push({ category, tagName, slug });
+            technologies.tags.push({ type: category, name: tagName, slug });
         }
     });
 
     return [languages, technologies, products];
 }
 
-// TODO: you will also need to pass userId here to construct the path for the PUT/POST
+// TODO: you will also need to pass userId here to construct the path for the PUT
 // eslint-disable-next-line
-export function submitPersonalizationSelections(selections: any) {
+export function submitPersonalizationSelections(body: any) {
     // do the http req here
 }
