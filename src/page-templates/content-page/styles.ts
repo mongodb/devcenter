@@ -121,6 +121,12 @@ const vidOrPodContent: ThemeUICSSObject = {
 };
 
 const tooltip = {
+    tooltipPlacement: {
+        position: 'relative',
+        top: '50%',
+        left: 100,
+        transform: 'translate(-50%)',
+    },
     tooltipWrapper: {
         position: 'absolute',
         top: '50%',

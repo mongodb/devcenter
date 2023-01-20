@@ -10,7 +10,8 @@ import {
 
 import Breadcrumbs from '../breadcrumbs';
 import { HeroProps } from './types';
-import { heroContainerStyles, tooltipStyles } from './styles';
+import { heroContainerStyles } from './styles';
+import styles from '../../page-templates/content-page/styles';
 
 const Hero: React.FunctionComponent<HeroProps> = memo(
     ({ crumbs, name, description, ctas, topicPage }) => {
@@ -48,7 +49,6 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                                 display: 'flex',
                                 flexDirection: 'row',
                                 alignContent: 'space-around',
-                                // alignItems: 'center',
                                 gap: '16px',
                             }}
                         >
@@ -75,28 +75,24 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                                         )}
                                         &nbsp;{linkText}
                                     </Link>
-                                    <div
-                                        sx={{
-                                            position: 'relative',
-                                            top: '50%',
-                                            left: 100,
-                                            transform: 'translate(-50%)',
-                                        }}
-                                    >
+                                    <div sx={styles.tooltip.tooltipPlacement}>
                                         {showClickTooltip && (
                                             <div
                                                 sx={
-                                                    tooltipStyles.tooltipWrapper
+                                                    styles.tooltip
+                                                        .tooltipWrapper
                                                 }
                                             >
                                                 <div
                                                     sx={
-                                                        tooltipStyles.tooltipArrow
+                                                        styles.tooltip
+                                                            .tooltipArrow
                                                     }
                                                 />
                                                 <div
                                                     sx={
-                                                        tooltipStyles.tooltipBody
+                                                        styles.tooltip
+                                                            .tooltipBody
                                                     }
                                                 >
                                                     {tooltipText}
@@ -106,17 +102,20 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                                         {showHoverTooltip && !isFollowing && (
                                             <div
                                                 sx={
-                                                    tooltipStyles.tooltipWrapper
+                                                    styles.tooltip
+                                                        .tooltipWrapper
                                                 }
                                             >
                                                 <div
                                                     sx={
-                                                        tooltipStyles.tooltipArrow
+                                                        styles.tooltip
+                                                            .tooltipArrow
                                                     }
                                                 />
                                                 <div
                                                     sx={
-                                                        tooltipStyles.tooltipBody
+                                                        styles.tooltip
+                                                            .tooltipBody
                                                     }
                                                 >
                                                     Receive a monthly digest and

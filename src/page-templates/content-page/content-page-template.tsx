@@ -544,14 +544,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                     />
                                 )}
                             </Link>
-                            <div
-                                sx={{
-                                    position: 'relative',
-                                    top: '50%',
-                                    left: 100,
-                                    transform: 'translate(-50%)',
-                                }}
-                            >
+                            <div sx={styles.tooltip.tooltipPlacement}>
                                 {showHoverTooltip && (
                                     <div sx={styles.tooltip.tooltipWrapper}>
                                         <div sx={styles.tooltip.tooltipArrow} />
