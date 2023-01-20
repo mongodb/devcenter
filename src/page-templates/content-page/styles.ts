@@ -126,7 +126,7 @@ const tooltip = {
         top: '50%',
         left: 100,
         transform: 'translate(-50%)',
-    },
+    } as ThemeUICSSObject,
     tooltipWrapper: {
         position: 'absolute',
         top: '50%',
