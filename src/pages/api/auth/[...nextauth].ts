@@ -6,7 +6,7 @@ import * as Sentry from '@sentry/nextjs';
 
 async function getUser(userId: string): User | null {
     const query = 'userId=' + userId;
-    const url = `https://data.mongodb-api.com/app/personalization-yxbjz/endpoint/user_preferences?${query}`;
+    const url = `${process.env.PERSONALIZATION_URL}/user_preferences?${query}`;
     const options = {
         method: 'GET',
         headers: {
@@ -25,7 +25,7 @@ async function getUser(userId: string): User | null {
 }
 
 async function persistNewUser(user) {
-    const url = `https://data.mongodb-api.com/app/personalization-yxbjz/endpoint/user_preferences`;
+    const url = `${process.env.PERSONALIZATION_URL}/user_preferences`;
     try {
         const req = await fetch(url, {
             method: 'POST',
@@ -95,7 +95,6 @@ export const nextAuthOptions: NextAuthOptions = {
                 session.preferences = preferences;
                 session.lastLogin = last_login;
             }
-            console.log(session);
             return session;
         },
     },
