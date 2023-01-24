@@ -138,21 +138,24 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                                 topic.category,
                                 topic.tagName
                             );
-                            const icon = Object.values(
-                                EThirdPartyLogoVariant
-                            ).includes(iconString as EThirdPartyLogoVariant) ? (
-                                <ThirdPartyLogo
-                                    sx={iconStyles}
-                                    variant={
-                                        iconString as EThirdPartyLogoVariant
-                                    }
-                                />
-                            ) : (
-                                <BrandedIcon
-                                    sx={iconStyles}
-                                    name={iconString}
-                                />
-                            );
+
+                            const icon = iconString ? (
+                                Object.values(EThirdPartyLogoVariant).includes(
+                                    iconString as EThirdPartyLogoVariant
+                                ) ? (
+                                    <ThirdPartyLogo
+                                        sx={iconStyles}
+                                        variant={
+                                            iconString as EThirdPartyLogoVariant
+                                        }
+                                    />
+                                ) : (
+                                    <BrandedIcon
+                                        sx={iconStyles}
+                                        name={iconString}
+                                    />
+                                )
+                            ) : null;
 
                             return (
                                 <TopicCard
