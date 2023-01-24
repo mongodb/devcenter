@@ -1,8 +1,7 @@
 import { ContentItem } from '../../interfaces/content-item';
 import { Tag } from '../../interfaces/tag';
 import { ShowcaseCardItem } from '../../components/showcase-card/types';
-import { languageToLogo } from '../../utils/language-to-logo';
-import { productToLogo } from '../../utils/product-to-logo';
+import { languageToLogo, productToLogo } from '../../utils/logo';
 import { PillCategory } from '../../types/pill-category';
 
 // Temporary until we find a logo to include in Flora.
