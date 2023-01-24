@@ -3,28 +3,29 @@ import type { NextAuthOptions } from 'next-auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import * as Sentry from '@sentry/nextjs';
+import { User } from '../../../interfaces/user-preference';
 
-async function getUser(userId: string): User | null {
-    const query = 'userId=' + userId;
-    const url = `${process.env.PERSONALIZATION_URL}/user_preferences?${query}`;
+async function getUser(userId: string | unknown): Promise<User> {
+    const url = `${process.env.PERSONALIZATION_URL}/user_preferences?userId=${userId}`;
+    const apiKey = process.env.REALM_API_KEY || '';
     const options = {
         method: 'GET',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            apiKey: process.env.REALM_API_KEY,
+            apiKey: apiKey,
         },
     };
     try {
         const req = await fetch(url, options);
-        return await req.json();
+        return (await req.json()) as User;
     } catch (e) {
         Sentry.captureException(e);
         throw new Error('Failed to fetch user preferences.');
     }
 }
 
-async function persistNewUser(user) {
+async function persistNewUser(user: User): Promise<User> {
     const url = `${process.env.PERSONALIZATION_URL}/user_preferences`;
     try {
         const req = await fetch(url, {
@@ -36,7 +37,7 @@ async function persistNewUser(user) {
             // },
             body: JSON.stringify(user),
         });
-        return await req.json();
+        return (await req.json()) as User;
     } catch (e) {
         Sentry.captureException(e);
         throw new Error('Failed to persist new user');
@@ -76,25 +77,31 @@ export const nextAuthOptions: NextAuthOptions = {
             session.lastName = token.lastName;
             session.email = token.email;
             session.userId = token.userId;
-            const user = await getUser(token.userId);
-            if (user == null) {
-                const newUser = {
-                    user_id: token.userId,
-                    first_name: token.firstName,
-                    last_name: token.lastName,
-                    email: token.email,
-                    preferences: [],
-                    last_login: null,
-                };
-                const persisted_user = await persistNewUser(newUser);
-                const { preferences, last_login } = persisted_user;
-                session.preferences = preferences;
-                session.lastLogin = last_login;
-            } else {
-                const { preferences, last_login } = user;
-                session.preferences = preferences;
-                session.lastLogin = last_login;
+            if (token.userId) {
+                const user = await getUser(token.userId);
+                if (!user) {
+                    const persisted_user: User = await persistNewUser({
+                        user_id: token.userId,
+                        first_name: token.firstName,
+                        last_name: token.lastName,
+                        email: token.email,
+                        preferences: [],
+                        last_login: null,
+                        email_preference: false,
+                    } as User);
+                    const { preferences, last_login, email_preference } =
+                        persisted_user;
+                    session.preferences = preferences;
+                    session.lastLogin = last_login;
+                    session.emailPreference = email_preference;
+                } else {
+                    const { preferences, last_login, email_preference } = user;
+                    session.preferences = preferences;
+                    session.lastLogin = last_login;
+                    session.emailPreference = email_preference;
+                }
             }
+            console.log(session);
             return session;
         },
     },
