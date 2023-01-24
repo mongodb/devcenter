@@ -14,7 +14,7 @@ import { h5Styles } from '../../styled/layout';
 import { ContentItem } from '../../interfaces/content-item';
 import { MetaInfo } from '../../interfaces/meta-info';
 import { iconStyles } from '../topic-cards-container/styles';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { topicToLogo } from '../../utils/logo';
 
 interface RecommendedSectionProps {
@@ -68,15 +68,6 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     onTopicSelected = () => undefined,
     onTopicsSaved,
 }) => {
-    const truncatedTopics = useMemo(
-        () => (topics.length > 10 ? topics.slice(0, 10) : topics),
-        [topics]
-    );
-    const truncatedContent = useMemo(
-        () => (content.length > 4 ? content.slice(0, 4) : content),
-        [content]
-    );
-
     const [selectedTopics, setSelectedTopics] = useState<MetaInfo[]>([]);
     const topicCardSelected = useCallback(
         (topic: MetaInfo) => () => {
@@ -125,15 +116,15 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                 Select topics to follow for recommended content
             </TypographyScale>
 
-            {truncatedContent && (
+            {content && (
                 // TODO
                 <div></div>
             )}
 
-            {topics && !truncatedContent.length && (
+            {topics && !content.length && (
                 <div>
                     <Grid columns={5} gap={16} sx={{ marginBottom: 'inc50' }}>
-                        {truncatedTopics.map((topic, i) => {
+                        {topics.map((topic, i) => {
                             const iconString = topicToLogo(
                                 topic.category,
                                 topic.tagName
