@@ -69,7 +69,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     onTopicsSaved,
 }) => {
     const truncatedTopics = useMemo(
-        () => (topics.length > 8 ? topics.slice(0, 8) : topics),
+        () => (topics.length > 10 ? topics.slice(0, 10) : topics),
         [topics]
     );
     const truncatedContent = useMemo(
@@ -132,7 +132,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
 
             {topics && !truncatedContent.length && (
                 <div>
-                    <Grid columns={4} gap={16} sx={{ marginBottom: 'inc50' }}>
+                    <Grid columns={5} gap={16} sx={{ marginBottom: 'inc50' }}>
                         {truncatedTopics.map((topic, i) => {
                             const iconString = topicToLogo(
                                 topic.category,

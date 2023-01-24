@@ -442,7 +442,7 @@ export const getStaticProps: GetStaticProps<{
                 topic.category !== 'ContentType' &&
                 topic.category !== 'L2Product'
         )
-        .slice(0, 8);
+        .slice(0, 10);
 
     return {
         props: { recommendedTopics },
