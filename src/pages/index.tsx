@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import {
     EThirdPartyLogoVariant,
     GridLayout,
@@ -21,6 +21,11 @@ import {
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
 import { layers, h5Styles } from '../styled/layout';
+
+import RecommendedSection from '../components/recommended-section';
+import { MetaInfo } from '../interfaces/meta-info';
+import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.preval';
+import { useSession } from 'next-auth/react';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -67,7 +72,15 @@ const HomepageSearch: React.FunctionComponent = () => {
     );
 };
 
-const Home: NextPage = () => {
+interface HomeProps {
+    recommendedTopics: MetaInfo[];
+}
+
+const Home: React.FunctionComponent<HomeProps & NextPage> = ({
+    recommendedTopics,
+}) => {
+    const { status } = useSession();
+
     return (
         <main
             sx={{
@@ -132,6 +145,17 @@ const Home: NextPage = () => {
                     <HomepageSearch />
                 </div>
             </GridLayout>
+
+            <RecommendedSection
+                topics={recommendedTopics}
+                showFooter={status === 'authenticated'}
+                onTopicsSaved={
+                    (/* selectedTopics: MetaInfo[], digestChecked: boolean */) => {
+                        // TODO
+                    }
+                }
+            />
+
             <GridLayout>
                 <div
                     sx={{
@@ -407,6 +431,22 @@ const Home: NextPage = () => {
             </div>
         </main>
     );
+};
+
+export const getStaticProps: GetStaticProps<{
+    recommendedTopics: MetaInfo[];
+}> = async () => {
+    const recommendedTopics = getAllMetaInfoRandomPreval
+        .filter(
+            topic =>
+                topic.category !== 'ContentType' &&
+                topic.category !== 'L2Product'
+        )
+        .slice(0, 8);
+
+    return {
+        props: { recommendedTopics },
+    };
 };
 
 export default Home;

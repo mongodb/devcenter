@@ -6,7 +6,7 @@ import { GridLayout, LogoPaths, BrandedIcon, ThirdPartyLogo } from '@mdb/flora';
 import { TopicCard } from '@mdb/devcenter-components';
 import { Grid } from 'theme-ui';
 
-import { technologyToLogo } from '../utils/technology-to-logo';
+import { technologyToLogo } from '../utils/logo';
 import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
 import { iconStyles } from '../components/topic-cards-container/styles';

@@ -1,5 +1,5 @@
 import { EThirdPartyLogoVariant } from '@mdb/flora';
-import { productToLogo } from '../utils/product-to-logo';
+import { productToLogo } from '../utils/logo';
 
 export const cardsLanguagesData = [
     {

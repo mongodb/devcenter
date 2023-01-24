@@ -11,7 +11,7 @@ import {
 } from '@mdb/flora';
 import { Grid, ThemeUICSSObject } from 'theme-ui';
 
-import { languageToLogo } from '../utils/language-to-logo';
+import { languageToLogo } from '../utils/logo';
 import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
 import { getURLPath } from '../utils/format-url-path';
