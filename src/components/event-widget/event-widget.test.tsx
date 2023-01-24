@@ -20,8 +20,12 @@ describe('[Component]: Event Widget', () => {
             />
         );
 
+        /*
+            Only test for date formatting because of .toLocaleString() usage
+            Exact match would cause wacky behavior of times when running tests locally vs. during build
+        */
         expect(
-            screen.getByText('Nov 30, 2022 - Dec 1, 2022 EST')
+            screen.getByText('Nov 30, 2022 - Dec 1, 2022', { exact: false })
         ).toBeInTheDocument();
 
         // sets location
