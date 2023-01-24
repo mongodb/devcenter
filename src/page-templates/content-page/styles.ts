@@ -139,18 +139,17 @@ const vidOrPodContent: ThemeUICSSObject = {
 const tooltip = {
     tooltipPlacement: {
         position: 'relative',
-        top: '50%',
-        left: 100,
-        transform: 'translate(-50%)',
+        right: 'inc20',
+        // top: '50%',
+        // left: 100,
+        // transform: 'translate(-50%)',
     } as ThemeUICSSObject,
     tooltipWrapper: {
+        bottom: '50%',
+        transform: 'translate(0,50%)',
         position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%,-50%)',
         display: 'flex',
         alignItems: 'center',
-        width: 208,
     } as ThemeUICSSObject,
     tooltipArrow: {
         borderBottom: '8px solid transparent',
@@ -158,6 +157,8 @@ const tooltip = {
         borderRight: `8px solid ${theme.colors.background.containerInverse}`,
     } as ThemeUICSSObject,
     tooltipBody: {
+        width: 208,
+        maxWidth: '100%',
         bg: 'background.containerInverse',
         color: 'text.inverse',
         borderRadius: 'tooltips',

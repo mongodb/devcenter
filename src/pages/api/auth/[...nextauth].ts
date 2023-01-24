@@ -16,7 +16,9 @@ export const nextAuthOptions: NextAuthOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        jwt: async ({ token, account, profile }) => {
+        jwt: async body => {
+            console.log('JWT: ', body);
+            const { token, account, profile } = body;
             // Persist the OAuth access_token to the token right after signin
             if (account) {
                 token.accessToken = account.access_token;
@@ -28,7 +30,9 @@ export const nextAuthOptions: NextAuthOptions = {
             }
             return token;
         },
-        session: async ({ session, token }) => {
+        session: async body => {
+            console.log('SESSION: ', body);
+            const { session, token } = body;
             session.firstName = token.firstName;
             session.lastName = token.lastName;
             session.email = token.email;
