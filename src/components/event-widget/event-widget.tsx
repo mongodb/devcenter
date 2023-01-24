@@ -7,7 +7,7 @@ import {
 } from '@mdb/flora';
 import { ThemeUICSSObject } from 'theme-ui';
 
-import { formatSingleDate } from '../../utils/format-date';
+import { formatDateRange } from '../../utils/format-date';
 
 import styles from './styles';
 
@@ -30,9 +30,6 @@ export default function EventWidget({
     registrationLink = '',
     virtualLinkText = 'Virtual Link',
 }: EventWidgetProps) {
-    const startTime = dates[0] ? formatSingleDate(dates[0]) : '';
-    const endTime = dates[1] ? `- ${formatSingleDate(dates[1])}` : '';
-
     return (
         <div sx={{ ...wrapperStyles }}>
             <div sx={styles.widget}>
@@ -43,7 +40,7 @@ export default function EventWidget({
                     </TypographyScale>
                 </div>
                 <TypographyScale variant="body3" sx={styles.content}>
-                    {startTime} {endTime}
+                    {formatDateRange(dates[0], dates[1])}
                 </TypographyScale>
             </div>
             {(location || virtualLink) && (
