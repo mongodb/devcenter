@@ -21,7 +21,7 @@ describe('Recommended Section', () => {
     test('Renders content when passed content', () => {
         render(<RecommendedSection content={MOCK_ARTICLE_CONTENT} />);
 
-        expect(screen.queryAllByTestId('card-medium').length).toBeGreaterThan(
+        expect(screen.queryAllByTestId('card-related').length).toBeGreaterThan(
             0
         );
     });
@@ -34,7 +34,7 @@ describe('Recommended Section', () => {
             />
         );
         expect(screen.queryAllByTestId('recommended-topic-tag').length).toBe(0);
-        expect(screen.queryAllByTestId('card-medium').length).toBeGreaterThan(
+        expect(screen.queryAllByTestId('card-related').length).toBeGreaterThan(
             0
         );
     });

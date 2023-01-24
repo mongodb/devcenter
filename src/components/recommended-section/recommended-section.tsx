@@ -1,5 +1,4 @@
 import { Link, TypographyScale } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
 
 import { h5Styles } from '../../styled/layout';
 import { ContentItem } from '../../interfaces/content-item';
@@ -9,7 +8,7 @@ import RecommendedContentSection from './recommended-content-section';
 import { useModalContext } from '../../contexts/modal';
 import { ScrollPersonalizationModal } from '../modal/personalization';
 import { useCallback, useState } from 'react';
-import { ThemeUICSSObject } from 'theme-ui';
+import { recommendedSectionStyles } from './styles';
 
 interface RecommendedSectionProps {
     tags?: Tag[];
@@ -18,15 +17,6 @@ interface RecommendedSectionProps {
     onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
     showFooter?: boolean;
 }
-
-const recommendedSectionStyles: ThemeUICSSObject = {
-    margin: 'auto',
-    maxWidth: theme.sizes.maxWidthDesktop,
-    marginBottom: 'section40',
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-};
 
 const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     tags = [],

@@ -2,21 +2,12 @@ import { Grid } from 'theme-ui';
 import Card, { getCardProps } from '../card';
 import { ContentItem } from '../../interfaces/content-item';
 import AdditionalContentPlaceholder from './additional-content-placeholder';
+import { placeholderStyles } from './styles';
 
 interface RecommendedSectionProps {
     content?: ContentItem[];
     onSeeTopics: () => void;
 }
-
-const placeholderStyles = (contentLength: number) => {
-    const gridColumnValues = [
-        ['auto', null, null, '2 / span 2', null, '2 / span 3'],
-        ['auto', null, '1 / span 2', 'auto', null, '3 / span 2'],
-        'auto',
-    ];
-
-    return { gridColumn: gridColumnValues[contentLength - 1] };
-};
 
 const RecommendedContentSection: React.FunctionComponent<
     RecommendedSectionProps
@@ -41,7 +32,7 @@ const RecommendedContentSection: React.FunctionComponent<
                     sx={{
                         height: '100%',
                     }}
-                    {...getCardProps(item, 'medium')}
+                    {...getCardProps(item, 'related')}
                 />
             ))}
 

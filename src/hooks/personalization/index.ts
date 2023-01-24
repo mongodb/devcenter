@@ -1,15 +1,28 @@
-import useSWR, { Fetcher } from 'swr';
+import useSWR, { Fetcher, KeyedMutator } from 'swr';
 import { Tag } from '../../interfaces/tag';
 import { getURLPath } from '../../utils/format-url-path';
 import { ContentItem } from '../../interfaces/content-item';
+import { searchItemToContentItem, swrOptions } from '../search/utils';
+import { SearchItem } from '../../components/search/types';
 
-const fetcher: Fetcher<ContentItem[], string> = queryString => {
-    return fetch(
-        (getURLPath('/api/personalized-content') as string) + '?' + queryString
-    ).then(async response => {
-        const json: ContentItem[] = await response.json();
-        return json;
-    });
+interface RecommendedContentData {
+    contentItem: SearchItem[];
+    followedTags: Tag[];
+}
+interface RecommendedContentResponse {
+    data?: ContentItem[];
+    error?: string;
+    isValidating?: boolean;
+    mutate: KeyedMutator<{ data: RecommendedContentData }>;
+}
+
+const fetcher: Fetcher<{ data: RecommendedContentData }, string> = () => {
+    return fetch(getURLPath('/api/personalized-content') as string).then(
+        async response => {
+            const json = await response.json();
+            return json;
+        }
+    );
 };
 
 const buildQuery = (tags: Tag[]) => {
@@ -19,12 +32,22 @@ const buildQuery = (tags: Tag[]) => {
         .slice(0, -1);
 };
 
-const usePersonalizedContent = (followedTags: Tag[]) => {
+const usePersonalizedContent = (
+    followedTags: Tag[]
+): RecommendedContentResponse => {
+    // Pass followedTags as a query so data updates when tags change
     const query = buildQuery(followedTags);
 
-    const { data, error, isValidating } = useSWR(query, fetcher);
+    const {
+        data: { data: { contentItem = [] } = {} } = {},
+        error,
+        isValidating,
+        mutate,
+    } = useSWR(query, fetcher, swrOptions);
 
-    return { data, error, isValidating };
+    const contentItems = contentItem.map(searchItemToContentItem);
+
+    return { data: contentItems, error, isValidating, mutate };
 };
 
 export default usePersonalizedContent;
