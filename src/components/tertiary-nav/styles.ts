@@ -81,4 +81,5 @@ export const titleFollowTopicStyles = {
     display: 'flex',
     flexDirection: 'row',
     gap: '16px',
+    alignItems: 'center',
 } as ThemeUICSSObject;

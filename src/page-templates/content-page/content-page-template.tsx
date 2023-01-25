@@ -15,7 +15,6 @@ import {
     HorizontalRule,
     Link,
     SideNav,
-    SystemIcon,
     TypographyScale,
 } from '@mdb/flora';
 // components
@@ -68,6 +67,7 @@ import {
 import { FullApplication, Snippet } from '../../components/icons';
 import { iconStyles } from '../../components/topic-cards-container/styles';
 import { formatEventTypes } from '../../utils/format-text';
+import FollowLink from '../../components/follow-link';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -592,20 +592,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         );
     };
 
-    const [showHoverTooltip, setShowHoverTooltip] = useState(false);
-    const [isFollowing, setIsFollowing] = useState(false);
-
-    let tooltipText =
-        'Receive a monthly digest and recommended content based on topics you follow!';
-    if (isFollowing) {
-        tooltipText = 'Unfollow this topic';
-    }
-
-    const onFollowLinkClick = () => {
-        setIsFollowing(!isFollowing);
-        setShowHoverTooltip(false);
-    };
-
     return (
         <>
             <NextSeo
@@ -647,42 +633,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                     {topicName}
                                 </TypographyScale>
                             </a>
-                            <Link
-                                onClick={onFollowLinkClick}
-                                onMouseEnter={() => setShowHoverTooltip(true)}
-                                onMouseLeave={() => setShowHoverTooltip(false)}
-                            >
-                                {isFollowing && (
-                                    <SystemIcon
-                                        sx={{
-                                            stroke: 'blue60',
-                                            path: {
-                                                strokeWidth: 3,
-                                            },
-                                        }}
-                                        name={ESystemIconNames.CHECK}
-                                    />
-                                )}
-                                {!isFollowing && (
-                                    <SystemIcon
-                                        sx={{
-                                            fill: 'blue60',
-                                            stroke: 'blue60',
-                                        }}
-                                        name={ESystemIconNames.PLUS}
-                                    />
-                                )}
-                            </Link>
-                            <div sx={styles.tooltip.tooltipPlacement}>
-                                {showHoverTooltip && (
-                                    <div sx={styles.tooltip.tooltipWrapper}>
-                                        <div sx={styles.tooltip.tooltipArrow} />
-                                        <div sx={styles.tooltip.tooltipBody}>
-                                            {tooltipText}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                            <FollowLink topicName={topicName} iconsOnly />
                         </div>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
