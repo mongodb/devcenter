@@ -139,6 +139,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                                         variant={
                                             iconString as EThirdPartyLogoVariant
                                         }
+                                        href={topic.slug}
                                     />
                                 ) : (
                                     <BrandedIcon
