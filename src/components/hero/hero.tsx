@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 
 import {
     TypographyScale,
@@ -46,8 +46,13 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
 
         const isLoggedIn = status === 'authenticated';
         const followedTopics = session?.topics as Tag[] | undefined;
-        const isFollowing = !!(
-            followedTopics && followedTopics.find(topic => topic.name === name)
+        const isFollowing = useMemo(
+            () =>
+                !!(
+                    followedTopics &&
+                    followedTopics.find(topic => topic.name === name)
+                ),
+            [followedTopics, name]
         );
         const hasHoverTooltip =
             !isLoggedIn || !followedTopics || !followedTopics.length;
@@ -57,7 +62,7 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
             ? 'Receive a monthly digest and recommended content based on topics you follow!'
             : 'Sign in to follow topics';
 
-        const onFollowClick = () => {
+        const onFollowClick = useCallback(() => {
             let topics: Tag[];
             if (isFollowing) {
                 setShowClickTooltip(false); // Just in case they hit Follow and Unfollow in < 2 seconds.
@@ -75,16 +80,17 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                     : [newTopic];
             }
             setSession({ topics });
-        };
+        }, [isFollowing, followedTopics, name]);
 
-        let linkElement: JSX.Element | null = null;
-        if (topicPage) {
+        const linkElement: JSX.Element | null = useMemo(() => {
+            if (!topicPage) return null;
+
             const linkProps = isLoggedIn
                 ? {
                       onClick: onFollowClick,
                   }
                 : { href: signInURL };
-            linkElement = (
+            return (
                 <>
                     <div
                         sx={{
@@ -128,7 +134,17 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                     </div>
                 </>
             );
-        }
+        }, [
+            topicPage,
+            isLoggedIn,
+            onFollowClick,
+            isFollowing,
+            signInURL,
+            hasHoverTooltip,
+            hoverTooltipText,
+            showClickTooltip,
+        ]);
+
         return (
             <div sx={heroContainerStyles}>
                 <GridLayout sx={{ rowGap: 'inc30' }}>
