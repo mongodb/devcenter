@@ -52,6 +52,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     return (
         <div ref={ref => setLayoutRef(ref)}>
             <Global
+                // TODO: using globalStyles as func call might be producing performance bottleneck
                 styles={css`
                     ${emotionNormalize}
                     ${globalStyles(!!hasOverlay || !!hasModalOpen)}

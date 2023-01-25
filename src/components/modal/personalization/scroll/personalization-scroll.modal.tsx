@@ -2,16 +2,11 @@ import { Fragment, useState } from 'react';
 import { Grid } from 'theme-ui';
 import { Button, TypographyScale, Checkbox } from '@mdb/flora';
 import { TopicCard } from '@mdb/devcenter-components';
-
 import { useModalContext } from '../../../../contexts/modal';
-
+import tagConfig from '../../../../service/get-personalization-modal-config.preval';
 import { Tag } from '../../../../interfaces/tag';
 import { ScrollModalProps } from '../types';
-
-import {
-    initializePersonalizationConfig,
-    submitPersonalizationSelections,
-} from '../utils';
+import { submitPersonalizationSelections } from '../utils';
 import { tagToTopic } from '../../../../utils/tag-to-topic';
 
 import styles from '../styles';
@@ -21,8 +16,6 @@ const ScrollPersonalizationModal = ({
     subtitle = '',
     existingSelections = [],
 }: ScrollModalProps) => {
-    const tagConfig = initializePersonalizationConfig();
-
     const { closeModal } = useModalContext();
     const [isOptedIn, setIsOptedIn] = useState(true);
     const [selections, setSelections] =

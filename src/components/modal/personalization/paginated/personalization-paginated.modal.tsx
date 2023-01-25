@@ -9,21 +9,15 @@ import {
     ESystemIconNames,
 } from '@mdb/flora';
 import { TopicCard } from '@mdb/devcenter-components';
-
 import { useModalContext } from '../../../../contexts/modal';
-
+import paginationConfig from '../../../../service/get-personalization-modal-config.preval';
 import { Tag } from '../../../../interfaces/tag';
-import {
-    initializePersonalizationConfig,
-    submitPersonalizationSelections,
-} from '../utils';
+import { submitPersonalizationSelections } from '../utils';
 import { tagToTopic } from '../../../../utils/tag-to-topic';
 
 import styles from '../styles';
 
 const PaginatedPersonalizationModal = () => {
-    const paginationConfig = initializePersonalizationConfig();
-
     const { closeModal } = useModalContext();
 
     const [tabIndex, setTabIndex] = useState(0);
