@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 
 import {
     TypographyScale,
@@ -7,92 +7,152 @@ import {
     SystemIcon,
     ESystemIconNames,
 } from '@mdb/flora';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 
 import Breadcrumbs from '../breadcrumbs';
 import { HeroProps } from './types';
 import { heroContainerStyles } from './styles';
 import styles from '../../page-templates/content-page/styles';
 import useSignInURL from '../../hooks/sign-in-url';
-// import { Tag } from '../../interfaces/tag';
+import { Tag } from '../../interfaces/tag';
 
 interface TooltipProps {
-    text: string;
+    children?: React.ReactNode;
+    className?: string;
 }
 
-const Tooltip: React.FunctionComponent<TooltipProps> = ({ text }) => (
-    <div sx={styles.tooltip.tooltipPlacement}>
-        <div sx={styles.tooltip.tooltipWrapper}>
-            <div sx={styles.tooltip.tooltipArrow} />
-            <div sx={styles.tooltip.tooltipBody}>{text}</div>
+const Tooltip: React.FunctionComponent<TooltipProps> = ({
+    children,
+    className,
+}) => (
+    <>
+        <div sx={styles.tooltip.tooltipArrow} className={className} />
+        <div sx={styles.tooltip.tooltipBody} className={className}>
+            {children}
         </div>
-    </div>
+    </>
 );
+
+interface Session {
+    topics?: Tag[];
+}
 
 const Hero: React.FunctionComponent<HeroProps> = memo(
     ({ crumbs, name, description, ctas, topicPage }) => {
-        const { data: session } = useSession();
+        // const { data: session } = useSession();
 
-        console.log('SESSION:', session);
+        const [session, setSession] = useState<Session | null>(null);
 
-        // const [showHoverTooltip, setShowHoverTooltip] = useState(false);
-        // const [showClickTooltip, setShowClickTooltip] = useState(false);
+        console.log(session);
+
+        const [showClickTooltip, setShowClickTooltip] = useState(false);
 
         const isLoggedIn = !!session;
-        // const followedTopics = session?.topics as Tag[] | undefined;
-        // const isFollowing = !!(
-        //     followedTopics && followedTopics.find(topic => topic.name === name)
-        // );
+        const followedTopics = session?.topics as Tag[] | undefined;
+        const isFollowing = !!(
+            followedTopics && followedTopics.find(topic => topic.name === name)
+        );
+        const hasHoverTooltip =
+            !isLoggedIn || !followedTopics || !followedTopics.length;
         const signInURL = useSignInURL();
 
-        // let linkText = 'Follow';
-        // let tooltipText = 'You are no longer following this topic';
-        // if (isFollowing) {
-        //     linkText = 'Unfollow';
-        //     tooltipText = 'You are now following this topic';
-        // }
+        const hoverTooltipText = isLoggedIn
+            ? 'Receive a monthly digest and recommended content based on topics you follow!'
+            : 'Sign in to follow topics';
 
-        // const onFollowLinkClick = () => {
-        //     setShowHoverTooltip(false);
-        //     setShowClickTooltip(true);
-        //     setTimeout(() => setShowClickTooltip(false), 2000);
-        // };
+        const onFollowClick = () => {
+            let topics: Tag[];
+            if (isFollowing) {
+                setShowClickTooltip(false); // Just in case they hit Follow and Unfollow in < 2 seconds.
+                topics = followedTopics.filter(topic => topic.name !== name);
+            } else {
+                setShowClickTooltip(true);
+                setTimeout(() => setShowClickTooltip(false), 2000);
+                const newTopic: Tag = {
+                    name,
+                    type: 'Technology',
+                    slug: '/',
+                };
+                topics = followedTopics
+                    ? [...followedTopics, newTopic]
+                    : [newTopic];
+            }
+            setSession({ topics });
+        };
 
         let linkElement: JSX.Element | null = null;
         if (topicPage) {
-            if (!isLoggedIn) {
-                linkElement = (
-                    <>
+            const linkProps = isLoggedIn
+                ? {
+                      onClick: onFollowClick,
+                  }
+                : { href: signInURL };
+            linkElement = (
+                <>
+                    <div
+                        sx={{
+                            position: 'relative',
+                            '.tooltip': {
+                                display: 'none',
+                            },
+                            '&:hover': {
+                                '.tooltip': {
+                                    display: hasHoverTooltip
+                                        ? 'initial'
+                                        : 'hidden',
+                                },
+                            },
+                        }}
+                    >
                         <div>
-                            <div
-                                onMouseEnter={() => {
-                                    // setShowHoverTooltip(true);
-                                    console.log('Enter');
-                                }}
-                                onMouseLeave={() => {
-                                    // setShowHoverTooltip(false);
-                                    console.log('Leave');
-                                }}
-                            >
-                                <Link href={signInURL}>
-                                    <SystemIcon
-                                        sx={{
-                                            fill: 'blue60',
-                                            stroke: 'blue60',
-                                        }}
-                                        name={ESystemIconNames.PLUS}
-                                    />
-                                    Follow
-                                </Link>
-                            </div>
+                            <Link {...linkProps}>
+                                {isFollowing ? (
+                                    'Unfollow'
+                                ) : (
+                                    <>
+                                        <SystemIcon
+                                            sx={{
+                                                fill: 'blue60',
+                                                stroke: 'blue60',
+                                            }}
+                                            name={ESystemIconNames.PLUS}
+                                        />
+                                        Follow
+                                    </>
+                                )}
+                            </Link>
                         </div>
-                        {true && <Tooltip text="Rec" />}
-                    </>
-                );
-            }
+                        <Tooltip className="tooltip">
+                            {hoverTooltipText}
+                        </Tooltip>
+                        {showClickTooltip && (
+                            <Tooltip>You are now following this topic</Tooltip>
+                        )}
+                    </div>
+                </>
+            );
         }
         return (
             <div sx={heroContainerStyles}>
+                <button
+                    onClick={() =>
+                        setSession(
+                            isLoggedIn
+                                ? null
+                                : {
+                                      topics: [
+                                          //   {
+                                          //       name: 'Atlas',
+                                          //       type: 'L1Product',
+                                          //       slug: '/products/atlas',
+                                          //   },
+                                      ],
+                                  }
+                        )
+                    }
+                >
+                    {isLoggedIn ? 'Logout' : 'Login'}
+                </button>
                 <GridLayout sx={{ rowGap: 'inc30' }}>
                     {crumbs && <Breadcrumbs crumbs={crumbs} />}
                     <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
@@ -108,86 +168,17 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                                 customElement="h1"
                                 variant="heading2"
                                 color="mark"
+                                // This styling is to accomodate the "Follow" button on topic pages.
+                                sx={{
+                                    width: topicPage
+                                        ? 'min-content'
+                                        : 'initial',
+                                }}
                             >
                                 {name}
                             </TypographyScale>
                             {topicPage && linkElement}
                         </div>
-                        {/* {topicPage && (
-                                <>
-                                    <Link
-                                        onClick={onFollowLinkClick}
-                                        onMouseEnter={() =>
-                                            setShowHoverTooltip(true)
-                                        }
-                                        onMouseLeave={() =>
-                                            setShowHoverTooltip(false)
-                                        }
-                                    >
-                                        {!isFollowing && (
-                                            <SystemIcon
-                                                sx={{
-                                                    fill: 'blue60',
-                                                    stroke: 'blue60',
-                                                }}
-                                                name={ESystemIconNames.PLUS}
-                                            />
-                                        )}
-                                        &nbsp;{linkText}
-                                    </Link>
-                                    <div sx={styles.tooltip.tooltipPlacement}>
-                                        {showClickTooltip && (
-                                            <div
-                                                sx={
-                                                    styles.tooltip
-                                                        .tooltipWrapper
-                                                }
-                                            >
-                                                <div
-                                                    sx={
-                                                        styles.tooltip
-                                                            .tooltipArrow
-                                                    }
-                                                />
-                                                <div
-                                                    sx={
-                                                        styles.tooltip
-                                                            .tooltipBody
-                                                    }
-                                                >
-                                                    {tooltipText}
-                                                </div>
-                                            </div>
-                                        )}
-                                        {showHoverTooltip && !isFollowing && (
-                                            <div
-                                                sx={
-                                                    styles.tooltip
-                                                        .tooltipWrapper
-                                                }
-                                            >
-                                                <div
-                                                    sx={
-                                                        styles.tooltip
-                                                            .tooltipArrow
-                                                    }
-                                                />
-                                                <div
-                                                    sx={
-                                                        styles.tooltip
-                                                            .tooltipBody
-                                                    }
-                                                >
-                                                    Receive a monthly digest and
-                                                    recommended content based on
-                                                    topics you follow!
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </>
-                            )} */}
-
                         {!!description && (
                             <TypographyScale variant="body2">
                                 {description}

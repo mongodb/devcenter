@@ -137,28 +137,34 @@ const vidOrPodContent: ThemeUICSSObject = {
 };
 
 const tooltip = {
-    tooltipPlacement: {
-        position: 'relative',
-        right: 'inc20',
-        // top: '50%',
-        // left: 100,
-        // transform: 'translate(-50%)',
-    } as ThemeUICSSObject,
-    tooltipWrapper: {
-        bottom: '50%',
-        transform: 'translate(0,50%)',
-        position: 'absolute',
-        display: 'flex',
-        alignItems: 'center',
-    } as ThemeUICSSObject,
     tooltipArrow: {
+        // positioning
+        position: 'absolute',
+
+        top: ['100%', null, '50%'],
+        transform: ['translateX(50%) rotate(90deg)', null, 'translateY(-50%)'],
+        left: [null, null, '100%'],
+        right: ['50%', null, 'initial'],
+        marginLeft: [null, null, 'inc20'],
+        marginTop: ['-12px', null, 'initial'],
+
+        // styling
         borderBottom: '8px solid transparent',
         borderTop: '8px solid transparent',
         borderRight: `8px solid ${theme.colors.background.containerInverse}`,
     } as ThemeUICSSObject,
     tooltipBody: {
-        width: 208,
-        maxWidth: '100%',
+        // positioning
+        position: 'absolute',
+        top: ['100%', null, '50%'],
+        transform: ['translateX(50%)', null, 'translateY(-50%)'],
+        left: [null, null, '100%'],
+        right: ['50%', null, 'initial'],
+        marginLeft: [null, null, 'inc30'],
+        width: 'max-content',
+        maxWidth: [104, null, 208],
+
+        // styling
         bg: 'background.containerInverse',
         color: 'text.inverse',
         borderRadius: 'tooltips',
