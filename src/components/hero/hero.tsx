@@ -64,7 +64,7 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
 
         const onFollowClick = useCallback(() => {
             let topics: Tag[];
-            if (isFollowing) {
+            if (followedTopics && isFollowing) {
                 setShowClickTooltip(false); // Just in case they hit Follow and Unfollow in < 2 seconds.
                 topics = followedTopics.filter(topic => topic.name !== name);
             } else {
