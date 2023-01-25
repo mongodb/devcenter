@@ -102,24 +102,21 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
                                         data-testid="search-results"
                                         sx={dataStyles(layout)}
                                     >
-                                        {resultsToShow.map(item => {
-                                            console.log(item);
-                                            return (
-                                                <Card
-                                                    key={item.slug}
-                                                    sx={extraCardStyles}
-                                                    hideTagsOnMobile={
-                                                        layout === 'list'
-                                                    }
-                                                    {...getCardProps(
-                                                        item,
-                                                        layout === 'list'
-                                                            ? 'list'
-                                                            : 'medium'
-                                                    )}
-                                                />
-                                            );
-                                        })}
+                                        {resultsToShow.map(item => (
+                                            <Card
+                                                key={item.slug}
+                                                sx={extraCardStyles}
+                                                hideTagsOnMobile={
+                                                    layout === 'list'
+                                                }
+                                                {...getCardProps(
+                                                    item,
+                                                    layout === 'list'
+                                                        ? 'list'
+                                                        : 'medium'
+                                                )}
+                                            />
+                                        ))}
                                     </div>
 
                                     {showLoadMoreButton && (
