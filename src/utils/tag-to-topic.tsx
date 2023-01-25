@@ -1,7 +1,9 @@
 import { ThirdPartyLogo, BrandedIcon } from '@mdb/flora';
 import { TopicCardProps } from '@mdb/devcenter-components';
 import { iconStyles } from '../components/topic-cards-container/styles';
-import { technologyToLogo, productToLogo, languageToLogo } from './logo';
+import { technologyToLogo } from './technology-to-logo';
+import { productToLogo } from './product-to-logo';
+import { languageToLogo } from './language-to-logo';
 import { Tag } from '../interfaces/tag';
 import { getURLPath } from './format-url-path';
 
