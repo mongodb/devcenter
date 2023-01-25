@@ -7,7 +7,7 @@ import {
     SystemIcon,
     ESystemIconNames,
 } from '@mdb/flora';
-// import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 import Breadcrumbs from '../breadcrumbs';
 import { HeroProps } from './types';
@@ -39,15 +39,12 @@ interface Session {
 
 const Hero: React.FunctionComponent<HeroProps> = memo(
     ({ crumbs, name, description, ctas, topicPage }) => {
-        // const { data: session } = useSession();
-
+        const { status } = useSession();
         const [session, setSession] = useState<Session | null>(null);
-
-        console.log(session);
 
         const [showClickTooltip, setShowClickTooltip] = useState(false);
 
-        const isLoggedIn = !!session;
+        const isLoggedIn = status === 'authenticated';
         const followedTopics = session?.topics as Tag[] | undefined;
         const isFollowing = !!(
             followedTopics && followedTopics.find(topic => topic.name === name)
@@ -134,25 +131,6 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
         }
         return (
             <div sx={heroContainerStyles}>
-                <button
-                    onClick={() =>
-                        setSession(
-                            isLoggedIn
-                                ? null
-                                : {
-                                      topics: [
-                                          //   {
-                                          //       name: 'Atlas',
-                                          //       type: 'L1Product',
-                                          //       slug: '/products/atlas',
-                                          //   },
-                                      ],
-                                  }
-                        )
-                    }
-                >
-                    {isLoggedIn ? 'Logout' : 'Login'}
-                </button>
                 <GridLayout sx={{ rowGap: 'inc30' }}>
                     {crumbs && <Breadcrumbs crumbs={crumbs} />}
                     <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
