@@ -1,21 +1,14 @@
 import { TopicCard } from '@mdb/devcenter-components';
-import {
-    BrandedIcon,
-    Button,
-    Checkbox,
-    EThirdPartyLogoVariant,
-    ThirdPartyLogo,
-    TypographyScale,
-} from '@mdb/flora';
+import { Button, Checkbox, TypographyScale } from '@mdb/flora';
 import { Grid } from 'theme-ui';
 import theme from '@mdb/flora/theme';
 
 import { h5Styles } from '../../styled/layout';
 import { ContentItem } from '../../interfaces/content-item';
 import { MetaInfo } from '../../interfaces/meta-info';
-import { iconStyles } from '../topic-cards-container/styles';
 import { useCallback, useState } from 'react';
-import { topicToLogo } from '../../utils/logo';
+import { tagToTopic } from '../../utils/tag-to-topic';
+import { Tag } from '../../interfaces/tag';
 
 interface RecommendedSectionProps {
     topics?: MetaInfo[];
@@ -124,35 +117,17 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
             {topics && !content.length && (
                 <div>
                     <Grid columns={5} gap={16} sx={{ marginBottom: 'inc50' }}>
-                        {topics.map((topic, i) => {
-                            const iconString = topicToLogo(
-                                topic.category,
-                                topic.tagName
-                            );
-
-                            const icon = iconString ? (
-                                Object.values(EThirdPartyLogoVariant).includes(
-                                    iconString as EThirdPartyLogoVariant
-                                ) ? (
-                                    <ThirdPartyLogo
-                                        sx={iconStyles}
-                                        variant={
-                                            iconString as EThirdPartyLogoVariant
-                                        }
-                                        href={topic.slug}
-                                    />
-                                ) : (
-                                    <BrandedIcon
-                                        sx={iconStyles}
-                                        name={iconString}
-                                    />
-                                )
-                            ) : null;
+                        {topics.map(topic => {
+                            const { title, icon } = tagToTopic({
+                                name: topic.tagName,
+                                type: topic.category,
+                                slug: '',
+                            } as Tag);
 
                             return (
                                 <TopicCard
-                                    key={i}
-                                    title={topic.tagName}
+                                    key={title}
+                                    title={title}
                                     variant="selectable"
                                     onSelect={topicCardSelected(topic)}
                                     selected={selectedTopics.some(

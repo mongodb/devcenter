@@ -439,8 +439,10 @@ export const getStaticProps: GetStaticProps<{
     const recommendedTopics = getAllMetaInfoRandomPreval
         .filter(
             topic =>
-                topic.category !== 'ContentType' &&
-                topic.category !== 'L2Product'
+                topic.category === 'L1Product' ||
+                topic.category === 'L2Product' ||
+                topic.category === 'Technology' ||
+                topic.category === 'ProgrammingLanguage'
         )
         .slice(0, 10);
 

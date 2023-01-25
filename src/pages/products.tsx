@@ -14,7 +14,7 @@ import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
 
 import { getURLPath } from '../utils/format-url-path';
-import { productToLogo } from '../utils/logo';
+import { productToLogo } from '../utils/product-to-logo';
 
 import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
