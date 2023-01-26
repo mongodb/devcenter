@@ -66,6 +66,7 @@ const ScrollPersonalizationModal = ({
                         <Grid
                             columns={[2, null, null, 3]}
                             sx={styles.scrollTagSection}
+                            data-testid="scroll-modal-tags"
                         >
                             {tags.map(tag => {
                                 const isSelected = !!selections.find(

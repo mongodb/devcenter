@@ -60,7 +60,11 @@ const PaginatedPersonalizationModal = () => {
             <TypographyScale variant="heading6" sx={styles.categoryHeader}>
                 {paginationConfig[tabIndex].title}
             </TypographyScale>
-            <Grid columns={[2, null, null, 3]} sx={styles.tagsWrapper}>
+            <Grid
+                columns={[2, null, null, 3]}
+                sx={styles.tagsWrapper}
+                data-testid="paginated-modal-tags"
+            >
                 {paginationConfig[tabIndex]?.tags.map(tag => {
                     const isSelected = !!selections.find(
                         prevTags => prevTags.name === tag.name
