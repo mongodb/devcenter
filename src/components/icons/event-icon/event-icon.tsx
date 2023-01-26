@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { thumbnailStyles } from '../../card/styles';
+import isServerSide from '../../../utils/is-server-side';
 
 const PILL_PADDING = 13;
 const RIGHT_MARGIN = 16;
@@ -383,7 +384,7 @@ const EventIcon = ({ text }: { text?: string }) => {
                     d="M151.294 110.103C151.22 110.068 151.19 109.98 151.225 109.906L153.574 105.046C153.609 104.973 153.697 104.942 153.77 104.978L158.618 107.332C158.691 107.368 158.722 107.456 158.686 107.529L156.338 112.39C156.302 112.463 156.214 112.494 156.141 112.458L151.294 110.103ZM151.554 109.902L156.137 112.128L158.357 107.534L153.774 105.307L151.554 109.902Z"
                     fill="black"
                 />
-                {text && (
+                {text && !isServerSide() && (
                     <g>
                         <rect
                             x={rectX}

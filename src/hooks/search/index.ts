@@ -19,6 +19,7 @@ import useSearchString from './search-string';
 import useFilter from './filter';
 import { ContentItem } from '../../interfaces/content-item';
 import { SearchParamType, SearchProps } from './types';
+import isServerSide from '../../utils/is-server-side';
 
 // Credit https://github.com/reduxjs/redux/blob/d794c56f78eccb56ba3c67971c26df8ee34dacc1/src/compose.ts#L46
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -46,7 +47,7 @@ const useSearch = (
     tagSlug?: string, // Filter on backend by tag.
     filterItems?: { key: string; value: FilterItem[] }[] // This is needed for URL filter/search updates.
 ): SearchProps => {
-    const [allResults, setAllResults] = useState<ContentItem[]>();
+    const [allResults, setAllResults] = useState<ContentItem[]>([]);
     const router = useRouter();
     const shouldUseQueryParams = !!filterItems;
     const paramChangeCallback = useCallback(() => {
@@ -128,7 +129,11 @@ const useSearch = (
     const searchKey = buildSearchQuery(searchQueryParams);
 
     // TODO: Refactor to useSWRInfinite and implement client-side pagination.
-    const { data, error, isValidating } = useSWR(searchKey, searchFetcher, {
+    const {
+        data = [],
+        error,
+        isValidating,
+    } = useSWR(searchKey, searchFetcher, {
         ...swrOptions,
         fallbackData: (initialSearchContent || []).map(searchItemToContentItem),
     });
@@ -136,7 +141,7 @@ const useSearch = (
     // Populate all results with either the result of useSWR if searchString starts out empty,
     // or with a one-time fetch to the search endpoint with an empty query
     useEffect(() => {
-        if (!allResults) {
+        if (!allResults.length) {
             if (searchString === '' && data && data.length > 0) {
                 setAllResults(data);
             } else {
@@ -165,12 +170,12 @@ const useSearch = (
         sortProps,
         locationProps,
         resultsProps: {
-            allResults: allResults || [],
-            unfilteredResults: data || [],
+            allResults: isServerSide() ? data : allResults,
+            unfilteredResults: data,
             results: filteredData,
             error,
             // Disable loading state when running server-side so results show when JS is disabled
-            isValidating: typeof window === 'undefined' ? false : isValidating,
+            isValidating: isServerSide() ? false : isValidating,
             searchString,
             filters,
             sortBy,
