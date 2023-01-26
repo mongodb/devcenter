@@ -34,15 +34,13 @@ const pluralize = require('pluralize');
 
 interface TopicPageProps {
     crumbs: Crumb[];
-    name: string;
-    slug: string;
     description: string;
     ctas: CTA[];
-    topics: Tag[];
+    topic: Tag;
+    subTopics: Tag[];
     relatedTopics: Tag[];
     featured: ContentItem[];
     content: ContentItem[];
-    contentType: string;
     variant: 'light' | 'medium' | 'heavy';
     tertiaryNavItems: TertiaryNavItem[];
     initialSearchContent?: SearchItem[];
@@ -79,20 +77,19 @@ const buildPageTitle =
 
 const TopicPageTemplate: NextPage<TopicPageProps> = ({
     crumbs,
-    name,
-    slug,
     description,
     ctas,
-    topics,
+    topic,
+    subTopics,
     relatedTopics,
     featured,
     content,
-    contentType,
     variant,
     tertiaryNavItems,
     initialSearchContent,
     pageNumber,
 }) => {
+    const { name, type: contentType, slug } = topic;
     const contentRows =
         variant === 'heavy'
             ? PillCategoryValues.map(contentType =>
@@ -133,13 +130,13 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         slug
     );
 
-    const topicsRow = topics.length > 0 ? 1 : 0;
+    const subTopicsRow = subTopics.length > 0 ? 1 : 0;
     const featuredRow = variant === 'light' ? 0 : 1;
     const relatedTopicsRow = variant === 'light' ? 1 : 0;
     const searchRow = 1; // Search is always there.
 
     const mainGridDesktopRowsCount =
-        topicsRow +
+        subTopicsRow +
         featuredRow +
         sortedContentRows.length +
         searchRow +
@@ -147,7 +144,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 
     const CTAComponents = createTopicPageCTAS(ctas);
 
-    const topicItems = topics.map(tagToTopic);
+    const subTopicItems = subTopics.map(tagToTopic);
     const realtedTopicsWithIcons = relatedTopics.map(tagToTopic);
 
     setURLPathForNavItems(tertiaryNavItems);
@@ -169,7 +166,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                 name={name}
                 description={description}
                 ctas={CTAComponents}
-                topicPage={true}
+                topic={topic}
             />
             <TertiaryNav items={tertiaryNavItems} topic={name} />
             <div
@@ -187,11 +184,11 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
-                    {(variant !== 'light' || topics.length > 0) && (
+                    {(variant !== 'light' || subTopics.length > 0) && (
                         <>
-                            {topics.length > 0 && (
+                            {subTopics.length > 0 && (
                                 <TopicCardsContainer
-                                    topics={topicItems}
+                                    topics={subTopicItems}
                                     title={`${name} Topics`}
                                 />
                             )}

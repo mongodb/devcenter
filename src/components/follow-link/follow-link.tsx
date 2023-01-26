@@ -11,17 +11,17 @@ interface Session {
 }
 
 interface FollowLinkProps {
-    topicName: string;
+    topic: Tag;
     iconsOnly?: boolean;
 }
 
 const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
-    topicName,
+    topic,
     iconsOnly = false,
 }) => {
     const { status } = useSession();
     const [session, setSession] = useState<Session | null>({
-        topics: [{ name: 'Python', slug: '/', type: 'ProgrammingLanguage' }],
+        topics: [],
     });
 
     const [showClickTooltip, setShowClickTooltip] = useState(false);
@@ -37,9 +37,11 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
         () =>
             !!(
                 followedTopics &&
-                followedTopics.find(topic => topic.name === topicName)
+                followedTopics.find(
+                    followedTopic => followedTopic.slug === topic.slug
+                )
             ),
-        [followedTopics, topicName]
+        [followedTopics, topic.slug]
     );
 
     const hoverTooltipText = useMemo(() => {
@@ -58,6 +60,11 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     const onFollowClick = useCallback(() => {
         let topics: Tag[];
         // Never show the click tooltip when using the iconsOnly variant
+        if (!isFollowingAnyTopics) {
+            // TODO: Enter modal flow
+            alert('Onboarding modal will go here');
+            return;
+        }
         if (!iconsOnly) {
             if (timeoutID) {
                 // To prevent a follow and unfollow action in under 2 seconds from having it's click tooltip dissapear prematurely.
@@ -69,25 +76,22 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
         }
 
         if (followedTopics && isFollowing) {
-            topics = followedTopics.filter(topic => topic.name !== topicName);
+            topics = followedTopics.filter(
+                followedTopic => followedTopic.name !== topic.name
+            );
         } else {
-            // TODO: get the type and slug in here. Maybe just pass a Tag as the prop to this instead of just topicName?
-            const newTopic: Tag = {
-                name: topicName,
-                type: 'Technology',
-                slug: '/',
-            };
-            topics = followedTopics
-                ? [...followedTopics, newTopic]
-                : [newTopic];
+            topics = followedTopics ? [...followedTopics, topic] : [topic];
         }
+        // TODO: POST these to external API endpoint.
         setSession({ topics });
-    }, [isFollowing, followedTopics, topicName]);
+    }, [isFollowing, followedTopics, topic]);
+
     const linkProps = isLoggedIn
         ? {
               onClick: onFollowClick,
           }
         : { href: signInURL };
+
     return (
         <div
             sx={{

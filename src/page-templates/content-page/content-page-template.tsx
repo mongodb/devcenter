@@ -68,11 +68,11 @@ import { FullApplication, Snippet } from '../../components/icons';
 import { iconStyles } from '../../components/topic-cards-container/styles';
 import { formatEventTypes } from '../../utils/format-text';
 import FollowLink from '../../components/follow-link';
+import { Tag } from '../../interfaces/tag';
 
 interface ContentPageProps {
     crumbs: Crumb[];
-    topicSlug: string;
-    topicName: string;
+    topic: Tag;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
     relatedContent: ContentItem[];
@@ -84,8 +84,7 @@ const parseUndefinedValue = (description: string | undefined): string =>
 
 const ContentPageTemplate: NextPage<ContentPageProps> = ({
     crumbs,
-    topicSlug,
-    topicName,
+    topic,
     tertiaryNavItems,
     relatedContent,
     previewMode,
@@ -625,15 +624,15 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 <GridLayout sx={{ rowGap: 0 }}>
                     <div sx={sideNavStyles(5)}>
                         <div sx={titleFollowTopicStyles}>
-                            <a href={getURLPath(topicSlug)}>
+                            <a href={getURLPath(topic.slug)}>
                                 <TypographyScale
                                     variant="heading6"
                                     sx={sideNavTitleStyles}
                                 >
-                                    {topicName}
+                                    {topic.name}
                                 </TypographyScale>
                             </a>
-                            <FollowLink topicName={topicName} iconsOnly />
+                            <FollowLink topic={topic} iconsOnly />
                         </div>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>

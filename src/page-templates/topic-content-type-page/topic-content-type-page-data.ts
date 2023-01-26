@@ -11,6 +11,7 @@ import allContentTypes from '../../service/get-all-content-types.preval';
 import { getSideNav } from '../../service/get-side-nav';
 import { PillCategory, pillCategoryToSlug } from '../../types/pill-category';
 import { appendDocumentationLinkToSideNav } from '../../utils/page-template-helpers';
+import { TagType } from '../../types/tag-type';
 
 export const getTopicContentTypePageData = async (
     l1_l2: string,
@@ -99,19 +100,20 @@ export const getTopicContentTypePageData = async (
             }));
     }
 
+    const topicTag: Tag = {
+        name: metaInfoForTopic?.tagName ?? '',
+        type: metaInfoForTopic?.category ?? ('' as TagType),
+        slug: topicSlug,
+    };
+
     const data = {
         crumbs,
-        contentType: contentType,
+        contentType,
         tertiaryNavItems: tertiaryNavItems,
-        topicName: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
-        topicSlug: topicSlug,
-        contentTypeSlug: contentTypeSlug ? contentTypeSlug : null,
-        contentTypeAggregateSlug: contentTypeAggregateSlug
-            ? contentTypeAggregateSlug
-            : null,
-        description: metaInfoForTopic?.description
-            ? metaInfoForTopic.description
-            : '',
+        topic: topicTag,
+        contentTypeSlug: contentTypeSlug || null,
+        contentTypeAggregateSlug: contentTypeAggregateSlug || null,
+        description: metaInfoForTopic?.description ?? '',
         subTopics: subTopicsWithContentType,
         initialSearchContent,
         pageNumber,

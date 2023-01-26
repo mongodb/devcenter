@@ -8,7 +8,7 @@ import { heroContainerStyles } from './styles';
 import FollowLink from '../follow-link';
 
 const Hero: React.FunctionComponent<HeroProps> = memo(
-    ({ crumbs, name, description, ctas, topicPage }) => {
+    ({ crumbs, name, description, ctas, topic }) => {
         return (
             <div sx={heroContainerStyles}>
                 <GridLayout sx={{ rowGap: 'inc30' }}>
@@ -28,14 +28,12 @@ const Hero: React.FunctionComponent<HeroProps> = memo(
                                 color="mark"
                                 // This styling is to accomodate the "Follow" button on topic pages.
                                 sx={{
-                                    width: topicPage
-                                        ? 'min-content'
-                                        : 'initial',
+                                    width: topic ? 'min-content' : 'initial',
                                 }}
                             >
                                 {name}
                             </TypographyScale>
-                            {topicPage && <FollowLink topicName={name} />}
+                            {!!topic && <FollowLink topic={topic} />}
                         </div>
                         {!!description && (
                             <TypographyScale variant="body2">

@@ -56,8 +56,7 @@ interface TopicContentTypePageProps {
     crumbs: Crumb[];
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
-    topicName: string;
-    topicSlug: string;
+    topic: Tag;
     contentTypeSlug: string;
     contentTypeAggregateSlug: string;
     description: string;
@@ -153,8 +152,7 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
     crumbs,
     contentType,
     tertiaryNavItems,
-    topicName,
-    topicSlug,
+    topic,
     contentTypeSlug,
     contentTypeAggregateSlug,
     description,
@@ -162,6 +160,7 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
     initialSearchContent,
     pageNumber,
 }) => {
+    const { name: topicName, slug: topicSlug } = topic;
     const requestButtonText = getRequestBtnText(contentType);
 
     const { setModalStage } = useRequestContentModal();
@@ -282,7 +281,7 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                                     {topicName}
                                 </TypographyScale>
                             </a>
-                            <FollowLink topicName={topicName} iconsOnly />
+                            <FollowLink topic={topic} iconsOnly />
                         </div>
 
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
