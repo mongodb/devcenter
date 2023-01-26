@@ -46,6 +46,9 @@ export const industryEventsFields = `
     description
     end_time
     location
+    city
+    state
+    country
     slug
     start_time
     registration_url
