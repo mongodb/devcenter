@@ -72,11 +72,7 @@ const ScrollPersonalizationModal = ({
                                 const isSelected = !!selections.find(
                                     prevTags => prevTags.name === tag.name
                                 );
-                                // do not pass slug b/c it would create a hyperlink on the card
-                                const { icon, title } = tagToTopic({
-                                    ...tag,
-                                    slug: '',
-                                });
+                                const { icon, title } = tagToTopic(tag);
                                 return (
                                     <TopicCard
                                         key={title}
