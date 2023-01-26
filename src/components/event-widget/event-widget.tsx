@@ -74,7 +74,7 @@ export default function EventWidget({
                     customWrapperStyles={{ ...buttonStyles }}
                     sx={styles.button}
                 >
-                    Register Now
+                    More Info
                 </Button>
             )}
         </div>
