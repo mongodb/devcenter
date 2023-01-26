@@ -545,7 +545,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                     width: ['100%', null, null, 'auto'],
                                 }}
                             >
-                                Register Now
+                                More Info
                             </Button>
                         </>
                     )}
