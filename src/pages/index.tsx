@@ -23,9 +23,9 @@ import { useRouter } from 'next/router';
 import { layers, h5Styles } from '../styled/layout';
 
 import RecommendedSection from '../components/recommended-section';
-import { MetaInfo } from '../interfaces/meta-info';
 import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.preval';
 import { useSession } from 'next-auth/react';
+import { Tag } from '../interfaces/tag';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -73,11 +73,11 @@ const HomepageSearch: React.FunctionComponent = () => {
 };
 
 interface HomeProps {
-    recommendedTopics: MetaInfo[];
+    recommendedTags: Tag[];
 }
 
 const Home: React.FunctionComponent<HomeProps & NextPage> = ({
-    recommendedTopics,
+    recommendedTags,
 }) => {
     const { status } = useSession();
 
@@ -147,9 +147,9 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
             </GridLayout>
 
             <RecommendedSection
-                topics={recommendedTopics}
+                tags={recommendedTags}
                 showFooter={status === 'authenticated'}
-                onTopicsSaved={
+                onTagSelected={
                     (/* selectedTopics: MetaInfo[], digestChecked: boolean */) => {
                         // TODO
                     }
@@ -434,20 +434,26 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
 };
 
 export const getStaticProps: GetStaticProps<{
-    recommendedTopics: MetaInfo[];
+    recommendedTags: Tag[];
 }> = async () => {
-    const recommendedTopics = getAllMetaInfoRandomPreval
-        .filter(
-            topic =>
-                topic.category === 'L1Product' ||
-                topic.category === 'L2Product' ||
-                topic.category === 'Technology' ||
-                topic.category === 'ProgrammingLanguage'
-        )
-        .slice(0, 10);
+    const topicCategories = [
+        'L1Product',
+        'L2Product',
+        'Technology',
+        'ProgrammingLanguage',
+    ];
+
+    const recommendedTags = getAllMetaInfoRandomPreval
+        .filter(topic => topicCategories.indexOf(topic.category) > -1)
+        .slice(0, 10)
+        .map(topic => ({
+            name: topic.tagName,
+            type: topic.category,
+            slug: topic.slug,
+        }));
 
     return {
-        props: { recommendedTopics },
+        props: { recommendedTags },
     };
 };
 

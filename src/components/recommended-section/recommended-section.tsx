@@ -5,16 +5,15 @@ import theme from '@mdb/flora/theme';
 
 import { h5Styles } from '../../styled/layout';
 import { ContentItem } from '../../interfaces/content-item';
-import { MetaInfo } from '../../interfaces/meta-info';
 import { useCallback, useState } from 'react';
 import { tagToTopic } from '../../utils/tag-to-topic';
 import { Tag } from '../../interfaces/tag';
 
 interface RecommendedSectionProps {
-    topics?: MetaInfo[];
+    tags?: Tag[];
     content?: ContentItem[];
-    onTopicsSaved: (topics: MetaInfo[], digestChecked: boolean) => void;
-    onTopicSelected?: (topic: MetaInfo) => void;
+    onTagsSaved?: (topics: Tag[], digestChecked: boolean) => void;
+    onTagSelected?: (topic: Tag) => void;
     showFooter: boolean;
 }
 
@@ -55,35 +54,35 @@ const footerStyles = (show: boolean) => ({
 });
 
 const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
-    topics = [],
+    tags = [],
     content = [],
     showFooter,
-    onTopicSelected = () => undefined,
-    onTopicsSaved,
+    onTagSelected = () => undefined,
+    onTagsSaved = () => undefined,
 }) => {
-    const [selectedTopics, setSelectedTopics] = useState<MetaInfo[]>([]);
+    const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
     const topicCardSelected = useCallback(
-        (topic: MetaInfo) => () => {
-            const index = selectedTopics.findIndex(
-                item => item.slug === topic.slug
+        (tag: Tag) => () => {
+            const index = selectedTags.findIndex(
+                selected => selected.slug === tag.slug
             );
 
             if (index === -1) {
-                onTopicSelected(topic);
-                setSelectedTopics([...selectedTopics, topic]);
+                onTagSelected(tag);
+                setSelectedTags([...selectedTags, tag]);
             } else {
-                const newSelected = [...selectedTopics];
+                const newSelected = [...selectedTags];
                 newSelected.splice(index, 1);
-                setSelectedTopics(newSelected);
+                setSelectedTags(newSelected);
             }
         },
-        [selectedTopics, onTopicSelected]
+        [selectedTags, onTagSelected]
     );
 
     const [digestChecked, setDigestChecked] = useState(false);
 
     const onSaveButtonClick = () => {
-        onTopicsSaved(selectedTopics, digestChecked);
+        onTagsSaved(selectedTags, digestChecked);
     };
 
     return (
@@ -114,24 +113,20 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                 <div></div>
             )}
 
-            {topics && !content.length && (
+            {tags && !content.length && (
                 <div>
                     <Grid columns={5} gap={16} sx={{ marginBottom: 'inc50' }}>
-                        {topics.map(topic => {
-                            const { title, icon } = tagToTopic({
-                                name: topic.tagName,
-                                type: topic.category,
-                                slug: '',
-                            } as Tag);
+                        {tags.map(tag => {
+                            const { title, icon } = tagToTopic(tag);
 
                             return (
                                 <TopicCard
                                     key={title}
                                     title={title}
                                     variant="selectable"
-                                    onSelect={topicCardSelected(topic)}
-                                    selected={selectedTopics.some(
-                                        item => item.slug === topic.slug
+                                    onSelect={topicCardSelected(tag)}
+                                    selected={selectedTags.some(
+                                        selected => selected.slug === tag.slug
                                     )}
                                     icon={icon}
                                 />
@@ -140,7 +135,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                     </Grid>
 
                     {showFooter && (
-                        <div sx={footerStyles(!!selectedTopics.length)}>
+                        <div sx={footerStyles(!!selectedTags.length)}>
                             <Checkbox
                                 customStyles={digestCheckboxStyles}
                                 onToggle={setDigestChecked}
