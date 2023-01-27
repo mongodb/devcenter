@@ -6,10 +6,6 @@ import useSignInURL from '../../hooks/sign-in-url';
 import { Tag } from '../../interfaces/tag';
 import Tooltip from '../tooltip/tooltip';
 
-interface Session {
-    topics?: Tag[];
-}
-
 interface FollowLinkProps {
     topic: Tag;
     iconsOnly?: boolean;
@@ -19,10 +15,7 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     topic,
     iconsOnly = false,
 }) => {
-    const { status } = useSession();
-    const [session, setSession] = useState<Session | null>({
-        topics: [],
-    });
+    const { status, data: session } = useSession();
 
     const [showClickTooltip, setShowClickTooltip] = useState(false);
 
@@ -31,7 +24,7 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     const signInURL = useSignInURL();
 
     const isLoggedIn = status === 'authenticated';
-    const followedTopics = session?.topics as Tag[] | undefined;
+    const followedTopics = session?.followedTopics as Tag[] | undefined;
     const isFollowingAnyTopics = !!followedTopics && !!followedTopics.length;
     const isFollowing = useMemo(
         () =>
@@ -82,8 +75,7 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
         } else {
             topics = followedTopics ? [...followedTopics, topic] : [topic];
         }
-        // TODO: POST these to external API endpoint.
-        setSession({ topics });
+        console.log(topics); // TODO: POST followedTopics to external API endpoint.
     }, [isFollowing, followedTopics, topic]);
 
     const linkProps = isLoggedIn
@@ -101,7 +93,7 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
                 },
                 '&:hover': {
                     '.tooltip': {
-                        display: hasHoverTooltip ? 'initial' : 'hidden',
+                        display: hasHoverTooltip ? 'initial' : 'none',
                     },
                 },
             }}

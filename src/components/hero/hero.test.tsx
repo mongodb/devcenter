@@ -4,6 +4,18 @@ import '@testing-library/jest-dom';
 import Hero from '.';
 
 import { createTopicPageCTAS } from './utils';
+import { Tag } from '../../interfaces/tag';
+
+import * as nextAuth from 'next-auth/react';
+import * as nextRouter from 'next/router';
+
+// @ts-expect-error hacky way to mock named exports
+nextAuth.useSession = jest.fn().mockImplementation(() => ({ session: null }));
+// @ts-expect-error hacky way to mock named exports
+nextRouter.useRouter = jest.fn().mockImplementation(() => ({ asPath: '' }));
+jest.mock('../../utils/get-sign-in-url', () => {
+    return jest.fn(() => '');
+});
 
 const crumbs = [
     { text: 'MongoDB Developer Center', url: '/' },
@@ -24,13 +36,20 @@ const ctas = [
 
 const ctaElements = createTopicPageCTAS(ctas);
 
-test('renders hero', () => {
+const topic: Tag = {
+    name: 'Atlas',
+    type: 'L1Product',
+    slug: '/products/atlas',
+};
+
+test('renders Hero', () => {
     render(
         <Hero
             crumbs={crumbs}
             name={name}
             description={description}
             ctas={ctaElements}
+            topic={topic}
         />
     );
     // Breadcrumbs
@@ -50,4 +69,7 @@ test('renders hero', () => {
 
     const secondaryCTA = screen.getByText('Secondary CTA');
     expect(secondaryCTA).toBeInTheDocument();
+
+    const followButton = screen.getByText('Follow');
+    expect(followButton).toBeInTheDocument();
 });

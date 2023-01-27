@@ -15,7 +15,11 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
 }) => (
     <>
         <div sx={styles.tooltipArrow(alwaysBelow)} className={className} />
-        <div sx={styles.tooltipBody(alwaysBelow)} className={className}>
+        <div
+            data-testid="tooltip-body"
+            sx={styles.tooltipBody(alwaysBelow)}
+            className={className}
+        >
             {children}
         </div>
     </>
