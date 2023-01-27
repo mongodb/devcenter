@@ -121,10 +121,9 @@ export const getDraftEventFromAPI = async (
     client: UnderlyingClient<'ApolloREST'>,
     calculatedSlug: string
 ): Promise<IndustryEvent | null> => {
-    calculatedSlug = '"' + calculatedSlug + '"';
     const query = gql`
         query IndustryEvents {
-            industryEvents(_publicationState : "preview", calculated_slug : ${calculatedSlug})
+            industryEvents(_publicationState : "preview", calculated_slug : "${calculatedSlug}")
             @rest(type: "IndustryEvent", path: "/industry-events?{args}") {
                 ${industryEventsFields}
             }

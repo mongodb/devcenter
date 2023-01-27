@@ -53,7 +53,7 @@ export const getServerSideProps = async (context: any) => {
         const contents: ContentItem[] = await getPreviewContentForArticles(
             '/' + slugString
         );
-        contentItem = contents.filter(c => c.slug === slugString)[0];
+        contentItem = contents.find(c => c.slug === slugString);
     }
 
     const result = {

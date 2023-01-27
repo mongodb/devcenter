@@ -22,8 +22,5 @@ export const getPreviewContentForEvents: (
     calculatedSlug: string
 ) => Promise<ContentItem | null> = async calculatedSlug => {
     const event = await getDraftEventFromAPI(STRAPI_CLIENT, calculatedSlug);
-    if (!event) {
-        return null;
-    }
-    return mapIndustryEventToContentItem(event);
+    return event ? mapIndustryEventToContentItem(event) : null;
 };
