@@ -34,4 +34,7 @@ test('Events page has correct logic to display featured', async ({ page }) => {
     ).toHaveCount(0);
 });
 
-test('Events page visual regression testing', runPercy(EVENTS_PAGE, 'Events'));
+test(
+    'Events page visual regression testing',
+    runPercy(EVENTS_PAGE, 'Events', 'events')
+);
