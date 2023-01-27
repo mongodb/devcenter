@@ -25,6 +25,7 @@ export const layers = {
     base: 0,
     desktopConsistentNav: 1, // From ConsistentNav
     navSearch: 2, // From ConsistentNav
+    tooltip: 3,
     textArea: 10, // From Flora
     secondaryNav: 11,
     desktopConsistentNavDropdown: 12,
