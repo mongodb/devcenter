@@ -80,11 +80,12 @@ export const formatDateRange = (start: string, end: string) => {
                 month: 'short',
                 day: 'numeric',
             }) + ' | ';
-        output += startDate.toLocaleString('default', {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true,
-        });
+        output +=
+            startDate.toLocaleString('default', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+            }) + ` ${timeZone}`;
     } else if (dateCompare(startDate, endDate)) {
         // Same day different time, format as a time range
         output +=
@@ -93,18 +94,18 @@ export const formatDateRange = (start: string, end: string) => {
                 month: 'short',
                 day: 'numeric',
             }) + ' | ';
-
         output +=
             startDate.toLocaleString('default', {
                 hour: 'numeric',
                 minute: 'numeric',
                 hour12: true,
             }) + ' - ';
-        output += endDate.toLocaleString('default', {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true,
-        });
+        output +=
+            endDate.toLocaleString('default', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+            }) + ` ${timeZone}`;
     } else {
         // Different days, format as a date range
         output +=
@@ -113,26 +114,14 @@ export const formatDateRange = (start: string, end: string) => {
                 month: 'short',
                 day: 'numeric',
             }) + ' - ';
-        output +=
-            startDate.toLocaleString('default', {
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true,
-            }) + ' | ';
-        output +=
-            endDate.toLocaleString('default', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-            }) + ' - ';
         output += endDate.toLocaleString('default', {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true,
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
         });
     }
 
-    return `${output} ${timeZone}`;
+    return output;
 };
 
 export const getLatestDate = (contentDate: string, updatedDate?: string) => {
@@ -149,19 +138,4 @@ export const getLatestDate = (contentDate: string, updatedDate?: string) => {
     }
 
     return latestDate;
-};
-
-// Example of return format: December 13, 2022 12:00 PM
-export const formatSingleDate = (date: string) => {
-    const dateObj = new Date(date);
-
-    return `${dateObj.toLocaleDateString('default', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    })} ${dateObj.toLocaleTimeString('default', {
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
-    })}`;
 };

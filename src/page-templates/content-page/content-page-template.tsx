@@ -546,7 +546,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                     width: ['100%', null, null, 'auto'],
                                 }}
                             >
-                                Register Now
+                                More Info
                             </Button>
                         </>
                     )}
@@ -598,6 +598,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 twitter={{
                     site: seo?.twitter_site,
                     handle: seo?.twitter_creator,
+                    cardType: seo?.twitter_card,
                 }}
                 openGraph={{
                     url: seo?.og_url,

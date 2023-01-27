@@ -59,6 +59,9 @@ export interface IndustryEvent {
     description: string;
     end_time: string;
     location: string;
+    city?: string;
+    state?: string;
+    country?: string;
     slug: string;
     start_time: string;
     registration_url: string;

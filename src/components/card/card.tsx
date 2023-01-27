@@ -33,6 +33,7 @@ import { getURLPath } from '../../utils/format-url-path';
 import { h5Styles, h6Styles } from '../../styled/layout';
 import EventIcon from '../icons/event-icon';
 import { PillCategory } from '../../types/pill-category';
+import isServerSide from '../../utils/is-server-side';
 
 const CardThumbnail = ({
     thumbnail: { url = '', alt = '', city = '' } = {},
@@ -126,11 +127,10 @@ const Card: React.FunctionComponent<CardProps> = ({
     const truncatedDescription =
         description && parse(description ? description : '');
 
-    const isExternalLink =
-        typeof window === 'undefined'
-            ? false
-            : new URL(document.baseURI).origin !==
-              new URL(slug, document.baseURI).origin;
+    const isExternalLink = isServerSide()
+        ? false
+        : new URL(document.baseURI).origin !==
+          new URL(slug, document.baseURI).origin;
 
     return (
         <div
