@@ -33,12 +33,12 @@ test('renders mobile filters', () => {
             onFilter={() => filterCounter++}
             filters={[]}
             filterItems={[
-                { key: 'ProgrammingLanguage', value: languageFilterItems },
+                { key: 'Language', value: languageFilterItems },
                 { key: 'Technology', value: technologyFilterItems },
             ]}
             closeModal={() => closeCounter++}
             sortBy=""
-            onSort={() => {}}
+            onSort={() => null}
         />
     );
 

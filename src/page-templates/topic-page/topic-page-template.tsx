@@ -1,4 +1,4 @@
-import { BrandedIcon, GridLayout, SideNav, TypographyScale } from '@mdb/flora';
+import { GridLayout, SideNav, TypographyScale } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { Crumb } from '../../components/breadcrumbs/types';
@@ -13,39 +13,24 @@ import { SearchItem } from '../../components/search/types';
 import TertiaryNav from '../../components/tertiary-nav';
 import { sideNavStyles } from '../../components/tertiary-nav/styles';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
-import { TopicCardsContainer } from '../../components/topic-card';
-import { iconStyles } from '../../components/topic-card/styles';
-import { ITopicCard, TopicCardProps } from '../../components/topic-card/types';
+import { TopicCardsContainer } from '../../components/topic-cards-container';
 import { ContentItem } from '../../interfaces/content-item';
-import { topicWithIcon } from '../content-type-page/sections/technologies';
 import {
-    PillCategory,
     pillCategoryToSlug,
     PillCategoryValues,
 } from '../../types/pill-category';
 import { addExternalIconToSideNav } from '../../utils/page-template-helpers';
 import { setURLPathForNavItems } from '../../utils/format-url-path';
-import { productToLogo } from '../../utils/product-to-logo';
 import { useSearchMeta } from '../../hooks/search/meta';
 import useSearch from '../../hooks/search';
 import {
     searchWrapperStyles,
     titleStyles,
 } from '../../components/search/styles';
-
-export interface TopicContentTypeProps {
-    crumbs: Crumb[];
-    contentType: PillCategory;
-    tertiaryNavItems: TertiaryNavItem[];
-    topicName: string;
-    topicSlug: string;
-    contentTypeSlug: string;
-    contentTypeAggregateSlug: string;
-    description: string;
-    subTopics: ITopicCard[];
-}
-
-let pluralize = require('pluralize');
+import { Tag } from '../../interfaces/tag';
+import { tagToTopic } from '../../utils/tag-to-topic';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pluralize = require('pluralize');
 
 interface TopicPageProps {
     crumbs: Crumb[];
@@ -53,8 +38,8 @@ interface TopicPageProps {
     slug: string;
     description: string;
     ctas: CTA[];
-    topics: ITopicCard[];
-    relatedTopics: TopicCardProps[];
+    topics: Tag[];
+    relatedTopics: Tag[];
     featured: ContentItem[];
     content: ContentItem[];
     contentType: string;
@@ -120,20 +105,28 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
     contentRows.forEach(contentRow => {
         sortedContentRows.push(
             contentRow.sort((a, b) =>
-                b.contentDate.localeCompare(a.contentDate)
+                (Array.isArray(b.contentDate)
+                    ? b.contentDate[0]
+                    : b.contentDate
+                ).localeCompare(
+                    (Array.isArray(a.contentDate)
+                        ? a.contentDate[0]
+                        : a.contentDate) as string
+                )
             )
         );
     });
 
+    const searchMetaProps = useSearchMeta(
+        pageNumber,
+        slug,
+        contentType,
+        buildPageTitle(contentType, name)
+    );
     const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
-        useSearchMeta(
-            pageNumber,
-            slug,
-            contentType,
-            buildPageTitle(contentType, name)
-        );
+        searchMetaProps;
 
-    const { searchBoxProps, sortBoxProps, resultsProps } = useSearch(
+    const { searchStringProps, sortProps, resultsProps } = useSearch(
         initialSearchContent,
         updatePageMeta,
         undefined,
@@ -154,17 +147,8 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 
     const CTAComponents = createTopicPageCTAS(ctas);
 
-    const topicToItem = (topic: ITopicCard) => {
-        const iconName = productToLogo[topic.title];
-        const icon = iconName ? (
-            <BrandedIcon sx={iconStyles} name={iconName} />
-        ) : null;
-        return { ...topic, icon };
-    };
-
-    const topicItems = topics.map(topicToItem);
-
-    const realtedTopicsWithIcons = relatedTopics.map(topicWithIcon);
+    const topicItems = topics.map(tagToTopic);
+    const realtedTopicsWithIcons = relatedTopics.map(tagToTopic);
 
     setURLPathForNavItems(tertiaryNavItems);
 
@@ -211,11 +195,17 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                                 />
                             )}
                             {variant !== 'light' && featured.length > 0 && (
-                                <FeaturedCardSection content={featured} />
+                                <FeaturedCardSection
+                                    content={featured}
+                                    featuredCardType="large"
+                                />
                             )}
                             {variant === 'heavy' &&
                                 sortedContentRows.map(contentRow => {
-                                    const contentType = contentRow[0].category;
+                                    const contentType =
+                                        contentRow[0].collectionType === 'Event'
+                                            ? 'Event'
+                                            : contentRow[0].category;
                                     const contentTypeSlug =
                                         pillCategoryToSlug.get(contentType);
                                     const direction =
@@ -248,22 +238,19 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         </div>
 
                         <SearchBox
-                            {...searchBoxProps}
+                            {...searchStringProps}
                             placeholder={`Search ${name} Content`}
                             extraStyles={extraSearchBoxStyles}
                         />
 
                         <SortBox
-                            {...sortBoxProps}
+                            {...sortProps}
                             extraStyles={extraSortBoxStyles}
                         />
 
                         <SearchResults
                             {...resultsProps}
-                            pageNumber={pageNumber}
-                            slug={slug}
-                            updatePageMeta={updatePageMeta}
-                            contentType={contentType}
+                            {...searchMetaProps}
                             extraStyles={{
                                 marginTop: ['inc30', null, 0],
                             }}

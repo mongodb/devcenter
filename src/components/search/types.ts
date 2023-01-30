@@ -4,10 +4,13 @@ import { Tag } from '../../interfaces/tag';
 import { ThemeUICSSObject } from 'theme-ui';
 import { FilterItem } from '@mdb/devcenter-components';
 import { ReactElement } from 'react';
+import { Coordinates } from '../../interfaces/coordinates';
+import { LocationOptions } from '../../hooks/search/types';
 
 interface SearchImage {
     url: string;
     alternativeText: string;
+    city?: string;
 }
 
 interface SearchAuthor {
@@ -16,46 +19,38 @@ interface SearchAuthor {
     calculated_slug: string;
 }
 
-export interface SearchProps {
-    titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
-    className?: string;
-    tagSlug?: string;
-    title: string;
-    contentType?: string;
-    filters?: string[];
-    resultsLayout?: 'list' | 'grid';
-    titleLink?: {
-        text: string;
-        href: string;
-    };
-    placeholder: string;
-    pageNumber: number; // current page number
-    pageSlug?: string[];
-    setSeoAttributes: (pageNumber: number) => void;
-    initialSearchContent?: SearchItem[]; // search content received from initial render
-}
-
 export interface SearchBoxProps {
     placeholder?: string;
     searchString?: string;
-    onSearch: any;
+    onSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
     autoFocus?: boolean;
     extraStyles?: ThemeUICSSObject;
 }
 
 export interface SortBoxProps {
     extraStyles?: ThemeUICSSObject;
-    onSort: (value?: string) => void;
-    sortBy: string;
+    onSort: (value: SortByType | '') => void;
+    sortBy?: SortByType | '';
+}
+
+export interface LocationBoxProps {
+    locationQuery?: string;
+    onLocationQuery: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    locationSelection?: google.maps.places.PlaceResult;
+    onLocationSelect: (selection: string) => void;
+    locationValidating: boolean;
+    geolocationValidating: boolean;
+    displayOptions: LocationOptions[];
+    extraStyles?: ThemeUICSSObject;
 }
 
 export interface ResultsProps {
     results: ContentItem[] | undefined;
     isValidating: boolean;
-    error: boolean;
+    error: string;
     searchString: string;
     filters: FilterItem[];
-    sortBy: string;
+    sortBy?: SortByType | '';
     slug: string;
     pageNumber: number;
     updatePageMeta?: (pageNumber: number) => void;
@@ -68,14 +63,22 @@ export interface SearchItem {
     type: PillCategory;
     authors: SearchAuthor[];
     name: string;
-    image: SearchImage;
+    image?: SearchImage;
     description: string;
+    location?: string;
+    city?: string;
+    state?: string;
+    country?: string;
     slug: string;
     date: string;
+    start_time?: string;
+    end_time?: string;
     tags: Tag[];
+    event_setup?: string;
+    coordinates?: Coordinates;
 }
 
 // add back when Most Popular is implemented
-// export type SortByType = 'Most Recent' | 'Most Popular' | 'Highest Rated';
-export type SortByType = 'Most Recent' | 'Highest Rated';
-export const defaultSortByType: SortByType = 'Most Recent';
+// export type SortByType = 'Newest' | 'Most Popular' | 'Highest Rated';
+export type SortByType = 'Newest' | 'Highest Rated';
+export const defaultSortByType: SortByType = 'Newest';

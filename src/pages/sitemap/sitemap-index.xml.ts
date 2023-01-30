@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
     const contentPages = allContentPreval.map(({ slug, contentDate }) => ({
         loc: `${DEVCENTER_URL}/${slug}`,
-        lastmod: contentDate || curDate,
+        lastmod: (contentDate as string) || curDate,
         priority: 0.5,
     }));
 
@@ -49,5 +49,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     ]);
 };
 
-const Sitemap = () => {};
+function Sitemap() {
+    // initialize empty
+}
 export default Sitemap;

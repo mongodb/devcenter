@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
+import { Tag } from '../../interfaces/tag';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
-import { ITopicCard } from '../../components/topic-card/types';
 import { defaultSortByType, SearchItem } from '../../components/search/types';
 import { ContentTypeTag } from '../../interfaces/tag-type-response';
 import { getSearchContent } from '../../api-requests/get-all-search-content';
@@ -67,7 +67,7 @@ export const getTopicContentTypePageData = async (
     const contentTypeAggregateSlug = pillCategoryToSlug.get(contentType);
 
     const subTopics = metaInfoForTopic?.topics;
-    let subTopicsWithContentType: ITopicCard[] = [];
+    let subTopicsWithContentType: Tag[] = [];
     // This is super annoying, but we need to only show the subtopics that have the content type we are looking at.
     if (subTopics) {
         const allRelevantContent = allContentPreval.filter(
@@ -82,14 +82,21 @@ export const getTopicContentTypePageData = async (
                         tag.name === metaInfoForTopic?.tagName
                 )
         );
-        subTopicsWithContentType = subTopics.filter(subTopic =>
-            allRelevantContent.find(item =>
-                item.tags.find(
-                    tag =>
-                        tag.type === 'L2Product' && tag.name === subTopic.title
+        subTopicsWithContentType = subTopics
+            .filter(subTopic =>
+                allRelevantContent.find(item =>
+                    item.tags.find(
+                        tag =>
+                            tag.type === 'L2Product' &&
+                            tag.name === subTopic.tagName
+                    )
                 )
             )
-        );
+            .map(item => ({
+                name: item.tagName,
+                slug: item.slug,
+                type: item.category,
+            }));
     }
 
     const data = {

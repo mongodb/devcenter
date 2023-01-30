@@ -1,11 +1,10 @@
+import React from 'react';
 import theme from '@mdb/flora/theme';
 
-import { FullApplication, Snippet } from '../icons';
-import { CodeLevel } from '../../types/tag-type';
-
-const SecondaryTag: React.FunctionComponent<{ codeLevel: CodeLevel }> = ({
-    codeLevel,
-}) => {
+const SecondaryTag: React.FunctionComponent<{
+    icon?: React.ReactNode;
+    children: React.ReactNode;
+}> = ({ icon = null, children }) => {
     return (
         <div
             sx={{
@@ -16,18 +15,7 @@ const SecondaryTag: React.FunctionComponent<{ codeLevel: CodeLevel }> = ({
                 marginBottom: 'inc30',
             }}
         >
-            {codeLevel === 'Snippet' ? (
-                <Snippet
-                    sx={{
-                        strokeWidth: 2,
-                        stroke: theme.colors.text.secondary,
-                    }}
-                />
-            ) : (
-                <FullApplication
-                    sx={{ strokeWidth: 2, fill: theme.colors.text.secondary }}
-                />
-            )}
+            {icon}
             <span
                 sx={{
                     lineHeight: 'inc00',
@@ -35,7 +23,7 @@ const SecondaryTag: React.FunctionComponent<{ codeLevel: CodeLevel }> = ({
                     fontWeight: '500',
                 }}
             >
-                {codeLevel.toUpperCase()}
+                {children}
             </span>
         </div>
     );

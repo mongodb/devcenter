@@ -29,6 +29,22 @@ const defaultHeaderGrid = {
     ],
 };
 
+const eventHeaderGrid = {
+    ...headerGrid,
+    gridTemplateAreas: [
+        `
+        "tags"
+        "social"
+        "eventType"
+        `,
+        null,
+        `
+        "tags social"
+        "eventType eventType"
+        `,
+    ],
+};
+
 const vidOrPodHeaderGrid = {
     ...headerGrid,
     gridTemplateAreas: [
@@ -58,7 +74,7 @@ const breadcrumbs = {
 
 const section = {
     maxWidth: '100%', // patches a Codemirror bug on FF https://github.com/codemirror/CodeMirror/issues/4142.
-    gridColumn: ['span 6', null, 'span 8', 'span 12', '4 /span 6'],
+    gridColumn: ['span 6', null, 'span 8', '1 /span 9', '4 /span 6'],
 };
 
 const bodySection = {
@@ -73,11 +89,11 @@ const footer: ThemeUICSSObject = {
     ...section,
 };
 
-const footerActions = {
+const footerActions: ThemeUICSSObject = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: ['start', null, 'center'],
-    flexDirection: ['column' as 'column', null, 'row' as 'row'],
+    flexDirection: ['column', null, 'row'],
     gap: 'inc30',
     marginTop: ['inc30', null, null, 'inc40'],
 };
@@ -101,7 +117,7 @@ const externalExamples: ThemeUICSSObject = {
 };
 
 const floatingMenu = {
-    display: ['none', null, null, null, 'block'],
+    display: ['none', null, null, 'block'],
     gridColumn: '10 /span 3',
     gridRow: '3 / 5',
     paddingLeft: 'inc70',
@@ -134,6 +150,7 @@ const styles = {
     externalExamples,
     requestBtn,
     footerActions,
+    eventHeaderGrid,
 };
 
 export default styles;

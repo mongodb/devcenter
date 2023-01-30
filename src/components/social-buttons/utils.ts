@@ -2,9 +2,9 @@ import { Author } from '../../interfaces/author';
 import { Tag } from '../../interfaces/tag';
 
 export const getTweetText = (
-    authors: Author[],
-    heading: string,
-    tags: Tag[]
+    authors: Author[] = [],
+    heading = '',
+    tags: Tag[] = []
 ): string => {
     const twitterTextElements: string[] = [heading, '#MongoDB'];
 

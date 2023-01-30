@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Button, ESystemIconNames, TypographyScale } from '@mdb/flora';
+import { Button, TypographyScale } from '@mdb/flora';
 
 import { ResultsProps } from './types';
 import { dataStyles, resultsStyles } from './styles';
@@ -18,7 +18,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
     results = [],
     isValidating,
     error,
-    updatePageMeta = () => {},
+    updatePageMeta = () => null,
     searchString,
     filters,
     sortBy,
@@ -97,7 +97,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
                             {!!resultsToShow.length && (
                                 // Needs to be wrapped in a div because Safari isn't the best with grid...
                                 // https://stackoverflow.com/questions/44770074/css-grid-row-height-safari-bug
-                                <div>
+                                <div sx={{ width: '100%' }}>
                                     <div
                                         data-testid="search-results"
                                         sx={dataStyles(layout)}

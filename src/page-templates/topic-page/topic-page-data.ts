@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/nextjs';
-import { TopicCardProps } from '../../components/topic-card/types';
+import { Tag } from '../../interfaces/tag';
 import { ContentItem } from '../../interfaces/content-item';
 import { defaultSortByType, SearchItem } from '../../components/search/types';
 import { getSideNav } from '../../service/get-side-nav';
@@ -43,7 +43,6 @@ export const getTopicPageData = async (
     );
 
     const content = await getL1L2Content(slugString, allContentPreval);
-
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
 
@@ -57,21 +56,29 @@ export const getTopicPageData = async (
 
     const crumbs = await getBreadcrumbsFromSlug(slugString, metaInfoForTopic);
 
-    let relatedTopics: TopicCardProps[] = [];
+    let relatedTopics: Tag[] = [];
     if (variant === 'light') {
         // Per Product, we are just putting all technologies as related.
         const related = allMetaInfoPreval.filter(
             ({ category }) => category === 'Technology'
         );
-        relatedTopics = related.map(({ tagName, slug }) => ({
-            title: tagName,
-            href: slug,
-            icon: null,
+        relatedTopics = related.map(({ tagName, slug, category }) => ({
+            name: tagName,
+            slug,
+            type: category,
         }));
         relatedTopics = relatedTopics
-            .filter(({ title }) => title !== metaInfoForTopic?.tagName)
+            .filter(({ name }) => name !== metaInfoForTopic?.tagName)
             .slice(0, 12);
     }
+
+    const topics = metaInfoForTopic?.topics
+        ? metaInfoForTopic.topics.map(({ tagName, slug, category }) => ({
+              name: tagName,
+              slug,
+              type: category,
+          }))
+        : [];
 
     const data = {
         crumbs,
@@ -86,7 +93,7 @@ export const getTopicPageData = async (
             ? metaInfoForTopic.description
             : '',
         ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
-        topics: metaInfoForTopic?.topics ? metaInfoForTopic.topics : [],
+        topics,
         relatedTopics,
         initialSearchContent,
         pageNumber,

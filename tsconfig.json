@@ -15,7 +15,7 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
-        "types": ["sanitize-html"],
+        "types": ["sanitize-html", "google.maps"],
         "jsxImportSource": "theme-ui"
     },
     "rootDir": "src/",

@@ -32,7 +32,6 @@ export const VideoEmbed = ({
     argument,
     name: provider,
     thumbnail,
-    ...props
 }: {
     argument: Argument[];
     name: string;

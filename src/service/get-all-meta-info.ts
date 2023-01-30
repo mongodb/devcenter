@@ -9,10 +9,8 @@ import {
     getAllTechnologiesMetaInfo,
 } from '../api-requests/get-all-meta-info';
 import { CTA } from '../components/hero/types';
-import { ITopicCard } from '../components/topic-card/types';
 import { getDistinctTags } from './get-distinct-tags';
 import { TagType } from '../types/tag-type';
-import { DOCS_UNIVERSAL_LINK } from '../data/constants';
 
 export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
     const existingTags = await getDistinctTags();
@@ -98,14 +96,14 @@ const getMetaInfo = (m: MetaInfoResponse): MetaInfo => {
         tagName: m.name,
         description: m.description ? m.description : '',
         slug: m.slug,
-        ctas: getCTAs(m.primary_cta, m.secondary_cta),
+        ctas: getCTAs(m.primary_cta),
         topics: [],
         documentationLink: m.documentation_link || '',
     };
 };
 
 const getL2Topics = (l1Item: MetaInfoResponse, l2: MetaInfoResponse[]) => {
-    const topics: ITopicCard[] = [];
+    const topics: MetaInfoResponse[] = [];
     l2.forEach(l2Item => {
         const l1Product = l2Item.l1_product?.l_1_product;
         if (l1Product) {
@@ -113,48 +111,19 @@ const getL2Topics = (l1Item: MetaInfoResponse, l2: MetaInfoResponse[]) => {
                 l1Product.name &&
                 l1Product.name.toLowerCase() === l1Item.name.toLowerCase()
             ) {
-                topics.push({
-                    title: l2Item.name,
-                    icon: 'mdb_backup',
-                    href: l2Item.slug,
-                });
+                topics.push(l2Item);
             }
         }
     });
-    return topics;
+    return parseMetaInfoResponse(topics);
 };
 
-const getCTAs = (
-    primary_cta: string | undefined,
-    secondary_cta: string | undefined
-): CTA[] => {
-    // if (primary_cta && secondary_cta) {
-    //     return [
-    //         {
-    //             text: 'Download Now',
-    //             url: primary_cta,
-    //         },
-    //         {
-    //             text: 'Secondary CTA',
-    //             url: secondary_cta,
-    //         },
-    //     ];
-    // }
-    if (primary_cta) {
-        return [
-            {
-                text: 'Learn More',
-                url: primary_cta,
-            },
-        ];
-    }
-    // if (secondary_cta) {
-    //     return [
-    //         {
-    //             text: 'Secondary CTA',
-    //             url: secondary_cta,
-    //         },
-    //     ];
-    // }
-    return [];
-};
+const getCTAs = (primary_cta: string | undefined): CTA[] =>
+    primary_cta
+        ? [
+              {
+                  text: 'Learn More',
+                  url: primary_cta,
+              },
+          ]
+        : [];

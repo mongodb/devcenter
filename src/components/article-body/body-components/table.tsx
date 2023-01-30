@@ -1,25 +1,21 @@
 import React from 'react';
+import { ThemeUICSSObject } from 'theme-ui';
+
 import { ComponentFactory } from '../component-factory';
-import theme from '@mdb/flora/theme';
 import { ArticleNode } from '../../../interfaces/article-body-node';
 
-const headerCellStyles = (align: any, index: number) => {
-    const alignment = align[index];
-    return {
-        paddingTop: ['inc20', 'inc40', 'inc40', 'inc40'],
-        paddingBottom: ['inc20', 'inc40', 'inc40', 'inc40'],
-        paddingLeft: ['inc20', 'inc30', 'inc30', 'inc30'],
-        paddingRight: ['inc20', 'inc30', 'inc30', 'inc30'],
-        textAlign: alignment,
-        whiteSpace: 'nowrap' as 'nowrap',
-    };
-};
+const headerCellStyles = (align: any, index: number): ThemeUICSSObject =>
+    ({
+        py: ['inc20', null, 'inc40'],
+        px: ['inc20', null, 'inc30'],
+        textAlign: align[index] || 'left',
+        whiteSpace: 'nowrap',
+    } as ThemeUICSSObject);
 
-const headerRowStyles = () => {
-    return {
-        borderBottom: `solid ${theme.borderWidths.inc30}`,
-        borderBottomColor: theme.colors.blue80,
-    };
+const headerRowStyles: ThemeUICSSObject = {
+    borderBottomWidth: 'inc30',
+    borderBottomStyle: 'solid',
+    borderBottomColor: 'blue80',
 };
 
 const getNestedValue = (p: any, o: any) => {
@@ -35,7 +31,7 @@ const TableHeading = ({
     headingRow: any;
 }) => (
     <thead>
-        <tr sx={{ headerRowStyles }}>
+        <tr sx={headerRowStyles}>
             {headingRow.map((column: ArticleNode, colIndex: number) => (
                 <th sx={headerCellStyles(align, colIndex)} key={colIndex}>
                     <ComponentFactory
@@ -53,7 +49,13 @@ export const Table = ({ align, children }: { align: any; children: any }) => {
         const otherRows = children.slice(1);
         return (
             <div sx={{ overflowX: 'auto' }}>
-                <table sx={{ borderCollapse: 'collapse', border: 'none' }}>
+                <table
+                    sx={{
+                        borderCollapse: 'collapse',
+                        border: 'none',
+                        width: '100%',
+                    }}
+                >
                     <TableHeading align={align} headingRow={headingRow} />
                     {otherRows.map((data: ArticleNode, i: number) => (
                         // Pass the align array so we can apply alignment in TableCell

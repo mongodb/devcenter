@@ -60,7 +60,7 @@ export const ComponentFactory = ({
         }
         const { name, type } = nodeData;
         const lookup = type === 'directive' ? name : type;
-        let ComponentType = lookup && componentMap[lookup];
+        const ComponentType = lookup && componentMap[lookup];
         if (!ComponentType) {
             console.warn(`${name} (${type}) not yet implemented)`);
             return null;

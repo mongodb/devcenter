@@ -26,9 +26,7 @@ const series: Series = {
     ],
 };
 
-const notLastSlug = 'product/atlas/a2';
 const notLastTitle = 'This is 102 article';
-const lastSlug = 'product/atlas/a4';
 const lastTitle = 'This is 104 article';
 
 test("renders series with with piece that isn't last in series", () => {

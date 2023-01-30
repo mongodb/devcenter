@@ -1,6 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { TypographyScale, Pill, HorizontalRule } from '@mdb/flora';
+import {
+    TypographyScale,
+    Pill,
+    HorizontalRule,
+    SystemIcon,
+    ESystemIconNames,
+} from '@mdb/flora';
 import Truncate from 'react-truncate';
 
 import AuthorLockup from '../author-lockup';
@@ -11,52 +17,121 @@ import {
     descriptionStyles,
     cardHeaderStyles,
     thumbnailWrapperStyles,
+    thumbnailStyles,
 } from './styles';
 import {
     hasThumbnail,
     hasTags,
     hasDescription,
     hasAuthorLockup,
-    getLatestDate,
 } from './utils';
 import TagSection from '../tag-section';
-import { CardProps } from './types';
+import { CardProps, CardVariant } from './types';
 import parse from 'html-react-parser';
-import { formatDateToDisplayDateFormat } from '../../utils/format-date';
 import { parseAuthorsToAuthorLockup } from '../../utils/parse-authors-to-author-lockup';
 import { getURLPath } from '../../utils/format-url-path';
-import SecondaryTag from './secondary-tag';
-import { CodeLevel } from '../../types/tag-type';
 import { h5Styles, h6Styles } from '../../styled/layout';
+import EventIcon from '../icons/event-icon';
+import { PillCategory } from '../../types/pill-category';
+import isServerSide from '../../utils/is-server-side';
+
+const CardThumbnail = ({
+    thumbnail: { url = '', alt = '', city = '' } = {},
+    contentType,
+    variant,
+}: {
+    thumbnail?: {
+        url?: string;
+        alt?: string;
+        city?: string;
+    };
+    contentType: PillCategory;
+    variant: CardVariant;
+}) => {
+    const playButtonUrl = getURLPath('/play-button.svg', false) as string;
+
+    const defaultThumbnail = (
+        <Image
+            alt={alt || 'alt not provided'}
+            src={url as string}
+            sx={thumbnailStyles}
+            layout="fill"
+        />
+    );
+
+    const customThumbnails = {
+        Podcast: (
+            <Image
+                alt="Play Button"
+                src={playButtonUrl}
+                sx={thumbnailStyles}
+                layout="fill"
+            />
+        ),
+        Event: url ? defaultThumbnail : <EventIcon text={city} />,
+        Video: (
+            <>
+                {defaultThumbnail}
+                <div
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        height: '100%',
+                    }}
+                >
+                    <Image
+                        alt="Play Button"
+                        src={playButtonUrl}
+                        width={60}
+                        height={60}
+                    />
+                </div>
+            </>
+        ),
+    } as { [category: string]: JSX.Element };
+
+    return hasThumbnail(variant, contentType) ? (
+        <div sx={thumbnailWrapperStyles(variant, contentType)}>
+            {customThumbnails[contentType] || defaultThumbnail}
+        </div>
+    ) : null;
+};
+
+const externalLinkIcon = (
+    <div
+        sx={{
+            fill: 'blue60',
+            stroke: 'blue60',
+            display: 'inline',
+        }}
+    >
+        <SystemIcon name={ESystemIconNames.EXTERNAL} inheritColor />
+    </div>
+);
 
 const Card: React.FunctionComponent<CardProps> = ({
     authors,
-    contentDate,
-    updateDate: updatedDate,
+    displayDate,
     className,
     description,
     title,
-    pillCategory,
+    contentType,
+    pillCategory = contentType,
     tags,
     thumbnail,
     variant,
     slug,
     hideTagsOnMobile = true,
+    secondaryTag = null,
 }) => {
     const truncatedDescription =
         description && parse(description ? description : '');
-    const displayDate = formatDateToDisplayDateFormat(
-        getLatestDate(contentDate, updatedDate)
-    );
-    let secondaryTagElement = null;
-    if (tags && pillCategory === 'Code Example') {
-        const codeLevelTag = tags.find(tag => tag.type === 'CodeLevel');
-        if (codeLevelTag && codeLevelTag.name) {
-            secondaryTagElement = (
-                <SecondaryTag codeLevel={codeLevelTag.name as CodeLevel} />
-            );
-        }
-    }
+
+    const isExternalLink = isServerSide()
+        ? false
+        : new URL(document.baseURI).origin !==
+          new URL(slug, document.baseURI).origin;
+
     return (
         <div
             sx={cardWrapperStyles}
@@ -75,62 +150,23 @@ const Card: React.FunctionComponent<CardProps> = ({
                     top: 0,
                 }}
                 aria-label={title}
+                {...(isExternalLink ? { target: '_blank' } : {})}
             />
-            <div sx={cardHeaderStyles(variant, pillCategory)}>
-                {((thumbnail && thumbnail.url) || pillCategory === 'Podcast') &&
-                    hasThumbnail(variant, pillCategory) && (
-                        <div sx={thumbnailWrapperStyles(variant, pillCategory)}>
-                            <Image
-                                alt={
-                                    pillCategory === 'Podcast'
-                                        ? 'Play Button'
-                                        : thumbnail?.alt || 'alt not provided'
-                                }
-                                src={
-                                    pillCategory === 'Podcast'
-                                        ? (getURLPath(
-                                              '/play-button.svg',
-                                              false
-                                          ) as string)
-                                        : (thumbnail?.url as string)
-                                }
-                                sx={{
-                                    borderRadius: 'inc30',
-                                    objectFit: 'cover',
-                                }}
-                                layout="fill"
-                            />
-                            {pillCategory === 'Video' && (
-                                <div
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        height: '100%',
-                                    }}
-                                >
-                                    <Image
-                                        alt={'Play Button'}
-                                        src={
-                                            getURLPath(
-                                                '/play-button.svg',
-                                                false
-                                            ) as string
-                                        }
-                                        width={60}
-                                        height={60}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    )}
+            <div sx={cardHeaderStyles(variant, contentType)}>
+                <CardThumbnail
+                    thumbnail={thumbnail}
+                    contentType={contentType}
+                    variant={variant}
+                />
+
                 <div>
                     <Pill
-                        sx={pillStyles(pillCategory)}
+                        sx={pillStyles}
                         variant="identifier"
                         text={pillCategory}
                         size="small"
                     />
-                    {secondaryTagElement}
+                    {secondaryTag}
                     <TypographyScale
                         variant="heading3"
                         sx={{
@@ -146,12 +182,12 @@ const Card: React.FunctionComponent<CardProps> = ({
                             }),
                         }}
                     >
-                        {title}
+                        {title} {isExternalLink ? externalLinkIcon : ''}
                     </TypographyScale>
-                    {hasDescription(variant, pillCategory) && (
+                    {hasDescription(variant, contentType) && (
                         <TypographyScale
                             variant="body2"
-                            sx={descriptionStyles(variant, pillCategory)}
+                            sx={descriptionStyles(variant, contentType)}
                         >
                             <Truncate lines={4} ellipsis={<span>...</span>}>
                                 {truncatedDescription}
@@ -185,7 +221,7 @@ const Card: React.FunctionComponent<CardProps> = ({
                     </TypographyScale>
                     {authors &&
                         !!authors.length &&
-                        hasAuthorLockup(variant, pillCategory) && (
+                        hasAuthorLockup(variant, contentType) && (
                             <AuthorLockup
                                 sx={{
                                     display: ['none', null, 'flex'],

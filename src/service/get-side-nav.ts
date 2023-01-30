@@ -1,18 +1,19 @@
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import { ContentItem } from '../interfaces/content-item';
 
-export const getSideNav = async (
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pluralize = require('pluralize');
+
+export const getSideNav = (
     inputSlug: string,
     allContent: ContentItem[]
-): Promise<TertiaryNavItem[]> => {
+): TertiaryNavItem[] => {
     const tertiaryNavItems: TertiaryNavItem[] = [];
     const contents: ContentItem[] = allContent;
     const filteredContents = contents.filter(c => {
         const slugsInTags = c.tags.map(tag => tag.slug);
         return slugsInTags.includes(inputSlug);
     });
-
-    let pluralize = require('pluralize');
 
     filteredContents.forEach((fc: ContentItem) => {
         fc.tags.forEach(tag => {

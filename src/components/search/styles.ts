@@ -1,26 +1,20 @@
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
 
-export const titleStyles = {
+export const titleStyles: ThemeUICSSObject = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: ['start', null, 'end'],
-    flexDirection: ['column' as 'column', null, 'row' as 'row'],
+    flexDirection: ['column', null, 'row'],
     gap: 'inc30',
     width: '100%',
 };
 
-export const searchBoxSortBarWrapperStyles = {
-    display: 'grid',
-    marginBottom: ['inc40', null, 'inc70'],
-    columnGap: 'inc40',
-    rowGap: 'inc30',
-};
-
-export const searchWrapperStyles = {
+export const searchWrapperStyles: ThemeUICSSObject = {
     alignItems: 'flex-start',
     alignContent: 'flex-start',
     display: 'flex',
-    flexWrap: 'wrap' as 'wrap',
+    flexWrap: 'wrap',
     gap: ['inc30', null, 'inc40'],
     gridColumn: 'span 9',
     '& > *': {
@@ -28,16 +22,23 @@ export const searchWrapperStyles = {
     },
 };
 
-export const searchBoxStyles = {
+export const searchBoxStyles: ThemeUICSSObject = {
     flexGrow: '1',
     flexShrink: '1',
     flexBasis: 'calc(66% - 12px)',
-    marginBottom: ['inc20', null, 'inc50'],
+    marginBottom: ['inc20', null, 'inc40'],
     '& > div': {
         maxWidth: 'unset',
     },
-    'div[aria-label="input-box"]': {
-        boxSizing: 'content-box' as 'content-box',
+    'span[aria-label="left-icon"]': {
+        height: 'inc20',
+        margin: '0',
+        marginRight: 'inc20',
+
+        svg: {
+            height: 'inc20',
+            width: 'inc20',
+        },
     },
 };
 
@@ -47,7 +48,7 @@ export const sortBoxStyles = {
         maxWidth: 'unset',
     },
     '& > button#sort-by-dropdown': {
-        height: '84px',
+        height: '80px',
     },
     'div[role="dropdown"]': {
         width: '100%',
@@ -57,12 +58,29 @@ export const sortBoxStyles = {
     flexBasis: 'calc(33% - 12px)',
 };
 
-export const dataStyles = (layout: 'list' | 'grid') =>
+export const locationBoxStyles = {
+    width: ['100%', null, 'calc(33% - 12px)'],
+    div: {
+        maxWidth: '100%',
+    },
+    'span[aria-label="left-icon"]': {
+        height: 'inc20',
+        margin: '0',
+        marginRight: 'inc20',
+
+        svg: {
+            height: 'inc20',
+            width: 'inc20',
+        },
+    },
+};
+
+export const dataStyles = (layout: 'list' | 'grid'): ThemeUICSSObject =>
     layout === 'list'
         ? {
               margin: 'auto',
               display: 'flex',
-              flexDirection: 'column' as 'column', // theme-ui is weird about this.
+              flexDirection: 'column',
               alignItems: 'center',
               width: '100%',
               gap: ['inc40', null, 'inc50'],
@@ -78,17 +96,12 @@ export const dataStyles = (layout: 'list' | 'grid') =>
               gap: 'inc40',
           };
 
-export const resultsStyles = {
+export const resultsStyles: ThemeUICSSObject = {
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column' as 'column',
+    flexDirection: 'column',
     width: '100%',
     marginTop: 'inc30',
-};
-
-export const loadMoreStyles = {
-    marginTop: ['inc70', null, 'inc90'],
-    mx: 'auto',
 };
 
 export const linkStyleOverride = {

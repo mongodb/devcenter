@@ -39,7 +39,7 @@ export const parseMarkdownToAST = (markdown: string) => {
                     );
                 }
                 break;
-            case 'image':
+            case 'image': {
                 const isFigure = !!node.title;
                 if (isFigure) {
                     node.type = 'figure';
@@ -47,6 +47,7 @@ export const parseMarkdownToAST = (markdown: string) => {
                     node.options = {};
                 }
                 break;
+            }
             // Custom directive definitions go here
             case 'textDirective':
                 data['name'] = node.name;

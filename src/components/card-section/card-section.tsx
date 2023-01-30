@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { TypographyScale, Link } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
-import { Grid, ThemeUIStyleObject } from 'theme-ui';
+import { Grid, ThemeUICSSObject } from 'theme-ui';
 
 import Card, { getCardProps } from '../card';
 import { CardSectionProps } from './types';
@@ -24,8 +24,9 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
     title,
     direction = 'row',
     href,
+    extraStyles = {},
 }) => {
-    const [hoverStyles, setHoverStyles] = useState<ThemeUIStyleObject>({});
+    const [hoverStyles, setHoverStyles] = useState<ThemeUICSSObject>({});
 
     const onLinkEnter = () =>
         setHoverStyles({
@@ -64,6 +65,7 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
                 .replace(' ', '-')}-card-section`}
             sx={{
                 gridColumn: ['span 6', null, 'span 8', 'span 12', '4 / span 9'],
+                ...extraStyles,
             }}
         >
             <div sx={sectionHeadingTopStyles}>

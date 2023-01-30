@@ -32,7 +32,7 @@ test('renders desktop filters', () => {
             onFilter={() => counter++}
             filters={[]}
             filterItems={[
-                { key: 'ProgrammingLanguage', value: languageFilterItems },
+                { key: 'Language', value: languageFilterItems },
                 { key: 'Technology', value: technologyFilterItems },
             ]}
         />

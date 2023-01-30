@@ -8,7 +8,9 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
-import { CommunityEvent } from '../interfaces/community-event';
+import { CommunityEvent, IndustryEvent } from '../interfaces/event';
+import { Tag } from '../interfaces/tag';
+import { IndustryEventRelatedContentFromCMS } from '../interfaces/event';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -21,7 +23,7 @@ export const mapPodcastsToContentItems = (
             category: 'Podcast',
             contentDate: p.publishDate,
             slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
-            tags: flattenTags([p.otherTags]),
+            tags: flattenTags(p.otherTags),
             title: p.title,
             seo: p.seo,
         };
@@ -50,7 +52,7 @@ export const mapVideosToContentItems = (
             category: 'Video',
             contentDate: v.publishDate,
             slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
-            tags: flattenTags([v.otherTags]),
+            tags: flattenTags(v.otherTags),
             title: v.title,
             seo: v.seo,
             relevantLinks: v?.relevantLinks || '',
@@ -80,9 +82,7 @@ export const mapArticlesToContentItems = (
     /*
     very important - filter out articles that have no calculated slug
      */
-    const filteredArticles = allArticles.filter(
-        a => a['calculatedSlug'] != null
-    );
+    const filteredArticles = allArticles.filter(a => a.calculatedSlug);
     filteredArticles.forEach((a: Article) => {
         const item: ContentItem = {
             collectionType: 'Article',
@@ -112,24 +112,90 @@ export const mapArticlesToContentItems = (
     return items.filter(item => PillCategoryValues.includes(item.category));
 };
 
-export const mapCommunityEventsToContentItems = (
-    allCommunityEvents: CommunityEvent[]
+const eventContentTypeTag = {
+    name: 'Event',
+    slug: '/events',
+    type: 'ContentType',
+} as Tag;
+
+const mapEventsRelatedContent = (
+    relatedContent: IndustryEventRelatedContentFromCMS
 ) => {
-    return allCommunityEvents.map((event: CommunityEvent) => ({
+    const categoryMapper = {
+        newVideos: 'Video',
+        podcasts: 'Podcast',
+        newArticles: 'Article',
+        industryEvents: 'Industry Event',
+    } as { [field: string]: PillCategory };
+
+    const content = [];
+
+    for (const item in relatedContent) {
+        content.push(
+            ...relatedContent[item].map(piece => ({
+                title: piece.title,
+                contentDate: piece?.originalPublishDate ||
+                    piece?.published_at || [piece?.start_time, piece?.end_time],
+                slug: piece?.calculated_slug || piece?.slug,
+                category: categoryMapper[item],
+            }))
+        );
+    }
+
+    return content;
+};
+
+export const mapIndustryEventToContentItem = (event: IndustryEvent) =>
+    ({
         collectionType: 'Event',
-        category: 'User Group Meetup',
-        // content date will be used for sorting for featured
-        // guess for cards we need to create another field rather than manipulating content Date since we need ContentDate for sorting
-        contentDate: event.start_time,
+        category: 'Event',
+        subCategory: 'Industry Event',
+        image: {
+            url: event?.image?.url || '',
+            alt: event?.image?.alt || 'MongoDB Event Image',
+            city: event.city || null,
+        },
+        contentDate: [event.start_time, event.end_time],
         description: event.description,
-        slug: event.slug,
-        tags: event.tags,
+        slug: event.calculated_slug,
+        tags: flattenTags(event.otherTags).concat(eventContentTypeTag),
         title: event.title,
-        // TODO to be added to content type
-        // eventSetup: event.event_setup,
-        // location: event.location,
-        // coordinates: event.coordinates
-        // start_time: event.start_time
-        // end_time: event.end_time
-    })) as ContentItem[];
+        location: event.location,
+        city: event.city || null,
+        state: event.state || null,
+        country: event.country || null,
+        eventSetup: event.type,
+        authors: event.authors,
+        content: event.content,
+        registrationLink: event.registration_url,
+        virtualLink: event.virtual_meetup_url,
+        virtualLinkText: event.virtual_meetup_url_text,
+        relatedContent: mapEventsRelatedContent(event.related_content),
+    } as ContentItem);
+
+export const mapEventsToContentItems = (
+    allCommunityEvents: CommunityEvent[],
+    allIndustryEvents: IndustryEvent[]
+) => {
+    const mappedCommunityEvents = allCommunityEvents.map(
+        (event: CommunityEvent) => ({
+            collectionType: 'Event',
+            category: 'Event',
+            subCategory: 'User Group Meetup',
+            contentDate: [event.start_time, event.end_time],
+            description: event.description,
+            slug: event.slug,
+            tags: event.tags.concat(eventContentTypeTag),
+            title: event.title,
+            location: event.location,
+            coordinates: event.coordinates,
+            eventSetup: event.event_setup,
+        })
+    ) as ContentItem[];
+
+    const mappedIndustryEvents = allIndustryEvents.map(
+        mapIndustryEventToContentItem
+    );
+
+    return [...mappedCommunityEvents, ...mappedIndustryEvents];
 };

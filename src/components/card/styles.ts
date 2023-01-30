@@ -1,35 +1,27 @@
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
 import { PillCategory } from '../../types/pill-category';
 import { CardVariant } from './types';
 
-interface IPillColorMap {
-    [key: string]: string;
-}
-
-const pillColorMap: IPillColorMap = {
-    Video: theme.colors.purple10,
-    Article: theme.colors.blue10,
-    'Code Example': theme.colors.yellow20,
-    Tutorial: theme.colors.green20,
-    Podcast: theme.colors.red20,
-    Quickstart: theme.colors.yellow20,
-};
-
-export const pillStyles = (pillCategory: PillCategory) => ({
+export const pillStyles: ThemeUICSSObject = {
     marginBottom: 'inc30',
-    bg: pillColorMap[pillCategory],
     // Weird values but that's what figma says for the flora pills.
     px: ['inc30', null, null, 'inc40'],
     py: ['inc10', null, null, 'inc20'],
     fontSize: ['9px', null, null, 'inc00'],
     fontWeight: '500',
     letterSpacing: ['2.5px', null, null, '3px'],
-});
+};
+
+export const thumbnailStyles: ThemeUICSSObject = {
+    borderRadius: 'inc30',
+    objectFit: 'cover',
+};
 
 export const thumbnailWrapperStyles = (
     variant: CardVariant,
     category: PillCategory
-) => {
+): ThemeUICSSObject => {
     const videoAspectRatio =
         category === 'Video' ? { aspectRatio: '16/9' } : {};
 
@@ -39,15 +31,23 @@ export const thumbnailWrapperStyles = (
     switch (variant) {
         case 'large':
             tabletDesktopDisplay = 'block';
-            mobileDisplay = category === 'Tutorial' ? 'none' : 'block';
+            mobileDisplay =
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'medium':
             mobileDisplay = tabletDesktopDisplay =
-                category === 'Tutorial' ? 'none' : 'block';
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'small':
             tabletDesktopDisplay = 'none';
-            mobileDisplay = category === 'Tutorial' ? 'none' : 'block';
+            mobileDisplay =
+                category === 'Tutorial' || category === 'Event'
+                    ? 'none'
+                    : 'block';
             break;
         case 'list':
             mobileDisplay = tabletDesktopDisplay = 'block';
@@ -73,6 +73,7 @@ export const thumbnailWrapperStyles = (
                 case 'Podcast':
                     mobileDimensions = '48px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions = '64px';
                     break;
@@ -99,6 +100,7 @@ export const thumbnailWrapperStyles = (
                     mobileDimensions = tabletDimensions = '48px';
                     desktopDimensions = '64px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions =
                         tabletDimensions =
@@ -120,6 +122,7 @@ export const thumbnailWrapperStyles = (
                 case 'Podcast':
                     mobileDimensions = '48px';
                     break;
+                case 'Event':
                 case 'Quickstart':
                     mobileDimensions = '64px';
                     break;
@@ -140,17 +143,17 @@ export const thumbnailWrapperStyles = (
     return {
         display: [mobileDisplay, null, tabletDesktopDisplay],
         flexShrink: 0,
-        position: 'relative' as 'relative',
+        position: 'relative',
         ...videoAspectRatio,
         width: [mobileDimensions, null, tabletDimensions, desktopDimensions],
         height: [mobileDimensions, null, tabletDimensions, desktopDimensions],
     };
 };
 
-export const cardWrapperStyles = {
-    position: 'relative' as 'relative',
+export const cardWrapperStyles: ThemeUICSSObject = {
+    position: 'relative',
     display: 'flex',
-    flexDirection: 'column' as 'column',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     padding: [
         theme.space.cards.paddingXXS,
@@ -174,7 +177,7 @@ export const cardWrapperStyles = {
 export const descriptionStyles = (
     variant: CardVariant,
     category: PillCategory
-) => {
+): ThemeUICSSObject => {
     let mobileDisplay;
     let tabletDesktopDisplay;
     switch (variant) {
@@ -207,22 +210,18 @@ export const descriptionStyles = (
         WebkitLineClamp: 4,
         WebkitBoxOrient: 'vertical',
         overflow: 'hidden',
-        lineBreak: 'anywhere' as 'anywhere',
+        lineBreak: 'anywhere',
     };
 };
 
 export const cardHeaderStyles = (
     variant: CardVariant,
     category: PillCategory
-) => {
+): ThemeUICSSObject => {
     const mobileFlexDirection =
-        variant === 'list' || category === 'Podcast'
-            ? ('row' as 'row')
-            : ('column' as 'column');
+        variant === 'list' || category === 'Podcast' ? 'row' : 'column';
     const tabletDesktopFlexDirection =
-        variant === 'medium' && category !== 'Podcast'
-            ? ('column' as 'column')
-            : ('row' as 'row');
+        variant === 'medium' && category !== 'Podcast' ? 'column' : 'row';
     return {
         display: 'flex',
         gap: ['inc30', null, 'inc50'],

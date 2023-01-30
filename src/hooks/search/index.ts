@@ -1,11 +1,10 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import debounce from 'lodash.debounce';
+import { useEffect, useCallback, useState } from 'react';
 import useSWR from 'swr';
 import { FilterItem } from '@mdb/devcenter-components';
 import {
-    fetcher,
-    itemInFilters,
+    searchFetcher,
     searchItemToContentItem,
+    swrOptions,
     updateUrl,
 } from './utils';
 import { useRouter } from 'next/router';
@@ -13,273 +12,174 @@ import {
     buildSearchQuery,
     SearchQueryParams,
 } from '../../components/search/utils';
-import {
-    defaultSortByType,
-    SearchItem,
-    SortByType,
-} from '../../components/search/types';
-import { DEBOUNCE_WAIT } from '../../data/constants';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
+import useSort from './sort';
+import useLocationSearch from './location';
+import useSearchString from './search-string';
+import useFilter from './filter';
+import { ContentItem } from '../../interfaces/content-item';
+import { SearchParamType, SearchProps } from './types';
+import isServerSide from '../../utils/is-server-side';
 
-// Hook that contains the majority of the logic for our search functionality across the site.
+// Credit https://github.com/reduxjs/redux/blob/d794c56f78eccb56ba3c67971c26df8ee34dacc1/src/compose.ts#L46
+// eslint-disable-next-line @typescript-eslint/ban-types
+const compose = (...funcs: Function[]) => {
+    if (funcs.length === 0) {
+        return <T>(arg: T) => arg;
+    }
 
+    if (funcs.length === 1) {
+        return funcs[0];
+    }
+
+    return funcs.reduce(
+        (a, b) =>
+            (...args: any) =>
+                a(b(...args))
+    );
+};
+
+// Hook that contains the majority of the logic for our search functionality across the site
 const useSearch = (
     initialSearchContent?: SearchItem[],
-    updatePageMeta: (pageNumber?: number) => void = () => {},
+    updatePageMeta: (pageNumber?: number) => void = () => null,
     contentType?: string, // Filter on backend by contentType tag specifically.
     tagSlug?: string, // Filter on backend by tag.
     filterItems?: { key: string; value: FilterItem[] }[] // This is needed for URL filter/search updates.
-) => {
-    const shouldUseQueryParams = !!filterItems;
-
+): SearchProps => {
+    const [allResults, setAllResults] = useState<ContentItem[]>([]);
     const router = useRouter();
+    const shouldUseQueryParams = !!filterItems;
+    const paramChangeCallback = useCallback(() => {
+        if (!shouldUseQueryParams) {
+            updatePageMeta();
+        }
+    }, [shouldUseQueryParams, updatePageMeta]);
 
-    const [searchString, setSearchString] = useState('');
-    const [filters, setFilters] = useState<FilterItem[]>([]);
-    const [sortBy, setSortBy] = useState<SortByType | ''>('');
+    const {
+        searchStringProps,
+        searchStringProps: { searchString },
+        clearSearch,
+    } = useSearchString(paramChangeCallback);
 
-    const queryParams: SearchQueryParams = {
+    const {
+        sortProps,
+        sortProps: { sortBy },
+        clearSort,
+    } = useSort(paramChangeCallback);
+
+    const {
+        filterProps,
+        filterProps: { filters },
+        filterData,
+        clearFilters,
+    } = useFilter(paramChangeCallback, filterItems);
+
+    const { locationProps, clearLocation, filterDataByLocation } =
+        useLocationSearch(paramChangeCallback);
+
+    useEffect(() => {
+        if (shouldUseQueryParams) {
+            updateUrl(router.pathname, filters, searchString, sortBy);
+        }
+    }, [
+        shouldUseQueryParams,
+        router.pathname,
+        filters,
+        searchString,
+        sortBy,
+        filterItems,
+    ]);
+
+    const clearSearchParam = useCallback(
+        (which?: SearchParamType) => {
+            switch (which) {
+                case 'search':
+                    clearSearch();
+                    break;
+                case 'location':
+                    clearLocation();
+                    break;
+                case 'sort':
+                    clearSort();
+                    break;
+                case 'filters':
+                    clearFilters();
+                    break;
+                default:
+                    clearSearch();
+                    clearLocation();
+                    clearSort();
+                    clearFilters();
+                    break;
+            }
+
+            updatePageMeta();
+        },
+        [clearSearch, clearLocation, clearSort, clearFilters, updatePageMeta]
+    );
+
+    const searchQueryParams: SearchQueryParams = {
         searchString,
         contentType,
         tagSlug,
         sortBy: sortBy || defaultSortByType,
     };
 
-    const key = buildSearchQuery(queryParams);
+    const searchKey = buildSearchQuery(searchQueryParams);
 
     // TODO: Refactor to useSWRInfinite and implement client-side pagination.
-    const { data, error, isValidating } = useSWR(key, fetcher, {
-        // revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-        shouldRetryOnError: false,
+    const {
+        data = [],
+        error,
+        isValidating,
+    } = useSWR(searchKey, searchFetcher, {
+        ...swrOptions,
         fallbackData: (initialSearchContent || []).map(searchItemToContentItem),
     });
 
-    const onSearch = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            updatePageMeta();
-            setSearchString(event.target.value);
-
-            if (shouldUseQueryParams) {
-                updateUrl(router, filters, event.target.value);
-            }
-        },
-        [filters, router, shouldUseQueryParams, updatePageMeta]
-    );
-
-    const onFilter = useCallback(
-        (filters: FilterItem[]) => {
-            updatePageMeta();
-            setFilters(filters);
-
-            if (shouldUseQueryParams) {
-                updateUrl(router, filters, searchString);
-            }
-        },
-        [router, searchString, shouldUseQueryParams, updatePageMeta]
-    );
-
-    const onSort = useCallback(
-        (sortByValue?: string) => {
-            updatePageMeta();
-            setSortBy(sortByValue as SortByType);
-
-            if (shouldUseQueryParams) {
-                updateUrl(
-                    router,
-                    filters,
-                    searchString,
-                    sortByValue as SortByType
-                );
-            }
-        },
-        [filters, router, searchString, shouldUseQueryParams, updatePageMeta]
-    );
-
-    const debouncedOnSearch = useMemo(
-        () => debounce(onSearch, DEBOUNCE_WAIT),
-        [onSearch]
-    );
-    // Stop the invocation of the debounced function after unmounting.
+    // Populate all results with either the result of useSWR if searchString starts out empty,
+    // or with a one-time fetch to the search endpoint with an empty query
     useEffect(() => {
-        return () => {
-            debouncedOnSearch.cancel();
-        };
-    }, [debouncedOnSearch]);
-
-    const getFiltersFromQueryStr = useCallback(() => {
-        const l1Items = filterItems?.find(
-            item => item.key === 'L1Product'
-        )?.value;
-        const contentTypeItems = filterItems?.find(
-            item => item.key === 'ContentType'
-        )?.value;
-        const languageItems = filterItems?.find(
-            item => item.key === 'ProgrammingLanguage'
-        )?.value;
-        const technologyItems = filterItems?.find(
-            item => item.key === 'Technology'
-        )?.value;
-        const contributedByItems = filterItems?.find(
-            item => item.key === 'AuthorType'
-        )?.value;
-        const expertiseLevelItems = filterItems?.find(
-            item => item.key === 'ExpertiseLevel'
-        )?.value;
-
-        const {
-            product,
-            language,
-            technology,
-            contributedBy,
-            contentType,
-            expertiseLevel,
-        } = router.query;
-
-        const buildFilters = (
-            filterType: string | string[],
-            filterTypeItems: FilterItem[]
-        ) => {
-            const items =
-                typeof filterType === 'object' ? filterType : [filterType];
-            let filtersList: FilterItem[] = [];
-
-            // Gotta look for L1s and L2s that match.
-            items.forEach(item => {
-                const filterProduct = filterTypeItems.find(
-                    l1 =>
-                        l1.name === item ||
-                        l1.subFilters?.find(l2 => l2.name === item)
-                );
-                if (filterProduct) {
-                    if (filterProduct.name !== item) {
-                        // This means it's an L2 match.
-                        filtersList.push(
-                            filterProduct.subFilters?.find(
-                                l2 => l2.name === item
-                            ) as FilterItem
-                        );
-                    } else {
-                        filtersList.push(filterProduct);
-                    }
-                }
-            });
-            return filtersList;
-        };
-
-        let allNewFilters: FilterItem[] = [];
-        if (product && l1Items) {
-            const productFilters: FilterItem[] = buildFilters(product, l1Items);
-            allNewFilters = allNewFilters.concat(productFilters);
-        }
-        if (contentType && contentTypeItems) {
-            const contentTypeFilters: FilterItem[] = buildFilters(
-                contentType,
-                contentTypeItems
-            );
-            allNewFilters = allNewFilters.concat(contentTypeFilters);
-        }
-        // For the rest, just map it to the corresponding item.
-        if (language && languageItems) {
-            // Technically can either come in as a string of a string[], so convert to a string[]
-            // and loop over by default.
-            const languages =
-                typeof language === 'object' ? language : [language];
-            const languageFilters = languageItems.filter(lang =>
-                languages.includes(lang.name)
-            );
-            allNewFilters = allNewFilters.concat(languageFilters);
-        }
-        if (technology && technologyItems) {
-            const technologies =
-                typeof technology === 'object' ? technology : [technology];
-            const technologyFilters = technologyItems.filter(tech =>
-                technologies.includes(tech.name)
-            );
-            allNewFilters = allNewFilters.concat(technologyFilters);
-        }
-        if (contributedBy && contributedByItems) {
-            const contributedBys =
-                typeof contributedBy === 'object'
-                    ? contributedBy
-                    : [contributedBy];
-            const contributedByFilters = contributedByItems.filter(contrib =>
-                contributedBys.includes(contrib.name)
-            );
-            allNewFilters = allNewFilters.concat(contributedByFilters);
-        }
-        if (expertiseLevel && expertiseLevelItems) {
-            const expertiseLevels =
-                typeof expertiseLevel === 'object'
-                    ? expertiseLevel
-                    : [expertiseLevel];
-            const expertiseLevelFilters = expertiseLevelItems.filter(exp =>
-                expertiseLevels.includes(exp.name)
-            );
-            allNewFilters = allNewFilters.concat(expertiseLevelFilters);
-        }
-        return allNewFilters;
-    }, [filterItems, router.query]);
-
-    // Populate the search/filters with query params on page load/param change if we have a router and filters defined.
-    useEffect(() => {
-        if (router?.isReady) {
-            const { s } = router.query;
-
-            if (!!filterItems) {
-                const allNewFilters = getFiltersFromQueryStr();
-                setFilters(allNewFilters);
-            }
-
-            if (s && typeof s === 'string' && s !== searchString) {
-                setSearchString(s);
+        if (!allResults.length) {
+            if (searchString === '' && data && data.length > 0) {
+                setAllResults(data);
+            } else {
+                (
+                    searchFetcher(
+                        buildSearchQuery({
+                            searchString: '',
+                            contentType,
+                            tagSlug,
+                            sortBy: defaultSortByType,
+                        })
+                    ) as Promise<ContentItem[]>
+                ).then((response: ContentItem[]) => {
+                    setAllResults(response);
+                });
             }
         }
-    }, [router?.isReady]); // Missing query dependency, but that's ok because we only need this on first page load.
+    }, [searchString, allResults, data, contentType, tagSlug]);
 
-    const hasFiltersSet = !!filters.length;
-    const filteredData = (() => {
-        if (!data) {
-            return [];
-        } else if (!hasFiltersSet) {
-            return data;
-        } else {
-            return data.filter(item => {
-                return itemInFilters(item, filters);
-            });
-        }
-    })();
-
-    const clearAll = () => {
-        setSearchString('');
-        setFilters([]);
-        setSortBy(defaultSortByType);
-        updatePageMeta();
-    };
+    const filteredData = compose(filterData, filterDataByLocation)(data);
 
     return {
-        searchBoxProps: {
-            searchString,
-            onSearch: debouncedOnSearch,
-        },
-        filterProps: {
-            onFilter,
-            filters,
-        },
-        sortBoxProps: {
-            onSort,
-            sortBy,
-        },
+        clearSearchParam,
+        searchStringProps,
+        filterProps,
+        sortProps,
+        locationProps,
         resultsProps: {
+            allResults: isServerSide() ? data : allResults,
+            unfilteredResults: data,
             results: filteredData,
             error,
             // Disable loading state when running server-side so results show when JS is disabled
-            isValidating: typeof window === 'undefined' ? false : isValidating,
+            isValidating: isServerSide() ? false : isValidating,
             searchString,
             filters,
             sortBy,
         },
-        clearAll,
     };
 };
 

@@ -1,5 +1,4 @@
-import { ContentItem } from '../interfaces/content-item';
-import { FeaturedItem, FeaturedResponse } from '../interfaces/featured';
+import { FeaturedResponse } from '../interfaces/featured';
 import { getFeaturedForTopic } from './get-featured-for-topic';
 import * as apiRequestModule from '../api-requests/get-featured-for-topic';
 

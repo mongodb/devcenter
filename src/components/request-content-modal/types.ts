@@ -5,7 +5,7 @@ export type modalStages = 'closed' | 'text' | 'thanks';
 export interface ContentRequest {
     topic: string;
     description: string;
-    email: string;
+    email: string | null;
 }
 
 export interface RequestContentModalProps {

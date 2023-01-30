@@ -1,4 +1,5 @@
 import theme from '@mdb/flora/theme';
+import { ThemeUICSSObject } from 'theme-ui';
 
 export const seriesCardStyles = {
     padding: [
@@ -12,20 +13,20 @@ export const seriesCardStyles = {
     borderRadius: 'cardResponsive',
 };
 
-export const listItemstyles = {
-    position: 'relative' as 'relative',
+export const listItemstyles: ThemeUICSSObject = {
+    position: 'relative',
     marginBottom: 'inc30',
     paddingLeft: ['inc50', null, null, 'inc60'],
     fontSize: ['inc10', null, null, 'inc20'],
     lineHeight: ['inc20', null, null, 'inc30'],
 };
 
-export const glyphStyles = {
-    position: 'absolute' as 'absolute',
+export const glyphStyles: ThemeUICSSObject = {
+    position: 'absolute',
     left: 0,
     '&::before': {
         content: '""',
-        position: 'absolute' as 'absolute',
+        position: 'absolute',
         width: '12px',
         height: '12px',
         bg: 'list.default.bullet',

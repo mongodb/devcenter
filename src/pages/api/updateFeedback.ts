@@ -38,9 +38,23 @@ const updateFeedbackHandler = async (
         return res.json({ message: 'This is a PUT-only endpoint.' });
     }
     try {
+        const { _id, ...content } = req.body;
+        // Need to make sure this is a valid ObjectID and not some random input.
+        const regHex = /^[0-9a-fA-F]{24}$/;
+        if (!regHex.test(_id)) {
+            res = res.status(400);
+            logRequestData(req.url, req.method, res.statusCode, req.headers);
+
+            return res.json({
+                error: {
+                    message:
+                        'Bad Request: "_id" value in request body must be a valid ObjectID.',
+                },
+            });
+        }
         const response = await axios.put(
-            process.env.REALM_API_URL + '/update_feedback',
-            req.body,
+            `${process.env.BACKEND_URL}/api/feedback/${_id}`,
+            content,
             {
                 headers: {
                     Accept: 'application/json',

@@ -11,7 +11,8 @@ import { appendDocumentationLinkToSideNav } from '../../utils/page-template-help
 import { getContentItemFromSlug } from '../../service/get-content-by-slug';
 import allContentPreval from '../../service/get-all-content.preval';
 
-let pluralize = require('pluralize');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pluralize = require('pluralize');
 
 export const getContentPageData = async (slug: string[]) => {
     const slugStr = slug.join('/');
@@ -28,9 +29,7 @@ export const getContentPageData = async (slug: string[]) => {
     }
     if (!contentItem) return null;
 
-    const vidOrPod =
-        contentItem.collectionType === 'Video' ||
-        contentItem.collectionType === 'Podcast';
+    const isEventContent = contentItem.collectionType === 'Event';
     let sideNavFilterSlug = '/' + slug.slice(0, slug.length - 1).join('/');
 
     //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag
@@ -39,7 +38,10 @@ export const getContentPageData = async (slug: string[]) => {
             '/languages/' + slug.slice(1, slug.length - 1).join('/');
     }
 
-    if (vidOrPod) {
+    if (
+        contentItem.collectionType === 'Video' ||
+        contentItem.collectionType === 'Podcast'
+    ) {
         if (contentItem.primaryTag?.programmingLanguage) {
             sideNavFilterSlug =
                 contentItem.primaryTag.programmingLanguage.calculatedSlug;
@@ -47,41 +49,53 @@ export const getContentPageData = async (slug: string[]) => {
         if (contentItem.primaryTag?.l1Product) {
             sideNavFilterSlug = contentItem.primaryTag.l1Product.calculatedSlug;
         }
+    } else if (isEventContent) {
+        // Events do not come with a "primary tag" fields, so a search for "L1Product" or "ProgrammingLanguage" needs to be done in the standard tags field
+        const eventTags = contentItem.tags.find(
+            tag =>
+                tag.type === 'L1Product' || tag.type === 'ProgrammingLanguage'
+        );
+
+        if (eventTags) {
+            sideNavFilterSlug = eventTags.slug;
+        }
     }
 
     const slugString = `${sideNavFilterSlug}/slug`; // Add "slug" so we get all crumbs up until this throwaway one.
 
-    const crumbs = await getBreadcrumbsFromSlug(slugString);
+    const crumbs = getBreadcrumbsFromSlug(slugString);
     const contentTypeSlug = pillCategoryToSlug.get(contentItem.category);
     const topicContentTypeCrumb: Crumb = {
         text: pluralize(contentItem.category),
         url: `${crumbs[crumbs.length - 1].url}${contentTypeSlug}`,
     };
+
     crumbs.push(topicContentTypeCrumb);
-    let tertiaryNavItems = await getSideNav(
-        sideNavFilterSlug,
-        allContentPreval
-    );
+
+    // In the rare event an event has no tags, set tertiary nav to empty to prevent parent and first child titles both displaying "Events"
+    let tertiaryNavItems =
+        sideNavFilterSlug === '/events'
+            ? []
+            : getSideNav(sideNavFilterSlug, allContentPreval);
     setURLPathForNavItems(tertiaryNavItems);
 
-    const metaInfoForTopic = await getMetaInfoForTopic(sideNavFilterSlug);
+    const metaInfoForTopic = getMetaInfoForTopic(sideNavFilterSlug);
+
     tertiaryNavItems = appendDocumentationLinkToSideNav(
         tertiaryNavItems,
         metaInfoForTopic
     );
-    const topicSlug = sideNavFilterSlug;
-    const topicName = metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '';
-    const relatedContent = getRelatedContent(
-        sideNavFilterSlug,
-        contentItem.slug
-    );
+
+    const relatedContent = isEventContent
+        ? contentItem.relatedContent
+        : getRelatedContent(sideNavFilterSlug, contentItem.slug);
 
     const data = {
         crumbs,
         contentItem,
         tertiaryNavItems,
-        topicSlug,
-        topicName,
+        topicSlug: sideNavFilterSlug,
+        topicName: metaInfoForTopic?.tagName || '',
         relatedContent,
     };
 

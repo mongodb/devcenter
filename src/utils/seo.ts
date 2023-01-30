@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 export const CONTENT_ROUTE = '/[...slug]';
-export const CONTENT_TYPE_ROUTES = [
+const CONTENT_TYPE_ROUTES = [
     '/articles',
     '/code-examples',
     '/quickstarts',
@@ -10,7 +10,7 @@ export const CONTENT_TYPE_ROUTES = [
     '/tutorials',
     '/videos',
 ];
-export const SEARCH_ROUTE = '/search';
+const SEARCH_ROUTE = '/search';
 
 export const getMetaDescr = (config: any, route: string, asPath: string) => {
     const path =
@@ -67,7 +67,7 @@ export const getCanonicalUrlWithParams = (
             }
 
             const paramsToInclude = canonicalQueryParams.toString();
-            if (!!paramsToInclude) canonicalUrl += `?${paramsToInclude}`;
+            if (paramsToInclude) canonicalUrl += `?${paramsToInclude}`;
         }
     }
 
@@ -89,7 +89,7 @@ export const useEnsureImageAlts = (parent: HTMLElement | undefined | null) => {
                 // Try to guess an alt name from the filename, if not default to empty string
                 const src = img.getAttribute('src') as string;
                 const match =
-                    /[\/-]([^\/-]+)\.(gif|jpe?g|tiff?|png|webp|bmp|svg)/.exec(
+                    /[/-]([^/-]+)\.(gif|jpe?g|tiff?|png|webp|bmp|svg)/.exec(
                         src
                     );
 

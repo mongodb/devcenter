@@ -2,7 +2,7 @@ import { Author } from '../interfaces/author';
 import { UnderlyingClient } from '../types/client-factory';
 import { ApolloQueryResult, gql } from '@apollo/client';
 
-export const authorFields = `
+const authorFields = `
     name
     bio
     image {
@@ -13,7 +13,6 @@ export const authorFields = `
     linkedin
     facebook
     twitter
-    youtube
     calculated_slug
     articles: new_articles {
         description

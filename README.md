@@ -15,7 +15,8 @@ We use Artifactory (MongoDB's internal package repository) as our primary source
 The data for this project is fetched from a Strapi CMS. In order to get actual data, we have to configure the Strapi URL we want to use in development. To do this, create a file in the top level of this project called `.env.local` (this will be ignored by git).
 
 `STRAPI_URL`. See [this DevHub wiki page](https://wiki.corp.mongodb.com/display/DEVREL/DevHub+Front-End+Guide#DevHubFrontEndGuide-InstallationandSetup) and copy the value for `STRAPI_URL` shown there (or ask a teammate).
-`REALM_SEARCH_URL` and `REALM_API_URL` are needed for feedback and search functionality. Ask a teammate for these values.
+`REALM_SEARCH_URL` and `BACKEND_URL` are needed for feedback and search functionality. Ask a teammate for these values.
+`REALM_API_URL` is needed for events functionality.
 
 #### Logging in with SSO Locally
 
@@ -26,6 +27,7 @@ Also, ensure the following environment variables are set:
 ```
 HOST_URL=devcenter-local.mongodb.com:3000
 NEXTAUTH_URL=http://devcenter-local.mongodb.com:3000/developer/api/auth/
+ACCOUNT_PORTAL_URL=https://account-qa.mongodb.com
 NEXTAUTH_SECRET=<secret>
 OKTA_CLIENT_ID=<secret>
 OKTA_CLIENT_SECRET=<secret>
@@ -46,7 +48,7 @@ Ensure you have the necessary environment variables set in your terminal session
 
 To build the Docker image, run the following:
 
-`docker build -t nextjs-docker --no-cache --build-arg NPM_AUTH --build-arg NPM_EMAIL --build-arg STRAPI_URL --build-arg HOST_URL --build-arg REALM_API_URL --build-arg REALM_SEARCH_URL .`
+`docker build -t nextjs-docker --no-cache --build-arg NPM_AUTH --build-arg NPM_EMAIL --build-arg STRAPI_URL --build-arg HOST_URL --build-arg REALM_API_URL --build-arg BACKEND_URL --build-arg REALM_SEARCH_URL .`
 
 To create the container, run:
 
