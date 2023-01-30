@@ -5,11 +5,11 @@ import { ContentItem } from '../../interfaces/content-item';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import ContentPageTemplate from '../../page-templates/content-page/content-page-template';
 import { getPreviewContent } from '../../service/get-preview-content';
+import { Tag } from '../../interfaces/tag';
 
 interface ContentPageProps {
     crumbs: Crumb[];
-    topicSlug: string;
-    topicName: string;
+    topic: Tag;
     contentItem: ContentItem;
     relatedContent: ContentItem[];
     tertiaryNavItems: TertiaryNavItem[];
@@ -18,8 +18,7 @@ interface ContentPageProps {
 
 const ContentPage: NextPage<ContentPageProps> = ({
     crumbs,
-    topicSlug,
-    topicName,
+    topic,
     contentItem,
     tertiaryNavItems,
     relatedContent,
@@ -28,8 +27,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
     return (
         <ContentPageTemplate
             crumbs={crumbs}
-            topicSlug={topicSlug}
-            topicName={topicName}
+            topic={topic}
             contentItem={contentItem}
             tertiaryNavItems={tertiaryNavItems}
             relatedContent={relatedContent}
@@ -45,12 +43,16 @@ export const getServerSideProps = async (context: any) => {
     const slugString = slug.join('/');
     const contents: ContentItem[] = await getPreviewContent('/' + slugString);
     const contentItem = contents.filter(c => c.slug === slugString)[0];
+    const topic: Tag = {
+        name: '',
+        type: 'Technology',
+        slug: '',
+    };
     const result = {
         crumbs: [],
         contentItem,
         tertiaryNavItems: [],
-        topicSlug: '',
-        topicName: '',
+        topic,
         relatedContent: [],
         previewMode: true,
     };
