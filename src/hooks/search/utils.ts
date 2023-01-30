@@ -32,6 +32,9 @@ export const searchItemToContentItem = ({
     end_time,
     tags,
     location,
+    city,
+    state,
+    country,
     coordinates,
 }: SearchItem): ContentItem => {
     const itemImage: Image | undefined =
@@ -41,6 +44,8 @@ export const searchItemToContentItem = ({
                   url: image.url,
                   alt: image.alternativeText,
               }
+            : city
+            ? { url: '', city }
             : undefined;
 
     const itemAuthors: Author[] = authors.map(auth => ({
@@ -71,6 +76,9 @@ export const searchItemToContentItem = ({
         title: name,
         featured: false,
         location,
+        city,
+        state,
+        country,
         coordinates,
     };
 };

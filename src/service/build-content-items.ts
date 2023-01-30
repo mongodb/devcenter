@@ -153,6 +153,7 @@ export const mapIndustryEventToContentItem = (event: IndustryEvent) =>
         image: {
             url: event?.image?.url || '',
             alt: event?.image?.alt || 'MongoDB Event Image',
+            city: event.city || null,
         },
         contentDate: [event.start_time, event.end_time],
         description: event.description,
@@ -160,6 +161,9 @@ export const mapIndustryEventToContentItem = (event: IndustryEvent) =>
         tags: flattenTags(event.otherTags).concat(eventContentTypeTag),
         title: event.title,
         location: event.location,
+        city: event.city || null,
+        state: event.state || null,
+        country: event.country || null,
         eventSetup: event.type,
         authors: event.authors,
         content: event.content,

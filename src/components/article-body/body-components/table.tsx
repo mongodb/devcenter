@@ -8,7 +8,7 @@ const headerCellStyles = (align: any, index: number): ThemeUICSSObject =>
     ({
         py: ['inc20', null, 'inc40'],
         px: ['inc20', null, 'inc30'],
-        textAlign: align[index],
+        textAlign: align[index] || 'left',
         whiteSpace: 'nowrap',
     } as ThemeUICSSObject);
 
@@ -49,7 +49,13 @@ export const Table = ({ align, children }: { align: any; children: any }) => {
         const otherRows = children.slice(1);
         return (
             <div sx={{ overflowX: 'auto' }}>
-                <table sx={{ borderCollapse: 'collapse', border: 'none' }}>
+                <table
+                    sx={{
+                        borderCollapse: 'collapse',
+                        border: 'none',
+                        width: '100%',
+                    }}
+                >
                     <TableHeading align={align} headingRow={headingRow} />
                     {otherRows.map((data: ArticleNode, i: number) => (
                         // Pass the align array so we can apply alignment in TableCell
