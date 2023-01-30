@@ -116,3 +116,20 @@ export const getIndustryEventBySlugFromAPI = async (
 
     return data.industryEvents.length > 0 ? data.industryEvents[0] : null;
 };
+
+export const getDraftEventFromAPI = async (
+    client: UnderlyingClient<'ApolloREST'>,
+    calculatedSlug: string
+): Promise<IndustryEvent | null> => {
+    const query = gql`
+        query IndustryEvents {
+            industryEvents(_publicationState : "preview", calculated_slug : "${calculatedSlug}")
+            @rest(type: "IndustryEvent", path: "/industry-events?{args}") {
+                ${industryEventsFields}
+            }
+        }`;
+    const { data }: ApolloQueryResult<{ industryEvents: IndustryEvent[] }> =
+        await client.query({ query, fetchPolicy: 'no-cache' });
+
+    return data.industryEvents.length > 0 ? data.industryEvents[0] : null;
+};
