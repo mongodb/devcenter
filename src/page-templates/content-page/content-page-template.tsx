@@ -579,7 +579,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             <TagSection withLabels tags={tags} />
                         </div>
                     )}
-                    {headingNodes.length > 0 && (
+                    {headingNodes.length > 0 && !isIndustryEvent && (
                         <TableOfContents
                             headingNodes={headingNodes}
                             sx={{ position: 'sticky', top: 'inc150' }}
