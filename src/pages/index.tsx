@@ -155,10 +155,6 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                     tags={recommendedTags}
                     content={content}
                     showFooter
-                    onTagSelected={(selectedTag: Tag) => {
-                        console.log('tag selected');
-                        console.log(selectedTag);
-                    }}
                     onTagsSaved={
                         (/* selectedTags: Tag[], digestChecked: boolean */) => {
                             // TODO: Replace with call to user preferences endpoint
