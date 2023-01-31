@@ -111,10 +111,11 @@ export const getCardProps = (
                 tag => tag.type === 'EventAttendance'
             );
             const attendanceType = eventSetup || attendanceTag?.name;
+            console.log(city, country, state, location);
             const locationDisplay =
                 city && country
                     ? `${city}, ${state ? `${state}, ` : ''}${country}`
-                    : location;
+                    : location || '';
 
             if (locationDisplay || attendanceType) {
                 const hyphenatedAttendanceType =
