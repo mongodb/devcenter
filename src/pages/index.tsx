@@ -26,6 +26,8 @@ import RecommendedSection from '../components/recommended-section';
 import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.preval';
 import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
+import { ContentItem } from '../interfaces/content-item';
+import { MOCK_ARTICLE_CONTENT } from '../mockdata';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -80,6 +82,8 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
     recommendedTags,
 }) => {
     const { status } = useSession();
+
+    const [content, setContent] = useState<ContentItem[]>([]);
 
     return (
         <main
@@ -146,15 +150,23 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                 </div>
             </GridLayout>
 
-            <RecommendedSection
-                tags={recommendedTags}
-                showFooter={status === 'authenticated'}
-                onTagSelected={
-                    (/* selectedTopics: MetaInfo[], digestChecked: boolean */) => {
-                        // TODO
+            {status === 'authenticated' && (
+                <RecommendedSection
+                    tags={recommendedTags}
+                    content={content}
+                    showFooter
+                    onTagSelected={(selectedTag: Tag) => {
+                        console.log('tag selected');
+                        console.log(selectedTag);
+                    }}
+                    onTagsSaved={
+                        (/* selectedTags: Tag[], digestChecked: boolean */) => {
+                            // TODO: Replace with call to user preferences endpoint
+                            setContent(MOCK_ARTICLE_CONTENT as ContentItem[]);
+                        }
                     }
-                }
-            />
+                />
+            )}
 
             <GridLayout>
                 <div
@@ -445,7 +457,7 @@ export const getStaticProps: GetStaticProps<{
 
     const recommendedTags = getAllMetaInfoRandomPreval
         .filter(topic => topicCategories.indexOf(topic.category) > -1)
-        .slice(0, 10)
+        .slice(0, 8)
         .map(topic => ({
             name: topic.tagName,
             type: topic.category,
