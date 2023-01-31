@@ -114,7 +114,7 @@ export const getCardProps = (
             const locationDisplay =
                 city && country
                     ? `${city}, ${state ? `${state}, ` : ''}${country}`
-                    : location;
+                    : location || '';
 
             if (locationDisplay || attendanceType) {
                 const hyphenatedAttendanceType =
