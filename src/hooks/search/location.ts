@@ -9,8 +9,8 @@ import { locationFetcher, swrOptions } from './utils';
 import haversine from 'haversine-distance';
 import { LocationOptions, LocationSelection } from './types';
 
-// 10 miles in meters
-const MAX_LOCATION_RADIUS = 16093.4;
+// 100 miles in meters
+const MAX_LOCATION_RADIUS = 160934;
 
 const DEFAULT_OPTIONS = [
     { icon: ESystemIconNames.LOCATION, label: 'Current Location' },
@@ -150,13 +150,22 @@ const useLocationSearch = (callback: () => void) => {
                 return data;
             }
 
-            return data.filter(({ coordinates }) => {
-                if (!coordinates) return false;
+            return data
+                .filter(({ coordinates }) => {
+                    if (!coordinates) return false;
 
-                const distance = haversine(location, coordinates);
+                    const distance = haversine(location, coordinates);
 
-                return distance < MAX_LOCATION_RADIUS;
-            });
+                    return distance < MAX_LOCATION_RADIUS;
+                })
+                .sort(({ coordinates: aCoords }, { coordinates: bCoords }) => {
+                    if (!aCoords || !bCoords) return 0;
+
+                    return haversine(location, aCoords) >
+                        haversine(location, bCoords)
+                        ? 1
+                        : -1;
+                });
         },
         [locationSelection]
     );

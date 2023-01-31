@@ -117,13 +117,14 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         );
     });
 
+    const searchMetaProps = useSearchMeta(
+        pageNumber,
+        slug,
+        contentType,
+        buildPageTitle(contentType, name)
+    );
     const { pageTitle, metaDescr, canonicalUrl, updatePageMeta } =
-        useSearchMeta(
-            pageNumber,
-            slug,
-            contentType,
-            buildPageTitle(contentType, name)
-        );
+        searchMetaProps;
 
     const { searchStringProps, sortProps, resultsProps } = useSearch(
         initialSearchContent,
@@ -249,10 +250,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
 
                         <SearchResults
                             {...resultsProps}
-                            pageNumber={pageNumber}
-                            slug={slug}
-                            updatePageMeta={updatePageMeta}
-                            contentType={contentType}
+                            {...searchMetaProps}
                             extraStyles={{
                                 marginTop: ['inc30', null, 0],
                             }}

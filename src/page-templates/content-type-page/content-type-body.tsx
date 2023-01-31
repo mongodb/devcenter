@@ -39,7 +39,7 @@ const ContentTypeBody: React.FunctionComponent<
         resultsProps: { results, isValidating },
         clearSearchParam,
     },
-    searchMetaProps: { updatePageMeta },
+    searchMetaProps,
     featured,
     extraFeatured: {
         featuredLanguages,
@@ -50,8 +50,6 @@ const ContentTypeBody: React.FunctionComponent<
     mobileFiltersOpen,
     setMobileFiltersOpen,
     contentType,
-    pageNumber,
-    slug,
     children,
 }) => {
     const showFeatured = !searchString && !filters.length;
@@ -202,10 +200,7 @@ const ContentTypeBody: React.FunctionComponent<
 
                 <SearchResults
                     {...resultsProps}
-                    pageNumber={pageNumber}
-                    slug={slug}
-                    updatePageMeta={updatePageMeta}
-                    contentType={contentType}
+                    {...searchMetaProps}
                     extraStyles={{
                         order: showFeatured ? '4' : '3',
                     }}

@@ -46,6 +46,9 @@ export const industryEventsFields = `
     description
     end_time
     location
+    city
+    state
+    country
     slug
     start_time
     registration_url
@@ -110,6 +113,23 @@ export const getIndustryEventBySlugFromAPI = async (
     `;
     const { data }: ApolloQueryResult<{ industryEvents: IndustryEvent[] }> =
         await client.query({ query });
+
+    return data.industryEvents.length > 0 ? data.industryEvents[0] : null;
+};
+
+export const getDraftEventFromAPI = async (
+    client: UnderlyingClient<'ApolloREST'>,
+    calculatedSlug: string
+): Promise<IndustryEvent | null> => {
+    const query = gql`
+        query IndustryEvents {
+            industryEvents(_publicationState : "preview", calculated_slug : "${calculatedSlug}")
+            @rest(type: "IndustryEvent", path: "/industry-events?{args}") {
+                ${industryEventsFields}
+            }
+        }`;
+    const { data }: ApolloQueryResult<{ industryEvents: IndustryEvent[] }> =
+        await client.query({ query, fetchPolicy: 'no-cache' });
 
     return data.industryEvents.length > 0 ? data.industryEvents[0] : null;
 };

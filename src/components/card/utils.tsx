@@ -59,6 +59,9 @@ export const getCardProps = (
         image,
         slug,
         location,
+        city,
+        state,
+        country,
         eventSetup,
     }: ContentItem,
     variant: CardVariant
@@ -108,8 +111,12 @@ export const getCardProps = (
                 tag => tag.type === 'EventAttendance'
             );
             const attendanceType = eventSetup || attendanceTag?.name;
+            const locationDisplay =
+                city && country
+                    ? `${city}, ${state ? `${state}, ` : ''}${country}`
+                    : location || '';
 
-            if (location || attendanceType) {
+            if (locationDisplay || attendanceType) {
                 const hyphenatedAttendanceType =
                     attendanceType
                         ?.trim()
@@ -125,8 +132,10 @@ export const getCardProps = (
                             />
                         }
                     >
-                        {`${location}${
-                            location && hyphenatedAttendanceType ? ' | ' : ''
+                        {`${locationDisplay}${
+                            locationDisplay && hyphenatedAttendanceType
+                                ? ' | '
+                                : ''
                         }${hyphenatedAttendanceType}`.toUpperCase()}
                     </SecondaryTag>
                 );

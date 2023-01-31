@@ -34,6 +34,9 @@ export interface ContentItem {
     liveSiteUrl?: string;
     seo?: SEO;
     location?: string;
+    city?: string;
+    state?: string;
+    country?: string;
     eventSetup?: EventSetup;
     coordinates?: Coordinates;
     registrationLink?: string;

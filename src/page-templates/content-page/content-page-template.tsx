@@ -559,7 +559,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                     width: ['100%', null, null, 'auto'],
                                 }}
                             >
-                                Register Now
+                                More Info
                             </Button>
                         </>
                     )}
@@ -593,7 +593,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             <TagSection withLabels tags={tags} />
                         </div>
                     )}
-                    {headingNodes.length > 0 && (
+                    {headingNodes.length > 0 && !isIndustryEvent && (
                         <TableOfContents
                             headingNodes={headingNodes}
                             sx={{ position: 'sticky', top: 'inc150' }}
@@ -611,6 +611,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 twitter={{
                     site: seo?.twitter_site,
                     handle: seo?.twitter_creator,
+                    cardType: seo?.twitter_card,
                 }}
                 openGraph={{
                     url: seo?.og_url,
