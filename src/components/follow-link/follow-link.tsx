@@ -5,6 +5,8 @@ import { useSession } from 'next-auth/react';
 import useSignInURL from '../../hooks/sign-in-url';
 import { Tag } from '../../interfaces/tag';
 import Tooltip from '../tooltip/tooltip';
+import { useModalContext } from '../../contexts/modal';
+import { ScrollPersonalizationModal } from '../modal/personalization';
 
 interface FollowLinkProps {
     topic: Tag;
@@ -20,6 +22,8 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     const [showClickTooltip, setShowClickTooltip] = useState(false);
 
     const [timeoutID, setTimeoutID] = useState<NodeJS.Timeout | null>(null);
+
+    const { openModal } = useModalContext();
 
     const signInURL = useSignInURL();
 
@@ -54,8 +58,18 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
         let topics: Tag[];
         // Never show the click tooltip when using the iconsOnly variant
         if (!isFollowingAnyTopics) {
-            // TODO: Enter modal flow
-            alert('Onboarding modal will go here');
+            openModal(
+                <ScrollPersonalizationModal
+                    title={
+                        <>
+                            You&apos;re now following this topic. <br />{' '}
+                            Interested in following other topics?
+                        </>
+                    }
+                    existingSelections={[topic]}
+                />,
+                { hideCloseBtn: true }
+            );
             return;
         }
         if (!iconsOnly) {

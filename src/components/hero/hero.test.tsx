@@ -6,13 +6,18 @@ import Hero from '.';
 import { createTopicPageCTAS } from './utils';
 import { Tag } from '../../interfaces/tag';
 
-import * as nextAuth from 'next-auth/react';
-import * as nextRouter from 'next/router';
+jest.mock('next/router', () => ({
+    __esModule: true,
+    ...jest.requireActual('next/router'),
+    useRouter: jest.fn(() => ({ asPath: '' })),
+}));
 
-// @ts-expect-error hacky way to mock named exports
-nextAuth.useSession = jest.fn().mockImplementation(() => ({ session: null }));
-// @ts-expect-error hacky way to mock named exports
-nextRouter.useRouter = jest.fn().mockImplementation(() => ({ asPath: '' }));
+jest.mock('next-auth/react', () => ({
+    __esModule: true,
+    ...jest.requireActual('next/router'),
+    useSession: jest.fn(() => ({ session: null })),
+}));
+
 jest.mock('../../utils/get-sign-in-url', () => {
     return jest.fn(() => '');
 });

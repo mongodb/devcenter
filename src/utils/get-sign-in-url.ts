@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 
-const getSignInURL = (path: string): string => {
+const getSignInURL = (path?: string | null): string => {
     const fromPagePath = path ? `?fromPagePath=${path}` : '';
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath, accountPortalUrl } = publicRuntimeConfig;
