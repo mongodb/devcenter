@@ -5,7 +5,7 @@ export interface User {
     firstName: string;
     lastName: string;
     email: string;
-    followedTags?: Tag[] | null;
+    followedTags: Tag[] | null;
     lastLogin: string | null;
     emailPreference: boolean;
 }

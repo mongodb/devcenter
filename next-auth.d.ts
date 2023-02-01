@@ -1,4 +1,5 @@
 import { DefaultSession } from 'next-auth';
+import { Tag } from './src/interfaces/tag';
 
 declare module 'next-auth' {
     /**
@@ -14,6 +15,10 @@ declare module 'next-auth' {
         lastName: string;
         /** Custom: The user's email address, taken from profile. */
         email: string;
+        /** additional fields added as part of personalization **/
+        followedTags?: Tag[] | null;
+        lastLogin: string | null;
+        emailPreference: boolean;
     }
 
     interface Profile {
