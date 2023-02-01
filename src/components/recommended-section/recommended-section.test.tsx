@@ -18,12 +18,12 @@ describe('Recommended Section', () => {
         ).toBeGreaterThan(0);
     });
 
-    test('Renders tags when passed content', () => {
+    test('Renders content when passed content', () => {
         render(<RecommendedSection content={MOCK_ARTICLE_CONTENT} />);
 
-        expect(
-            screen.queryAllByTestId('recommended-content-item').length
-        ).toBeGreaterThan(0);
+        expect(screen.queryAllByTestId('card-medium').length).toBeGreaterThan(
+            0
+        );
     });
 
     test('Renders content over tags when passed both', () => {
@@ -34,9 +34,9 @@ describe('Recommended Section', () => {
             />
         );
         expect(screen.queryAllByTestId('recommended-topic-tag').length).toBe(0);
-        expect(
-            screen.queryAllByTestId('recommended-content-item').length
-        ).toBeGreaterThan(0);
+        expect(screen.queryAllByTestId('card-medium').length).toBeGreaterThan(
+            0
+        );
     });
 
     test('Selecting a tag calls onTagSelected prop', async () => {

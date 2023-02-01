@@ -55,7 +55,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                 <RecommendedContentSection content={content} />
             )}
 
-            {tags && !content.length && (
+            {!!tags.length && !content.length && (
                 <RecommendedTagSection
                     tags={tags}
                     showFooter={showFooter}

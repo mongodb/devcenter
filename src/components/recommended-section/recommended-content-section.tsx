@@ -32,15 +32,13 @@ const RecommendedContentSection: React.FunctionComponent<
             }}
         >
             {content.map((item, i) => (
-                <div key={i} data-testid="recommended-content-item">
-                    <Card
-                        key={i}
-                        sx={{
-                            height: '100%',
-                        }}
-                        {...getCardProps(item, 'medium')}
-                    />
-                </div>
+                <Card
+                    key={i}
+                    sx={{
+                        height: '100%',
+                    }}
+                    {...getCardProps(item, 'medium')}
+                />
             ))}
 
             {content.length < 4 && (
