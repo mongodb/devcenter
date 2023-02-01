@@ -5,7 +5,7 @@ import NextAuth from 'next-auth';
 import * as Sentry from '@sentry/nextjs';
 import { User } from '../../../interfaces/user-preference';
 
-async function getUser(userId: string | unknown): Promise<User> {
+async function getUser(userId: string | unknown): Promise<any> {
     const url = `${process.env.PERSONALIZATION_URL}/user_preferences?userId=${userId}`;
     const apiKey = process.env.REALM_API_KEY || '';
     const options = {
@@ -18,14 +18,14 @@ async function getUser(userId: string | unknown): Promise<User> {
     };
     try {
         const req = await fetch(url, options);
-        return (await req.json()) as User;
+        return await req.json();
     } catch (e) {
         Sentry.captureException(e);
         throw new Error('Failed to fetch user preferences.');
     }
 }
 
-async function persistNewUser(user: User): Promise<User> {
+async function persistNewUser(user: User): Promise<any> {
     const url = `${process.env.PERSONALIZATION_URL}/user_preferences`;
     try {
         const req = await fetch(url, {
@@ -37,7 +37,7 @@ async function persistNewUser(user: User): Promise<User> {
             // },
             body: JSON.stringify(user),
         });
-        return (await req.json()) as User;
+        return await req.json();
     } catch (e) {
         Sentry.captureException(e);
         throw new Error('Failed to persist new user');
@@ -80,27 +80,29 @@ export const nextAuthOptions: NextAuthOptions = {
             if (token.userId) {
                 const user = await getUser(token.userId);
                 if (!user) {
-                    const persisted_user: User = await persistNewUser({
-                        user_id: token.userId,
-                        first_name: token.firstName,
-                        last_name: token.lastName,
+                    const persisted_user = await persistNewUser({
+                        userId: token.userId,
+                        firstName: token.firstName,
+                        lastName: token.lastName,
                         email: token.email,
-                        preferences: [],
-                        last_login: null,
-                        email_preference: false,
+                        followedTags: [],
+                        lastLogin: null,
+                        emailPreference: false,
                     } as User);
-                    const { preferences, last_login, email_preference } =
+                    const { followed_tags, last_login, email_preference } =
                         persisted_user;
-                    session.preferences = preferences;
+                    session.followedTags = followed_tags;
                     session.lastLogin = last_login;
                     session.emailPreference = email_preference;
                 } else {
-                    const { preferences, last_login, email_preference } = user;
-                    session.preferences = preferences;
+                    const { followed_tags, last_login, email_preference } =
+                        user;
+                    session.followedTags = followed_tags;
                     session.lastLogin = last_login;
                     session.emailPreference = email_preference;
                 }
             }
+            console.log(session);
             return session;
         },
     },
