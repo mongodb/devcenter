@@ -4,8 +4,6 @@ import '@testing-library/jest-dom';
 import FollowLink from '.';
 import { Tag } from '../../interfaces/tag';
 
-import * as nextAuth from 'next-auth/react';
-
 jest.mock('../modal/personalization', () => {
     return jest.fn(() => <></>);
 });
@@ -18,6 +16,13 @@ jest.mock('next/router', () => ({
 jest.mock('../../utils/get-sign-in-url', () => {
     return jest.fn(() => '');
 });
+
+const mockUseSession = jest.fn();
+jest.mock('next-auth/react', () => ({
+    __esModule: true,
+    ...jest.requireActual('next-auth/react'),
+    useSession: () => mockUseSession(),
+}));
 
 const topic: Tag = {
     name: 'Atlas',
@@ -32,8 +37,7 @@ const otherTopic: Tag = {
 };
 
 test('renders full FollowLink when signed out', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'unauthenticated',
         data: null,
     }));
@@ -52,8 +56,7 @@ test('renders full FollowLink when signed out', () => {
 });
 
 test('renders iconsOnly FollowLink when signed out', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'unauthenticated',
         data: null,
     }));
@@ -72,8 +75,7 @@ test('renders iconsOnly FollowLink when signed out', () => {
 });
 
 test('renders full FollowLink when signed in and not following anything', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'authenticated',
         data: { followedTags: [] },
     }));
@@ -88,8 +90,7 @@ test('renders full FollowLink when signed in and not following anything', () => 
 });
 
 test('renders full FollowLink when signed in and not following anything', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'authenticated',
         data: { followedTags: [] },
     }));
@@ -104,8 +105,7 @@ test('renders full FollowLink when signed in and not following anything', () => 
 });
 
 test('renders iconsOnly FollowLink when signed in and not following anything', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'authenticated',
         data: { followedTags: [] },
     }));
@@ -120,8 +120,7 @@ test('renders iconsOnly FollowLink when signed in and not following anything', (
 });
 
 test('renders full FollowLink when signed in and following other topics', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'authenticated',
         data: { followedTags: [otherTopic] },
     }));
@@ -140,8 +139,7 @@ test('renders full FollowLink when signed in and following other topics', () => 
 });
 
 test('renders iconsOnly FollowLink when signed in and following other topics', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'authenticated',
         data: { followedTags: [otherTopic] },
     }));
@@ -154,8 +152,7 @@ test('renders iconsOnly FollowLink when signed in and following other topics', (
 });
 
 test('renders full FollowLink when signed in and following this topic', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'authenticated',
         data: { followedTags: [topic] },
     }));
@@ -171,8 +168,7 @@ test('renders full FollowLink when signed in and following this topic', () => {
 });
 
 test('renders iconsOnly FollowLink when signed in and following this topic', () => {
-    // @ts-expect-error have to mock named export differently for each test
-    nextAuth.useSession = jest.fn().mockImplementation(() => ({
+    mockUseSession.mockImplementation(() => ({
         status: 'authenticated',
         data: { followedTags: [topic] },
     }));
