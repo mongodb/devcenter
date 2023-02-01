@@ -76,9 +76,9 @@ export const nextAuthOptions: NextAuthOptions = {
             session.firstName = token.firstName;
             session.lastName = token.lastName;
             session.email = token.email;
-            session.userId = token.userId;
-            if (token.userId) {
-                const user = await getUser(token.userId);
+            session.userId = token.sub;
+            if (token.sub) {
+                const user = await getUser(token.sub);
                 if (!user) {
                     const persisted_user = await persistNewUser({
                         userId: token.userId,
