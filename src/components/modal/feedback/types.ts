@@ -1,6 +1,10 @@
-import { PillCategory } from '../../types/pill-category';
+import { PillCategory } from '../../../types/pill-category';
 
-export type modalStages = 'closed' | 'checkbox' | 'text' | 'thanks';
+export enum FEEDBACK_MODAL_STAGE {
+    CHECKBOX = 'CHECKBOX',
+    TEXT = 'TEXT',
+    THANKS = 'THANKS',
+}
 
 interface FeedbackDialogProps {
     stars: number;
@@ -33,8 +37,7 @@ export interface ICheckboxFeedback {
 }
 
 export interface FeedbackModalProps {
-    setModalStage: (stage: modalStages) => void;
-    modalStage: modalStages;
+    initialStage: FEEDBACK_MODAL_STAGE;
     stars: number;
     contentCategory: PillCategory;
     feedbackId: string;

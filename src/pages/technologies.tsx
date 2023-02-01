@@ -2,15 +2,14 @@ import { NextPage, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 import Hero from '../components/hero';
 import { Crumb } from '../components/breadcrumbs/types';
-import { GridLayout, LogoPaths, BrandedIcon, ThirdPartyLogo } from '@mdb/flora';
+import { GridLayout } from '@mdb/flora';
 import { TopicCard } from '@mdb/devcenter-components';
 import { Grid } from 'theme-ui';
 
-import { technologyToLogo } from '../utils/technology-to-logo';
 import allMetaInfoPreval from '../service/get-all-meta-info.preval';
 import { MetaInfo } from '../interfaces/meta-info';
-import { iconStyles } from '../components/topic-cards-container/styles';
 import { getURLPath } from '../utils/format-url-path';
+import { tagToTopic } from '../utils/tag-to-topic';
 
 const crumbs: Crumb[] = [
     { text: 'MongoDB Developer Center', url: '/developer' },
@@ -26,34 +25,17 @@ const TechnologiesSection: React.FunctionComponent<{
 }> = ({ technologies }) => {
     return (
         <Grid columns={[1, null, 2, 4]} gap="inc70">
-            {technologies.map(({ tagName, slug }) => {
-                const hasLogo =
-                    tagName === 'Serverless' ||
-                    LogoPaths[technologyToLogo[tagName]];
-                let icon: JSX.Element | null = null;
-                if (hasLogo) {
-                    if (tagName === 'Serverless') {
-                        icon = (
-                            <BrandedIcon
-                                sx={iconStyles}
-                                name="atlas_serverless"
-                            />
-                        );
-                    } else {
-                        icon = (
-                            <ThirdPartyLogo
-                                sx={iconStyles}
-                                variant={technologyToLogo[tagName]}
-                                href={slug}
-                            />
-                        );
-                    }
-                }
+            {technologies.map(({ category, slug, tagName }) => {
+                const { href, icon, title } = tagToTopic({
+                    slug,
+                    type: category,
+                    name: tagName,
+                });
                 return (
                     <TopicCard
-                        key={tagName}
-                        title={tagName}
-                        href={getURLPath(slug)}
+                        key={title}
+                        title={title}
+                        href={getURLPath(href)}
                         icon={icon}
                     />
                 );

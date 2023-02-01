@@ -10,6 +10,7 @@ import SecondaryNav from './secondary-nav';
 import { OverlayContext } from '../contexts/overlay';
 import { layers } from '../styled/layout';
 import { useEnsureImageAlts } from '../utils/seo';
+import { useModalContext } from '../contexts/modal';
 
 const navStyles = {
     'nav > div > div > ul': {
@@ -28,6 +29,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     pagePath,
 }) => {
     const { hasOverlay } = useContext(OverlayContext);
+    const { component: hasModalOpen } = useModalContext();
     const { data: session } = useSession();
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath, accountPortalUrl } = publicRuntimeConfig;
@@ -50,9 +52,10 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     return (
         <div ref={ref => setLayoutRef(ref)}>
             <Global
+                // TODO: using globalStyles as func call might be producing performance bottleneck
                 styles={css`
                     ${emotionNormalize}
-                    ${globalStyles(!!hasOverlay)}
+                    ${globalStyles(!!hasOverlay || !!hasModalOpen)}
                 `}
             />
             <div sx={navStyles}>

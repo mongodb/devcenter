@@ -18,9 +18,7 @@ import {
     TypographyScale,
 } from '@mdb/flora';
 // components
-import FeedbackModal, {
-    feedbackModalStages,
-} from '../../components/feedback-modal';
+import FeedbackModal from '../../components/modal/feedback';
 import Card from '../../components/card';
 import SeriesCard from '../../components/series-card';
 import TagSection from '../../components/tag-section';
@@ -31,17 +29,20 @@ import { getCardProps } from '../../components/card/utils';
 import ContentRating from '../../components/content-rating';
 import SocialButtons from '../../components/social-buttons';
 import SecondaryTag from '../../components/card/secondary-tag';
-import RequestContentModal from '../../components/request-content-modal';
+import RequestContentModal from '../../components/modal/request-content';
 import PodcastPlayer from '../../components/podcast-player/podcast-player';
 import { DocumentBody } from '../../components/article-body/document-body';
 import { TableOfContents } from '../../components/article-body/table-of-contents';
 import { VideoEmbed } from '../../components/article-body/body-components/video-embed';
 // context
-import { useRequestContentModal } from '../../contexts/request-content-modal';
+import { useModalContext } from '../../contexts/modal';
 // types
 import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
-import { IRating } from '../../components/feedback-modal/types';
+import {
+    FEEDBACK_MODAL_STAGE,
+    IRating,
+} from '../../components/modal/feedback/types';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 // utils
 import { normalizeCategory } from './util';
@@ -119,13 +120,11 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     const router = useRouter();
     const { asPath } = router;
     const { publicRuntimeConfig } = getConfig();
-    const { setModalStage } = useRequestContentModal();
+    const { openModal } = useModalContext();
 
     const [ratingStars, setRatingStars] = useState(0);
     const [pageUrl, setPageUrl] = useState('');
     const [feedbackId, setFeedbackId] = useState<string>('');
-    const [feedbackModalStage, setFeedbackModalStage] =
-        useState<feedbackModalStages>('closed');
 
     useEffect(() => {
         setPageUrl(window.location.href);
@@ -205,7 +204,18 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 setFeedbackId(data._id);
             });
         setRatingStars(stars); // This should update both rating sections but it doesn't.
-        setFeedbackModalStage(stars === 3 ? 'text' : 'checkbox');
+        openModal(
+            <FeedbackModal
+                stars={stars}
+                feedbackId={feedbackId}
+                contentCategory={category}
+                initialStage={
+                    stars === 3
+                        ? FEEDBACK_MODAL_STAGE.TEXT
+                        : FEEDBACK_MODAL_STAGE.CHECKBOX
+                }
+            />
+        );
     };
 
     const ratingSection = (
@@ -276,7 +286,11 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 <Button
                     variant="secondary"
                     sx={styles.requestBtn}
-                    onClick={() => setModalStage('text')}
+                    onClick={() =>
+                        openModal(
+                            <RequestContentModal contentCategory={category} />
+                        )
+                    }
                 >
                     {requestButtonText}
                 </Button>
@@ -580,7 +594,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             <TagSection withLabels tags={tags} />
                         </div>
                     )}
-                    {headingNodes.length > 0 && (
+                    {headingNodes.length > 0 && !isIndustryEvent && (
                         <TableOfContents
                             headingNodes={headingNodes}
                             sx={{ position: 'sticky', top: 'inc150' }}
@@ -645,16 +659,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     )}
                 </GridLayout>
             </div>
-            <FeedbackModal
-                setModalStage={setFeedbackModalStage}
-                modalStage={feedbackModalStage}
-                stars={ratingStars}
-                contentCategory={category}
-                feedbackId={feedbackId}
-            />
-            {hasRequestContentFlow && (
-                <RequestContentModal contentCategory={category} />
-            )}
         </>
     );
 };
