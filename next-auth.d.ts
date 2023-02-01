@@ -1,6 +1,5 @@
-import NextAuth, { DefaultSession } from 'next-auth';
-import { Session } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
+import { DefaultSession } from 'next-auth';
+import { Tag } from './src/interfaces/tag';
 
 declare module 'next-auth' {
     /**
@@ -16,6 +15,10 @@ declare module 'next-auth' {
         lastName: string;
         /** Custom: The user's email address, taken from profile. */
         email: string;
+        /** additional fields added as part of personalization **/
+        followedTags?: Tag[] | null;
+        lastLogin: string | null;
+        emailPreference: boolean;
     }
 
     interface Profile {
@@ -35,5 +38,6 @@ declare module 'next-auth/jwt' {
         lastName: string;
         /** Custom: The user's email address, taken from profile. */
         email: string;
+        userId?: string;
     }
 }
