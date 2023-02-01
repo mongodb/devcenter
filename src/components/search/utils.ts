@@ -7,6 +7,7 @@ export const sortByOptions: { [key in SortByType]: number } = {
     Newest: 0,
     // 'Most Popular': 1, // add back when Most Popular is implemented
     'Highest Rated': 2,
+    'Closest Upcoming': 3,
 };
 
 export interface SearchQueryParams {
