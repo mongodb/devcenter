@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import theme from '@mdb/flora/theme';
 
+// TODO: <body style="overflow: initial"> is being set somewhere that cannot be located (not in custom CSS)
+// use !important for now to avoid scrolling of window when filter overlay or modals are present
 export const globalStyles = (hasOverlay: boolean) => `
     * {
         box-sizing: border-box;
@@ -8,7 +10,7 @@ export const globalStyles = (hasOverlay: boolean) => `
     body {
         font-family: ${theme.fonts['euclid-circular-a']};
         margin: 0;
-        overflow: ${hasOverlay ? 'hidden' : 'visible'};
+        overflow: ${hasOverlay ? 'hidden' : 'visible'} !important;
     }
     a {
         text-decoration: none;

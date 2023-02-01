@@ -4,7 +4,7 @@ import { Button } from '@mdb/flora';
 import { pageWrapper } from '../../styled/layout';
 
 import Hero from '../../components/hero';
-import RequestContentModal from '../../components/request-content-modal';
+import RequestContentModal from '../../components/modal/request-content';
 import { useSearchMeta } from '../../hooks/search/meta';
 import { shouldRenderRequestButton } from './utils';
 import { CTAContainerStyles } from '../../components/hero/styles';
@@ -13,7 +13,7 @@ import { ContentTypePageProps } from './types';
 import useSearch from '../../hooks/search';
 import { isEmptyArray } from '../../hooks/search/utils';
 import { getRequestBtnText } from '../../utils/page-template-helpers';
-import { useRequestContentModal } from '../../contexts/request-content-modal';
+import { useModalContext } from '../../contexts/modal';
 import ContentTypeBody from './content-type-body';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -49,7 +49,7 @@ const ContentTypePage: React.FunctionComponent<
 
     const requestButtonText = getRequestBtnText(contentType);
 
-    const { setModalStage } = useRequestContentModal();
+    const { openModal } = useModalContext();
     const searchMetaProps = useSearchMeta(
         pageNumber,
         slug,
@@ -76,9 +76,15 @@ const ContentTypePage: React.FunctionComponent<
             shouldRenderRequestButton(contentType) ? (
                 <div sx={CTAContainerStyles}>
                     <Button
-                        variant="secondary"
-                        onClick={() => setModalStage('text')}
                         size="large"
+                        variant="secondary"
+                        onClick={() =>
+                            openModal(
+                                <RequestContentModal
+                                    contentCategory={contentType}
+                                />
+                            )
+                        }
                     >
                         {requestButtonText}
                     </Button>
@@ -114,7 +120,6 @@ const ContentTypePage: React.FunctionComponent<
                     {...props}
                 />
             </div>
-            <RequestContentModal contentCategory={contentType} />
         </>
     );
 };

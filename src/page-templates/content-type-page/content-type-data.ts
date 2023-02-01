@@ -23,7 +23,10 @@ export const getContentTypePageData = async (
         initialSearchContent = await getSearchContent({
             searchString: '',
             contentType: contentType,
-            sortBy: defaultSortByType,
+            sortBy:
+                contentType === 'Event'
+                    ? 'Closest Upcoming'
+                    : defaultSortByType,
         });
     } catch (e) {
         Sentry.captureException(e);
