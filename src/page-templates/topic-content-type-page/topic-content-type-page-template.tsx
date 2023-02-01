@@ -12,7 +12,7 @@ import { NextSeo } from 'next-seo';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { CTAContainerStyles } from '../../components/hero/styles';
-import RequestContentModal from '../../components/request-content-modal';
+import RequestContentModal from '../../components/modal/request-content';
 import {
     LocationBox,
     SearchBox,
@@ -41,7 +41,7 @@ import {
     getRequestBtnText,
     addExternalIconToSideNav,
 } from '../../utils/page-template-helpers';
-import { useRequestContentModal } from '../../contexts/request-content-modal';
+import { useModalContext } from '../../contexts/modal';
 import { Tag } from '../../interfaces/tag';
 import { tagToTopic } from '../../utils/tag-to-topic';
 import { LocationOptions } from '../../hooks/search/types';
@@ -162,7 +162,7 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
 }) => {
     const requestButtonText = getRequestBtnText(contentType);
 
-    const { setModalStage } = useRequestContentModal();
+    const { openModal } = useModalContext();
 
     const searchMetaProps = useSearchMeta(
         pageNumber,
@@ -241,8 +241,14 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
             {contentType !== 'News & Announcements' && contentType !== 'Event' && (
                 <div sx={CTAContainerStyles}>
                     <Button
-                        onClick={() => setModalStage('text')}
                         variant="secondary"
+                        onClick={() =>
+                            openModal(
+                                <RequestContentModal
+                                    contentCategory={contentType}
+                                />
+                            )
+                        }
                     >
                         {requestButtonText}
                     </Button>
@@ -377,9 +383,6 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                     </div>
                 </GridLayout>
             </div>
-            {contentType !== 'News & Announcements' && (
-                <RequestContentModal contentCategory={contentType} />
-            )}
         </>
     );
 };

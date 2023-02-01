@@ -11,12 +11,13 @@ import { customCache } from '../utils/emotion';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
 import { OverlayProvider } from '../contexts/overlay';
-import { RequestContentModalProvider } from '../contexts/request-content-modal';
 import {
     getMetaDescr,
     getCanonicalUrl,
     shouldDefineDefaultCanonical,
 } from '../utils/seo';
+import ModalRoot from '../components/modal';
+import { ModalProvider } from '../contexts/modal';
 
 interface CustomProps {
     session?: Session;
@@ -55,15 +56,16 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
             >
                 <CacheProvider value={customCache(theme)}>
                     <ThemeProvider theme={theme}>
-                        <OverlayProvider>
-                            <RequestContentModalProvider>
+                        <ModalProvider>
+                            <OverlayProvider>
                                 <Layout pagePath={pagePath}>
                                     <ErrorBoundary>
+                                        <ModalRoot />
                                         <Component {...pageProps} />
                                     </ErrorBoundary>
                                 </Layout>
-                            </RequestContentModalProvider>
-                        </OverlayProvider>
+                            </OverlayProvider>
+                        </ModalProvider>
                     </ThemeProvider>
                 </CacheProvider>
             </SessionProvider>

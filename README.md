@@ -65,7 +65,10 @@ Try to name your branch for the corresponding Jira ticket you are working on. Fo
 
 We use Jest to unit test our components. In the `src/components` directory, each component should have its own directory containing a file ending in `.test.tsx` that contains all test cases for that component.
 
-Run `yarn test` to run unit tests.
+You will need to create a `.env.test.local` file that mirrors your `.env.local` file to run tests locally.
+
+Run `yarn test` to run unit tests in "watch" mode.
+Run `yarn test:coverage` to run the full test suite and generate a coverage report in `./coverage`. You can view the report in your browser by going to `{path/to/project/coverage/lcov-report/index.html}`
 
 ### End-to-end tests
 
