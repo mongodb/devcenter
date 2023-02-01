@@ -102,7 +102,6 @@ export const nextAuthOptions: NextAuthOptions = {
                     session.emailPreference = email_preference;
                 }
             }
-            console.log(session);
             return session;
         },
     },
