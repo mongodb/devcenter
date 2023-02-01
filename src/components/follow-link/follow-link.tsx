@@ -28,7 +28,7 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     const signInURL = useSignInURL();
 
     const isLoggedIn = status === 'authenticated';
-    const followedTopics = session?.followedTopics as Tag[] | undefined;
+    const followedTopics = session?.followedTags;
     const isFollowingAnyTopics = !!followedTopics && !!followedTopics.length;
     const isFollowing = useMemo(
         () =>
