@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import {
     EThirdPartyLogoVariant,
     GridLayout,
@@ -21,6 +21,11 @@ import {
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
 import { layers, h5Styles } from '../styled/layout';
+
+import RecommendedSection from '../components/recommended-section';
+import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.preval';
+import { useSession } from 'next-auth/react';
+import { Tag } from '../interfaces/tag';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -67,7 +72,15 @@ const HomepageSearch: React.FunctionComponent = () => {
     );
 };
 
-const Home: NextPage = () => {
+interface HomeProps {
+    recommendedTags: Tag[];
+}
+
+const Home: React.FunctionComponent<HomeProps & NextPage> = ({
+    recommendedTags,
+}) => {
+    const { status } = useSession();
+
     return (
         <main
             sx={{
@@ -132,6 +145,17 @@ const Home: NextPage = () => {
                     <HomepageSearch />
                 </div>
             </GridLayout>
+
+            <RecommendedSection
+                tags={recommendedTags}
+                showFooter={status === 'authenticated'}
+                onTagSelected={
+                    (/* selectedTopics: MetaInfo[], digestChecked: boolean */) => {
+                        // TODO
+                    }
+                }
+            />
+
             <GridLayout>
                 <div
                     sx={{
@@ -407,6 +431,30 @@ const Home: NextPage = () => {
             </div>
         </main>
     );
+};
+
+export const getStaticProps: GetStaticProps<{
+    recommendedTags: Tag[];
+}> = async () => {
+    const topicCategories = [
+        'L1Product',
+        'L2Product',
+        'Technology',
+        'ProgrammingLanguage',
+    ];
+
+    const recommendedTags = getAllMetaInfoRandomPreval
+        .filter(topic => topicCategories.indexOf(topic.category) > -1)
+        .slice(0, 10)
+        .map(topic => ({
+            name: topic.tagName,
+            type: topic.category,
+            slug: topic.slug,
+        }));
+
+    return {
+        props: { recommendedTags },
+    };
 };
 
 export default Home;
