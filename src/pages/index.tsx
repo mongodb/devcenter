@@ -27,7 +27,6 @@ import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.prev
 import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
 import usePersonalizedContent from '../hooks/personalization';
-import { MOCK_ARTICLE_TAGS } from '../mockdata';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -159,12 +158,12 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                     tags={recommendedTags}
                     content={content}
                     showFooter
-                    onTagsSaved={
-                        (/* selectedTags: Tag[], digestChecked: boolean */) => {
-                            // TODO: Replace with call to user preferences endpoint
-                            setFollowedTags(MOCK_ARTICLE_TAGS);
-                        }
-                    }
+                    onTagsSaved={(
+                        selectedTags: Tag[] /*, digestChecked: boolean */
+                    ) => {
+                        // TODO: Replace with call to user preferences endpoint
+                        setFollowedTags(selectedTags);
+                    }}
                 />
             )}
 
