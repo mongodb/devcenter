@@ -5,6 +5,7 @@ import AdditionalContentPlaceholder from './additional-content-placeholder';
 
 interface RecommendedSectionProps {
     content?: ContentItem[];
+    onSeeTopics: () => void;
 }
 
 const placeholderStyles = (contentLength: number) => {
@@ -19,7 +20,7 @@ const placeholderStyles = (contentLength: number) => {
 
 const RecommendedContentSection: React.FunctionComponent<
     RecommendedSectionProps
-> = ({ content = [] }) => {
+> = ({ content = [], onSeeTopics }) => {
     const totalItems = Math.min(content.length + 1, 4);
 
     return (
@@ -44,6 +45,7 @@ const RecommendedContentSection: React.FunctionComponent<
             {content.length < 4 && (
                 <AdditionalContentPlaceholder
                     extraStyles={placeholderStyles(content.length)}
+                    onSeeTopics={onSeeTopics}
                 />
             )}
         </Grid>

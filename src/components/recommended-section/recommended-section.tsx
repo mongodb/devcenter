@@ -1,4 +1,4 @@
-import { TypographyScale } from '@mdb/flora';
+import { Link, TypographyScale } from '@mdb/flora';
 import theme from '@mdb/flora/theme';
 
 import { h5Styles } from '../../styled/layout';
@@ -6,12 +6,15 @@ import { ContentItem } from '../../interfaces/content-item';
 import { Tag } from '../../interfaces/tag';
 import RecommendedTagSection from './recommended-tag-section';
 import RecommendedContentSection from './recommended-content-section';
+import { useModalContext } from '../../contexts/modal';
+import { ScrollPersonalizationModal } from '../modal/personalization';
+import { useCallback, useState } from 'react';
 
 interface RecommendedSectionProps {
     tags?: Tag[];
     content?: ContentItem[];
-    onTagsSaved?: (topics: Tag[], digestChecked: boolean) => void;
-    onTagSelected?: (topic: Tag) => void;
+    onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
+    onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
     showFooter?: boolean;
 }
 
@@ -27,19 +30,50 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     showFooter = true,
     onTagSelected = () => undefined,
     onTagsSaved = () => undefined,
-}) =>
-    !!tags.length || !!content.length ? (
+}) => {
+    const { openModal } = useModalContext();
+    const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+
+    const onViewAllTopics = useCallback(() => {
+        openModal(
+            <ScrollPersonalizationModal
+                title="What topics are you interested in?"
+                subtitle="Follow topics for personalized recommendations"
+                existingSelections={selectedTags}
+            />,
+            { hideCloseBtn: true }
+        );
+    }, [openModal, selectedTags]);
+
+    return !!tags.length || !!content.length ? (
         <div sx={recommendedSectionStyles}>
-            <TypographyScale
-                variant="heading2"
-                customStyles={{
-                    ...h5Styles,
-                    marginBottom: 'inc20',
+            <div
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                 }}
             >
-                Recommended for you
-            </TypographyScale>
+                <TypographyScale
+                    variant="heading2"
+                    customStyles={{
+                        ...h5Styles,
+                        marginBottom: 'inc20',
+                    }}
+                >
+                    Recommended for you
+                </TypographyScale>
 
+                <Link
+                    onClick={onViewAllTopics}
+                    linkIcon="arrow"
+                    linkIconDisableExpand={true}
+                >
+                    {content.length
+                        ? 'Follow More Topics'
+                        : 'View All Topics to Follow'}
+                </Link>
+            </div>
             <TypographyScale
                 variant="body1"
                 color="default"
@@ -52,7 +86,10 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
             </TypographyScale>
 
             {!!content.length && (
-                <RecommendedContentSection content={content} />
+                <RecommendedContentSection
+                    content={content}
+                    onSeeTopics={onViewAllTopics}
+                />
             )}
 
             {!!tags.length && !content.length && (
@@ -60,10 +97,14 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                     tags={tags}
                     showFooter={showFooter}
                     onTagsSaved={onTagsSaved}
-                    onTagSelected={onTagSelected}
+                    onTagSelected={(tag: Tag, allSelectedTags: Tag[]) => {
+                        onTagSelected(tag, allSelectedTags);
+                        setSelectedTags(allSelectedTags);
+                    }}
                 />
             )}
         </div>
     ) : null;
+};
 
 export default RecommendedSection;

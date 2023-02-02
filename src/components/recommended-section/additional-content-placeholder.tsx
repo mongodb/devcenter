@@ -5,11 +5,12 @@ import { ThemeUICSSObject } from 'theme-ui';
 
 interface AdditionalContentPlaceholderProps {
     extraStyles?: ThemeUICSSObject;
+    onSeeTopics: () => void;
 }
 
 const AdditionalContentPlaceholder: React.FunctionComponent<
     AdditionalContentPlaceholderProps
-> = ({ extraStyles = {} }) => (
+> = ({ extraStyles = {}, onSeeTopics }) => (
     <div
         sx={{
             ...cardWrapperStyles,
@@ -31,7 +32,9 @@ const AdditionalContentPlaceholder: React.FunctionComponent<
             Follow more topics for additional recommendations
         </TypographyScale>
 
-        <Button variant="secondary">See topics</Button>
+        <Button onClick={onSeeTopics} variant="secondary">
+            See topics
+        </Button>
     </div>
 );
 

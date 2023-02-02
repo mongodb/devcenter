@@ -37,8 +37,8 @@ const footerStyles = (show: boolean) => ({
 
 interface RecommendedTagSectionProps {
     tags?: Tag[];
-    onTagsSaved?: (topics: Tag[], digestChecked: boolean) => void;
-    onTagSelected?: (topic: Tag) => void;
+    onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
+    onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
     showFooter: boolean;
 }
 
@@ -60,7 +60,7 @@ const RecommendedTagSection: React.FunctionComponent<
             );
 
             if (index === -1) {
-                onTagSelected(tag);
+                onTagSelected(tag, [...selectedTags, tag]);
                 setSelectedTags([...selectedTags, tag]);
             } else {
                 const newSelected = [...selectedTags];
