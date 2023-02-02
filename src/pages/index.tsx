@@ -26,6 +26,7 @@ import RecommendedSection from '../components/recommended-section';
 import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.preval';
 import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
+import usePersonalizedContent from '../hooks/personalization';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -80,6 +81,12 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
     recommendedTags,
 }) => {
     const { status } = useSession();
+
+    // TODO: Grab from session and remove this state variable
+    const [followedTags, setFollowedTags] = useState<Tag[]>([]);
+
+    const { data } = usePersonalizedContent(followedTags);
+    const content = followedTags.length ? data : [];
 
     return (
         <main
@@ -146,15 +153,19 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                 </div>
             </GridLayout>
 
-            <RecommendedSection
-                tags={recommendedTags}
-                showFooter={status === 'authenticated'}
-                onTagSelected={
-                    (/* selectedTopics: MetaInfo[], digestChecked: boolean */) => {
-                        // TODO
-                    }
-                }
-            />
+            {status === 'authenticated' && (
+                <RecommendedSection
+                    tags={recommendedTags}
+                    content={content}
+                    showFooter
+                    onTagsSaved={(
+                        selectedTags: Tag[] /*, digestChecked: boolean */
+                    ) => {
+                        // TODO: Replace with call to user preferences endpoint
+                        setFollowedTags(selectedTags);
+                    }}
+                />
+            )}
 
             <GridLayout>
                 <div
@@ -445,7 +456,7 @@ export const getStaticProps: GetStaticProps<{
 
     const recommendedTags = getAllMetaInfoRandomPreval
         .filter(topic => topicCategories.indexOf(topic.category) > -1)
-        .slice(0, 10)
+        .slice(0, 8)
         .map(topic => ({
             name: topic.tagName,
             type: topic.category,
