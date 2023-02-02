@@ -9,6 +9,7 @@ import RecommendedContentSection from './recommended-content-section';
 import { useModalContext } from '../../contexts/modal';
 import { ScrollPersonalizationModal } from '../modal/personalization';
 import { useCallback, useState } from 'react';
+import { ThemeUICSSObject } from 'theme-ui';
 
 interface RecommendedSectionProps {
     tags?: Tag[];
@@ -18,10 +19,13 @@ interface RecommendedSectionProps {
     showFooter?: boolean;
 }
 
-const recommendedSectionStyles = {
+const recommendedSectionStyles: ThemeUICSSObject = {
     margin: 'auto',
     maxWidth: theme.sizes.maxWidthDesktop,
     marginBottom: 'section40',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
 };
 
 const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
@@ -34,7 +38,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     const { openModal } = useModalContext();
     const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
-    const onViewAllTopics = useCallback(() => {
+    const openPersonalizationModal = useCallback(() => {
         openModal(
             <ScrollPersonalizationModal
                 title="What topics are you interested in?"
@@ -47,39 +51,43 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
 
     return !!tags.length || !!content.length ? (
         <div sx={recommendedSectionStyles}>
-            <div
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
+            <TypographyScale
+                variant="heading2"
+                customStyles={{
+                    ...h5Styles,
+                    marginBottom: 'inc20',
+                    flexGrow: 1,
+                    order: 1,
                 }}
             >
-                <TypographyScale
-                    variant="heading2"
-                    customStyles={{
-                        ...h5Styles,
-                        marginBottom: 'inc20',
-                    }}
-                >
-                    Recommended for you
-                </TypographyScale>
+                Recommended for you
+            </TypographyScale>
 
-                <Link
-                    onClick={onViewAllTopics}
-                    linkIcon="arrow"
-                    linkIconDisableExpand={true}
-                >
-                    {content.length
-                        ? 'Follow More Topics'
-                        : 'View All Topics to Follow'}
-                </Link>
-            </div>
+            <Link
+                onClick={openPersonalizationModal}
+                linkIcon="arrow"
+                linkIconDisableExpand={true}
+                customStyles={{
+                    alignSelf: 'flex-end',
+                    margin: 'auto 0 auto 0',
+                    flexShrink: 1,
+                    flexBasis: ['100%', null, null, 'auto'],
+                    order: [2, null, null, 1],
+                    marginBottom: ['inc30', null, null, 0],
+                }}
+            >
+                {content.length
+                    ? 'Follow More Topics'
+                    : 'View All Topics to Follow'}
+            </Link>
             <TypographyScale
                 variant="body1"
                 color="default"
                 sx={{
                     display: 'block',
                     marginBottom: 'inc50',
+                    flexBasis: '100%',
+                    order: 1,
                 }}
             >
                 Select topics to follow for recommended content
@@ -88,7 +96,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
             {!!content.length && (
                 <RecommendedContentSection
                     content={content}
-                    onSeeTopics={onViewAllTopics}
+                    onSeeTopics={openPersonalizationModal}
                 />
             )}
 

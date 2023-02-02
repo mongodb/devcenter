@@ -30,6 +30,8 @@ const RecommendedContentSection: React.FunctionComponent<
             gap="inc30"
             sx={{
                 overflow: 'visible',
+                flexBasis: '100%',
+                order: 1,
             }}
         >
             {content.map((item, i) => (
