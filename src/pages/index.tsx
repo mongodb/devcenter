@@ -26,8 +26,8 @@ import RecommendedSection from '../components/recommended-section';
 import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.preval';
 import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
-import { ContentItem } from '../interfaces/content-item';
-import { MOCK_ARTICLE_CONTENT } from '../mockdata';
+import usePersonalizedContent from '../hooks/personalization';
+import { MOCK_ARTICLE_TAGS } from '../mockdata';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -83,7 +83,11 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
 }) => {
     const { status } = useSession();
 
-    const [content, setContent] = useState<ContentItem[]>([]);
+    // TODO: Grab from session and remove this state variable
+    const [followedTags, setFollowedTags] = useState<Tag[]>([]);
+
+    const { data } = usePersonalizedContent(followedTags);
+    const content = followedTags.length ? data : [];
 
     return (
         <main
@@ -158,7 +162,7 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                     onTagsSaved={
                         (/* selectedTags: Tag[], digestChecked: boolean */) => {
                             // TODO: Replace with call to user preferences endpoint
-                            setContent(MOCK_ARTICLE_CONTENT as ContentItem[]);
+                            setFollowedTags(MOCK_ARTICLE_TAGS);
                         }
                     }
                 />
