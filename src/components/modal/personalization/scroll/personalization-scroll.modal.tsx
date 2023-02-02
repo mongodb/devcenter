@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Grid } from 'theme-ui';
+import { useSession } from 'next-auth/react';
 import { Button, TypographyScale, Checkbox } from '@mdb/flora';
 import { TopicCard } from '@mdb/devcenter-components';
 import { useModalContext } from '../../../../contexts/modal';
@@ -16,7 +17,9 @@ const ScrollPersonalizationModal = ({
     subtitle = '',
     existingSelections = [],
 }: ScrollModalProps) => {
+    const { data: session } = useSession();
     const { closeModal } = useModalContext();
+
     const [isOptedIn, setIsOptedIn] = useState(true);
     const [selections, setSelections] =
         useState<Array<Tag>>(existingSelections);
@@ -34,10 +37,13 @@ const ScrollPersonalizationModal = ({
     };
 
     const onCompletion = () => {
-        submitPersonalizationSelections({
-            preferences: selections,
-            emailPreference: isOptedIn,
-        });
+        submitPersonalizationSelections(
+            {
+                followedTags: selections,
+                emailPreference: isOptedIn,
+            },
+            session?.userId
+        );
         closeModal();
     };
 

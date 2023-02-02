@@ -4,10 +4,19 @@ import { useModalContext } from '../../contexts/modal';
 const Modal = () => {
     const { component, props, closeModal } = useModalContext();
 
+    function onLightboxClose() {
+        // TODO: will this override then other close methods?
+        if (props?.onCloseCallback) {
+            props.onCloseCallback();
+        }
+
+        closeModal();
+    }
+
     return (
         <Lightbox
             isOpen={!!component}
-            onClose={closeModal}
+            onClose={onLightboxClose}
             sx={{
                 '> div': { height: 'unset' },
                 ...(props?.hideCloseBtn && {

@@ -1,5 +1,7 @@
+import { Tag } from '../../../interfaces/tag';
 import { MetaInfo } from '../../../interfaces/meta-info';
 import { PersonalizationModalConfig } from './types';
+import { getURLPath } from '../../../utils/format-url-path';
 
 export function initializePersonalizationConfig(metaInfo: MetaInfo[]) {
     const languages: PersonalizationModalConfig = {
@@ -28,8 +30,24 @@ export function initializePersonalizationConfig(metaInfo: MetaInfo[]) {
     return [languages, technologies, products];
 }
 
-// TODO: you will also need to pass userId here to construct the path for the PUT
-// eslint-disable-next-line
-export function submitPersonalizationSelections(body: any) {
-    // do the http req here
+export async function submitPersonalizationSelections(
+    {
+        followedTags,
+        emailPreference,
+    }: {
+        followedTags: Array<Tag>;
+        emailPreference: boolean;
+    },
+    userId: unknown
+) {
+    const requestUpdate = await fetch(
+        getURLPath(`/api/userPreferences/${userId}`) as string,
+        {
+            method: 'PUT',
+            body: JSON.stringify({ followedTags, emailPreference }),
+        }
+    );
+
+    const updated = await requestUpdate.json();
+    console.log('updated', updated);
 }

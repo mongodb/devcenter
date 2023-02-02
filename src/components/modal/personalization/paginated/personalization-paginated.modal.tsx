@@ -8,6 +8,7 @@ import {
     TypographyScale,
     ESystemIconNames,
 } from '@mdb/flora';
+import { useSession } from 'next-auth/react';
 import { TopicCard } from '@mdb/devcenter-components';
 import { useModalContext } from '../../../../contexts/modal';
 import paginationConfig from '../../../../service/get-personalization-modal-config.preval';
@@ -18,6 +19,7 @@ import { tagToTopic } from '../../../../utils/tag-to-topic';
 import styles from '../styles';
 
 const PaginatedPersonalizationModal = () => {
+    const { data: session } = useSession();
     const { closeModal } = useModalContext();
 
     const [tabIndex, setTabIndex] = useState(0);
@@ -40,10 +42,13 @@ const PaginatedPersonalizationModal = () => {
     };
 
     const onCompletion = () => {
-        submitPersonalizationSelections({
-            preferences: selections,
-            emailPreference: isOptedIn,
-        });
+        submitPersonalizationSelections(
+            {
+                followedTags: selections,
+                emailPreference: isOptedIn,
+            },
+            session?.userId
+        );
         closeModal();
     };
 
