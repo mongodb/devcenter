@@ -69,7 +69,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                 linkIconDisableExpand={true}
                 customStyles={{
                     alignSelf: 'flex-end',
-                    margin: 'auto 0 auto 0',
+                    margin: 'auto 0',
                     flexShrink: 1,
                     flexBasis: ['100%', null, null, 'auto'],
                     order: [2, null, null, 1],
