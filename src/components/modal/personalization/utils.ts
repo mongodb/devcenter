@@ -40,7 +40,8 @@ export async function submitPersonalizationSelections(
     },
     userId: unknown
 ) {
-    const requestUpdate = await fetch(
+    // TODO: might need to be updated based on integration
+    const req = await fetch(
         getURLPath(`/api/userPreferences/${userId}`) as string,
         {
             method: 'PUT',
@@ -48,6 +49,6 @@ export async function submitPersonalizationSelections(
         }
     );
 
-    const updated = await requestUpdate.json();
-    console.log('updated', updated);
+    const res = await req.json();
+    return res; // there's no current plan to display success/failure to user
 }

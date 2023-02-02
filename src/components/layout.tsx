@@ -40,7 +40,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
         if (session && !session?.lastLogin) {
             openModal(
                 <PaginatedPersonalizationModal />,
-                // TODO: add comment once confirming if this works
+                // Pass default values to PUT if user dismisses the modal so their "lastLogin" flag can be updated
                 {
                     onCloseCallback: () =>
                         submitPersonalizationSelections(

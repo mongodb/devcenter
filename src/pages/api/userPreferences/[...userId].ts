@@ -5,6 +5,7 @@ async function userPreferencesHandler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    // TODO: just set up a basic handler. Might need to change based on integration
     try {
         const request = await fetch(
             `${process.env.PERSONALIZATION_URL}/user_preferences/${req.query.userId}`,
