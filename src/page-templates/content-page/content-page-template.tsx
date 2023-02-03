@@ -63,15 +63,17 @@ import styles from './styles';
 import {
     sideNavStyles,
     sideNavTitleStyles,
+    titleFollowTopicStyles,
 } from '../../components/tertiary-nav/styles';
 import { FullApplication, Snippet } from '../../components/icons';
 import { iconStyles } from '../../components/topic-cards-container/styles';
 import { formatEventTypes } from '../../utils/format-text';
+import FollowLink from '../../components/follow-link';
+import { Tag } from '../../interfaces/tag';
 
 interface ContentPageProps {
     crumbs: Crumb[];
-    topicSlug: string;
-    topicName: string;
+    topic: Tag;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
     relatedContent: ContentItem[];
@@ -83,8 +85,7 @@ const parseUndefinedValue = (description: string | undefined): string =>
 
 const ContentPageTemplate: NextPage<ContentPageProps> = ({
     crumbs,
-    topicSlug,
-    topicName,
+    topic,
     tertiaryNavItems,
     relatedContent,
     previewMode,
@@ -637,14 +638,17 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             <div sx={styles.wrapper}>
                 <GridLayout sx={{ rowGap: 0 }}>
                     <div sx={sideNavStyles(5)}>
-                        <a href={getURLPath(topicSlug)}>
-                            <TypographyScale
-                                variant="heading6"
-                                sx={sideNavTitleStyles}
-                            >
-                                {topicName}
-                            </TypographyScale>
-                        </a>
+                        <div sx={titleFollowTopicStyles}>
+                            <a href={getURLPath(topic.slug)}>
+                                <TypographyScale
+                                    variant="heading6"
+                                    sx={sideNavTitleStyles}
+                                >
+                                    {topic.name}
+                                </TypographyScale>
+                            </a>
+                            <FollowLink topic={topic} iconsOnly />
+                        </div>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
                     <Breadcrumbs crumbs={crumbs} sx={styles.breadcrumbs} />

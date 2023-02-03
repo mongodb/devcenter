@@ -53,6 +53,7 @@ export const sideNavTitleStyles = {
     borderColor: 'black20',
     py: 'inc20',
     px: 'inc60',
+    paddingRight: 0,
     '&:hover': {
         borderLeftColor: 'green60',
         fontWeight: 700,
@@ -75,3 +76,10 @@ export const sideNavStyles = (rowCount?: number) =>
             },
         },
     } as ThemeUICSSObject);
+
+export const titleFollowTopicStyles = {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '16px',
+    alignItems: 'center',
+} as ThemeUICSSObject;

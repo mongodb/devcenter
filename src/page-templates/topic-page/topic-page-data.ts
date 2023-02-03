@@ -11,6 +11,7 @@ import { getFeaturedForContent } from '../../service/get-featured-for-content';
 import { getL1L2Content } from '../../service/get-l1-l2-content';
 import allContentPreval from '../../service/get-all-content.preval';
 import allMetaInfoPreval from '../../service/get-all-meta-info.preval';
+import { TagType } from '../../types/tag-type';
 
 export const getTopicPageData = async (
     l1_l2: string,
@@ -72,7 +73,7 @@ export const getTopicPageData = async (
             .slice(0, 12);
     }
 
-    const topics = metaInfoForTopic?.topics
+    const subTopics = metaInfoForTopic?.topics
         ? metaInfoForTopic.topics.map(({ tagName, slug, category }) => ({
               name: tagName,
               slug,
@@ -80,20 +81,22 @@ export const getTopicPageData = async (
           }))
         : [];
 
+    const topic: Tag = {
+        name: metaInfoForTopic?.tagName ?? '',
+        type: metaInfoForTopic?.category ?? ('' as TagType),
+        slug: slugString,
+    };
+
     const data = {
         crumbs,
-        name: metaInfoForTopic?.tagName ? metaInfoForTopic.tagName : '',
-        slug: slugString,
         content,
-        contentType: l1_l2,
         variant,
         tertiaryNavItems: tertiaryNavItems,
         featured: featured,
-        description: metaInfoForTopic?.description
-            ? metaInfoForTopic.description
-            : '',
-        ctas: metaInfoForTopic?.ctas ? metaInfoForTopic.ctas : [],
-        topics,
+        description: metaInfoForTopic?.description ?? '',
+        ctas: metaInfoForTopic?.ctas ?? [],
+        topic,
+        subTopics,
         relatedTopics,
         initialSearchContent,
         pageNumber,

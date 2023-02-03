@@ -4,6 +4,7 @@ import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import ContentPageTemplate from '../../page-templates/content-page/content-page-template';
+import { Tag } from '../../interfaces/tag';
 import {
     getPreviewContentForArticles,
     getPreviewContentForEvents,
@@ -11,8 +12,7 @@ import {
 
 interface ContentPageProps {
     crumbs: Crumb[];
-    topicSlug: string;
-    topicName: string;
+    topic: Tag;
     contentItem: ContentItem;
     relatedContent: ContentItem[];
     tertiaryNavItems: TertiaryNavItem[];
@@ -21,8 +21,7 @@ interface ContentPageProps {
 
 const ContentPage: NextPage<ContentPageProps> = ({
     crumbs,
-    topicSlug,
-    topicName,
+    topic,
     contentItem,
     tertiaryNavItems,
     relatedContent,
@@ -31,8 +30,7 @@ const ContentPage: NextPage<ContentPageProps> = ({
     return (
         <ContentPageTemplate
             crumbs={crumbs}
-            topicSlug={topicSlug}
-            topicName={topicName}
+            topic={topic}
             contentItem={contentItem}
             tertiaryNavItems={tertiaryNavItems}
             relatedContent={relatedContent}
@@ -46,6 +44,11 @@ export default ContentPage;
 export const getServerSideProps = async (context: any) => {
     const { slug } = context.query;
     const slugString = slug.join('/');
+    const topic: Tag = {
+        name: '',
+        type: 'Technology',
+        slug: '',
+    };
     let contentItem;
     if (slugString.startsWith('events/')) {
         contentItem = await getPreviewContentForEvents('/' + slugString);
@@ -60,8 +63,7 @@ export const getServerSideProps = async (context: any) => {
         crumbs: [],
         contentItem,
         tertiaryNavItems: [],
-        topicSlug: '',
-        topicName: '',
+        topic,
         relatedContent: [],
         previewMode: true,
     };

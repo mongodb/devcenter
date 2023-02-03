@@ -23,6 +23,7 @@ import { SearchItem } from '../../components/search/types';
 import {
     sideNavStyles,
     sideNavTitleStyles,
+    titleFollowTopicStyles,
 } from '../../components/tertiary-nav/styles';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import { TopicCardsContainer } from '../../components/topic-cards-container';
@@ -46,6 +47,7 @@ import { Tag } from '../../interfaces/tag';
 import { tagToTopic } from '../../utils/tag-to-topic';
 import { LocationOptions } from '../../hooks/search/types';
 import EventResults from '../../components/event-results';
+import FollowLink from '../../components/follow-link';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
@@ -54,8 +56,7 @@ interface TopicContentTypePageProps {
     crumbs: Crumb[];
     contentType: PillCategory;
     tertiaryNavItems: TertiaryNavItem[];
-    topicName: string;
-    topicSlug: string;
+    topic: Tag;
     contentTypeSlug: string;
     contentTypeAggregateSlug: string;
     description: string;
@@ -151,8 +152,7 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
     crumbs,
     contentType,
     tertiaryNavItems,
-    topicName,
-    topicSlug,
+    topic,
     contentTypeSlug,
     contentTypeAggregateSlug,
     description,
@@ -160,6 +160,7 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
     initialSearchContent,
     pageNumber,
 }) => {
+    const { name: topicName, slug: topicSlug } = topic;
     const requestButtonText = getRequestBtnText(contentType);
 
     const { openModal } = useModalContext();
@@ -277,14 +278,17 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                     }}
                 >
                     <div sx={sideNavStyles(mainGridDesktopRowsCount)}>
-                        <a href={getURLPath(topicSlug)}>
-                            <TypographyScale
-                                variant="heading6"
-                                sx={sideNavTitleStyles}
-                            >
-                                {topicName}
-                            </TypographyScale>
-                        </a>
+                        <div sx={titleFollowTopicStyles}>
+                            <a href={getURLPath(topicSlug)}>
+                                <TypographyScale
+                                    variant="heading6"
+                                    sx={sideNavTitleStyles}
+                                >
+                                    {topicName}
+                                </TypographyScale>
+                            </a>
+                            <FollowLink topic={topic} iconsOnly />
+                        </div>
 
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
