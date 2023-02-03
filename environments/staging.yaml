@@ -30,7 +30,6 @@ envSecrets:
   REALM_API_KEY: devcenter-secrets
   PERSONALIZATION_URL: devcenter-secrets
 
-
 autoscaling:
   minReplicas: 2
   maxReplicas: 4
