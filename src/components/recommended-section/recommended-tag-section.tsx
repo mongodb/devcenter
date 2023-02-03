@@ -33,12 +33,14 @@ const footerStyles = (show: boolean) => ({
     maxHeight: show ? '106px' : '0',
     overflow: 'hidden',
     transition: 'max-height 0.25s ease-in-out',
+    flexBasis: '100%',
+    order: 3,
 });
 
 interface RecommendedTagSectionProps {
     tags?: Tag[];
-    onTagsSaved?: (topics: Tag[], digestChecked: boolean) => void;
-    onTagSelected?: (topic: Tag) => void;
+    onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
+    onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
     showFooter: boolean;
 }
 
@@ -60,7 +62,7 @@ const RecommendedTagSection: React.FunctionComponent<
             );
 
             if (index === -1) {
-                onTagSelected(tag);
+                onTagSelected(tag, [...selectedTags, tag]);
                 setSelectedTags([...selectedTags, tag]);
             } else {
                 const newSelected = [...selectedTags];
@@ -76,10 +78,18 @@ const RecommendedTagSection: React.FunctionComponent<
     }, [selectedTags, digestChecked, onTagsSaved]);
 
     return (
-        <div>
-            <Grid columns={4} gap={16} sx={{ marginBottom: 'inc50' }}>
+        <>
+            <Grid
+                columns={[2, null, 4]}
+                gap={16}
+                sx={{ marginBottom: 'inc50', flexBasis: '100%', order: 1 }}
+            >
                 {tags.map(tag => {
-                    const { title, icon } = tagToTopic(tag);
+                    const { title, icon } = tagToTopic({
+                        name: tag.name,
+                        type: tag.type,
+                        slug: '',
+                    } as Tag);
 
                     return (
                         <div key={title} data-testid="recommended-topic-tag">
@@ -116,7 +126,7 @@ const RecommendedTagSection: React.FunctionComponent<
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

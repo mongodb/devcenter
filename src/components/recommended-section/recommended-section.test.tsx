@@ -53,7 +53,9 @@ describe('Recommended Section', () => {
 
         await userEvent.click(firstTag);
 
-        expect(mockTagSelected).toBeCalledWith(MOCK_ARTICLE_TAGS[0]);
+        expect(mockTagSelected).toBeCalledWith(MOCK_ARTICLE_TAGS[0], [
+            MOCK_ARTICLE_TAGS[0],
+        ]);
     });
 
     test('Clicking save button calls onTagsSaved prop', async () => {
