@@ -32,6 +32,7 @@ const RecommendedContentSection: React.FunctionComponent<
                 overflow: 'visible',
                 flexBasis: '100%',
                 order: 1,
+                marginBottom: ['inc30', null, null, 0],
             }}
         >
             {content.map((item, i) => (

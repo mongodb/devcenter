@@ -70,10 +70,10 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                 customStyles={{
                     alignSelf: 'flex-end',
                     margin: 'auto 0',
-                    flexShrink: 1,
+                    marginBottom: [0, null, null, 'auto'],
                     flexBasis: ['100%', null, null, 'auto'],
+                    flexShrink: 1,
                     order: [2, null, null, 1],
-                    marginBottom: ['inc30', null, null, 0],
                 }}
             >
                 {content.length
