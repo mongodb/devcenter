@@ -1,3 +1,4 @@
+import { Tag } from '../../interfaces/tag';
 import { Crumb } from '../breadcrumbs/types';
 export interface CTA {
     text: string;
@@ -9,4 +10,5 @@ export interface HeroProps {
     name: string;
     description?: string;
     ctas?: JSX.Element | null;
+    topic?: Tag;
 }

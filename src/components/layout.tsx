@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Global, css } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
-import getConfig from 'next/config';
 import { useSession } from 'next-auth/react';
 import { UnifiedFooter } from '@mdb/consistent-nav';
 import { globalStyles, Main } from '../styled/layout';
@@ -13,6 +12,7 @@ import { useEnsureImageAlts } from '../utils/seo';
 import { useModalContext } from '../contexts/modal';
 import { PaginatedPersonalizationModal } from './modal/personalization';
 import { submitPersonalizationSelections } from './modal/personalization/utils';
+import getSignInURL from '../utils/get-sign-in-url';
 
 const navStyles = {
     'nav > div > div > ul': {
@@ -33,8 +33,6 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     const { hasOverlay } = useContext(OverlayContext);
     const { component: hasModalOpen, openModal } = useModalContext();
     const { data: session } = useSession();
-    const { publicRuntimeConfig } = getConfig();
-    const { absoluteBasePath, accountPortalUrl } = publicRuntimeConfig;
 
     useEffect(() => {
         if (session && !session?.lastLogin) {
@@ -55,16 +53,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
         }
     }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // For sign in handling, the user will need to be able to return
-    // to the page they were previously on before clicking the login button. The
-    // "fromPagePath" query parameter will hold this value.
-    const fromPagePath = pagePath ? `?fromPagePath=${pagePath}` : '';
-    // The "fromURI" will be sent to the account portal for redirection, and will
-    // include the above information for when it redirects back to DevCenter.
-    const signInParams = new URLSearchParams({
-        fromURI: `${absoluteBasePath}/auth/signin/${fromPagePath}`,
-    });
-    const signInUrl = `${accountPortalUrl}?` + signInParams.toString();
+    const signInUrl = getSignInURL(pagePath);
 
     // SEO workaround because unified nav/footer doesn't set their image alts properly
     const [layoutRef, setLayoutRef] = useState<HTMLElement | null>();

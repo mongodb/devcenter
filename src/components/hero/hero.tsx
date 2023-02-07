@@ -5,24 +5,36 @@ import { TypographyScale, GridLayout } from '@mdb/flora';
 import Breadcrumbs from '../breadcrumbs';
 import { HeroProps } from './types';
 import { heroContainerStyles } from './styles';
+import FollowLink from '../follow-link';
 
 const Hero: React.FunctionComponent<HeroProps> = memo(
-    ({ crumbs, name, description, ctas }) => {
+    ({ crumbs, name, description, ctas, topic }) => {
         return (
             <div sx={heroContainerStyles}>
                 <GridLayout sx={{ rowGap: 'inc30' }}>
                     {crumbs && <Breadcrumbs crumbs={crumbs} />}
                     <div sx={{ gridColumn: ['span 6', null, 'span 5'] }}>
-                        <TypographyScale
-                            customElement="h1"
-                            variant="heading2"
-                            color="mark"
+                        <div
                             sx={{
                                 marginBottom: ['inc20', null, null, 'inc40'],
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 'inc30',
                             }}
                         >
-                            {name}
-                        </TypographyScale>
+                            <TypographyScale
+                                customElement="h1"
+                                variant="heading2"
+                                color="mark"
+                                // This styling is to accomodate the "Follow" button on topic pages.
+                                sx={{
+                                    width: topic ? 'min-content' : 'initial',
+                                }}
+                            >
+                                {name}
+                            </TypographyScale>
+                            {!!topic && <FollowLink topic={topic} />}
+                        </div>
                         {!!description && (
                             <TypographyScale variant="body2">
                                 {description}

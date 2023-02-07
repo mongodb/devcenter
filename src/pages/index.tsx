@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import {
     EThirdPartyLogoVariant,
     GridLayout,
@@ -21,6 +21,12 @@ import {
 import { getURLPath } from '../utils/format-url-path';
 import { useRouter } from 'next/router';
 import { layers, h5Styles } from '../styled/layout';
+
+import RecommendedSection from '../components/recommended-section';
+import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.preval';
+import { useSession } from 'next-auth/react';
+import { Tag } from '../interfaces/tag';
+import usePersonalizedContent from '../hooks/personalization';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -67,7 +73,21 @@ const HomepageSearch: React.FunctionComponent = () => {
     );
 };
 
-const Home: NextPage = () => {
+interface HomeProps {
+    recommendedTags: Tag[];
+}
+
+const Home: React.FunctionComponent<HomeProps & NextPage> = ({
+    recommendedTags,
+}) => {
+    const { status } = useSession();
+
+    // TODO: Grab from session and remove this state variable
+    const [followedTags, setFollowedTags] = useState<Tag[]>([]);
+
+    const { data } = usePersonalizedContent(followedTags);
+    const content = followedTags.length ? data : [];
+
     return (
         <main
             sx={{
@@ -132,6 +152,21 @@ const Home: NextPage = () => {
                     <HomepageSearch />
                 </div>
             </GridLayout>
+
+            {status === 'authenticated' && (
+                <RecommendedSection
+                    tags={recommendedTags}
+                    content={content}
+                    showFooter
+                    onTagsSaved={(
+                        selectedTags: Tag[] /*, digestChecked: boolean */
+                    ) => {
+                        // TODO: Replace with call to user preferences endpoint
+                        setFollowedTags(selectedTags);
+                    }}
+                />
+            )}
+
             <GridLayout>
                 <div
                     sx={{
@@ -407,6 +442,30 @@ const Home: NextPage = () => {
             </div>
         </main>
     );
+};
+
+export const getStaticProps: GetStaticProps<{
+    recommendedTags: Tag[];
+}> = async () => {
+    const topicCategories = [
+        'L1Product',
+        'L2Product',
+        'Technology',
+        'ProgrammingLanguage',
+    ];
+
+    const recommendedTags = getAllMetaInfoRandomPreval
+        .filter(topic => topicCategories.indexOf(topic.category) > -1)
+        .slice(0, 8)
+        .map(topic => ({
+            name: topic.tagName,
+            type: topic.category,
+            slug: topic.slug,
+        }));
+
+    return {
+        props: { recommendedTags },
+    };
 };
 
 export default Home;
