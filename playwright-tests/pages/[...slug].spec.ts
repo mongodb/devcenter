@@ -25,7 +25,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
     // Title
     const title = page.locator('h1');
     expect(title).toHaveText(
-        'Building an E-commerce Content Catalog with Atlas Search'
+        '*Building an E-commerce Content Catalog with Atlas Search'
     );
 
     // Author Lockup

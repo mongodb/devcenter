@@ -26,6 +26,8 @@ export const getContentItemFromSlug: (
     let content: Article | Video | Podcast | IndustryEvent | null = null;
     let contentType: CollectionType | null = null;
 
+    console.log('SLUG', slug);
+
     // videos always starts with /videos
     if (slug.startsWith('/videos')) {
         content = await getVideoBySlug(slug);

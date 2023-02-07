@@ -1,5 +1,6 @@
 import preval from 'next-plugin-preval';
 import { getAllAuthors } from './get-all-authors';
+import '../../mocks/run-msw';
 
 async function getData() {
     const allAuthors = await getAllAuthors();

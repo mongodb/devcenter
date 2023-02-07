@@ -43,7 +43,10 @@ const clientFactory = <T extends ClientType>(
                 link: ApolloLink.from([
                     // ordering is important
                     new RetryLink(),
-                    new RestLink({ uri, headers: defaultHeaders }),
+                    new RestLink({
+                        uri,
+                        headers: defaultHeaders,
+                    }),
                 ]),
             }) as UnderlyingClient<T>;
 

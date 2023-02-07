@@ -11,8 +11,9 @@
         "format:check": "prettier --check .",
         "test": "jest --watch",
         "test:coverage": "jest --coverage",
-        "test:e2e": "npx playwright install --with-deps && npx playwright test",
-        "test:e2e:visual": "npx @percy/cli exec -- npm run test:e2e"
+        "test:e2e": "NEXT_PUBLIC_API_MOCKING=enabled yarn build && npx playwright install --with-deps && npx playwright test playwright-tests/pages/slug.spec.ts",
+        "test:e2e:visual": "NEXT_PUBLIC_API_MOCKING=enabled npx @percy/cli exec -- npm run test:e2e",
+        "fetch-mocks": "tsx ./mocks/fetch-mocks.ts"
     },
     "husky": {
         "hooks": {
@@ -34,7 +35,8 @@
         "@sentry/nextjs": "7.19.0",
         "@types/react-truncate": "2.3.4",
         "apollo-link-rest": "0.9.0-rc.1",
-        "axios": "^0.27.2",
+        "axios": "0.27.2",
+        "dotenv": "16.0.3",
         "emotion-normalize": "11.0.1",
         "feed": "4.2.2",
         "graphql": "16.2.0",
@@ -44,6 +46,7 @@
         "html-react-parser": "1.4.11",
         "lodash.debounce": "4.0.8",
         "lru-cache": "7.10.1",
+        "msw": "1.0.0",
         "next": "12.3.1",
         "next-auth": "4.10.3",
         "next-plugin-preval": "1.2.4",
@@ -67,10 +70,9 @@
         "stylis": "4.1.2",
         "swr": "1.2.1",
         "theme-ui": "0.13.1",
-        "unist-util-visit": "^2.0.3"
+        "unist-util-visit": "2.0.3"
     },
     "devDependencies": {
-        "@babel/plugin-transform-react-jsx": "^7.17.3",
         "@emotion/babel-plugin": "11.7.2",
         "@next/bundle-analyzer": "12.0.8",
         "@percy/cli": "1.16.0",
@@ -79,12 +81,12 @@
         "@testing-library/jest-dom": "5.16.1",
         "@testing-library/react": "12.1.2",
         "@testing-library/user-event": "14.0.0-beta.11",
-        "@types/google.maps": "^3.51.0",
+        "@types/google.maps": "3.51.0",
         "@types/lodash.debounce": "4.0.7",
         "@types/node": "17.0.12",
-        "@types/pluralize": "^0.0.29",
+        "@types/pluralize": "0.0.29",
         "@types/react": "17.0.38",
-        "@types/sanitize-html": "^2.6.2",
+        "@types/sanitize-html": "2.6.2",
         "@types/stylis": "4.0.2",
         "@typescript-eslint/eslint-plugin": "5.46.0",
         "@typescript-eslint/parser": "5.46.0",
@@ -94,11 +96,17 @@
         "husky": "4.3.8",
         "jest": "27.4.7",
         "lint-staged": "11.1.1",
+        "node-fetch": "3.3.0",
         "prettier": "2.5.1",
+        "tsx": "3.12.3",
         "typescript": "4.5.4"
     },
     "resolutions": {
         "@types/react": "17.0.2",
         "@types/react-dom": "17.0.2"
-    }
+    },
+    "msw": {
+        "workerDirectory": "public"
+    },
+    "homepage": "/developer"
 }
