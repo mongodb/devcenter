@@ -40,9 +40,8 @@ export async function submitPersonalizationSelections(
     },
     userId: unknown
 ) {
-    // TODO: might need to be updated based on integration
     const req = await fetch(
-        getURLPath(`/api/userPreferences/${userId}`) as string,
+        getURLPath(`/api/userPreferences?userId=${userId}`, false) as string,
         {
             method: 'PUT',
             body: JSON.stringify({ followedTags, emailPreference }),
