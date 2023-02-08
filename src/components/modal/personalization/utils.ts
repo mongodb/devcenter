@@ -30,24 +30,25 @@ export function initializePersonalizationConfig(metaInfo: MetaInfo[]) {
     return [languages, technologies, products];
 }
 
-export async function submitPersonalizationSelections(
-    {
-        followedTags,
-        emailPreference,
-    }: {
-        followedTags: Array<Tag>;
-        emailPreference: boolean;
-    },
-    userId: unknown
-) {
-    const req = await fetch(
-        getURLPath(`/api/userPreferences?userId=${userId}`, false) as string,
-        {
-            method: 'PUT',
-            body: JSON.stringify({ followedTags, emailPreference }),
-        }
-    );
+export async function submitPersonalizationSelections({
+    followedTags,
+    emailPreference,
+}: {
+    followedTags: Array<Tag>;
+    emailPreference: boolean;
+}) {
+    try {
+        const req = await fetch(
+            getURLPath('/api/userPreferences', false) as string,
+            {
+                method: 'PUT',
+                body: JSON.stringify({ followedTags, emailPreference }),
+            }
+        );
 
-    const res = await req.json();
-    return res; // there's no current plan to display success/failure to user
+        const res = await req.json();
+        return res; // there's no current plan to display success/failure to user
+    } catch {
+        console.error('Could not update user preferences');
+    }
 }
