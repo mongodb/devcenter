@@ -41,13 +41,10 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
                 // Pass default values to PUT if user dismisses the modal so their "lastLogin" flag can be updated
                 {
                     onCloseCallback: () =>
-                        submitPersonalizationSelections(
-                            {
-                                followedTags: [],
-                                emailPreference: false,
-                            },
-                            session?.userId
-                        ),
+                        submitPersonalizationSelections({
+                            followedTags: [],
+                            emailPreference: false,
+                        }),
                 }
             );
         }
