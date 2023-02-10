@@ -45,7 +45,7 @@ const fetchMocks = async () => {
 
         try {
             const fname = handler.mockFile;
-            const response = (await (await fetch(handler.url)).json()) as any[];
+            const response = await (await fetch(handler.url)).json();
 
             if (
                 response?.message?.[0]?.messages?.[0]?.id ===
