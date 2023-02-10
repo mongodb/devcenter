@@ -17,7 +17,6 @@ export const getSearchContent = async (
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-        keepalive: true,
     };
     try {
         const req = await fetch(url, options);
