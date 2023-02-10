@@ -19,13 +19,6 @@ export const handlerInfo: HandlerInfo[] = [
         url: `${process.env.REALM_SEARCH_URL}/search_devcenter`,
         mockFile: 'search_devcenter',
     },
-    // This redundant case is necessary, otherwise we get intermittent socket hangup errors for
-    // calls to /search_devcenter?s=&sortMode=0 (msw bug)
-    {
-        pattern: `${process.env.REALM_SEARCH_URL}/search_devcenter?s=&sortMode=0`,
-        url: `${process.env.REALM_SEARCH_URL}/search_devcenter`,
-        mockFile: 'search_devcenter',
-    },
     {
         pattern: `${process.env.REALM_API_URL}/community_events`,
         url: `${process.env.REALM_API_URL}/community_events`,

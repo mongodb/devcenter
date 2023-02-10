@@ -29,7 +29,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
     );
 
     // Author Lockup
-    const authorName = page.locator('"Joel Lord"');
+    const authorName = page.locator('"*Joel Lord"');
     expect(await authorName.getAttribute('href')).toBe(
         '/developer/author/joel-lord/'
     );
