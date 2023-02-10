@@ -3,17 +3,20 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
+        "dev:mocked": "NEXT_PUBLIC_API_MOCKING=enabled next dev",
         "build": "next build",
+        "build:mocked": "NEXT_PUBLIC_API_MOCKING=enabled next build",
         "build:analyze": "ANALYZE=true next build",
         "start": "next start",
+        "start:mocked": "NEXT_PUBLIC_API_MOCKING=enabled next start",
         "lint": "next lint",
         "format:write": "prettier --write .",
         "format:check": "prettier --check .",
         "test": "jest --watch",
         "test:coverage": "jest --coverage",
-        "test:e2e": "NEXT_PUBLIC_API_MOCKING=enabled yarn build && npx playwright install --with-deps && npx playwright test playwright-tests/pages/slug.spec.ts",
-        "test:e2e:visual": "NEXT_PUBLIC_API_MOCKING=enabled npx @percy/cli exec -- npm run test:e2e",
-        "fetch-mocks": "tsx ./mocks/fetch-mocks.ts"
+        "test:e2e": "yarn build:mocked && npx playwright install --with-deps && npx playwright test playwright-tests/pages/slug.spec.ts",
+        "test:e2e:visual": "npx @percy/cli exec -- npm run test:e2e",
+        "update-mocks": "tsx ./mocks/update-mocks.ts"
     },
     "husky": {
         "hooks": {

@@ -45,7 +45,7 @@ const fetchMocks = async () => {
 
         try {
             const fname = handler.mockFile;
-            const response = await (await fetch(handler.url)).json();
+            const response = (await (await fetch(handler.url)).json()) as any[];
 
             if (
                 response?.message?.[0]?.messages?.[0]?.id ===
@@ -57,7 +57,8 @@ const fetchMocks = async () => {
                 continue;
             }
 
-            // Prepends "*" to names/titles so it's easier to tell mocks apart from real data. This can be removed if needed
+            // Prepends "*" to names/titles so it's easier to tell mocks apart from real data in the app.
+            // Can be safely removed, if needed
             setMockTitles(response);
 
             await fs.writeFile(

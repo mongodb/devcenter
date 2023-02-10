@@ -94,9 +94,10 @@ export const getPodcastBySlugFromAPI = async (
             }
         }
     `;
-    const { data }: ApolloQueryResult<{ podcasts: any }> = await client.query({
-        query,
-    });
+    const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
+        await client.query({
+            query,
+        });
 
     return data.podcasts.length > 0 ? data.podcasts[0] : null;
 };
