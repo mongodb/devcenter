@@ -61,6 +61,8 @@ jobs:
             - name: Install Playwright
               if: steps.cache.outputs.cache-hit == 'true'
               run: ./node_modules/.bin/playwright install
+            - name: Build
+              run: yarn build:mocked
             - name: Run Playwright/Percy
               run: yarn test:e2e:visual
               env:
