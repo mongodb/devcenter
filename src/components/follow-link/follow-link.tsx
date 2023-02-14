@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import debounce from 'lodash.debounce';
 
 import { Link, SystemIcon, ESystemIconNames } from '@mdb/flora';
 import { useSession } from 'next-auth/react';
@@ -7,6 +8,8 @@ import { Tag } from '../../interfaces/tag';
 import Tooltip from '../tooltip/tooltip';
 import { useModalContext } from '../../contexts/modal';
 import { ScrollPersonalizationModal } from '../modal/personalization';
+import { submitPersonalizationSelections } from '../modal/personalization/utils';
+import { DEBOUNCE_WAIT } from '../../data/constants';
 
 interface FollowLinkProps {
     topic: Tag;
@@ -23,23 +26,22 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
 
     const [timeoutID, setTimeoutID] = useState<NodeJS.Timeout | null>(null);
 
-    const { openModal } = useModalContext();
-
-    const signInURL = useSignInURL();
-
-    const isLoggedIn = status === 'authenticated';
     const followedTopics = session?.followedTags;
-    const isFollowingAnyTopics = !!followedTopics && !!followedTopics.length;
-    const isFollowing = useMemo(
-        () =>
-            !!(
-                followedTopics &&
-                followedTopics.find(
-                    followedTopic => followedTopic.slug === topic.slug
-                )
-            ),
-        [followedTopics, topic.slug]
+
+    // Keep this state here because there is a delay that we cannot hook into in getting the updated session back.
+    const [isFollowing, setIsFollowing] = useState(
+        !!(
+            followedTopics &&
+            followedTopics.find(
+                followedTopic => followedTopic.slug === topic.slug
+            )
+        )
     );
+
+    const { openModal } = useModalContext();
+    const signInURL = useSignInURL();
+    const isLoggedIn = status === 'authenticated';
+    const isFollowingAnyTopics = !!followedTopics && !!followedTopics.length;
 
     const hoverTooltipText = useMemo(() => {
         if (!isLoggedIn) return 'Sign in to follow topics';
@@ -54,47 +56,65 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     // If we're not in a hoverTooltipText scenario, there should be no hover tooltip rendered.
     const hasHoverTooltip = !!hoverTooltipText;
 
-    const onFollowClick = useCallback(() => {
-        let topics: Tag[];
-        // Never show the click tooltip when using the iconsOnly variant
-        if (!isFollowingAnyTopics) {
-            openModal(
-                <ScrollPersonalizationModal
-                    title={
-                        <>
-                            You&apos;re now following this topic. <br />{' '}
-                            Interested in following other topics?
-                        </>
-                    }
-                    existingSelections={[topic]}
-                />,
-                { hideCloseBtn: true }
-            );
-            return;
-        }
-        if (!iconsOnly) {
-            if (timeoutID) {
-                // To prevent a follow and unfollow action in under 2 seconds from having it's click tooltip dissapear prematurely.
-                clearTimeout(timeoutID);
+    const onFollowClick = useCallback(
+        (currentlyFollowing: boolean) => {
+            let followedTags: Tag[];
+            // Never show the click tooltip when using the iconsOnly variant
+            if (!isFollowingAnyTopics) {
+                openModal(
+                    <ScrollPersonalizationModal
+                        title={
+                            <>
+                                You&apos;re now following this topic. <br />{' '}
+                                Interested in following other topics?
+                            </>
+                        }
+                        existingSelections={[topic]}
+                    />,
+                    { hideCloseBtn: true }
+                );
+                return;
             }
-            setShowClickTooltip(true);
-            const id = setTimeout(() => setShowClickTooltip(false), 2000);
-            setTimeoutID(id);
-        }
 
-        if (followedTopics && isFollowing) {
-            topics = followedTopics.filter(
-                followedTopic => followedTopic.name !== topic.name
-            );
-        } else {
-            topics = followedTopics ? [...followedTopics, topic] : [topic];
-        }
-        console.log(topics); // TODO: POST followedTopics to external API endpoint.
-    }, [isFollowing, followedTopics, topic]);
+            if (followedTopics && currentlyFollowing) {
+                followedTags = followedTopics.filter(
+                    followedTopic => followedTopic.name !== topic.name
+                );
+            } else {
+                followedTags = followedTopics
+                    ? [...followedTopics, topic]
+                    : [topic];
+            }
+            if (!iconsOnly) {
+                if (timeoutID) {
+                    // To prevent a follow and unfollow action in under 2 seconds from having it's click tooltip dissapear prematurely.
+                    clearTimeout(timeoutID);
+                }
+                setShowClickTooltip(true);
+                const id = setTimeout(() => setShowClickTooltip(false), 2000);
+                setTimeoutID(id);
+            }
+            setIsFollowing(!currentlyFollowing);
+            submitPersonalizationSelections({
+                followedTags,
+                emailPreference: session.emailPreference,
+            });
+        },
+        [followedTopics, topic]
+    );
+
+    const debouncedOnFollowClick = useMemo(
+        () =>
+            debounce(onFollowClick, DEBOUNCE_WAIT, {
+                leading: true,
+                trailing: false,
+            }),
+        [onFollowClick]
+    );
 
     const linkProps = isLoggedIn
         ? {
-              onClick: onFollowClick,
+              onClick: () => debouncedOnFollowClick(isFollowing), // Have to pass this in to prevent the debounced version from being overwritten on state change of isFollowing.
           }
         : { href: signInURL };
 
