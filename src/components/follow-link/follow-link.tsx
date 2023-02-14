@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 import { Link, SystemIcon, ESystemIconNames } from '@mdb/flora';
@@ -27,16 +27,18 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     const [timeoutID, setTimeoutID] = useState<NodeJS.Timeout | null>(null);
 
     const followedTopics = session?.followedTags;
+    const isFollowing = !!(
+        followedTopics &&
+        followedTopics.find(followedTopic => followedTopic.slug === topic.slug)
+    );
 
     // Keep this state here because there is a delay that we cannot hook into in getting the updated session back.
-    const [isFollowing, setIsFollowing] = useState(
-        !!(
-            followedTopics &&
-            followedTopics.find(
-                followedTopic => followedTopic.slug === topic.slug
-            )
-        )
-    );
+    const [isShowingFollowing, setIsShowingFollowing] = useState(isFollowing);
+
+    // Whenever the session updates propogate to here, update isShowingFollowing.
+    useEffect(() => {
+        setIsShowingFollowing(isFollowing);
+    }, [setIsShowingFollowing, isFollowing, followedTopics]);
 
     const { openModal } = useModalContext();
     const signInURL = useSignInURL();
@@ -50,8 +52,10 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
             return 'Receive a monthly digest and recommended content based on topics you follow!';
 
         if (iconsOnly)
-            return isFollowing ? 'Unfollow this topic' : 'Follow this topic';
-    }, [isLoggedIn, isFollowingAnyTopics, iconsOnly, isFollowing]);
+            return isShowingFollowing
+                ? 'Unfollow this topic'
+                : 'Follow this topic';
+    }, [isLoggedIn, isFollowingAnyTopics, iconsOnly, isShowingFollowing]);
 
     // If we're not in a hoverTooltipText scenario, there should be no hover tooltip rendered.
     const hasHoverTooltip = !!hoverTooltipText;
@@ -60,6 +64,7 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
         (currentlyFollowing: boolean) => {
             let followedTags: Tag[];
             // Never show the click tooltip when using the iconsOnly variant
+            setIsShowingFollowing(!currentlyFollowing);
             if (!isFollowingAnyTopics) {
                 openModal(
                     <ScrollPersonalizationModal
@@ -94,7 +99,6 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
                 const id = setTimeout(() => setShowClickTooltip(false), 2000);
                 setTimeoutID(id);
             }
-            setIsFollowing(!currentlyFollowing);
             submitPersonalizationSelections({
                 followedTags,
                 emailPreference: session.emailPreference,
@@ -114,7 +118,7 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
 
     const linkProps = isLoggedIn
         ? {
-              onClick: () => debouncedOnFollowClick(isFollowing), // Have to pass this in to prevent the debounced version from being overwritten on state change of isFollowing.
+              onClick: () => debouncedOnFollowClick(isShowingFollowing), // Have to pass this in to prevent the debounced version from being overwritten on state change of isFollowing.
           }
         : { href: signInURL };
 
@@ -134,28 +138,31 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
         >
             <div>
                 <Link {...linkProps}>
-                    {(iconsOnly || !isFollowing) && (
+                    {(iconsOnly || !isShowingFollowing) && (
                         <SystemIcon
                             sx={{
-                                fill: isFollowing ? 'none' : 'blue60',
+                                fill: isShowingFollowing ? 'none' : 'blue60',
                                 stroke: 'blue60',
-                                path: { strokeWidth: isFollowing ? 3 : 1 },
+                                path: {
+                                    strokeWidth: isShowingFollowing ? 3 : 1,
+                                },
                             }}
                             name={
-                                isFollowing
+                                isShowingFollowing
                                     ? ESystemIconNames.CHECK
                                     : ESystemIconNames.PLUS
                             }
                         />
                     )}
-                    {!iconsOnly && (isFollowing ? 'Unfollow' : ' Follow')}
+                    {!iconsOnly &&
+                        (isShowingFollowing ? 'Unfollow' : ' Follow')}
                 </Link>
             </div>
             <Tooltip className="tooltip">{hoverTooltipText}</Tooltip>
             {showClickTooltip && (
                 <Tooltip>
-                    You are {isFollowing ? 'now' : 'no longer'} following this
-                    topic
+                    You are {isShowingFollowing ? 'now' : 'no longer'} following
+                    this topic
                 </Tooltip>
             )}
         </div>
