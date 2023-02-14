@@ -11,12 +11,12 @@ async function userPreferencesHandler(
 
     try {
         const request = await fetch(
-            `${process.env.PERSONALIZATION_URL}/user_preferences?userId=${session?.userId}`,
+            `${process.env.BACKEND_URL}/api/user_preferences/${session?.userId}`,
             {
                 method: req.method,
                 body: req.body,
                 headers: {
-                    apiKey: process.env.REALM_API_KEY || '',
+                    'Content-Type': 'application/json',
                 },
             }
         );

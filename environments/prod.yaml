@@ -30,7 +30,6 @@ envSecrets:
   STRAPI_API_TOKEN: devcenter-secrets
   GOOGLE_PLACES_API_KEY: devcenter-secrets
   REALM_API_KEY: devcenter-secrets
-  PERSONALIZATION_URL: devcenter-secrets
 
 autoscaling:
   minReplicas: 4
