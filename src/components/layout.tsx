@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Global, css } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
 import { useSession } from 'next-auth/react';
@@ -10,6 +10,8 @@ import { OverlayContext } from '../contexts/overlay';
 import { layers } from '../styled/layout';
 import { useEnsureImageAlts } from '../utils/seo';
 import { useModalContext } from '../contexts/modal';
+import { PaginatedPersonalizationModal } from './modal/personalization';
+import { submitPersonalizationSelections } from './modal/personalization/utils';
 import getSignInURL from '../utils/get-sign-in-url';
 
 const navStyles = {
@@ -29,8 +31,24 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     pagePath,
 }) => {
     const { hasOverlay } = useContext(OverlayContext);
-    const { component: hasModalOpen } = useModalContext();
+    const { component: hasModalOpen, openModal } = useModalContext();
     const { data: session } = useSession();
+
+    useEffect(() => {
+        if (session && !session?.lastLogin) {
+            openModal(
+                <PaginatedPersonalizationModal />,
+                // Pass default values to PUT if user dismisses the modal so their "lastLogin" flag can be updated
+                {
+                    onCloseCallback: () =>
+                        submitPersonalizationSelections({
+                            followedTags: [],
+                            emailPreference: false,
+                        }),
+                }
+            );
+        }
+    }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const signInUrl = getSignInURL(pagePath);
 

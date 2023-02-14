@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 type ModalComponent = JSX.Element | null;
 type ModalProps = {
     hideCloseBtn?: boolean;
+    onCloseCallback?: () => Promise<void> | undefined;
 };
 
 export const ModalContext = createContext<{

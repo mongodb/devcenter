@@ -41,7 +41,7 @@ const PaginatedPersonalizationModal = () => {
 
     const onCompletion = () => {
         submitPersonalizationSelections({
-            preferences: selections,
+            followedTags: selections,
             emailPreference: isOptedIn,
         });
         closeModal();

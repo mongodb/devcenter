@@ -17,6 +17,7 @@ const ScrollPersonalizationModal = ({
     existingSelections = [],
 }: ScrollModalProps) => {
     const { closeModal } = useModalContext();
+
     const [isOptedIn, setIsOptedIn] = useState(true);
     const [selections, setSelections] =
         useState<Array<Tag>>(existingSelections);
@@ -35,7 +36,7 @@ const ScrollPersonalizationModal = ({
 
     const onCompletion = () => {
         submitPersonalizationSelections({
-            preferences: selections,
+            followedTags: selections,
             emailPreference: isOptedIn,
         });
         closeModal();
