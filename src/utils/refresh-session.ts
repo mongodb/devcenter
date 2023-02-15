@@ -2,7 +2,6 @@
 // Next auth will refetch the session on this event, so we manually trigger it.
 
 export default function refreshSession() {
-    console.log('Displathci');
     const event = new Event('visibilitychange');
     document.dispatchEvent(event);
 }
