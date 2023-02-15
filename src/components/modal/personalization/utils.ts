@@ -2,6 +2,7 @@ import { Tag } from '../../../interfaces/tag';
 import { MetaInfo } from '../../../interfaces/meta-info';
 import { PersonalizationModalConfig } from './types';
 import { getURLPath } from '../../../utils/format-url-path';
+import refreshSession from '../../../utils/refresh-session';
 
 export function initializePersonalizationConfig(metaInfo: MetaInfo[]) {
     const languages: PersonalizationModalConfig = {
@@ -45,7 +46,7 @@ export async function submitPersonalizationSelections({
                 body: JSON.stringify({ followedTags, emailPreference }),
             }
         );
-
+        refreshSession();
         const res = await req.json();
         return res; // there's no current plan to display success/failure to user
     } catch {

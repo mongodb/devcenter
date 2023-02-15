@@ -6,14 +6,12 @@ import * as Sentry from '@sentry/nextjs';
 import { User } from '../../../interfaces/user-preference';
 
 async function getUser(userId: string | unknown): Promise<any> {
-    const url = `${process.env.PERSONALIZATION_URL}/user_preferences?userId=${userId}`;
-    const apiKey = process.env.REALM_API_KEY || '';
+    const url = `${process.env.BACKEND_URL}/api/user_preferences/${userId}`;
     const options = {
         method: 'GET',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            apiKey: apiKey,
         },
     };
     try {
@@ -26,16 +24,12 @@ async function getUser(userId: string | unknown): Promise<any> {
 }
 
 async function persistNewUser(user: User): Promise<any> {
-    const url = `${process.env.PERSONALIZATION_URL}/user_preferences`;
+    const url = `${process.env.BACKEND_URL}/api/user_preferences`;
     try {
         const req = await fetch(url, {
             method: 'POST',
-            mode: 'cors',
-            //TODO figure out how to make post calls for API key protected APIs
-            // headers: {
-            //     'api-key' : process.env.REALM_API_KEY
-            // },
             body: JSON.stringify(user),
+            headers: { 'Content-Type': 'application/json' },
         });
         return await req.json();
     } catch (e) {
@@ -89,17 +83,16 @@ export const nextAuthOptions: NextAuthOptions = {
                         lastLogin: null,
                         emailPreference: false,
                     } as User);
-                    const { followed_tags, last_login, email_preference } =
+                    const { followedTags, lastLogin, emailPreference } =
                         persisted_user;
-                    session.followedTags = followed_tags;
-                    session.lastLogin = last_login;
-                    session.emailPreference = email_preference;
+                    session.followedTags = followedTags;
+                    session.lastLogin = lastLogin;
+                    session.emailPreference = emailPreference;
                 } else {
-                    const { followed_tags, last_login, email_preference } =
-                        user;
-                    session.followedTags = followed_tags;
-                    session.lastLogin = last_login;
-                    session.emailPreference = email_preference;
+                    const { followedTags, lastLogin, emailPreference } = user;
+                    session.followedTags = followedTags;
+                    session.lastLogin = lastLogin;
+                    session.emailPreference = emailPreference;
                 }
             }
             return session;
