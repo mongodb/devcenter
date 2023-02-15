@@ -14,5 +14,6 @@ const config: PlaywrightTestConfig = {
     },
     outputDir: './playwright-artifacts',
     timeout: 120 * 1000,
+    globalSetup: './playwright-tests/setup.ts',
 };
 export default config;

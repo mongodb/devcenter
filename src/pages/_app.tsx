@@ -19,6 +19,8 @@ import {
 import ModalRoot from '../components/modal';
 import { ModalProvider } from '../contexts/modal';
 
+import '../../mocks/run-msw';
+
 interface CustomProps {
     session?: Session;
 }

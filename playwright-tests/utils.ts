@@ -34,18 +34,9 @@ const removeRelated = () => {
     }
 };
 
-export const mockApiRoute = async (page, apiRoute, mockName) => {
-    const mockPath = `./playwright-tests/mocks/${mockName}.json`;
-    await page.route(apiRoute, route => route.fulfill({ path: mockPath }));
-};
-
 export const runPercy =
-    (url, pageName, mockName?) =>
+    (url, pageName) =>
     async ({ page }) => {
-        if (mockName) {
-            await mockApiRoute(page, '**/api/search/**', mockName);
-        }
-
         await page.goto(url, { waitUntil: 'networkidle' });
         await page.evaluate(async () => {
             const delay = ms => new Promise(resolve => setTimeout(resolve, ms));

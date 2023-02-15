@@ -11,3 +11,5 @@ Dockerfile
 .*ignore
 coverage/
 sentry.properties
+mocks/data/
+public/

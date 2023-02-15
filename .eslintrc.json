@@ -22,5 +22,6 @@
             "error",
             { "ignoreRestSiblings": true }
         ]
-    }
+    },
+    "ignorePatterns": ["mocks/data/*.js"]
 }
