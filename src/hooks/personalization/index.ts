@@ -5,18 +5,26 @@ import { ContentItem } from '../../interfaces/content-item';
 import { searchItemToContentItem, swrOptions } from '../search/utils';
 import { SearchItem } from '../../components/search/types';
 
-interface RecommendedContentData {
+interface RecommendedContentResponseData {
     contentItem: SearchItem[];
     followedTags: Tag[];
 }
+
+export interface RecommendedContentData {
+    contentItems: ContentItem[];
+    followedTags: Tag[];
+}
 interface RecommendedContentResponse {
-    data?: ContentItem[];
+    data?: RecommendedContentData;
     error?: string;
     isValidating?: boolean;
-    mutate: KeyedMutator<{ data: RecommendedContentData }>;
+    mutate: KeyedMutator<{ data: RecommendedContentResponseData }>;
 }
 
-const fetcher: Fetcher<{ data: RecommendedContentData }, string> = () => {
+const fetcher: Fetcher<
+    { data: RecommendedContentResponseData },
+    string
+> = () => {
     return fetch(getURLPath('/api/personalized-content') as string).then(
         async response => {
             const json = await response.json();
@@ -39,7 +47,12 @@ const usePersonalizedContent = (
     const query = buildQuery(followedTags);
 
     const {
-        data: { data: { contentItem = [] } = {} } = {},
+        data: {
+            data: {
+                contentItem = [],
+                followedTags: responseFollowedTags = [],
+            } = {},
+        } = {},
         error,
         isValidating,
         mutate,
@@ -47,7 +60,12 @@ const usePersonalizedContent = (
 
     const contentItems = contentItem.map(searchItemToContentItem);
 
-    return { data: contentItems, error, isValidating, mutate };
+    return {
+        data: { contentItems, followedTags: responseFollowedTags },
+        error,
+        isValidating,
+        mutate,
+    };
 };
 
 export default usePersonalizedContent;

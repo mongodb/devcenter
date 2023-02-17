@@ -3,6 +3,11 @@ import userEvent from '@testing-library/user-event';
 import RecommendedSection from './recommended-section';
 import { MOCK_ARTICLE_TAGS, MOCK_ARTICLE_CONTENT } from '../../mockdata';
 
+const mockContent = {
+    contentItems: MOCK_ARTICLE_CONTENT,
+    followedTags: MOCK_ARTICLE_TAGS,
+};
+
 describe('Recommended Section', () => {
     test('Renders nothing when not passed tags or content', () => {
         render(<RecommendedSection />);
@@ -19,7 +24,7 @@ describe('Recommended Section', () => {
     });
 
     test('Renders content when passed content', () => {
-        render(<RecommendedSection content={MOCK_ARTICLE_CONTENT} />);
+        render(<RecommendedSection content={mockContent} />);
 
         expect(screen.queryAllByTestId('card-related').length).toBeGreaterThan(
             0
@@ -30,7 +35,7 @@ describe('Recommended Section', () => {
         render(
             <RecommendedSection
                 tags={MOCK_ARTICLE_TAGS}
-                content={MOCK_ARTICLE_CONTENT}
+                content={mockContent}
             />
         );
         expect(screen.queryAllByTestId('recommended-topic-tag').length).toBe(0);

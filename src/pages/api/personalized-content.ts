@@ -16,7 +16,7 @@ const personalizedContentHandler = async (
 
     try {
         const request = await fetch(
-            `${process.env.BACKEND_URL}/homepage_content/${session?.userId}`,
+            `${process.env.BACKEND_URL}/api/homepage_content/${session?.userId}`,
             {
                 method: 'GET',
                 headers: {

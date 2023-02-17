@@ -28,7 +28,6 @@ import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
 import usePersonalizedContent from '../hooks/personalization';
 import { submitPersonalizationSelections } from '../components/modal/personalization/utils';
-import refreshSession from '../utils/refresh-session';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -84,7 +83,9 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
 }) => {
     const { status, data } = useSession();
     const { followedTags } = data || {};
-    const { data: content } = usePersonalizedContent(followedTags || []);
+    const { data: content, isValidating } = usePersonalizedContent(
+        followedTags || []
+    );
 
     return (
         <main
@@ -151,7 +152,7 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                 </div>
             </GridLayout>
 
-            {status === 'authenticated' && (
+            {status === 'authenticated' && !isValidating && (
                 <RecommendedSection
                     tags={recommendedTags}
                     content={content}
@@ -164,7 +165,7 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                         submitPersonalizationSelections({
                             followedTags,
                             emailPreference,
-                        }).then(refreshSession);
+                        });
                     }}
                 />
             )}

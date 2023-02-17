@@ -1,5 +1,6 @@
 import { ThemeUICSSObject } from 'theme-ui';
 import theme from '@mdb/flora/theme';
+import { h5Styles } from '../../styled/layout';
 
 export const recommendedSectionStyles: ThemeUICSSObject = {
     margin: 'auto',
@@ -8,6 +9,20 @@ export const recommendedSectionStyles: ThemeUICSSObject = {
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
+};
+
+export const recommendedSectionHeadingStyles = {
+    ...h5Styles,
+    marginBottom: 'inc20',
+    flexGrow: 1,
+    order: 1,
+};
+
+export const recommendedSectionSubheadingStyles = {
+    display: 'block',
+    marginBottom: 'inc50',
+    flexBasis: '100%',
+    order: 1,
 };
 
 export const digestCheckboxStyles = {
@@ -49,5 +64,31 @@ export const placeholderStyles = (contentLength: number) => {
         'auto',
     ];
 
-    return { gridColumn: gridColumnValues[contentLength - 1] };
+    return {
+        gridColumn: gridColumnValues[contentLength - 1],
+        height: 'calc(100% - 62px)',
+    };
+};
+
+export const recommendedContentTaglineStyles: ThemeUICSSObject = {
+    textAlign: 'center',
+    display: 'block',
+    flexBasis: 'inc50',
+    marginTop: 'inc30',
+};
+
+export const recommendedContentGridStyles = {
+    overflow: 'visible',
+    flexBasis: '100%',
+    order: 1,
+    marginBottom: ['inc30', null, null, 0],
+};
+
+export const followTopicsArrowStyles = {
+    alignSelf: 'flex-end',
+    margin: 'auto 0',
+    marginBottom: [0, null, null, 'auto'],
+    flexBasis: ['100%', null, null, 'auto'],
+    flexShrink: 1,
+    order: [2, null, null, 1],
 };
