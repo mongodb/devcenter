@@ -27,6 +27,7 @@ import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.prev
 import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
 import usePersonalizedContent from '../hooks/personalization';
+import { submitPersonalizationSelections } from '../components/modal/personalization/utils';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -80,13 +81,11 @@ interface HomeProps {
 const Home: React.FunctionComponent<HomeProps & NextPage> = ({
     recommendedTags,
 }) => {
-    const { status } = useSession();
-
-    // TODO: Grab from session and remove this state variable
-    const [followedTags, setFollowedTags] = useState<Tag[]>([]);
-
-    const { data } = usePersonalizedContent(followedTags);
-    const content = followedTags.length ? data : [];
+    const { status, data } = useSession();
+    const { followedTags } = data || {};
+    const { data: content, isValidating } = usePersonalizedContent(
+        followedTags || []
+    );
 
     return (
         <main
@@ -153,16 +152,20 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                 </div>
             </GridLayout>
 
-            {status === 'authenticated' && (
+            {status === 'authenticated' && !isValidating && (
                 <RecommendedSection
                     tags={recommendedTags}
                     content={content}
                     showFooter
                     onTagsSaved={(
-                        selectedTags: Tag[] /*, digestChecked: boolean */
+                        followedTags: Tag[],
+                        emailPreference: boolean
                     ) => {
                         // TODO: Replace with call to user preferences endpoint
-                        setFollowedTags(selectedTags);
+                        submitPersonalizationSelections({
+                            followedTags,
+                            emailPreference,
+                        });
                     }}
                 />
             )}

@@ -1,36 +1,31 @@
 import { Link, TypographyScale } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
 
-import { h5Styles } from '../../styled/layout';
-import { ContentItem } from '../../interfaces/content-item';
 import { Tag } from '../../interfaces/tag';
 import RecommendedTagSection from './recommended-tag-section';
 import RecommendedContentSection from './recommended-content-section';
 import { useModalContext } from '../../contexts/modal';
 import { ScrollPersonalizationModal } from '../modal/personalization';
 import { useCallback, useState } from 'react';
-import { ThemeUICSSObject } from 'theme-ui';
+import {
+    followTopicsArrowStyles,
+    recommendedSectionHeadingStyles,
+    recommendedSectionStyles,
+    recommendedSectionSubheadingStyles,
+} from './styles';
+import { RecommendedContentData } from '../../hooks/personalization';
 
 interface RecommendedSectionProps {
     tags?: Tag[];
-    content?: ContentItem[];
+    content?: RecommendedContentData;
     onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
     onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
     showFooter?: boolean;
 }
 
-const recommendedSectionStyles: ThemeUICSSObject = {
-    margin: 'auto',
-    maxWidth: theme.sizes.maxWidthDesktop,
-    marginBottom: 'section40',
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-};
-
 const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     tags = [],
-    content = [],
+    content: { contentItems = [] } = {},
+    content,
     showFooter = true,
     onTagSelected = () => undefined,
     onTagsSaved = () => undefined,
@@ -49,16 +44,11 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
         );
     }, [openModal, selectedTags]);
 
-    return !!tags.length || !!content.length ? (
+    return !!tags.length || !!contentItems.length ? (
         <div sx={recommendedSectionStyles}>
             <TypographyScale
                 variant="heading2"
-                customStyles={{
-                    ...h5Styles,
-                    marginBottom: 'inc20',
-                    flexGrow: 1,
-                    order: 1,
-                }}
+                customStyles={recommendedSectionHeadingStyles}
             >
                 Recommended for you
             </TypographyScale>
@@ -66,41 +56,29 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
             <Link
                 onClick={openPersonalizationModal}
                 linkIcon="arrow"
-                linkIconDisableExpand={true}
-                customStyles={{
-                    alignSelf: 'flex-end',
-                    margin: 'auto 0',
-                    marginBottom: [0, null, null, 'auto'],
-                    flexBasis: ['100%', null, null, 'auto'],
-                    flexShrink: 1,
-                    order: [2, null, null, 1],
-                }}
+                linkIconDisableExpand
+                customStyles={followTopicsArrowStyles}
             >
-                {content.length
+                {contentItems.length
                     ? 'Follow More Topics'
                     : 'View All Topics to Follow'}
             </Link>
             <TypographyScale
                 variant="body1"
                 color="default"
-                sx={{
-                    display: 'block',
-                    marginBottom: 'inc50',
-                    flexBasis: '100%',
-                    order: 1,
-                }}
+                sx={recommendedSectionSubheadingStyles}
             >
                 Select topics to follow for recommended content
             </TypographyScale>
 
-            {!!content.length && (
+            {!!contentItems.length && (
                 <RecommendedContentSection
                     content={content}
                     onSeeTopics={openPersonalizationModal}
                 />
             )}
 
-            {!!tags.length && !content.length && (
+            {!!tags.length && !contentItems.length && (
                 <RecommendedTagSection
                     tags={tags}
                     showFooter={showFooter}
