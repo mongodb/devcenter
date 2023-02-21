@@ -1,36 +1,15 @@
-import useSWR, { Fetcher, KeyedMutator } from 'swr';
+import useSWR, { Fetcher } from 'swr';
 import { Tag } from '../../interfaces/tag';
 import { getURLPath } from '../../utils/format-url-path';
 import { ContentItem } from '../../interfaces/content-item';
-import { searchItemToContentItem, swrOptions } from '../search/utils';
-import { SearchItem } from '../../components/search/types';
 
-interface RecommendedContentResponseData {
-    contentItem: SearchItem[];
-    followedTags: Tag[];
-}
-
-export interface RecommendedContentData {
-    contentItems: ContentItem[];
-    followedTags: Tag[];
-}
-interface RecommendedContentResponse {
-    data?: RecommendedContentData;
-    error?: string;
-    isValidating?: boolean;
-    mutate: KeyedMutator<{ data: RecommendedContentResponseData }>;
-}
-
-const fetcher: Fetcher<
-    { data: RecommendedContentResponseData },
-    string
-> = () => {
-    return fetch(getURLPath('/api/personalized-content') as string).then(
-        async response => {
-            const json = await response.json();
-            return json;
-        }
-    );
+const fetcher: Fetcher<ContentItem[], string> = queryString => {
+    return fetch(
+        (getURLPath('/api/personalized-content') as string) + '?' + queryString
+    ).then(async response => {
+        const json: ContentItem[] = await response.json();
+        return json;
+    });
 };
 
 const buildQuery = (tags: Tag[]) => {
@@ -40,32 +19,12 @@ const buildQuery = (tags: Tag[]) => {
         .slice(0, -1);
 };
 
-const usePersonalizedContent = (
-    followedTags: Tag[]
-): RecommendedContentResponse => {
-    // Pass followedTags as a query so data updates when tags change
+const usePersonalizedContent = (followedTags: Tag[]) => {
     const query = buildQuery(followedTags);
 
-    const {
-        data: {
-            data: {
-                contentItem = [],
-                followedTags: responseFollowedTags = [],
-            } = {},
-        } = {},
-        error,
-        isValidating,
-        mutate,
-    } = useSWR(query, fetcher, swrOptions);
+    const { data, error, isValidating } = useSWR(query, fetcher);
 
-    const contentItems = contentItem.map(searchItemToContentItem);
-
-    return {
-        data: { contentItems, followedTags: responseFollowedTags },
-        error,
-        isValidating,
-        mutate,
-    };
+    return { data, error, isValidating };
 };
 
 export default usePersonalizedContent;

@@ -4,12 +4,38 @@ import { Tag } from '../../interfaces/tag';
 import { useCallback, useState } from 'react';
 import { Button, Checkbox } from '@mdb/flora';
 import { tagToTopic } from '../../utils/tag-to-topic';
-import {
-    digestCheckboxStyles,
-    topicSaveButtonStyles,
-    topicSaveButtonWrapperStyles,
-    footerStyles,
-} from './styles';
+
+const digestCheckboxStyles = {
+    display: 'flex',
+    marginBottom: 'inc50',
+    '& label': {
+        margin: 'auto',
+    },
+};
+
+const topicSaveButtonStyles = {
+    display: 'flex',
+    width: '100%',
+    '& button': {
+        margin: 'auto',
+    },
+};
+
+const topicSaveButtonWrapperStyles = {
+    width: '100%',
+    display: 'flex',
+    '& > div': {
+        margin: 'auto',
+    },
+};
+
+const footerStyles = (show: boolean) => ({
+    maxHeight: show ? '106px' : '0',
+    overflow: 'hidden',
+    transition: 'max-height 0.25s ease-in-out',
+    flexBasis: '100%',
+    order: 3,
+});
 
 interface RecommendedTagSectionProps {
     tags?: Tag[];

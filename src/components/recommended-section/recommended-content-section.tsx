@@ -1,72 +1,53 @@
 import { Grid } from 'theme-ui';
 import Card, { getCardProps } from '../card';
-import AdditionalContentPlaceholder from './additional-content-placeholder';
-import {
-    placeholderStyles,
-    recommendedContentGridStyles,
-    recommendedContentTaglineStyles,
-} from './styles';
-import { RecommendedContentData } from '../../hooks/personalization';
-import { TypographyScale } from '@mdb/flora';
 import { ContentItem } from '../../interfaces/content-item';
-import { Tag } from '../../interfaces/tag';
+import AdditionalContentPlaceholder from './additional-content-placeholder';
 
 interface RecommendedSectionProps {
-    content?: RecommendedContentData;
+    content?: ContentItem[];
     onSeeTopics: () => void;
 }
 
-const generateTagString = (item: ContentItem, followedTags: Tag[]) => {
-    const intersection = followedTags.filter(ftag =>
-        item.tags.some(tag => tag.slug === ftag.slug)
-    );
+const placeholderStyles = (contentLength: number) => {
+    const gridColumnValues = [
+        ['auto', null, null, '2 / span 2', null, '2 / span 3'],
+        ['auto', null, '1 / span 2', 'auto', null, '3 / span 2'],
+        'auto',
+    ];
 
-    // Shouldn't ever happen, but add this here as a failsafe
-    if (intersection.length === 0) return '';
-
-    let tagString = intersection[0].name;
-
-    if (intersection.length > 1) {
-        tagString += ` and ${intersection.length - 1} other topic`;
-        tagString += intersection.length > 2 ? 's' : '';
-    }
-
-    return `Because you follow ${tagString}`;
+    return { gridColumn: gridColumnValues[contentLength - 1] };
 };
 
 const RecommendedContentSection: React.FunctionComponent<
     RecommendedSectionProps
-> = ({
-    content: { contentItems = [], followedTags = [] } = {},
-    onSeeTopics,
-}) => {
-    const totalItems = Math.min(contentItems.length + 1, 4);
+> = ({ content = [], onSeeTopics }) => {
+    const totalItems = Math.min(content.length + 1, 4);
 
     return (
         <Grid
             // If full 4 items (incl placeholder), never show a 3 column layout
             columns={[1, null, 2, totalItems === 4 ? 2 : 3, null, 4]}
             gap="inc30"
-            sx={recommendedContentGridStyles}
+            sx={{
+                overflow: 'visible',
+                flexBasis: '100%',
+                order: 1,
+                marginBottom: ['inc30', null, null, 0],
+            }}
         >
-            {contentItems.map((item, i) => (
-                <div key={i} sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Card
-                        sx={{ flexGrow: '1' }}
-                        {...getCardProps(item, 'related')}
-                    />
-                    <TypographyScale
-                        variant="body3"
-                        sx={recommendedContentTaglineStyles}
-                    >
-                        {generateTagString(item, followedTags)}
-                    </TypographyScale>
-                </div>
+            {content.map((item, i) => (
+                <Card
+                    key={i}
+                    sx={{
+                        height: '100%',
+                    }}
+                    {...getCardProps(item, 'medium')}
+                />
             ))}
 
-            {contentItems.length < 4 && (
+            {content.length < 4 && (
                 <AdditionalContentPlaceholder
-                    extraStyles={placeholderStyles(contentItems.length)}
+                    extraStyles={placeholderStyles(content.length)}
                     onSeeTopics={onSeeTopics}
                 />
             )}

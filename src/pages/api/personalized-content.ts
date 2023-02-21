@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { nextAuthOptions } from './auth/[...nextauth]';
-import { unstable_getServerSession } from 'next-auth/next';
+import { MOCK_ARTICLE_CONTENT } from '../../mockdata';
 
 const personalizedContentHandler = async (
     req: NextApiRequest,
@@ -12,36 +11,9 @@ const personalizedContentHandler = async (
             .json({ message: 'This is a GET-only endpoint.' });
     }
 
-    const session = await unstable_getServerSession(req, res, nextAuthOptions);
+    // TODO: call api to get personalized content
 
-    try {
-        const request = await fetch(
-            `${process.env.BACKEND_URL}/api/homepage_content/${session?.userId}`,
-            {
-                method: 'GET',
-                headers: {
-                    apiKey: process.env.REALM_API_KEY || '',
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        if (request.status === 200) {
-            const response = await request.json();
-            return res
-                .status(request.status)
-                .json({ data: response, error: false });
-        } else {
-            return res
-                .status(request.status)
-                .json({ data: {}, error: request.statusText });
-        }
-    } catch (err) {
-        return res.status(400).json({
-            error: `Could not get recommended content, ${err}`,
-            data: [],
-        });
-    }
+    return res.status(200).json(MOCK_ARTICLE_CONTENT);
 };
 
 export default personalizedContentHandler;
