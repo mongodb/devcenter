@@ -3,6 +3,7 @@ import { Grid } from 'theme-ui';
 import { Button, TypographyScale, Checkbox } from '@mdb/flora';
 import { TopicCard } from '@mdb/devcenter-components';
 import { useModalContext } from '../../../../contexts/modal';
+import { useNotificationContext } from '../../../../contexts/notification';
 import tagConfig from '../../../../service/get-personalization-modal-config.preval';
 import { Tag } from '../../../../interfaces/tag';
 import { ScrollModalProps } from '../types';
@@ -17,6 +18,7 @@ const ScrollPersonalizationModal = ({
     existingSelections = [],
 }: ScrollModalProps) => {
     const { closeModal } = useModalContext();
+    const { setNotification } = useNotificationContext();
 
     const [isOptedIn, setIsOptedIn] = useState(true);
     const [selections, setSelections] =
@@ -34,12 +36,26 @@ const ScrollPersonalizationModal = ({
         return setSelections(currSelections => [...currSelections, tag]);
     };
 
-    const onCompletion = () => {
-        submitPersonalizationSelections({
+    const onCompletion = async () => {
+        const { error } = await submitPersonalizationSelections({
             followedTags: selections,
             emailPreference: isOptedIn,
         });
+
         closeModal();
+
+        if (!error) {
+            setNotification({
+                message: 'Successfully saved your preferences',
+                variant: 'SUCCESS',
+            });
+        } else {
+            setNotification({
+                message:
+                    'Your request could not be completed at this time. Please try again.',
+                variant: 'WARN',
+            });
+        }
     };
 
     return (

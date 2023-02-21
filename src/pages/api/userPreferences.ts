@@ -21,7 +21,6 @@ async function userPreferencesHandler(
             }
         );
         if (request.status === 200) {
-            // There's no current plans to display success/failure of PUT in the UI, just return the response for now
             const response = await request.json();
             return res
                 .status(request.status)

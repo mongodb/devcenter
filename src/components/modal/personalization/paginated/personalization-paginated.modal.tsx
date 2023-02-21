@@ -10,6 +10,7 @@ import {
 } from '@mdb/flora';
 import { TopicCard } from '@mdb/devcenter-components';
 import { useModalContext } from '../../../../contexts/modal';
+import { useNotificationContext } from '../../../../contexts/notification';
 import paginationConfig from '../../../../service/get-personalization-modal-config.preval';
 import { Tag } from '../../../../interfaces/tag';
 import { submitPersonalizationSelections } from '../utils';
@@ -19,6 +20,7 @@ import styles from '../styles';
 
 const PaginatedPersonalizationModal = () => {
     const { closeModal } = useModalContext();
+    const { setNotification } = useNotificationContext();
 
     const [tabIndex, setTabIndex] = useState(0);
     const [isOptedIn, setIsOptedIn] = useState(true);
@@ -39,12 +41,26 @@ const PaginatedPersonalizationModal = () => {
         return setSelections(currSelections => [...currSelections, tag]);
     };
 
-    const onCompletion = () => {
-        submitPersonalizationSelections({
+    const onCompletion = async () => {
+        const { error } = await submitPersonalizationSelections({
             followedTags: selections,
             emailPreference: isOptedIn,
         });
+
         closeModal();
+
+        if (!error) {
+            setNotification({
+                message: 'Successfully saved your preferences',
+                variant: 'SUCCESS',
+            });
+        } else {
+            setNotification({
+                message:
+                    'Your request could not be completed at this time. Please try again.',
+                variant: 'WARN',
+            });
+        }
     };
 
     return (
