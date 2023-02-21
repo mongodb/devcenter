@@ -26,8 +26,8 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
     const setNotification = (notification: AddNotification) => {
-        setNotifications(prev => [
-            ...prev,
+        setNotifications(prevNotifications => [
+            ...prevNotifications,
             {
                 id: new Date().getTime(), // generate unique ID
                 ...notification,
@@ -36,7 +36,9 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     };
 
     const clearNotification = (id: number) => {
-        setNotifications(prev => prev.filter(n => n.id !== id));
+        setNotifications(prevNotifications =>
+            prevNotifications.filter(n => n.id !== id)
+        );
     };
 
     return (

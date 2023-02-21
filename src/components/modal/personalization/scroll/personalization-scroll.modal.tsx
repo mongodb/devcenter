@@ -37,12 +37,12 @@ const ScrollPersonalizationModal = ({
     };
 
     const onCompletion = async () => {
+        closeModal();
+
         const { error } = await submitPersonalizationSelections({
             followedTags: selections,
             emailPreference: isOptedIn,
         });
-
-        closeModal();
 
         if (!error) {
             setNotification({

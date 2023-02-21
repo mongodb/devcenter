@@ -28,8 +28,8 @@ export function Notification({
     message,
     variant,
     customStyles,
-    dismissCb = () => null,
     autoDismiss = false,
+    dismissCb = () => null,
 }: NotificationProps) {
     const icon = useMemo(() => {
         let type = ESystemIconNames.CIRCLE_ALERT;
@@ -69,18 +69,15 @@ export function NotificationsContainer() {
 
     return (
         <div sx={styles.container}>
-            {notifications.length > 0 &&
-                notifications.map(({ id, message, variant }) => {
-                    return (
-                        <Notification
-                            key={id}
-                            // autoDismiss
-                            message={message}
-                            variant={variant}
-                            dismissCb={() => clearNotification(id)}
-                        />
-                    );
-                })}
+            {notifications.map(({ id, message, variant }) => (
+                <Notification
+                    key={id}
+                    autoDismiss
+                    message={message}
+                    variant={variant}
+                    dismissCb={() => clearNotification(id)}
+                />
+            ))}
         </div>
     );
 }
