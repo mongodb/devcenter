@@ -74,7 +74,11 @@ const ScrollPersonalizationModal = ({
                                 const isSelected = !!selections.find(
                                     prevTags => prevTags.name === tag.name
                                 );
-                                const { icon, title } = tagToTopic(tag);
+                                // only pass name and type to prevent the icons becoming active href's
+                                const { icon, title } = tagToTopic({
+                                    name: tag.name,
+                                    type: tag.type,
+                                } as Tag);
                                 return (
                                     <TopicCard
                                         key={title}
