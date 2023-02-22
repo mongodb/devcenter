@@ -48,8 +48,8 @@ export async function submitPersonalizationSelections({
         );
         refreshSession();
         const res = await req.json();
-        return res; // there's no current plan to display success/failure to user
+        return res;
     } catch {
-        console.error('Could not update user preferences');
+        return { error: 'Could not update user preferences' };
     }
 }
