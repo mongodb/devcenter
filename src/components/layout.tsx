@@ -36,7 +36,8 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     const { data: session } = useSession();
 
     useEffect(() => {
-        if (session && !session?.lastLogin) {
+        if (session && !session.lastLogin && !session.failedToFetch) {
+            // Don't spam with the modal if we failed to fetch.
             openModal(
                 <PaginatedPersonalizationModal />,
                 // Pass default values to PUT if user dismisses the modal so their "lastLogin" flag can be updated

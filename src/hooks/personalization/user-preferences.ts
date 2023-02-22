@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { submitPersonalizationSelections } from '../../components/modal/personalization/utils';
 import { Tag } from '../../interfaces/tag';
+import { useNotificationContext } from '../../contexts/notification';
 
 interface UserPreferences {
     followedTags: Array<Tag>;
@@ -11,7 +12,8 @@ interface UserPreferencesHook {
     updateUserPreferences: (prefs: UserPreferences) => Promise<void>;
 }
 const useUserPreferences = (): UserPreferencesHook => {
-    // Can use use context here for notification
+    const { setNotification } = useNotificationContext();
+
     const updateUserPreferences = useCallback(
         async ({ followedTags, emailPreference }: UserPreferences) => {
             try {
@@ -20,10 +22,17 @@ const useUserPreferences = (): UserPreferencesHook => {
                     emailPreference,
                 });
             } catch {
-                alert('Unable to update user prefs.');
+                setNotification({
+                    message:
+                        'Your request could not be completed at this time. Please try again.',
+                    variant: 'WARN',
+                });
                 return;
             }
-            alert('Successfully updated user pref');
+            setNotification({
+                message: 'Successfully saved your preferences',
+                variant: 'SUCCESS',
+            });
         },
         []
     );

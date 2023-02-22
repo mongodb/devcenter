@@ -9,6 +9,7 @@ import Tooltip from '../tooltip/tooltip';
 import { useModalContext } from '../../contexts/modal';
 import { ScrollPersonalizationModal } from '../modal/personalization';
 import useUserPreferences from '../../hooks/personalization/user-preferences';
+import { useNotificationContext } from '../../contexts/notification';
 import { DEBOUNCE_WAIT } from '../../data/constants';
 
 interface FollowLinkProps {
@@ -21,6 +22,7 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     iconsOnly = false,
 }) => {
     const { updateUserPreferences } = useUserPreferences();
+    const { setNotification } = useNotificationContext();
     const { status, data: session } = useSession();
 
     const followedTopics = session?.followedTags;
@@ -60,7 +62,12 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     const onFollowClick = useCallback(
         (currentlyFollowing: boolean) => {
             if (session?.failedToFetch) {
-                alert('Failed to fetch so not executing');
+                setNotification({
+                    message:
+                        'Your request could not be completed at this time. Please try again.',
+                    variant: 'WARN',
+                });
+                return;
             }
             let followedTags: Tag[];
             setIsShowingFollowing(!currentlyFollowing);

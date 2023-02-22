@@ -72,7 +72,7 @@ export const nextAuthOptions: NextAuthOptions = {
             session.lastName = token.lastName;
             session.email = token.email;
             session.userId = token.sub;
-            console.log('Setting Session');
+            session.failedToFetch = false;
             if (token.sub) {
                 let user;
                 try {
