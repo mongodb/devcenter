@@ -5,6 +5,7 @@ import RecommendedTagSection from './recommended-tag-section';
 import RecommendedContentSection from './recommended-content-section';
 import { useModalContext } from '../../contexts/modal';
 import { ScrollPersonalizationModal } from '../modal/personalization';
+import { useSession } from 'next-auth/react';
 import { useCallback, useState } from 'react';
 import {
     followTopicsArrowStyles,
@@ -13,6 +14,7 @@ import {
     recommendedSectionSubheadingStyles,
 } from './styles';
 import { RecommendedContentData } from '../../hooks/personalization';
+import { Notification } from '../notification';
 
 interface RecommendedSectionProps {
     tags?: Tag[];
@@ -30,6 +32,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     onTagSelected = () => undefined,
     onTagsSaved = () => undefined,
 }) => {
+    const { data: session } = useSession();
     const { openModal } = useModalContext();
     const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
@@ -63,31 +66,45 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                     ? 'Follow More Topics'
                     : 'View All Topics to Follow'}
             </Link>
-            <TypographyScale
-                variant="body1"
-                color="default"
-                sx={recommendedSectionSubheadingStyles}
-            >
-                Select topics to follow for recommended content
-            </TypographyScale>
+            {session?.failedToFetch ? (
+                <div sx={{ flexBasis: '100%', order: 1 }}>
+                    <Notification
+                        customStyles={{ width: 'fit-content' }}
+                        message="An error occurred while fetching recommended content. Please try refreshing the page."
+                        variant="WARN"
+                    />
+                </div>
+            ) : (
+                <>
+                    <TypographyScale
+                        variant="body1"
+                        color="default"
+                        sx={recommendedSectionSubheadingStyles}
+                    >
+                        Select topics to follow for recommended content
+                    </TypographyScale>
+                    {!!contentItems.length && (
+                        <RecommendedContentSection
+                            content={content}
+                            onSeeTopics={openPersonalizationModal}
+                        />
+                    )}
 
-            {!!contentItems.length && (
-                <RecommendedContentSection
-                    content={content}
-                    onSeeTopics={openPersonalizationModal}
-                />
-            )}
-
-            {!!tags.length && !contentItems.length && (
-                <RecommendedTagSection
-                    tags={tags}
-                    showFooter={showFooter}
-                    onTagsSaved={onTagsSaved}
-                    onTagSelected={(tag: Tag, allSelectedTags: Tag[]) => {
-                        onTagSelected(tag, allSelectedTags);
-                        setSelectedTags(allSelectedTags);
-                    }}
-                />
+                    {!!tags.length && !contentItems.length && (
+                        <RecommendedTagSection
+                            tags={tags}
+                            showFooter={showFooter}
+                            onTagsSaved={onTagsSaved}
+                            onTagSelected={(
+                                tag: Tag,
+                                allSelectedTags: Tag[]
+                            ) => {
+                                onTagSelected(tag, allSelectedTags);
+                                setSelectedTags(allSelectedTags);
+                            }}
+                        />
+                    )}
+                </>
             )}
         </div>
     ) : null;
