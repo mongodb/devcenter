@@ -28,6 +28,7 @@ import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
 import usePersonalizedContent from '../hooks/personalization';
 import { submitPersonalizationSelections } from '../components/modal/personalization/utils';
+import { useNotificationContext } from '../contexts/notification';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -82,10 +83,10 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
     recommendedTags,
 }) => {
     const { status, data } = useSession();
-    const { followedTags } = data || {};
-    const { data: content, isValidating } = usePersonalizedContent(
-        followedTags || []
-    );
+    const followedTags = data?.followedTags || [];
+    const { data: content, isValidating } =
+        usePersonalizedContent(followedTags);
+    const { setNotification } = useNotificationContext();
 
     return (
         <main
@@ -155,16 +156,30 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
             {status === 'authenticated' && !isValidating && (
                 <RecommendedSection
                     tags={recommendedTags}
+                    followedTags={followedTags}
                     content={content}
                     showFooter
                     onTagsSaved={(
                         followedTags: Tag[],
                         emailPreference: boolean
                     ) => {
-                        // TODO: Replace with call to user preferences endpoint
                         submitPersonalizationSelections({
                             followedTags,
                             emailPreference,
+                        }).then(({ error }) => {
+                            if (!error) {
+                                setNotification({
+                                    message:
+                                        'Successfully saved your preferences',
+                                    variant: 'SUCCESS',
+                                });
+                            } else {
+                                setNotification({
+                                    message:
+                                        'Your request could not be completed at this time. Please try again.',
+                                    variant: 'WARN',
+                                });
+                            }
                         });
                     }}
                 />

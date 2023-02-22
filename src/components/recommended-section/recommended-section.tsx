@@ -16,6 +16,7 @@ import { RecommendedContentData } from '../../hooks/personalization';
 
 interface RecommendedSectionProps {
     tags?: Tag[];
+    followedTags?: Tag[];
     content?: RecommendedContentData;
     onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
     onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
@@ -24,6 +25,7 @@ interface RecommendedSectionProps {
 
 const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     tags = [],
+    followedTags = [],
     content: { contentItems = [] } = {},
     content,
     showFooter = true,
@@ -38,11 +40,13 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
             <ScrollPersonalizationModal
                 title="What topics are you interested in?"
                 subtitle="Follow topics for personalized recommendations"
-                existingSelections={selectedTags}
+                existingSelections={
+                    followedTags.length ? followedTags : selectedTags
+                }
             />,
             { hideCloseBtn: true }
         );
-    }, [openModal, selectedTags]);
+    }, [openModal, followedTags, selectedTags]);
 
     return !!tags.length || !!contentItems.length ? (
         <div sx={recommendedSectionStyles}>

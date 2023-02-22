@@ -21,22 +21,24 @@ interface RecommendedContentResponse {
     mutate: KeyedMutator<{ data: RecommendedContentResponseData }>;
 }
 
-const fetcher: Fetcher<
-    { data: RecommendedContentResponseData },
-    string
-> = () => {
-    return fetch(getURLPath('/api/personalized-content') as string).then(
-        async response => {
-            const json = await response.json();
-            return json;
-        }
-    );
+const fetcher: Fetcher<{ data: RecommendedContentResponseData }, string> = (
+    query: string
+) => {
+    return fetch(
+        (getURLPath('/api/personalized-content') as string) + '?' + query
+    ).then(async response => {
+        const json = await response.json();
+        return json;
+    });
 };
 
 const buildQuery = (tags: Tag[]) => {
-    // TODO: Replace with correct query string logic
+    // Keep tags sorted so cache functions properly
     return tags
-        .reduce((acc, tag) => acc + `${tag.type}=${tag.name},`, '')
+        .sort((a: Tag, b: Tag) =>
+            `${a.type}${a.name}` > `${b.type}${b.name}` ? 1 : -1
+        )
+        .reduce((acc, tag) => acc + `${tag.type}=${tag.name}&`, '')
         .slice(0, -1);
 };
 
