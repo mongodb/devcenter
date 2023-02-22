@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Grid } from 'theme-ui';
 import {
     Pill,
@@ -19,6 +19,7 @@ import { tagToTopic } from '../../../../utils/tag-to-topic';
 import styles from '../styles';
 
 const PaginatedPersonalizationModal = () => {
+    const tagsContainer = useRef<HTMLDivElement>(null);
     const { closeModal } = useModalContext();
     const { setNotification } = useNotificationContext();
 
@@ -26,8 +27,14 @@ const PaginatedPersonalizationModal = () => {
     const [isOptedIn, setIsOptedIn] = useState(true);
     const [selections, setSelections] = useState<Array<Tag>>([]);
 
-    // Flora pagination is not zero-based, so need to always subtract 1 from the number in callback
-    const onPaginationChange = (newIndex: number) => setTabIndex(newIndex - 1);
+    const onPaginationChange = (newIndex: number) => {
+        setTabIndex(newIndex);
+
+        // scroll to top whenever showing a new view
+        if (tagsContainer?.current) {
+            tagsContainer.current?.scrollTo(0, 0);
+        }
+    };
 
     const onCheckboxToggle = (isChecked: boolean) => setIsOptedIn(isChecked);
 
@@ -77,6 +84,7 @@ const PaginatedPersonalizationModal = () => {
                 {paginationConfig[tabIndex].title}
             </TypographyScale>
             <Grid
+                ref={tagsContainer}
                 columns={[2, null, null, 3]}
                 sx={styles.tagsWrapper}
                 data-testid="paginated-modal-tags"
@@ -85,7 +93,11 @@ const PaginatedPersonalizationModal = () => {
                     const isSelected = !!selections.find(
                         prevTags => prevTags.name === tag.name
                     );
-                    const { icon, title } = tagToTopic(tag);
+                    // only pass name and type to prevent the icons becoming active href's
+                    const { icon, title } = tagToTopic({
+                        name: tag.name,
+                        type: tag.type,
+                    } as Tag);
                     return (
                         <TopicCard
                             key={title}
@@ -113,7 +125,7 @@ const PaginatedPersonalizationModal = () => {
                         hasIcon
                         iconPosition="right"
                         iconName={ESystemIconNames.ARROW_RIGHT}
-                        onClick={() => setTabIndex(tabIndex + 1)}
+                        onClick={() => onPaginationChange(tabIndex + 1)}
                         sx={styles.button}
                     >
                         {paginationConfig[tabIndex + 1].title}
@@ -128,7 +140,8 @@ const PaginatedPersonalizationModal = () => {
                     type="dots"
                     currentPage={tabIndex + 1} // Flora pagination is not zero-based
                     pages={paginationConfig.length}
-                    onChangePage={onPaginationChange}
+                    // Need to always subtract 1 from the number in callback since it's not zero-based
+                    onChangePage={newIndex => onPaginationChange(newIndex - 1)}
                 />
             </div>
         </div>
