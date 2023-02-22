@@ -32,11 +32,15 @@ const personalizedContentHandler = async (
                 .status(request.status)
                 .json({ data: response, error: false });
         } else {
+            // Set this to enable refreshing on error.
+            res.setHeader('Cache-Control', 'no-store, max-age=0');
             return res
                 .status(request.status)
                 .json({ data: {}, error: request.statusText });
         }
     } catch (err) {
+        // Set this to enable refreshing on error.
+        res.setHeader('Cache-Control', 'no-store, max-age=0');
         return res.status(400).json({
             error: `Could not get recommended content, ${err}`,
             data: [],
