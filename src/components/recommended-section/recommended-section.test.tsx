@@ -84,6 +84,6 @@ describe('Recommended Section', () => {
         await userEvent.click(checkbox);
         await userEvent.click(saveBtn);
 
-        expect(mockTagsSaved).toBeCalledWith([MOCK_ARTICLE_TAGS[0]], true);
+        expect(mockTagsSaved).toBeCalledWith([MOCK_ARTICLE_TAGS[0]], false);
     });
 });

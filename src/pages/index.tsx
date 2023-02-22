@@ -83,10 +83,9 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
 }) => {
     const { updateUserPreferences } = useUserPreferences();
     const { status, data } = useSession();
-    const { followedTags } = data || {};
-    const { data: content, isValidating } = usePersonalizedContent(
-        followedTags || []
-    );
+    const followedTags = data?.followedTags || [];
+    const { data: content, isValidating } =
+        usePersonalizedContent(followedTags);
 
     return (
         <main
@@ -156,13 +155,13 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
             {status === 'authenticated' && !isValidating && (
                 <RecommendedSection
                     tags={recommendedTags}
+                    followedTags={followedTags}
                     content={content}
                     showFooter
                     onTagsSaved={(
                         followedTags: Tag[],
                         emailPreference: boolean
                     ) => {
-                        // TODO: Replace with call to user preferences endpoint
                         updateUserPreferences({
                             followedTags,
                             emailPreference,

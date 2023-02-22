@@ -88,6 +88,7 @@ const RecommendedTagSection: React.FunctionComponent<
                         onToggle={setDigestChecked}
                         label="Receive a monthly digest with new content based on topics you follow"
                         name="digest-checkbox"
+                        checked
                     />
 
                     <div sx={topicSaveButtonWrapperStyles}>
