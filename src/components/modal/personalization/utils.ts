@@ -38,18 +38,21 @@ export async function submitPersonalizationSelections({
     followedTags: Array<Tag>;
     emailPreference: boolean;
 }) {
+    let req;
     try {
-        const req = await fetch(
-            getURLPath('/api/userPreferences', false) as string,
-            {
-                method: 'PUT',
-                body: JSON.stringify({ followedTags, emailPreference }),
-            }
-        );
+        req = await fetch(getURLPath('/api/userPreferences', false) as string, {
+            method: 'PUT',
+            body: JSON.stringify({ followedTags, emailPreference }),
+        });
+    } catch (err) {
         refreshSession();
-        const res = await req.json();
-        return res; // there's no current plan to display success/failure to user
-    } catch {
-        console.error('Could not update user preferences');
+        throw Error('Could not update user preferences');
     }
+    refreshSession();
+    if (req.status !== 200) {
+        throw Error('Could not update user preferences');
+    }
+
+    const res = await req.json();
+    return res; // there's no current plan to display success/failure to user
 }

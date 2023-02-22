@@ -19,6 +19,7 @@ declare module 'next-auth' {
         followedTags?: Tag[] | null;
         lastLogin: string | null;
         emailPreference: boolean;
+        failedToFetch?: boolean;
     }
 
     interface Profile {

@@ -27,7 +27,7 @@ import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.prev
 import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
 import usePersonalizedContent from '../hooks/personalization';
-import { submitPersonalizationSelections } from '../components/modal/personalization/utils';
+import useUserPreferences from '../hooks/personalization/user-preferences';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -81,6 +81,7 @@ interface HomeProps {
 const Home: React.FunctionComponent<HomeProps & NextPage> = ({
     recommendedTags,
 }) => {
+    const { updateUserPreferences } = useUserPreferences();
     const { status, data } = useSession();
     const { followedTags } = data || {};
     const { data: content, isValidating } = usePersonalizedContent(
@@ -162,7 +163,7 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                         emailPreference: boolean
                     ) => {
                         // TODO: Replace with call to user preferences endpoint
-                        submitPersonalizationSelections({
+                        updateUserPreferences({
                             followedTags,
                             emailPreference,
                         });

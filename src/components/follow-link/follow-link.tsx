@@ -8,7 +8,7 @@ import { Tag } from '../../interfaces/tag';
 import Tooltip from '../tooltip/tooltip';
 import { useModalContext } from '../../contexts/modal';
 import { ScrollPersonalizationModal } from '../modal/personalization';
-import { submitPersonalizationSelections } from '../modal/personalization/utils';
+import useUserPreferences from '../../hooks/personalization/user-preferences';
 import { DEBOUNCE_WAIT } from '../../data/constants';
 
 interface FollowLinkProps {
@@ -20,11 +20,8 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
     topic,
     iconsOnly = false,
 }) => {
+    const { updateUserPreferences } = useUserPreferences();
     const { status, data: session } = useSession();
-
-    const [showClickTooltip, setShowClickTooltip] = useState(false);
-
-    const [timeoutID, setTimeoutID] = useState<NodeJS.Timeout | null>(null);
 
     const followedTopics = session?.followedTags;
     const isFollowing = !!(
@@ -62,8 +59,10 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
 
     const onFollowClick = useCallback(
         (currentlyFollowing: boolean) => {
+            if (session?.failedToFetch) {
+                alert('Failed to fetch so not executing');
+            }
             let followedTags: Tag[];
-            // Never show the click tooltip when using the iconsOnly variant
             setIsShowingFollowing(!currentlyFollowing);
             if (!isFollowingAnyTopics) {
                 openModal(
@@ -90,21 +89,12 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
                     ? [...followedTopics, topic]
                     : [topic];
             }
-            if (!iconsOnly) {
-                if (timeoutID) {
-                    // To prevent a follow and unfollow action in under 2 seconds from having it's click tooltip dissapear prematurely.
-                    clearTimeout(timeoutID);
-                }
-                setShowClickTooltip(true);
-                const id = setTimeout(() => setShowClickTooltip(false), 2000);
-                setTimeoutID(id);
-            }
-            submitPersonalizationSelections({
+            updateUserPreferences({
                 followedTags,
                 emailPreference: session.emailPreference,
             });
         },
-        [followedTopics, topic]
+        [followedTopics, topic, session?.failedToFetch]
     );
 
     const debouncedOnFollowClick = useMemo(
@@ -159,12 +149,6 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
                 </Link>
             </div>
             <Tooltip className="tooltip">{hoverTooltipText}</Tooltip>
-            {showClickTooltip && (
-                <Tooltip>
-                    You are {isShowingFollowing ? 'now' : 'no longer'} following
-                    this topic
-                </Tooltip>
-            )}
         </div>
     );
 };

@@ -12,12 +12,13 @@ import { TopicCard } from '@mdb/devcenter-components';
 import { useModalContext } from '../../../../contexts/modal';
 import paginationConfig from '../../../../service/get-personalization-modal-config.preval';
 import { Tag } from '../../../../interfaces/tag';
-import { submitPersonalizationSelections } from '../utils';
+import useUserPreferences from '../../../../hooks/personalization/user-preferences';
 import { tagToTopic } from '../../../../utils/tag-to-topic';
 
 import styles from '../styles';
 
 const PaginatedPersonalizationModal = () => {
+    const { updateUserPreferences } = useUserPreferences();
     const { closeModal } = useModalContext();
 
     const [tabIndex, setTabIndex] = useState(0);
@@ -40,7 +41,7 @@ const PaginatedPersonalizationModal = () => {
     };
 
     const onCompletion = () => {
-        submitPersonalizationSelections({
+        updateUserPreferences({
             followedTags: selections,
             emailPreference: isOptedIn,
         });

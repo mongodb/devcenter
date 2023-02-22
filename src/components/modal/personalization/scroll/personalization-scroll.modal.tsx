@@ -6,7 +6,7 @@ import { useModalContext } from '../../../../contexts/modal';
 import tagConfig from '../../../../service/get-personalization-modal-config.preval';
 import { Tag } from '../../../../interfaces/tag';
 import { ScrollModalProps } from '../types';
-import { submitPersonalizationSelections } from '../utils';
+import useUserPreferences from '../../../../hooks/personalization/user-preferences';
 import { tagToTopic } from '../../../../utils/tag-to-topic';
 
 import styles from '../styles';
@@ -16,6 +16,7 @@ const ScrollPersonalizationModal = ({
     subtitle = '',
     existingSelections = [],
 }: ScrollModalProps) => {
+    const { updateUserPreferences } = useUserPreferences();
     const { closeModal } = useModalContext();
 
     const [isOptedIn, setIsOptedIn] = useState(true);
@@ -35,7 +36,7 @@ const ScrollPersonalizationModal = ({
     };
 
     const onCompletion = () => {
-        submitPersonalizationSelections({
+        updateUserPreferences({
             followedTags: selections,
             emailPreference: isOptedIn,
         });
