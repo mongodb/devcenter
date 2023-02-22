@@ -28,6 +28,7 @@ import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
 import usePersonalizedContent from '../hooks/personalization';
 import { submitPersonalizationSelections } from '../components/modal/personalization/utils';
+import { useNotificationContext } from '../contexts/notification';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -85,6 +86,7 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
     const followedTags = data?.followedTags || [];
     const { data: content, isValidating } =
         usePersonalizedContent(followedTags);
+    const { setNotification } = useNotificationContext();
 
     return (
         <main
@@ -164,6 +166,20 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                         submitPersonalizationSelections({
                             followedTags,
                             emailPreference,
+                        }).then(({ error }) => {
+                            if (!error) {
+                                setNotification({
+                                    message:
+                                        'Successfully saved your preferences',
+                                    variant: 'SUCCESS',
+                                });
+                            } else {
+                                setNotification({
+                                    message:
+                                        'Your request could not be completed at this time. Please try again.',
+                                    variant: 'WARN',
+                                });
+                            }
                         });
                     }}
                 />
