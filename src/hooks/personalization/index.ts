@@ -33,7 +33,7 @@ const fetcher: Fetcher<{ data: RecommendedContentResponseData }, string> = (
 };
 
 const buildQuery = (tags: Tag[]) => {
-    // TODO: Replace with correct query string logic
+    // Keep tags sorted so cache functions properly
     return tags
         .sort((a: Tag, b: Tag) =>
             `${a.type}${a.name}` > `${b.type}${b.name}` ? 1 : -1
