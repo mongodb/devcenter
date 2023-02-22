@@ -161,7 +161,11 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                     followedTags={followedTags}
                     content={content}
                     showFooter
-                    hasContentError={!!personalizedContentError}
+                    // If there was either an error fetching the profile or the personalizaed content, show error.
+                    hasContentError={
+                        !!personalizedContentError ||
+                        (!!data && !!data.failedToFetch)
+                    }
                     onTagsSaved={(
                         followedTags: Tag[],
                         emailPreference: boolean
