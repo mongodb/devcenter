@@ -36,11 +36,11 @@ const ScrollPersonalizationModal = ({
     };
 
     const onCompletion = () => {
+        closeModal();
         updateUserPreferences({
             followedTags: selections,
             emailPreference: isOptedIn,
         });
-        closeModal();
     };
 
     return (

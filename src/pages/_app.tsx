@@ -1,23 +1,27 @@
-import { useRouter } from 'next/router';
-import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import getConfig from 'next/config';
 import { Session } from 'next-auth';
+import { useRouter } from 'next/router';
+import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
 import { ThemeProvider } from '@theme-ui/core';
 import { CacheProvider } from '@emotion/react';
-import { customCache } from '../utils/emotion';
+
+import { OverlayProvider } from '../contexts/overlay';
+import { ModalProvider } from '../contexts/modal';
+import { NotificationsProvider } from '../contexts/notification';
+
+import ModalRoot from '../components/modal';
+import { NotificationsContainer } from '../components/notification';
 import Layout from '../components/layout';
 import ErrorBoundary from '../components/error-boundary';
-import { OverlayProvider } from '../contexts/overlay';
 import {
     getMetaDescr,
     getCanonicalUrl,
     shouldDefineDefaultCanonical,
 } from '../utils/seo';
-import ModalRoot from '../components/modal';
-import { ModalProvider } from '../contexts/modal';
+import { customCache } from '../utils/emotion';
 
 import '../../mocks/run-msw';
 
@@ -58,16 +62,19 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
             >
                 <CacheProvider value={customCache(theme)}>
                     <ThemeProvider theme={theme}>
-                        <ModalProvider>
-                            <OverlayProvider>
-                                <Layout pagePath={pagePath}>
-                                    <ErrorBoundary>
-                                        <ModalRoot />
-                                        <Component {...pageProps} />
-                                    </ErrorBoundary>
-                                </Layout>
-                            </OverlayProvider>
-                        </ModalProvider>
+                        <NotificationsProvider>
+                            <ModalProvider>
+                                <OverlayProvider>
+                                    <Layout pagePath={pagePath}>
+                                        <ErrorBoundary>
+                                            <ModalRoot />
+                                            <NotificationsContainer />
+                                            <Component {...pageProps} />
+                                        </ErrorBoundary>
+                                    </Layout>
+                                </OverlayProvider>
+                            </ModalProvider>
+                        </NotificationsProvider>
                     </ThemeProvider>
                 </CacheProvider>
             </SessionProvider>
