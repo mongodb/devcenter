@@ -27,6 +27,9 @@ const fetcher: Fetcher<{ data: RecommendedContentResponseData }, string> = (
     return fetch(
         (getURLPath('/api/personalized-content') as string) + '?' + query
     ).then(async response => {
+        if (response.status !== 200) {
+            throw Error('Failed to fetch personalized content.');
+        }
         const json = await response.json();
         return json;
     });

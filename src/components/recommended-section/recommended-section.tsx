@@ -5,7 +5,6 @@ import RecommendedTagSection from './recommended-tag-section';
 import RecommendedContentSection from './recommended-content-section';
 import { useModalContext } from '../../contexts/modal';
 import { ScrollPersonalizationModal } from '../modal/personalization';
-import { useSession } from 'next-auth/react';
 import { useCallback, useState } from 'react';
 import {
     followTopicsArrowStyles,
@@ -23,6 +22,7 @@ interface RecommendedSectionProps {
     onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
     onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
     showFooter?: boolean;
+    hasContentError?: boolean;
 }
 
 const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
@@ -31,10 +31,10 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     content: { contentItems = [] } = {},
     content,
     showFooter = true,
+    hasContentError = false,
     onTagSelected = () => undefined,
     onTagsSaved = () => undefined,
 }) => {
-    const { data: session } = useSession();
     const { openModal } = useModalContext();
     const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
@@ -51,7 +51,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
         );
     }, [openModal, followedTags, selectedTags]);
 
-    return !!tags.length || !!contentItems.length ? (
+    return !!tags.length || !!contentItems.length || !!hasContentError ? (
         <div sx={recommendedSectionStyles}>
             <TypographyScale
                 variant="heading2"
@@ -70,7 +70,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                     ? 'Follow More Topics'
                     : 'View All Topics to Follow'}
             </Link>
-            {session?.failedToFetch ? (
+            {hasContentError ? (
                 <div sx={{ flexBasis: '100%', order: 1 }}>
                     <Notification
                         customStyles={{ width: 'fit-content' }}

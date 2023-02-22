@@ -84,8 +84,11 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
     const { updateUserPreferences } = useUserPreferences();
     const { status, data } = useSession();
     const followedTags = data?.followedTags || [];
-    const { data: content, isValidating } =
-        usePersonalizedContent(followedTags);
+    const {
+        data: content,
+        isValidating,
+        error: personalizedContentError,
+    } = usePersonalizedContent(followedTags);
 
     return (
         <main
@@ -158,6 +161,7 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                     followedTags={followedTags}
                     content={content}
                     showFooter
+                    hasContentError={!!personalizedContentError}
                     onTagsSaved={(
                         followedTags: Tag[],
                         emailPreference: boolean
