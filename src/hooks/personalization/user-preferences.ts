@@ -34,7 +34,7 @@ const useUserPreferences = (): UserPreferencesHook => {
                 variant: 'SUCCESS',
             });
         },
-        []
+        [setNotification]
     );
 
     return {

@@ -101,7 +101,16 @@ const FollowLink: React.FunctionComponent<FollowLinkProps> = ({
                 emailPreference: session.emailPreference,
             });
         },
-        [followedTopics, topic, session?.failedToFetch]
+        [
+            followedTopics,
+            topic,
+            session?.failedToFetch,
+            session?.emailPreference,
+            isFollowingAnyTopics,
+            openModal,
+            setNotification,
+            updateUserPreferences,
+        ]
     );
 
     const debouncedOnFollowClick = useMemo(
