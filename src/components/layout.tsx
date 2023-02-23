@@ -11,8 +11,8 @@ import { layers } from '../styled/layout';
 import { useEnsureImageAlts } from '../utils/seo';
 import { useModalContext } from '../contexts/modal';
 import { PaginatedPersonalizationModal } from './modal/personalization';
-import { submitPersonalizationSelections } from './modal/personalization/utils';
 import getSignInURL from '../utils/get-sign-in-url';
+import useUserPreferences from '../hooks/personalization/user-preferences';
 
 const navStyles = {
     'nav > div > div > ul': {
@@ -30,18 +30,20 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
     children,
     pagePath,
 }) => {
+    const { updateUserPreferences } = useUserPreferences();
     const { hasOverlay } = useContext(OverlayContext);
     const { component: hasModalOpen, openModal } = useModalContext();
     const { data: session } = useSession();
 
     useEffect(() => {
-        if (session && !session?.lastLogin) {
+        if (session && !session.lastLogin && !session.failedToFetch) {
+            // Don't spam with the modal if we failed to fetch.
             openModal(
                 <PaginatedPersonalizationModal />,
                 // Pass default values to PUT if user dismisses the modal so their "lastLogin" flag can be updated
                 {
                     onCloseCallback: () =>
-                        submitPersonalizationSelections({
+                        updateUserPreferences({
                             followedTags: [],
                             emailPreference: false,
                         }),

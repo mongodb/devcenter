@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import * as Sentry from '@sentry/nextjs';
 import { User } from '../../../interfaces/user-preference';
+import logger from '../../../utils/logger';
 
 async function getUser(userId: string | unknown): Promise<any> {
     const url = `${process.env.BACKEND_URL}/api/user_preferences/${userId}`;
@@ -71,20 +72,36 @@ export const nextAuthOptions: NextAuthOptions = {
             session.lastName = token.lastName;
             session.email = token.email;
             session.userId = token.sub;
+            session.failedToFetch = false;
             if (token.sub) {
-                const user = await getUser(token.sub);
+                let user;
+                try {
+                    user = await getUser(token.sub);
+                } catch (err) {
+                    logger.error(err);
+                    session.failedToFetch = true;
+                    return session;
+                }
+
                 if (!user) {
-                    const persisted_user = await persistNewUser({
-                        userId: token.userId,
-                        firstName: token.firstName,
-                        lastName: token.lastName,
-                        email: token.email,
-                        followedTags: [],
-                        lastLogin: null,
-                        emailPreference: false,
-                    } as User);
+                    let persistedUser;
+                    try {
+                        persistedUser = await persistNewUser({
+                            userId: token.userId,
+                            firstName: token.firstName,
+                            lastName: token.lastName,
+                            email: token.email,
+                            followedTags: [],
+                            lastLogin: null,
+                            emailPreference: false,
+                        } as User);
+                    } catch (err) {
+                        logger.error(err);
+                        session.failedToFetch = true;
+                        return session;
+                    }
                     const { followedTags, lastLogin, emailPreference } =
-                        persisted_user;
+                        persistedUser;
                     session.followedTags = followedTags;
                     session.lastLogin = lastLogin;
                     session.emailPreference = emailPreference;

@@ -3,11 +3,10 @@ import { Grid } from 'theme-ui';
 import { Button, TypographyScale, Checkbox } from '@mdb/flora';
 import { TopicCard } from '@mdb/devcenter-components';
 import { useModalContext } from '../../../../contexts/modal';
-import { useNotificationContext } from '../../../../contexts/notification';
 import tagConfig from '../../../../service/get-personalization-modal-config.preval';
 import { Tag } from '../../../../interfaces/tag';
 import { ScrollModalProps } from '../types';
-import { submitPersonalizationSelections } from '../utils';
+import useUserPreferences from '../../../../hooks/personalization/user-preferences';
 import { tagToTopic } from '../../../../utils/tag-to-topic';
 
 import styles from '../styles';
@@ -17,8 +16,8 @@ const ScrollPersonalizationModal = ({
     subtitle = '',
     existingSelections = [],
 }: ScrollModalProps) => {
+    const { updateUserPreferences } = useUserPreferences();
     const { closeModal } = useModalContext();
-    const { setNotification } = useNotificationContext();
 
     const [isOptedIn, setIsOptedIn] = useState(true);
     const [selections, setSelections] =
@@ -36,26 +35,12 @@ const ScrollPersonalizationModal = ({
         return setSelections(currSelections => [...currSelections, tag]);
     };
 
-    const onCompletion = async () => {
+    const onCompletion = () => {
         closeModal();
-
-        const { error } = await submitPersonalizationSelections({
+        updateUserPreferences({
             followedTags: selections,
             emailPreference: isOptedIn,
         });
-
-        if (!error) {
-            setNotification({
-                message: 'Successfully saved your preferences',
-                variant: 'SUCCESS',
-            });
-        } else {
-            setNotification({
-                message:
-                    'Your request could not be completed at this time. Please try again.',
-                variant: 'WARN',
-            });
-        }
     };
 
     return (

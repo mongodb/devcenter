@@ -27,8 +27,7 @@ import getAllMetaInfoRandomPreval from '../service/get-all-meta-info-random.prev
 import { useSession } from 'next-auth/react';
 import { Tag } from '../interfaces/tag';
 import usePersonalizedContent from '../hooks/personalization';
-import { submitPersonalizationSelections } from '../components/modal/personalization/utils';
-import { useNotificationContext } from '../contexts/notification';
+import useUserPreferences from '../hooks/personalization/user-preferences';
 
 const getImageSrc = (imageString: string | EThirdPartyLogoVariant) =>
     (
@@ -82,11 +81,14 @@ interface HomeProps {
 const Home: React.FunctionComponent<HomeProps & NextPage> = ({
     recommendedTags,
 }) => {
+    const { updateUserPreferences } = useUserPreferences();
     const { status, data } = useSession();
     const followedTags = data?.followedTags || [];
-    const { data: content, isValidating } =
-        usePersonalizedContent(followedTags);
-    const { setNotification } = useNotificationContext();
+    const {
+        data: content,
+        isValidating,
+        error: personalizedContentError,
+    } = usePersonalizedContent(followedTags);
 
     return (
         <main
@@ -159,27 +161,18 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                     followedTags={followedTags}
                     content={content}
                     showFooter
+                    // If there was either an error fetching the profile or the personalizaed content, show error.
+                    hasContentError={
+                        !!personalizedContentError ||
+                        (!!data && !!data.failedToFetch)
+                    }
                     onTagsSaved={(
                         followedTags: Tag[],
                         emailPreference: boolean
                     ) => {
-                        submitPersonalizationSelections({
+                        updateUserPreferences({
                             followedTags,
                             emailPreference,
-                        }).then(({ error }) => {
-                            if (!error) {
-                                setNotification({
-                                    message:
-                                        'Successfully saved your preferences',
-                                    variant: 'SUCCESS',
-                                });
-                            } else {
-                                setNotification({
-                                    message:
-                                        'Your request could not be completed at this time. Please try again.',
-                                    variant: 'WARN',
-                                });
-                            }
                         });
                     }}
                 />

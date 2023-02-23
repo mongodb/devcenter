@@ -13,6 +13,7 @@ import {
     recommendedSectionSubheadingStyles,
 } from './styles';
 import { RecommendedContentData } from '../../hooks/personalization';
+import { Notification } from '../notification';
 
 interface RecommendedSectionProps {
     tags?: Tag[];
@@ -21,6 +22,7 @@ interface RecommendedSectionProps {
     onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
     onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
     showFooter?: boolean;
+    hasContentError?: boolean;
 }
 
 const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
@@ -29,6 +31,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     content: { contentItems = [] } = {},
     content,
     showFooter = true,
+    hasContentError = false,
     onTagSelected = () => undefined,
     onTagsSaved = () => undefined,
 }) => {
@@ -48,7 +51,7 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
         );
     }, [openModal, followedTags, selectedTags]);
 
-    return !!tags.length || !!contentItems.length ? (
+    return !!tags.length || !!contentItems.length || !!hasContentError ? (
         <div sx={recommendedSectionStyles}>
             <TypographyScale
                 variant="heading2"
@@ -67,31 +70,45 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                     ? 'Follow More Topics'
                     : 'View All Topics to Follow'}
             </Link>
-            <TypographyScale
-                variant="body1"
-                color="default"
-                sx={recommendedSectionSubheadingStyles}
-            >
-                Select topics to follow for recommended content
-            </TypographyScale>
+            {hasContentError ? (
+                <div sx={{ flexBasis: '100%', order: 1 }}>
+                    <Notification
+                        customStyles={{ width: 'fit-content' }}
+                        message="An error occurred while fetching recommended content. Please try refreshing the page."
+                        variant="WARN"
+                    />
+                </div>
+            ) : (
+                <>
+                    <TypographyScale
+                        variant="body1"
+                        color="default"
+                        sx={recommendedSectionSubheadingStyles}
+                    >
+                        Select topics to follow for recommended content
+                    </TypographyScale>
+                    {!!contentItems.length && (
+                        <RecommendedContentSection
+                            content={content}
+                            onSeeTopics={openPersonalizationModal}
+                        />
+                    )}
 
-            {!!contentItems.length && (
-                <RecommendedContentSection
-                    content={content}
-                    onSeeTopics={openPersonalizationModal}
-                />
-            )}
-
-            {!!tags.length && !contentItems.length && (
-                <RecommendedTagSection
-                    tags={tags}
-                    showFooter={showFooter}
-                    onTagsSaved={onTagsSaved}
-                    onTagSelected={(tag: Tag, allSelectedTags: Tag[]) => {
-                        onTagSelected(tag, allSelectedTags);
-                        setSelectedTags(allSelectedTags);
-                    }}
-                />
+                    {!!tags.length && !contentItems.length && (
+                        <RecommendedTagSection
+                            tags={tags}
+                            showFooter={showFooter}
+                            onTagsSaved={onTagsSaved}
+                            onTagSelected={(
+                                tag: Tag,
+                                allSelectedTags: Tag[]
+                            ) => {
+                                onTagSelected(tag, allSelectedTags);
+                                setSelectedTags(allSelectedTags);
+                            }}
+                        />
+                    )}
+                </>
             )}
         </div>
     ) : null;
