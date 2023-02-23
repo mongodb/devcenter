@@ -13,39 +13,22 @@ import {
 
 interface RecommendedTagSectionProps {
     tags?: Tag[];
-    onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
-    onTagSelected?: (tag: Tag, allSelectedTags: Tag[]) => void;
+    selectedTags?: Tag[];
     showFooter: boolean;
+    onTagsSaved?: (tags: Tag[], digestChecked: boolean) => void;
+    onTagClick?: (tag: Tag) => void;
 }
 
 const RecommendedTagSection: React.FunctionComponent<
     RecommendedTagSectionProps
 > = ({
     tags = [],
-    onTagSelected = () => undefined,
-    onTagsSaved = () => undefined,
+    selectedTags = [],
     showFooter,
+    onTagClick = () => undefined,
+    onTagsSaved = () => undefined,
 }) => {
-    const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
     const [digestChecked, setDigestChecked] = useState(false);
-
-    const topicCardSelected = useCallback(
-        (tag: Tag) => () => {
-            const index = selectedTags.findIndex(
-                selected => selected.slug === tag.slug
-            );
-
-            if (index === -1) {
-                onTagSelected(tag, [...selectedTags, tag]);
-                setSelectedTags([...selectedTags, tag]);
-            } else {
-                const newSelected = [...selectedTags];
-                newSelected.splice(index, 1);
-                setSelectedTags(newSelected);
-            }
-        },
-        [selectedTags, onTagSelected]
-    );
 
     const onSaveButtonClick = useCallback(() => {
         onTagsSaved(selectedTags, digestChecked);
@@ -70,7 +53,7 @@ const RecommendedTagSection: React.FunctionComponent<
                             <TopicCard
                                 title={title}
                                 variant="selectable"
-                                onSelect={topicCardSelected(tag)}
+                                onSelect={() => onTagClick(tag)}
                                 selected={selectedTags.some(
                                     selected => selected.slug === tag.slug
                                 )}

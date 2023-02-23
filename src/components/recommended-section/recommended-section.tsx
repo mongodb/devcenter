@@ -32,7 +32,6 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
     content,
     showFooter = true,
     hasContentError = false,
-    onTagSelected = () => undefined,
     onTagsSaved = () => undefined,
 }) => {
     const { openModal } = useModalContext();
@@ -50,6 +49,21 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
             { hideCloseBtn: true }
         );
     }, [openModal, followedTags, selectedTags]);
+
+    const onTagClick = useCallback(
+        (tag: Tag) => {
+            const index = selectedTags.findIndex(
+                selected => selected.slug === tag.slug
+            );
+
+            if (index === -1) {
+                setSelectedTags([...selectedTags, tag]);
+            } else {
+                setSelectedTags(selectedTags.filter((_, i) => i !== index));
+            }
+        },
+        [selectedTags]
+    );
 
     return !!tags.length || !!contentItems.length || !!hasContentError ? (
         <div sx={recommendedSectionStyles}>
@@ -97,15 +111,10 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                     {!!tags.length && !contentItems.length && (
                         <RecommendedTagSection
                             tags={tags}
+                            selectedTags={selectedTags}
                             showFooter={showFooter}
                             onTagsSaved={onTagsSaved}
-                            onTagSelected={(
-                                tag: Tag,
-                                allSelectedTags: Tag[]
-                            ) => {
-                                onTagSelected(tag, allSelectedTags);
-                                setSelectedTags(allSelectedTags);
-                            }}
+                            onTagClick={onTagClick}
                         />
                     )}
                 </>
