@@ -16,6 +16,26 @@ import { TagType } from '../../types/tag-type';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
 
+const hasPrimaryTag = (contentItem: ContentItem) => {
+    if (contentItem.tags) {
+        return contentItem.tags.some(
+            item =>
+                item.type === 'L1Product' ||
+                item.type === 'ProgrammingLanguage' ||
+                item.type === 'Technology'
+        );
+    }
+
+    return false;
+};
+
+const categoryWithoutPrimaryTagToURL: { [key: string]: string } = {
+    Podcast: 'https://podcasts.mongodb.com/',
+    Video: 'https://www.mongodb.com/developer/videos/',
+    Event: 'https://www.mongodb.com/developer/events/',
+    'Industry Event': 'https://www.mongodb.com/developer/events/',
+};
+
 export const getContentPageData = async (slug: string[]) => {
     const slugStr = slug.join('/');
     let contentItem: ContentItem | null;
@@ -31,6 +51,7 @@ export const getContentPageData = async (slug: string[]) => {
     }
     if (!contentItem) return null;
 
+    const contentItemHasPrimaryTag = hasPrimaryTag(contentItem);
     const isEventContent = contentItem.collectionType === 'Event';
     let topicSlug = '/' + slug.slice(0, slug.length - 1).join('/');
 
@@ -68,7 +89,9 @@ export const getContentPageData = async (slug: string[]) => {
     const contentTypeSlug = pillCategoryToSlug.get(contentItem.category);
     const topicContentTypeCrumb: Crumb = {
         text: pluralize(contentItem.category),
-        url: `${crumbs[crumbs.length - 1].url}${contentTypeSlug}`,
+        url: contentItemHasPrimaryTag
+            ? `${crumbs[crumbs.length - 1].url}${contentTypeSlug}`
+            : categoryWithoutPrimaryTagToURL[contentItem.category],
     };
 
     crumbs.push(topicContentTypeCrumb);
