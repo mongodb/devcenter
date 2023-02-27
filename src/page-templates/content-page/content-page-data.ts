@@ -73,9 +73,14 @@ export const getContentPageData = async (slug: string[]) => {
 
     crumbs.push(topicContentTypeCrumb);
 
-    // In the rare event an event has no tags, set tertiary nav to empty to prevent parent and first child titles both displaying "Events"
+    // Events, Podcasts, Videos are not required to have primary tags
+    // In the rare event an item (e.g., event) has no tags, set tertiary nav to empty to prevent parent and first child titles both displaying "Events"
     let tertiaryNavItems =
-        topicSlug === '/events' ? [] : getSideNav(topicSlug, allContentPreval);
+        topicSlug === '/events' ||
+        topicSlug === '/podcasts' ||
+        topicSlug === '/videos'
+            ? []
+            : getSideNav(topicSlug, allContentPreval);
     setURLPathForNavItems(tertiaryNavItems);
 
     const metaInfoForTopic = getMetaInfoForTopic(topicSlug);
