@@ -647,7 +647,13 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                     {topic.name}
                                 </TypographyScale>
                             </a>
-                            <FollowLink topic={topic} iconsOnly />
+                            {
+                                // Render FollowLink only if the topic is followable
+                                // This is for item without primary tag (e.g., Podcast, Video, Event)
+                                topic.type === 'ContentType' ? null : (
+                                    <FollowLink topic={topic} iconsOnly />
+                                )
+                            }
                         </div>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>

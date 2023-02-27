@@ -16,17 +16,16 @@ import { TagType } from '../../types/tag-type';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
 
-const hasPrimaryTag = (contentItem: ContentItem) => {
-    if (contentItem.tags) {
-        return contentItem.tags.some(
-            item =>
-                item.type === 'L1Product' ||
-                item.type === 'ProgrammingLanguage' ||
-                item.type === 'Technology'
-        );
-    }
+const tagsHasPrimaryTag = (tags: Tag[]) => {
+    return tags.some(tag => {
+        tag.type === 'L1Product' ||
+            tag.type === 'ProgrammingLanguage' ||
+            tag.type === 'Technology';
+    });
+};
 
-    return false;
+const hasPrimaryTag = (contentItem: ContentItem) => {
+    return contentItem.tags != null && tagsHasPrimaryTag(contentItem.tags);
 };
 
 const categoryWithoutPrimaryTagToURL: { [key: string]: string } = {
@@ -96,16 +95,11 @@ export const getContentPageData = async (slug: string[]) => {
 
     crumbs.push(topicContentTypeCrumb);
 
-    // Events, Podcasts, Videos are not required to have primary tags
     // In the rare event an item (e.g., event) has no tags, set tertiary nav to empty to prevent parent and first child titles both displaying "Events"
-    const hasNoPrimaryTag =
-        topicSlug === '/events' ||
-        topicSlug === '/podcasts' ||
-        topicSlug === '/videos';
 
-    let tertiaryNavItems = hasNoPrimaryTag
-        ? []
-        : getSideNav(topicSlug, allContentPreval);
+    let tertiaryNavItems = contentItemHasPrimaryTag
+        ? getSideNav(topicSlug, allContentPreval)
+        : [];
     setURLPathForNavItems(tertiaryNavItems);
 
     const metaInfoForTopic = getMetaInfoForTopic(topicSlug);
