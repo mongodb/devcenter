@@ -75,12 +75,14 @@ export const getContentPageData = async (slug: string[]) => {
 
     // Events, Podcasts, Videos are not required to have primary tags
     // In the rare event an item (e.g., event) has no tags, set tertiary nav to empty to prevent parent and first child titles both displaying "Events"
-    let tertiaryNavItems =
+    const hasNoPrimaryTag =
         topicSlug === '/events' ||
         topicSlug === '/podcasts' ||
-        topicSlug === '/videos'
-            ? []
-            : getSideNav(topicSlug, allContentPreval);
+        topicSlug === '/videos';
+
+    let tertiaryNavItems = hasNoPrimaryTag
+        ? []
+        : getSideNav(topicSlug, allContentPreval);
     setURLPathForNavItems(tertiaryNavItems);
 
     const metaInfoForTopic = getMetaInfoForTopic(topicSlug);
