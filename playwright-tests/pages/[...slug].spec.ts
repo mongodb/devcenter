@@ -5,6 +5,8 @@ test.describe.configure({ mode: 'parallel' });
 
 const PAGE_URL =
     '/developer/products/atlas/building-e-commerce-content-catalog-atlas-search/';
+const PAGE_URL_WITHOUT_PRIMARY_TAG =
+    '/developer/podcasts/dwight-merriman-and-lena-smart/';
 
 test('Content page has all components on tutorial', async ({ page }) => {
     await page.goto(PAGE_URL);
@@ -214,3 +216,25 @@ test(
     'Content page visual regression testing',
     runPercy(PAGE_URL, 'Content Page')
 );
+
+test('Content page without primary tag has correct components', async ({
+    page,
+}) => {
+    await page.goto(PAGE_URL_WITHOUT_PRIMARY_TAG);
+
+    // TertiaryNav
+    const tertiaryNavTitle = page.locator('a[href="/developer/podcasts/"] h6');
+    expect(await tertiaryNavTitle.count()).toEqual(1);
+
+    // Breadcrumbs
+    expect(
+        await page
+            .locator('div[data-testid="breadcrumbs"] a:has-text("Podcasts")')
+            .count()
+    ).toEqual(1);
+
+    // No Follow-topic Button
+    expect(
+        await page.locator('div[data-testid="tooltip-body"]').count()
+    ).toEqual(0);
+});
