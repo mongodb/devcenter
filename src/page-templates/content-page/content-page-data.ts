@@ -12,9 +12,27 @@ import { getContentItemFromSlug } from '../../service/get-content-by-slug';
 import allContentPreval from '../../service/get-all-content.preval';
 import { Tag } from '../../interfaces/tag';
 import { TagType } from '../../types/tag-type';
+import { hasPrimaryTag } from './util';
+import { PillCategory } from '../../types/pill-category';
+import { getURLPath } from '../../utils/format-url-path';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
+
+// Assumes that other category always carries a primary tag
+const categoryWithoutPrimaryTagToURL = (category: PillCategory) => {
+    if (category === 'Podcast') {
+        return 'https://podcasts.mongodb.com/';
+    }
+
+    if (category === 'Video') {
+        return getURLPath('videos');
+    }
+
+    if (category === 'Event' || category === 'Industry Event') {
+        return getURLPath('events');
+    }
+};
 
 export const getContentPageData = async (slug: string[]) => {
     const slugStr = slug.join('/');
@@ -31,6 +49,7 @@ export const getContentPageData = async (slug: string[]) => {
     }
     if (!contentItem) return null;
 
+    const contentItemHasPrimaryTag = hasPrimaryTag(contentItem);
     const isEventContent = contentItem.collectionType === 'Event';
     let topicSlug = '/' + slug.slice(0, slug.length - 1).join('/');
 
@@ -68,14 +87,17 @@ export const getContentPageData = async (slug: string[]) => {
     const contentTypeSlug = pillCategoryToSlug.get(contentItem.category);
     const topicContentTypeCrumb: Crumb = {
         text: pluralize(contentItem.category),
-        url: `${crumbs[crumbs.length - 1].url}${contentTypeSlug}`,
+        url: contentItemHasPrimaryTag
+            ? `${crumbs[crumbs.length - 1].url}${contentTypeSlug}`
+            : categoryWithoutPrimaryTagToURL(contentItem.category),
     };
-
     crumbs.push(topicContentTypeCrumb);
 
-    // In the rare event an event has no tags, set tertiary nav to empty to prevent parent and first child titles both displaying "Events"
-    let tertiaryNavItems =
-        topicSlug === '/events' ? [] : getSideNav(topicSlug, allContentPreval);
+    // In the rare event an item (e.g., event) has no tags, set tertiary nav to empty to prevent parent and first child titles both displaying "Events"
+
+    let tertiaryNavItems = contentItemHasPrimaryTag
+        ? getSideNav(topicSlug, allContentPreval)
+        : [];
     setURLPathForNavItems(tertiaryNavItems);
 
     const metaInfoForTopic = getMetaInfoForTopic(topicSlug);

@@ -17,7 +17,7 @@ const getURLs = () =>
             dirent =>
                 `http://localhost:3000/developer/${
                     path.parse(dirent.name).name
-                }`
+                }/`
         );
 module.exports = {
     ci: {
