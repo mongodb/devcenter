@@ -12,23 +12,10 @@ import { getContentItemFromSlug } from '../../service/get-content-by-slug';
 import allContentPreval from '../../service/get-all-content.preval';
 import { Tag } from '../../interfaces/tag';
 import { TagType } from '../../types/tag-type';
+import { hasPrimaryTag } from './util';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
-
-const tagsHasPrimaryTag = (tags: Tag[]) => {
-    return tags.some(tag => {
-        return (
-            tag.type === 'L1Product' ||
-            tag.type === 'ProgrammingLanguage' ||
-            tag.type === 'Technology'
-        );
-    });
-};
-
-const hasPrimaryTag = (contentItem: ContentItem) => {
-    return contentItem.tags != null && tagsHasPrimaryTag(contentItem.tags);
-};
 
 const categoryWithoutPrimaryTagToURL: { [key: string]: string } = {
     Podcast: 'https://podcasts.mongodb.com/',

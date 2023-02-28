@@ -45,7 +45,7 @@ import {
 } from '../../components/modal/feedback/types';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 // utils
-import { normalizeCategory } from './util';
+import { normalizeCategory, isPrimaryTag } from './util';
 import { getCanonicalUrl } from '../../utils/seo';
 import { getURLPath } from '../../utils/format-url-path';
 import { constructDateDisplay } from '../../utils/format-date';
@@ -650,9 +650,9 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             {
                                 // Render FollowLink only if the topic is followable
                                 // This is for item without primary tag (e.g., Podcast, Video, Event)
-                                topic.type === 'ContentType' ? null : (
+                                isPrimaryTag(topic) ? (
                                     <FollowLink topic={topic} iconsOnly />
-                                )
+                                ) : null
                             }
                         </div>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
