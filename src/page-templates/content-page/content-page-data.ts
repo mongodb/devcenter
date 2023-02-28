@@ -13,15 +13,25 @@ import allContentPreval from '../../service/get-all-content.preval';
 import { Tag } from '../../interfaces/tag';
 import { TagType } from '../../types/tag-type';
 import { hasPrimaryTag } from './util';
+import { PillCategory } from '../../types/pill-category';
+import { getURLPath } from '../../utils/format-url-path';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
 
-const categoryWithoutPrimaryTagToURL: { [key: string]: string } = {
-    Podcast: 'https://podcasts.mongodb.com/',
-    Video: 'https://www.mongodb.com/developer/videos/',
-    Event: 'https://www.mongodb.com/developer/events/',
-    'Industry Event': 'https://www.mongodb.com/developer/events/',
+// Assumes that other category always carries a primary tag
+const categoryWithoutPrimaryTagToURL = (category: PillCategory) => {
+    if (category === 'Podcast') {
+        return 'https://podcasts.mongodb.com/';
+    }
+
+    if (category === 'Video') {
+        return getURLPath('videos');
+    }
+
+    if (category === 'Event' || category === 'Industry Event') {
+        return getURLPath('events');
+    }
 };
 
 export const getContentPageData = async (slug: string[]) => {
@@ -79,7 +89,7 @@ export const getContentPageData = async (slug: string[]) => {
         text: pluralize(contentItem.category),
         url: contentItemHasPrimaryTag
             ? `${crumbs[crumbs.length - 1].url}${contentTypeSlug}`
-            : categoryWithoutPrimaryTagToURL[contentItem.category],
+            : categoryWithoutPrimaryTagToURL(contentItem.category),
     };
     crumbs.push(topicContentTypeCrumb);
 
