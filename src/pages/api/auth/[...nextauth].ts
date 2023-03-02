@@ -105,18 +105,19 @@ export const nextAuthOptions: NextAuthOptions = {
 
                 if (!user) {
                     let persistedUser;
+                    const body = {
+                        userId: token.userId,
+                        firstName: token.firstName,
+                        lastName: token.lastName,
+                        email: token.email,
+                        followedTags: [],
+                        lastLogin: null,
+                        emailPreference: false,
+                    };
                     try {
-                        persistedUser = await persistNewUser({
-                            userId: token.userId,
-                            firstName: token.firstName,
-                            lastName: token.lastName,
-                            email: token.email,
-                            followedTags: [],
-                            lastLogin: null,
-                            emailPreference: false,
-                        } as User);
+                        persistedUser = await persistNewUser(body as User);
                     } catch (err) {
-                        logger.error(err);
+                        logger.error({ err, body });
                         session.failedToFetch = true;
                         return session;
                     }
