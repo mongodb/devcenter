@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { withSentry } from '@sentry/nextjs';
 import { nextAuthOptions } from './auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth/next';
+import logger from '../../utils/logger';
 
 async function userPreferencesHandler(
     req: NextApiRequest,
@@ -27,6 +28,12 @@ async function userPreferencesHandler(
                 .json({ data: response, error: false });
         } else {
             // Set this to enable refreshing on error.
+            logger.error({
+                msg: 'Failed to update user preferences',
+                status: request.status,
+                body: req.body,
+                userId: session?.userId,
+            });
             res.setHeader('Cache-Control', 'no-store, max-age=0');
             return res
                 .status(request.status)

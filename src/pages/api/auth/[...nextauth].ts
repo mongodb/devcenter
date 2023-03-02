@@ -15,28 +15,48 @@ async function getUser(userId: string | unknown): Promise<any> {
             'Content-Type': 'application/json',
         },
     };
+    let req;
     try {
-        const req = await fetch(url, options);
-        return await req.json();
+        req = await fetch(url, options);
     } catch (e) {
+        logger.error(e);
         Sentry.captureException(e);
         throw new Error('Failed to fetch user preferences.');
     }
+    if (req.status !== 200) {
+        logger.error({
+            msg: 'Failed to get user',
+            status: req.status,
+            userId,
+        });
+        throw Error('Failed to fetch user preferences.');
+    }
+    return await req.json();
 }
 
 async function persistNewUser(user: User): Promise<any> {
     const url = `${process.env.BACKEND_URL}/api/user_preferences`;
+    let req;
     try {
-        const req = await fetch(url, {
+        req = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(user),
             headers: { 'Content-Type': 'application/json' },
         });
-        return await req.json();
     } catch (e) {
+        logger.error(e);
         Sentry.captureException(e);
         throw new Error('Failed to persist new user');
     }
+    if (req.status !== 200) {
+        logger.error({
+            msg: 'Failed to post user',
+            status: req.status,
+            body: user,
+        });
+        throw Error('Failed to persist new user');
+    }
+    return await req.json();
 }
 
 export const nextAuthOptions: NextAuthOptions = {
