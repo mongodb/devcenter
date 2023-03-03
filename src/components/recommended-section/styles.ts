@@ -82,6 +82,7 @@ export const recommendedContentGridStyles = {
     flexBasis: '100%',
     order: 1,
     marginBottom: ['inc30', null, null, 0],
+    marginTop: 'inc50',
 };
 
 export const followTopicsArrowStyles = {

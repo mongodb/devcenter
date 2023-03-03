@@ -10,7 +10,6 @@ import {
     followTopicsArrowStyles,
     recommendedSectionHeadingStyles,
     recommendedSectionStyles,
-    recommendedSectionSubheadingStyles,
 } from './styles';
 import { RecommendedContentData } from '../../hooks/personalization';
 import { Notification } from '../notification';
@@ -94,13 +93,6 @@ const RecommendedSection: React.FunctionComponent<RecommendedSectionProps> = ({
                 </div>
             ) : (
                 <>
-                    <TypographyScale
-                        variant="body1"
-                        color="default"
-                        sx={recommendedSectionSubheadingStyles}
-                    >
-                        Select topics to follow for recommended content
-                    </TypographyScale>
                     {!!contentItems.length && (
                         <RecommendedContentSection
                             content={content}

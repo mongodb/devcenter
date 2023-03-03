@@ -2,13 +2,14 @@ import { TopicCard } from '@mdb/devcenter-components';
 import { Grid } from 'theme-ui';
 import { Tag } from '../../interfaces/tag';
 import { useCallback, useState } from 'react';
-import { Button, Checkbox } from '@mdb/flora';
+import { Button, Checkbox, TypographyScale } from '@mdb/flora';
 import { tagToTopic } from '../../utils/tag-to-topic';
 import {
     digestCheckboxStyles,
     topicSaveButtonStyles,
     topicSaveButtonWrapperStyles,
     footerStyles,
+    recommendedSectionSubheadingStyles,
 } from './styles';
 
 interface RecommendedTagSectionProps {
@@ -36,6 +37,13 @@ const RecommendedTagSection: React.FunctionComponent<
 
     return (
         <>
+            <TypographyScale
+                variant="body1"
+                color="default"
+                sx={recommendedSectionSubheadingStyles}
+            >
+                Select topics to follow for recommended content
+            </TypographyScale>
             <Grid
                 columns={[2, null, 4]}
                 gap={16}
