@@ -72,7 +72,7 @@ export const nextAuthOptions: NextAuthOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        jwt: async ({ token, account, profile, user }) => {
+        jwt: async ({ token, account, profile }) => {
             // Persist the OAuth access_token to the token right after signin
             if (account) {
                 token.accessToken = account.access_token;
@@ -81,9 +81,6 @@ export const nextAuthOptions: NextAuthOptions = {
                 token.firstName = profile.firstName;
                 token.lastName = profile.lastName;
                 token.email = profile.email;
-            }
-            if (user) {
-                token.userId = user.id;
             }
             return token;
         },
@@ -106,7 +103,7 @@ export const nextAuthOptions: NextAuthOptions = {
                 if (!user) {
                     let persistedUser;
                     const body = {
-                        userId: token.userId,
+                        userId: token.sub,
                         firstName: token.firstName,
                         lastName: token.lastName,
                         email: token.email,

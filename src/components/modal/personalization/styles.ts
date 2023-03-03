@@ -5,7 +5,7 @@ const wrapper: ThemeUICSSObject = {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'black00',
-    height: '90vh',
+    maxHeight: '90vh',
     padding: ['inc40', null, null, 'inc70'],
     borderRadius: 'inc20',
 };
