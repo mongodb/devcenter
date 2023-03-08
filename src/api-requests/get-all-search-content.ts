@@ -18,14 +18,13 @@ export const getSearchContent = async (
             'Content-Type': 'application/json',
         },
     };
-
     try {
         const req = await fetch(url, options);
         const data: SearchItem[] = await req.json();
         return data;
     } catch (e) {
         Sentry.captureException(e);
-        throw new Error('Failed to fetch search data.');
+        throw new Error(`Failed to fetch search data. ${e}`);
     }
 };
 

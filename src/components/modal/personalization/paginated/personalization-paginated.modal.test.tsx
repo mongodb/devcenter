@@ -13,6 +13,19 @@ jest.mock('../../../../service/get-personalization-modal-config.preval', () => {
     };
 });
 
+jest.mock('next-auth/react', () => {
+    const nextAuthModule = jest.requireActual('next-auth/react');
+    return {
+        __esModule: true,
+        ...nextAuthModule,
+        useSession: jest.fn(() => {
+            return { data: undefined, status: 'unauthenticated' };
+        }),
+    };
+});
+
+global.HTMLElement.prototype.scrollTo = jest.fn();
+
 // Since component imports the preval being mocked, it has to be imported after
 import PaginatedPersonalizationModal from './personalization-paginated.modal';
 

@@ -6,7 +6,7 @@ import { useModalContext } from '../../../../contexts/modal';
 import tagConfig from '../../../../service/get-personalization-modal-config.preval';
 import { Tag } from '../../../../interfaces/tag';
 import { ScrollModalProps } from '../types';
-import { submitPersonalizationSelections } from '../utils';
+import useUserPreferences from '../../../../hooks/personalization/user-preferences';
 import { tagToTopic } from '../../../../utils/tag-to-topic';
 
 import styles from '../styles';
@@ -16,7 +16,9 @@ const ScrollPersonalizationModal = ({
     subtitle = '',
     existingSelections = [],
 }: ScrollModalProps) => {
+    const { updateUserPreferences } = useUserPreferences();
     const { closeModal } = useModalContext();
+
     const [isOptedIn, setIsOptedIn] = useState(true);
     const [selections, setSelections] =
         useState<Array<Tag>>(existingSelections);
@@ -34,11 +36,11 @@ const ScrollPersonalizationModal = ({
     };
 
     const onCompletion = () => {
-        submitPersonalizationSelections({
-            preferences: selections,
+        closeModal();
+        updateUserPreferences({
+            followedTags: selections,
             emailPreference: isOptedIn,
         });
-        closeModal();
     };
 
     return (
@@ -72,7 +74,11 @@ const ScrollPersonalizationModal = ({
                                 const isSelected = !!selections.find(
                                     prevTags => prevTags.name === tag.name
                                 );
-                                const { icon, title } = tagToTopic(tag);
+                                // only pass name and type to prevent the icons becoming active href's
+                                const { icon, title } = tagToTopic({
+                                    name: tag.name,
+                                    type: tag.type,
+                                } as Tag);
                                 return (
                                     <TopicCard
                                         key={title}

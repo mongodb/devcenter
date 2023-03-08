@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import Tooltip from '../tooltip';
 
 import styles from './styles';
 
@@ -54,12 +55,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                             height={12}
                         />
                     </button>
-                    {showTooltip && (
-                        <div sx={styles.tooltipWrapper}>
-                            <div sx={styles.tooltipArrow} />
-                            <div sx={styles.tooltipBody}>Link Copied!</div>
-                        </div>
-                    )}
+                    {showTooltip && <Tooltip alwaysBelow>Link Copied!</Tooltip>}
                 </div>
             )}
             {facebook?.url && (

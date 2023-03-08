@@ -26,7 +26,7 @@ const buildImagePatterns = (hostsString = '') => {
 
     return items.reduce((acc, item) => {
         const match =
-            /^(https?):\/\/([a-zA-Z0-9\*\.\-]+)((?:\/[a-zA-Z0-9\*\-]+)+)?/.exec(
+            /^(https?):\/\/([a-zA-Z0-9*.-]+)((?:\/[a-zA-Z0-9*-]+)+)?/.exec(
                 item.trim()
             );
 

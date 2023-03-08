@@ -3,5 +3,5 @@ import { runPercy } from '../utils';
 
 test(
     'Quickstarts visual regression testing',
-    runPercy('/developer/quickstarts', 'Quickstarts', 'quickstarts')
+    runPercy('/developer/quickstarts', 'Quickstarts')
 );

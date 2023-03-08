@@ -45,9 +45,11 @@ export const getFeaturedForTopic = async (
     const featuredForTopic = fromStatic
         ? getFeaturedForTopicFromPreval(topicSlug)
         : await getFeaturedForTopicFromAPI(STRAPI_CLIENT, topicSlug);
+
     const featuredArticles = (featuredForTopic?.articles || []).map(
         a => a.title
     );
+
     const featuredPodcasts = (featuredForTopic?.podcasts || []).map(
         p => p.title
     );

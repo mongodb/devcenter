@@ -4,10 +4,18 @@ import { useModalContext } from '../../contexts/modal';
 const Modal = () => {
     const { component, props, closeModal } = useModalContext();
 
+    const onModalDismiss = () => {
+        if (props?.onCloseCallback) {
+            props.onCloseCallback();
+        }
+
+        closeModal();
+    };
+
     return (
         <Lightbox
             isOpen={!!component}
-            onClose={closeModal}
+            onClose={onModalDismiss}
             sx={{
                 '> div': { height: 'unset' },
                 ...(props?.hideCloseBtn && {

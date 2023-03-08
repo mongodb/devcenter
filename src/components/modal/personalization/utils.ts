@@ -1,5 +1,8 @@
+import { Tag } from '../../../interfaces/tag';
 import { MetaInfo } from '../../../interfaces/meta-info';
 import { PersonalizationModalConfig } from './types';
+import { getURLPath } from '../../../utils/format-url-path';
+import refreshSession from '../../../utils/refresh-session';
 
 export function initializePersonalizationConfig(metaInfo: MetaInfo[]) {
     const languages: PersonalizationModalConfig = {
@@ -28,8 +31,28 @@ export function initializePersonalizationConfig(metaInfo: MetaInfo[]) {
     return [languages, technologies, products];
 }
 
-// TODO: you will also need to pass userId here to construct the path for the PUT
-// eslint-disable-next-line
-export function submitPersonalizationSelections(body: any) {
-    // do the http req here
+export async function submitPersonalizationSelections({
+    followedTags,
+    emailPreference,
+}: {
+    followedTags: Array<Tag>;
+    emailPreference: boolean;
+}) {
+    let req;
+    try {
+        req = await fetch(getURLPath('/api/userPreferences', false) as string, {
+            method: 'PUT',
+            body: JSON.stringify({ followedTags, emailPreference }),
+        });
+    } catch (err) {
+        refreshSession();
+        throw Error('Could not update user preferences');
+    }
+    refreshSession();
+    if (req.status !== 200) {
+        throw Error('Could not update user preferences');
+    }
+
+    const res = await req.json();
+    return res; // there's no current plan to display success/failure to user
 }

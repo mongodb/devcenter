@@ -7,6 +7,17 @@ jest.mock('../../../../service/get-personalization-modal-config.preval', () => {
     };
 });
 
+jest.mock('next-auth/react', () => {
+    const nextAuthModule = jest.requireActual('next-auth/react');
+    return {
+        __esModule: true,
+        ...nextAuthModule,
+        useSession: jest.fn(() => {
+            return { data: undefined, status: 'unauthenticated' };
+        }),
+    };
+});
+
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 

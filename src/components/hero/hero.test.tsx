@@ -4,6 +4,23 @@ import '@testing-library/jest-dom';
 import Hero from '.';
 
 import { createTopicPageCTAS } from './utils';
+import { Tag } from '../../interfaces/tag';
+
+jest.mock('next/router', () => ({
+    __esModule: true,
+    ...jest.requireActual('next/router'),
+    useRouter: jest.fn(() => ({ asPath: '' })),
+}));
+
+jest.mock('next-auth/react', () => ({
+    __esModule: true,
+    ...jest.requireActual('next/router'),
+    useSession: jest.fn(() => ({ session: null })),
+}));
+
+jest.mock('../../utils/get-sign-in-url', () => {
+    return jest.fn(() => '');
+});
 
 const crumbs = [
     { text: 'MongoDB Developer Center', url: '/' },
@@ -24,13 +41,20 @@ const ctas = [
 
 const ctaElements = createTopicPageCTAS(ctas);
 
-test('renders hero', () => {
+const topic: Tag = {
+    name: 'Atlas',
+    type: 'L1Product',
+    slug: '/products/atlas',
+};
+
+test('renders Hero', () => {
     render(
         <Hero
             crumbs={crumbs}
             name={name}
             description={description}
             ctas={ctaElements}
+            topic={topic}
         />
     );
     // Breadcrumbs
@@ -50,4 +74,7 @@ test('renders hero', () => {
 
     const secondaryCTA = screen.getByText('Secondary CTA');
     expect(secondaryCTA).toBeInTheDocument();
+
+    const followButton = screen.getByText('Follow');
+    expect(followButton).toBeInTheDocument();
 });

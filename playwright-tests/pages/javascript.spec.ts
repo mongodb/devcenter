@@ -3,5 +3,5 @@ import { runPercy } from '../utils';
 
 test(
     'JavaScript topic visual regression testing',
-    runPercy('/developer/languages/javascript', 'Javascript', 'javascript')
+    runPercy('/developer/languages/javascript', 'Javascript')
 );

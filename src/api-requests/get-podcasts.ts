@@ -76,6 +76,7 @@ const getAllPodcastsFromAPI = async (
             }
         }
     `;
+
     const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
         await client.query({ query });
 
@@ -94,7 +95,9 @@ export const getPodcastBySlugFromAPI = async (
         }
     `;
     const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
-        await client.query({ query });
+        await client.query({
+            query,
+        });
 
     return data.podcasts.length > 0 ? data.podcasts[0] : null;
 };

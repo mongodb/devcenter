@@ -45,7 +45,7 @@ import {
 } from '../../components/modal/feedback/types';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 // utils
-import { normalizeCategory } from './util';
+import { normalizeCategory, isPrimaryTag } from './util';
 import { getCanonicalUrl } from '../../utils/seo';
 import { getURLPath } from '../../utils/format-url-path';
 import { constructDateDisplay } from '../../utils/format-date';
@@ -63,15 +63,17 @@ import styles from './styles';
 import {
     sideNavStyles,
     sideNavTitleStyles,
+    titleFollowTopicStyles,
 } from '../../components/tertiary-nav/styles';
 import { FullApplication, Snippet } from '../../components/icons';
 import { iconStyles } from '../../components/topic-cards-container/styles';
 import { formatEventTypes } from '../../utils/format-text';
+import FollowLink from '../../components/follow-link';
+import { Tag } from '../../interfaces/tag';
 
 interface ContentPageProps {
     crumbs: Crumb[];
-    topicSlug: string;
-    topicName: string;
+    topic: Tag;
     contentItem: ContentItem;
     tertiaryNavItems: TertiaryNavItem[];
     relatedContent: ContentItem[];
@@ -83,8 +85,7 @@ const parseUndefinedValue = (description: string | undefined): string =>
 
 const ContentPageTemplate: NextPage<ContentPageProps> = ({
     crumbs,
-    topicSlug,
-    topicName,
+    topic,
     tertiaryNavItems,
     relatedContent,
     previewMode,
@@ -637,14 +638,23 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             <div sx={styles.wrapper}>
                 <GridLayout sx={{ rowGap: 0 }}>
                     <div sx={sideNavStyles(5)}>
-                        <a href={getURLPath(topicSlug)}>
-                            <TypographyScale
-                                variant="heading6"
-                                sx={sideNavTitleStyles}
-                            >
-                                {topicName}
-                            </TypographyScale>
-                        </a>
+                        <div sx={titleFollowTopicStyles}>
+                            <a href={getURLPath(topic.slug)}>
+                                <TypographyScale
+                                    variant="heading6"
+                                    sx={sideNavTitleStyles}
+                                >
+                                    {topic.name}
+                                </TypographyScale>
+                            </a>
+                            {
+                                // Render FollowLink only if the topic is followable
+                                // This is for item without primary tag (e.g., Podcast, Video, Event)
+                                isPrimaryTag(topic) ? (
+                                    <FollowLink topic={topic} iconsOnly />
+                                ) : null
+                            }
+                        </div>
                         <SideNav currentUrl="#" items={tertiaryNavItems} />
                     </div>
                     <Breadcrumbs crumbs={crumbs} sx={styles.breadcrumbs} />
