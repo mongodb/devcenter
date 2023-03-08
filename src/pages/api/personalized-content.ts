@@ -20,7 +20,6 @@ const personalizedContentHandler = async (
             {
                 method: 'GET',
                 headers: {
-                    apiKey: process.env.REALM_API_KEY || '',
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
