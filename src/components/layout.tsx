@@ -15,7 +15,7 @@ import getSignInURL from '../utils/get-sign-in-url';
 import useUserPreferences from '../hooks/personalization/user-preferences';
 
 const navStyles = {
-    zIndex: '9999',
+    zIndex: 9999,
     position: 'relative',
     'nav > div > div > ul': {
         zIndex: `${layers.desktopConsistentNavDropdown}!important`,
