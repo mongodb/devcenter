@@ -7,6 +7,7 @@ env:
   APP_ENV: staging
   HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
   NEXTAUTH_URL: https://mongodbcom-cdn.staging.corp.mongodb.com/developer/api/auth/
+  NEXT_PUBLIC_API_MOCKING: disabled
 
 envSecrets:
   NEXTAUTH_SECRET: devcenter-secrets

@@ -7,6 +7,9 @@ env:
   APP_ENV: production
   HOST_URL: www.mongodb.com
   NEXTAUTH_URL: https://www.mongodb.com/developer/api/auth/
+  # Prevents mocks from being in the server bundle.
+  # https://github.com/mswjs/msw/issues/359#issuecomment-690935709
+  NEXT_PUBLIC_API_MOCKING: disabled
 
 envSecrets:
   DRONE_TOKEN: devcenter-secrets # Only production needs to have this (it's for the preview webhook).
@@ -29,6 +32,7 @@ envSecrets:
   STRAPI_URL: devcenter-secrets
   STRAPI_API_TOKEN: devcenter-secrets
   GOOGLE_PLACES_API_KEY: devcenter-secrets
+  
 
 autoscaling:
   minReplicas: 4
