@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 import { Global, css } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
 import { useSession } from 'next-auth/react';
-import { UnifiedFooter } from '@mdb/consistent-nav';
+import { UnifiedFooter, UnifiedNav } from '@mdb/consistent-nav';
 import { globalStyles, Main } from '../styled/layout';
-import { UnifiedNav } from '@mdb/consistent-nav';
+import { ThemeUICSSObject } from 'theme-ui';
 import SecondaryNav from './secondary-nav';
 import { OverlayContext } from '../contexts/overlay';
 import { layers } from '../styled/layout';
@@ -14,8 +14,8 @@ import { PaginatedPersonalizationModal } from './modal/personalization';
 import getSignInURL from '../utils/get-sign-in-url';
 import useUserPreferences from '../hooks/personalization/user-preferences';
 
-const navStyles = {
-    zIndex: 9999,
+const navStyles: ThemeUICSSObject = {
+    zIndex: '9999',
     position: 'relative',
     'nav > div > div > ul': {
         zIndex: `${layers.desktopConsistentNavDropdown}!important`,
