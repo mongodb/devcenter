@@ -1,5 +1,5 @@
 import theme from '@mdb/flora/theme';
-import Image from 'next/future/image';
+import Image from 'next/image';
 
 export const ArticleImage = ({
     url,

@@ -43,20 +43,23 @@ interface L1LinkProps {
 }
 
 const L1Link: React.FunctionComponent<L1LinkProps> = ({ name, slug }) => (
-    <Link href={slug} passHref key={slug}>
-        <a
-            sx={{
-                '&:hover': {
-                    '*': {
-                        color: 'green60',
-                        stroke: 'green60',
-                    },
+    <Link
+        href={slug}
+        passHref
+        key={slug}
+        sx={{
+            '&:hover': {
+                '*': {
+                    color: 'green60',
+                    stroke: 'green60',
                 },
-                display: 'block',
-                width: 'max-content',
-                marginBottom: 'inc50',
-            }}
-        >
+            },
+            display: 'block',
+            width: 'max-content',
+            marginBottom: 'inc50',
+        }}
+    >
+        <>
             <TypographyScale
                 sx={{
                     display: 'inline-block',
@@ -67,7 +70,7 @@ const L1Link: React.FunctionComponent<L1LinkProps> = ({ name, slug }) => (
                 {name}
             </TypographyScale>
             <SystemIcon name={ESystemIconNames.CHEVRON_RIGHT} size="medium" />
-        </a>
+        </>
     </Link>
 );
 
