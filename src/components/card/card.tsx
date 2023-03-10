@@ -55,7 +55,7 @@ const CardThumbnail = ({
             alt={alt || 'alt not provided'}
             src={url as string}
             sx={thumbnailStyles}
-            layout="fill"
+            fill
         />
     );
 
@@ -65,7 +65,7 @@ const CardThumbnail = ({
                 alt="Play Button"
                 src={playButtonUrl}
                 sx={thumbnailStyles}
-                layout="fill"
+                fill
             />
         ),
         Event: url ? defaultThumbnail : <EventIcon text={city} />,
