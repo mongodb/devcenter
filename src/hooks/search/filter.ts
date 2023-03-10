@@ -33,7 +33,7 @@ const useFilter = (
 
     const hasFiltersSet = !!filters.length;
     const filterData = useCallback(
-        searchData => {
+        (searchData: ContentItem[]) => {
             if (!searchData) {
                 return [];
             } else if (!hasFiltersSet) {

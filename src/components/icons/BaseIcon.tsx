@@ -1,6 +1,7 @@
 export interface BaseIconProps {
     className?: string;
     isFilled?: boolean;
+    children?: React.ReactNode;
 }
 
 const BaseIcon: React.FunctionComponent<BaseIconProps> = ({

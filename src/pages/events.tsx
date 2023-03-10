@@ -55,7 +55,7 @@ const EventsPageComponent: React.FunctionComponent<
     mobileFiltersOpen,
     setMobileFiltersOpen,
     featured,
-    children,
+    childComponent,
     filterItems: rawFilterItems,
 }) => {
     // TODO: Refactor and remove the following three consts
@@ -149,55 +149,57 @@ const EventsPageComponent: React.FunctionComponent<
                     columnGap: 'inc40',
                 }}
             >
-                <SearchBox
-                    {...searchStringProps}
-                    placeholder="Search Events"
-                    extraStyles={{
-                        flexBasis: ['100%', null, 'calc(66% - 12px)'],
-                        marginBottom: 0,
-                    }}
-                />
+                <>
+                    <SearchBox
+                        {...searchStringProps}
+                        placeholder="Search Events"
+                        extraStyles={{
+                            flexBasis: ['100%', null, 'calc(66% - 12px)'],
+                            marginBottom: 0,
+                        }}
+                    />
 
-                <LocationBox
-                    {...locationProps}
-                    onLocationSelect={locationSelect}
-                />
+                    <LocationBox
+                        {...locationProps}
+                        onLocationSelect={locationSelect}
+                    />
 
-                {showFeatured && featured.length >= 3 && (
-                    <div sx={{ width: '100%', marginBottom: 'inc70' }}>
-                        <FeaturedCardSection
-                            content={featured}
-                            title="Featured Events"
-                            featuredCardType="middle"
-                        />
-                    </div>
-                )}
+                    {showFeatured && featured.length >= 3 && (
+                        <div sx={{ width: '100%', marginBottom: 'inc70' }}>
+                            <FeaturedCardSection
+                                content={featured}
+                                title="Featured Events"
+                                featuredCardType="middle"
+                            />
+                        </div>
+                    )}
 
-                <Button
-                    hasIcon
-                    iconPosition="right"
-                    iconStrokeWeight="medium"
-                    iconName={ESystemIconNames.FILTER_HAMBURGER}
-                    onClick={() => setMobileFiltersOpen(true)}
-                    customWrapperStyles={{
-                        display: ['block', null, null, 'none'],
-                        flexBasis: ['100%', null, 'auto'],
-                    }}
-                    customStyles={{
-                        display: ['flex', null, null, 'none'],
-                        justifyContent: 'center',
-                    }}
-                >
-                    Filter
-                    {!!filters.length && ` (${filters.length})`}
-                </Button>
+                    <Button
+                        hasIcon
+                        iconPosition="right"
+                        iconStrokeWeight="medium"
+                        iconName={ESystemIconNames.FILTER_HAMBURGER}
+                        onClick={() => setMobileFiltersOpen(true)}
+                        customWrapperStyles={{
+                            display: ['block', null, null, 'none'],
+                            flexBasis: ['100%', null, 'auto'],
+                        }}
+                        customStyles={{
+                            display: ['flex', null, null, 'none'],
+                            justifyContent: 'center',
+                        }}
+                    >
+                        Filter
+                        {!!filters.length && ` (${filters.length})`}
+                    </Button>
 
-                <EventResults
-                    searchProps={searchProps}
-                    searchMetaProps={searchMetaProps}
-                />
+                    <EventResults
+                        searchProps={searchProps}
+                        searchMetaProps={searchMetaProps}
+                    />
 
-                {children}
+                    {childComponent}
+                </>
             </div>
         </GridLayout>
     );

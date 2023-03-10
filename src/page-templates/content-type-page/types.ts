@@ -20,7 +20,7 @@ export interface ContentTypePageProps {
     initialSearchContent?: SearchItem[];
     pageNumber: number;
     slug: string;
-    children: React.FunctionComponent<{
+    childComponent: React.FunctionComponent<{
         searchProps: SearchProps;
         searchMetaProps: SearchMetaProps;
         mobileFiltersOpen: boolean;

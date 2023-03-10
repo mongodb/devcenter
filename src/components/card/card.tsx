@@ -7,7 +7,7 @@ import {
     SystemIcon,
     ESystemIconNames,
 } from '@mdb/flora';
-import Truncate from 'react-truncate';
+import Truncate from '../truncate';
 
 import AuthorLockup from '../author-lockup';
 

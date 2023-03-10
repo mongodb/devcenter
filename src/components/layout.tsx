@@ -24,6 +24,7 @@ const navStyles = {
 };
 interface LayoutProps {
     pagePath?: string | null;
+    children?: React.ReactNode;
 }
 
 const Layout: React.FunctionComponent<LayoutProps> = ({

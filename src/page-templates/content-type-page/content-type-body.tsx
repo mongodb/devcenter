@@ -23,7 +23,7 @@ interface ContentTypeBodyProps {
     searchMetaProps: SearchMetaProps;
     mobileFiltersOpen: boolean;
     setMobileFiltersOpen: (open: boolean) => void;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 const ContentTypeBody: React.FunctionComponent<
