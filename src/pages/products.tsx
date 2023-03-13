@@ -87,6 +87,7 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                 <Grid columns={[1, null, 2, 4]} gap="inc70">
                     {l2s.map(l2 => {
                         const iconName = productToLogo[l2.tagName];
+                        // Flash card needs to be updated in Flora. Currently it contains nested <a> tags, which is not legal HTML.
                         return (
                             <FlashCard
                                 flashCard
@@ -150,6 +151,7 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                     >
                         {featured.map(prod => {
                             const iconName = productToLogo[prod.tagName];
+                            // Flash card needs to be updated in Flora. Currently it contains nested <a> tags, which is not legal HTML.
                             return (
                                 <FlashCard
                                     flashCard
