@@ -48,6 +48,15 @@ export const getContentTypePageData = async (
             ? getFeaturedLangProdTech(contentType, content)
             : {};
 
+    // filter out past events to ensure frontend always receive future events
+    if (contentType === 'Event') {
+        const now = new Date();
+        initialSearchContent = initialSearchContent?.filter(content => {
+            const contentDate = new Date(content.date);
+            return contentDate > now;
+        }) as SearchItem[] | null;
+    }
+
     return {
         contentType,
         filterItems,
