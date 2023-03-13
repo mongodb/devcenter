@@ -17,8 +17,8 @@ export const ArticleImage = ({
         <Image
             alt={alt || ''}
             src={url}
-            width="0"
-            height="0"
+            width={0}
+            height={0}
             sizes={`(max-width: ${theme.sizes.breakpoint.xlarge}) 100vw,
               50vw`}
             style={{ width: '100%', height: 'auto' }}

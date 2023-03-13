@@ -53,6 +53,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                             alt="Copy link"
                             width={12}
                             height={12}
+                            sx={{ display: 'block' }}
                         />
                     </button>
                     {showTooltip && <Tooltip alwaysBelow>Link Copied!</Tooltip>}
@@ -71,6 +72,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                         alt="Facebook Icon"
                         width={12}
                         height={12}
+                        sx={{ display: 'block' }}
                     />
                 </a>
             )}
@@ -87,6 +89,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                         alt="twitter icon"
                         width={12}
                         height={12}
+                        sx={{ display: 'block' }}
                     />
                 </a>
             )}
@@ -103,6 +106,7 @@ const SocialButtons: React.FunctionComponent<SocialButtonsProps> = ({
                         alt="linkedin icon"
                         width={12}
                         height={12}
+                        sx={{ display: 'block' }}
                     />
                 </a>
             )}

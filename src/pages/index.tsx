@@ -225,8 +225,8 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                                 image={
                                     <Image
                                         src={getImageSrc(imageString)}
-                                        height={theme.sizes.inc80}
-                                        width={theme.sizes.inc80}
+                                        height={parseInt(theme.sizes.inc80)}
+                                        width={parseInt(theme.sizes.inc80)}
                                         alt={titleLink.text}
                                     />
                                 }
@@ -331,8 +331,8 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                                     image={
                                         <Image
                                             src={getImageSrc(imageString)}
-                                            height={theme.sizes.inc60}
-                                            width={theme.sizes.inc60}
+                                            height={parseInt(theme.sizes.inc60)}
+                                            width={parseInt(theme.sizes.inc60)}
                                             alt={titleLink.text}
                                         />
                                     }
@@ -423,8 +423,8 @@ const Home: React.FunctionComponent<HomeProps & NextPage> = ({
                                     image={
                                         <Image
                                             src={getImageSrc(imageString)}
-                                            height={theme.sizes.inc80}
-                                            width={theme.sizes.inc80}
+                                            height={parseInt(theme.sizes.inc80)}
+                                            width={parseInt(theme.sizes.inc80)}
                                             alt={titleLink.text}
                                         />
                                     }
