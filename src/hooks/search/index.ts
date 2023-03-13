@@ -21,6 +21,17 @@ import { ContentItem } from '../../interfaces/content-item';
 import { SearchParamType, SearchProps } from './types';
 import isServerSide from '../../utils/is-server-side';
 
+const excludePastEvent = (data: ContentItem[]): ContentItem[] => {
+    const now = new Date();
+
+    return data.filter(item => {
+        return (
+            item.category !== 'Event' ||
+            new Date(item.contentDate as string) > now
+        );
+    });
+};
+
 // Credit https://github.com/reduxjs/redux/blob/d794c56f78eccb56ba3c67971c26df8ee34dacc1/src/compose.ts#L46
 // eslint-disable-next-line @typescript-eslint/ban-types
 const compose = (...funcs: Function[]) => {
@@ -161,7 +172,11 @@ const useSearch = (
         }
     }, [searchString, allResults, data, contentType, tagSlug]);
 
-    const filteredData = compose(filterData, filterDataByLocation)(data);
+    const filteredData = compose(
+        filterData,
+        filterDataByLocation,
+        excludePastEvent
+    )(data);
 
     return {
         clearSearchParam,

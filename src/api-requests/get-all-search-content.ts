@@ -5,6 +5,15 @@ import {
 } from '../components/search/utils';
 import { defaultSortByType, SearchItem } from '../components/search/types';
 
+const excludePastEvent = (data: SearchItem[]): SearchItem[] => {
+    const now = new Date();
+
+    return data.filter(item => {
+        const contentDate = new Date(item.date);
+        return item.type !== 'Event' || contentDate > now;
+    });
+};
+
 export const getSearchContent = async (
     queryParams: SearchQueryParams
 ): Promise<SearchItem[]> => {
@@ -21,7 +30,7 @@ export const getSearchContent = async (
     try {
         const req = await fetch(url, options);
         const data: SearchItem[] = await req.json();
-        return data;
+        return excludePastEvent(data);
     } catch (e) {
         Sentry.captureException(e);
         throw new Error(`Failed to fetch search data. ${e}`);
