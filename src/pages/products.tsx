@@ -1,5 +1,4 @@
 import { Grid } from 'theme-ui';
-import Link from 'next/link';
 import { NextPage, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 import {
@@ -43,9 +42,8 @@ interface L1LinkProps {
 }
 
 const L1Link: React.FunctionComponent<L1LinkProps> = ({ name, slug }) => (
-    <Link
-        href={slug}
-        passHref
+    <a
+        href={getURLPath(slug)}
         key={slug}
         sx={{
             '&:hover': {
@@ -59,19 +57,17 @@ const L1Link: React.FunctionComponent<L1LinkProps> = ({ name, slug }) => (
             marginBottom: 'inc50',
         }}
     >
-        <>
-            <TypographyScale
-                sx={{
-                    display: 'inline-block',
-                    marginRight: 'inc40',
-                }}
-                variant="heading5"
-            >
-                {name}
-            </TypographyScale>
-            <SystemIcon name={ESystemIconNames.CHEVRON_RIGHT} size="medium" />
-        </>
-    </Link>
+        <TypographyScale
+            sx={{
+                display: 'inline-block',
+                marginRight: 'inc40',
+            }}
+            variant="heading5"
+        >
+            {name}
+        </TypographyScale>
+        <SystemIcon name={ESystemIconNames.CHEVRON_RIGHT} size="medium" />
+    </a>
 );
 
 const ProductSection: React.FunctionComponent<L1Product> = ({
