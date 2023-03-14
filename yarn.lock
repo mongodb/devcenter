@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@adobe/css-tools@^4.0.1":
+  version "4.2.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@adobe/css-tools/-/css-tools-4.2.0.tgz#e1a84fca468f4b337816fcb7f0964beb620ba855"
+  integrity sha512-E09FiIft46CmH5Qnjb0wsW54/YQd69LsxeKUOWawmws1XWvyFGURnAChH0mlr7YPFR1ofwvUQfcL0J3lMxXqPA==
+
 "@ampproject/remapping@^2.1.0":
   version "2.1.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@ampproject/remapping/-/remapping-2.1.2.tgz#4edca94973ded9630d20101cd8559cedb8d8bd34"
@@ -2054,12 +2059,12 @@
     strict-event-emitter "^0.2.4"
     web-encoding "^1.1.5"
 
-"@next/bundle-analyzer@12.0.8":
-  version "12.0.8"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/bundle-analyzer/-/bundle-analyzer-12.0.8.tgz#a4fef1b14f8a4a87c09d97a3d909deddc88d12f8"
-  integrity sha1-pP7xsU+KSofAnZej2Qne3ciNEvg=
+"@next/bundle-analyzer@13.2.4":
+  version "13.2.4"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@next/bundle-analyzer/-/bundle-analyzer-13.2.4.tgz#ad319bf566528f8afee34df07574fd97170b03f2"
+  integrity sha512-bY4Clt7f1roJextpeQOQQWfNiXI0O5UvfOEyfuM5YUGPQMOCAZD2zjLjolakdn9Dm2yyMQUQ6JDE+iJK0dIeLA==
   dependencies:
-    webpack-bundle-analyzer "4.3.0"
+    webpack-bundle-analyzer "4.7.0"
 
 "@next/env@13.2.4":
   version "13.2.4"
@@ -2592,49 +2597,48 @@
   dependencies:
     tslib "^2.4.0"
 
-"@testing-library/dom@^8.0.0":
-  version "8.13.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/dom/-/dom-8.13.0.tgz#bc00bdd64c7d8b40841e27a70211399ad3af46f5"
-  integrity sha1-vAC91kx9i0CEHienAhE5mtOvRvU=
+"@testing-library/dom@^9.0.0":
+  version "9.0.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/dom/-/dom-9.0.1.tgz#fb9e3837fe2a662965df1536988f0863f01dbf51"
+  integrity sha512-fTOVsMY9QLFCCXRHG3Ese6cMH5qIWwSbgxZsgeF5TNsy81HKaZ4kgehnSF8FsR3OF+numlIV2YcU79MzbnhSig==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/runtime" "^7.12.5"
-    "@types/aria-query" "^4.2.0"
+    "@types/aria-query" "^5.0.1"
     aria-query "^5.0.0"
     chalk "^4.1.0"
     dom-accessibility-api "^0.5.9"
-    lz-string "^1.4.4"
+    lz-string "^1.5.0"
     pretty-format "^27.0.2"
 
-"@testing-library/jest-dom@5.16.1":
-  version "5.16.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/jest-dom/-/jest-dom-5.16.1.tgz#3db7df5ae97596264a7da9696fe14695ba02e51f"
-  integrity sha1-PbffWul1liZKfalpb+FGlboC5R8=
+"@testing-library/jest-dom@5.16.5":
+  version "5.16.5"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/jest-dom/-/jest-dom-5.16.5.tgz#3912846af19a29b2dbf32a6ae9c31ef52580074e"
+  integrity sha512-N5ixQ2qKpi5OLYfwQmUb/5mSV9LneAcaUfp32pn4yCnpb8r/Yz0pXFPck21dIicKmi+ta5WRAknkZCfA8refMA==
   dependencies:
+    "@adobe/css-tools" "^4.0.1"
     "@babel/runtime" "^7.9.2"
     "@types/testing-library__jest-dom" "^5.9.1"
     aria-query "^5.0.0"
     chalk "^3.0.0"
-    css "^3.0.0"
     css.escape "^1.5.1"
     dom-accessibility-api "^0.5.6"
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/react@12.1.2":
-  version "12.1.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/react/-/react-12.1.2.tgz#f1bc9a45943461fa2a598bb4597df1ae044cfc76"
-  integrity sha1-8byaRZQ0YfoqWYu0WX3xrgRM/HY=
+"@testing-library/react@14.0.0":
+  version "14.0.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/react/-/react-14.0.0.tgz#59030392a6792450b9ab8e67aea5f3cc18d6347c"
+  integrity sha512-S04gSNJbYE30TlIMLTzv6QCTzt9AqIF5y6s6SzVFILNcNvbV/jU96GeiTPillGQo+Ny64M/5PV7klNYYgv5Dfg==
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@testing-library/dom" "^8.0.0"
+    "@testing-library/dom" "^9.0.0"
+    "@types/react-dom" "^18.0.0"
 
-"@testing-library/user-event@14.0.0-beta.11":
-  version "14.0.0-beta.11"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/user-event/-/user-event-14.0.0-beta.11.tgz#213267cf871170df191d81a7af6c9832a6597c89"
-  integrity sha1-ITJnz4cRcN8ZHYGnr2yYMqZZfIk=
-  dependencies:
-    "@babel/runtime" "^7.12.5"
+"@testing-library/user-event@14.4.3":
+  version "14.4.3"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@testing-library/user-event/-/user-event-14.4.3.tgz#af975e367743fa91989cd666666aec31a8f50591"
+  integrity sha512-kCUc5MEwaEMakkO5x7aoD+DLi02ehmEM2QCGWvNqAS1dV/fAvORWEjnjsEIvml59M7Y5kCkWN6fCCyPOe8OL6Q==
 
 "@theme-ui/color-modes@0.13.1":
   version "0.13.1"
@@ -2702,10 +2706,10 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha1-zLkURTYBeaBOf+av94wA/8Hur4I=
 
-"@types/aria-query@^4.2.0":
-  version "4.2.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/aria-query/-/aria-query-4.2.2.tgz#ed4e0ad92306a704f9fb132a0cfcf77486dbe2bc"
-  integrity sha1-7U4K2SMGpwT5+xMqDPz3dIbb4rw=
+"@types/aria-query@^5.0.1":
+  version "5.0.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/aria-query/-/aria-query-5.0.1.tgz#3286741fb8f1e1580ac28784add4c7a1d49bdfbc"
+  integrity sha512-XTIieEY+gvJ39ChLcB4If5zHtPxt3Syj5rgZR+e1ctpmK8NjPf0zFqsz4JpLJT0xla9GFDKjy8Cpu331nrmE1Q==
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14":
   version "7.1.19"
@@ -2888,7 +2892,7 @@
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha1-XxnSuFqY6VWANvajysyIGUIPBc8=
 
-"@types/react-dom@17.0.2":
+"@types/react-dom@17.0.2", "@types/react-dom@^18.0.0":
   version "17.0.2"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/react-dom/-/react-dom-17.0.2.tgz#35654cf6c49ae162d5bc90843d5437dc38008d43"
   integrity sha1-NWVM9sSa4WLVvJCEPVQ33DgAjUM=
@@ -3563,11 +3567,6 @@ asynckit@^0.4.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-atob@^2.1.2:
-  version "2.1.2"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
-  integrity sha1-bZUX654DDSQ2ZmZR6GvZ9vE1M8k=
-
 atomic-sleep@^1.0.0:
   version "1.0.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/atomic-sleep/-/atomic-sleep-1.0.0.tgz#eb85b77a601fc932cfe432c5acd364a9e2c9075b"
@@ -4155,11 +4154,6 @@ commander@^4.0.0:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
 
-commander@^6.2.0:
-  version "6.2.1"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/commander/-/commander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
-  integrity sha1-B5LraC37wyWZm7K4T93duhEKxzw=
-
 commander@^7.2.0:
   version "7.2.0"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/commander/-/commander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
@@ -4277,15 +4271,6 @@ css.escape@^1.5.1:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/css.escape/-/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
   integrity sha1-QuJ9T6BK4y+TGktNQZH6nN3ul8s=
 
-css@^3.0.0:
-  version "3.0.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/css/-/css-3.0.0.tgz#4447a4d58fdd03367c516ca9f64ae365cee4aa5d"
-  integrity sha1-REek1Y/dAzZ8UWyp9krjZc7kql0=
-  dependencies:
-    inherits "^2.0.4"
-    source-map "^0.6.1"
-    source-map-resolve "^0.6.0"
-
 cssom@^0.4.4:
   version "0.4.4"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/cssom/-/cssom-0.4.4.tgz#5a66cf93d2d0b661d80bf6a44fb65f5c2e4e0a10"
@@ -4357,11 +4342,6 @@ decimal.js@^10.2.1:
   version "10.3.1"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/decimal.js/-/decimal.js-10.3.1.tgz#d8c3a444a9c6774ba60ca6ad7261c3a94fd5e783"
   integrity sha1-2MOkRKnGd0umDKatcmHDqU/V54M=
-
-decode-uri-component@^0.2.0:
-  version "0.2.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
-  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 decompress-response@^6.0.0:
   version "6.0.0"
@@ -6980,10 +6960,10 @@ lru_map@^0.3.3:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/lru_map/-/lru_map-0.3.3.tgz#b5c8351b9464cbd750335a79650a0ec0e56118dd"
   integrity sha1-tcg1G5Rky9dQM1p5ZQoOwOVhGN0=
 
-lz-string@^1.4.4:
-  version "1.4.4"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
-  integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
+lz-string@^1.5.0:
+  version "1.5.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/lz-string/-/lz-string-1.5.0.tgz#c1ab50f77887b712621201ba9fd4e3a6ed099941"
+  integrity sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==
 
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
@@ -8720,14 +8700,6 @@ source-map-js@^1.0.2:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
   integrity sha1-rbw2HZxi3zgBJefxYfccgm8eSQw=
 
-source-map-resolve@^0.6.0:
-  version "0.6.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/source-map-resolve/-/source-map-resolve-0.6.0.tgz#3d9df87e236b53f16d01e58150fc7711138e5ed2"
-  integrity sha1-PZ34fiNrU/FtAeWBUPx3EROOXtI=
-  dependencies:
-    atob "^2.1.2"
-    decode-uri-component "^0.2.0"
-
 source-map-support@^0.5.16, source-map-support@^0.5.21, source-map-support@^0.5.6, source-map-support@~0.5.20:
   version "0.5.21"
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
@@ -9653,15 +9625,15 @@ webidl-conversions@^6.1.0:
   resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/webidl-conversions/-/webidl-conversions-6.1.0.tgz#9111b4d7ea80acd40f5270d666621afa78b69514"
   integrity sha1-kRG01+qArNQPUnDWZmIa+ni2lRQ=
 
-webpack-bundle-analyzer@4.3.0:
-  version "4.3.0"
-  resolved "http://artifactory.corp.mongodb.com/artifactory/api/npm/npm/webpack-bundle-analyzer/-/webpack-bundle-analyzer-4.3.0.tgz#2f3c0ca9041d5ee47fa418693cf56b4a518b578b"
-  integrity sha1-LzwMqQQdXuR/pBhpPPVrSlGLV4s=
+webpack-bundle-analyzer@4.7.0:
+  version "4.7.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/webpack-bundle-analyzer/-/webpack-bundle-analyzer-4.7.0.tgz#33c1c485a7fcae8627c547b5c3328b46de733c66"
+  integrity sha512-j9b8ynpJS4K+zfO5GGwsAcQX4ZHpWV+yRiHDiL+bE0XHJ8NiPYLTNVQdlFYWxtpg9lfAQNlwJg16J9AJtFSXRg==
   dependencies:
     acorn "^8.0.4"
     acorn-walk "^8.0.0"
     chalk "^4.1.0"
-    commander "^6.2.0"
+    commander "^7.2.0"
     gzip-size "^6.0.0"
     lodash "^4.17.20"
     opener "^1.5.2"
