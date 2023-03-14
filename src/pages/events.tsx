@@ -55,7 +55,7 @@ const EventsPageComponent: React.FunctionComponent<
     mobileFiltersOpen,
     setMobileFiltersOpen,
     featured,
-    childComponent,
+    children,
     filterItems: rawFilterItems,
 }) => {
     // TODO: Refactor and remove the following three consts
@@ -198,7 +198,7 @@ const EventsPageComponent: React.FunctionComponent<
                         searchMetaProps={searchMetaProps}
                     />
 
-                    {childComponent}
+                    {children}
                 </>
             </div>
         </GridLayout>

@@ -42,7 +42,7 @@ const ContentTypePage: React.FunctionComponent<
         initialSearchContent,
         pageNumber,
         slug,
-        childComponent: ChildComponent = ContentTypeBody,
+        children: ChildComponent = ContentTypeBody,
     } = props;
 
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);

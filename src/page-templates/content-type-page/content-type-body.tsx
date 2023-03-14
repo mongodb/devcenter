@@ -23,7 +23,6 @@ interface ContentTypeBodyProps {
     searchMetaProps: SearchMetaProps;
     mobileFiltersOpen: boolean;
     setMobileFiltersOpen: (open: boolean) => void;
-    children?: React.ReactNode;
 }
 
 const ContentTypeBody: React.FunctionComponent<
@@ -94,129 +93,136 @@ const ContentTypeBody: React.FunctionComponent<
             </div>
 
             <div sx={searchWrapperStyles}>
-                <SearchBox
-                    {...searchStringProps}
-                    placeholder={`Search ${pluralize(contentType)}`}
-                    extraStyles={{
-                        flexBasis: showFeatured
-                            ? '100%'
-                            : ['100%', null, null, '60%'],
-                    }}
-                />
-
-                {showFeatured && (
-                    <div sx={{ width: '100%' }}>
-                        <FeaturedCardSection
-                            content={featured}
-                            sx={{
-                                marginBottom: ['section20', null, 'section50'],
-                            }}
-                            title={`Featured ${pluralize(contentType)}`}
-                            featuredCardType="middle"
-                        />
-
-                        {!!featuredLanguages?.length && (
-                            <LanguagesSection
-                                title={`${contentType}s by Programming Language`}
-                                items={featuredLanguages}
-                            />
-                        )}
-                        {!!featuredTechnologies?.length && (
-                            <TechnologiesSection
-                                title={`${contentType}s by Technology`}
-                                items={featuredTechnologies}
-                            />
-                        )}
-                        {!!featuredProducts?.length && (
-                            <ProductsSection
-                                title={`${contentType}s by Product`}
-                                items={featuredProducts}
-                            />
-                        )}
-                    </div>
-                )}
-
-                <SortBox
-                    {...sortProps}
-                    extraStyles={{
-                        order: showFeatured ? '2' : '1',
-                    }}
-                />
-
-                {(!isValidating || showFeatured) && (
-                    <TypographyScale
-                        variant="heading2"
-                        sx={{
-                            ...h5Styles,
-                            flexGrow: '1',
+                <>
+                    <SearchBox
+                        {...searchStringProps}
+                        placeholder={`Search ${pluralize(contentType)}`}
+                        extraStyles={{
                             flexBasis: showFeatured
-                                ? 'auto'
-                                : ['100%', null, 'auto'],
+                                ? '100%'
+                                : ['100%', null, null, '60%'],
                         }}
-                    >
-                        {resultsHeader}
-                    </TypographyScale>
-                )}
+                    />
 
-                {!!filters?.length && (
-                    <div
-                        sx={{
-                            flexBasis: '100%',
-                            display: ['none', null, null, 'block'],
+                    {showFeatured && (
+                        <div sx={{ width: '100%' }}>
+                            <FeaturedCardSection
+                                content={featured}
+                                sx={{
+                                    marginBottom: [
+                                        'section20',
+                                        null,
+                                        'section50',
+                                    ],
+                                }}
+                                title={`Featured ${pluralize(contentType)}`}
+                                featuredCardType="middle"
+                            />
+
+                            {!!featuredLanguages?.length && (
+                                <LanguagesSection
+                                    title={`${contentType}s by Programming Language`}
+                                    items={featuredLanguages}
+                                />
+                            )}
+                            {!!featuredTechnologies?.length && (
+                                <TechnologiesSection
+                                    title={`${contentType}s by Technology`}
+                                    items={featuredTechnologies}
+                                />
+                            )}
+                            {!!featuredProducts?.length && (
+                                <ProductsSection
+                                    title={`${contentType}s by Product`}
+                                    items={featuredProducts}
+                                />
+                            )}
+                        </div>
+                    )}
+
+                    <SortBox
+                        {...sortProps}
+                        extraStyles={{
+                            order: showFeatured ? '2' : '1',
                         }}
-                    >
-                        <FilterTagSection
-                            allFilters={filters}
-                            onClearTag={(filterTag: FilterItem) =>
-                                onFilter(
-                                    filters.filter(
-                                        (item: FilterItem) => item !== filterTag
-                                    )
-                                )
-                            }
-                            onClearAll={() => onFilter([])}
-                        />
-                    </div>
-                )}
+                    />
 
-                <Button
-                    hasIcon
-                    iconPosition="right"
-                    iconStrokeWeight="medium"
-                    iconName={ESystemIconNames.FILTER_HAMBURGER}
-                    onClick={() => setMobileFiltersOpen(true)}
-                    customWrapperStyles={{
-                        display: ['block', null, null, 'none'],
-                        flexBasis: ['100%', null, 'auto'],
-                    }}
-                    customStyles={{
-                        display: ['flex', null, null, 'none'],
-                        justifyContent: 'center',
-                    }}
-                >
-                    Filter & Sort
-                    {!!filters.length && ` (${filters.length})`}
-                </Button>
-
-                <SearchResults
-                    {...resultsProps}
-                    {...searchMetaProps}
-                    extraStyles={{
-                        order: showFeatured ? '4' : '3',
-                    }}
-                    noResultsFooter={
-                        <Button
-                            hasIcon={true}
-                            iconName={ESystemIconNames.ARROW_LEFT}
-                            iconPosition="left"
-                            onClick={clearSearchParam}
+                    {(!isValidating || showFeatured) && (
+                        <TypographyScale
+                            variant="heading2"
+                            sx={{
+                                ...h5Styles,
+                                flexGrow: '1',
+                                flexBasis: showFeatured
+                                    ? 'auto'
+                                    : ['100%', null, 'auto'],
+                            }}
                         >
-                            Back to all {contentType.toLowerCase()}s
-                        </Button>
-                    }
-                />
+                            {resultsHeader}
+                        </TypographyScale>
+                    )}
 
-                {children}
+                    {!!filters?.length && (
+                        <div
+                            sx={{
+                                flexBasis: '100%',
+                                display: ['none', null, null, 'block'],
+                            }}
+                        >
+                            <FilterTagSection
+                                allFilters={filters}
+                                onClearTag={(filterTag: FilterItem) =>
+                                    onFilter(
+                                        filters.filter(
+                                            (item: FilterItem) =>
+                                                item !== filterTag
+                                        )
+                                    )
+                                }
+                                onClearAll={() => onFilter([])}
+                            />
+                        </div>
+                    )}
+
+                    <Button
+                        hasIcon
+                        iconPosition="right"
+                        iconStrokeWeight="medium"
+                        iconName={ESystemIconNames.FILTER_HAMBURGER}
+                        onClick={() => setMobileFiltersOpen(true)}
+                        customWrapperStyles={{
+                            display: ['block', null, null, 'none'],
+                            flexBasis: ['100%', null, 'auto'],
+                        }}
+                        customStyles={{
+                            display: ['flex', null, null, 'none'],
+                            justifyContent: 'center',
+                        }}
+                    >
+                        Filter & Sort
+                        {!!filters.length && ` (${filters.length})`}
+                    </Button>
+
+                    <SearchResults
+                        {...resultsProps}
+                        {...searchMetaProps}
+                        extraStyles={{
+                            order: showFeatured ? '4' : '3',
+                        }}
+                        noResultsFooter={
+                            <Button
+                                hasIcon={true}
+                                iconName={ESystemIconNames.ARROW_LEFT}
+                                iconPosition="left"
+                                onClick={clearSearchParam}
+                            >
+                                Back to all {contentType.toLowerCase()}s
+                            </Button>
+                        }
+                    />
+
+                    {children}
+                </>
             </div>
         </GridLayout>
     );
