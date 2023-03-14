@@ -34,6 +34,14 @@ const removeRelated = () => {
     }
 };
 
+const removeSrcsets = () => {
+    const images = document.querySelectorAll('img');
+
+    images.forEach(image => {
+        image.removeAttribute('srcset');
+    });
+};
+
 export const runPercy =
     (url, pageName) =>
     async ({ page }) => {
@@ -47,5 +55,6 @@ export const runPercy =
         });
 
         await page.evaluate(removeRelated);
+        await page.evaluate(removeSrcsets);
         await percySnapshot(page, pageName);
     };
