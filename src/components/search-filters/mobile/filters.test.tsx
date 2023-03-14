@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 
 import { FilterItem } from '@mdb/devcenter-components';
 import MobileFilters from './filters';
@@ -25,7 +26,7 @@ Array(4)
         })
     );
 
-test('renders mobile filters', () => {
+test('renders mobile filters', async () => {
     let filterCounter = 0;
     let closeCounter = 0;
     render(
@@ -41,13 +42,14 @@ test('renders mobile filters', () => {
             onSort={() => null}
         />
     );
+    const user = userEvent.setup();
 
     // Check that they are rendered only if they have items.
     const languageTitle = screen.getByText('Language');
-    languageTitle.click();
+    await user.click(languageTitle);
     screen.getByText('Language 1');
     const technologyTitle = screen.getByText('Technology');
-    technologyTitle.click();
+    await user.click(technologyTitle);
     screen.getByText('Technology 1');
 
     expect(screen.queryByText('Products')).toBeNull();
@@ -56,16 +58,17 @@ test('renders mobile filters', () => {
     expect(screen.queryByText('Contributed By')).toBeNull();
 
     // Check onFilter works
-    screen.getByText('Apply').click();
+    await user.click(screen.getByText('Apply'));
     expect(filterCounter).toEqual(1);
 
     // Check closeModal works
-    screen.getByText('Clear').click();
+    await user.click(screen.getByText('Clear'));
     expect(filterCounter).toEqual(2);
     expect(closeCounter).toEqual(1);
 
     const closeIcon = screen.getByTitle('close');
+    const iconParent = closeIcon.parentElement?.parentElement;
 
-    closeIcon.parentElement?.parentElement?.click();
+    await user.click(iconParent as Element);
     expect(closeCounter).toEqual(2);
 });
