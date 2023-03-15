@@ -10,28 +10,12 @@ export const allLinksHaveHref = async (links, href) => {
     }
 };
 
-const removeRelated = () => {
-    const xpath = "//h5[text()='Related']";
-    const matchingElement = document.evaluate(
-        xpath,
-        document,
-        null,
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
-        null
-    ).singleNodeValue;
+const removeSrcsets = () => {
+    const images = document.querySelectorAll('img');
 
-    if (matchingElement) {
-        while (
-            matchingElement.parentNode &&
-            matchingElement.parentNode.firstChild
-        ) {
-            if (matchingElement.parentNode.lastChild) {
-                matchingElement.parentNode.removeChild(
-                    matchingElement.parentNode.lastChild
-                );
-            }
-        }
-    }
+    images.forEach(image => {
+        image.removeAttribute('srcset');
+    });
 };
 
 export const runPercy =
@@ -46,6 +30,6 @@ export const runPercy =
             }
         });
 
-        await page.evaluate(removeRelated);
+        await page.evaluate(removeSrcsets);
         await percySnapshot(page, pageName);
     };
