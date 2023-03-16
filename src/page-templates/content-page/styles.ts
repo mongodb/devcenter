@@ -81,7 +81,7 @@ const getSectionStyles = (
         null,
         'span 8',
         '1 /span 9',
-        isPathFactory ? '1 /span 9' : '4 /span 6',
+        isPathFactory ? null : '4 /span 6',
     ],
 });
 const getBodySectionStyles = (
