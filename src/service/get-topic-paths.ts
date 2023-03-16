@@ -5,7 +5,7 @@ import { getSideNav } from '../service/get-side-nav';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import { L1L2_TOPIC_PAGE_TYPES } from '../data/constants';
 
-export const getTopicPagePathMappings = async () => {
+export const getTopicPagePathMappings = () => {
     const distinctSlugs = distinctTags
         .filter(tag => L1L2_TOPIC_PAGE_TYPES.includes(tag.type))
         .map(tag => tag.slug);
@@ -27,10 +27,7 @@ export const getTopicPagePathMappings = async () => {
             fullSlug: fullSlug,
         };
 
-        const tertiaryNavItems = await getSideNav(
-            distinctSlug,
-            allContentPreval
-        );
+        const tertiaryNavItems = getSideNav(distinctSlug, allContentPreval);
 
         tertiaryNavItems.forEach((item: TertiaryNavItem) => {
             const parsedItemUrl = item.url.startsWith('/')

@@ -72,22 +72,33 @@ const breadcrumbs = {
     gridColumn: ['span 6', null, 'span 8', 'span 12', 'span 9'],
 };
 
-const section = {
+const getSectionStyles = (
+    isPathFactory: boolean | undefined
+): ThemeUICSSObject => ({
     maxWidth: '100%', // patches a Codemirror bug on FF https://github.com/codemirror/CodeMirror/issues/4142.
-    gridColumn: ['span 6', null, 'span 8', '1 /span 9', '4 /span 6'],
-};
-
-const bodySection = {
-    ...section,
+    gridColumn: [
+        'span 6',
+        null,
+        'span 8',
+        '1 /span 9',
+        isPathFactory ? '1 /span 9' : '4 /span 6',
+    ],
+});
+const getBodySectionStyles = (
+    isPathFactory: boolean | undefined
+): ThemeUICSSObject => ({
+    ...getSectionStyles(isPathFactory),
     my: ['section20', null, 'section30', 'section40'],
-};
+});
 
-const footer: ThemeUICSSObject = {
+const getFooterStyles = (
+    isPathFactory: boolean | undefined
+): ThemeUICSSObject => ({
     display: 'flex',
     flexDirection: 'column',
     gap: ['section30', null, 'section40', 'section50'],
-    ...section,
-};
+    ...getSectionStyles(isPathFactory),
+});
 
 const footerActions: ThemeUICSSObject = {
     display: 'flex',
@@ -137,12 +148,12 @@ const vidOrPodContent: ThemeUICSSObject = {
 
 const styles = {
     image,
-    footer,
+    getFooterStyles,
     floatingMenu,
     wrapper,
-    section,
+    getSectionStyles,
     ratingSection,
-    bodySection,
+    getBodySectionStyles,
     defaultHeaderGrid,
     vidOrPodHeaderGrid,
     breadcrumbs,
@@ -152,5 +163,7 @@ const styles = {
     footerActions,
     eventHeaderGrid,
 };
+
+export { getSectionStyles, getBodySectionStyles, getFooterStyles };
 
 export default styles;

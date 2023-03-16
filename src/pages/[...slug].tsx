@@ -18,15 +18,22 @@ import TopicPageTemplate from '../page-templates/topic-page/topic-page-template'
 interface ContentPageProps {
     pageType: PageType;
     pageData: any;
+    isPathFactory?: boolean;
 }
 
 const DynamicContentPage: NextPage<ContentPageProps> = ({
     pageType,
     pageData,
+    isPathFactory,
 }) => {
     switch (pageType) {
         case PageType.Content:
-            return <ContentPageTemplate {...pageData} />;
+            return (
+                <ContentPageTemplate
+                    isPathFactory={isPathFactory}
+                    {...pageData}
+                />
+            );
         case PageType.Topic:
             return <TopicPageTemplate {...pageData} />;
         case PageType.TopicContentType:
@@ -44,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (
     const { query } = context;
     const { slug } = query as PageParams;
 
-    const dynamicPageType: DynamicPageType = await pageTypeFactory(slug);
+    const dynamicPageType: DynamicPageType = pageTypeFactory(slug);
     const {
         pageType,
         pageParams,
@@ -52,6 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (
     let data: any | null = {};
 
     let pageNumber: number;
+    let isPathFactory = false;
     switch (pageType) {
         case PageType.Content:
             // cache content only for 5 minutes
@@ -61,6 +69,10 @@ export const getServerSideProps: GetServerSideProps = async (
             );
 
             data = await getContentPageData(slug);
+            // PathFactory embeds content pages, and would like certain elements to be removed via query param.
+            if (query.hideMenu === '1') {
+                isPathFactory = true;
+            }
             break;
         case PageType.Topic:
             pageNumber = parsePageNumber(query.page);
@@ -109,6 +121,7 @@ export const getServerSideProps: GetServerSideProps = async (
         props: {
             pageData: data,
             pageType: pageType,
+            isPathFactory,
         },
     };
 };
