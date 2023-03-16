@@ -22,10 +22,8 @@ import {
     shouldDefineDefaultCanonical,
 } from '../utils/seo';
 import { customCache } from '../utils/emotion';
-import { pageTypeFactory } from '../utils/page-type-factory';
 
 import '../../mocks/run-msw';
-import { PageType } from '../types/page-type';
 
 interface CustomProps {
     session?: Session;
@@ -33,14 +31,11 @@ interface CustomProps {
 
 function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const router = useRouter();
-    const { slug, hideMenu } = router.query;
+    const { hideMenu } = router.query;
     // PathFactory embeds content pages, and would like certain elements to be removed via query param.
     let isPathFactory = false;
-    if (hideMenu === '1' && slug && Array.isArray(slug)) {
-        const { pageType } = pageTypeFactory(slug);
-        if (pageType === PageType.Content) {
-            isPathFactory = true;
-        }
+    if (hideMenu === '1') {
+        isPathFactory = true;
     }
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath } = publicRuntimeConfig;
