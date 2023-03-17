@@ -645,6 +645,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         asPath
                     )
                 }
+                noindex={isPathFactory}
             />
             <div sx={styles.wrapper}>
                 <GridLayout sx={{ rowGap: 0 }}>
