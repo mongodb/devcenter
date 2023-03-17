@@ -33,10 +33,7 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const router = useRouter();
     const { hideMenu } = router.query;
     // PathFactory embeds content pages, and would like certain elements to be removed via query param.
-    let isPathFactory = false;
-    if (hideMenu === '1') {
-        isPathFactory = true;
-    }
+    const isPathFactory = hideMenu === '1';
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;

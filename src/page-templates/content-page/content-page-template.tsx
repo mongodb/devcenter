@@ -2,7 +2,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, useMemo } from 'react';
 import { NextSeo } from 'next-seo';
 import getConfig from 'next/config';
 import parse from 'html-react-parser';
@@ -127,6 +127,15 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     const [ratingStars, setRatingStars] = useState(0);
     const [pageUrl, setPageUrl] = useState('');
     const [feedbackId, setFeedbackId] = useState<string>('');
+
+    const calculatedStyles = useMemo(
+        () => ({
+            section: styles.getSectionStyles(isPathFactory),
+            bodySection: styles.getBodySectionStyles(isPathFactory),
+            footer: styles.getFooterStyles(isPathFactory),
+        }),
+        [isPathFactory]
+    );
 
     useEffect(() => {
         setPageUrl(window.location.href);
@@ -254,7 +263,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     );
 
     const contentFooter = (
-        <div sx={styles.getFooterStyles(isPathFactory)}>
+        <div sx={calculatedStyles.footer}>
             <div>
                 <HorizontalRule />
                 {!previewMode && (
@@ -317,7 +326,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
     const VideoOrPodcastContent = () => (
         <>
-            <div sx={styles.getSectionStyles(isPathFactory)}>
+            <div sx={calculatedStyles.section}>
                 {displayTitle}
                 <div sx={styles.vidOrPodHeaderGrid}>
                     <TypographyScale
@@ -337,7 +346,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     {getSocialButtons(true)}
                 </div>
             </div>
-            <div sx={styles.getSectionStyles(isPathFactory)}>
+            <div sx={calculatedStyles.section}>
                 <div sx={styles.image}>
                     {category === 'Video' ? (
                         <VideoEmbed
@@ -352,7 +361,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 </div>
                 {!previewMode && ratingSection}
             </div>
-            <div sx={styles.getBodySectionStyles(isPathFactory)}>
+            <div sx={calculatedStyles.bodySection}>
                 <>
                     <TypographyScale
                         variant="body1"
@@ -463,11 +472,11 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
         return (
             <>
-                <div sx={styles.getSectionStyles(isPathFactory)}>
+                <div sx={calculatedStyles.section}>
                     {displayTitle}
                     {isIndustryEvent ? eventHeader : defaultHeader}
                 </div>
-                <div sx={styles.getSectionStyles(isPathFactory)}>
+                <div sx={calculatedStyles.section}>
                     {displayHeaderImage && (
                         <div sx={styles.image}>
                             <Image
@@ -507,7 +516,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         />
                     )}
                 </div>
-                <div sx={styles.getBodySectionStyles(isPathFactory)}>
+                <div sx={calculatedStyles.bodySection}>
                     <DocumentBody content={contentAst} />
                     {isIndustryEvent && authors.length > 0 && (
                         <>
