@@ -2,15 +2,12 @@ import { getTopicPagePathMappings } from '../service/get-topic-paths';
 import { PageType } from '../types/page-type';
 import { DynamicPageType } from '../types/page-type-factory';
 
-export const pageTypeFactory = async (
-    slug: string[]
-): Promise<DynamicPageType> => {
+export const pageTypeFactory = (slug: string[]): DynamicPageType => {
     const slugStr = slug.join('/');
     let pageType = null;
     let pageParams = null;
 
-    const { topicPaths, topicContentTypePaths } =
-        await getTopicPagePathMappings();
+    const { topicPaths, topicContentTypePaths } = getTopicPagePathMappings();
 
     if (slugStr in topicPaths) {
         pageType = PageType.Topic;
