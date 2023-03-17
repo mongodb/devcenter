@@ -164,6 +164,4 @@ const styles = {
     eventHeaderGrid,
 };
 
-export { getSectionStyles, getBodySectionStyles, getFooterStyles };
-
 export default styles;
