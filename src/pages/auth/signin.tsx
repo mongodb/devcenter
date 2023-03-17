@@ -26,14 +26,27 @@ const SigninPage: NextPage<SigninProps> = ({ session }) => {
     // the login process and then redirect the client to either the
     // account portal or the previously visited page (if already logged in).
     useEffect(() => {
+        // We must scope this to the host url to prevent on open redirect.
+        const givenURL = new URL(fromPagePath, document.baseURI);
+        const isSameOrigin =
+            new URL(document.baseURI).origin === givenURL.origin;
+        let redirectUrl = '/';
+        if (
+            isSameOrigin &&
+            (fromPagePath.startsWith('/') ||
+                givenURL.pathname.startsWith('/developer/'))
+        ) {
+            redirectUrl = fromPagePath;
+        }
+
         if (status === 'unauthenticated') {
-            const callbackUrl = getURLPath(fromPagePath);
+            const callbackUrl = getURLPath(redirectUrl);
             // https://github.com/nextauthjs/next-auth/issues/45
             // Note: next-auth currently has no way of doing a server side signIn()
             signIn('okta', { callbackUrl });
         } else if (status === 'authenticated' || session) {
             // Redirect to prior page if already authenticated.
-            router.push(fromPagePath as string);
+            router.push(redirectUrl);
         }
     }, [fromPagePath, router, session, status]);
 
