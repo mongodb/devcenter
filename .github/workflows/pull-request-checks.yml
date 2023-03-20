@@ -108,8 +108,6 @@ jobs:
               run: npx jest
               if: github.event_name != 'pull_request'
     lighthouse:
-        env:
-            NEXT_PUBLIC_API_MOCKING: disabled
         name: Lighthouse
         runs-on: ubuntu-latest
         steps:
@@ -141,3 +139,4 @@ jobs:
               run: lhci autorun
               env:
                   LHCI_GITHUB_APP_TOKEN: ${{secrets.LIGHTHOUSE_CI_TOKEN}}
+                  NEXT_PUBLIC_API_MOCKING: disabled
