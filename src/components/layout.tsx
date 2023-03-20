@@ -13,6 +13,7 @@ import { useModalContext } from '../contexts/modal';
 import { PaginatedPersonalizationModal } from './modal/personalization';
 import getSignInURL from '../utils/get-sign-in-url';
 import useUserPreferences from '../hooks/personalization/user-preferences';
+import { Globals as FloraGlobals } from '@mdb/flora'; // Need this to load fonts when UnifiedNav isn't present.
 
 const navStyles: ThemeUICSSObject = {
     zIndex: '9999',
@@ -27,11 +28,13 @@ const navStyles: ThemeUICSSObject = {
 interface LayoutProps {
     pagePath?: string | null;
     children?: React.ReactNode;
+    isPathFactory?: boolean;
 }
 
 const Layout: React.FunctionComponent<LayoutProps> = ({
     children,
     pagePath,
+    isPathFactory,
 }) => {
     const { updateUserPreferences } = useUserPreferences();
     const { hasOverlay } = useContext(OverlayContext);
@@ -70,19 +73,25 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
                     ${globalStyles(!!hasOverlay || !!hasModalOpen)}
                 `}
             />
-            <div sx={navStyles}>
-                <UnifiedNav
-                    position="static"
-                    floraTheme="default"
-                    property={{ name: 'DEVHUB', searchParams: [] }}
-                    hideTryFree={!!session}
-                    hideSignIn={!!session}
-                    signInUrl={signInUrl}
-                />
-            </div>
-            <SecondaryNav />
+            <FloraGlobals />
+            {!isPathFactory && (
+                <>
+                    <div sx={navStyles}>
+                        <UnifiedNav
+                            position="static"
+                            floraTheme="default"
+                            property={{ name: 'DEVHUB', searchParams: [] }}
+                            hideTryFree={!!session}
+                            hideSignIn={!!session}
+                            signInUrl={signInUrl}
+                        />
+                    </div>
+                    <SecondaryNav />
+                </>
+            )}
+
             <Main>{children}</Main>
-            <UnifiedFooter hideLocale />
+            {!isPathFactory && <UnifiedFooter hideLocale />}
         </div>
     );
 };

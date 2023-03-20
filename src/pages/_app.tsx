@@ -33,6 +33,9 @@ interface CustomProps {
 
 function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
     const router = useRouter();
+    const { hideMenu } = router.query;
+    // PathFactory embeds content pages, and would like certain elements to be removed via query param.
+    const isPathFactory = hideMenu === '1';
     const { publicRuntimeConfig } = getConfig();
     const { absoluteBasePath } = publicRuntimeConfig;
     const { asPath, route } = router;
@@ -67,7 +70,10 @@ function MyApp({ Component, pageProps, session }: AppProps & CustomProps) {
                         <NotificationsProvider>
                             <ModalProvider>
                                 <OverlayProvider>
-                                    <Layout pagePath={pagePath}>
+                                    <Layout
+                                        pagePath={pagePath}
+                                        isPathFactory={isPathFactory}
+                                    >
                                         <ErrorBoundary>
                                             <ModalRoot />
                                             <NotificationsContainer />

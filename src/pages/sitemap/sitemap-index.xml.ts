@@ -42,10 +42,17 @@ export const getServerSideProps: GetServerSideProps = async context => {
         priority: 0.5,
     }));
 
+    const academiaPage = {
+        loc: 'https://www.mongodb.com/academia',
+        lastMod: curDate,
+        priority: 0.8,
+    };
+
     return getServerSideSitemap(context, [
         ...staticPages,
         ...topicPages,
         ...contentPages,
+        academiaPage,
     ]);
 };
 

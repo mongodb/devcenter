@@ -2,7 +2,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, useMemo } from 'react';
 import { NextSeo } from 'next-seo';
 import getConfig from 'next/config';
 import parse from 'html-react-parser';
@@ -78,6 +78,7 @@ interface ContentPageProps {
     tertiaryNavItems: TertiaryNavItem[];
     relatedContent: ContentItem[];
     previewMode?: boolean;
+    isPathFactory?: boolean;
 }
 
 const parseUndefinedValue = (description: string | undefined): string =>
@@ -116,6 +117,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         registrationLink,
         virtualLinkText,
     },
+    isPathFactory,
 }) => {
     const router = useRouter();
     const { asPath } = router;
@@ -125,6 +127,15 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     const [ratingStars, setRatingStars] = useState(0);
     const [pageUrl, setPageUrl] = useState('');
     const [feedbackId, setFeedbackId] = useState<string>('');
+
+    const calculatedStyles = useMemo(
+        () => ({
+            section: styles.getSectionStyles(isPathFactory),
+            bodySection: styles.getBodySectionStyles(isPathFactory),
+            footer: styles.getFooterStyles(isPathFactory),
+        }),
+        [isPathFactory]
+    );
 
     useEffect(() => {
         setPageUrl(window.location.href);
@@ -153,7 +164,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     const displayTitle = (
         <TypographyScale
             customElement="h1"
-            variant="heading2"
+            variant={`heading${isPathFactory ? '5' : '2'}`}
             sx={{ marginBottom: ['inc20', null, null, 'inc30'] }}
         >
             {title}
@@ -252,7 +263,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     );
 
     const contentFooter = (
-        <div sx={styles.footer}>
+        <div sx={calculatedStyles.footer}>
             <div>
                 <HorizontalRule />
                 {!previewMode && (
@@ -315,7 +326,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
     const VideoOrPodcastContent = () => (
         <>
-            <div sx={styles.section}>
+            <div sx={calculatedStyles.section}>
                 {displayTitle}
                 <div sx={styles.vidOrPodHeaderGrid}>
                     <TypographyScale
@@ -335,7 +346,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     {getSocialButtons(true)}
                 </div>
             </div>
-            <div sx={styles.section}>
+            <div sx={calculatedStyles.section}>
                 <div sx={styles.image}>
                     {category === 'Video' ? (
                         <VideoEmbed
@@ -350,7 +361,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 </div>
                 {!previewMode && ratingSection}
             </div>
-            <div sx={styles.bodySection}>
+            <div sx={calculatedStyles.bodySection}>
                 <>
                     <TypographyScale
                         variant="body1"
@@ -461,11 +472,11 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
         return (
             <>
-                <div sx={styles.section}>
+                <div sx={calculatedStyles.section}>
                     {displayTitle}
                     {isIndustryEvent ? eventHeader : defaultHeader}
                 </div>
-                <div sx={styles.section}>
+                <div sx={calculatedStyles.section}>
                     {displayHeaderImage && (
                         <div sx={styles.image}>
                             <Image
@@ -505,7 +516,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         />
                     )}
                 </div>
-                <div sx={styles.bodySection}>
+                <div sx={calculatedStyles.bodySection}>
                     <DocumentBody content={contentAst} />
                     {isIndustryEvent && authors.length > 0 && (
                         <>
@@ -634,30 +645,45 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         asPath
                     )
                 }
+                noindex={isPathFactory}
             />
             <div sx={styles.wrapper}>
                 <GridLayout sx={{ rowGap: 0 }}>
-                    <div sx={sideNavStyles(5)}>
-                        <div sx={titleFollowTopicStyles}>
-                            <a href={getURLPath(topic.slug)}>
-                                <TypographyScale
-                                    variant="heading6"
-                                    sx={sideNavTitleStyles}
-                                >
-                                    {topic.name}
-                                </TypographyScale>
-                            </a>
-                            {
-                                // Render FollowLink only if the topic is followable
-                                // This is for item without primary tag (e.g., Podcast, Video, Event)
-                                isPrimaryTag(topic) ? (
-                                    <FollowLink topic={topic} iconsOnly />
-                                ) : null
-                            }
-                        </div>
-                        <SideNav currentUrl="#" items={tertiaryNavItems} />
-                    </div>
-                    <Breadcrumbs crumbs={crumbs} sx={styles.breadcrumbs} />
+                    {!isPathFactory && (
+                        <>
+                            <div sx={sideNavStyles(5)}>
+                                <div sx={titleFollowTopicStyles}>
+                                    <a href={getURLPath(topic.slug)}>
+                                        <TypographyScale
+                                            variant="heading6"
+                                            sx={sideNavTitleStyles}
+                                        >
+                                            {topic.name}
+                                        </TypographyScale>
+                                    </a>
+                                    {
+                                        // Render FollowLink only if the topic is followable
+                                        // This is for item without primary tag (e.g., Podcast, Video, Event)
+                                        isPrimaryTag(topic) ? (
+                                            <FollowLink
+                                                topic={topic}
+                                                iconsOnly
+                                            />
+                                        ) : null
+                                    }
+                                </div>
+                                <SideNav
+                                    currentUrl="#"
+                                    items={tertiaryNavItems}
+                                />
+                            </div>
+
+                            <Breadcrumbs
+                                crumbs={crumbs}
+                                sx={styles.breadcrumbs}
+                            />
+                        </>
+                    )}
                     {isVideoOrPodcastContent ? (
                         <VideoOrPodcastContent />
                     ) : (
