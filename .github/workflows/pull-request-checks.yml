@@ -13,6 +13,7 @@ env:
     STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
     NEXTAUTH_URL: http://localhost:3000/developer/api/auth/
     NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+    NEXT_PUBLIC_API_MOCKING: enabled
 jobs:
     check-formatting-and-lint:
         runs-on: ubuntu-latest
@@ -107,6 +108,8 @@ jobs:
               run: npx jest
               if: github.event_name != 'pull_request'
     lighthouse:
+        env:
+            NEXT_PUBLIC_API_MOCKING: disabled
         name: Lighthouse
         runs-on: ubuntu-latest
         steps:
