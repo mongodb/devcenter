@@ -13,7 +13,7 @@ env:
     STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
     NEXTAUTH_URL: http://localhost:3000/developer/api/auth/
     NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-    NEXT_PUBLIC_API_MOCKING: enabled
+    NEXT_PUBLIC_API_MOCKING: disabled
 jobs:
     check-formatting-and-lint:
         runs-on: ubuntu-latest
@@ -40,6 +40,8 @@ jobs:
             - name: Lint
               run: yarn lint
     playwright-tests:
+        env:
+            NEXT_PUBLIC_API_MOCKING: enabled
         runs-on: ubuntu-20.04
         steps:
             - name: Checkout target branch
@@ -139,4 +141,3 @@ jobs:
               run: lhci autorun
               env:
                   LHCI_GITHUB_APP_TOKEN: ${{secrets.LIGHTHOUSE_CI_TOKEN}}
-                  NEXT_PUBLIC_API_MOCKING: disabled
