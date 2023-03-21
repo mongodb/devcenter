@@ -123,7 +123,9 @@ const useSearch = (
         searchString,
         contentType,
         tagSlug,
-        sortBy: sortBy || defaultSortByType,
+        sortBy:
+            sortBy ||
+            (contentType === 'Event' ? 'Closest Upcoming' : defaultSortByType),
     };
 
     const searchKey = buildSearchQuery(searchQueryParams);
@@ -151,7 +153,10 @@ const useSearch = (
                             searchString: '',
                             contentType,
                             tagSlug,
-                            sortBy: defaultSortByType,
+                            sortBy:
+                                contentType === 'Event'
+                                    ? 'Closest Upcoming'
+                                    : defaultSortByType,
                         })
                     ) as Promise<ContentItem[]>
                 ).then((response: ContentItem[]) => {
