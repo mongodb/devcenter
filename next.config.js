@@ -99,6 +99,10 @@ const configVals = {
                         key: 'X-Frame-Options',
                         value: 'SAMEORIGIN',
                     },
+                    {
+                        key: 'Content-Security-Policy',
+                        value: "frame-ancestors 'self' https://*.mongodb.com",
+                    },
                 ],
             },
             {
@@ -115,6 +119,10 @@ const configVals = {
                     {
                         key: 'X-Frame-Options',
                         value: 'SAMEORIGIN',
+                    },
+                    {
+                        key: 'Content-Security-Policy',
+                        value: "frame-ancestors 'self' https://*.mongodb.com",
                     },
                 ],
             },
