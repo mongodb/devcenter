@@ -5,8 +5,10 @@ import theme from '@mdb/flora/theme';
 
 import ExpandingLink from '.';
 
-test('renders expanding link with no hover override', () => {
+test('renders expanding link with no hover override', async () => {
     render(<ExpandingLink text="Atlas" href={'/products/atlas/'} />);
+
+    const user = userEvent.setup();
 
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute('href', '/developer/products/atlas/');
@@ -15,13 +17,13 @@ test('renders expanding link with no hover override', () => {
     expect(link).toHaveStyle({
         right: 0,
     });
-    userEvent.hover(link);
+    await user.hover(link);
     expect(link).toHaveStyle({
         right: `calc(${theme.sizes.inc60} - ${theme.sizes.inc70})`,
     });
 });
 
-test('renders expanding link with hover override', () => {
+test('renders expanding link with hover override', async () => {
     render(
         <ExpandingLink
             text="Atlas"
@@ -29,6 +31,7 @@ test('renders expanding link with hover override', () => {
             hoverStyleOverrides={{ top: '10px' }}
         />
     );
+    const user = userEvent.setup();
 
     const link = screen.getByRole('link');
 
@@ -36,7 +39,7 @@ test('renders expanding link with hover override', () => {
         right: 0,
     });
 
-    userEvent.hover(link);
+    await user.hover(link);
     expect(link).toHaveStyle({
         right: 0,
         top: '10px',

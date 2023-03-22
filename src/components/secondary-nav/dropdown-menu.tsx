@@ -107,45 +107,41 @@ const SubNavLink = ({ name, slug, dropDownItems, path, all }: DropDownItem) => {
             {dropDownItems && (
                 <>
                     <ul sx={subLinkStyles}>
-                        {dropDownItems?.map(
-                            ({ name, slug, dropDownItems, l1Product }) => (
-                                <li
+                        {dropDownItems?.map(({ name, slug, dropDownItems }) => (
+                            <li
+                                sx={{
+                                    position: 'relative',
+                                }}
+                                key={name}
+                            >
+                                <a
+                                    href={getURLPath(slug)}
                                     sx={{
-                                        position: 'relative',
+                                        ...aLinkStyles,
                                     }}
                                     key={name}
                                 >
-                                    <a
-                                        href={getURLPath(slug)}
-                                        sx={{
-                                            ...aLinkStyles,
-                                        }}
-                                        key={name}
-                                    >
-                                        {l1Product ? { name } : name}
-                                    </a>
-                                    {!!dropDownItems?.length && (
-                                        <ul>
-                                            {dropDownItems?.map(
-                                                ({ name, slug }) => (
-                                                    <li key={name}>
-                                                        <a
-                                                            href={getURLPath(
-                                                                slug
-                                                            )}
-                                                            sx={aLinkStyles}
-                                                            key={name}
-                                                        >
-                                                            {name}
-                                                        </a>
-                                                    </li>
-                                                )
-                                            )}
-                                        </ul>
-                                    )}
-                                </li>
-                            )
-                        )}
+                                    {name}
+                                </a>
+                                {!!dropDownItems?.length && (
+                                    <ul>
+                                        {dropDownItems?.map(
+                                            ({ name, slug }) => (
+                                                <li key={name}>
+                                                    <a
+                                                        href={getURLPath(slug)}
+                                                        sx={aLinkStyles}
+                                                        key={name}
+                                                    >
+                                                        {name}
+                                                    </a>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                )}
+                            </li>
+                        ))}
                     </ul>
                     {all && (
                         <FloraLink

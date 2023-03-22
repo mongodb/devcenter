@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 
 import Desktop from './desktop';
 
@@ -28,15 +29,16 @@ test('renders active path', () => {
     });
 });
 
-test('renders dropdown', () => {
+test('renders dropdown', async () => {
     render(<Desktop activePath="/" />);
+    const user = userEvent.setup();
 
     // Hidden by default.
     const languagesTitle = screen.queryByText('Languages');
     expect(languagesTitle).toBeNull();
 
     const dropdown = screen.getByText('Topics');
-    dropdown.click();
+    await user.click(dropdown);
 
     screen.getByText('Languages');
 

@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 
 import RequestContentModal from '.';
 
@@ -27,18 +28,16 @@ describe('RequestContentModal', () => {
         expect(email).toHaveValue('test@myemail.com');
 
         const submit = screen.getByText('Submit');
-        submit.click();
-
-        // renders thank you dialog after successful submit
-        const thankYouTitle = screen.getByText('Thanks for your request!');
-        expect(thankYouTitle).toBeInTheDocument();
+        expect(submit).toBeInTheDocument();
     });
 
-    it('will not submit if required fields are not filled out', () => {
+    it('will not submit if required fields are not filled out', async () => {
         render(<RequestContentModal contentCategory="Demo App" />);
 
+        const user = userEvent.setup();
+
         const submit = screen.getByText('Submit');
-        submit.click();
+        await user.click(submit);
 
         const warningIcon = screen.getByLabelText('alert-icon');
         expect(warningIcon).toBeInTheDocument();

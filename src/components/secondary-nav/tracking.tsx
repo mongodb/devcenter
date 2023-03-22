@@ -28,19 +28,28 @@ export const trackSecondaryNavLink = (e: Event) => {
 
     if (window?.segment && link) {
         const { href, textContent: label } = link;
-
-        window.segment.track('Secondary Nav Click', {
-            href,
-            label,
-            category: 'navigation',
-        });
+        try {
+            window.segment.track('Secondary Nav Click', {
+                href,
+                label,
+                category: 'navigation',
+            });
+        } catch {
+            // Just swallow these for now since they are not essential.
+            // Maybe log these to sentry when it's back running.
+        }
     }
 };
 
 export const trackSecondaryNavToggle = (open: boolean) => {
     if (window?.segment) {
-        window.segment.track(`Secondary Nav ${open ? 'Open' : 'Close'}`, {
-            category: 'navigation',
-        });
+        try {
+            window.segment.track(`Secondary Nav ${open ? 'Open' : 'Close'}`, {
+                category: 'navigation',
+            });
+        } catch {
+            // Just swallow these for now since they are not essential
+            // Maybe log these to sentry when it's back running.
+        }
     }
 };

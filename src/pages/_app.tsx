@@ -23,7 +23,9 @@ import {
 } from '../utils/seo';
 import { customCache } from '../utils/emotion';
 
-import '../../mocks/run-msw';
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+    import('../../mocks/run-msw');
+}
 
 interface CustomProps {
     session?: Session;

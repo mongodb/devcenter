@@ -486,7 +486,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                     borderRadius: 'inc30',
                                     objectFit: 'cover',
                                 }}
-                                layout="fill"
+                                fill
                             />
                         </div>
                     )}

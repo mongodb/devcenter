@@ -7,7 +7,7 @@ import {
     SystemIcon,
     ESystemIconNames,
 } from '@mdb/flora';
-import Truncate from 'react-truncate';
+import Truncate from '../truncate';
 
 import AuthorLockup from '../author-lockup';
 
@@ -51,12 +51,7 @@ const CardThumbnail = ({
     const playButtonUrl = getURLPath('/play-button.svg', false) as string;
 
     const defaultThumbnail = (
-        <Image
-            alt={alt || 'alt not provided'}
-            src={url as string}
-            sx={thumbnailStyles}
-            layout="fill"
-        />
+        <Image alt={alt || ''} src={url as string} sx={thumbnailStyles} fill />
     );
 
     const customThumbnails = {
@@ -65,7 +60,7 @@ const CardThumbnail = ({
                 alt="Play Button"
                 src={playButtonUrl}
                 sx={thumbnailStyles}
-                layout="fill"
+                fill
             />
         ),
         Event: url ? defaultThumbnail : <EventIcon text={city} />,
@@ -77,6 +72,7 @@ const CardThumbnail = ({
                         display: 'flex',
                         justifyContent: 'center',
                         height: '100%',
+                        position: 'relative',
                     }}
                 >
                     <Image
@@ -84,6 +80,7 @@ const CardThumbnail = ({
                         src={playButtonUrl}
                         width={60}
                         height={60}
+                        sx={{ display: 'block', my: 'auto' }}
                     />
                 </div>
             </>

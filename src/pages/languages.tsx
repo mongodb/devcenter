@@ -48,6 +48,7 @@ const LanguagesSection: React.FunctionComponent<{ languages: MetaInfo[] }> = ({
     <Grid columns={[1, null, 2, 4]} gap="inc70">
         {languages.map(lang => {
             const imageSrc = LogoPaths[languageToLogo[lang.tagName]];
+            // Flash card needs to be updated in Flora. Currently it contains nested <a> tags, which is not legal HTML.
             return (
                 <FlashCard
                     key={lang.slug}
@@ -110,6 +111,7 @@ const LanguagesPage: NextPage<LanguagesPageProps> = ({
                         {featured.map(lang => {
                             const imageSrc =
                                 LogoPaths[languageToLogo[lang.tagName]];
+                            // Flash card needs to be updated in Flora. Currently it contains nested <a> tags, which is not legal HTML.
                             return (
                                 <FlashCard
                                     flashCard

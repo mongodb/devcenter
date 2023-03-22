@@ -22,10 +22,13 @@ const SeriesList: React.FunctionComponent<{
                 return (
                     <li key={index} sx={listItemstyles}>
                         <span aria-label="glyph" sx={glyphStyles} />
-                        <NextLink href={item.url} passHref>
-                            <a target="_blank" rel="noreferrer">
-                                {item.text}
-                            </a>
+                        <NextLink
+                            href={item.url}
+                            passHref
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {item.text}
                         </NextLink>
                     </li>
                 );

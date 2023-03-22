@@ -11,6 +11,11 @@ const mockContent = {
 
 const mockPropsFn = jest.fn();
 
+jest.mock('../modal/personalization', () => ({
+    __esModule: true,
+    ScrollPersonalizationModal: jest.fn(() => <></>),
+}));
+
 jest.mock('../../contexts/modal', () => ({
     useModalContext: () => ({
         openModal: (Component: ReactNode) => {

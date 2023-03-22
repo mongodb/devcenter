@@ -105,10 +105,12 @@ test('1 star rating flow on content page', async ({ page }) => {
             body: JSON.stringify({ _id: '12345' }),
         });
     });
-    // One Star
+
+    // Have to hover because the element becomes stale on hover. we relocate it to click.
+    await page.locator('div[aria-label="One Star"]').nth(0).hover();
     await Promise.all([
-        (await page.locator('div[aria-label="One Star"]').nth(0)).click(),
         page.waitForSelector(':has-text("We\'re sorry to hear that")'),
+        page.locator('div[aria-label="One Star"]').nth(0).click(),
     ]);
     await Promise.all([
         page.waitForSelector('"How could this be better?"'),
@@ -119,32 +121,6 @@ test('1 star rating flow on content page', async ({ page }) => {
         page.locator('button:text("Next")').click(),
     ]);
     await page.locator('button:text("Close")').click();
-
-    // Three Stars
-    await Promise.all([
-        page.waitForSelector('"Thanks for the feedback."'),
-        (await page.locator('div[aria-label="Three Stars"]').nth(0)).click(),
-    ]);
-    await Promise.all([
-        page.waitForSelector('"We appreciate your feedback."'),
-        page.locator('button:text("Next")').click(),
-    ]);
-    await page.locator('button:text("Close")').click();
-
-    // Five Stars
-    await Promise.all([
-        page.waitForSelector('"Thanks for the feedback!"'),
-        page.waitForSelector('img[alt="misc_sunrise"]'),
-        (await page.locator('div[aria-label="Five Stars"]').nth(0)).click(),
-    ]);
-    await Promise.all([
-        page.waitForSelector('"How can we improve this tutorial?"'),
-        page.locator('button:has-text("Tell us more")').click(),
-    ]);
-    await Promise.all([
-        page.waitForSelector('"We appreciate your feedback."'),
-        page.locator('button:text("Next")').click(),
-    ]);
 });
 
 test('3 star rating flow on content page', async ({ page }) => {
@@ -158,7 +134,8 @@ test('3 star rating flow on content page', async ({ page }) => {
         });
     });
 
-    // Three Stars
+    // Have to hover because the element becomes stale on hover. we relocate it to click.
+    await page.locator('div[aria-label="Three Stars"]').nth(0).hover();
     await Promise.all([
         page.waitForSelector('"Thanks for the feedback."'),
         (await page.locator('div[aria-label="Three Stars"]').nth(0)).click(),
@@ -168,21 +145,6 @@ test('3 star rating flow on content page', async ({ page }) => {
         page.locator('button:text("Next")').click(),
     ]);
     await page.locator('button:text("Close")').click();
-
-    // Five Stars
-    await Promise.all([
-        page.waitForSelector('"Thanks for the feedback!"'),
-        page.waitForSelector('img[alt="misc_sunrise"]'),
-        (await page.locator('div[aria-label="Five Stars"]').nth(0)).click(),
-    ]);
-    await Promise.all([
-        page.waitForSelector('"How can we improve this tutorial?"'),
-        page.locator('button:has-text("Tell us more")').click(),
-    ]);
-    await Promise.all([
-        page.waitForSelector('"We appreciate your feedback."'),
-        page.locator('button:text("Next")').click(),
-    ]);
 });
 
 test('5 star rating flow on content page', async ({ page }) => {
@@ -196,7 +158,8 @@ test('5 star rating flow on content page', async ({ page }) => {
         });
     });
 
-    // Five Stars
+    // Have to hover because the element becomes stale on hover. we relocate it to click.
+    await page.locator('div[aria-label="Five Stars"]').nth(0).hover();
     await Promise.all([
         page.waitForSelector('"Thanks for the feedback!"'),
         page.waitForSelector('img[alt="misc_sunrise"]'),

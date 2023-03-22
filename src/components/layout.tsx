@@ -27,6 +27,7 @@ const navStyles: ThemeUICSSObject = {
 };
 interface LayoutProps {
     pagePath?: string | null;
+    children?: React.ReactNode;
     isPathFactory?: boolean;
 }
 

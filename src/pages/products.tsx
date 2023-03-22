@@ -1,5 +1,4 @@
 import { Grid } from 'theme-ui';
-import Link from 'next/link';
 import { NextPage, GetStaticProps } from 'next';
 import { NextSeo } from 'next-seo';
 import {
@@ -43,32 +42,32 @@ interface L1LinkProps {
 }
 
 const L1Link: React.FunctionComponent<L1LinkProps> = ({ name, slug }) => (
-    <Link href={slug} passHref key={slug}>
-        <a
-            sx={{
-                '&:hover': {
-                    '*': {
-                        color: 'green60',
-                        stroke: 'green60',
-                    },
+    <a
+        href={getURLPath(slug)}
+        key={slug}
+        sx={{
+            '&:hover': {
+                '*': {
+                    color: 'green60',
+                    stroke: 'green60',
                 },
-                display: 'block',
-                width: 'max-content',
-                marginBottom: 'inc50',
+            },
+            display: 'block',
+            width: 'max-content',
+            marginBottom: 'inc50',
+        }}
+    >
+        <TypographyScale
+            sx={{
+                display: 'inline-block',
+                marginRight: 'inc40',
             }}
+            variant="heading5"
         >
-            <TypographyScale
-                sx={{
-                    display: 'inline-block',
-                    marginRight: 'inc40',
-                }}
-                variant="heading5"
-            >
-                {name}
-            </TypographyScale>
-            <SystemIcon name={ESystemIconNames.CHEVRON_RIGHT} size="medium" />
-        </a>
-    </Link>
+            {name}
+        </TypographyScale>
+        <SystemIcon name={ESystemIconNames.CHEVRON_RIGHT} size="medium" />
+    </a>
 );
 
 const ProductSection: React.FunctionComponent<L1Product> = ({
@@ -84,6 +83,7 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                 <Grid columns={[1, null, 2, 4]} gap="inc70">
                     {l2s.map(l2 => {
                         const iconName = productToLogo[l2.tagName];
+                        // Flash card needs to be updated in Flora. Currently it contains nested <a> tags, which is not legal HTML.
                         return (
                             <FlashCard
                                 flashCard
@@ -147,6 +147,7 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                     >
                         {featured.map(prod => {
                             const iconName = productToLogo[prod.tagName];
+                            // Flash card needs to be updated in Flora. Currently it contains nested <a> tags, which is not legal HTML.
                             return (
                                 <FlashCard
                                     flashCard

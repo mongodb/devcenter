@@ -5,9 +5,6 @@ const styles: { [key: string]: ThemeUICSSObject } = {
     container: {
         display: 'flex',
         gap: 'inc30',
-        span: {
-            display: 'block !important', // Override next/image default styling
-        },
     },
     circle: {
         borderRadius: 'circle',

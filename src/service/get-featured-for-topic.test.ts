@@ -1,11 +1,5 @@
 import { FeaturedResponse } from '../interfaces/featured';
 import { getFeaturedForTopic } from './get-featured-for-topic';
-import * as apiRequestModule from '../api-requests/get-featured-for-topic';
-
-jest.mock('../api-requests/get-featured-for-topic', () => ({
-    __esModule: true,
-    ...jest.requireActual('../api-requests/get-featured-for-topic'),
-}));
 
 const featuredArticles: FeaturedResponse = {
     articles: [
@@ -16,11 +10,15 @@ const featuredArticles: FeaturedResponse = {
     ],
     podcasts: [],
     videos: [],
+    events: [],
 };
 
+jest.mock('../config/api-client', () => ({
+    esModule: true,
+    STRAPI_CLIENT: { query: () => ({ data: { featured: featuredArticles } }) },
+}));
+
 test('parses featured to list of strings', async () => {
-    const spy = jest.spyOn(apiRequestModule, 'getFeaturedForTopicFromAPI');
-    spy.mockReturnValue(Promise.resolve(featuredArticles));
     const result = await getFeaturedForTopic('');
     expect(result.articles).toHaveLength(4);
     expect(result.podcasts).toHaveLength(0);

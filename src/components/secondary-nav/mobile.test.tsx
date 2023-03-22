@@ -15,10 +15,12 @@ jest.mock('next-auth/react', () => {
     };
 });
 
-test('renders mobile dropdown', () => {
+test('renders mobile dropdown', async () => {
     render(<Mobile />);
 
-    userEvent.click(screen.getByTitle('chevron-down'));
+    const user = userEvent.setup();
+
+    await user.click(screen.getByTitle('chevron-down'));
 
     // See articles.
     const article = screen.getByText('Articles');
@@ -33,7 +35,7 @@ test('renders mobile dropdown', () => {
     ).toHaveAttribute('href', '/developer/topics/');
 
     const languages = screen.getByText('Languages');
-    languages.click();
+    await user.click(languages);
 
     const python = screen.getByText('Python');
     expect(python.parentElement?.parentElement?.parentElement).toHaveAttribute(
