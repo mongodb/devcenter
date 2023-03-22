@@ -22,6 +22,10 @@ jest.mock('../../utils/get-sign-in-url', () => {
     return jest.fn(() => '');
 });
 
+jest.mock('../modal/personalization', () => {
+    return jest.fn(() => <></>);
+});
+
 const crumbs = [
     { text: 'MongoDB Developer Center', url: '/' },
     { text: 'Developer Topics', url: '/topics' },
