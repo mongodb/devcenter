@@ -10,9 +10,9 @@ export const getSearchContent = async (
 ): Promise<SearchItem[]> => {
     const query = buildSearchQuery(queryParams);
 
-    const url = `${process.env.REALM_SEARCH_URL}/search_devcenter?${query}`;
+    const url = `${process.env.BACKEND_URL}/api/search?${query}`;
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
