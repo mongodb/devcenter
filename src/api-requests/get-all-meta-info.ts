@@ -2,14 +2,20 @@ import { ContentTypeUID, MetaInfoResponse } from '../interfaces/meta-info';
 import axios from 'axios';
 
 const CS_GRAPHQL_URL = process.env.CS_GRAPHQL_URL;
+export const CS_GRAPHQL_LIMIT = 100;
 
 const headers = {
     access_token: process.env.CS_DELIVERY_TOKEN || '',
     branch: 'prod',
 };
 
-const getQuery = (contentTypeID: string, skip: number) => `        {
-        all_${contentTypeID}(limit: 100, skip: ${skip})  {
+export const getMetaInfoQuery = (
+    contentTypeID: string,
+    skip: number
+) => `        
+    query get_all_${contentTypeID} {
+        all_${contentTypeID}(limit: ${CS_GRAPHQL_LIMIT}, skip: ${skip})  {
+            total
             items {
                 title
                 description
@@ -41,21 +47,21 @@ const getQuery = (contentTypeID: string, skip: number) => `        {
 export const getMetaInfoFromCMS = async (
     contentTypeID: ContentTypeUID
 ): Promise<MetaInfoResponse[]> => {
-    const url = `${CS_GRAPHQL_URL}?environment=production&query=${getQuery(
+    const url = `${CS_GRAPHQL_URL}?environment=production&query=${getMetaInfoQuery(
         contentTypeID,
         0
     )}`;
 
     const { data } = await axios.get(url, { headers });
-    const { total, items } = data.data[`all_${contentTypeID}`];
+    const { total, items } = data.data.data[`all_${contentTypeID}`];
 
     while (items.length < total) {
-        const url = `${CS_GRAPHQL_URL}?environment=production&query=${getQuery(
+        const url = `${CS_GRAPHQL_URL}?environment=production&query=${getMetaInfoQuery(
             contentTypeID,
             items.length
         )}`;
         const { data: extraData } = await axios.get(url, { headers });
-        items.push(...extraData.data[`all_${contentTypeID}`].items);
+        items.push(...extraData.data.data[`all_${contentTypeID}`].items);
     }
 
     return items;
