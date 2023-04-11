@@ -1,27 +1,28 @@
-import { OtherTags } from './other-tags';
+interface ImageResponse {
+    edges: { node: { url: string } }[];
+}
 
 export type Image = {
     url: string;
 };
-
-type ArticlesByAuthor = {
-    name: string;
-    calculated_slug: string;
-    description: string;
-    otherTags: OtherTags[];
-};
-
-export interface Author {
-    name: string;
+interface AuthorBase {
     url?: string;
     bio?: string;
-    image?: Image;
     location?: string;
-    title?: string;
     linkedin?: string;
     facebook?: string;
     twitter?: string;
     youtube?: string;
-    articles?: ArticlesByAuthor[];
     calculated_slug: string;
+}
+export interface Author extends AuthorBase {
+    image?: Image;
+    title?: string;
+    name: string;
+}
+
+export interface AuthorResponse extends AuthorBase {
+    imageConnection?: ImageResponse;
+    job_title?: string;
+    title: string;
 }

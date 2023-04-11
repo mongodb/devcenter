@@ -1,6 +1,13 @@
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { TagType } from '../types/tag-type';
 
+export const CS_GRAPHQL_LIMIT = 100;
+
+export const CS_HEADERS = {
+    access_token: process.env.CS_DELIVERY_TOKEN || '',
+    branch: 'prod',
+};
+
 export const L1L2_TOPIC_PAGE_TYPES: TagType[] = [
     'L1Product',
     'L2Product',

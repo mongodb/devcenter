@@ -8,8 +8,7 @@ import {
     graphql,
 } from 'msw';
 import { ContentTypeUID } from '../src/interfaces/meta-info';
-import { CS_GRAPHQL_LIMIT } from '../src/api-requests/get-all-meta-info';
-
+import { CS_GRAPHQL_LIMIT } from '../src/data/constants';
 interface RESTHandlerInfo {
     pattern: string;
     url: string;
