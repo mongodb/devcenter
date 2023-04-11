@@ -82,14 +82,16 @@ const fetchMocks = async () => {
 
     for (let i = 0; i < gqlHandlerInfo.length; i++) {
         const handler = gqlHandlerInfo[i];
+        if (!handler.queryName.startsWith('get_all_')) {
+            continue; // We don't need to write files for endpoints fetching a single entry
+        }
         try {
             const fname = handler.mockFile;
             let paginationCount = 0;
             const url = `${
                 process.env.CS_GRAPHQL_URL
-            }?environment=production&query=${getMetaInfoQuery(
-                handler.contentTypeUID,
-                0
+            }?environment=production&query=${handler.getQuery(
+                paginationCount
             )}`;
             const response = await (
                 await fetch(url, { headers: CSHeaders })
@@ -98,7 +100,7 @@ const fetchMocks = async () => {
             setMockTitles(response);
             await fs.writeFile(
                 path.resolve(dataDir, `${fname}-${paginationCount}.js`),
-                `module.exports=${JSON.stringify(response)}`,
+                `module.exports=${JSON.stringify(response.data)}`,
                 err => {
                     if (err) console.error(err);
                     else files++;
@@ -108,13 +110,12 @@ const fetchMocks = async () => {
             const { total, items } =
                 response.data[`all_${handler.contentTypeUID}`];
 
-            while (items.length < total) {
+            while (total && items.length < total) {
                 paginationCount++;
                 const url = `${
                     process.env.CS_GRAPHQL_URL
-                }?environment=production&query=${getMetaInfoQuery(
-                    handler.contentTypeUID,
-                    items.length
+                }?environment=production&query=${handler.getQuery(
+                    paginationCount
                 )}`;
                 const paginatedResponse = await (
                     await fetch(url, { headers: CSHeaders })
@@ -126,7 +127,7 @@ const fetchMocks = async () => {
                 setMockTitles(response);
                 await fs.writeFile(
                     path.resolve(dataDir, `${fname}-${paginationCount}.js`),
-                    `module.exports=${JSON.stringify(paginatedResponse)}`,
+                    `module.exports=${JSON.stringify(paginatedResponse.data)}`,
                     err => {
                         if (err) console.error(err);
                         else files++;

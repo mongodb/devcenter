@@ -23,19 +23,19 @@ const authorFields = `
     youtube
 `;
 
-const getAllAuthorsQuery = (skip: number) => `
-query get_all_authors {
-    all_authors(limit: ${CS_GRAPHQL_LIMIT}, skip: ${skip})  {
-        total
-        items {
-            ${authorFields}
+export const getAllAuthorsQuery = (skip: number) => `
+    query get_all_authors {
+        all_authors(limit: ${CS_GRAPHQL_LIMIT}, skip: ${skip})  {
+            total
+            items {
+                ${authorFields}
+            }
         }
     }
-}
 `;
-const getAuthorQuery = (uid: string) => `        
+export const getAuthorQuery = (calculatedSlug: string) => `        
     query get_author {
-        authors(uid: "${uid}") {
+        all_authors(where: {calculated_slug: "${calculatedSlug}"}) {
             ${authorFields}
         }
     }

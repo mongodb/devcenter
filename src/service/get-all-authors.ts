@@ -16,7 +16,6 @@ const mapAuthor = (author: AuthorResponse): Author => {
     if (image) {
         mappedAuthor.image = image;
     }
-    console.log(mappedAuthor);
     return mappedAuthor;
 };
 
