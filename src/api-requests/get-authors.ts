@@ -3,7 +3,6 @@ import axios from 'axios';
 import { AuthorResponse } from '../interfaces/author';
 import { CS_GRAPHQL_LIMIT, CS_HEADERS } from '../data/constants';
 
-// Will have to add articles
 const authorFields = `
     bio
     calculated_slug
