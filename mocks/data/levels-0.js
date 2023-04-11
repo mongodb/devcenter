@@ -1,1 +1,1 @@
-module.exports={"data":{"all_levels":{"total":2,"items":[{"title":"*Introductory","description":"","primary_cta":"","secondary_cta":"","documentation_link":"","slug":"/expertise-levels/introductory","system":{"content_type_uid":"levels"}},{"title":"*Advanced","description":"","primary_cta":"","secondary_cta":"","documentation_link":"","slug":"/expertise-levels/advanced","system":{"content_type_uid":"levels"}}]}}}
+module.exports={"all_levels":{"total":0,"items":[]}}
