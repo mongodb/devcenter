@@ -1,6 +1,5 @@
 import { CTA } from '../components/hero/types';
 import { TagType } from '../types/tag-type';
-
 export interface MetaInfo {
     category: TagType;
     tagName: string;
@@ -10,6 +9,29 @@ export interface MetaInfo {
     topics?: MetaInfo[];
     documentationLink: string;
 }
+
+// STRAPI
+
+interface L1Props2 {
+    name?: string;
+}
+
+interface L1Props {
+    l_1_product?: L1Props2;
+}
+
+export interface MetaInfoResponse {
+    __typename: TagType;
+    name: string;
+    description?: string;
+    slug: string;
+    l1_product?: L1Props;
+    primary_cta?: string;
+    secondary_cta?: string;
+    documentation_link?: string;
+}
+
+// CONTENTSTACK
 
 export type ContentTypeUID =
     | 'l1_products'
@@ -42,7 +64,7 @@ interface L1ProductsConnection {
     edges: { node: { title: string } }[];
 }
 
-export interface MetaInfoResponse {
+export interface CS_MetaInfoResponse {
     title: string;
     description?: string;
     slug: string;
