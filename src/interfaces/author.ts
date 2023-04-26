@@ -1,10 +1,12 @@
-interface ImageResponse {
-    edges: { node: { url: string } }[];
-}
-
 export type Image = {
     url: string;
 };
+// CONTENTSTACK
+
+interface ImageConnection {
+    edges: { node: { url: string } }[];
+}
+
 interface AuthorBase {
     url?: string;
     bio?: string;
@@ -21,8 +23,8 @@ export interface Author extends AuthorBase {
     name: string;
 }
 
-export interface AuthorResponse extends AuthorBase {
-    imageConnection?: ImageResponse;
+export interface CS_AuthorResponse extends AuthorBase {
+    imageConnection?: ImageConnection;
     job_title?: string;
     title: string;
 }
