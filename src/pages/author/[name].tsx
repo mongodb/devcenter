@@ -5,7 +5,7 @@ import { ParsedUrlQuery } from 'querystring';
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
 
-import { getAuthor } from '../../service/get-all-authors';
+import { CS_getAuthor } from '../../service/get-all-authors';
 import allAuthorsPreval from '../../service/get-all-authors.preval';
 
 import { Author, Image } from '../../interfaces/author';
@@ -247,7 +247,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     let author: Author | null;
     try {
-        author = await getAuthor(slugString);
+        author = await CS_getAuthor(slugString);
     } catch (e) {
         Sentry.captureException(e);
         author = allAuthorsPreval.filter(
