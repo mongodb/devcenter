@@ -112,7 +112,22 @@ export const getAuthorFromAPI = async (
 };
 
 const CS_authorFields = `
+    bio
+    calculated_slug
+    facebook
+    imageConnection {
+    edges {
+        node {
+        url
+        }
+    }
+    }
+    job_title
+    linkedin
+    location
     title
+    twitter
+    youtube
 `;
 
 export const getAllAuthorsQuery = (skip: number) => `
