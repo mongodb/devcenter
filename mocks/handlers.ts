@@ -11,6 +11,7 @@ import { ContentTypeUID } from '../src/interfaces/meta-info';
 import { CS_GRAPHQL_LIMIT } from '../src/data/constants';
 import { getMetaInfoQuery } from '../src/api-requests/get-all-meta-info';
 import { getAllAuthorsQuery } from '../src/api-requests/get-authors';
+import { getAllArticlesQuery } from '../src/api-requests/get-articles';
 interface RESTHandlerInfo {
     pattern: string;
     url: string;
@@ -39,25 +40,6 @@ export const restHandlerInfo: RESTHandlerInfo[] = [
         pattern: `${process.env.REALM_API_URL}/community_events`,
         url: `${process.env.REALM_API_URL}/community_events`,
         mockFile: 'community_events',
-    },
-    {
-        pattern: `${process.env.STRAPI_URL}/new-articles`,
-        url: `${process.env.STRAPI_URL}/new-articles?_limit=-1`,
-        mockFile: 'new-articles',
-        handlerFunc: async (req, res, ctx) => {
-            const bySlug = req.url.searchParams.get('calculated_slug_eq');
-            const json = (await import(`./data/new-articles.js`)).default;
-
-            if (bySlug) {
-                const match = json.find(item => bySlug.includes(item.slug));
-
-                if (match) {
-                    return res(ctx.json([match]));
-                }
-            }
-
-            return res(ctx.json(json));
-        },
     },
     {
         pattern: `${process.env.STRAPI_URL}/new-videos`,
@@ -143,6 +125,17 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
         contentTypeUID: 'authors',
         queryName: 'get_author',
         mockFile: 'authors',
+    },
+    {
+        contentTypeUID: 'articles',
+        queryName: 'get_all_articles',
+        mockFile: 'articles',
+        getQuery: skip => getAllArticlesQuery(skip),
+    },
+    {
+        contentTypeUID: 'articles',
+        queryName: 'get_article',
+        mockFile: 'articles',
     },
 ];
 

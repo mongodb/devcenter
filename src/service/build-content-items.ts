@@ -251,6 +251,10 @@ export const CS_mapArticlesToContentItems = (
         addSeriesToItem(item, 'article', articleSeries);
         items.push(item);
     });
-
-    return items.filter(item => PillCategoryValues.includes(item.category));
+    return items.filter(
+        item =>
+            PillCategoryValues.includes(
+                item.category.replace('*', '') as PillCategory
+            ) // The replace is necessart for mocking.
+    );
 };

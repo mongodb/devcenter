@@ -1,1 +1,1 @@
-module.exports={"all_authors":{"total":1,"items":[{"bio":"Test bio","calculated_slug":"/author/aaron-bassett","facebook":"Test facebook","imageConnection":{"edges":[{"node":{"url":"https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltcc5ea45967362a27/637402342938151067563084/file-structure.png?branch=prod"}}]},"job_title":"Test title","linkedin":"Test linkedin","location":"Test location","title":"*Aaron Bassett","twitter":"Test twitter","youtube":"Test yt"}]}}
+module.exports={"all_authors":{"total":0,"items":[]}}
