@@ -67,7 +67,7 @@ export const getSecondaryNavMenu = async () => {
     };
 
     const videosMenu: SecondaryNavMenu = {
-        name: 'Videos',
+        name: 'MongoDB TV',
         slug: '/videos',
     };
 

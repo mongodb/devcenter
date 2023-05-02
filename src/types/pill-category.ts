@@ -11,6 +11,7 @@ export const PillCategoryValues = [
     'Tutorial',
     'Podcast',
     'Video',
+    'MongoDB TV',
 ] as const;
 
 export type PillCategory = typeof PillCategoryValues[number];

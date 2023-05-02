@@ -66,7 +66,7 @@ export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
         .flat();
 };
 
-const parseMetaInfoResponse = (
+export const parseMetaInfoResponse = (
     metaInfoResponses: MetaInfoResponse[]
 ): MetaInfo[] => {
     const parsedInfo: MetaInfo[] = [];
@@ -75,8 +75,7 @@ const parseMetaInfoResponse = (
     });
     return parsedInfo;
 };
-
-const parseMetaInfoResponseForL1 = (
+export const parseMetaInfoResponseForL1 = (
     l1: MetaInfoResponse[],
     l2: MetaInfoResponse[]
 ): MetaInfo[] => {
