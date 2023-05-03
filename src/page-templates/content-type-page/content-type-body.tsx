@@ -53,10 +53,12 @@ const ContentTypeBody: React.FunctionComponent<
     children,
 }) => {
     const showFeatured = !searchString && !filters.length;
+    const pluralContentType =
+        contentType === 'Video' ? 'Shows' : pluralize(contentType);
 
     const resultsHeader =
         (showFeatured
-            ? `All ${pluralize(contentType)}`
+            ? `All ${pluralContentType}`
             : !results
             ? ''
             : results.length === 1
@@ -96,7 +98,7 @@ const ContentTypeBody: React.FunctionComponent<
             <div sx={searchWrapperStyles}>
                 <SearchBox
                     {...searchStringProps}
-                    placeholder={`Search ${pluralize(contentType)}`}
+                    placeholder={`Search ${pluralContentType}`}
                     extraStyles={{
                         flexBasis: showFeatured
                             ? '100%'
@@ -111,7 +113,7 @@ const ContentTypeBody: React.FunctionComponent<
                             sx={{
                                 marginBottom: ['section20', null, 'section50'],
                             }}
-                            title={`Featured ${pluralize(contentType)}`}
+                            title={`Featured ${pluralContentType}`}
                             featuredCardType="middle"
                         />
 

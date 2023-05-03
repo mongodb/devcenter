@@ -76,6 +76,7 @@ export interface SearchItem {
     tags: Tag[];
     event_setup?: string;
     coordinates?: Coordinates;
+    video_type?: 'Video' | 'MongoDB TV';
 }
 
 // add back when Most Popular is implemented

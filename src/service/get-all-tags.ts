@@ -16,7 +16,6 @@ import {
 
 // Similar to getAllMetaInfo, but doesn't filter out tags without content associated.
 export const getAllTags = async (): Promise<MetaInfo[]> => {
-    console.log('GETTING ALL TAGS');
     const l2MetaInfoResponse = await getAllL2ProductsMetaInfo(STRAPI_CLIENT);
 
     const l1ProductsMetaInfo = parseMetaInfoResponseForL1(
