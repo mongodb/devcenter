@@ -156,7 +156,7 @@ const CS_articleFields = `
     original_publish_date
     strapi_updated_at
     expiry_date
-    authorsConnection {
+    authorsConnection(limit: 5) {
       edges {
         node {
           ... on Authors {
@@ -305,6 +305,7 @@ export const CS_getAllArticlesFromCMS = async (): Promise<
     const url = `${
         process.env.CS_GRAPHQL_URL
     }?environment=production&query=${getAllArticlesQuery(0)}`;
+    console.log(url);
 
     const { data } = await axios.get(url, { headers: CS_HEADERS });
     const { total, items } = data.data.all_articles;
