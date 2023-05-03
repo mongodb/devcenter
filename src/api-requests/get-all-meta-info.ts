@@ -2,6 +2,7 @@ import { UnderlyingClient } from '../types/client-factory';
 import { ApolloQueryResult, gql } from '@apollo/client';
 import { MetaInfoResponse } from '../interfaces/meta-info';
 import { isStrapiClient } from '../utils/client-factory';
+import { TagType } from '../types/tag-type';
 
 type metaInfoType =
     | 'l1Products'
@@ -11,14 +12,6 @@ type metaInfoType =
     | 'expertiseLevels'
     | 'contentTypes';
 
-type __typename =
-    | 'L1Product'
-    | 'L2Product'
-    | 'ProgrammingLanguage'
-    | 'Technology'
-    | 'ExpertiseLevel'
-    | 'ContentType';
-
 // NOTE: Failed to set type for data
 /**
  * Adapt ContentStack' returned data into format consistent with Strapi
@@ -27,7 +20,7 @@ const dataAdapter = (
     isStrapiClient: boolean,
     metaInfoType: metaInfoType,
     data: any,
-    __typename: __typename
+    __typename: TagType
 ) => {
     let adaptedData = data[metaInfoType];
 
