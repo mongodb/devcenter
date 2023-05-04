@@ -1,4 +1,4 @@
-import { STRAPI_CLIENT } from '../config/api-client';
+import { CS_CLIENT } from '../config/api-client';
 import { Podcast } from '../interfaces/podcast';
 import getAllPodcastsFromAPI, {
     getPodcastBySlugFromAPI,
@@ -36,14 +36,15 @@ const setPodcastTags = (podcasts: Podcast[]) => {
 };
 
 export const getAllPodcasts = async (): Promise<Podcast[]> => {
-    const podcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
+    const podcasts = await getAllPodcastsFromAPI(CS_CLIENT);
+    console.log(podcasts);
     return setPodcastTags(podcasts);
 };
 
 export const getPodcastBySlug = async (
     slug: string
 ): Promise<Podcast | null> => {
-    const podcast = await getPodcastBySlugFromAPI(STRAPI_CLIENT, slug);
+    const podcast = await getPodcastBySlugFromAPI(CS_CLIENT, slug);
     if (!podcast) return null;
     const modifiedPodcasts = setPodcastTags([podcast]);
     return modifiedPodcasts.length > 0 ? modifiedPodcasts[0] : null;
