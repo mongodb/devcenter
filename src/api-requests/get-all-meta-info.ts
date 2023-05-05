@@ -3,6 +3,7 @@ import { ApolloQueryResult, gql } from '@apollo/client';
 import { MetaInfoResponse } from '../interfaces/meta-info';
 import { isStrapiClient } from '../utils/client-factory';
 import { TagType } from '../types/tag-type';
+import { insertTypename, extractFieldsFromNode } from './utils';
 
 type metaInfoType =
     | 'l1Products'
@@ -12,38 +13,43 @@ type metaInfoType =
     | 'expertiseLevels'
     | 'contentTypes';
 
-// NOTE: Failed to set type for data
 /**
- * Adapt ContentStack' returned data into format consistent with Strapi
+ * Ensure CS response is compatible with original Strapi format
  */
-const dataAdapter = (
+const formatResponse = (
     isStrapiClient: boolean,
     metaInfoType: metaInfoType,
     data: any,
     __typename: TagType
 ) => {
-    let adaptedData = data[metaInfoType];
+    let formattedData = data[metaInfoType];
 
     if (isStrapiClient) {
-        return adaptedData;
+        return formattedData;
     }
 
-    adaptedData = adaptedData.items;
+    formattedData = formattedData.items;
+
+    // explicitly define to ensure undefined values become null
+    formattedData = formattedData.map((d: any) => ({
+        name: d.name ? d.name : null,
+        description: d.description ? d.description : null,
+        slug: d.slug ? d.slug : null,
+        secondary_cta: d.secondary_cta ? d.secondary_cta : null,
+        primary_cta: d.primary_cta ? d.primary_cta : null,
+        documentation_link: d.documentation_link ? d.documentation_link : null,
+    }));
 
     if (metaInfoType === 'l2Products') {
-        return adaptedData.map((d: any) => ({
+        formattedData = formattedData.map((d: any) => ({
             ...d,
-            __typename,
             l1_product: {
-                l_1_product: { name: d.l1_product.edges[0].node.name },
+                l_1_product: extractFieldsFromNode(d.l1_product, ['name']),
             },
         }));
     }
 
-    return adaptedData.map((d: any) => ({
-        ...d,
-        __typename,
-    }));
+    return insertTypename(formattedData, __typename);
 };
 
 export const getAllL1ProductsMetaInfo = async (
@@ -83,7 +89,7 @@ export const getAllL1ProductsMetaInfo = async (
     const { data }: ApolloQueryResult<{ l1Products: MetaInfoResponse[] }> =
         await client.query({ query });
 
-    const adaptedData = dataAdapter(
+    const adaptedData = formatResponse(
         isStrapi,
         'l1Products',
         data,
@@ -144,7 +150,7 @@ export const getAllL2ProductsMetaInfo = async (
     const { data }: ApolloQueryResult<{ l2Products: MetaInfoResponse[] }> =
         await client.query({ query });
 
-    const adaptedData = dataAdapter(
+    const adaptedData = formatResponse(
         isStrapi,
         'l2Products',
         data,
@@ -197,7 +203,7 @@ export const getAllProgrammingLanguagesMetaInfo = async (
     }: ApolloQueryResult<{ programmingLanguages: MetaInfoResponse[] }> =
         await client.query({ query });
 
-    const adaptedData = dataAdapter(
+    const adaptedData = formatResponse(
         isStrapi,
         'programmingLanguages',
         data,
@@ -248,7 +254,7 @@ export const getAllTechnologiesMetaInfo = async (
     const { data }: ApolloQueryResult<{ technologies: MetaInfoResponse[] }> =
         await client.query({ query });
 
-    const adaptedData = dataAdapter(
+    const adaptedData = formatResponse(
         isStrapi,
         'technologies',
         data,
@@ -293,7 +299,7 @@ export const getAllExpertiseLevelsMetaInfo = async (
     const { data }: ApolloQueryResult<{ expertiseLevels: MetaInfoResponse[] }> =
         await client.query({ query });
 
-    const adaptedData = dataAdapter(
+    const adaptedData = formatResponse(
         isStrapi,
         'expertiseLevels',
         data,
@@ -338,7 +344,7 @@ export const getAllContentTypesMetaInfo = async (
     const { data }: ApolloQueryResult<{ contentTypes: MetaInfoResponse[] }> =
         await client.query({ query });
 
-    const adaptedData = dataAdapter(
+    const adaptedData = formatResponse(
         isStrapi,
         'contentTypes',
         data,

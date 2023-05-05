@@ -1,5 +1,8 @@
 import { TagType } from '../types/tag-type';
 import { CollectionType } from '../types/collection-type';
+import { UnderlyingClient } from '../types/client-factory';
+import { DocumentNode } from 'graphql';
+import { isStrapiClient } from '../utils/client-factory';
 
 /**
  * Helper to access the desired fields through edges and node
@@ -7,9 +10,13 @@ import { CollectionType } from '../types/collection-type';
  * or field[] if both sourceField and projectField are the same
  */
 export const extractFieldsFromNode = (
-    singleDataOfField: { [key: string]: any },
+    singleDataOfField: { [key: string]: any } | null,
     fields: [string, string][] | string[]
 ): null | { [key: string]: any } => {
+    if (!singleDataOfField) {
+        return null;
+    }
+
     const projectedData: { [key: string]: any } = {};
 
     if (singleDataOfField.edges.length === 0) {
@@ -33,6 +40,44 @@ export const extractFieldsFromNode = (
     }
 
     return projectedData;
+};
+/**
+ * Helper to access the desired fields through edges and node
+ * @param fields [sourceField, projectedField][] if they are different
+ * or field[] if both sourceField and projectField are the same
+ */
+export const extractFieldsFromNodes = (
+    singleDataOfField: { [key: string]: any | null },
+    fields: [string, string][] | string[]
+): { [key: string]: any }[] => {
+    if (!singleDataOfField) {
+        return [];
+    }
+
+    const projectedDataList: { [key: string]: any }[] = [];
+
+    if (singleDataOfField.edges.length === 0) {
+        return [];
+    }
+
+    for (const { node } of singleDataOfField.edges) {
+        const projectedData: { [key: string]: any } = {};
+        const sourceAndProjectFieldsAreDifferent = Array.isArray(fields[0]);
+        if (sourceAndProjectFieldsAreDifferent) {
+            for (const [sourceField, projectedField] of fields) {
+                projectedData[projectedField] = node[sourceField];
+            }
+        } else {
+            // source field and project field are the same
+            for (const field of fields) {
+                projectedData[field as string] = node[field as string];
+            }
+        }
+
+        projectedDataList.push(projectedData);
+    }
+
+    return projectedDataList;
 };
 
 /**
@@ -60,6 +105,8 @@ export const getSEO = (seoData: {
         twitter_image: extractFieldsFromNode(seoData.twitter_image, ['url']),
     };
 
+    delete seo.__typename;
+
     return !isEmptySEO(seo) ? seo : null;
 };
 
@@ -71,4 +118,36 @@ export const insertTypename = (
         ...d,
         __typename,
     }));
+};
+
+export const fetchAll = async (
+    client: UnderlyingClient<'ApolloREST'> | UnderlyingClient<'ApolloGraphQL'>,
+    query: DocumentNode,
+    gqlParentName: string
+) => {
+    if (isStrapiClient(client)) {
+        return client.query({ query });
+    }
+
+    // expect all incoming cs_query already has total
+    const response: any = await client.query({ query });
+    const { total } = response.data[gqlParentName];
+
+    let allItems: { [key: string]: any }[] = [];
+
+    while (allItems.length < total) {
+        const variables = { skip: allItems.length };
+        const res: any = await client.query({ query, variables });
+        const { items } = res.data[gqlParentName];
+
+        allItems = allItems.concat(items);
+    }
+
+    const allData: { [key: string]: any } = { data: {} };
+    allData.data[gqlParentName] = {
+        total,
+        items: allItems,
+    };
+
+    return allData;
 };

@@ -17,6 +17,7 @@ const setPodcastTags = (podcasts: Podcast[]) => {
             contentType: contentType,
         },
     }));
+
     modifiedPodcasts.forEach(p => {
         if (p.l1Product) {
             p.otherTags.l1Product = p.l1Product;
@@ -37,7 +38,7 @@ const setPodcastTags = (podcasts: Podcast[]) => {
 
 export const getAllPodcasts = async (): Promise<Podcast[]> => {
     const podcasts = await getAllPodcastsFromAPI(CS_CLIENT);
-    console.log(podcasts);
+
     return setPodcastTags(podcasts);
 };
 

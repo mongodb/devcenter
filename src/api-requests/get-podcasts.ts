@@ -3,7 +3,13 @@ import { ApolloQueryResult, gql } from '@apollo/client';
 import { UnderlyingClient } from '../types/client-factory';
 import { Podcast } from '../interfaces/podcast';
 import { isStrapiClient } from '../utils/client-factory';
-import { extractFieldsFromNode, getSEO, insertTypename } from './utils';
+import {
+    extractFieldsFromNode,
+    extractFieldsFromNodes,
+    getSEO,
+    insertTypename,
+    fetchAll,
+} from './utils';
 
 const podcastFields = `
     description
@@ -65,8 +71,9 @@ const podcastFields = `
 `;
 
 const cs_query_all = gql`
-    query Podcasts {
-        podcasts: all_podcasts {
+    query Podcasts($skip: Int = 0) {
+        podcasts: all_podcasts(skip: $skip) {
+            total
             items {
                 description
                 publishDate: original_publish_date
@@ -109,8 +116,8 @@ const cs_query_all = gql`
                     edges {
                         node {
                             ... on Technologies {
-                                title
-                                calculated_slug
+                                name: title
+                                calculatedSlug: calculated_slug
                             }
                         }
                     }
@@ -284,6 +291,37 @@ const cs_query_by_slug = gql`
     }
 `;
 
+const getOtherTags = (otherTagsData: any) => {
+    if (!otherTagsData) {
+        return null;
+    }
+
+    const otherTags = {
+        spokenLanguage: extractFieldsFromNode(otherTagsData.spokenLanguage, [
+            'name',
+            'calculatedSlug',
+        ]),
+        expertiseLevel: extractFieldsFromNode(otherTagsData.expertiseLevel, [
+            'name',
+            'calculatedSlug',
+        ]),
+        authorType: extractFieldsFromNode(otherTagsData.authorType, [
+            'name',
+            'calculatedSlug',
+        ]),
+    };
+
+    if (
+        otherTags.spokenLanguage ||
+        otherTags.expertiseLevel ||
+        otherTags.authorType
+    ) {
+        return otherTags;
+    }
+
+    return null;
+};
+
 /**
  * Ensure CS response is compatible with original Strapi format
  */
@@ -307,7 +345,15 @@ const formatResponse = (
     let podcasts = data.podcasts.items;
 
     podcasts = podcasts.map((podcast: { [key: string]: any }) => ({
-        ...podcast,
+        // explicitly defined instead of using spread operator
+        // because fields can be undefined and mess up JSON serialization
+        description: podcast.description ? podcast.description : null,
+        publishDate: podcast.publishDate ? podcast.publishDate : null,
+        title: podcast.title ? podcast.title : null,
+        slug: podcast.slug ? podcast.slug : null,
+        podcastFileUrl: podcast.podcastFileUrl ? podcast.podcastFileUrl : null,
+        thumbnailUrl: podcast.thumbnailUrl ? podcast.thumbnailUrl : null,
+        casted_slug: podcast.casted_slug ? podcast.casted_slug : null,
         l1Product: extractFieldsFromNode(podcast.l1Product, [
             'name',
             'calculatedSlug',
@@ -316,14 +362,15 @@ const formatResponse = (
             'name',
             'calculatedSlug',
         ]),
-        programmingLanguage: extractFieldsFromNode(
+        programmingLanguage: extractFieldsFromNodes(
             podcast.programmingLanguage,
             ['name', 'calculatedSlug']
         ),
-        technology: extractFieldsFromNode(podcast.technology, [
+        technology: extractFieldsFromNodes(podcast.technology, [
             'name',
             'calculatedSlug',
         ]),
+        otherTags: getOtherTags(podcast.otherTags),
         seo: getSEO(podcast.seo),
     }));
 
@@ -348,8 +395,7 @@ const getAllPodcastsFromAPI = async (
     const isStrapi = isStrapiClient(client);
     const query = isStrapi ? strapi_query : cs_query_all;
 
-    const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
-        await client.query({ query });
+    const { data }: any = await fetchAll(client, query, 'podcasts');
 
     return formatResponse(isStrapi, data, true);
 };
