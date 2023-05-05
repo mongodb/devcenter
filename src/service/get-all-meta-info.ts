@@ -26,7 +26,6 @@ export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
         await getAllL2ProductsMetaInfo(CS_CLIENT),
         'L2Product'
     );
-
     const l1ProductsMetaInfo = parseMetaInfoResponseForL1(
         getExisting(await getAllL1ProductsMetaInfo(CS_CLIENT), 'L1Product'),
         l2MetaInfoResponse

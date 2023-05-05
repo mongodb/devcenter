@@ -151,3 +151,31 @@ export const fetchAll = async (
 
     return allData;
 };
+
+export const areTheSame = (
+    list1: { [key: string]: any }[],
+    list2: { [key: string]: any }[],
+    comparatorFunc: (
+        a: { [key: string]: any },
+        b: { [key: string]: any }
+    ) => number,
+    isEqualFunc: (
+        a: { [key: string]: any },
+        b: { [key: string]: any }
+    ) => boolean
+): boolean => {
+    if (list1.length !== list2.length) {
+        return false;
+    }
+
+    list1.sort(comparatorFunc);
+    list2.sort(comparatorFunc);
+
+    for (let idx = 0; idx < list1.length; idx++) {
+        if (!isEqualFunc(list1[idx], list2[idx])) {
+            return false;
+        }
+    }
+
+    return true;
+};

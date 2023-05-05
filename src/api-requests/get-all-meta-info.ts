@@ -3,7 +3,8 @@ import { ApolloQueryResult, gql } from '@apollo/client';
 import { MetaInfoResponse } from '../interfaces/meta-info';
 import { isStrapiClient } from '../utils/client-factory';
 import { TagType } from '../types/tag-type';
-import { insertTypename, extractFieldsFromNode } from './utils';
+import { insertTypename, extractFieldsFromNode, areTheSame } from './utils';
+import { CS_CLIENT, STRAPI_CLIENT } from '../config/api-client';
 
 type metaInfoType =
     | 'l1Products'
@@ -30,13 +31,13 @@ const formatResponse = (
 
     formattedData = formattedData.items;
 
-    // explicitly define to ensure undefined values become null
+    // explicitly define default when falsy
     formattedData = formattedData.map((d: any) => ({
         name: d.name ? d.name : null,
         description: d.description ? d.description : null,
         slug: d.slug ? d.slug : null,
-        secondary_cta: d.secondary_cta ? d.secondary_cta : null,
-        primary_cta: d.primary_cta ? d.primary_cta : null,
+        secondary_cta: d.secondary_cta ? d.secondary_cta : '',
+        primary_cta: d.primary_cta ? d.primary_cta : '',
         documentation_link: d.documentation_link ? d.documentation_link : null,
     }));
 
@@ -352,4 +353,80 @@ export const getAllContentTypesMetaInfo = async (
     ) as MetaInfoResponse[];
 
     return adaptedData;
+};
+
+export const parityTesting = async () => {
+    const comparator = (
+        a: { [key: string]: any },
+        b: { [key: string]: any }
+    ): number => {
+        return a.name.localeCompare(b.name);
+    };
+
+    const isEqualFunc = (
+        a: { [key: string]: any },
+        b: { [key: string]: any }
+    ): boolean => {
+        const staticFieldsMatch: boolean =
+            a.name === b.name &&
+            a.description === b.description &&
+            a.slug === b.slug &&
+            a.primary_cta === b.primary_cta &&
+            a.secondary_cta === b.secondary_cta &&
+            a.__typename === b.__typename;
+
+        let matched = staticFieldsMatch;
+
+        if ('l1_product' in a) {
+            matched =
+                Object.is(a.l1_product.l_1_product, b.l1_product.l_1_product) &&
+                staticFieldsMatch;
+        }
+
+        if (!matched) {
+            console.warn('strapi', a);
+            console.warn('cs', b);
+        }
+
+        return matched;
+    };
+
+    return (
+        areTheSame(
+            await getAllL1ProductsMetaInfo(STRAPI_CLIENT),
+            await getAllL1ProductsMetaInfo(CS_CLIENT),
+            comparator,
+            isEqualFunc
+        ) &&
+        areTheSame(
+            await getAllL2ProductsMetaInfo(STRAPI_CLIENT),
+            await getAllL2ProductsMetaInfo(CS_CLIENT),
+            comparator,
+            isEqualFunc
+        ) &&
+        areTheSame(
+            await getAllProgrammingLanguagesMetaInfo(STRAPI_CLIENT),
+            await getAllProgrammingLanguagesMetaInfo(CS_CLIENT),
+            comparator,
+            isEqualFunc
+        ) &&
+        areTheSame(
+            await getAllTechnologiesMetaInfo(STRAPI_CLIENT),
+            await getAllTechnologiesMetaInfo(CS_CLIENT),
+            comparator,
+            isEqualFunc
+        ) &&
+        areTheSame(
+            await getAllExpertiseLevelsMetaInfo(STRAPI_CLIENT),
+            await getAllExpertiseLevelsMetaInfo(CS_CLIENT),
+            comparator,
+            isEqualFunc
+        ) &&
+        areTheSame(
+            await getAllContentTypesMetaInfo(STRAPI_CLIENT),
+            await getAllContentTypesMetaInfo(CS_CLIENT),
+            comparator,
+            isEqualFunc
+        )
+    );
 };
