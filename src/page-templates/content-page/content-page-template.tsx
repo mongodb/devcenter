@@ -94,7 +94,6 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         collectionType,
         authors = [],
         category,
-        subCategory,
         contentDate,
         updateDate,
         description,
@@ -117,6 +116,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         virtualLink,
         registrationLink,
         virtualLinkText,
+        videoType,
     },
     isPathFactory,
 }) => {
@@ -145,8 +145,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     const requestButtonText = getRequestBtnText(category);
 
     const isIndustryEvent = category === 'Event';
-    const isMongoDBTVShow =
-        category === 'Video' && subCategory === 'MongoDB TV';
+    const isMongoDBTVShow = category === 'Video' && videoType === 'MongoDB TV';
     const isVideoOrPodcastContent =
         collectionType === 'Video' || collectionType === 'Podcast';
 

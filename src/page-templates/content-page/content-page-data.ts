@@ -51,7 +51,7 @@ export const getContentPageData = async (slug: string[]) => {
 
     const contentItemHasPrimaryTag = hasPrimaryTag(contentItem);
     const isEventContent = contentItem.collectionType === 'Event';
-    const isMongoDBTVContent = contentItem.subCategory === 'MongoDB TV';
+    const isMongoDBTVContent = contentItem.videoType === 'MongoDB TV';
     let topicSlug = '/' + slug.slice(0, slug.length - 1).join('/');
 
     //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag

@@ -140,6 +140,7 @@ const ContentTypeBody: React.FunctionComponent<
 
                 <SortBox
                     {...sortProps}
+                    contentType={contentType}
                     extraStyles={{
                         order: showFeatured ? '2' : '1',
                     }}

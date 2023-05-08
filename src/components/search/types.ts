@@ -31,6 +31,7 @@ export interface SortBoxProps {
     extraStyles?: ThemeUICSSObject;
     onSort: (value: SortByType | '') => void;
     sortBy?: SortByType | '';
+    contentType?: PillCategory;
 }
 
 export interface LocationBoxProps {
@@ -79,7 +80,10 @@ export interface SearchItem {
     video_type?: 'Video' | 'MongoDB TV';
 }
 
-// add back when Most Popular is implemented
-// export type SortByType = 'Newest' | 'Most Popular' | 'Highest Rated' | 'Closest Upcoming';
-export type SortByType = 'Newest' | 'Highest Rated' | 'Closest Upcoming';
+export type SortByType =
+    | 'Newest'
+    | 'Highest Rated'
+    | 'Closest Upcoming'
+    | 'Upcoming'
+    | 'Recently Aired';
 export const defaultSortByType: SortByType = 'Newest';

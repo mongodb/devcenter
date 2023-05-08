@@ -39,10 +39,19 @@ export const getContentItemFromSlug: (
 
     // videos and MongoDBTV shows always starts with /videos
     if (slug.startsWith('/videos')) {
-        content = await getVideoBySlug(slug);
-        if (!content) {
-            content = await getMongoDBTVShowBySlug(slug);
+        const mbdtvContent = await getMongoDBTVShowBySlug(slug);
+        // We currently only want to create pages for MongoDB TV shows that have not yet aired.
+        if (mbdtvContent && mbdtvContent.upcoming) {
             isShow = true;
+            content = mbdtvContent;
+        } else {
+            // If not an upcoming show, we want to resort to the corresponding CMS entry.
+            content = await getVideoBySlug(slug);
+            if (!content && mbdtvContent) {
+                // If there is no corresponding CMS entry, use the show even though it is a rerun.
+                isShow = true;
+                content = mbdtvContent;
+            }
         }
         contentType = 'Video';
     } else if (slug.startsWith('/podcasts')) {

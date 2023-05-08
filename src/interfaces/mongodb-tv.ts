@@ -6,4 +6,5 @@ export interface MongoDBTVShow {
     videoId: string;
     tags: string[];
     thumbnail: string;
+    upcoming: boolean;
 }

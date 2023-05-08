@@ -88,7 +88,7 @@ export const mapMongoDBTVShowsToContentItems = async (
             collectionType: 'Video',
             image: { url: show.thumbnail },
             category: 'Video',
-            subCategory: 'MongoDB TV',
+            videoType: 'MongoDB TV',
             contentDate: [show.since, show.till],
             description: descriptionWithLinks(show.description),
             slug: '/videos/' + slugify(show.title),
