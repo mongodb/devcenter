@@ -22,7 +22,9 @@ const formatResponses = (csVideos: CSVideo[]): Video[] => {
         title: v.title ? v.title : '',
         slug: v.slug ? v.slug : '',
         videoId: v.videoId ? v.videoId : '',
-        relevantLinks: v.relevantLinks ? v.relevantLinks : '',
+        // relevantLinks follow old format to return null value
+        // but cast as string to conform to the interface
+        relevantLinks: (v.relevantLinks ? v.relevantLinks : null) as string,
         l1Product: extractFieldsFromNode(v.l1Product as CSEdges<any>, [
             'name',
             'calculatedSlug',

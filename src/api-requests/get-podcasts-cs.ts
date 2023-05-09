@@ -40,7 +40,9 @@ const formatResponses = (csPodcasts: CSPodcast[]): Podcast[] => {
         otherTags: getOtherTags(p.otherTags) as OtherTags,
         seo: getSEO(p.seo),
         podcastFileUrl: p.podcastFileUrl ? p.podcastFileUrl : '',
-        thumbnailUrl: p.thumbnailUrl ? p.thumbnailUrl : '',
+        // thumbnailUrl follow old format to return null value
+        // but cast as string to conform to the interface
+        thumbnailUrl: (p.thumbnailUrl ? p.thumbnailUrl : null) as string,
         casted_slug: p.casted_slug ? p.casted_slug : '',
     }));
 };
