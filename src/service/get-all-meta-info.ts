@@ -1,13 +1,13 @@
-import { STRAPI_CLIENT } from '../config/api-client';
+import { CS_CLIENT } from '../config/api-client';
 import { MetaInfo, MetaInfoResponse } from '../interfaces/meta-info';
 import {
-    getAllContentTypesMetaInfo,
-    getAllExpertiseLevelsMetaInfo,
     getAllL1ProductsMetaInfo,
     getAllL2ProductsMetaInfo,
     getAllProgrammingLanguagesMetaInfo,
     getAllTechnologiesMetaInfo,
-} from '../api-requests/get-all-meta-info';
+    getAllExpertiseLevelsMetaInfo,
+    getAllContentTypesMetaInfo,
+} from '../api-requests/get-all-meta-info-cs';
 import { CTA } from '../components/hero/types';
 import { getDistinctTags } from './get-distinct-tags';
 import { TagType } from '../types/tag-type';
@@ -22,12 +22,12 @@ export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
             )
         );
     const l2MetaInfoResponse = getExisting(
-        await getAllL2ProductsMetaInfo(STRAPI_CLIENT),
+        await getAllL2ProductsMetaInfo(CS_CLIENT),
         'L2Product'
     );
 
     const l1ProductsMetaInfo = parseMetaInfoResponseForL1(
-        getExisting(await getAllL1ProductsMetaInfo(STRAPI_CLIENT), 'L1Product'),
+        getExisting(await getAllL1ProductsMetaInfo(CS_CLIENT), 'L1Product'),
         l2MetaInfoResponse
     );
 
@@ -35,27 +35,21 @@ export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
 
     const programmingLanguagesMetaInfo = parseMetaInfoResponse(
         getExisting(
-            await getAllProgrammingLanguagesMetaInfo(STRAPI_CLIENT),
+            await getAllProgrammingLanguagesMetaInfo(CS_CLIENT),
             'ProgrammingLanguage'
         )
     );
     const technologiesMetaInfo = parseMetaInfoResponse(
-        getExisting(
-            await getAllTechnologiesMetaInfo(STRAPI_CLIENT),
-            'Technology'
-        )
+        getExisting(await getAllTechnologiesMetaInfo(CS_CLIENT), 'Technology')
     );
     const expertiseLevelsMetaInfo = parseMetaInfoResponse(
         getExisting(
-            await getAllExpertiseLevelsMetaInfo(STRAPI_CLIENT),
+            await getAllExpertiseLevelsMetaInfo(CS_CLIENT),
             'ExpertiseLevel'
         )
     );
     const contentTypesMetaInfo = parseMetaInfoResponse(
-        getExisting(
-            await getAllContentTypesMetaInfo(STRAPI_CLIENT),
-            'ContentType'
-        )
+        getExisting(await getAllContentTypesMetaInfo(CS_CLIENT), 'ContentType')
     );
     return l1ProductsMetaInfo
         .concat(l2ProductsMetaInfo)

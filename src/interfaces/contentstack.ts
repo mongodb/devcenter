@@ -13,6 +13,16 @@ export interface CSImage {
     url: string;
 }
 
+export interface CSMetaInfoResponse {
+    name: string;
+    description?: string;
+    slug: string;
+    l1_product?: CSEdges<{ name?: string }>;
+    primary_cta?: string;
+    secondary_cta?: string;
+    documentation_link?: string;
+}
+
 export interface CSSEO {
     canonical_url?: string;
     meta_description?: string;

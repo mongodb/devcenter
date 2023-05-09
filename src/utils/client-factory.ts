@@ -15,7 +15,8 @@ import { RetryLink } from '@apollo/client/link/retry';
  */
 const clientFactory = <T extends ClientType>(
     clientType: T,
-    uri: string | undefined
+    uri: string | undefined,
+    headers?: Record<string, string>
 ): UnderlyingClient<T> => {
     const defaultOptions: DefaultOptions = {
         watchQuery: {
@@ -54,6 +55,7 @@ const clientFactory = <T extends ClientType>(
             return new ApolloClient({
                 cache: new InMemoryCache(),
                 uri,
+                headers,
             }) as UnderlyingClient<T>;
         default:
             throw Error('Invalid client type.');

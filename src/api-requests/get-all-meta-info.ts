@@ -138,5 +138,7 @@ export const getAllContentTypesMetaInfo = async (
     const { data }: ApolloQueryResult<{ contentTypes: MetaInfoResponse[] }> =
         await client.query({ query });
 
+    console.log(JSON.stringify(data, null, 2));
+
     return data.contentTypes;
 };
