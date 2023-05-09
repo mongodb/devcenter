@@ -1,56 +1,22 @@
 import { UnderlyingClient } from '../types/client-factory';
-import { PillCategory } from '../types/pill-category';
 import { Podcast } from '../interfaces/podcast';
 import { GenericTagTypeResponse } from '../interfaces/tag-type-response';
+import { CSEdges, CSPodcast } from '../interfaces/contentstack';
+import { OtherTags } from '../interfaces/other-tags';
+
 import {
     fetchAll,
     extractFieldsFromNode,
     extractFieldsFromNodes,
     getSEO,
+    getOtherTags,
 } from './utils';
-import { CSEdges, CSPodcast } from '../interfaces/contentstack';
-import { OtherTags } from '../interfaces/other-tags';
 import { allPodcastsQuery, podcastsBySlugQuery } from '../graphql/podcasts';
-
-const getOtherTags = (otherTagsData: any) => {
-    if (!otherTagsData) {
-        return null;
-    }
-
-    const otherTags = {
-        spokenLanguage: extractFieldsFromNode(otherTagsData.spokenLanguage, [
-            'name',
-            'calculatedSlug',
-        ]) as GenericTagTypeResponse,
-        expertiseLevel: extractFieldsFromNode(otherTagsData.expertiseLevel, [
-            'name',
-            'calculatedSlug',
-        ]) as GenericTagTypeResponse,
-        authorType: extractFieldsFromNode(otherTagsData.authorType, [
-            'name',
-            'calculatedSlug',
-        ]) as GenericTagTypeResponse,
-        contentType: {
-            contentType: 'Podcast' as PillCategory,
-            calculatedSlug: '',
-        },
-    };
-
-    if (
-        otherTags.spokenLanguage ||
-        otherTags.expertiseLevel ||
-        otherTags.authorType
-    ) {
-        return otherTags;
-    }
-
-    return null;
-};
 
 const formatResponses = (csPodcasts: CSPodcast[]): Podcast[] => {
     return csPodcasts.map(p => ({
         // explicitly defined instead of using spread operator
-        // because fields can be undefined and mess up JSON serialization
+        // to ensure default value for undefined
         description: p.description ? p.description : '',
         publishDate: p.publishDate ? p.publishDate : '',
         title: p.title ? p.title : '',

@@ -102,6 +102,8 @@ export const getVideoBySlugFromAPI = async (
         { query }
     );
 
+    console.log(JSON.stringify(data, null, 2));
+
     return data.videos.length > 0 ? data.videos[0] : null;
 };
 

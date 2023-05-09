@@ -2,6 +2,8 @@ import { UnderlyingClient } from '../types/client-factory';
 import { DocumentNode } from 'graphql';
 import { CSEdges, CSSEO } from '../interfaces/contentstack';
 import { SEO } from '../interfaces/seo';
+import { GenericTagTypeResponse } from '../interfaces/tag-type-response';
+import { OtherTags } from '../interfaces/other-tags';
 
 type gqlParents =
     | 'l1Products'
@@ -10,7 +12,8 @@ type gqlParents =
     | 'technologies'
     | 'expertiseLevels'
     | 'contentTypes'
-    | 'podcasts';
+    | 'podcasts'
+    | 'videos';
 
 export const fetchAll = async (
     client: UnderlyingClient<'ApolloGraphQL'>,
@@ -44,7 +47,7 @@ export const fetchAll = async (
 export const extractFieldsFromNode = (
     singleDataOfField: CSEdges<any>,
     fields: [string, string][] | string[]
-): null | { [key: string]: any } => {
+) => {
     if (!singleDataOfField) {
         return null;
     }
@@ -71,7 +74,7 @@ export const extractFieldsFromNode = (
         projectedData[field as string] = data[field as string];
     }
 
-    return projectedData;
+    return projectedData as GenericTagTypeResponse;
 };
 /**
  * Helper to access the desired fields through edges and node
@@ -81,7 +84,7 @@ export const extractFieldsFromNode = (
 export const extractFieldsFromNodes = (
     singleDataOfField: CSEdges<any>,
     fields: [string, string][] | string[]
-): { [key: string]: any }[] => {
+) => {
     if (!singleDataOfField) {
         return [];
     }
@@ -109,7 +112,7 @@ export const extractFieldsFromNodes = (
         projectedDataList.push(projectedData);
     }
 
-    return projectedDataList;
+    return projectedDataList as GenericTagTypeResponse[];
 };
 
 /**
@@ -143,4 +146,35 @@ export const getSEO = (seoData: CSSEO): SEO => {
     delete seo.__typename;
 
     return (!isEmptySEO(seo) ? seo : null) as SEO;
+};
+
+export const getOtherTags = (otherTagsData: any) => {
+    if (!otherTagsData) {
+        return null;
+    }
+
+    const otherTags = {
+        spokenLanguage: extractFieldsFromNode(otherTagsData.spokenLanguage, [
+            'name',
+            'calculatedSlug',
+        ]) as GenericTagTypeResponse,
+        expertiseLevel: extractFieldsFromNode(otherTagsData.expertiseLevel, [
+            'name',
+            'calculatedSlug',
+        ]) as GenericTagTypeResponse,
+        authorType: extractFieldsFromNode(otherTagsData.authorType, [
+            'name',
+            'calculatedSlug',
+        ]) as GenericTagTypeResponse,
+    };
+
+    if (
+        otherTags.spokenLanguage ||
+        otherTags.expertiseLevel ||
+        otherTags.authorType
+    ) {
+        return otherTags as OtherTags;
+    }
+
+    return null;
 };

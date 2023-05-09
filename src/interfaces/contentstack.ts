@@ -57,6 +57,7 @@ export interface CSMedia {
     publishDate: string;
     title: string;
     slug: string;
+    relevantLinks?: string;
     thumbnailUrl?: string;
     l1Product?: CSEdges<GenericTagTypeResponse>;
     l2Product?: CSEdges<GenericTagTypeResponse>;
@@ -69,4 +70,8 @@ export interface CSMedia {
 export interface CSPodcast extends CSMedia {
     podcastFileUrl: string;
     casted_slug: string;
+}
+
+export interface CSVideo extends CSMedia {
+    videoId: string;
 }
