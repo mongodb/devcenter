@@ -1,110 +1,82 @@
-import { ApolloQueryResult, gql } from '@apollo/client';
-
 import { UnderlyingClient } from '../types/client-factory';
 import { Video } from '../interfaces/video';
+import { OtherTags } from '../interfaces/other-tags';
+import { GenericTagTypeResponse } from '../interfaces/tag-type-response';
+import { CSEdges, CSVideo } from '../interfaces/contentstack';
 
-const videoFields = `
-    description
-    publishDate: originalPublishDate
-    title
-    slug
-    videoId
-    relevantLinks: relevant_links
-    thumbnailUrl
-    l1Product: l_1_product {
-        name
-        calculatedSlug: calculated_slug
-    }
-    l2Product: l_2_product {
-        name
-        calculatedSlug: calculated_slug
-    }
-    programmingLanguage: programming_language {
-        name
-        calculatedSlug: calculated_slug
-    }
-    technology: technology {
-        name
-        calculatedSlug: calculated_slug
-    }
-    otherTags: other_tags {
-        spokenLanguage: spoken_language {
-            name
-            calculatedSlug: calculated_slug
-        }
-        expertiseLevel: expertise_level {
-            name: level
-            calculatedSlug: calculated_slug
-        }
-        authorType: author_type {
-            name
-            calculatedSlug: calculated_slug
-        }
-    }
-    seo: SEO {
-        canonical_url
-        meta_description
-        og_description
-        og_image {
-            url
-        }
-        og_title
-        og_type
-        og_url
-        twitter_card
-        twitter_creator
-        twitter_description
-        twitter_image {
-            url
-        }
-        twitter_site
-        twitter_title
-    }
-`;
+import { allVideosQuery, videoBySlugQuery } from '../graphql/videos';
+import {
+    fetchAll,
+    extractFieldsFromNode,
+    extractFieldsFromNodes,
+    getOtherTags,
+    getSEO,
+} from './utils';
 
-/**
- * Returns a list of all videos.
- * @param client -  The Apollo REST client that will be used to make the request.
- */
-const getAllVideosFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
-): Promise<Video[]> => {
-    const query = gql`
-        query Videos {
-            videos @rest(type: "Video", path: "/new-videos?_limit=-1") {
-                ${videoFields}
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
-        { query }
-    );
-
-    return data.videos;
+const formatResponses = (csVideos: CSVideo[]): Video[] => {
+    return csVideos.map(v => ({
+        // explicitly defined instead of using spread operator
+        // to ensure default value for undefined
+        description: v.description ? v.description : '',
+        publishDate: v.publishDate ? v.publishDate : '',
+        title: v.title ? v.title : '',
+        slug: v.slug ? v.slug : '',
+        videoId: v.videoId ? v.videoId : '',
+        // relevantLinks follow old format to return null value
+        // but cast as string to conform to the interface
+        relevantLinks: (v.relevantLinks ? v.relevantLinks : null) as string,
+        l1Product: extractFieldsFromNode(v.l1Product as CSEdges<any>, [
+            'name',
+            'calculatedSlug',
+        ]) as GenericTagTypeResponse,
+        l2Product: extractFieldsFromNode(v.l2Product as CSEdges<any>, [
+            'name',
+            'calculatedSlug',
+        ]) as GenericTagTypeResponse,
+        programmingLanguage: extractFieldsFromNodes(
+            v.programmingLanguage as CSEdges<any>,
+            ['name', 'calculatedSlug']
+        ) as GenericTagTypeResponse[],
+        technology: extractFieldsFromNodes(v.technology as CSEdges<any>, [
+            'name',
+            'calculatedSlug',
+        ]) as GenericTagTypeResponse[],
+        otherTags: getOtherTags(v.otherTags) as OtherTags,
+        seo: getSEO(v.seo),
+    }));
 };
 
-/**
- * Returns a list of all videos.
- * @param client -  The Apollo REST client that will be used to make the request.
- */
+const getAllVideosFromAPI = async (
+    client: UnderlyingClient<'ApolloGraphQL'>
+): Promise<Video[]> => {
+    const podcasts = (await fetchAll(
+        client,
+        allVideosQuery,
+        'videos'
+    )) as CSVideo[];
+    const data = formatResponses(podcasts);
+
+    return data;
+};
+
 export const getVideoBySlugFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>,
+    client: UnderlyingClient<'ApolloGraphQL'>,
     slug: string
 ): Promise<Video | null> => {
-    const query = gql`
-        query Videos {
-            videos @rest(type: "Video", path: "/new-videos?slug_eq=${slug}") {
-                ${videoFields}
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
-        { query }
-    );
+    const variables = { slug };
+    const videos = (await fetchAll(
+        client,
+        videoBySlugQuery,
+        'videos',
+        variables
+    )) as CSVideo[];
 
-    console.log(JSON.stringify(data, null, 2));
+    if (!videos) {
+        return null;
+    }
 
-    return data.videos.length > 0 ? data.videos[0] : null;
+    const data = formatResponses(videos)[0];
+    return data;
 };
 
 export default getAllVideosFromAPI;

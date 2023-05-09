@@ -1,11 +1,8 @@
 import { CS_CLIENT } from '../config/api-client';
 import { Podcast } from '../interfaces/podcast';
-// import // getAllPodcastsFromAPI,
-// // getPodcastBySlugFromAPI,
-// '../api-requests/get-podcasts';
 import getAllPodcastsFromAPI, {
     getPodcastBySlugFromAPI,
-} from '../api-requests/get-podcasts-cs'; // getPodcastBySlugFromAPI,
+} from '../api-requests/get-podcasts';
 
 import { ContentTypeTag } from '../interfaces/tag-type-response';
 

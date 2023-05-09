@@ -7,7 +7,7 @@ import {
     getAllTechnologiesMetaInfo,
     getAllExpertiseLevelsMetaInfo,
     getAllContentTypesMetaInfo,
-} from '../api-requests/get-all-meta-info-cs';
+} from '../api-requests/get-all-meta-info';
 import { CTA } from '../components/hero/types';
 import { getDistinctTags } from './get-distinct-tags';
 import { TagType } from '../types/tag-type';

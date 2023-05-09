@@ -2,7 +2,7 @@ import { CS_CLIENT } from '../config/api-client';
 import { Video } from '../interfaces/video';
 import getAllVideosFromAPI, {
     getVideoBySlugFromAPI,
-} from '../api-requests/get-videos-cs';
+} from '../api-requests/get-videos';
 
 import { ContentTypeTag } from '../interfaces/tag-type-response';
 

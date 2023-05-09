@@ -1,142 +1,111 @@
 import { UnderlyingClient } from '../types/client-factory';
-import { ApolloQueryResult, gql } from '@apollo/client';
 import { MetaInfoResponse } from '../interfaces/meta-info';
+import { CSEdges, CSMetaInfoResponse } from '../interfaces/contentstack';
+import { extractFieldsFromNode, fetchAll } from './utils';
+import { TagType } from '../types/tag-type';
+import {
+    allL1ProductsQuery,
+    allL2ProductsQuery,
+    allProgrammingLanguagesQuery,
+    allTechnologiesQuery,
+    allExpertiseLevelsQuery,
+    allContentTypesQuery,
+} from '../graphql/meta-info';
+
+const formatResponses = (
+    csMetaResponses: CSMetaInfoResponse[],
+    metaInfoType: TagType
+): MetaInfoResponse[] => {
+    return csMetaResponses.map(r => {
+        const metaResponse: any = { ...r, __typename: metaInfoType };
+
+        if ('l1_product' in metaResponse) {
+            metaResponse.l1_product = {
+                l_1_product: extractFieldsFromNode(
+                    r.l1_product as CSEdges<any>,
+                    ['name']
+                ),
+            };
+        }
+
+        return metaResponse;
+    });
+};
 
 export const getAllL1ProductsMetaInfo = async (
-    client: UnderlyingClient<'ApolloREST'>
+    client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query L1Products {
-            l1Products @rest(type: "L1Product", path: "/l-1-products") {
-                name
-                description
-                slug: calculated_slug
-                primary_cta
-                secondary_cta
-                documentation_link
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ l1Products: MetaInfoResponse[] }> =
-        await client.query({ query });
+    const l1Products = (await fetchAll(
+        client,
+        allL1ProductsQuery,
+        'l1Products'
+    )) as CSMetaInfoResponse[];
 
-    return data.l1Products;
+    const data = formatResponses(l1Products, 'L1Product');
+    return data;
 };
 
 export const getAllL2ProductsMetaInfo = async (
-    client: UnderlyingClient<'ApolloREST'>
+    client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query L2Products {
-            l2Products @rest(type: "L2Product", path: "/l-2-products") {
-                name
-                description
-                slug: calculated_slug
-                primary_cta
-                secondary_cta
-                documentation_link
-                l1_product {
-                    l_1_product {
-                        name
-                    }
-                }
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ l2Products: MetaInfoResponse[] }> =
-        await client.query({ query });
+    const l2Products = (await fetchAll(
+        client,
+        allL2ProductsQuery,
+        'l2Products'
+    )) as CSMetaInfoResponse[];
 
-    return data.l2Products;
+    const data = formatResponses(l2Products, 'L2Product');
+    return data;
 };
 
 export const getAllProgrammingLanguagesMetaInfo = async (
-    client: UnderlyingClient<'ApolloREST'>
+    client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query ProgrammingLanguages {
-            programmingLanguages
-                @rest(
-                    type: "ProgrammingLanguage"
-                    path: "/programming-languages"
-                ) {
-                name
-                description
-                slug: calculated_slug
-                primary_cta
-                secondary_cta
-                documentation_link
-            }
-        }
-    `;
-    const {
-        data,
-    }: ApolloQueryResult<{ programmingLanguages: MetaInfoResponse[] }> =
-        await client.query({ query });
+    const programmingLanguages = (await fetchAll(
+        client,
+        allProgrammingLanguagesQuery,
+        'programmingLanguages'
+    )) as CSMetaInfoResponse[];
 
-    return data.programmingLanguages;
+    const data = formatResponses(programmingLanguages, 'ProgrammingLanguage');
+    return data;
 };
 
-/*
-
-    | 'ContentType';
- */
 export const getAllTechnologiesMetaInfo = async (
-    client: UnderlyingClient<'ApolloREST'>
+    client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query Technologies {
-            technologies @rest(type: "Technology", path: "/technologies") {
-                name
-                description
-                slug: calculated_slug
-                primary_cta
-                secondary_cta
-                documentation_link
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ technologies: MetaInfoResponse[] }> =
-        await client.query({ query });
+    const technologies = (await fetchAll(
+        client,
+        allTechnologiesQuery,
+        'technologies'
+    )) as CSMetaInfoResponse[];
 
-    return data.technologies;
+    const data = formatResponses(technologies, 'Technology');
+    return data;
 };
 
 export const getAllExpertiseLevelsMetaInfo = async (
-    client: UnderlyingClient<'ApolloREST'>
+    client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query ExpertiseLevels {
-            expertiseLevels @rest(type: "ExpertiseLevel", path: "/levels") {
-                name: level
-                description
-                slug: calculated_slug
-                primary_cta
-                secondary_cta
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ expertiseLevels: MetaInfoResponse[] }> =
-        await client.query({ query });
+    const expertiseLevels = (await fetchAll(
+        client,
+        allExpertiseLevelsQuery,
+        'expertiseLevels'
+    )) as CSMetaInfoResponse[];
 
-    return data.expertiseLevels;
+    const data = formatResponses(expertiseLevels, 'ExpertiseLevel');
+    return data;
 };
 
 export const getAllContentTypesMetaInfo = async (
-    client: UnderlyingClient<'ApolloREST'>
+    client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query ContentTypes {
-            contentTypes @rest(type: "ContentType", path: "/content-types") {
-                name: content_type
-                description
-                slug: calculated_slug
-                primary_cta
-                secondary_cta
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ contentTypes: MetaInfoResponse[] }> =
-        await client.query({ query });
+    const contentTypes = (await fetchAll(
+        client,
+        allContentTypesQuery,
+        'contentTypes'
+    )) as CSMetaInfoResponse[];
 
-    return data.contentTypes;
+    const data = formatResponses(contentTypes, 'ContentType');
+    return data;
 };
