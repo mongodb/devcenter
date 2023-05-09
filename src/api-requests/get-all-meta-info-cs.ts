@@ -1,9 +1,16 @@
 import { UnderlyingClient } from '../types/client-factory';
-import { gql } from '@apollo/client';
 import { MetaInfoResponse } from '../interfaces/meta-info';
 import { CSEdges, CSMetaInfoResponse } from '../interfaces/contentstack';
 import { extractFieldsFromNode, fetchAll } from './utils';
 import { TagType } from '../types/tag-type';
+import {
+    allL1ProductsQuery,
+    allL2ProductsQuery,
+    allProgrammingLanguagesQuery,
+    allTechnologiesQuery,
+    allExpertiseLevelsQuery,
+    allContentTypesQuery,
+} from '../graphql/meta-info';
 
 const formatResponses = (
     csMetaResponses: CSMetaInfoResponse[],
@@ -28,25 +35,9 @@ const formatResponses = (
 export const getAllL1ProductsMetaInfo = async (
     client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query L1Products($skip: Int = 0) {
-            l1Products: all_l1_products(skip: $skip) {
-                total
-                items {
-                    name: title
-                    description
-                    slug: calculated_slug
-                    secondary_cta
-                    primary_cta
-                    documentation_link
-                }
-            }
-        }
-    `;
-
     const l1Products = (await fetchAll(
         client,
-        query,
+        allL1ProductsQuery,
         'l1Products'
     )) as CSMetaInfoResponse[];
 
@@ -57,34 +48,9 @@ export const getAllL1ProductsMetaInfo = async (
 export const getAllL2ProductsMetaInfo = async (
     client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query L2_products($skip: Int = 0) {
-            l2Products: all_l2_products(skip: $skip) {
-                total
-                items {
-                    name: title
-                    description
-                    slug: calculated_slug
-                    primary_cta
-                    secondary_cta
-                    documentation_link
-                    l1_product: l1_productConnection {
-                        edges {
-                            node {
-                                ... on L1Products {
-                                    name: title
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    `;
-
     const l2Products = (await fetchAll(
         client,
-        query,
+        allL2ProductsQuery,
         'l2Products'
     )) as CSMetaInfoResponse[];
 
@@ -95,25 +61,9 @@ export const getAllL2ProductsMetaInfo = async (
 export const getAllProgrammingLanguagesMetaInfo = async (
     client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query ProgrammingLanguages($skip: Int = 0) {
-            programmingLanguages: all_programming_languages(skip: $skip) {
-                total
-                items {
-                    name: title
-                    description
-                    slug: calculated_slug
-                    secondary_cta
-                    primary_cta
-                    documentation_link
-                }
-            }
-        }
-    `;
-
     const programmingLanguages = (await fetchAll(
         client,
-        query,
+        allProgrammingLanguagesQuery,
         'programmingLanguages'
     )) as CSMetaInfoResponse[];
 
@@ -121,32 +71,12 @@ export const getAllProgrammingLanguagesMetaInfo = async (
     return data;
 };
 
-/*
-
-    | 'ContentType';
- */
 export const getAllTechnologiesMetaInfo = async (
     client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query Technologies($skip: Int = 0) {
-            technologies: all_technologies(skip: $skip) {
-                total
-                items {
-                    name: title
-                    description
-                    slug: calculated_slug
-                    secondary_cta
-                    primary_cta
-                    documentation_link
-                }
-            }
-        }
-    `;
-
     const technologies = (await fetchAll(
         client,
-        query,
+        allTechnologiesQuery,
         'technologies'
     )) as CSMetaInfoResponse[];
 
@@ -157,25 +87,9 @@ export const getAllTechnologiesMetaInfo = async (
 export const getAllExpertiseLevelsMetaInfo = async (
     client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query ExpertiseLevels($skip: Int = 0) {
-            expertiseLevels: all_levels(skip: $skip) {
-                total
-                items {
-                    name: title
-                    description
-                    slug: calculated_slug
-                    secondary_cta
-                    primary_cta
-                    documentation_link
-                }
-            }
-        }
-    `;
-
     const expertiseLevels = (await fetchAll(
         client,
-        query,
+        allExpertiseLevelsQuery,
         'expertiseLevels'
     )) as CSMetaInfoResponse[];
 
@@ -186,25 +100,9 @@ export const getAllExpertiseLevelsMetaInfo = async (
 export const getAllContentTypesMetaInfo = async (
     client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<MetaInfoResponse[]> => {
-    const query = gql`
-        query ContentTypes($skip: Int = 0) {
-            contentTypes: all_content_types(skip: $skip) {
-                total
-                items {
-                    name: title
-                    description
-                    slug: calculated_slug
-                    secondary_cta
-                    primary_cta
-                    documentation_link
-                }
-            }
-        }
-    `;
-
     const contentTypes = (await fetchAll(
         client,
-        query,
+        allContentTypesQuery,
         'contentTypes'
     )) as CSMetaInfoResponse[];
 
