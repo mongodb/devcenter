@@ -1,5 +1,3 @@
-import { gql } from '@apollo/client';
-
 import { UnderlyingClient } from '../types/client-factory';
 import { PillCategory } from '../types/pill-category';
 import { Podcast } from '../interfaces/podcast';
@@ -12,228 +10,7 @@ import {
 } from './utils';
 import { CSEdges, CSPodcast } from '../interfaces/contentstack';
 import { OtherTags } from '../interfaces/other-tags';
-
-const cs_query_all = gql`
-    query Podcasts($skip: Int = 0) {
-        podcasts: all_podcasts(skip: $skip) {
-            total
-            items {
-                description
-                publishDate: original_publish_date
-                title
-                slug
-                podcastFileUrl: podcast_file_url
-                thumbnailUrl: thumbnail_url
-                casted_slug
-                l1Product: l1_productConnection {
-                    edges {
-                        node {
-                            ... on L1Products {
-                                name: title
-                                calculatedSlug: calculated_slug
-                            }
-                        }
-                    }
-                }
-                l2Product: l2_productConnection {
-                    edges {
-                        node {
-                            ... on L2Products {
-                                name: title
-                                calculatedSlug: calculated_slug
-                            }
-                        }
-                    }
-                }
-                programmingLanguage: programming_languagesConnection {
-                    edges {
-                        node {
-                            ... on ProgrammingLanguages {
-                                name: title
-                                calculatedSlug: calculated_slug
-                            }
-                        }
-                    }
-                }
-                technology: technologiesConnection {
-                    edges {
-                        node {
-                            ... on Technologies {
-                                name: title
-                                calculatedSlug: calculated_slug
-                            }
-                        }
-                    }
-                }
-                otherTags: other_tags {
-                    spokenLanguage: spoken_languageConnection {
-                        edges {
-                            node {
-                                ... on SpokenLanguages {
-                                    name: title
-                                    calculatedSlug: calculated_slug
-                                }
-                            }
-                        }
-                    }
-                    expertiseLevel: expertise_levelConnection {
-                        edges {
-                            node {
-                                ... on Levels {
-                                    name: title
-                                    calculatedSlug: calculated_slug
-                                }
-                            }
-                        }
-                    }
-                    authorType: author_typeConnection {
-                        edges {
-                            node {
-                                ... on AuthorTypes {
-                                    name: title
-                                    calculatedSlug: calculated_slug
-                                }
-                            }
-                        }
-                    }
-                }
-                seo {
-                    canonical_url
-                    meta_description
-                    og_description
-                    og_image: og_imageConnection {
-                        edges {
-                            node {
-                                url
-                            }
-                        }
-                    }
-                    twitter_card
-                    twitter_creator
-                    twitter_description
-                    twitter_image: twitter_imageConnection {
-                        edges {
-                            node {
-                                url
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-`;
-
-const cs_query_by_slug = gql`
-    query Podcasts($slug: String!) {
-        podcasts: all_podcasts(where: { slug: $slug }) {
-            total
-            items {
-                description
-                publishDate: original_publish_date
-                title
-                slug
-                podcastFileUrl: podcast_file_url
-                thumbnailUrl: thumbnail_url
-                casted_slug
-                l1Product: l1_productConnection {
-                    edges {
-                        node {
-                            ... on L1Products {
-                                name: title
-                                calculatedSlug: calculated_slug
-                            }
-                        }
-                    }
-                }
-                l2Product: l2_productConnection {
-                    edges {
-                        node {
-                            ... on L2Products {
-                                name: title
-                                calculatedSlug: calculated_slug
-                            }
-                        }
-                    }
-                }
-                programmingLanguage: programming_languagesConnection {
-                    edges {
-                        node {
-                            ... on ProgrammingLanguages {
-                                name: title
-                                calculatedSlug: calculated_slug
-                            }
-                        }
-                    }
-                }
-                technology: technologiesConnection {
-                    edges {
-                        node {
-                            ... on Technologies {
-                                title
-                                calculated_slug
-                            }
-                        }
-                    }
-                }
-                otherTags: other_tags {
-                    spokenLanguage: spoken_languageConnection {
-                        edges {
-                            node {
-                                ... on SpokenLanguages {
-                                    name: title
-                                    calculatedSlug: calculated_slug
-                                }
-                            }
-                        }
-                    }
-                    expertiseLevel: expertise_levelConnection {
-                        edges {
-                            node {
-                                ... on Levels {
-                                    name: title
-                                    calculatedSlug: calculated_slug
-                                }
-                            }
-                        }
-                    }
-                    authorType: author_typeConnection {
-                        edges {
-                            node {
-                                ... on AuthorTypes {
-                                    name: title
-                                    calculatedSlug: calculated_slug
-                                }
-                            }
-                        }
-                    }
-                }
-                seo {
-                    canonical_url
-                    meta_description
-                    og_description
-                    og_image: og_imageConnection {
-                        edges {
-                            node {
-                                url
-                            }
-                        }
-                    }
-                    twitter_card
-                    twitter_creator
-                    twitter_description
-                    twitter_image: twitter_imageConnection {
-                        edges {
-                            node {
-                                url
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-`;
+import { allPodcastsQuery, podcastsBySlugQuery } from '../graphql/podcasts';
 
 const getOtherTags = (otherTagsData: any) => {
     if (!otherTagsData) {
@@ -309,8 +86,11 @@ const formatResponses = (csPodcasts: CSPodcast[]): Podcast[] => {
 const getAllPodcastsFromAPI = async (
     client: UnderlyingClient<'ApolloGraphQL'>
 ): Promise<Podcast[]> => {
-    const query = cs_query_all;
-    const podcasts = (await fetchAll(client, query, 'podcasts')) as CSPodcast[];
+    const podcasts = (await fetchAll(
+        client,
+        allPodcastsQuery,
+        'podcasts'
+    )) as CSPodcast[];
     const data = formatResponses(podcasts);
 
     return data;
@@ -320,11 +100,10 @@ export const getPodcastBySlugFromAPI = async (
     client: UnderlyingClient<'ApolloGraphQL'>,
     slug: string
 ): Promise<Podcast | null> => {
-    const query = cs_query_by_slug;
     const variables = { slug };
     const podcasts = (await fetchAll(
         client,
-        query,
+        podcastsBySlugQuery,
         'podcasts',
         variables
     )) as CSPodcast[];
