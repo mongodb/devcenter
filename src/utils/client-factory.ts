@@ -3,6 +3,7 @@ import {
     ApolloLink,
     InMemoryCache,
     DefaultOptions,
+    HttpLink,
 } from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
 import { ClientType, UnderlyingClient } from '../types/client-factory';
@@ -56,6 +57,11 @@ const clientFactory = <T extends ClientType>(
                 cache: new InMemoryCache(),
                 uri,
                 headers,
+                link: new HttpLink({
+                    uri,
+                    headers,
+                    fetchOptions: { method: 'GET' },
+                }),
             }) as UnderlyingClient<T>;
         default:
             throw Error('Invalid client type.');
