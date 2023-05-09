@@ -51,6 +51,7 @@ const ContentTypeBody: React.FunctionComponent<
     setMobileFiltersOpen,
     contentType,
     children,
+    slug,
 }) => {
     const showFeatured = !searchString && !filters.length;
     const pluralContentType =
@@ -89,6 +90,8 @@ const ContentTypeBody: React.FunctionComponent<
                     <MobileFilters
                         {...filterProps}
                         {...sortProps} // Mobile filters include sorting
+                        contentType={contentType}
+                        slug={slug}
                         filterItems={filterItems}
                         closeModal={() => setMobileFiltersOpen(false)}
                     />
