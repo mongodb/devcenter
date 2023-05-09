@@ -80,6 +80,7 @@ const getAllPodcastsFromAPI = async (
     const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
         await client.query({ query });
 
+    console.log(JSON.stringify(data, null, 2));
     return data.podcasts;
 };
 

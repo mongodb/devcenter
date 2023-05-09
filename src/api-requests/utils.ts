@@ -1,6 +1,7 @@
 import { UnderlyingClient } from '../types/client-factory';
 import { DocumentNode } from 'graphql';
-import { CSEdges } from '../interfaces/contentstack';
+import { CSEdges, CSSEO } from '../interfaces/contentstack';
+import { SEO } from '../interfaces/seo';
 
 type gqlParents =
     | 'l1Products'
@@ -8,7 +9,8 @@ type gqlParents =
     | 'programmingLanguages'
     | 'technologies'
     | 'expertiseLevels'
-    | 'contentTypes';
+    | 'contentTypes'
+    | 'podcasts';
 
 export const fetchAll = async (
     client: UnderlyingClient<'ApolloGraphQL'>,
@@ -75,7 +77,7 @@ export const extractFieldsFromNode = (
  * or field[] if both sourceField and projectField are the same
  */
 export const extractFieldsFromNodes = (
-    singleDataOfField: { [key: string]: any | null },
+    singleDataOfField: CSEdges<any>,
     fields: [string, string][] | string[]
 ): { [key: string]: any }[] => {
     if (!singleDataOfField) {
@@ -106,4 +108,37 @@ export const extractFieldsFromNodes = (
     }
 
     return projectedDataList;
+};
+
+/**
+ * This function will treat fields with [] and {} as non-empty, but SEO
+ * after formatting only has "" and null values and thus work
+ */
+const isEmptySEO = (seo: { [key: string]: any }) => {
+    for (const value of Object.values(seo)) {
+        if (value) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+export const getSEO = (seoData: CSSEO): SEO => {
+    let seo: { [key: string]: any } = {};
+
+    seo = {
+        ...seoData,
+        og_image: extractFieldsFromNode(seoData.og_image as CSEdges<any>, [
+            'url',
+        ]),
+        twitter_image: extractFieldsFromNode(
+            seoData.twitter_image as CSEdges<any>,
+            ['url']
+        ),
+    };
+
+    delete seo.__typename;
+
+    return (!isEmptySEO(seo) ? seo : null) as SEO;
 };

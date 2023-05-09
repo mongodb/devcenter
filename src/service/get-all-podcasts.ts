@@ -1,8 +1,11 @@
-import { STRAPI_CLIENT } from '../config/api-client';
+import { CS_CLIENT, STRAPI_CLIENT } from '../config/api-client';
 import { Podcast } from '../interfaces/podcast';
-import getAllPodcastsFromAPI, {
+import {
+    // getAllPodcastsFromAPI,
     getPodcastBySlugFromAPI,
 } from '../api-requests/get-podcasts';
+import getAllPodcastsFromAPI from '../api-requests/get-podcasts-cs'; // getPodcastBySlugFromAPI,
+
 import { ContentTypeTag } from '../interfaces/tag-type-response';
 
 const setPodcastTags = (podcasts: Podcast[]) => {
@@ -36,7 +39,7 @@ const setPodcastTags = (podcasts: Podcast[]) => {
 };
 
 export const getAllPodcasts = async (): Promise<Podcast[]> => {
-    const podcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
+    const podcasts = await getAllPodcastsFromAPI(CS_CLIENT);
     return setPodcastTags(podcasts);
 };
 

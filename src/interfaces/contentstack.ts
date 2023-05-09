@@ -57,7 +57,6 @@ export interface CSMedia {
     publishDate: string;
     title: string;
     slug: string;
-    relevantLinks?: string;
     thumbnailUrl?: string;
     l1Product?: CSEdges<GenericTagTypeResponse>;
     l2Product?: CSEdges<GenericTagTypeResponse>;
