@@ -194,7 +194,7 @@ const useSearch = (
 
     const filterFunctions = [filterData, filterDataByLocation];
 
-    if ((contentType === 'Video' && sortBy === 'Upcoming') || !sortBy) {
+    if (tagSlug === '/videos' && (sortBy === 'Upcoming' || !sortBy)) {
         filterFunctions.unshift(filterAired);
     } else {
         filterFunctions.unshift(filterMongoDBTV);

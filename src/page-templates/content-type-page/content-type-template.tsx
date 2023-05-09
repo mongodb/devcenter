@@ -92,6 +92,7 @@ const ContentTypePage: React.FunctionComponent<
                         <Button
                             size="large"
                             href="https://youtube.com/@mongodb?sub_confirmation=1"
+                            target="_blank"
                         >
                             Subscribe
                         </Button>
