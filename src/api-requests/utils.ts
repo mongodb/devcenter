@@ -15,16 +15,18 @@ type gqlParents =
 export const fetchAll = async (
     client: UnderlyingClient<'ApolloGraphQL'>,
     query: DocumentNode,
-    gqlParentName: gqlParents
+    gqlParentName: gqlParents,
+    vars?: { [key: string]: any }
 ) => {
     // expect all incoming cs_query already has total
-    const response: any = await client.query({ query });
+    const response: any = await client.query({ query, variables: vars });
+
     const { total } = response.data[gqlParentName];
 
     let allItems: { [key: string]: any }[] = [];
 
     while (allItems.length < total) {
-        const variables = { skip: allItems.length };
+        const variables = { ...vars, skip: allItems.length };
         const res: any = await client.query({ query, variables });
         const { items } = res.data[gqlParentName];
 

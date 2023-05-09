@@ -1,10 +1,11 @@
-import { CS_CLIENT, STRAPI_CLIENT } from '../config/api-client';
+import { CS_CLIENT } from '../config/api-client';
 import { Podcast } from '../interfaces/podcast';
-import {
-    // getAllPodcastsFromAPI,
+// import // getAllPodcastsFromAPI,
+// // getPodcastBySlugFromAPI,
+// '../api-requests/get-podcasts';
+import getAllPodcastsFromAPI, {
     getPodcastBySlugFromAPI,
-} from '../api-requests/get-podcasts';
-import getAllPodcastsFromAPI from '../api-requests/get-podcasts-cs'; // getPodcastBySlugFromAPI,
+} from '../api-requests/get-podcasts-cs'; // getPodcastBySlugFromAPI,
 
 import { ContentTypeTag } from '../interfaces/tag-type-response';
 
@@ -46,7 +47,7 @@ export const getAllPodcasts = async (): Promise<Podcast[]> => {
 export const getPodcastBySlug = async (
     slug: string
 ): Promise<Podcast | null> => {
-    const podcast = await getPodcastBySlugFromAPI(STRAPI_CLIENT, slug);
+    const podcast = await getPodcastBySlugFromAPI(CS_CLIENT, slug);
     if (!podcast) return null;
     const modifiedPodcasts = setPodcastTags([podcast]);
     return modifiedPodcasts.length > 0 ? modifiedPodcasts[0] : null;

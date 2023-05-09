@@ -1,4 +1,4 @@
-import { ApolloQueryResult, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 import { UnderlyingClient } from '../types/client-factory';
 import { PillCategory } from '../types/pill-category';
@@ -127,6 +127,7 @@ const cs_query_all = gql`
 const cs_query_by_slug = gql`
     query Podcasts($slug: String!) {
         podcasts: all_podcasts(where: { slug: $slug }) {
+            total
             items {
                 description
                 publishDate: original_publish_date
@@ -310,26 +311,30 @@ const getAllPodcastsFromAPI = async (
 ): Promise<Podcast[]> => {
     const query = cs_query_all;
     const podcasts = (await fetchAll(client, query, 'podcasts')) as CSPodcast[];
-    console.log(JSON.stringify(podcasts, null, 2));
     const data = formatResponses(podcasts);
-    console.log(JSON.stringify(data, null, 2));
 
     return data;
 };
 
 export const getPodcastBySlugFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>,
+    client: UnderlyingClient<'ApolloGraphQL'>,
     slug: string
 ): Promise<Podcast | null> => {
     const query = cs_query_by_slug;
     const variables = { slug };
-    const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
-        await client.query({
-            query,
-            variables,
-        });
+    const podcasts = (await fetchAll(
+        client,
+        query,
+        'podcasts',
+        variables
+    )) as CSPodcast[];
 
-    return data.podcasts.length > 0 ? data.podcasts[0] : null;
+    if (!podcasts) {
+        return null;
+    }
+
+    const data = formatResponses(podcasts)[0];
+    return data;
 };
 
 export default getAllPodcastsFromAPI;
