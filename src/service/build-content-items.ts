@@ -1,16 +1,20 @@
-import { Podcast } from '../interfaces/podcast';
 import { Video } from '../interfaces/video';
-import { Article } from '../interfaces/article';
+import { Podcast } from '../interfaces/podcast';
+import {
+    CS_ArticleResponse,
+    Article,
+    ImageConnection,
+} from '../interfaces/article';
 import { ContentItem } from '../interfaces/content-item';
 import { Series } from '../interfaces/series';
-import { flattenTags } from '../utils/flatten-tags';
+import { flattenTags, CS_flattenTags } from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
-import { CommunityEvent, IndustryEvent } from '../interfaces/event';
+import { mapAuthor } from './get-all-authors';
+import { CommunityEvent, CS_IndustryEventsResponse } from '../interfaces/event';
 import { Tag } from '../interfaces/tag';
-import { IndustryEventRelatedContentFromCMS } from '../interfaces/event';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -118,64 +122,56 @@ const eventContentTypeTag = {
     type: 'ContentType',
 } as Tag;
 
-const mapEventsRelatedContent = (
-    relatedContent: IndustryEventRelatedContentFromCMS
-) => {
-    const categoryMapper = {
-        newVideos: 'Video',
-        podcasts: 'Podcast',
-        newArticles: 'Article',
-        industryEvents: 'Industry Event',
-    } as { [field: string]: PillCategory };
-
-    const content = [];
-
-    for (const item in relatedContent) {
-        content.push(
-            ...relatedContent[item].map(piece => ({
-                title: piece.title,
-                contentDate: piece?.originalPublishDate ||
-                    piece?.published_at || [piece?.start_time, piece?.end_time],
-                slug: piece?.calculated_slug || piece?.slug,
-                category: categoryMapper[item],
-            }))
-        );
+const mapImage = (image: ImageConnection, event: CS_IndustryEventsResponse) => {
+    const img = image.edges.length > 0 ? image.edges[0] : null;
+    if (img) {
+        return {
+            url: img.node.url,
+            alt: img.node.description
+                ? img.node.description
+                : 'MongoDB Event Image',
+            city: event.address.city || null,
+        };
+    } else {
+        return {
+            url: '',
+            alt: 'MongoDB Event Image',
+            city: event.address.city || null,
+        };
     }
-
-    return content;
 };
 
-export const mapIndustryEventToContentItem = (event: IndustryEvent) =>
+export const CS_mapIndustryEventToContentItem = (
+    event: CS_IndustryEventsResponse
+) =>
     ({
         collectionType: 'Event',
         category: 'Event',
         subCategory: 'Industry Event',
-        image: {
-            url: event?.image?.url || '',
-            alt: event?.image?.alt || 'MongoDB Event Image',
-            city: event.city || null,
-        },
+        image: mapImage(event.imageConnection, event),
         contentDate: [event.start_time, event.end_time],
         description: event.description,
         slug: event.calculated_slug,
-        tags: flattenTags(event.otherTags).concat(eventContentTypeTag),
+        tags: CS_flattenTags(event.other_tags).concat(eventContentTypeTag),
         title: event.title,
-        location: event.location,
-        city: event.city || null,
-        state: event.state || null,
-        country: event.country || null,
+        location: event.address.location,
+        city: event.address.city || null,
+        state: event.address.state || null,
+        country: event.address.country || null,
         eventSetup: event.type,
-        authors: event.authors,
+        authors: event.authorsConnection.edges.map(({ node }) =>
+            mapAuthor(node)
+        ),
         content: event.content,
         registrationLink: event.registration_url,
         virtualLink: event.virtual_meetup_url,
         virtualLinkText: event.virtual_meetup_url_text,
-        relatedContent: mapEventsRelatedContent(event.related_content),
+        relatedContent: [],
     } as ContentItem);
 
 export const mapEventsToContentItems = (
     allCommunityEvents: CommunityEvent[],
-    allIndustryEvents: IndustryEvent[]
+    allIndustryEvents: CS_IndustryEventsResponse[]
 ) => {
     const mappedCommunityEvents = allCommunityEvents.map(
         (event: CommunityEvent) => ({
@@ -194,8 +190,62 @@ export const mapEventsToContentItems = (
     ) as ContentItem[];
 
     const mappedIndustryEvents = allIndustryEvents.map(
-        mapIndustryEventToContentItem
+        CS_mapIndustryEventToContentItem
     );
 
     return [...mappedCommunityEvents, ...mappedIndustryEvents];
+};
+
+export const CS_mapArticlesToContentItems = (
+    allArticles: CS_ArticleResponse[],
+    articleSeries: Series[]
+) => {
+    const items: ContentItem[] = [];
+    /*
+    very important - filter out articles that have no calculated slug
+     */
+    const filteredArticles = allArticles.filter(a => a.calculated_slug);
+    filteredArticles.forEach((a: CS_ArticleResponse) => {
+        const updated_at =
+            !a.strapi_updated_at ||
+            new Date(a.system.updated_at) > new Date('2023-04-19') // This should be set to the date we migrate from Strapi to ContentStack
+                ? a.system.updated_at
+                : a.strapi_updated_at;
+        const authors = a.authorsConnection.edges.map(({ node }) =>
+            mapAuthor(node)
+        );
+        const item: ContentItem = {
+            collectionType: 'Article',
+            authors,
+            category: a.other_tags.content_typeConnection.edges[0].node.title,
+            contentDate: a.original_publish_date, // || a.published_at,
+            updateDate: updated_at,
+            description: a.description,
+            content: a.content,
+            slug: a.calculated_slug.startsWith('/')
+                ? a.calculated_slug.substring(1)
+                : a.calculated_slug,
+            tags: CS_flattenTags(a.other_tags),
+            title: a.title,
+            codeType: a.other_tags.code_type,
+            githubUrl: a.other_tags.github_url,
+            liveSiteUrl: a.other_tags.livesite_url,
+            seo: a.seo,
+        };
+        const image = a.imageConnection.edges[0];
+        if (image) {
+            item.image = {
+                url: image.node.url,
+                alt: image.node.description || '',
+            };
+        }
+        addSeriesToItem(item, 'article', articleSeries);
+        items.push(item);
+    });
+    return items.filter(
+        item =>
+            PillCategoryValues.includes(
+                item.category.replace('*', '') as PillCategory
+            ) // The replace is necessart for mocking.
+    );
 };

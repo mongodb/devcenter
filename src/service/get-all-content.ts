@@ -1,6 +1,5 @@
-import { getAllArticlesFromAPI } from '../api-requests/get-articles';
+import { CS_getAllArticlesFromCMS } from '../api-requests/get-articles';
 import { ContentItem } from '../interfaces/content-item';
-import { STRAPI_CLIENT } from '../config/api-client';
 import { getAllArticleSeries } from './get-all-article-series';
 import { getAllVideoSeries } from './get-all-video-series';
 import { getAllPodcastSeries } from './get-all-podcast-series';
@@ -9,17 +8,18 @@ import { getAllPodcasts } from './get-all-podcasts';
 import {
     mapPodcastsToContentItems,
     mapVideosToContentItems,
-    mapArticlesToContentItems,
+    CS_mapArticlesToContentItems,
     mapEventsToContentItems,
 } from './build-content-items';
-import { getAllCommunityEvents, getAllIndustryEvents } from './get-all-events';
+import { getAllCommunityEvents } from './get-all-events';
+import { CS_getAllIndustryEventsFromCMS } from '../api-requests/get-industry-events';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcasts();
     const allVideos = await getAllVideos();
-    const allArticles = await getAllArticlesFromAPI(STRAPI_CLIENT);
+    const allArticles = await CS_getAllArticlesFromCMS();
     const allCommunityEvents = await getAllCommunityEvents();
-    const allIndustryEvents = await getAllIndustryEvents();
+    const allIndustryEvents = await CS_getAllIndustryEventsFromCMS();
     /*
     series
      */
@@ -32,7 +32,7 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
         podcastSeries
     );
     const mappedVideos = mapVideosToContentItems(allVideos, videoSeries);
-    const mappedArticles = mapArticlesToContentItems(
+    const mappedArticles = CS_mapArticlesToContentItems(
         allArticles,
         articleSeries
     );
