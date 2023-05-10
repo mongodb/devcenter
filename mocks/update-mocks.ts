@@ -3,8 +3,8 @@
 
 require('dotenv').config({ path: `.env.local` });
 
-const fetch = url =>
-    import('node-fetch').then(({ default: fetch }) => fetch(url));
+const fetch = (url: string, options: RequestInit) =>
+    import('node-fetch').then(({ default: fetch }) => fetch(url, options));
 
 const { handlerInfo } = require('./handlers.ts');
 const fs = require('fs');
@@ -45,7 +45,9 @@ const fetchMocks = async () => {
 
         try {
             const fname = handler.mockFile;
-            const response = await (await fetch(handler.url)).json();
+            const response = await (
+                await fetch(handler.url, handler.fetchOptions || {})
+            ).json();
 
             if (
                 response?.message?.[0]?.messages?.[0]?.id ===

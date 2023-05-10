@@ -43,7 +43,14 @@ export const getTopicPageData = async (
         metaInfoForTopic
     );
 
-    const content = await getL1L2Content(slugString, allContentPreval);
+    const unfilteredContent = await getL1L2Content(
+        slugString,
+        allContentPreval
+    );
+    // Don't want MongoDB TV content to surface on topic pages yet.
+    const content = unfilteredContent.filter(
+        piece => piece.videoType !== 'MongoDB TV'
+    );
     const variant: 'light' | 'medium' | 'heavy' =
         content.length > 15 ? 'heavy' : content.length > 5 ? 'medium' : 'light';
 

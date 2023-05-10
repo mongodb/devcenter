@@ -48,7 +48,7 @@ import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 import { normalizeCategory, isPrimaryTag } from './util';
 import { getCanonicalUrl } from '../../utils/seo';
 import { getURLPath } from '../../utils/format-url-path';
-import { constructDateDisplay } from '../../utils/format-date';
+import { constructDateDisplay, formatDateRange } from '../../utils/format-date';
 import { getTweetText } from '../../components/social-buttons/utils';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 import { parseMarkdownToAST } from '../../utils/markdown-parser/parse-markdown-to-ast';
@@ -116,6 +116,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         virtualLink,
         registrationLink,
         virtualLinkText,
+        videoType,
     },
     isPathFactory,
 }) => {
@@ -144,6 +145,7 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
     const requestButtonText = getRequestBtnText(category);
 
     const isIndustryEvent = category === 'Event';
+    const isMongoDBTVShow = category === 'Video' && videoType === 'MongoDB TV';
     const isVideoOrPodcastContent =
         collectionType === 'Video' || collectionType === 'Podcast';
 
@@ -338,7 +340,9 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             gridArea: 'authordate',
                         }}
                     >
-                        {displayDate}
+                        {isMongoDBTVShow
+                            ? formatDateRange(contentDate[0], contentDate[1])
+                            : displayDate}
                     </TypographyScale>
                     {tags && (
                         <TagSection tags={tags} sx={{ gridArea: 'tags' }} />
