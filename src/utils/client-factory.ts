@@ -54,14 +54,27 @@ const clientFactory = <T extends ClientType>(
 
         case 'ApolloGraphQL':
             return new ApolloClient({
+                // https://www.apollographql.com/docs/react/performance/server-side-rendering#initializing-apollo-client
+                ssrMode: true, // prevents ApolloClient from refetching queries unnecessarily
                 cache: new InMemoryCache(),
                 uri,
                 headers,
-                link: new HttpLink({
-                    uri,
-                    headers,
-                    fetchOptions: { method: 'GET' },
-                }),
+                // adds logger
+                link:
+                    // https://www.apollographql.com/docs/react/networking/advanced-http-networking/#overriding-options
+                    new HttpLink({
+                        uri,
+                        headers,
+                        fetchOptions: { method: 'GET' }, // override default POST to use GET
+                        // log uri and fetch
+                        fetch: (...pl) => {
+                            // https://github.com/apollographql/apollo-client/issues/4017
+                            // tweaked from musemind implementation
+                            const [uri] = pl;
+                            console.log('uri: ', decodeURI(uri as string));
+                            return fetch(...pl);
+                        },
+                    }),
             }) as UnderlyingClient<T>;
         default:
             throw Error('Invalid client type.');
