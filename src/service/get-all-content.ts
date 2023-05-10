@@ -11,14 +11,15 @@ import {
     CS_mapArticlesToContentItems,
     mapEventsToContentItems,
 } from './build-content-items';
-import { getAllCommunityEvents, getAllIndustryEvents } from './get-all-events';
+import { getAllCommunityEvents } from './get-all-events';
+import { CS_getAllIndustryEventsFromCMS } from '../api-requests/get-industry-events';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcasts();
     const allVideos = await getAllVideos();
     const allArticles = await CS_getAllArticlesFromCMS();
     const allCommunityEvents = await getAllCommunityEvents();
-    const allIndustryEvents = await getAllIndustryEvents();
+    const allIndustryEvents = await CS_getAllIndustryEventsFromCMS();
     /*
     series
      */
