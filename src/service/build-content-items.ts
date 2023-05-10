@@ -7,7 +7,12 @@ import {
 } from '../interfaces/article';
 import { ContentItem } from '../interfaces/content-item';
 import { Series } from '../interfaces/series';
-import { flattenTags, CS_flattenTags } from '../utils/flatten-tags';
+import {
+    flattenTags,
+    CS_flattenTags,
+    CS_flattenPrimaryTags,
+    CS_mergeTags,
+} from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag } from './set-primary-tag';
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
@@ -208,7 +213,7 @@ export const CS_mapArticlesToContentItems = (
     filteredArticles.forEach((a: CS_ArticleResponse) => {
         const updated_at =
             !a.strapi_updated_at ||
-            new Date(a.system.updated_at) > new Date('2023-04-19') // This should be set to the date we migrate from Strapi to ContentStack
+            new Date(a.system.updated_at) > new Date('2023-05-10') // This should be set to the date we migrate from Strapi to ContentStack
                 ? a.system.updated_at
                 : a.strapi_updated_at;
         const authors = a.authorsConnection.edges.map(({ node }) =>
@@ -218,14 +223,18 @@ export const CS_mapArticlesToContentItems = (
             collectionType: 'Article',
             authors,
             category: a.other_tags.content_typeConnection.edges[0].node.title,
-            contentDate: a.original_publish_date, // || a.published_at,
+            contentDate:
+                a.original_publish_date || a.system.publish_details.time,
             updateDate: updated_at,
             description: a.description,
             content: a.content,
             slug: a.calculated_slug.startsWith('/')
                 ? a.calculated_slug.substring(1)
                 : a.calculated_slug,
-            tags: CS_flattenTags(a.other_tags),
+            tags: CS_mergeTags(
+                CS_flattenTags(a.other_tags),
+                CS_flattenPrimaryTags(a.primary_tag)
+            ),
             title: a.title,
             codeType: a.other_tags.code_type,
             githubUrl: a.other_tags.github_url,

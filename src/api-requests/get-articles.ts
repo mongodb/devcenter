@@ -1,11 +1,7 @@
 import axios from 'axios';
 
 import { CS_ArticleResponse } from '../interfaces/article';
-import {
-    CS_GRAPHQL_LIMIT,
-    CS_HEADERS,
-    CS_STAGING_HEADERS,
-} from '../data/constants';
+import { CS_GRAPHQL_LIMIT, CS_HEADERS } from '../data/constants';
 
 const CS_articleFields = `
     calculated_slug
@@ -39,6 +35,22 @@ const CS_articleFields = `
             bio
             calculated_slug
             twitter
+          }
+        }
+      }
+    }
+    primary_tag {
+      tagConnection {
+        edges {
+          node {
+            ... on ProgrammingLanguages {
+                title
+                calculated_slug
+              }
+            ... on L1Products {
+                title
+                calculated_slug
+              }
           }
         }
       }
@@ -145,6 +157,9 @@ const CS_articleFields = `
     }
     system {
         updated_at
+        publish_details {
+          time
+        }
     }
 `;
 
@@ -207,8 +222,8 @@ export const CS_getDraftArticleBySlugFromCMS = async (
 ): Promise<CS_ArticleResponse> => {
     const url = `${
         process.env.CS_GRAPHQL_URL
-    }?environment=staging&query=${getArticleQuery(calculatedSlug)}`;
-    const { data } = await axios.get(url, { headers: CS_STAGING_HEADERS });
+    }?environment=production&query=${getArticleQuery(calculatedSlug)}`;
+    const { data } = await axios.get(url, { headers: CS_HEADERS });
     const { items } = data.data.all_articles;
     return items[0];
 };

@@ -46,6 +46,10 @@ export interface AuthorsConnection {
     edges: { node: CS_AuthorResponse }[];
 }
 
+export interface CS_ArticlePrimaryTag {
+    tagConnection: OtherTagConnection;
+}
+
 export interface CS_ArticleOtherTags {
     author_typeConnection: OtherTagConnection;
     content_typeConnection: ContentTypeConnection;
@@ -70,9 +74,10 @@ export interface CS_ArticleResponse {
     title: string;
     original_publish_date: string;
     expiry_date: string | null;
+    primary_tag: CS_ArticlePrimaryTag;
     other_tags: CS_ArticleOtherTags;
     strapi_updated_at: string;
     seo: SEO;
     authorsConnection: AuthorsConnection;
-    system: { updated_at: string };
+    system: { updated_at: string; publish_details: { time: string } };
 }
