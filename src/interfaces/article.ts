@@ -30,23 +30,23 @@ export interface Article {
 
 // CONTENTSTACK
 
-interface ImageConnection {
+export interface ImageConnection {
     edges: { node: { url: string; description?: string } }[];
 }
 
-interface OtherTagConnection {
+export interface OtherTagConnection {
     edges: { node: { title: string; calculated_slug: string } }[];
 }
 
-interface ContentTypeConnection {
+export interface ContentTypeConnection {
     edges: { node: { title: PillCategory; calculated_slug: string } }[];
 }
 
-interface AuthorsConnection {
+export interface AuthorsConnection {
     edges: { node: CS_AuthorResponse }[];
 }
 
-export interface CS_OtherTags {
+export interface CS_ArticleOtherTags {
     author_typeConnection: OtherTagConnection;
     content_typeConnection: ContentTypeConnection;
     expertise_levelConnection: OtherTagConnection;
@@ -61,7 +61,7 @@ export interface CS_OtherTags {
     // TODO: What is nullable from the API?
 }
 
-export interface CS_ArticleRepsonse {
+export interface CS_ArticleResponse {
     calculated_slug: string;
     content: string;
     description: string;
@@ -70,7 +70,7 @@ export interface CS_ArticleRepsonse {
     title: string;
     original_publish_date: string;
     expiry_date: string | null;
-    other_tags: CS_OtherTags;
+    other_tags: CS_ArticleOtherTags;
     strapi_updated_at: string;
     seo: SEO;
     authorsConnection: AuthorsConnection;

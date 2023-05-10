@@ -1,11 +1,11 @@
-import { CommunityEvent } from '../interfaces/event';
+import { CommunityEvent, CS_IndustryEventsResponse } from '../interfaces/event';
 import { getAllCommunityEventsFromApi } from '../api-requests/get-community-events';
-import { getAllIndustryEventsFromApi } from '../api-requests/get-industry-events';
-import { IndustryEvent } from '../interfaces/event';
-import { STRAPI_CLIENT } from '../config/api-client';
+import { CS_getAllIndustryEventsFromCMS } from '../api-requests/get-industry-events';
 
-export const getAllIndustryEvents = async (): Promise<IndustryEvent[]> => {
-    return getAllIndustryEventsFromApi(STRAPI_CLIENT);
+export const getAllIndustryEvents = async (): Promise<
+    CS_IndustryEventsResponse[]
+> => {
+    return CS_getAllIndustryEventsFromCMS();
 };
 
 export const getAllCommunityEvents = async (): Promise<CommunityEvent[]> => {

@@ -5,7 +5,12 @@ export const CS_GRAPHQL_LIMIT = 100;
 
 export const CS_HEADERS = {
     access_token: process.env.CS_DELIVERY_TOKEN || '',
-    branch: 'prod',
+    branch: 'apr_28',
+};
+
+export const CS_STAGING_HEADERS = {
+    access_token: process.env.CS_DELIVERY_TOKEN_STAGING || '',
+    branch: 'apr_28',
 };
 
 export const L1L2_TOPIC_PAGE_TYPES: TagType[] = [
