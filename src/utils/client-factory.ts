@@ -8,6 +8,7 @@ import {
 import { RestLink } from 'apollo-link-rest';
 import { ClientType, UnderlyingClient } from '../types/client-factory';
 import { RetryLink } from '@apollo/client/link/retry';
+import { appendFileSync } from 'fs';
 
 /**
  * Returns a client instance used to make external requests.
@@ -59,19 +60,28 @@ const clientFactory = <T extends ClientType>(
                 cache: new InMemoryCache(),
                 uri,
                 headers,
-                // adds logger
                 link:
                     // https://www.apollographql.com/docs/react/networking/advanced-http-networking/#overriding-options
                     new HttpLink({
                         uri,
                         headers,
                         fetchOptions: { method: 'GET' }, // override default POST to use GET
-                        // log uri and fetch
+                        // log uri (on dev mode) and fetch
                         fetch: (...pl) => {
+                            if (process.env.NODE_ENV === 'production') {
+                                return fetch(...pl);
+                            }
+
                             // https://github.com/apollographql/apollo-client/issues/4017
                             // tweaked from musemind implementation
                             const [uri] = pl;
-                            console.log('uri: ', decodeURI(uri as string));
+
+                            // because queries are long,
+                            // so save them locally instead of logging to console
+                            appendFileSync(
+                                'gql_uri_log.txt',
+                                decodeURI(uri as string)
+                            );
                             return fetch(...pl);
                         },
                     }),

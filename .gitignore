@@ -9,6 +9,9 @@
 /coverage
 /playwright-artifacts
 
+# graphql testing
+gql_uri_log.txt
+
 # next.js
 /.next/
 /out/
