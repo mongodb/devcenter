@@ -11,7 +11,6 @@ export const getPreviewContentForArticles: (
 ) => Promise<ContentItem> = async calculatedSlug => {
     const content = await CS_getDraftArticleBySlugFromCMS(calculatedSlug);
     const mappedArticles = CS_mapArticlesToContentItems([content], []);
-    console.log(mappedArticles[0]);
     return mappedArticles[0];
 };
 
