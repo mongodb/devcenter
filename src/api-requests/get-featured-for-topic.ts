@@ -122,13 +122,39 @@ export const getFeaturedForTopic = (topicSlug: string) => `
     }
 `;
 
+const transformCSFeaturedContentResponse = (
+    items: CS_FeaturedContentResponse[]
+) => {
+    return items.map(item => {
+        return {
+            articles: item.articlesConnection.edges.map(a => a.node.title),
+            videos: item.videosConnection.edges.map(v => v.node.title),
+            podcasts: item.podcastsConnection.edges.map(p => p.node.title),
+            industry_events: item.industry_eventsConnection.edges.map(
+                i => i.node.title
+            ),
+        } as FeaturedResponse;
+    });
+};
+
 export const CS_getAllFeaturedContent = async (): Promise<
-    CS_FeaturedContentResponse[]
+    FeaturedResponse[]
 > => {
     const url = `${
         process.env.CS_GRAPHQL_URL
     }?environment=production&query=${getAllFeaturedContent()}`;
     const { data } = await axios.get(url, { headers: CS_HEADERS });
     const { items } = data.data.all_featured_content;
-    return items;
+    return transformCSFeaturedContentResponse(items);
+};
+
+export const CS_getFeaturedContentForTopic = async (
+    topicSlug
+): Promise<FeaturedResponse> => {
+    const url = `${
+        process.env.CS_GRAPHQL_URL
+    }?environment=production&query=${getFeaturedForTopic(topicSlug)}`;
+    const { data } = await axios.get(url, { headers: CS_HEADERS });
+    const { items } = data.data.all_featured_content;
+    return transformCSFeaturedContentResponse(items)[0];
 };
