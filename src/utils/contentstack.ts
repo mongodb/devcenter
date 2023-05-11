@@ -65,15 +65,12 @@ export const mapSEO = (cs_seo: CS_SEO): SEO | null => {
         meta_description: cs_seo.meta_description,
         og_description: cs_seo.og_description,
         og_image: og_image as OGImage,
-        og_title: cs_seo.og_title,
         og_type: cs_seo.og_type,
         og_url: cs_seo.og_url,
         twitter_card: cs_seo.twitter_card as string,
         twitter_creator: cs_seo.twitter_creator,
         twitter_description: cs_seo.twitter_description,
         twitter_image: twitter_image as TwitterImage,
-        twitter_site: cs_seo.twitter_site,
-        twitter_title: cs_seo.twitter_title,
     };
 
     return isEmptySEO(seo) ? null : seo;

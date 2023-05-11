@@ -44,8 +44,19 @@ const podcastFields = gql`
         seo {
             canonical_url
             meta_description
+            og_url
+            og_imageConnection {
+                edges {
+                    node {
+                        url
+                    }
+                }
+            }
+            og_type
             og_description
-            og_image: og_imageConnection {
+            twitter_creator
+            twitter_description
+            twitter_imageConnection {
                 edges {
                     node {
                         url
@@ -53,15 +64,6 @@ const podcastFields = gql`
                 }
             }
             twitter_card
-            twitter_creator
-            twitter_description
-            twitter_image: twitter_imageConnection {
-                edges {
-                    node {
-                        url
-                    }
-                }
-            }
         }
         casted_slug
         l1_productConnection {

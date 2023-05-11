@@ -8,7 +8,6 @@ import {
 import { RestLink } from 'apollo-link-rest';
 import { ClientType, UnderlyingClient } from '../types/client-factory';
 import { RetryLink } from '@apollo/client/link/retry';
-import { appendFileSync } from 'fs';
 
 /**
  * Returns a client instance used to make external requests.
@@ -75,14 +74,13 @@ const clientFactory = <T extends ClientType>(
 
                             // https://github.com/apollographql/apollo-client/issues/4017
                             // tweaked from musemind implementation
-                            const [uri] = pl;
+
+                            // Uncomment below if we want to see outbound gql uri
+                            // const [uri] = pl;
+                            // console.log(uri)
 
                             // because queries are long,
                             // so save them locally instead of logging to console
-                            appendFileSync(
-                                'gql_uri_log.txt',
-                                decodeURI(uri as string)
-                            );
                             return fetch(...pl);
                         },
                     }),

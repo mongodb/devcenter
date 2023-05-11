@@ -1,4 +1,4 @@
-import { Video } from '../interfaces/video';
+import { CS_VideoResponse, Video } from '../interfaces/video';
 import { Podcast } from '../interfaces/podcast';
 import { CS_PodcastResponse } from '../interfaces/podcast';
 import { CS_ArticleResponse, Article } from '../interfaces/article';
@@ -100,6 +100,39 @@ export const mapVideosToContentItems = (
 
         item.videoId = v.videoId;
         setPrimaryTag(item, v);
+        addSeriesToItem(item, 'video', videoSeries);
+        items.push(item);
+    });
+    return items.filter(item => item.title !== '');
+};
+export const CS_mapVideosToContentItems = (
+    allVideos: CS_VideoResponse[],
+    videoSeries: Series[]
+) => {
+    const items: ContentItem[] = [];
+    allVideos.forEach((v: CS_VideoResponse) => {
+        const item: ContentItem = {
+            collectionType: 'Video',
+            category: 'Video',
+            contentDate: v.original_publish_date,
+            slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
+            tags: CS_flattenTags(v.other_tags),
+            title: v.title,
+            seo: mapSEO(v.seo) as SEO,
+            relevantLinks: v?.relevant_links || '',
+        };
+
+        if (v.description) {
+            item.description = v.description;
+        }
+
+        item.image = {
+            url: getPlaceHolderImage(v.thumbnailUrl),
+            alt: 'randomAlt',
+        };
+
+        item.videoId = v.video_id;
+        CS_setPrimaryTag(item, v);
         addSeriesToItem(item, 'video', videoSeries);
         items.push(item);
     });
