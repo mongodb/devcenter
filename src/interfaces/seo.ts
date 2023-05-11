@@ -1,10 +1,10 @@
-import { ImageConnection } from './article';
+import { ImageConnection } from './image';
 
-interface OGImage {
+export interface OGImage {
     url: string;
 }
 
-interface TwitterImage {
+export interface TwitterImage {
     url: string;
 }
 
@@ -32,7 +32,7 @@ export interface CS_SEO {
     og_title?: string;
     og_type?: string;
     og_url?: string;
-    twitter_card?: string;
+    twitter_card?: string | null;
     twitter_creator?: string;
     twitter_description?: string;
     twitter_imageConnection?: ImageConnection;

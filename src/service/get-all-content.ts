@@ -6,7 +6,7 @@ import { getAllPodcastSeries } from './get-all-podcast-series';
 import { getAllVideos } from './get-all-videos';
 import { getAllPodcasts } from './get-all-podcasts';
 import {
-    mapPodcastsToContentItems,
+    CS_mapPodcastsToContentItems,
     mapVideosToContentItems,
     CS_mapArticlesToContentItems,
     mapEventsToContentItems,
@@ -27,7 +27,7 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const podcastSeries = await getAllPodcastSeries();
     const videoSeries = await getAllVideoSeries();
     const articleSeries = await getAllArticleSeries();
-    const mappedPodcasts = mapPodcastsToContentItems(
+    const mappedPodcasts = CS_mapPodcastsToContentItems(
         allPodcasts,
         podcastSeries
     );

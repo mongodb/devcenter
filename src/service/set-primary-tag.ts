@@ -1,5 +1,8 @@
+import { Connection } from '../interfaces/connection';
 import { ContentItem } from '../interfaces/content-item';
-import { Media } from '../interfaces/media';
+import { CS_Media, Media } from '../interfaces/media';
+import { GenericTagTypeResponse } from '../interfaces/tag-type-response';
+import { extractFieldsFromConnection } from '../utils/contentstack';
 
 export const setPrimaryTag = (
     contentItem: ContentItem,
@@ -18,6 +21,43 @@ export const setPrimaryTag = (
         contentItem.primaryTag = {
             programmingLanguage:
                 videoOrPodcastObject.otherTags.programmingLanguage[0],
+        };
+    }
+};
+export const CS_setPrimaryTag = (
+    contentItem: ContentItem,
+    videoOrPodcast: CS_Media
+) => {
+    if (!videoOrPodcast.other_tags) return;
+
+    const l1Product = extractFieldsFromConnection(
+        videoOrPodcast.other_tags.l1_productConnection as Connection,
+        [
+            ['title', 'name'],
+            ['slug', 'calculatedSlug'],
+        ],
+        true
+    );
+
+    const programmingLanguage = extractFieldsFromConnection(
+        videoOrPodcast.other_tags.l1_productConnection as Connection,
+        [
+            ['title', 'name'],
+            ['slug', 'calculatedSlug'],
+        ],
+        true
+    );
+
+    // programming language takes precedence as the primary tag
+    if (l1Product) {
+        contentItem.primaryTag = {
+            l1Product: l1Product as GenericTagTypeResponse,
+        };
+    }
+
+    if (programmingLanguage) {
+        contentItem.primaryTag = {
+            programmingLanguage: programmingLanguage as GenericTagTypeResponse,
         };
     }
 };

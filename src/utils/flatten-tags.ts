@@ -1,6 +1,6 @@
 import { Tag } from '../interfaces/tag';
 import { OtherTags } from '../interfaces/other-tags';
-import { CS_ArticleOtherTags } from '../interfaces/article';
+import { CS_OtherTags } from '../interfaces/other-tags';
 
 // STRAPI
 
@@ -82,18 +82,19 @@ const parseOtherTags = (otherTags: OtherTags) => {
 
 // CONTENTSTACK
 
-const CS_parseOtherTags = (otherTags: CS_ArticleOtherTags) => {
+const CS_parseOtherTags = (otherTags: CS_OtherTags) => {
     const tags: Tag[] = [];
     if (!otherTags) return tags;
 
     const contentType = otherTags.content_typeConnection?.edges[0];
-    const technology = otherTags.technologiesConnection.edges;
+    const technology = otherTags.technologiesConnection?.edges;
     const authorType = otherTags.author_typeConnection?.edges[0];
-    const l1Product = otherTags.l1_productConnection.edges[0];
-    const l2Product = otherTags.l2_productConnection.edges[0];
+    const l1Product = otherTags.l1_productConnection?.edges[0];
+    const l2Product = otherTags.l2_productConnection?.edges[0];
     const spokenLanguage = otherTags.spoken_languageConnection?.edges[0];
     const expertiseLevel = otherTags.expertise_levelConnection?.edges[0];
-    const programmingLanguage = otherTags.programming_languagesConnection.edges;
+    const programmingLanguage =
+        otherTags.programming_languagesConnection?.edges;
     if (contentType) {
         tags.push({
             name: contentType.node.title,
@@ -185,7 +186,7 @@ export const flattenTags = (otherTags: OtherTags | OtherTags[]): Tag[] => {
 };
 
 export const CS_flattenTags = (
-    otherTags: CS_ArticleOtherTags | CS_ArticleOtherTags[]
+    otherTags: CS_OtherTags | CS_OtherTags[] | null
 ): Tag[] => {
     if (!otherTags) {
         return [];
