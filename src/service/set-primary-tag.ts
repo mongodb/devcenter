@@ -34,16 +34,16 @@ export const CS_setPrimaryTag = (
         videoOrPodcast.other_tags.l1_productConnection as Connection,
         [
             ['title', 'name'],
-            ['slug', 'calculatedSlug'],
+            ['calculated_slug', 'calculatedSlug'],
         ],
         true
     );
 
     const programmingLanguage = extractFieldsFromConnection(
-        videoOrPodcast.other_tags.l1_productConnection as Connection,
+        videoOrPodcast.other_tags.programming_languagesConnection as Connection,
         [
             ['title', 'name'],
-            ['slug', 'calculatedSlug'],
+            ['calculated_slug', 'calculatedSlug'],
         ],
         true
     );
