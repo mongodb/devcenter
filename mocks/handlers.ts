@@ -6,6 +6,7 @@ interface HandlerInfo {
     pattern: string;
     url: string;
     mockFile: string;
+    fetchOptions?: RequestInit;
     handlerFunc?: (
         req: RestRequest,
         res: ResponseComposition,
@@ -23,6 +24,12 @@ export const handlerInfo: HandlerInfo[] = [
         pattern: `${process.env.REALM_API_URL}/community_events`,
         url: `${process.env.REALM_API_URL}/community_events`,
         mockFile: 'community_events',
+    },
+    {
+        pattern: `https://data.mongodb-api.com/app/mongodb-tv-app-bsvzg/endpoint/api/epg`,
+        url: `https://data.mongodb-api.com/app/mongodb-tv-app-bsvzg/endpoint/api/epg`,
+        mockFile: 'mongodb-tv',
+        fetchOptions: { headers: { apiKey: process.env.MONGODB_TV_API_KEY } },
     },
     {
         pattern: `${process.env.STRAPI_URL}/new-articles`,

@@ -1,4 +1,5 @@
 import { FilterItem } from '@mdb/devcenter-components';
+import { PillCategory } from '../../types/pill-category';
 
 export interface RadioFilterGroupProps {
     className?: string;
@@ -9,6 +10,7 @@ export interface RadioFilterGroupProps {
     setSort?: (sortByValue: string) => void;
     setFilters?: (filters: FilterItem[]) => void;
     isMobile?: boolean;
+    contentType?: PillCategory;
 }
 
 export interface FiltersProps {

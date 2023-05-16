@@ -88,6 +88,15 @@ const ContentTypePage: React.FunctionComponent<
                     >
                         {requestButtonText}
                     </Button>
+                    {contentType === 'Video' && (
+                        <Button
+                            size="large"
+                            href="https://youtube.com/@mongodb?sub_confirmation=1"
+                            target="_blank"
+                        >
+                            Subscribe
+                        </Button>
+                    )}
                 </div>
             ) : null,
         [contentType, requestButtonText] // eslint-disable-line react-hooks/exhaustive-deps

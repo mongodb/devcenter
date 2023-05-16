@@ -13,22 +13,46 @@ import {
     mapVideosToContentItems,
     mapArticlesToContentItems,
     mapIndustryEventToContentItem,
+    mapMongoDBTVShowsToContentItems,
 } from './build-content-items';
 import { Article } from '../interfaces/article';
 import { Video } from '../interfaces/video';
 import { Podcast } from '../interfaces/podcast';
 import { IndustryEvent } from '../interfaces/event';
+import { getMongoDBTVShowBySlug } from '../api-requests/get-mongodb-tv-shows';
+import { MongoDBTVShow } from '../interfaces/mongodb-tv';
 
 export const getContentItemFromSlug: (
     slug: string
 ) => Promise<ContentItem | null> = async (slug: string) => {
     slug = '/' + slug;
-    let content: Article | Video | Podcast | IndustryEvent | null = null;
+    let content:
+        | Article
+        | Video
+        | Podcast
+        | IndustryEvent
+        | MongoDBTVShow
+        | null = null;
     let contentType: CollectionType | null = null;
 
-    // videos always starts with /videos
+    let isShow = false;
+
+    // videos and MongoDBTV shows always starts with /videos
     if (slug.startsWith('/videos')) {
-        content = await getVideoBySlug(slug);
+        const mbdtvContent = await getMongoDBTVShowBySlug(slug);
+        // We currently only want to create pages for MongoDB TV shows that have not yet aired.
+        if (mbdtvContent && mbdtvContent.upcoming) {
+            isShow = true;
+            content = mbdtvContent;
+        } else {
+            // If not an upcoming show, we want to resort to the corresponding CMS entry.
+            content = await getVideoBySlug(slug);
+            if (!content && mbdtvContent) {
+                // If there is no corresponding CMS entry, use the show even though it is a rerun.
+                isShow = true;
+                content = mbdtvContent;
+            }
+        }
         contentType = 'Video';
     } else if (slug.startsWith('/podcasts')) {
         content = await getPodcastBySlug(slug);
@@ -56,10 +80,12 @@ export const getContentItemFromSlug: (
         );
         return mappedPodcasts[0];
     } else if (contentType === 'Video') {
-        const mappedVideos = mapVideosToContentItems(
-            [content as Video],
-            allVideoSeries
-        );
+        const mappedVideos = isShow
+            ? await mapMongoDBTVShowsToContentItems(
+                  [content as MongoDBTVShow],
+                  true
+              )
+            : await mapVideosToContentItems([content as Video], allVideoSeries);
         return mappedVideos[0];
     } else if (contentType === 'Event') {
         return mapIndustryEventToContentItem(content as IndustryEvent);
