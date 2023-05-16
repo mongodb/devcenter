@@ -43,5 +43,4 @@ export interface ContentItem {
     virtualLink?: string;
     virtualLinkText?: string;
     relatedContent?: Array<IndustryEventRelatedContent>;
-    videoType?: 'MongoDB TV' | 'Video';
 }

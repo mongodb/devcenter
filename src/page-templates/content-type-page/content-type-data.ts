@@ -7,8 +7,7 @@ import allContent from '../../service/get-all-content.preval';
 import allSearchContent from '../../service/get-all-search-content.preval';
 import { getFeaturedForContent } from '../../service/get-featured-for-content';
 import { getFeaturedLangProdTech } from './utils';
-import { SearchItem } from '../../components/search/types';
-import { getDefaultSortBy } from '../../components/search/utils';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
 
 export const getContentTypePageData = async (
     contentType: PillCategory,
@@ -23,21 +22,14 @@ export const getContentTypePageData = async (
     try {
         initialSearchContent = await getSearchContent({
             searchString: '',
-            contentType,
-            sortBy: getDefaultSortBy(contentType),
+            contentType: contentType,
+            sortBy:
+                contentType === 'Event'
+                    ? 'Closest Upcoming'
+                    : defaultSortByType,
         });
     } catch (e) {
         Sentry.captureException(e);
-    }
-
-    const currentTime = new Date();
-    if (initialSearchContent && contentType === 'Video') {
-        initialSearchContent = initialSearchContent.filter(
-            item =>
-                item.video_type === 'MongoDB TV' &&
-                item.start_time &&
-                new Date(item.start_time) > currentTime
-        );
     }
 
     const filterItems = await getFilters(contentType, allSearchContent);

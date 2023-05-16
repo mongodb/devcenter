@@ -10,10 +10,9 @@ import {
 import { useRouter } from 'next/router';
 import {
     buildSearchQuery,
-    getDefaultSortBy,
     SearchQueryParams,
 } from '../../components/search/utils';
-import { SearchItem } from '../../components/search/types';
+import { defaultSortByType, SearchItem } from '../../components/search/types';
 import useSort from './sort';
 import useLocationSearch from './location';
 import useSearchString from './search-string';
@@ -21,7 +20,6 @@ import useFilter from './filter';
 import { ContentItem } from '../../interfaces/content-item';
 import { SearchParamType, SearchProps } from './types';
 import isServerSide from '../../utils/is-server-side';
-import { PillCategory } from '../../types/pill-category';
 
 // Credit https://github.com/reduxjs/redux/blob/d794c56f78eccb56ba3c67971c26df8ee34dacc1/src/compose.ts#L46
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -126,7 +124,8 @@ const useSearch = (
         contentType,
         tagSlug,
         sortBy:
-            sortBy || getDefaultSortBy(contentType as PillCategory, tagSlug),
+            sortBy ||
+            (contentType === 'Event' ? 'Closest Upcoming' : defaultSortByType),
     };
 
     const searchKey = buildSearchQuery(searchQueryParams);
@@ -154,10 +153,10 @@ const useSearch = (
                             searchString: '',
                             contentType,
                             tagSlug,
-                            sortBy: getDefaultSortBy(
-                                contentType as PillCategory,
-                                tagSlug
-                            ),
+                            sortBy:
+                                contentType === 'Event'
+                                    ? 'Closest Upcoming'
+                                    : defaultSortByType,
                         })
                     ) as Promise<ContentItem[]>
                 ).then((response: ContentItem[]) => {
@@ -167,40 +166,7 @@ const useSearch = (
         }
     }, [searchString, allResults, data, contentType, tagSlug]);
 
-    const filterAired = useCallback(searchData => {
-        if (!searchData) {
-            return [];
-        } else {
-            // Only show MongoDB TV content that has not yet aired.
-            const currentTime = new Date();
-            return searchData.filter(
-                (item: ContentItem) =>
-                    item.videoType === 'MongoDB TV' &&
-                    Array.isArray(item.contentDate) &&
-                    new Date(item.contentDate[1]) > currentTime
-            );
-        }
-    }, []);
-
-    const filterMongoDBTV = useCallback(searchData => {
-        if (!searchData) {
-            return [];
-        } else {
-            return searchData.filter(
-                (item: ContentItem) => item.videoType !== 'MongoDB TV'
-            );
-        }
-    }, []);
-
-    const filterFunctions = [filterData, filterDataByLocation];
-
-    if (tagSlug === '/videos' && (sortBy === 'Upcoming' || !sortBy)) {
-        filterFunctions.unshift(filterAired);
-    } else {
-        filterFunctions.unshift(filterMongoDBTV);
-    }
-
-    const filteredData = compose(...filterFunctions)(data);
+    const filteredData = compose(filterData, filterDataByLocation)(data);
 
     return {
         clearSearchParam,
