@@ -10,9 +10,11 @@ export const mapAuthor = (author: CS_AuthorResponse): Author => {
     const image = imageConnection?.edges[0]?.node;
     const mappedAuthor: Author = {
         ...authorRest,
-        title: job_title,
         name: title,
     };
+    if (job_title) {
+        mappedAuthor.title = job_title;
+    }
     if (image) {
         mappedAuthor.image = image;
     }
