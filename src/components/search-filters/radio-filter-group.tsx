@@ -11,7 +11,7 @@ import { FilterItem } from '@mdb/devcenter-components';
 
 import { RadioFilterGroupProps } from './types';
 import { titleStyles, itemsStyles } from './styles';
-import { SortByType } from '../search/types';
+import { sortByOptions } from '../search/utils';
 
 const FILTER_STEP = 5;
 
@@ -24,13 +24,7 @@ const RadioFilterGroup: React.FunctionComponent<RadioFilterGroupProps> = memo(
         isMobile = false,
         setSort = () => null,
         sortBy,
-        contentType,
     }) => {
-        let options: SortByType[] = ['Newest', 'Highest Rated'];
-
-        if (contentType === 'Video') {
-            options = ['Upcoming', 'Recently Aired', 'Highest Rated'];
-        }
         const [expanded, setExpanded] = useState<boolean>(
             isMobile ? false : true
         );
@@ -109,7 +103,7 @@ const RadioFilterGroup: React.FunctionComponent<RadioFilterGroupProps> = memo(
                                 onChange={setSort}
                                 defaultChecked={sortBy}
                             >
-                                {options.map(
+                                {Object.keys(sortByOptions).map(
                                     (filterType: string, index: number) => (
                                         <Radio key={index} value={filterType}>
                                             {filterType}

@@ -51,7 +51,6 @@ export const getContentPageData = async (slug: string[]) => {
 
     const contentItemHasPrimaryTag = hasPrimaryTag(contentItem);
     const isEventContent = contentItem.collectionType === 'Event';
-    const isMongoDBTVContent = contentItem.videoType === 'MongoDB TV';
     let topicSlug = '/' + slug.slice(0, slug.length - 1).join('/');
 
     //this code examples start with /code-examples ignore first part and add languages in order to identify its primary tag
@@ -59,17 +58,7 @@ export const getContentPageData = async (slug: string[]) => {
         topicSlug = '/languages/' + slug.slice(1, slug.length - 1).join('/');
     }
 
-    if (isEventContent || isMongoDBTVContent) {
-        // Events and MongoDBTV Shows do not come with a "primary tag" fields, so a search for "L1Product" or "ProgrammingLanguage" needs to be done in the standard tags field
-        const eventTags = contentItem.tags.find(
-            tag =>
-                tag.type === 'L1Product' || tag.type === 'ProgrammingLanguage'
-        );
-
-        if (eventTags) {
-            topicSlug = eventTags.slug;
-        }
-    } else if (
+    if (
         contentItem.collectionType === 'Video' ||
         contentItem.collectionType === 'Podcast'
     ) {
@@ -79,6 +68,16 @@ export const getContentPageData = async (slug: string[]) => {
         }
         if (contentItem.primaryTag?.l1Product) {
             topicSlug = contentItem.primaryTag.l1Product.calculatedSlug;
+        }
+    } else if (isEventContent) {
+        // Events do not come with a "primary tag" fields, so a search for "L1Product" or "ProgrammingLanguage" needs to be done in the standard tags field
+        const eventTags = contentItem.tags.find(
+            tag =>
+                tag.type === 'L1Product' || tag.type === 'ProgrammingLanguage'
+        );
+
+        if (eventTags) {
+            topicSlug = eventTags.slug;
         }
     }
 

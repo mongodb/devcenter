@@ -51,15 +51,12 @@ const ContentTypeBody: React.FunctionComponent<
     setMobileFiltersOpen,
     contentType,
     children,
-    slug,
 }) => {
     const showFeatured = !searchString && !filters.length;
-    const pluralContentType =
-        contentType === 'Video' ? 'Shows' : pluralize(contentType);
 
     const resultsHeader =
         (showFeatured
-            ? `All ${pluralContentType}`
+            ? `All ${pluralize(contentType)}`
             : !results
             ? ''
             : results.length === 1
@@ -90,8 +87,6 @@ const ContentTypeBody: React.FunctionComponent<
                     <MobileFilters
                         {...filterProps}
                         {...sortProps} // Mobile filters include sorting
-                        contentType={contentType}
-                        slug={slug}
                         filterItems={filterItems}
                         closeModal={() => setMobileFiltersOpen(false)}
                     />
@@ -101,7 +96,7 @@ const ContentTypeBody: React.FunctionComponent<
             <div sx={searchWrapperStyles}>
                 <SearchBox
                     {...searchStringProps}
-                    placeholder={`Search ${pluralContentType}`}
+                    placeholder={`Search ${pluralize(contentType)}`}
                     extraStyles={{
                         flexBasis: showFeatured
                             ? '100%'
@@ -116,7 +111,7 @@ const ContentTypeBody: React.FunctionComponent<
                             sx={{
                                 marginBottom: ['section20', null, 'section50'],
                             }}
-                            title={`Featured ${pluralContentType}`}
+                            title={`Featured ${pluralize(contentType)}`}
                             featuredCardType="middle"
                         />
 
@@ -143,7 +138,6 @@ const ContentTypeBody: React.FunctionComponent<
 
                 <SortBox
                     {...sortProps}
-                    contentType={contentType}
                     extraStyles={{
                         order: showFeatured ? '2' : '1',
                     }}

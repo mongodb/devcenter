@@ -1,30 +1,13 @@
 import { useEffect, useState } from 'react';
 import { SortByType } from './types';
-import { PillCategory } from '../../types/pill-category';
-import { defaultSortByType } from './types';
 
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const sortByOptions: { [key in SortByType]: number } = {
     Newest: 0,
-    'Recently Aired': 0,
     // 'Most Popular': 1, // add back when Most Popular is implemented
     'Highest Rated': 2,
     'Closest Upcoming': 3,
-    Upcoming: 3,
-};
-
-export const getDefaultSortBy = (
-    contentType?: PillCategory,
-    tagSlug?: string
-): SortByType => {
-    if (contentType === 'Event') {
-        return 'Closest Upcoming';
-    } else if (tagSlug === '/videos') {
-        return 'Upcoming';
-    } else {
-        return defaultSortByType;
-    }
 };
 
 export interface SearchQueryParams {

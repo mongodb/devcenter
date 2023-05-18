@@ -36,7 +36,6 @@ export const searchItemToContentItem = ({
     state,
     country,
     coordinates,
-    video_type,
 }: SearchItem): ContentItem => {
     const itemImage: Image | undefined =
         // Sometimes the image url can be an object with an "$undefined" key.
@@ -81,7 +80,6 @@ export const searchItemToContentItem = ({
         state,
         country,
         coordinates,
-        videoType: video_type,
     };
 };
 
