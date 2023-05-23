@@ -1,6 +1,9 @@
 import { Tag } from '../interfaces/tag';
 import { OtherTags } from '../interfaces/other-tags';
-import { CS_ArticleOtherTags } from '../interfaces/article';
+import {
+    CS_ArticleOtherTags,
+    CS_ArticlePrimaryTag,
+} from '../interfaces/article';
 
 // STRAPI
 
@@ -195,4 +198,34 @@ export const CS_flattenTags = (
         Array.isArray(otherTags) ? otherTags[0] : otherTags
     );
     return removeDuplicates(flattenedTags);
+};
+
+export const CS_flattenPrimaryTags = (
+    primary_tag: CS_ArticlePrimaryTag
+): Tag[] => {
+    if (!primary_tag) {
+        return [];
+    }
+
+    function CS_ParsePrimaryTag(primaryTag: CS_ArticlePrimaryTag) {
+        const tags: Tag[] = [];
+        const edges = primaryTag.tagConnection.edges;
+        if (edges && edges.length > 0) {
+            tags.push({
+                name: edges[0].node.title,
+                slug: edges[0].node.calculated_slug,
+                type: edges[0].node.calculated_slug.startsWith('/products')
+                    ? 'L1Product'
+                    : 'ProgrammingLanguage',
+            });
+        }
+        return tags;
+    }
+
+    const flattenedTags = CS_ParsePrimaryTag(primary_tag);
+    return removeDuplicates(flattenedTags);
+};
+
+export const CS_mergeTags = (primary_tags: Tag[], other_tags: Tag[]): Tag[] => {
+    return removeDuplicates(primary_tags.concat(other_tags));
 };
