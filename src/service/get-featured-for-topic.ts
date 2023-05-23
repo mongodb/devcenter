@@ -1,6 +1,5 @@
-import { STRAPI_CLIENT } from '../config/api-client';
 import { Featured, FeaturedResponse } from '../interfaces/featured';
-import { getFeaturedForTopicFromAPI } from '../api-requests/get-featured-for-topic';
+import { CS_getFeaturedContentForTopic } from '../api-requests/get-featured-for-topic';
 import allFeatured from './get-all-featured.preval';
 
 const getCalculatedSlug = (contentEntry: object) => {
@@ -44,7 +43,7 @@ export const getFeaturedForTopic = async (
 ): Promise<Featured> => {
     const featuredForTopic = fromStatic
         ? getFeaturedForTopicFromPreval(topicSlug)
-        : await getFeaturedForTopicFromAPI(STRAPI_CLIENT, topicSlug);
+        : await CS_getFeaturedContentForTopic(topicSlug);
 
     const featuredArticles = (featuredForTopic?.articles || []).map(
         a => a.title
