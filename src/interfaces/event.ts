@@ -1,10 +1,9 @@
 import { Coordinates } from './coordinates';
 import { Tag } from './tag';
-import {
-    AuthorsConnection,
-    CS_ArticleOtherTags,
-    ImageConnection,
-} from './article';
+import { AuthorsConnection } from './article';
+import { ImageConnection } from './image';
+import { CS_ArticleOtherTags } from './article';
+import { Connection } from './connection';
 
 export type EventSetup = 'InPerson' | 'Virtual' | 'Hybrid' | 'Unknown';
 
@@ -83,7 +82,7 @@ export interface CS_RelatedContentResponse {
     system?: { publish_details: { time: string } };
 }
 
-export interface RelatedContentConnection {
+export interface RelatedContentConnection extends Connection {
     edges: { node: CS_RelatedContentResponse }[];
 }
 

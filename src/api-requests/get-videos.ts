@@ -1,108 +1,37 @@
-import { ApolloQueryResult, gql } from '@apollo/client';
-
+import { fetchAll } from './contentstack_utils';
 import { UnderlyingClient } from '../types/client-factory';
-import { Video } from '../interfaces/video';
+import { CS_VideoResponse } from '../interfaces/video';
+import { allVideosQuery, videoBySlugQuery } from '../graphql/videos';
 
-const videoFields = `
-    description
-    publishDate: originalPublishDate
-    title
-    slug
-    videoId
-    relevantLinks: relevant_links
-    thumbnailUrl
-    l1Product: l_1_product {
-        name
-        calculatedSlug: calculated_slug
-    }
-    l2Product: l_2_product {
-        name
-        calculatedSlug: calculated_slug
-    }
-    programmingLanguage: programming_language {
-        name
-        calculatedSlug: calculated_slug
-    }
-    technology: technology {
-        name
-        calculatedSlug: calculated_slug
-    }
-    otherTags: other_tags {
-        spokenLanguage: spoken_language {
-            name
-            calculatedSlug: calculated_slug
-        }
-        expertiseLevel: expertise_level {
-            name: level
-            calculatedSlug: calculated_slug
-        }
-        authorType: author_type {
-            name
-            calculatedSlug: calculated_slug
-        }
-    }
-    seo: SEO {
-        canonical_url
-        meta_description
-        og_description
-        og_image {
-            url
-        }
-        og_title
-        og_type
-        og_url
-        twitter_card
-        twitter_creator
-        twitter_description
-        twitter_image {
-            url
-        }
-        twitter_site
-        twitter_title
-    }
-`;
-
-/**
- * Returns a list of all videos.
- * @param client -  The Apollo REST client that will be used to make the request.
- */
 const getAllVideosFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
-): Promise<Video[]> => {
-    const query = gql`
-        query Videos {
-            videos @rest(type: "Video", path: "/new-videos?_limit=-1") {
-                ${videoFields}
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
-        { query }
-    );
+    client: UnderlyingClient<'ApolloGraphQL'>
+): Promise<CS_VideoResponse[]> => {
+    const videos = (await fetchAll(
+        client,
+        allVideosQuery,
+        'videos'
+    )) as CS_VideoResponse[];
 
-    return data.videos;
+    return videos;
 };
 
-/**
- * Returns a list of all videos.
- * @param client -  The Apollo REST client that will be used to make the request.
- */
 export const getVideoBySlugFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>,
+    client: UnderlyingClient<'ApolloGraphQL'>,
     slug: string
-): Promise<Video | null> => {
-    const query = gql`
-        query Videos {
-            videos @rest(type: "Video", path: "/new-videos?slug_eq=${slug}") {
-                ${videoFields}
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
-        { query }
-    );
+): Promise<CS_VideoResponse | null> => {
+    const variables = { slug };
+    const videos = (await fetchAll(
+        client,
+        videoBySlugQuery,
+        'videos',
+        variables
+    )) as CS_VideoResponse[];
 
-    return data.videos.length > 0 ? data.videos[0] : null;
+    if (!videos) {
+        return null;
+    }
+
+    return videos[0];
 };
 
 export default getAllVideosFromAPI;

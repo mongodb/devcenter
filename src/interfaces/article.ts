@@ -1,7 +1,13 @@
-import { PillCategory } from '../types/pill-category';
-import { CodeLevel } from '../types/tag-type';
+import {
+    OtherTagConnection,
+    ContentTypeConnection,
+    CS_OtherTags,
+} from './other-tags';
 import { Author, CS_AuthorResponse } from './author';
 import { SEO } from './seo';
+import { ImageConnection } from './image';
+import { Connection } from './connection';
+import { CodeLevel } from '../types/tag-type';
 
 import { OtherTags } from './other-tags';
 
@@ -30,19 +36,7 @@ export interface Article {
 
 // CONTENTSTACK
 
-export interface ImageConnection {
-    edges: { node: { url: string; description?: string } }[];
-}
-
-export interface OtherTagConnection {
-    edges: { node: { title: string; calculated_slug: string } }[];
-}
-
-export interface ContentTypeConnection {
-    edges: { node: { title: PillCategory; calculated_slug: string } }[];
-}
-
-export interface AuthorsConnection {
+export interface AuthorsConnection extends Connection {
     edges: { node: CS_AuthorResponse }[];
 }
 
@@ -50,7 +44,7 @@ export interface CS_ArticlePrimaryTag {
     tagConnection: OtherTagConnection;
 }
 
-export interface CS_ArticleOtherTags {
+export interface CS_ArticleOtherTags extends CS_OtherTags {
     author_typeConnection: OtherTagConnection;
     content_typeConnection: ContentTypeConnection;
     expertise_levelConnection: OtherTagConnection;

@@ -1,105 +1,38 @@
-import { ApolloQueryResult, gql } from '@apollo/client';
-
 import { UnderlyingClient } from '../types/client-factory';
-import { Podcast } from '../interfaces/podcast';
+import { CS_PodcastResponse } from '../interfaces/podcast';
 
-const podcastFields = `
-    description
-    publishDate: originalPublishDate
-    title
-    slug
-    podcastFileUrl
-    thumbnailUrl
-    casted_slug
-    l1Product: l_1_product {
-        name
-        calculatedSlug: calculated_slug
-    }
-    l2Product: l_2_product {
-        name
-        calculatedSlug: calculated_slug
-    }
-    programmingLanguage: programming_language {
-        name
-        calculatedSlug: calculated_slug
-    }
-    technology: technology {
-        name
-        calculatedSlug: calculated_slug
-    }
-    otherTags: other_tags {
-        spokenLanguage: spoken_language {
-            name
-            calculatedSlug: calculated_slug
-        }
-        expertiseLevel: expertise_level {
-            name: level
-            calculatedSlug: calculated_slug
-        }
-        authorType: author_type {
-            name
-            calculatedSlug: calculated_slug
-        }
-    }
-    seo: SEO {
-        canonical_url
-        meta_description
-        og_description
-        og_image {
-            url
-        }
-        og_title
-        og_type
-        og_url
-        twitter_card
-        twitter_creator
-        twitter_description
-        twitter_image {
-            url
-        }
-        twitter_site
-        twitter_title
-    }
-`;
+import { fetchAll } from './contentstack_utils';
+import { allPodcastsQuery, podcastsBySlugQuery } from '../graphql/podcasts';
 
-/**
- * Returns a list of all articles.
- * @param client -  The Apollo REST client that will be used to make the request.
- */
 const getAllPodcastsFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
-): Promise<Podcast[]> => {
-    const query = gql`
-        query Podcasts {
-            podcasts @rest(type: "Podcast", path: "/podcasts?_limit=-1") {
-                ${podcastFields}
-            }
-        }
-    `;
+    client: UnderlyingClient<'ApolloGraphQL'>
+): Promise<CS_PodcastResponse[]> => {
+    const podcasts = (await fetchAll(
+        client,
+        allPodcastsQuery,
+        'podcasts'
+    )) as CS_PodcastResponse[];
 
-    const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
-        await client.query({ query });
-
-    return data.podcasts;
+    return podcasts;
 };
 
 export const getPodcastBySlugFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>,
+    client: UnderlyingClient<'ApolloGraphQL'>,
     slug: string
-): Promise<Podcast | null> => {
-    const query = gql`
-        query Podcasts {
-            podcasts @rest(type: "Podcast", path: "/podcasts?slug_eq=${slug}") {
-                ${podcastFields}
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ podcasts: Podcast[] }> =
-        await client.query({
-            query,
-        });
+): Promise<CS_PodcastResponse | null> => {
+    const variables = { slug };
+    const podcasts = (await fetchAll(
+        client,
+        podcastsBySlugQuery,
+        'podcasts',
+        variables
+    )) as CS_PodcastResponse[];
 
-    return data.podcasts.length > 0 ? data.podcasts[0] : null;
+    if (!podcasts) {
+        return null;
+    }
+
+    return podcasts[0];
 };
 
 export default getAllPodcastsFromAPI;

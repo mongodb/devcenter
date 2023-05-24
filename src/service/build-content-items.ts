@@ -1,10 +1,8 @@
-import { Video } from '../interfaces/video';
+import { CS_VideoResponse, Video } from '../interfaces/video';
 import { Podcast } from '../interfaces/podcast';
-import {
-    CS_ArticleResponse,
-    Article,
-    ImageConnection,
-} from '../interfaces/article';
+import { CS_PodcastResponse } from '../interfaces/podcast';
+import { CS_ArticleResponse, Article } from '../interfaces/article';
+import { ImageConnection } from '../interfaces/image';
 import { ContentItem } from '../interfaces/content-item';
 import { Series } from '../interfaces/series';
 import {
@@ -14,12 +12,14 @@ import {
     CS_mergeTags,
 } from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
-import { setPrimaryTag } from './set-primary-tag';
+import { setPrimaryTag, CS_setPrimaryTag } from './set-primary-tag';
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
 import { mapAuthor } from './get-all-authors';
 import { CommunityEvent, CS_IndustryEventsResponse } from '../interfaces/event';
 import { Tag } from '../interfaces/tag';
+import { mapSEO } from '../utils/contentstack';
+import { SEO } from '../interfaces/seo';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -44,6 +44,34 @@ export const mapPodcastsToContentItems = (
         }
         item.podcastFileUrl = p.casted_slug;
         setPrimaryTag(item, p);
+        addSeriesToItem(item, 'podcast', podcastSeries);
+        items.push(item);
+    });
+    return items.filter(item => item.title !== '');
+};
+export const CS_mapPodcastsToContentItems = (
+    allPodcasts: CS_PodcastResponse[],
+    podcastSeries: Series[]
+) => {
+    const items: ContentItem[] = [];
+    allPodcasts.forEach((p: CS_PodcastResponse) => {
+        const item: ContentItem = {
+            collectionType: 'Podcast',
+            category: 'Podcast',
+            contentDate: p.original_publish_date,
+            slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
+            tags: CS_flattenTags(p.other_tags),
+            title: p.title,
+            seo: mapSEO(p.seo) as SEO,
+        };
+        if (p.description) {
+            item.description = p.description;
+        }
+        if (p.thumbnail_url) {
+            item.image = { url: p.thumbnail_url, alt: 'randomAlt' };
+        }
+        item.podcastFileUrl = p.casted_slug;
+        CS_setPrimaryTag(item, p);
         addSeriesToItem(item, 'podcast', podcastSeries);
         items.push(item);
     });
@@ -77,6 +105,39 @@ export const mapVideosToContentItems = (
 
         item.videoId = v.videoId;
         setPrimaryTag(item, v);
+        addSeriesToItem(item, 'video', videoSeries);
+        items.push(item);
+    });
+    return items.filter(item => item.title !== '');
+};
+export const CS_mapVideosToContentItems = (
+    allVideos: CS_VideoResponse[],
+    videoSeries: Series[]
+) => {
+    const items: ContentItem[] = [];
+    allVideos.forEach((v: CS_VideoResponse) => {
+        const item: ContentItem = {
+            collectionType: 'Video',
+            category: 'Video',
+            contentDate: v.original_publish_date,
+            slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
+            tags: CS_flattenTags(v.other_tags),
+            title: v.title,
+            seo: mapSEO(v.seo) as SEO,
+            relevantLinks: v?.relevant_links || '',
+        };
+
+        if (v.description) {
+            item.description = v.description;
+        }
+
+        item.image = {
+            url: getPlaceHolderImage(v.thumbnailUrl),
+            alt: 'randomAlt',
+        };
+
+        item.videoId = v.video_id;
+        CS_setPrimaryTag(item, v);
         addSeriesToItem(item, 'video', videoSeries);
         items.push(item);
     });
