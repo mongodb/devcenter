@@ -1,25 +1,34 @@
-import { UnderlyingClient } from '../types/client-factory';
-import { ApolloQueryResult, gql } from '@apollo/client';
-import { SeriesResponse } from '../types/series-type';
+import { CS_SeriesResponse } from '../interfaces/series';
+import axios from 'axios';
+import { CS_HEADERS } from '../data/constants';
 
-export const getAllVideoSeriesFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
-): Promise<SeriesResponse[]> => {
-    const query = gql`
-        query VideoSeries {
-            videoSeries @rest(type: "VideoSeries", path: "/new-video-series") {
-                title
-                seriesEntry {
-                    video: new_video {
-                        title
-                        calculatedSlug: slug
-                    }
+export const getAllVideoSeriesQuery = () => `
+    query get_video_series {
+      all_video_series {
+        items {
+          series_entryConnection {
+            edges {
+              node {
+                ... on Videos {
+                  title
+                  calculated_slug : slug
                 }
+              }
             }
+          }
+          title
         }
-    `;
-    const { data }: ApolloQueryResult<{ videoSeries: SeriesResponse[] }> =
-        await client.query({ query });
+      }
+    }
+`;
 
-    return data.videoSeries;
+export const CS_getAllVideoSeriesFromAPI = async (): Promise<
+    CS_SeriesResponse[]
+> => {
+    const url = `${
+        process.env.CS_GRAPHQL_URL
+    }?environment=production&query=${getAllVideoSeriesQuery()}`;
+    const { data } = await axios.get(url, { headers: CS_HEADERS });
+    const { items } = data.data.all_video_series;
+    return items;
 };
