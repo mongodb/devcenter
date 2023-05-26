@@ -22,6 +22,7 @@ const personalizedContentHandler = async (
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    'X-API-KEY': process.env.BACKEND_API_KEY || '',
                 },
             }
         );
