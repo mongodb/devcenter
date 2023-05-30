@@ -1,9 +1,8 @@
-import { Series } from '../interfaces/series';
-import { STRAPI_CLIENT } from '../config/api-client';
-import { parseStrapiSeriesResponse } from './parse-strapi-series-response';
-import { getAllVideoSeriesFromAPI } from '../api-requests/get-video-series';
+import { CS_SeriesResponse, Series } from '../interfaces/series';
+import { CS_parseStrapiSeriesResponse } from './parse-strapi-series-response';
+import { CS_getAllVideoSeriesFromAPI } from '../api-requests/get-video-series';
 
 export const getAllVideoSeries = async (): Promise<Series[]> => {
-    const data = await getAllVideoSeriesFromAPI(STRAPI_CLIENT);
-    return parseStrapiSeriesResponse(data, 'video');
+    const data: CS_SeriesResponse[] = await CS_getAllVideoSeriesFromAPI();
+    return CS_parseStrapiSeriesResponse(data);
 };

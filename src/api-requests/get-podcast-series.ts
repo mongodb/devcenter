@@ -1,26 +1,34 @@
-import { UnderlyingClient } from '../types/client-factory';
-import { ApolloQueryResult, gql } from '@apollo/client';
-import { SeriesResponse } from '../types/series-type';
+import { CS_SeriesResponse } from '../interfaces/series';
+import axios from 'axios';
+import { CS_HEADERS } from '../data/constants';
 
-export const getAllPodcastSeriesFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
-): Promise<SeriesResponse[]> => {
-    const query = gql`
-        query PodcastSeries {
-            podcastSeries
-                @rest(type: "PodcastSeries", path: "/podcast-series") {
-                title
-                seriesEntry {
-                    podcast {
-                        title
-                        calculatedSlug: slug
-                    }
+export const getAllPodcastSeriesQuery = () => `
+    query get_podcast_series {
+      all_podcast_series {
+        items {
+          series_entryConnection {
+            edges {
+              node {
+                ... on Podcasts {
+                  title
+                  calculated_slug : slug
                 }
+              }
             }
+          }
+          title
         }
-    `;
-    const { data }: ApolloQueryResult<{ podcastSeries: SeriesResponse[] }> =
-        await client.query({ query });
+      }
+    }
+`;
 
-    return data.podcastSeries;
+export const CS_getAllPodcastSeriesFromAPI = async (): Promise<
+    CS_SeriesResponse[]
+> => {
+    const url = `${
+        process.env.CS_GRAPHQL_URL
+    }?environment=production&query=${getAllPodcastSeriesQuery()}`;
+    const { data } = await axios.get(url, { headers: CS_HEADERS });
+    const { items } = data.data.all_podcast_series;
+    return items;
 };
