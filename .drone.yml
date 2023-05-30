@@ -28,6 +28,12 @@ steps:
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
         from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
@@ -65,7 +71,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - cms_migration_may25
   event:
     - push
 
@@ -127,6 +133,12 @@ steps:
         from_secret: STRAPI_URL_PROD
       STRAPI_API_TOKEN:
         from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
@@ -217,6 +229,12 @@ steps:
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
         from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
@@ -287,6 +305,12 @@ steps:
         from_secret: STRAPI_URL_PROD
       STRAPI_API_TOKEN:
         from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
@@ -357,6 +381,12 @@ steps:
         from_secret: STRAPI_URL_STAGING
       STRAPI_API_TOKEN:
         from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
       SENTRY_AUTH_TOKEN:
         from_secret: SENTRY_AUTH_TOKEN
       SENTRY_DSN:
