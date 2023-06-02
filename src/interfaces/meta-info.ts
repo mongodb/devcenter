@@ -44,7 +44,15 @@ export type ContentTypeUID =
     | 'content_types'
     | 'code_levels'
     | 'event_types'
-    | 'event_attendances';
+    | 'event_attendances'
+    | 'industry_events'
+    | 'article_series'
+    | 'podcast_series'
+    | 'video_series'
+    | 'featured_content'
+    | 'featured_content_for_topic'
+    | 'podcasts'
+    | 'videos';
 
 export const contentTypeUIDtoTagType = new Map<ContentTypeUID, TagType>([
     ['l1_products', 'L1Product'],

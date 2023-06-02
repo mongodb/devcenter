@@ -3,8 +3,9 @@ import axios from 'axios';
 import { CS_SeriesResponse } from '../interfaces/series';
 
 export const getAllArticleSeriesQuery = () => `
-    query get_article_series {
+    query get_all_article_series {
       all_article_series {
+        total
         items {
           series_entryConnection {
             edges {

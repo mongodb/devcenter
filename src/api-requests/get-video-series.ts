@@ -3,8 +3,9 @@ import axios from 'axios';
 import { CS_HEADERS } from '../data/constants';
 
 export const getAllVideoSeriesQuery = () => `
-    query get_video_series {
+    query get_all_video_series {
       all_video_series {
+        total
         items {
           series_entryConnection {
             edges {

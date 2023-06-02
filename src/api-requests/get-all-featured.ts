@@ -65,6 +65,7 @@ export const CS_featuredContentFields = `
 export const getAllFeaturedContentQuery = () => `
     query get_featured {
         all_featured_content  {
+            total
             items {
                 ${CS_featuredContentFields}
             }

@@ -1,4 +1,3 @@
-import { CS_CLIENT } from '../config/api-client';
 import { CS_VideoResponse } from '../interfaces/video';
 import getAllVideosFromAPI, {
     getVideoBySlugFromAPI,
@@ -40,14 +39,14 @@ const setVideoTags = (videos: CS_VideoResponse[]) => {
 };
 
 export const getAllVideos = async (): Promise<CS_VideoResponse[]> => {
-    const videos = await getAllVideosFromAPI(CS_CLIENT);
+    const videos = await getAllVideosFromAPI();
     return setVideoTags(videos);
 };
 
 export const getVideoBySlug = async (
     slug: string
 ): Promise<CS_VideoResponse | null> => {
-    const video = await getVideoBySlugFromAPI(CS_CLIENT, slug);
+    const video = await getVideoBySlugFromAPI(slug);
     if (!video) return null;
     const modifiedVideos = setVideoTags([video]);
     return modifiedVideos[0];
