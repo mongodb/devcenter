@@ -215,9 +215,13 @@ const ContentTypeBody: React.FunctionComponent<
                             hasIcon={true}
                             iconName={ESystemIconNames.ARROW_LEFT}
                             iconPosition="left"
-                            onClick={clearSearchParam}
+                            onClick={() => clearSearchParam('search')}
                         >
-                            Back to all {contentType.toLowerCase()}s
+                            Back to all{' '}
+                            {contentType === 'Video'
+                                ? 'show'
+                                : contentType.toLowerCase()}
+                            s
                         </Button>
                     }
                 />

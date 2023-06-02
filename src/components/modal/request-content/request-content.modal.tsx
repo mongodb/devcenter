@@ -56,7 +56,7 @@ const RequestContentModal: React.FunctionComponent<RequestContentModalProps> =
                 [REQUEST_MODAL_STAGE.THANKS]: (
                     <ThankYou
                         title="Thanks for your request!"
-                        subtitle="Someone from our Developer Experience team will review your request. Once reviewed, someone from our team may reach out to you to follow up"
+                        subtitle="Someone from our Developer Experience team will review your request. Once reviewed, someone from our team may reach out to you to follow up."
                         titleStyles={{
                             display: 'block',
                             marginBottom: ['inc40', null, null, 'inc50'],

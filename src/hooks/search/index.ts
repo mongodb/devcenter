@@ -68,7 +68,7 @@ const useSearch = (
         sortProps,
         sortProps: { sortBy },
         clearSort,
-    } = useSort(paramChangeCallback);
+    } = useSort(paramChangeCallback, contentType);
 
     const {
         filterProps,
