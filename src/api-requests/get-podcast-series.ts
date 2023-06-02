@@ -3,8 +3,9 @@ import axios from 'axios';
 import { CS_HEADERS } from '../data/constants';
 
 export const getAllPodcastSeriesQuery = () => `
-    query get_podcast_series {
+    query get_all_podcast_series {
       all_podcast_series {
+        total
         items {
           series_entryConnection {
             edges {

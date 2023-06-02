@@ -2303,5 +2303,10 @@
         "source": "/products/mongodb/generate-mql-with-mognosh-and-openai/",
         "destination": "/products/mongodb/generate-mql-with-mongosh-and-openai/",
         "permanent": true
+    },
+    {
+        "source": "/products/mongodb/getting-started-mongodb-c/",
+        "destination": "/products/mongodb/getting-started-mongodb-cpp/",
+        "permanent": true
     }
 ]

@@ -12,6 +12,13 @@ import { CS_GRAPHQL_LIMIT } from '../src/data/constants';
 import { getMetaInfoQuery } from '../src/api-requests/get-all-meta-info';
 import { getAllAuthorsQuery } from '../src/api-requests/get-authors';
 import { getAllArticlesQuery } from '../src/api-requests/get-articles';
+import { getAllIndustryEventsQuery } from '../src/api-requests/get-industry-events';
+import { getAllArticleSeriesQuery } from '../src/api-requests/get-article-series';
+import { getAllPodcastSeriesQuery } from '../src/api-requests/get-podcast-series';
+import { getAllFeaturedContentQuery } from '../src/api-requests/get-all-featured';
+import { getAllVideosQuery } from '../src/api-requests/get-videos';
+import { getAllPodcastsQuery } from '../src/api-requests/get-podcasts';
+import { getAllVideoSeriesQuery } from '../src/api-requests/get-video-series';
 interface RESTHandlerInfo {
     pattern: string;
     url: string;
@@ -27,7 +34,7 @@ interface GQLHandlerInfo {
     contentTypeUID: ContentTypeUID;
     queryName: string;
     mockFile: string;
-    getQuery?: (skip?: number) => string;
+    getQuery?: (skip?: number, today?: string) => string;
 }
 
 export const restHandlerInfo: RESTHandlerInfo[] = [
@@ -40,41 +47,6 @@ export const restHandlerInfo: RESTHandlerInfo[] = [
         pattern: `${process.env.REALM_API_URL}/community_events`,
         url: `${process.env.REALM_API_URL}/community_events`,
         mockFile: 'community_events',
-    },
-    {
-        pattern: `${process.env.STRAPI_URL}/new-videos`,
-        url: `${process.env.STRAPI_URL}/new-videos?_limit=-1`,
-        mockFile: 'new-videos',
-    },
-    {
-        pattern: `${process.env.STRAPI_URL}/upcoming-industry-events`,
-        url: `${process.env.STRAPI_URL}/upcoming-industry-events?_limit=-1`,
-        mockFile: 'upcoming-industry-events',
-    },
-    {
-        pattern: `${process.env.STRAPI_URL}/podcast-series`,
-        url: `${process.env.STRAPI_URL}/podcast-series?_limit=-1`,
-        mockFile: 'podcast-series',
-    },
-    {
-        pattern: `${process.env.STRAPI_URL}/featured-content*`,
-        url: `${process.env.STRAPI_URL}/featured-content?_limit=-1`,
-        mockFile: 'featured-content',
-    },
-    {
-        pattern: `${process.env.STRAPI_URL}/podcasts`,
-        url: `${process.env.STRAPI_URL}/podcasts?_limit=-1`,
-        mockFile: 'podcasts',
-    },
-    {
-        pattern: `${process.env.STRAPI_URL}/new-article-series`,
-        url: `${process.env.STRAPI_URL}/new-article-series?_limit=-1`,
-        mockFile: 'new-article-series',
-    },
-    {
-        pattern: `${process.env.STRAPI_URL}/new-video-series`,
-        url: `${process.env.STRAPI_URL}/new-video-series?_limit=-1`,
-        mockFile: 'new-video-series',
     },
 ];
 
@@ -137,6 +109,49 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
         queryName: 'get_article',
         mockFile: 'articles',
     },
+    {
+        contentTypeUID: 'industry_events',
+        queryName: 'get_all_industry_events',
+        mockFile: 'upcoming-industry-events',
+        getQuery: skip =>
+            getAllIndustryEventsQuery(skip, new Date().toISOString()),
+    },
+    {
+        contentTypeUID: 'article_series',
+        queryName: 'get_all_article_series',
+        mockFile: 'article-series',
+        getQuery: skip => getAllArticleSeriesQuery(),
+    },
+    {
+        contentTypeUID: 'podcast_series',
+        queryName: 'get_all_podcast_series',
+        mockFile: 'podcast-series',
+        getQuery: skip => getAllPodcastSeriesQuery(),
+    },
+    {
+        contentTypeUID: 'video_series',
+        queryName: 'get_all_video_series',
+        mockFile: 'video-series',
+        getQuery: skip => getAllVideoSeriesQuery(),
+    },
+    {
+        contentTypeUID: 'featured_content',
+        queryName: 'get_all_featured_content',
+        mockFile: 'featured-content',
+        getQuery: skip => getAllFeaturedContentQuery(),
+    },
+    {
+        contentTypeUID: 'videos',
+        queryName: 'get_all_videos',
+        mockFile: 'videos',
+        getQuery: skip => getAllVideosQuery(skip),
+    },
+    {
+        contentTypeUID: 'podcasts',
+        queryName: 'get_all_podcasts',
+        mockFile: 'podcasts',
+        getQuery: skip => getAllPodcastsQuery(skip),
+    },
 ];
 
 const restHandlers = restHandlerInfo.map(
@@ -180,7 +195,12 @@ const gqlHandlers = gqlHandlerInfo.map(
                 }
                 return entry;
             }
-            const skip = Number(query.split('skip: ')[1].split(')')[0]);
+            const skip =
+                contentTypeUID == 'podcast_series' ||
+                contentTypeUID == 'video_series' ||
+                contentTypeUID == 'article_series'
+                    ? 0
+                    : Number(query.split('skip: ')[1].split(')')[0]);
             const fileIndex = skip / CS_GRAPHQL_LIMIT;
             // Will have to adjust for getting individual entries.
             const json = (await import(`./data/${mockFile}-${fileIndex}.js`))

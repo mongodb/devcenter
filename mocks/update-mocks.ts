@@ -88,10 +88,12 @@ const fetchMocks = async () => {
         try {
             const fname = handler.mockFile;
             let paginationCount = 0;
+            let today = new Date().toISOString();
             const url = `${
                 process.env.CS_GRAPHQL_URL
             }?environment=production&query=${handler.getQuery(
-                paginationCount
+                paginationCount,
+                today
             )}`;
             const response = await (
                 await fetch(url, { headers: CSHeaders })
@@ -115,7 +117,8 @@ const fetchMocks = async () => {
                 const url = `${
                     process.env.CS_GRAPHQL_URL
                 }?environment=production&query=${handler.getQuery(
-                    paginationCount
+                    paginationCount,
+                    today
                 )}`;
                 const paginatedResponse = await (
                     await fetch(url, { headers: CSHeaders })

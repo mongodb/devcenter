@@ -38,6 +38,7 @@ const feedbackHandler = async (req: NextApiRequest, res: NextApiResponse) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json;charset=UTF-8',
+                    'X-API-KEY': process.env.BACKEND_API_KEY || '',
                 },
             }
         );
