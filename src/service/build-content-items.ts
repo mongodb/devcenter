@@ -274,7 +274,7 @@ export const CS_mapArticlesToContentItems = (
     filteredArticles.forEach((a: CS_ArticleResponse) => {
         const updated_at =
             !a.strapi_updated_at ||
-            new Date(a.system.updated_at) > new Date('2023-05-10') // This should be set to the date we migrate from Strapi to ContentStack
+            new Date(a.system.updated_at) > new Date('2023-06-12') // This should be set to the date we migrate from Strapi to ContentStack
                 ? a.system.updated_at
                 : a.strapi_updated_at;
         const authors = a.authorsConnection.edges.map(({ node }) =>
