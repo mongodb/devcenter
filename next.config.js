@@ -155,10 +155,8 @@ const configVals = {
     staticPageGenerationTimeout: 180,
     trailingSlash: true,
     webpack: (config, { isServer, dev }) => {
-        if (isServer && !dev) {
-            buildRssFeed(`${httpProtocol}://${hostUrl}${basePath}`).then(() =>
-                console.log('Built RSS feed.')
-            );
+        if (process.env.APP_ENV !== 'production' && isServer && !dev) {
+            buildRssFeed(`${httpProtocol}://${hostUrl}${basePath}`);
         }
 
         return config;

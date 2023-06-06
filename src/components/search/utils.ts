@@ -20,15 +20,15 @@ export interface SearchQueryParams {
 export const buildSearchQuery = (queryParams: SearchQueryParams) => {
     const uriParts = [
         `s=${encodeURIComponent(queryParams.searchString)}`,
-        `sortMode=${sortByOptions[queryParams.sortBy]}`,
+        `sort_mode=${sortByOptions[queryParams.sortBy]}`,
     ];
     if (queryParams.contentType) {
         uriParts.push(
-            `contentType=${encodeURIComponent(queryParams.contentType)}`
+            `content_type=${encodeURIComponent(queryParams.contentType)}`
         );
     }
     if (queryParams.tagSlug) {
-        uriParts.push(`tagSlug=${encodeURIComponent(queryParams.tagSlug)}`);
+        uriParts.push(`tag_slug=${encodeURIComponent(queryParams.tagSlug)}`);
     }
     return uriParts.join('&');
 };

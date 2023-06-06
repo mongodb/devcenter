@@ -15,7 +15,10 @@ const SortBox: React.FunctionComponent<SortBoxProps> = ({
         }}
         label="Sort by"
         name="sort-by-dropdown"
-        options={Object.keys(sortByOptions)}
+        // 'Closest Upcoming' is reserved for events.
+        options={Object.keys(sortByOptions).filter(
+            mode => mode !== 'Closest Upcoming'
+        )}
         value={sortBy || defaultSortByType}
         onSelect={(value?: string) => onSort((value || '') as SortByType)}
     />

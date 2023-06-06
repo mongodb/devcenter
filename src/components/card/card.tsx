@@ -52,7 +52,7 @@ const CardThumbnail = ({
 
     const defaultThumbnail = (
         <Image
-            alt={alt || 'alt not provided'}
+            alt={alt || 'MongoDB thumbnail image'}
             src={url as string}
             sx={thumbnailStyles}
             layout="fill"
