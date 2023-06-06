@@ -1,7 +1,9 @@
 import { Coordinates } from './coordinates';
-import { OtherTags } from './other-tags';
 import { Tag } from './tag';
-import { Author } from './author';
+import { AuthorsConnection } from './article';
+import { ImageConnection } from './image';
+import { CS_ArticleOtherTags } from './article';
+import { Connection } from './connection';
 
 export type EventSetup = 'InPerson' | 'Virtual' | 'Hybrid' | 'Unknown';
 
@@ -45,50 +47,71 @@ export interface CommunityEvent {
     };
 }
 
-export interface IndustryEvent {
-    type: string;
-    authors: Author[];
-    coordinates: Coordinates;
-    content: string;
-    title: string;
-    image: {
-        url?: string;
-        alt?: string;
-    };
-    published_at: string;
-    otherTags: OtherTags;
-    created_at: string;
-    updated_at: string;
-    calculated_slug: string;
-    description: string;
-    end_time: string;
-    location: string;
-    city?: string;
-    state?: string;
-    country?: string;
-    slug: string;
-    start_time: string;
-    registration_url: string;
-    virtual_meetup_url: string;
-    virtual_meetup_url_text: string;
-    related_content: IndustryEventRelatedContentFromCMS;
-}
-
-export interface IndustryEventRelatedContentFromCMS {
-    [field: string]: Array<{
-        title: string;
-        slug?: string;
-        calculated_slug?: string;
-        end_time?: string;
-        start_time?: string;
-        originalPublishDate?: string;
-        published_at?: string;
-    }>;
-}
-
 export interface IndustryEventRelatedContent {
     title: string;
     contentDate: string | [string, string];
     slug: string;
     category: string;
+}
+
+export interface Address {
+    address_line_1?: string;
+    address_line_2?: string;
+    city?: string;
+    coordinates: string;
+    country?: string;
+    location: string;
+    preferred_location?: string;
+    state?: string;
+    zipcode?: string;
+}
+
+export interface CS_IndustryEventRelatedContentFromCMS {
+    [field: string]: Array<{
+        title: string;
+        calculated_slug?: string;
+        end_time?: string;
+        start_time?: string;
+        original_publish_date?: string;
+        system?: { publish_details: { time: string } };
+    }>;
+}
+
+export interface CS_RelatedContentResponse {
+    title: string;
+    calculated_slug: string;
+    original_publish_date?: string;
+    start_time?: string;
+    end_time?: string;
+    system?: { publish_details: { time: string } };
+}
+
+export interface RelatedContentConnection extends Connection {
+    edges: { node: CS_RelatedContentResponse }[];
+}
+
+export interface CS_IndustryEventRelatedContent {
+    articlesConnection?: RelatedContentConnection;
+    podcastsConnection?: RelatedContentConnection;
+    videosConnection?: RelatedContentConnection;
+    industry_eventsConnection?: RelatedContentConnection;
+}
+
+export interface CS_IndustryEventsResponse {
+    type: string;
+    authorsConnection: AuthorsConnection;
+    address: Address;
+    content: string;
+    title: string;
+    imageConnection: ImageConnection;
+    other_tags: CS_ArticleOtherTags;
+    calculated_slug: string;
+    description: string;
+    end_time: string;
+    slug: string;
+    start_time: string;
+    registration_url: string;
+    virtual_meetup_url: string;
+    virtual_meetup_url_text: string;
+    related_content: CS_IndustryEventRelatedContent;
 }
