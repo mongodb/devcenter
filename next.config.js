@@ -78,6 +78,10 @@ const configVals = {
                 protocol: 'https',
                 hostname: 'raw.githubusercontent.com',
             },
+            {
+                protocol: 'https',
+                hostname: 'img.youtube.com',
+            },
             ...IMAGE_PATTERNS,
         ],
         path: `${basePath}/_next/image`,
