@@ -1,27 +1,30 @@
-import { OtherTags } from './other-tags';
-
 export type Image = {
     url: string;
 };
+// CONTENTSTACK
 
-type ArticlesByAuthor = {
-    name: string;
-    calculated_slug: string;
-    description: string;
-    otherTags: OtherTags[];
-};
+interface ImageConnection {
+    edges: { node: { url: string } }[];
+}
 
-export interface Author {
-    name: string;
+interface AuthorBase {
     url?: string;
     bio?: string;
-    image?: Image;
     location?: string;
-    title?: string;
     linkedin?: string;
     facebook?: string;
     twitter?: string;
     youtube?: string;
-    articles?: ArticlesByAuthor[];
     calculated_slug: string;
+}
+export interface Author extends AuthorBase {
+    image?: Image;
+    title?: string;
+    name: string;
+}
+
+export interface CS_AuthorResponse extends AuthorBase {
+    imageConnection?: ImageConnection;
+    job_title?: string;
+    title: string;
 }

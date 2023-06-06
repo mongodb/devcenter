@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { TypographyScale, Button, TextArea, TextInput } from '@mdb/flora';
+import { TypographyScale, Button, TextArea, Select } from '@mdb/flora';
 
 import { TextRequestProps } from '../types';
 import { modalWrapperStyles } from '../../shared/styles';
 
 import { getRequestBtnText } from '../../../../utils/page-template-helpers';
 
-const helperText =
-    "Please include which products, languages, and technologies you're interested in seeing as part of this content request";
+import allMetaInfoPreval from '../../../../service/get-all-meta-info.preval';
 
 const TextRequest: React.FunctionComponent<TextRequestProps> = ({
     onContinue,
@@ -17,10 +16,24 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
 
     const [topic, setTopic] = useState('');
     const [description, setDescription] = useState('');
-    const [email, setEmail] = useState('');
+    const [programmingLanguage, setProgrammingLanguage] = useState('');
 
-    const [topicTyped, setTopicTyped] = useState(false);
     const [descTyped, setDescTyped] = useState(false);
+    const [topicSelected, setTopicSelected] = useState(false);
+    const [programmingLanguageSelected, setProgrammingLanguageSelected] =
+        useState(false);
+
+    const languages = allMetaInfoPreval
+        .filter(tag => tag.category === 'ProgrammingLanguage')
+        .map(tag => tag.tagName)
+        .sort();
+    languages.unshift('N/A');
+
+    const topics = allMetaInfoPreval
+        .filter(tag => tag.category === 'Technology')
+        .map(tag => tag.tagName)
+        .sort();
+    topics.unshift('N/A');
 
     return (
         <div sx={modalWrapperStyles}>
@@ -33,63 +46,52 @@ const TextRequest: React.FunctionComponent<TextRequestProps> = ({
             >
                 {title}
             </TypographyScale>
-            <div
-                sx={{
-                    '& > div': {
-                        maxWidth: '100%',
-                    },
-                    marginBottom: 'inc30',
-                    maxWidth: '100%',
-                }}
-            >
-                <TextInput
+            <div sx={{ marginBottom: 'inc30' }}>
+                <Select
                     name="topic"
                     label="Topic"
+                    options={topics}
+                    onSelect={(value?: string) => setTopic(value || '')}
                     value={topic}
-                    onChange={e => {
-                        setTopic(e.target.value);
-                        setTopicTyped(true);
-                    }}
-                    invalid={!topic && topicTyped}
+                    invalid={!topic && topicSelected}
+                />
+            </div>
+            <div sx={{ marginBottom: 'inc30' }}>
+                <Select
+                    name="programming_language"
+                    label="Programming Language"
+                    options={languages}
+                    onSelect={(value?: string) =>
+                        setProgrammingLanguage(value || '')
+                    }
+                    value={programmingLanguage}
+                    invalid={
+                        !programmingLanguage && programmingLanguageSelected
+                    }
                 />
             </div>
             <div sx={{ marginBottom: 'inc30' }}>
                 <TextArea
                     name="description"
-                    label="Describe your experience"
+                    label="Description"
                     value={description}
                     onChange={e => {
                         setDescription(e.target.value);
                         setDescTyped(true);
                     }}
-                    helper={helperText}
                     textAreaStyles={{ resize: 'vertical' }}
                     invalid={!description && descTyped}
-                />
-            </div>
-            <div
-                sx={{
-                    '& > div': {
-                        maxWidth: '100%',
-                    },
-                    marginBottom: ['inc40', null, null, 'inc50'],
-                }}
-            >
-                <TextInput
-                    name="email"
-                    label="Email (optional)"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
                 />
             </div>
             <div sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
                     onClick={() => {
-                        if (topic && description) {
-                            onContinue(topic, description, email);
+                        if (topic && programmingLanguage && description) {
+                            onContinue(topic, description, programmingLanguage);
                         } else {
-                            setTopicTyped(true);
                             setDescTyped(true);
+                            setTopicSelected(true);
+                            setProgrammingLanguageSelected(true);
                         }
                     }}
                     size="small"

@@ -8,7 +8,7 @@ export enum REQUEST_MODAL_STAGE {
 export interface ContentRequest {
     topic: string;
     description: string;
-    email: string | null;
+    programming_language: string;
 }
 
 export interface RequestContentModalProps {

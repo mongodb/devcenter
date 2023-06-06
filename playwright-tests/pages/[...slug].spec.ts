@@ -20,7 +20,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
     // Breadcrumbs
     expect(
         await page
-            .locator('div[data-testid="breadcrumbs"] a:has-text("Tutorials")')
+            .locator('div[data-testid="breadcrumbs"] a:has-text("*Tutorials")')
             .count()
     ).toEqual(1);
 
@@ -54,7 +54,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
 
     // Rating, top and bottom
     expect(
-        await page.locator('span:has-text("Rate this tutorial")').count()
+        await page.locator('span:has-text("Rate this *tutorial")').count()
     ).toEqual(2);
     expect(await page.locator('div[aria-label="One Star"]').count()).toEqual(2);
 
@@ -71,7 +71,7 @@ test('Content page has all components on tutorial', async ({ page }) => {
 
     // Request button
     expect(
-        await page.locator('button:text("Request a Tutorial")').count()
+        await page.locator('button:text("Request a *Tutorial")').count()
     ).toEqual(1);
 });
 
@@ -82,13 +82,20 @@ test('request content flow on content page works', async ({ page }) => {
         route.fulfill();
     });
     await Promise.all([
-        page.waitForSelector('h5:text("Request a Tutorial")'),
-        page.locator('button:text("Request a Tutorial")').click(),
+        page.waitForSelector('h5:text("Request a *Tutorial")'),
+        page.locator('button:text("Request a *Tutorial")').click(),
     ]);
-    await page.locator('input[name=topic]').fill('Topic X');
+
+    await page.locator('#topic').click();
+    await page.locator('span', { hasText: 'AWS' }).click();
+
+    await page.locator('#programming_language').click();
+    await page.locator('span', { hasText: 'Python' }).click();
+
     await page
         .locator('textarea[name=description]')
         .fill('I want to learn Y about topic X');
+
     await Promise.all([
         page.waitForSelector('"Thanks for your request!"'),
         page.locator('button:text("Submit")').click(),
@@ -138,7 +145,7 @@ test('1 star rating flow on content page', async ({ page }) => {
         (await page.locator('div[aria-label="Five Stars"]').nth(0)).click(),
     ]);
     await Promise.all([
-        page.waitForSelector('"How can we improve this tutorial?"'),
+        page.waitForSelector('"How can we improve this *tutorial?"'),
         page.locator('button:has-text("Tell us more")').click(),
     ]);
     await Promise.all([
@@ -176,7 +183,7 @@ test('3 star rating flow on content page', async ({ page }) => {
         (await page.locator('div[aria-label="Five Stars"]').nth(0)).click(),
     ]);
     await Promise.all([
-        page.waitForSelector('"How can we improve this tutorial?"'),
+        page.waitForSelector('"How can we improve this *tutorial?"'),
         page.locator('button:has-text("Tell us more")').click(),
     ]);
     await Promise.all([
@@ -203,7 +210,7 @@ test('5 star rating flow on content page', async ({ page }) => {
         (await page.locator('div[aria-label="Five Stars"]').nth(0)).click(),
     ]);
     await Promise.all([
-        page.waitForSelector('"How can we improve this tutorial?"'),
+        page.waitForSelector('"How can we improve this *tutorial?"'),
         page.locator('button:has-text("Tell us more")').click(),
     ]);
     await Promise.all([

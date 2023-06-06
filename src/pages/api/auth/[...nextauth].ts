@@ -13,6 +13,7 @@ async function getUser(userId: string | unknown): Promise<any> {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'X-API-KEY': process.env.BACKEND_API_KEY || '',
         },
     };
     let req;
@@ -41,7 +42,10 @@ async function persistNewUser(user: User): Promise<any> {
         req = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(user),
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': process.env.BACKEND_API_KEY || '',
+            },
         });
     } catch (e) {
         logger.error(e);

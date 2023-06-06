@@ -19,12 +19,12 @@ const RequestContentModal: React.FunctionComponent<RequestContentModalProps> =
         const onSubmit = (
             topic: string,
             description: string,
-            email: string
+            programming_language: string
         ) => {
             const contentRequest: ContentRequest = {
                 topic,
                 description,
-                email: email || null, // Convert empty string to null.
+                programming_language, // Convert empty string to null.
             };
 
             axios.post(
@@ -39,10 +39,10 @@ const RequestContentModal: React.FunctionComponent<RequestContentModalProps> =
         const onContinue = (
             topic: string,
             description: string,
-            email: string
+            programming_language: string
         ) => {
             setModalStage(REQUEST_MODAL_STAGE.THANKS);
-            onSubmit(topic, description, email);
+            onSubmit(topic, description, programming_language);
         };
 
         const renderModal = (type: REQUEST_MODAL_STAGE) => {

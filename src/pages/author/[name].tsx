@@ -5,19 +5,19 @@ import { ParsedUrlQuery } from 'querystring';
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import { GridLayout, SpeakerLockup, TypographyScale } from '@mdb/flora';
 
-import { getAuthor } from '../../service/get-all-authors';
+import { CS_getAuthor } from '../../service/get-all-authors';
 import allAuthorsPreval from '../../service/get-all-authors.preval';
 
 import { Author, Image } from '../../interfaces/author';
 import { ContentItem } from '../../interfaces/content-item';
 
-import { flattenTags } from '../../utils/flatten-tags';
 import { getPlaceHolderImage } from '../../utils/get-place-holder-thumbnail';
 
 import Breadcrumbs from '../../components/breadcrumbs';
 import Card, { getCardProps } from '../../components/card';
 import { Crumb } from '../../components/breadcrumbs/types';
 import SocialButtons from '../../components/social-buttons';
+import allContentPreval from '../../service/get-all-content.preval';
 
 const crumbs: Crumb[] = [{ text: 'MongoDB Developer Center', url: '/' }];
 interface AuthorPageProps {
@@ -247,7 +247,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     let author: Author | null;
     try {
-        author = await getAuthor(slugString);
+        author = await CS_getAuthor(slugString);
     } catch (e) {
         Sentry.captureException(e);
         author = allAuthorsPreval.filter(
@@ -261,28 +261,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         };
     }
 
-    const authorContentItems: any[] = [];
-    for (const article of author.articles as any) {
-        const item: ContentItem = {
-            collectionType: 'Article',
-            authors: article.authors,
-            category: article.otherTags[0].contentType.contentType,
-            contentDate: article.originalPublishDate || article.publishDate,
-            description: article.description,
-            slug: article.calculatedSlug.startsWith('/')
-                ? article.calculatedSlug.substring(1)
-                : article.calculatedSlug,
-            tags: flattenTags(article.otherTags),
-            title: article.title,
-        };
-        if (article.image) {
-            item.image = {
-                url: article.image.url,
-                alt: article.image.alt || 'random alt',
-            };
-        }
-        authorContentItems.push(item);
-    }
+    const authorContentItems = allContentPreval.filter(content =>
+        content.authors?.find(
+            contentAuthor =>
+                contentAuthor.calculated_slug === author?.calculated_slug
+        )
+    );
 
     const data = {
         name: author.name,

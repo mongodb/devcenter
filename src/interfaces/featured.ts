@@ -15,3 +15,19 @@ export interface FeaturedResponse {
     videos: FeaturedItem[] | null;
     events: FeaturedItem[] | null;
 }
+
+export interface CategoryConnection {
+    edges: { node: { calculated_slug: string } }[];
+}
+
+interface FeaturedReferenceConnection {
+    edges: { node: { title: string } }[];
+}
+
+export interface CS_FeaturedContentResponse {
+    categoryConnection: CategoryConnection;
+    articlesConnection: FeaturedReferenceConnection;
+    videosConnection: FeaturedReferenceConnection;
+    podcastsConnection: FeaturedReferenceConnection;
+    industry_eventsConnection: FeaturedReferenceConnection;
+}

@@ -18,6 +18,7 @@ async function userPreferencesHandler(
                 body: req.body,
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-API-KEY': process.env.BACKEND_API_KEY || '',
                 },
             }
         );
