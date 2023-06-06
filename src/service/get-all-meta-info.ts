@@ -1,13 +1,9 @@
-import { STRAPI_CLIENT } from '../config/api-client';
-import { MetaInfo, MetaInfoResponse } from '../interfaces/meta-info';
 import {
-    getAllContentTypesMetaInfo,
-    getAllExpertiseLevelsMetaInfo,
-    getAllL1ProductsMetaInfo,
-    getAllL2ProductsMetaInfo,
-    getAllProgrammingLanguagesMetaInfo,
-    getAllTechnologiesMetaInfo,
-} from '../api-requests/get-all-meta-info';
+    MetaInfo,
+    CS_MetaInfoResponse,
+    contentTypeUIDtoTagType,
+} from '../interfaces/meta-info';
+import { CS_getMetaInfoFromCMS } from '../api-requests/get-all-meta-info';
 import { CTA } from '../components/hero/types';
 import { getDistinctTags } from './get-distinct-tags';
 import { TagType } from '../types/tag-type';
@@ -15,19 +11,19 @@ import { TagType } from '../types/tag-type';
 export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
     const existingTags = await getDistinctTags();
     // We have no use for tags that have no content associated with them
-    const getExisting = (tags: MetaInfoResponse[], category: TagType) =>
+    const getExisting = (tags: CS_MetaInfoResponse[], category: TagType) =>
         tags.filter(tag =>
             existingTags.find(
                 ({ slug, type }) => slug === tag.slug && type === category
             )
         );
     const l2MetaInfoResponse = getExisting(
-        await getAllL2ProductsMetaInfo(STRAPI_CLIENT),
+        await CS_getMetaInfoFromCMS('l2_products'),
         'L2Product'
     );
 
     const l1ProductsMetaInfo = parseMetaInfoResponseForL1(
-        getExisting(await getAllL1ProductsMetaInfo(STRAPI_CLIENT), 'L1Product'),
+        getExisting(await CS_getMetaInfoFromCMS('l1_products'), 'L1Product'),
         l2MetaInfoResponse
     );
 
@@ -35,27 +31,18 @@ export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
 
     const programmingLanguagesMetaInfo = parseMetaInfoResponse(
         getExisting(
-            await getAllProgrammingLanguagesMetaInfo(STRAPI_CLIENT),
+            await CS_getMetaInfoFromCMS('programming_languages'),
             'ProgrammingLanguage'
         )
     );
     const technologiesMetaInfo = parseMetaInfoResponse(
-        getExisting(
-            await getAllTechnologiesMetaInfo(STRAPI_CLIENT),
-            'Technology'
-        )
+        getExisting(await CS_getMetaInfoFromCMS('technologies'), 'Technology')
     );
     const expertiseLevelsMetaInfo = parseMetaInfoResponse(
-        getExisting(
-            await getAllExpertiseLevelsMetaInfo(STRAPI_CLIENT),
-            'ExpertiseLevel'
-        )
+        getExisting(await CS_getMetaInfoFromCMS('levels'), 'ExpertiseLevel')
     );
     const contentTypesMetaInfo = parseMetaInfoResponse(
-        getExisting(
-            await getAllContentTypesMetaInfo(STRAPI_CLIENT),
-            'ContentType'
-        )
+        getExisting(await CS_getMetaInfoFromCMS('content_types'), 'ContentType')
     );
     return l1ProductsMetaInfo
         .concat(l2ProductsMetaInfo)
@@ -67,7 +54,7 @@ export const getAllMetaInfo = async (): Promise<MetaInfo[]> => {
 };
 
 const parseMetaInfoResponse = (
-    metaInfoResponses: MetaInfoResponse[]
+    metaInfoResponses: CS_MetaInfoResponse[]
 ): MetaInfo[] => {
     const parsedInfo: MetaInfo[] = [];
     metaInfoResponses.forEach(m => {
@@ -77,8 +64,8 @@ const parseMetaInfoResponse = (
 };
 
 const parseMetaInfoResponseForL1 = (
-    l1: MetaInfoResponse[],
-    l2: MetaInfoResponse[]
+    l1: CS_MetaInfoResponse[],
+    l2: CS_MetaInfoResponse[]
 ): MetaInfo[] => {
     const parsedInfo: MetaInfo[] = [];
     l1.forEach(l1Item => {
@@ -90,10 +77,12 @@ const parseMetaInfoResponseForL1 = (
     return parsedInfo;
 };
 
-const getMetaInfo = (m: MetaInfoResponse): MetaInfo => {
+const getMetaInfo = (m: CS_MetaInfoResponse): MetaInfo => {
     return {
-        category: m.__typename,
-        tagName: m.name,
+        category: contentTypeUIDtoTagType.get(
+            m.system.content_type_uid
+        ) as TagType,
+        tagName: m.title,
         description: m.description ? m.description : '',
         slug: m.slug,
         ctas: getCTAs(m.primary_cta),
@@ -102,14 +91,17 @@ const getMetaInfo = (m: MetaInfoResponse): MetaInfo => {
     };
 };
 
-const getL2Topics = (l1Item: MetaInfoResponse, l2: MetaInfoResponse[]) => {
-    const topics: MetaInfoResponse[] = [];
+const getL2Topics = (
+    l1Item: CS_MetaInfoResponse,
+    l2: CS_MetaInfoResponse[]
+) => {
+    const topics: CS_MetaInfoResponse[] = [];
     l2.forEach(l2Item => {
-        const l1Product = l2Item.l1_product?.l_1_product;
+        const l1Product = l2Item.l1_productsConnection?.edges[0].node;
         if (l1Product) {
             if (
-                l1Product.name &&
-                l1Product.name.toLowerCase() === l1Item.name.toLowerCase()
+                l1Product.title &&
+                l1Product.title.toLowerCase() === l1Item.title.toLowerCase()
             ) {
                 topics.push(l2Item);
             }

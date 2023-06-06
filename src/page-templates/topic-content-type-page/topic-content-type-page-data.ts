@@ -2,12 +2,10 @@ import * as Sentry from '@sentry/nextjs';
 import { Tag } from '../../interfaces/tag';
 import { getBreadcrumbsFromSlug } from '../../components/breadcrumbs/utils';
 import { defaultSortByType, SearchItem } from '../../components/search/types';
-import { ContentTypeTag } from '../../interfaces/tag-type-response';
 import { getSearchContent } from '../../api-requests/get-all-search-content';
 import { getMetaInfoForTopic } from '../../service/get-meta-info-for-topic';
 import allMetaInfoPreval from '../../service/get-all-meta-info.preval';
 import allContentPreval from '../../service/get-all-content.preval';
-import allContentTypes from '../../service/get-all-content-types.preval';
 import { getSideNav } from '../../service/get-side-nav';
 import { PillCategory, pillCategoryToSlug } from '../../types/pill-category';
 import { appendDocumentationLinkToSideNav } from '../../utils/page-template-helpers';
@@ -32,14 +30,9 @@ export const getTopicContentTypePageData = async (
     const topicSlug =
         '/' + pathComponents.slice(0, pathComponents.length - 1).join('/');
 
-    const contentType: PillCategory = allContentTypes
-        .filter((contentTypeTag: ContentTypeTag) => {
-            return (
-                contentTypeSlug.toLowerCase() ===
-                contentTypeTag.calculatedSlug.toLowerCase()
-            );
-        })
-        .map((contentTypeTag: ContentTypeTag) => contentTypeTag.contentType)[0];
+    const contentType: PillCategory = allMetaInfoPreval.find(
+        tag => tag.slug === contentTypeSlug.toLowerCase()
+    )?.tagName as PillCategory;
 
     let initialSearchContent: SearchItem[] | null = null;
     try {

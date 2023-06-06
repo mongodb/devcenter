@@ -68,6 +68,10 @@ const configVals = {
             },
             {
                 protocol: 'https',
+                hostname: 'images.contentstack.io',
+            },
+            {
+                protocol: 'https',
                 hostname: 'i.ytimg.com', // YouTube thumbnails
             },
             {

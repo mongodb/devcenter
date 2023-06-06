@@ -1,108 +1,193 @@
-import { ApolloQueryResult, gql } from '@apollo/client';
+import { CS_VideoResponse } from '../interfaces/video';
+import { CS_GRAPHQL_LIMIT, CS_HEADERS } from '../data/constants';
+import axios from 'axios';
 
-import { UnderlyingClient } from '../types/client-factory';
-import { Video } from '../interfaces/video';
+// const getAllVideosFromAPI = async (
+//     client: UnderlyingClient<'ApolloGraphQL'>
+// ): Promise<CS_VideoResponse[]> => {
+//     const videos = (await fetchAll(
+//         client,
+//         allVideosQuery,
+//         'videos'
+//     )) as CS_VideoResponse[];
+//
+//     return videos;
+// };
+//
+// export const getVideoBySlugFromAPI = async (
+//     client: UnderlyingClient<'ApolloGraphQL'>,
+//     slug: string
+// ): Promise<CS_VideoResponse | null> => {
+//     const variables = { slug };
+//     const videos = (await fetchAll(
+//         client,
+//         videoBySlugQuery,
+//         'videos',
+//         variables
+//     )) as CS_VideoResponse[];
+//
+//     if (!videos) {
+//         return null;
+//     }
+//
+//     return videos[0];
+// };
 
-const videoFields = `
-    description
-    publishDate: originalPublishDate
-    title
-    slug
-    videoId
-    relevantLinks: relevant_links
-    thumbnailUrl
-    l1Product: l_1_product {
-        name
-        calculatedSlug: calculated_slug
-    }
-    l2Product: l_2_product {
-        name
-        calculatedSlug: calculated_slug
-    }
-    programmingLanguage: programming_language {
-        name
-        calculatedSlug: calculated_slug
-    }
-    technology: technology {
-        name
-        calculatedSlug: calculated_slug
-    }
-    otherTags: other_tags {
-        spokenLanguage: spoken_language {
-            name
-            calculatedSlug: calculated_slug
+const CS_VideoFields = `
+        title
+        description
+        original_publish_date
+        slug
+        thumbnail_url
+        video_id
+        media_type
+        other_tags {
+            expertise_levelConnection {
+                edges {
+                    node {
+                        ... on Levels {
+                            title
+                            calculated_slug
+                        }
+                    }
+                }
+            }
+            spoken_languageConnection {
+                edges {
+                    node {
+                        ... on SpokenLanguages {
+                            title
+                            calculated_slug
+                        }
+                    }
+                }
+            }
+            author_typeConnection {
+                edges {
+                    node {
+                        ... on AuthorTypes {
+                            title
+                            calculated_slug
+                        }
+                    }
+                }
+            }
         }
-        expertiseLevel: expertise_level {
-            name: level
-            calculatedSlug: calculated_slug
+        seo {
+            canonical_url
+            meta_description
+            og_url
+            og_imageConnection {
+                edges {
+                    node {
+                        url
+                    }
+                }
+            }
+            og_type
+            og_description
+            twitter_creator
+            twitter_description
+            twitter_imageConnection {
+                edges {
+                    node {
+                        url
+                    }
+                }
+            }
+            twitter_card
         }
-        authorType: author_type {
-            name
-            calculatedSlug: calculated_slug
+        relevant_links
+        l1_productConnection {
+            edges {
+                node {
+                    ... on L1Products {
+                        title
+                        calculated_slug
+                    }
+                }
+            }
         }
-    }
-    seo: SEO {
-        canonical_url
-        meta_description
-        og_description
-        og_image {
-            url
+        l2_productConnection {
+            edges {
+                node {
+                    ... on L2Products {
+                        title
+                        calculated_slug
+                    }
+                }
+            }
         }
-        og_title
-        og_type
-        og_url
-        twitter_card
-        twitter_creator
-        twitter_description
-        twitter_image {
-            url
+        programming_languagesConnection(limit: 3) {
+            edges {
+                node {
+                    ... on ProgrammingLanguages {
+                        title
+                        calculated_slug
+                    }
+                }
+            }
         }
-        twitter_site
-        twitter_title
+        technologiesConnection(limit: 3) {
+            edges {
+                node {
+                    ... on Technologies {
+                        title
+                        calculated_slug
+                    }
+                }
+            }
+        }
+`;
+
+export const getAllVideosQuery = (skip: number) => `
+    query get_all_videos{
+        all_videos(limit: ${CS_GRAPHQL_LIMIT}, skip: ${skip}) {
+            total
+            items {
+                ${CS_VideoFields}
+            }
+        }
     }
 `;
 
-/**
- * Returns a list of all videos.
- * @param client -  The Apollo REST client that will be used to make the request.
- */
-const getAllVideosFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>
-): Promise<Video[]> => {
-    const query = gql`
-        query Videos {
-            videos @rest(type: "Video", path: "/new-videos?_limit=-1") {
-                ${videoFields}
+export const getVideosBySlugQuery = (calculatedSlug: string) => `
+    query get_video {
+        all_videos(where: { slug: "${calculatedSlug}" }) {
+            items {
+                ${CS_VideoFields}
             }
         }
-    `;
-    const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
-        { query }
-    );
+    }
+`;
 
-    return data.videos;
+export const getAllVideosFromAPI = async (): Promise<CS_VideoResponse[]> => {
+    let url = `${
+        process.env.CS_GRAPHQL_URL
+    }?environment=production&query=${getAllVideosQuery(0)}`;
+    const { data } = await axios.get(url, { headers: CS_HEADERS });
+    const { total, items } = data.data.all_videos;
+    while (items.length < total) {
+        url = `${
+            process.env.CS_GRAPHQL_URL
+        }?environment=production&query=${getAllVideosQuery(items.length)}`;
+        const { data: extraData } = await axios.get(url, {
+            headers: CS_HEADERS,
+        });
+        items.push(...extraData.data.all_videos.items);
+    }
+    return items;
 };
 
-/**
- * Returns a list of all videos.
- * @param client -  The Apollo REST client that will be used to make the request.
- */
 export const getVideoBySlugFromAPI = async (
-    client: UnderlyingClient<'ApolloREST'>,
     slug: string
-): Promise<Video | null> => {
-    const query = gql`
-        query Videos {
-            videos @rest(type: "Video", path: "/new-videos?slug_eq=${slug}") {
-                ${videoFields}
-            }
-        }
-    `;
-    const { data }: ApolloQueryResult<{ videos: Video[] }> = await client.query(
-        { query }
-    );
-
-    return data.videos.length > 0 ? data.videos[0] : null;
+): Promise<CS_VideoResponse | null> => {
+    const url = `${
+        process.env.CS_GRAPHQL_URL
+    }?environment=production&query=${getVideosBySlugQuery(slug)}`;
+    const { data } = await axios.get(url, { headers: CS_HEADERS });
+    const { items } = data.data.all_videos;
+    return items[0];
 };
 
 export default getAllVideosFromAPI;
