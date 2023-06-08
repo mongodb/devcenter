@@ -16,6 +16,7 @@ env:
     CS_BRANCH: ${{secrets.CS_BRANCH}}
     CS_DELIVERY_TOKEN: ${{secrets.CS_DELIVERY_TOKEN}}
     CS_GRAPHQL_URL: ${{secrets.CS_GRAPHQL_URL}}
+    MONGODB_TV_API_KEY: ${{ secrets.MONGODB_TV_API_KEY }}
 jobs:
     check-formatting-and-lint:
         runs-on: ubuntu-latest

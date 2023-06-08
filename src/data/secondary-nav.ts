@@ -106,7 +106,7 @@ export const secondaryNavData = [
         name: 'Podcasts',
         slug: 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624',
     },
-    { name: 'Videos', slug: '/videos' },
+    { name: 'MongoDB TV', slug: '/videos' },
 ];
 
 export default secondaryNavData;

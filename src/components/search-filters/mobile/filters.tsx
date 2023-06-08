@@ -13,12 +13,16 @@ import { FiltersProps } from '../types';
 
 import RadioFilterGroup from '../radio-filter-group';
 import { buttonSection, filtersModal, titleSection } from './styles';
-import { defaultSortByType, SortByType } from '../../search/types';
+import { SortByType } from '../../search/types';
+import { PillCategory } from '../../../types/pill-category';
+import { getDefaultSortBy } from '../../search/utils';
 
 interface MobileFiltersProps extends FiltersProps {
     closeModal: () => void;
     sortBy?: SortByType | '';
     onSort?: (sortByValue: SortByType) => void;
+    contentType?: PillCategory;
+    slug?: string;
 }
 
 const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
@@ -30,6 +34,8 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
         onSort,
         sortBy,
         closeModal,
+        contentType,
+        slug,
     }) => {
         const [tempFilters, setTempFilters] = useState<FilterItem[]>(filters);
 
@@ -86,12 +92,16 @@ const MobileFilters: React.FunctionComponent<MobileFiltersProps> = memo(
                             <RadioFilterGroup
                                 title="Sort by"
                                 items={[]}
-                                sortBy={sortBy || defaultSortByType}
+                                sortBy={
+                                    sortBy ||
+                                    getDefaultSortBy(contentType, slug)
+                                }
                                 setSort={(value: string) =>
                                     onSort(value as SortByType)
                                 }
                                 filters={tempFilters}
                                 isMobile
+                                contentType={contentType}
                             />
                             <HorizontalRule spacing="small" />
                         </>
