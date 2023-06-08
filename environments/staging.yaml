@@ -56,7 +56,7 @@ probes:
 resources:
   requests:
     cpu: 500m
-    memory: 2Gi
+    memory: 6Gi
 
 ingress:
   enabled: true
