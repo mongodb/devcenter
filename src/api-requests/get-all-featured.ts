@@ -1,4 +1,5 @@
 import {
+    CategoryConnection,
     CS_FeaturedContentResponse,
     FeaturedResponse,
 } from '../interfaces/featured';
@@ -73,11 +74,21 @@ export const getAllFeaturedContentQuery = () => `
     }
 `;
 
+const getCalculatedSlug = (categoryConnection: CategoryConnection) => {
+    if (!categoryConnection) {
+        return null;
+    }
+    return categoryConnection.edges.length > 0
+        ? categoryConnection.edges[0].node.calculated_slug
+        : null;
+};
+
 export const transformCSFeaturedContentResponse = (
     items: CS_FeaturedContentResponse[]
 ) => {
     return items.map(item => {
         return {
+            calculated_slug: getCalculatedSlug(item.categoryConnection),
             articles: item.articlesConnection.edges.map(a => {
                 return { title: a.node.title };
             }),

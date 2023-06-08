@@ -2,27 +2,11 @@ import { Featured, FeaturedResponse } from '../interfaces/featured';
 import { CS_getFeaturedContentForTopic } from '../api-requests/get-featured-for-topic';
 import allFeatured from './get-all-featured.preval';
 
-const getCalculatedSlug = (contentEntry: object) => {
-    if (!contentEntry || typeof contentEntry !== 'object') {
-        return null;
-    }
-
-    let calculatedSlug;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for (const [key, value] of Object.entries(contentEntry)) {
-        if (!value['calculated_slug']) continue;
-        calculatedSlug = value['calculated_slug'];
-        break;
-    }
-
-    return calculatedSlug;
-};
-
 const getFeaturedForTopicFromPreval = (
     topicSlug: string
 ): FeaturedResponse | undefined => {
     for (const content of allFeatured) {
-        const currSlug = getCalculatedSlug(content);
+        const currSlug = content['calculated_slug'];
 
         if (currSlug !== topicSlug) {
             continue;
