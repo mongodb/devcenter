@@ -71,7 +71,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - cms_migration
   event:
     - push
 
