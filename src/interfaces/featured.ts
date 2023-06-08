@@ -14,6 +14,7 @@ export interface FeaturedResponse {
     podcasts: FeaturedItem[] | null;
     videos: FeaturedItem[] | null;
     events: FeaturedItem[] | null;
+    calculated_slug?: string | null;
 }
 
 export interface CategoryConnection {
