@@ -55,7 +55,7 @@ probes:
 
 resources:
   requests:
-    cpu: 500m
+    cpu: 2
     memory: 6Gi
 
 ingress:
