@@ -46,7 +46,8 @@ steps:
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: devrel/${DRONE_REPO_NAME}
       tags:
-        - mongodb-tv-preview
+        - devcenter-staging-build-${DRONE_BUILD_NUMBER}
+        - latest-staging
       build_args:
       - APP_RELEASE=${DRONE_COMMIT_SHA}
       access_key:
@@ -58,7 +59,7 @@ steps:
   - name: deploy-staging
     image: drone/cli:1.4.0-alpine
     commands:
-    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} preview
+    - drone build promote mongodb/devcenter ${DRONE_BUILD_NUMBER} staging
     environment:
       DRONE_SERVER: ${DRONE_SYSTEM_PROTO}://${DRONE_SYSTEM_HOST}
       DRONE_TOKEN:
@@ -66,7 +67,7 @@ steps:
 
 trigger:
   branch:
-    - DEVHUB-1763
+    - main
   event:
     - push
 
@@ -84,8 +85,8 @@ steps:
       chart_version: 4.12.3
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: devrel
-      release: mongodb-tv-preview
-      values: image.tag=mongodb-tv-preview,image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
+      release: devcenter-frontend
+      values: image.tag=devcenter-staging-build-${DRONE_BUILD_PARENT},image.pullPolicy=Always,image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/devrel/${DRONE_REPO_NAME}
       api_server: https://api.staging.corp.mongodb.com
       kubernetes_token:
         from_secret: staging_kubernetes_token
@@ -96,7 +97,7 @@ trigger:
     - promote
     - rollback
   target:
-    - preview
+    - staging
 
 ---
 depends_on: null
