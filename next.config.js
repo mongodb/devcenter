@@ -86,6 +86,9 @@ const configVals = {
         ],
         path: `${basePath}/_next/image`,
     },
+    experimental: {
+        esmExternals: false,
+    },
     compiler: {
         styledComponents: true,
         emotion: true,
