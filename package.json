@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "next dev",
         "dev:mocked": "NEXT_PUBLIC_API_MOCKING=enabled next dev",
-        "build": "node --max-old-space-size=4076 && next build",
+        "build": "next build",
         "build:mocked": "NEXT_PUBLIC_API_MOCKING=enabled next build",
         "build:analyze": "ANALYZE=true next build",
         "start": "next start",
