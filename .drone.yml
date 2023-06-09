@@ -11,7 +11,7 @@ resources:
 
 steps:
   - name: build
-    image: node:14.21.1-slim
+    image: node:16.16.0-slim
     resources:
       limits:
         cpu: 3000
