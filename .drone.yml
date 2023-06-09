@@ -4,9 +4,18 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter-staging
 
+resources:
+  requests:
+    cpu: 2000
+    memory: 2000MiB
+
 steps:
   - name: build
     image: node:16.16.0-slim
+    resources:
+      limits:
+        cpu: 500
+        memory: 500MiB
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
