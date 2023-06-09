@@ -3,18 +3,18 @@ import {
     getAllPodcastsFromAPI,
     getPodcastBySlugFromAPI,
 } from '../api-requests/get-podcasts';
-import { ContentTypeTag } from '../interfaces/tag-type-response';
+import { ContentTypeConnection } from '../interfaces/other-tags';
 
 const setPodcastTags = (podcasts: CS_PodcastResponse[]) => {
-    const contentType: ContentTypeTag = {
-        contentType: 'Podcast',
-        calculatedSlug: '/podcasts',
+    // Simulate a content type connection
+    const content_typeConnection: ContentTypeConnection = {
+        edges: [{ node: { title: 'Podcast', calculated_slug: '/podcasts' } }],
     };
     const modifiedPodcasts = podcasts.map((item: CS_PodcastResponse) => ({
         ...item,
         other_tags: {
             ...item.other_tags,
-            contentType: contentType,
+            content_typeConnection,
         },
     }));
     modifiedPodcasts.forEach((p: CS_PodcastResponse) => {
