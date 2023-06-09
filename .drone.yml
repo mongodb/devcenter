@@ -17,8 +17,6 @@ steps:
         cpu: 800
         memory: 6000MiB
     commands:
-    - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
     environment:
