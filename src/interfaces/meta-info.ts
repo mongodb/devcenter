@@ -76,7 +76,7 @@ export interface CS_MetaInfoResponse {
     title: string;
     description?: string;
     slug: string;
-    l1_productsConnection?: L1ProductsConnection;
+    l1_productConnection?: L1ProductsConnection;
     primary_cta?: string;
     secondary_cta?: string;
     documentation_link?: string;
