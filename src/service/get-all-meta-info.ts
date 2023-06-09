@@ -97,7 +97,7 @@ const getL2Topics = (
 ) => {
     const topics: CS_MetaInfoResponse[] = [];
     l2.forEach(l2Item => {
-        const l1Product = l2Item.l1_productsConnection?.edges[0].node;
+        const l1Product = l2Item.l1_productConnection?.edges[0].node;
         if (l1Product) {
             if (
                 l1Product.title &&
