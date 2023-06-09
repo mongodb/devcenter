@@ -6,7 +6,7 @@ name: build-devcenter-staging
 
 resources:
   requests:
-    cpu: 10000
+    cpu: 1000
     memory: 8000MiB
 
 steps:
@@ -14,7 +14,7 @@ steps:
     image: node:16.16.0-slim
     resources:
       limits:
-        cpu: 8000
+        cpu: 800
         memory: 6000MiB
     commands:
     - apt-get -y update
