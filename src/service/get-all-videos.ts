@@ -2,19 +2,19 @@ import { CS_VideoResponse } from '../interfaces/video';
 import getAllVideosFromAPI, {
     getVideoBySlugFromAPI,
 } from '../api-requests/get-videos';
-import { ContentTypeTag } from '../interfaces/tag-type-response';
+import { ContentTypeConnection } from '../interfaces/other-tags';
 
 const setVideoTags = (videos: CS_VideoResponse[]) => {
-    const contentType: ContentTypeTag = {
-        contentType: 'Video',
-        calculatedSlug: '/videos',
+    // Simulate a content type connection
+    const content_typeConnection: ContentTypeConnection = {
+        edges: [{ node: { title: 'Video', calculated_slug: '/videos' } }],
     };
     const modifiedVideos: CS_VideoResponse[] = videos.map(
         (item: CS_VideoResponse) => ({
             ...item,
             other_tags: {
                 ...item.other_tags,
-                contentType: contentType,
+                content_typeConnection,
             },
         })
     );
