@@ -20,6 +20,7 @@ USER nextjs
 ENV APP_ENV $APP_ENV
 ENV APP_RELEASE $APP_RELEASE
 ENV NODE_ENV production
+ENV NODE_OPTIONS --max_old_space_size=2048
 ENV PORT 3000
 EXPOSE 3000
 CMD [ "yarn", "start" ]
