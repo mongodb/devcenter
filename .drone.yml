@@ -7,7 +7,7 @@ name: build-devcenter-staging
 resources:
   requests:
     cpu: 2000
-    memory: 2000MiB
+    memory: 5000MiB
 
 steps:
   - name: build
@@ -15,7 +15,7 @@ steps:
     resources:
       limits:
         cpu: 500
-        memory: 500MiB
+        memory: 3000MiB
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
