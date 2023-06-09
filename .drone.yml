@@ -79,7 +79,7 @@ steps:
 
 trigger:
   branch:
-    - cms_migration
+    - main
   event:
     - push
 
@@ -117,6 +117,11 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter-prod
 
+resources:
+  requests:
+    cpu: 2000
+    memory: 18Gi
+
 steps:
   - name: build-production
     image: node:16.16.0-slim
@@ -125,6 +130,9 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    resources:
+      limits:
+        memory: 18Gi
     environment:
       ACCOUNT_PORTAL_URL: https://account.mongodb.com
       APP_ENV: production
@@ -213,6 +221,12 @@ kind: pipeline
 type: kubernetes
 name: rebuild-devcenter-staging-cron # Used to rebuild content published by DevRel, using what's currently deployed in the main branch.
 
+
+resources:
+  requests:
+    cpu: 2000
+    memory: 18Gi
+
 steps:
   - name: build-staging-from-cron
     image: node:16.16.0-slim
@@ -221,6 +235,9 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    resources:
+      limits:
+        memory: 18Gi
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
@@ -289,6 +306,11 @@ kind: pipeline
 type: kubernetes
 name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
 
+resources:
+  requests:
+    cpu: 2000
+    memory: 18Gi
+
 steps:
   - name: build-production
     image: node:16.16.0-slim
@@ -297,6 +319,9 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    resources:
+      limits:
+        memory: 18Gi
     environment:
       ACCOUNT_PORTAL_URL: https://account.mongodb.com
       APP_ENV: production
