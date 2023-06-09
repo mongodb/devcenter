@@ -4,6 +4,11 @@ kind: pipeline
 type: kubernetes
 name: build-devcenter-staging
 
+resources:
+  requests:
+    cpu: 2000
+    memory: 18Gi
+
 steps:
   - name: build
     image: node:16.16.0-slim
@@ -12,6 +17,9 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
     - yarn build
+    resources:
+      limits:
+        memory: 18Gi
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
