@@ -1,13 +1,5 @@
-import { STRAPI_CLIENT } from '../config/api-client';
 import { MetaInfo } from '../interfaces/meta-info';
-import {
-    getAllContentTypesMetaInfo,
-    getAllExpertiseLevelsMetaInfo,
-    getAllL1ProductsMetaInfo,
-    getAllL2ProductsMetaInfo,
-    getAllProgrammingLanguagesMetaInfo,
-    getAllTechnologiesMetaInfo,
-} from '../api-requests/get-all-meta-info';
+import { CS_getMetaInfoFromCMS } from '../api-requests/get-all-meta-info';
 
 import {
     parseMetaInfoResponse,
@@ -16,26 +8,26 @@ import {
 
 // Similar to getAllMetaInfo, but doesn't filter out tags without content associated.
 export const getAllTags = async (): Promise<MetaInfo[]> => {
-    const l2MetaInfoResponse = await getAllL2ProductsMetaInfo(STRAPI_CLIENT);
+    const l2MetaInfoResponse = await CS_getMetaInfoFromCMS('l2_products');
 
     const l1ProductsMetaInfo = parseMetaInfoResponseForL1(
-        await getAllL1ProductsMetaInfo(STRAPI_CLIENT),
+        await CS_getMetaInfoFromCMS('l1_products'),
         l2MetaInfoResponse
     );
 
     const l2ProductsMetaInfo = parseMetaInfoResponse(l2MetaInfoResponse);
 
     const programmingLanguagesMetaInfo = parseMetaInfoResponse(
-        await getAllProgrammingLanguagesMetaInfo(STRAPI_CLIENT)
+        await CS_getMetaInfoFromCMS('programming_languages')
     );
     const technologiesMetaInfo = parseMetaInfoResponse(
-        await getAllTechnologiesMetaInfo(STRAPI_CLIENT)
+        await CS_getMetaInfoFromCMS('technologies')
     );
     const expertiseLevelsMetaInfo = parseMetaInfoResponse(
-        await getAllExpertiseLevelsMetaInfo(STRAPI_CLIENT)
+        await CS_getMetaInfoFromCMS('levels')
     );
     const contentTypesMetaInfo = parseMetaInfoResponse(
-        await getAllContentTypesMetaInfo(STRAPI_CLIENT)
+        await CS_getMetaInfoFromCMS('content_types')
     );
     return l1ProductsMetaInfo
         .concat(l2ProductsMetaInfo)
