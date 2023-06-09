@@ -71,7 +71,7 @@ steps:
 
 trigger:
   branch:
-    - main
+    - memory
   event:
     - push
 
