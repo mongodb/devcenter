@@ -1,7 +1,11 @@
 import axios from 'axios';
 
 import { CS_ArticleResponse } from '../interfaces/article';
-import { CS_GRAPHQL_LIMIT, CS_HEADERS } from '../data/constants';
+import {
+    CS_GRAPHQL_LIMIT,
+    CS_HEADERS,
+    CS_STAGING_HEADERS,
+} from '../data/constants';
 
 const CS_articleFields = `
     calculated_slug
@@ -222,8 +226,8 @@ export const CS_getDraftArticleBySlugFromCMS = async (
 ): Promise<CS_ArticleResponse> => {
     const url = `${
         process.env.CS_GRAPHQL_URL
-    }?environment=production&query=${getArticleQuery(calculatedSlug)}`;
-    const { data } = await axios.get(url, { headers: CS_HEADERS });
+    }?environment=staging&query=${getArticleQuery(calculatedSlug)}`;
+    const { data } = await axios.get(url, { headers: CS_STAGING_HEADERS });
     const { items } = data.data.all_articles;
     return items[0];
 };
