@@ -504,10 +504,10 @@ name: test-slack-webhook
 steps:
   - name: slack
     image: plugins/slack
-      settings:
-        webhook:
-          from_secret: SLACK_WEBHOOK_URL
-        channel: devcenter-releases
+    settings:
+      webhook:
+        from_secret: SLACK_WEBHOOK_URL
+      channel: devcenter-releases
 
 trigger:
   branch:
