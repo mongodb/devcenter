@@ -494,3 +494,23 @@ trigger:
     - promote
   target:
     - preview-graveyard
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: test-slack-webhook
+
+steps:
+  - name: slack
+    image: plugins/slack
+      settings:
+        webhook:
+          from_secret: SLACK_WEBHOOK_URL
+        channel: devcenter-releases
+
+trigger:
+  branch:
+    - slack-webhook
+  event:
+    - push
