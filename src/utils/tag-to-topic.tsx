@@ -13,6 +13,8 @@ export const tagToTopic = (tag: Tag): TopicCardProps => {
 
     if (tag.type === 'Technology' && tag.name === 'Serverless') {
         icon = <BrandedIcon sx={iconStyles} name="atlas_serverless" />;
+    } else if (tag.type === 'Technology' && tag.name === 'Mobile') {
+        icon = <BrandedIcon sx={iconStyles} name="misc_mobile" />;
     } else if (
         tag.type === 'Technology' ||
         tag.type === 'ProgrammingLanguage'

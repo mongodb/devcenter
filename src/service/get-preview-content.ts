@@ -1,26 +1,26 @@
 import { ContentItem } from '../interfaces/content-item';
-import { getAllDraftArticlesFromAPI } from '../api-requests/get-articles';
-import { STRAPI_CLIENT } from '../config/api-client';
+import { CS_getDraftArticleBySlugFromCMS } from '../api-requests/get-articles';
 import {
-    mapArticlesToContentItems,
-    mapIndustryEventToContentItem,
+    CS_mapArticlesToContentItems,
+    CS_mapIndustryEventToContentItem,
 } from './build-content-items';
-import { getDraftEventFromAPI } from '../api-requests/get-industry-events';
+import { CS_getDraftIndustryEventBySlugFromCMS } from '../api-requests/get-industry-events';
 
 export const getPreviewContentForArticles: (
     calculatedSlug: string
-) => Promise<ContentItem[]> = async calculatedSlug => {
-    const allArticles = await getAllDraftArticlesFromAPI(
-        STRAPI_CLIENT,
-        calculatedSlug
-    );
-
-    return mapArticlesToContentItems(allArticles, []);
+) => Promise<ContentItem> = async calculatedSlug => {
+    const content = await CS_getDraftArticleBySlugFromCMS(calculatedSlug);
+    const mappedArticles = CS_mapArticlesToContentItems([content], []);
+    return mappedArticles[0];
 };
 
 export const getPreviewContentForEvents: (
     calculatedSlug: string
 ) => Promise<ContentItem | null> = async calculatedSlug => {
-    const event = await getDraftEventFromAPI(STRAPI_CLIENT, calculatedSlug);
-    return event ? mapIndustryEventToContentItem(event) : null;
+    const content_stack_event = await CS_getDraftIndustryEventBySlugFromCMS(
+        calculatedSlug
+    );
+    return content_stack_event
+        ? CS_mapIndustryEventToContentItem(content_stack_event)
+        : null;
 };

@@ -1,49 +1,50 @@
-import { STRAPI_CLIENT } from '../config/api-client';
-import { Podcast } from '../interfaces/podcast';
-import getAllPodcastsFromAPI, {
+import { CS_PodcastResponse } from '../interfaces/podcast';
+import {
+    getAllPodcastsFromAPI,
     getPodcastBySlugFromAPI,
 } from '../api-requests/get-podcasts';
-import { ContentTypeTag } from '../interfaces/tag-type-response';
+import { ContentTypeConnection } from '../interfaces/other-tags';
 
-const setPodcastTags = (podcasts: Podcast[]) => {
-    const contentType: ContentTypeTag = {
-        contentType: 'Podcast',
-        calculatedSlug: '/podcasts',
+const setPodcastTags = (podcasts: CS_PodcastResponse[]) => {
+    // Simulate a content type connection
+    const content_typeConnection: ContentTypeConnection = {
+        edges: [{ node: { title: 'Podcast', calculated_slug: '/podcasts' } }],
     };
-    const modifiedPodcasts = podcasts.map(item => ({
+    const modifiedPodcasts = podcasts.map((item: CS_PodcastResponse) => ({
         ...item,
-        otherTags: {
-            ...item.otherTags,
-            contentType: contentType,
+        other_tags: {
+            ...item.other_tags,
+            content_typeConnection,
         },
     }));
-    modifiedPodcasts.forEach(p => {
-        if (p.l1Product) {
-            p.otherTags.l1Product = p.l1Product;
+    modifiedPodcasts.forEach((p: CS_PodcastResponse) => {
+        if (p.l1_productConnection) {
+            p.other_tags.l1_productConnection = p.l1_productConnection;
         }
-        if (p.l2Product) {
-            p.otherTags.l2Product = p.l2Product;
+        if (p.l2_productConnection) {
+            p.other_tags.l2_productConnection = p.l2_productConnection;
         }
-        if (p.programmingLanguage) {
-            p.otherTags.programmingLanguage = p.programmingLanguage;
+        if (p.programming_languagesConnection) {
+            p.other_tags.programming_languagesConnection =
+                p.programming_languagesConnection;
         }
-        if (p.technology) {
-            p.otherTags.technology = p.technology;
+        if (p.technologiesConnection) {
+            p.other_tags.technologiesConnection = p.technologiesConnection;
         }
     });
 
     return modifiedPodcasts;
 };
 
-export const getAllPodcasts = async (): Promise<Podcast[]> => {
-    const podcasts = await getAllPodcastsFromAPI(STRAPI_CLIENT);
+export const getAllPodcasts = async (): Promise<CS_PodcastResponse[]> => {
+    const podcasts = await getAllPodcastsFromAPI();
     return setPodcastTags(podcasts);
 };
 
 export const getPodcastBySlug = async (
     slug: string
-): Promise<Podcast | null> => {
-    const podcast = await getPodcastBySlugFromAPI(STRAPI_CLIENT, slug);
+): Promise<CS_PodcastResponse | null> => {
+    const podcast = await getPodcastBySlugFromAPI(slug);
     if (!podcast) return null;
     const modifiedPodcasts = setPodcastTags([podcast]);
     return modifiedPodcasts.length > 0 ? modifiedPodcasts[0] : null;

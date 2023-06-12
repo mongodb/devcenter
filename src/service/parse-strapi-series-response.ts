@@ -4,7 +4,7 @@ import {
     SeriesType,
 } from '../types/series-type';
 import { SeriesEntry } from '../interfaces/series-entry';
-import { Series } from '../interfaces/series';
+import { CS_SeriesResponse, Series } from '../interfaces/series';
 
 export const parseStrapiSeriesResponse = (
     data: SeriesResponse[],
@@ -20,6 +20,26 @@ export const parseStrapiSeriesResponse = (
                 const seriesEntryItem = seriesEntry[seriesType];
                 seriesEntries.push(seriesEntryItem);
             }
+        });
+        const seriesItem: Series = {
+            title: series.title,
+            seriesEntry: seriesEntries,
+        };
+        result.push(seriesItem);
+    });
+    return result;
+};
+
+export const CS_parseStrapiSeriesResponse = (data: CS_SeriesResponse[]) => {
+    const result: Series[] = [];
+    data.forEach((series: CS_SeriesResponse) => {
+        const seriesEntries: SeriesEntry[] = [];
+        const seriesConnection = series.series_entryConnection.edges;
+        seriesConnection.forEach(v => {
+            seriesEntries.push({
+                title: v.node.title,
+                calculatedSlug: v.node.calculated_slug,
+            });
         });
         const seriesItem: Series = {
             title: series.title,

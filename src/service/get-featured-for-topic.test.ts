@@ -19,7 +19,7 @@ const featuredArticles: FeaturedResponse = {
 };
 
 test('parses featured to list of strings', async () => {
-    const spy = jest.spyOn(apiRequestModule, 'getFeaturedForTopicFromAPI');
+    const spy = jest.spyOn(apiRequestModule, 'CS_getFeaturedContentForTopic');
     spy.mockReturnValue(Promise.resolve(featuredArticles));
     const result = await getFeaturedForTopic('');
     expect(result.articles).toHaveLength(4);
