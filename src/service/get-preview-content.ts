@@ -4,7 +4,7 @@ import {
     CS_mapArticlesToContentItems,
     CS_mapIndustryEventToContentItem,
 } from './build-content-items';
-import { CS_getIndustryEventBySlugFromCMS } from '../api-requests/get-industry-events';
+import { CS_getDraftIndustryEventBySlugFromCMS } from '../api-requests/get-industry-events';
 
 export const getPreviewContentForArticles: (
     calculatedSlug: string
@@ -17,7 +17,7 @@ export const getPreviewContentForArticles: (
 export const getPreviewContentForEvents: (
     calculatedSlug: string
 ) => Promise<ContentItem | null> = async calculatedSlug => {
-    const content_stack_event = await CS_getIndustryEventBySlugFromCMS(
+    const content_stack_event = await CS_getDraftIndustryEventBySlugFromCMS(
         calculatedSlug
     );
     return content_stack_event

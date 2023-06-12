@@ -29,6 +29,7 @@ envSecrets:
   CS_BRANCH: devcenter-secrets
   CS_DELIVERY_TOKEN: devcenter-secrets
   CS_GRAPHQL_URL: devcenter-secrets
+  CS_DELIVERY_TOKEN_STAGING: devcenter-secrets
   GOOGLE_PLACES_API_KEY: devcenter-secrets
   BACKEND_API_KEY: devcenter-secrets
 
