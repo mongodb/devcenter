@@ -494,3 +494,133 @@ trigger:
     - promote
   target:
     - preview-graveyard
+
+---
+depends_on: null
+kind: pipeline
+type: kubernetes
+name: test
+
+resources:
+  requests:
+    cpu: 2000
+    memory: 18Gi
+
+steps:
+  - name: build
+    image: node:16.16.0-slim
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates
+    - yarn install --frozen-lockfile
+    - ./node_modules/.bin/playwright install
+    - yarn build:mocked
+    resources:
+      limits:
+        memory: 18Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      DEBIAN_FRONTEND: noninteractive
+  - name: unit
+    image: node:16.16.0-slim
+    commands:
+    - yarn test
+    resources:
+      limits:
+        memory: 18Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      DEBIAN_FRONTEND: noninteractive
+  - name: e2e
+    image: node:16.16.0-slim
+    commands:
+    - yarn test:e2e:visual
+    resources:
+      limits:
+        memory: 18Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      DEBIAN_FRONTEND: noninteractive
+trigger:
+  branch:
+    - put-tests-in-drone
+  event:
+    - push
