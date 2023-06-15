@@ -6,6 +6,7 @@ import {
     HorizontalRule,
     SideNav,
     TypographyScale,
+    Link,
 } from '@mdb/flora';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
@@ -32,11 +33,9 @@ import { getURLPath, setURLPathForNavItems } from '../../utils/format-url-path';
 import useSearch from '../../hooks/search';
 import { useSearchMeta } from '../../hooks/search/meta';
 import {
-    linkStyleOverride,
     searchWrapperStyles,
     titleStyles,
 } from '../../components/search/styles';
-import ExpandingLink from '../../components/expanding-link';
 import { FilterItem, TopicCardProps } from '@mdb/devcenter-components';
 import {
     getRequestBtnText,
@@ -79,22 +78,6 @@ const extraSortBoxStyles = {
 const extraSearchWrapperStyles = {
     ...searchWrapperStyles,
     gridColumn: ['span 12', null, null, null, 'span 9'],
-};
-
-const getSearchTitleLink = (
-    contentType: PillCategory,
-    contentTypeAggregateSlug: string
-) => {
-    if (contentType === 'Podcast') {
-        return {
-            href: 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624',
-            text: 'All Podcasts',
-        };
-    }
-    return {
-        href: contentTypeAggregateSlug,
-        text: `All ${pluralize(contentType)}`,
-    };
 };
 
 const buildPageTitle =
@@ -212,6 +195,16 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
     );
 
     setURLPathForNavItems(tertiaryNavItems);
+    const searchTitleLink =
+        contentType === 'Podcast'
+            ? {
+                  href: 'https://podcasts.mongodb.com/public/115/The-MongoDB-Podcast-b02cf624',
+                  text: 'All Podcasts',
+              }
+            : {
+                  href: contentTypeAggregateSlug,
+                  text: `All ${pluralize(contentType)}`,
+              };
 
     const header = (
         <GridLayout
@@ -328,13 +321,12 @@ const TopicContentTypePageTemplate: NextPage<TopicContentTypePageProps> = ({
                                 All {topicName} {pluralize(contentType)}
                             </TypographyScale>
 
-                            <ExpandingLink
-                                {...getSearchTitleLink(
-                                    contentType,
-                                    contentTypeAggregateSlug
-                                )}
-                                hoverStyleOverrides={linkStyleOverride}
-                            />
+                            <Link
+                                href={getURLPath(searchTitleLink.href)}
+                                linkIcon="arrow"
+                            >
+                                {searchTitleLink.text}
+                            </Link>
                         </div>
 
                         <SearchBox

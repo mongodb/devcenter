@@ -1,7 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { TypographyScale, Link } from '@mdb/flora';
-import theme from '@mdb/flora/theme';
-import { Grid, ThemeUICSSObject } from 'theme-ui';
+import { Grid } from 'theme-ui';
 
 import Card, { getCardProps } from '../card';
 import { CardSectionProps } from './types';
@@ -10,8 +9,6 @@ import {
     sectionHeadingTopStyles,
     sectionHeadingBottomStyles,
     cardListStyles,
-    linkStyles,
-    linkWrapperStyles,
 } from './styles';
 import { getURLPath } from '../../utils/format-url-path';
 
@@ -26,19 +23,6 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
     href,
     extraStyles = {},
 }) => {
-    const [hoverStyles, setHoverStyles] = useState<ThemeUICSSObject>({});
-
-    const onLinkEnter = () =>
-        setHoverStyles({
-            right: [
-                `calc(${theme.sizes.inc60} - ${theme.sizes.inc70})`,
-                null,
-                `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`,
-            ],
-        });
-
-    const onLinkLeave = () => setHoverStyles({});
-
     // Memoize so we don't re-render the cards when this hover stuff happens.
     const contentSection = useMemo(
         () => (
@@ -71,45 +55,29 @@ const CardSection: React.FunctionComponent<CardSectionProps> = ({
             <div sx={sectionHeadingTopStyles}>
                 <TypographyScale variant="heading5">{title}</TypographyScale>
                 {!isNewsAndArticle(title) && (
-                    <div
-                        sx={linkWrapperStyles}
-                        onMouseEnter={onLinkEnter}
-                        onMouseLeave={onLinkLeave}
+                    <Link
+                        href={getURLPath(href ? href : '#')}
+                        linkIcon="arrow"
+                        sx={{
+                            display: ['none', null, 'inline'],
+                        }}
                     >
-                        <Link
-                            href={getURLPath(href ? href : '#')}
-                            linkIcon="arrow"
-                            sx={{
-                                ...linkStyles,
-                                ...hoverStyles,
-                                display: ['none', null, 'inline'],
-                            }}
-                        >
-                            All {title}
-                        </Link>
-                    </div>
+                        All {title}
+                    </Link>
                 )}
             </div>
             {contentSection}
             {!isNewsAndArticle(title) && (
                 <div sx={sectionHeadingBottomStyles}>
-                    <div
-                        sx={linkWrapperStyles}
-                        onMouseEnter={onLinkEnter}
-                        onMouseLeave={onLinkLeave}
+                    <Link
+                        href={getURLPath(href ? href : '#')}
+                        linkIcon="arrow"
+                        sx={{
+                            display: ['inline', null, 'none'],
+                        }}
                     >
-                        <Link
-                            href={getURLPath(href ? href : '#')}
-                            linkIcon="arrow"
-                            sx={{
-                                ...linkStyles,
-                                ...hoverStyles,
-                                display: ['inline', null, 'none'],
-                            }}
-                        >
-                            All {title}
-                        </Link>
-                    </div>
+                        All {title}
+                    </Link>
                 </div>
             )}
         </div>

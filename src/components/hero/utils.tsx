@@ -1,6 +1,5 @@
-import { Button } from '@mdb/flora';
+import { Button, Link } from '@mdb/flora';
 import { CTA } from './types';
-import CTALink from './CTALink';
 import { CTAContainerStyles } from './styles';
 
 export const createTopicPageCTAS = (ctas: CTA[]) => {
@@ -24,7 +23,16 @@ export const createTopicPageCTAS = (ctas: CTA[]) => {
                               );
                           }
                           if (i === 1) {
-                              return <CTALink {...cta} key={cta.url} />; // TODO: can this be replaced with Flora Link component and we can remove <CTALink /> all together?
+                              return (
+                                  <Link
+                                      href={cta.url}
+                                      key={cta.text}
+                                      linkIcon="arrow"
+                                      target="_blank"
+                                  >
+                                      {cta.text}
+                                  </Link>
+                              );
                           }
                       })
                     : null}
