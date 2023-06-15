@@ -72,6 +72,7 @@ const ShowcaseCard: React.FunctionComponent<ShowcaseCardProps> = ({
                     href={getURLPath(titleLink.url)}
                     linkIcon="chevron"
                     linkIconDisableExpand={true}
+                    sx={{ div: { minWidth: 0 } }}
                 >
                     {titleLink.text}
                 </Link>
