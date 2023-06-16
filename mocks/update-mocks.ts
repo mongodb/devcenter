@@ -3,7 +3,7 @@
 
 require('dotenv').config({ path: `.env.local` });
 
-const fetch = (url, options = {}) =>
+const fetch = (url: string, options: RequestInit) =>
     import('node-fetch').then(({ default: fetch }) => fetch(url, options));
 
 const { restHandlerInfo, gqlHandlerInfo } = require('./handlers.ts');
@@ -51,7 +51,9 @@ const fetchMocks = async () => {
 
         try {
             const fname = handler.mockFile;
-            const response = await (await fetch(handler.url)).json();
+            const response = await (
+                await fetch(handler.url, handler.fetchOptions || {})
+            ).json();
 
             if (
                 response?.message?.[0]?.messages?.[0]?.id ===

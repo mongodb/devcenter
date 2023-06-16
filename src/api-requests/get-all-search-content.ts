@@ -20,6 +20,11 @@ export const getSearchContent = async (
     };
     try {
         const req = await fetch(url, options);
+        if (!req.ok) {
+            const e = Error(`Bad response from search endpoint: ${req.status}`);
+            Sentry.captureException(e);
+            throw e;
+        }
         const data: SearchItem[] = await req.json();
         return data;
     } catch (e) {

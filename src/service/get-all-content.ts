@@ -10,14 +10,17 @@ import {
     CS_mapVideosToContentItems,
     CS_mapArticlesToContentItems,
     mapEventsToContentItems,
+    mapMongoDBTVShowsToContentItems,
 } from './build-content-items';
 import { getAllCommunityEvents } from './get-all-events';
 import { CS_getAllIndustryEventsFromCMS } from '../api-requests/get-industry-events';
+import { getAllMongoDBTVShows } from '../api-requests/get-mongodb-tv-shows';
 
 export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     const allPodcasts = await getAllPodcasts();
     const allVideos = await getAllVideos();
     const allArticles = await CS_getAllArticlesFromCMS();
+    const allMongoDBTVShows = await getAllMongoDBTVShows();
     const allCommunityEvents = await getAllCommunityEvents();
     const allIndustryEvents = await CS_getAllIndustryEventsFromCMS();
     /*
@@ -31,7 +34,14 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
         allPodcasts,
         podcastSeries
     );
-    const mappedVideos = CS_mapVideosToContentItems(allVideos, videoSeries);
+
+    let mappedVideos = CS_mapVideosToContentItems(allVideos, videoSeries);
+    const mappedMongodbTVShows = await mapMongoDBTVShowsToContentItems(
+        allMongoDBTVShows,
+        false
+    );
+    mappedVideos = [...mappedVideos, ...mappedMongodbTVShows];
+
     const mappedArticles = CS_mapArticlesToContentItems(
         allArticles,
         articleSeries

@@ -51,12 +51,15 @@ const ContentTypeBody: React.FunctionComponent<
     setMobileFiltersOpen,
     contentType,
     children,
+    slug,
 }) => {
     const showFeatured = !searchString && !filters.length;
+    const pluralContentType =
+        contentType === 'Video' ? 'Shows' : pluralize(contentType);
 
     const resultsHeader =
         (showFeatured
-            ? `All ${pluralize(contentType)}`
+            ? `All ${pluralContentType}`
             : !results
             ? ''
             : results.length === 1
@@ -87,6 +90,8 @@ const ContentTypeBody: React.FunctionComponent<
                     <MobileFilters
                         {...filterProps}
                         {...sortProps} // Mobile filters include sorting
+                        contentType={contentType}
+                        slug={slug}
                         filterItems={filterItems}
                         closeModal={() => setMobileFiltersOpen(false)}
                     />
@@ -96,7 +101,7 @@ const ContentTypeBody: React.FunctionComponent<
             <div sx={searchWrapperStyles}>
                 <SearchBox
                     {...searchStringProps}
-                    placeholder={`Search ${pluralize(contentType)}`}
+                    placeholder={`Search ${pluralContentType}`}
                     extraStyles={{
                         flexBasis: showFeatured
                             ? '100%'
@@ -111,7 +116,7 @@ const ContentTypeBody: React.FunctionComponent<
                             sx={{
                                 marginBottom: ['section20', null, 'section50'],
                             }}
-                            title={`Featured ${pluralize(contentType)}`}
+                            title={`Featured ${pluralContentType}`}
                             featuredCardType="middle"
                         />
 
@@ -138,6 +143,7 @@ const ContentTypeBody: React.FunctionComponent<
 
                 <SortBox
                     {...sortProps}
+                    contentType={contentType}
                     extraStyles={{
                         order: showFeatured ? '2' : '1',
                     }}
@@ -209,9 +215,13 @@ const ContentTypeBody: React.FunctionComponent<
                             hasIcon={true}
                             iconName={ESystemIconNames.ARROW_LEFT}
                             iconPosition="left"
-                            onClick={clearSearchParam}
+                            onClick={() => clearSearchParam('search')}
                         >
-                            Back to all {contentType.toLowerCase()}s
+                            Back to all{' '}
+                            {contentType === 'Video'
+                                ? 'show'
+                                : contentType.toLowerCase()}
+                            s
                         </Button>
                     }
                 />
