@@ -102,11 +102,6 @@ jobs:
             - name: Install dependencies
               if: steps.cache.outputs.cache-hit != 'true'
               run: yarn install --frozen-lockfile
-            - name: Run Jest tests with coverage report
-              with:
-                  skip-step: install
-              uses: ArtiomTr/jest-coverage-report-action@v2
-              if: github.event_name == 'pull_request'
             - name: Run Jest without coverage report
               run: npx jest
               if: github.event_name != 'pull_request'
