@@ -20,6 +20,9 @@ import { CommunityEvent, CS_IndustryEventsResponse } from '../interfaces/event';
 import { Tag } from '../interfaces/tag';
 import { mapSEO } from '../utils/contentstack';
 import { SEO } from '../interfaces/seo';
+import { MongoDBTVShow } from '../interfaces/mongodb-tv';
+import allTagsPreval from './get-all-tags.preval';
+import { getAllTags } from './get-all-tags';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -78,7 +81,63 @@ export const CS_mapPodcastsToContentItems = (
     return items.filter(item => item.title !== '');
 };
 
-export const mapVideosToContentItems = (
+const descriptionWithLinks = (description: string) => {
+    let newDescription = description;
+    const matches = description.match(/(https?:\/\/[^\s]+)/g);
+    matches?.forEach(match => {
+        const replaceText =
+            '<a target="_blank" rel="noreferrer">' + match + '</a>';
+        newDescription = newDescription.replace(match, replaceText);
+    });
+    return newDescription;
+};
+
+export const slugify = (text: string) => {
+    const slug = text.replace(/[^a-zA-Z0-9]+/g, '-');
+    return slug.toLowerCase();
+};
+
+export const mapMongoDBTVShowsToContentItems = async (
+    allMongoDBTVShows: MongoDBTVShow[],
+    isRuntime: boolean
+) => {
+    let mappedMongodbTVShows: ContentItem[] = [];
+    // we can leverage preval if it's runtime.
+    const allTags = isRuntime ? allTagsPreval : await getAllTags();
+    if (isRuntime) console.log('PREVAL TAGS');
+    const tagMap = new Map<string, Tag>();
+    allTags.forEach(tag => {
+        tagMap.set(tag.tagName.toLowerCase(), {
+            name: tag.tagName,
+            type: tag.category,
+            slug: tag.slug,
+        });
+    });
+    mappedMongodbTVShows = allMongoDBTVShows.map((show: MongoDBTVShow) => {
+        const tags: Tag[] = [];
+        show.tags.forEach(tag => {
+            const correspondingTag = tagMap.get(tag);
+            if (correspondingTag) {
+                tags.push(correspondingTag);
+            }
+        });
+        return {
+            collectionType: 'Video',
+            image: { url: show.thumbnail },
+            category: 'Video',
+            videoType: 'MongoDB TV',
+            contentDate: [show.since, show.till],
+            description: descriptionWithLinks(show.description),
+            slug: '/videos/' + slugify(show.title),
+            tags,
+            title: show.title,
+            videoId: show.videoId,
+        };
+    }) as ContentItem[];
+    return mappedMongodbTVShows;
+};
+
+export const mapVideosToContentItems = async (
     allVideos: Video[],
     videoSeries: Series[]
 ) => {

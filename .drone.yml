@@ -48,6 +48,8 @@ steps:
         from_secret: SENTRY_DSN
       NEXT_IMAGE_HOSTS:
         from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-staging
@@ -161,6 +163,8 @@ steps:
         from_secret: SENTRY_DSN
       NEXT_IMAGE_HOSTS:
         from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-production
@@ -266,6 +270,8 @@ steps:
         from_secret: SENTRY_DSN
       NEXT_IMAGE_HOSTS:
         from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-staging-from-cron
@@ -350,6 +356,8 @@ steps:
         from_secret: SENTRY_DSN
       NEXT_IMAGE_HOSTS:
         from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-prod-from-cron
@@ -426,6 +434,8 @@ steps:
         from_secret: SENTRY_DSN
       NEXT_IMAGE_HOSTS:
         from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
 
   - name: publish-preview

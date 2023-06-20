@@ -64,6 +64,7 @@ export const getAllCommunityEventsFromApi = async (): Promise<
             start_time: r.start_time,
             end_time: r.end_time,
             slug: r.calculated_slug,
+            image: r.image,
         };
     }) as CommunityEvent[];
 };

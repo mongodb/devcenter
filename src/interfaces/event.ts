@@ -29,6 +29,7 @@ export interface CommunityEventApiResponse {
     start_time: string;
     end_time: string;
     calculated_slug: string;
+    image: { url: string };
 }
 
 export interface CommunityEvent {
@@ -41,6 +42,9 @@ export interface CommunityEvent {
     start_time: string;
     end_time: string;
     slug: string;
+    image: {
+        url: string;
+    };
 }
 
 export interface IndustryEventRelatedContent {

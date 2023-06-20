@@ -31,6 +31,7 @@ envSecrets:
   CS_GRAPHQL_URL: devcenter-secrets
   GOOGLE_PLACES_API_KEY: devcenter-secrets
   BACKEND_API_KEY: devcenter-secrets
+  MONGODB_TV_API_KEY: devcenter-secrets
 
 autoscaling:
   minReplicas: 1
