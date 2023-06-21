@@ -1,6 +1,6 @@
-import * as Contentstack from 'contentstack';
+import { Stack } from 'contentstack';
 
-export const stack = Contentstack.Stack({
+export const stackConfig = {
     api_key: process.env.api_key,
     delivery_token: process.env.delivery_token,
     environment: process.env.environment,
@@ -9,8 +9,8 @@ export const stack = Contentstack.Stack({
         enable: true,
         host: 'api.contentstack.io',
     },
-});
+};
 
 export const initializeContentStackSdk = () => {
-    return stack;
+    return Stack(stackConfig);
 };
