@@ -17,7 +17,7 @@ import { getAllArticleSeriesQuery } from '../src/api-requests/get-article-series
 import { getAllPodcastSeriesQuery } from '../src/api-requests/get-podcast-series';
 import { getAllFeaturedContentQuery } from '../src/api-requests/get-all-featured';
 import { getAllVideosQuery } from '../src/api-requests/get-videos';
-import { getAllPodcastsQuery } from '../src/api-requests/get-podcasts';
+// import { getAllPodcastsQuery } from '../src/api-requests/get-podcasts';
 import { getAllVideoSeriesQuery } from '../src/api-requests/get-video-series';
 interface RESTHandlerInfo {
     pattern: string;
@@ -146,12 +146,12 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
         mockFile: 'videos',
         getQuery: skip => getAllVideosQuery(skip),
     },
-    {
-        contentTypeUID: 'podcasts',
-        queryName: 'get_all_podcasts',
-        mockFile: 'podcasts',
-        getQuery: skip => getAllPodcastsQuery(skip),
-    },
+    // {
+    //     contentTypeUID: 'podcasts',
+    //     queryName: 'get_all_podcasts',
+    //     mockFile: 'podcasts',
+    //     getQuery: skip => getAllPodcastsQuery(skip),
+    // },
 ];
 
 const restHandlers = restHandlerInfo.map(

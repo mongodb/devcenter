@@ -1,6 +1,6 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
-export type ApolloClientType = 'ApolloREST' | 'ApolloGraphQL';
+export type ApolloClientType = 'ApolloREST' | 'ApolloGraphQL' | 'Mock';
 export type ClientType = ApolloClientType; // Update this if we have more client types (e.g. Lambda)
 
 // Basically maps a string client type to the underlying client type so typescript knows what to do.

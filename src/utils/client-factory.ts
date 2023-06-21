@@ -4,10 +4,27 @@ import {
     InMemoryCache,
     DefaultOptions,
     HttpLink,
+    // Observable,
 } from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
 import { ClientType, UnderlyingClient } from '../types/client-factory';
 import { RetryLink } from '@apollo/client/link/retry';
+
+const mockLink = new ApolloLink((operation, forward) => {
+    // const {
+    //     operationName,
+    //     variables: { skip, slug },
+    // } = operation;
+
+    // console.log('[JW DEBUG] operationName', operationName);
+    // console.log('[JW DEBUG] skip', skip);
+    // console.log('[JW DEBUG] slug', slug);
+
+    // const skip = variables.skip
+
+    // return new Observable(() => {});
+    return forward(operation);
+});
 
 /**
  * Returns a client instance used to make external requests.
@@ -58,8 +75,6 @@ const clientFactory = <T extends ClientType>(
                 // https://www.apollographql.com/docs/react/performance/server-side-rendering#initializing-apollo-client
                 ssrMode: true, // prevents ApolloClient from refetching queries unnecessarily
                 cache: new InMemoryCache(),
-                uri,
-                headers,
                 link:
                     // https://www.apollographql.com/docs/react/networking/advanced-http-networking/#overriding-options
                     new HttpLink({
@@ -84,6 +99,19 @@ const clientFactory = <T extends ClientType>(
                             return fetch(...pl);
                         },
                     }),
+            }) as UnderlyingClient<T>;
+        case 'Mock':
+            return new ApolloClient({
+                ssrMode: true,
+                cache: new InMemoryCache(),
+                link: ApolloLink.from([
+                    mockLink,
+                    new HttpLink({
+                        uri,
+                        headers,
+                        fetchOptions: { method: 'GET' },
+                    }),
+                ]),
             }) as UnderlyingClient<T>;
         default:
             throw Error('Invalid client type.');

@@ -17,3 +17,4 @@ const CS_HEADERS = {
 };
 
 export const CS_CLIENT = clientFactory('ApolloGraphQL', CS_URL, CS_HEADERS);
+export const MOCK_CS_CLIENT = clientFactory('Mock', CS_URL, CS_HEADERS);
