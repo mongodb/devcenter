@@ -4,27 +4,11 @@ import {
     InMemoryCache,
     DefaultOptions,
     HttpLink,
-    // Observable,
 } from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
 import { ClientType, UnderlyingClient } from '../types/client-factory';
 import { RetryLink } from '@apollo/client/link/retry';
-
-const mockLink = new ApolloLink((operation, forward) => {
-    // const {
-    //     operationName,
-    //     variables: { skip, slug },
-    // } = operation;
-
-    // console.log('[JW DEBUG] operationName', operationName);
-    // console.log('[JW DEBUG] skip', skip);
-    // console.log('[JW DEBUG] slug', slug);
-
-    // const skip = variables.skip
-
-    // return new Observable(() => {});
-    return forward(operation);
-});
+import { mockLink } from '../../mocks/apollo-handlers';
 
 /**
  * Returns a client instance used to make external requests.
@@ -81,23 +65,6 @@ const clientFactory = <T extends ClientType>(
                         uri,
                         headers,
                         fetchOptions: { method: 'GET' }, // override default POST to use GET
-                        // log uri (on dev mode) and fetch
-                        fetch: (...pl) => {
-                            if (process.env.NODE_ENV === 'production') {
-                                return fetch(...pl);
-                            }
-
-                            // https://github.com/apollographql/apollo-client/issues/4017
-                            // tweaked from musemind implementation
-
-                            // Uncomment below if we want to see outbound gql uri
-                            // const [uri] = pl;
-                            // console.log(uri)
-
-                            // because queries are long,
-                            // so save them locally instead of logging to console
-                            return fetch(...pl);
-                        },
                     }),
             }) as UnderlyingClient<T>;
         case 'Mock':

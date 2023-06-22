@@ -19,7 +19,10 @@ export type gqlParents =
     | 'videos';
 
 const get_client = () => {
-    if (process.env.NODE_ENV === 'development') {
+    // if (process.env.NODE_ENV === 'development') {
+    //     return MOCK_CS_CLIENT;
+    // }
+    if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
         return MOCK_CS_CLIENT;
     }
 
@@ -41,6 +44,8 @@ export const fetchAll = async (
         query,
         variables: vars,
     });
+    console.log('[JW DEBUG] variables', vars);
+    console.log('[JW DEBUG] response', response);
 
     const { total } = response.data[gqlParentName];
 
@@ -52,6 +57,10 @@ export const fetchAll = async (
             query,
             variables,
         });
+
+        console.log('[JW DEBUG] variables', variables);
+        console.log('[JW DEBUG] response', response);
+
         const { items } = res.data[gqlParentName];
 
         allItems.push(...items);
