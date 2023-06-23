@@ -1,11 +1,13 @@
+const fs = require('fs');
+const path = require('path');
 import { ApolloLink, Observable } from '@apollo/client';
-import { readFileSync } from 'fs';
-import path from 'path';
 
 const mapToMockResources = (queryName: string) => {
     const queryToResources: Record<string, string> = {
         get_podcast: 'podcasts',
         get_all_podcasts: 'podcasts',
+        get_video: 'videos',
+        get_all_videos: 'videos',
     };
 
     return queryToResources[queryName];
@@ -47,7 +49,7 @@ const loadMockData = (operationName: string, skip: number, slug: string) => {
     let data: any = null;
 
     try {
-        const jsonData = readFileSync(filePath, 'utf-8');
+        const jsonData = fs.readFileSync(filePath, 'utf-8');
         data = JSON.parse(jsonData);
     } catch (error) {
         console.error(`Error deserializing JSON file at ${filePath}, error`);

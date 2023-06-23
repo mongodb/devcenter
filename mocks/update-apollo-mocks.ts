@@ -1,11 +1,13 @@
+const fs = require('fs');
+const path = require('path');
+
 import { DocumentNode } from 'graphql';
 import {
     fetchAllForMocks,
     gqlParents,
 } from '../src/api-requests/contentstack_utils';
 import { allPodcastsQuery } from '../src/graphql/podcasts';
-import { writeFileSync } from 'fs';
-import path from 'path';
+import { allVideosQuery } from '../src/graphql/videos';
 
 interface QueryInfo {
     query: DocumentNode;
@@ -17,6 +19,10 @@ const queryinfos: QueryInfo[] = [
         query: allPodcastsQuery,
         gqlParentName: 'podcasts',
     },
+    {
+        query: allVideosQuery,
+        gqlParentName: 'videos',
+    },
 ];
 
 const updateLocalMockData = async () => {
@@ -27,7 +33,7 @@ const updateLocalMockData = async () => {
         const filePath = path.join(__dirname, 'apollo-data', fileName);
 
         try {
-            writeFileSync(filePath, jsonData, { flag: 'w' });
+            fs.writeFileSync(filePath, jsonData, { flag: 'w' });
             console.log(`Successfully wrote to ${filePath}`);
         } catch (err) {
             console.error(`Failed to write to ${filePath}`, err);
