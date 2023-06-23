@@ -2007,10 +2007,10 @@
     "@leafygreen-ui/palette" "^3.4.4"
     "@leafygreen-ui/tokens" "^1.3.4"
 
-"@mdb/consistent-nav@1.2.37":
-  version "1.2.37"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.37.tgz#fd305bf536a5894b3b285d223538241ef26d0945"
-  integrity sha512-dzJlHb7iIvNjRevVBm0qroWudZAUBtDNKDOn7VRbpspHNlUSku4xZBYmw7eEg9O5u9yxtXDO83X7R8yxccqcjA==
+"@mdb/consistent-nav@1.2.38":
+  version "1.2.38"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.38.tgz#725bfc29f46c7016a1c3bd2432567a1b5c91ef8d"
+  integrity sha512-0YmuZKxoW7q4T1eiV/FZhD/8NHsB+7VzYC5O6HdGyT/L6NcUl1Gc6n4Gord5v530og9ekYGpb2bTkN9DQRcJcA==
 
 "@mdb/devcenter-components@0.2.0":
   version "0.2.0"
