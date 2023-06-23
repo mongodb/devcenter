@@ -103,8 +103,11 @@ const ProductSection: React.FunctionComponent<L1Product> = ({
                                     },
                                 }}
                                 sx={{
-                                    div: { minHeight: 'unset' },
                                     padding: 0,
+                                    // Push CTA link to bottom of card.
+                                    'div:nth-of-type(2)': {
+                                        flexGrow: 1,
+                                    },
                                 }}
                             />
                         );
@@ -164,8 +167,11 @@ const ProductsPage: NextPage<ProductsPageProps> = ({ products, featured }) => (
                                         },
                                     }}
                                     sx={{
-                                        div: { minHeight: 'unset' },
                                         py: 'inc60',
+                                        // Push CTA link to bottom of card.
+                                        'div:nth-of-type(2)': {
+                                            flexGrow: 1,
+                                        },
                                     }}
                                 />
                             );
