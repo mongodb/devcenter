@@ -1,4 +1,4 @@
-import { ApolloLink } from '@apollo/client';
+import { ApolloLink, Observable } from '@apollo/client';
 import { readFileSync } from 'fs';
 import path from 'path';
 
@@ -11,45 +11,33 @@ const mapToMockResources = (queryName: string) => {
     return queryToResources[queryName];
 };
 
-const formatToSlugResponse = (
-    items: Record<string, any>[],
-    remaining: Record<string, any>,
-    resourceName: string
-) => {
-    if (!items) return [];
-
-    const formattedResponse: Record<string, any> = { ...remaining };
-    const __typename = items[0].__typename;
-
-    formattedResponse.data[resourceName] = {
-        __typename,
-        total: items.length,
-        items,
-    };
-
-    return formattedResponse;
-};
-
+// note this in theory can return more than one items
+// although unlikely given that slug should be unique
 const findBySlug = (
-    responsesData: Record<string, any>,
+    data: Record<string, any>,
     resourceName: string,
     slug: string
 ) => {
-    const items: Record<string, any>[] = [];
+    const foundItems: Record<string, any>[] = [];
+    let __typename = '';
 
-    for (const [, responseData] of Object.entries(responsesData)) {
-        const items: Record<string, any>[] =
-            responseData.response.data[resourceName].items;
-        const item = items.find(item => item.slug === slug);
+    for (const [, resourceData] of Object.entries(data)) {
+        const items: Record<string, any>[] = resourceData[resourceName].items;
+        __typename = resourceData[resourceName].__typename;
+        const foundItem = items.find(item => item.slug === slug);
 
-        if (!item) continue;
-
-        items.push(item);
+        if (!foundItem) continue;
+        foundItems.push(foundItem);
     }
-    const remaining = {};
-    console.log(items);
 
-    return formatToSlugResponse(items, remaining, resourceName);
+    const formatted: Record<string, any> = {};
+    formatted[resourceName] = {
+        __typename,
+        total: foundItems.length,
+        items: foundItems,
+    };
+
+    return formatted;
 };
 
 const loadMockData = (operationName: string, skip: number, slug: string) => {
@@ -75,29 +63,26 @@ const loadMockData = (operationName: string, skip: number, slug: string) => {
 
     if (!skip) skip = 0;
 
-    return data[skip];
+    return data[skip.toString()];
 };
 
-// intercept gql query made by apolloclient
+// mockLink intercept gql query made by apolloclient
+// mockLink is used before the final HTTPLink
+// when creating the mock ApolloClient
 export const mockLink = new ApolloLink((operation, forward) => {
     const {
         operationName,
         variables: { skip, slug },
     } = operation;
 
-    console.log('[JW DEBUG] operationName', operationName);
-    console.log('[JW DEBUG] skip', skip);
-    console.log('[JW DEBUG] slug', slug);
-
     const data: any = loadMockData(operationName, skip, slug);
 
-    if (!data) {
-        return forward(operation);
+    if (data) {
+        return new Observable(observer => {
+            observer.next({ data });
+            observer.complete();
+        });
     }
 
-    console.log('[JW DEBUG] data', data);
-    // const skip = variables.skip
-
-    // return new Observable(() => {});
     return forward(operation);
 });

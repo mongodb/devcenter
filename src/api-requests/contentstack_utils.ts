@@ -19,9 +19,6 @@ export type gqlParents =
     | 'videos';
 
 const get_client = () => {
-    // if (process.env.NODE_ENV === 'development') {
-    //     return MOCK_CS_CLIENT;
-    // }
     if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
         return MOCK_CS_CLIENT;
     }
@@ -36,31 +33,25 @@ const get_client = () => {
 export const fetchAll = async (
     query: DocumentNode,
     gqlParentName: gqlParents,
-    vars?: Record<string, any>
+    variables?: Record<string, any>
 ) => {
     const client = get_client();
     // expect all incoming cs_query already has total
     const response: ApolloQueryResult<any> = await client.query({
         query,
-        variables: vars,
+        variables,
     });
-    console.log('[JW DEBUG] variables', vars);
-    console.log('[JW DEBUG] response', response);
 
     const { total } = response.data[gqlParentName];
 
     const allItems: Record<string, any>[] = [];
 
     while (allItems.length < total) {
-        const variables = { ...vars, skip: allItems.length };
+        const variablesWithSkip = { ...variables, skip: allItems.length };
         const res: ApolloQueryResult<any> = await client.query({
             query,
-            variables,
+            variables: variablesWithSkip,
         });
-
-        console.log('[JW DEBUG] variables', variables);
-        console.log('[JW DEBUG] response', response);
-
         const { items } = res.data[gqlParentName];
 
         allItems.push(...items);
@@ -69,20 +60,8 @@ export const fetchAll = async (
     return allItems;
 };
 
-const storeResponsesForMock = (
-    response: ApolloQueryResult<any>,
-    responsesContainer: Record<number, any>,
-    variables?: Record<string, any>
-) => {
-    const skip = variables?.skip ?? 0;
-
-    responsesContainer[skip] = {
-        response,
-    };
-};
-
 /**
- * fetchAll() with query and variables stored for updating mock.
+ * modified fetchAll() to store data with skip for updating mock.
  */
 export const fetchAllForMocks = async (
     query: DocumentNode,
@@ -90,7 +69,7 @@ export const fetchAllForMocks = async (
     variables?: Record<string, any>
 ) => {
     const client = CS_CLIENT;
-    const responsesContainer: Record<number, any> = {};
+    const mockData: Record<number, any> = {};
 
     // retrieve total and assume total field is included in the query
     const response: ApolloQueryResult<any> = await client.query({
@@ -102,13 +81,17 @@ export const fetchAllForMocks = async (
     const allItems: Record<string, any>[] = [];
 
     while (allItems.length < total) {
-        variables = { ...variables, skip: allItems.length };
-        const res: any = await client.query({ query, variables });
-        const { items } = res.data[gqlParentName];
+        const skip = allItems.length;
+        const variablesWithSkip = { ...variables, skip };
+        const { data }: any = await client.query({
+            query,
+            variables: variablesWithSkip,
+        });
+        const { items } = data[gqlParentName];
 
         allItems.push(...items);
-        storeResponsesForMock(response, responsesContainer, variables);
+        mockData[skip] = { ...data };
     }
 
-    return responsesContainer;
+    return mockData;
 };
