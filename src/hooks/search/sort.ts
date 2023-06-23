@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { defaultSortByType, SortByType } from '../../components/search/types';
 
-const useSort = (callback: () => void) => {
+const useSort = (callback: () => void, contentType?: string) => {
     const [sortBy, setSortBy] = useState<SortByType | ''>('');
 
     const onSort = useCallback(
@@ -17,7 +17,8 @@ const useSort = (callback: () => void) => {
             sortBy,
             onSort,
         },
-        clearSort: () => setSortBy(defaultSortByType),
+        clearSort: () =>
+            setSortBy(contentType === 'Video' ? 'Upcoming' : defaultSortByType),
     };
 };
 

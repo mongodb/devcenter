@@ -68,18 +68,6 @@ export default class MyDocument extends Document {
                         as="font"
                         type="font/ttf"
                     />
-                    <link
-                        rel="preload"
-                        href="/developer/fonts/akzidenzgroteskbq_light-webfont.woff2"
-                        as="font"
-                        type="font/woff2"
-                    />
-                    <link
-                        rel="preload"
-                        href="/developer/fonts/akzidenzgroteskbq_medium-webfont.woff2"
-                        as="font"
-                        type="font/woff2"
-                    />
                     <Script
                         id="ga-base"
                         strategy="afterInteractive"

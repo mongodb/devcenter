@@ -1,4 +1,3 @@
-import theme from '@mdb/flora/theme';
 import { ThemeUICSSObject } from 'theme-ui';
 
 export const titleStyles: ThemeUICSSObject = {
@@ -102,8 +101,4 @@ export const resultsStyles: ThemeUICSSObject = {
     flexDirection: 'column',
     width: '100%',
     marginTop: 'inc30',
-};
-
-export const linkStyleOverride = {
-    right: [0, null, `calc(${theme.sizes.inc50} - ${theme.sizes.inc70})`],
 };
