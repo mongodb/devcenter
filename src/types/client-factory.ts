@@ -1,6 +1,9 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
+// ApolloREST is only used with Strapi
+// TODO: To retire in future
 export type ApolloClientType = 'ApolloREST' | 'ApolloGraphQL' | 'Mock';
+
 export type ClientType = ApolloClientType; // Update this if we have more client types (e.g. Lambda)
 
 // Basically maps a string client type to the underlying client type so typescript knows what to do.
@@ -9,5 +12,7 @@ export type ClientType = ApolloClientType; // Update this if we have more client
 export type UnderlyingClient<T extends ClientType> = T extends 'ApolloREST'
     ? ApolloClient<NormalizedCacheObject>
     : T extends 'ApolloGraphQL'
+    ? ApolloClient<NormalizedCacheObject>
+    : T extends 'Mock'
     ? ApolloClient<NormalizedCacheObject>
     : never;

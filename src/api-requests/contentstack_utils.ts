@@ -1,6 +1,11 @@
-import { DocumentNode } from 'graphql';
-import { CS_CLIENT, MOCK_CS_CLIENT } from '../config/api-client';
 import { ApolloQueryResult } from '@apollo/client';
+import { DocumentNode } from 'graphql';
+import {
+    CS_CLIENT_MOCK,
+    CS_CLIENT_PROD,
+    CS_CLIENT_STAGING,
+} from '../config/api-client';
+import { UnderlyingClient } from '../types/client-factory';
 
 export type gqlParents =
     | 'l1Products'
@@ -18,12 +23,14 @@ export type gqlParents =
     | 'videoSeries'
     | 'videos';
 
-const get_client = () => {
-    if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-        return MOCK_CS_CLIENT;
-    }
+type environment = 'production' | 'staging';
 
-    return CS_CLIENT;
+export const getClient = (environment: environment) => {
+    const useMock = process.env.NEXT_PUBLIC_API_MOCKING === 'enabled';
+
+    if (useMock) return CS_CLIENT_MOCK;
+    if (environment === 'staging') return CS_CLIENT_STAGING;
+    return CS_CLIENT_PROD;
 };
 
 /**
@@ -33,9 +40,9 @@ const get_client = () => {
 export const fetchAll = async (
     query: DocumentNode,
     gqlParentName: gqlParents,
+    client: UnderlyingClient<'ApolloGraphQL'>,
     variables?: Record<string, any>
 ) => {
-    const client = get_client();
     // expect all incoming cs_query already has total
     const response: ApolloQueryResult<any> = await client.query({
         query,
@@ -68,7 +75,7 @@ export const fetchAllForMocks = async (
     gqlParentName: gqlParents,
     variables?: Record<string, any>
 ) => {
-    const client = CS_CLIENT;
+    const client = CS_CLIENT_PROD;
     const mockData: Record<number, any> = {};
 
     // retrieve total and assume total field is included in the query

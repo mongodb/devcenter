@@ -53,7 +53,6 @@ const clientFactory = <T extends ClientType>(
                     }),
                 ]),
             }) as UnderlyingClient<T>;
-
         case 'ApolloGraphQL':
             return new ApolloClient({
                 // https://www.apollographql.com/docs/react/performance/server-side-rendering#initializing-apollo-client
