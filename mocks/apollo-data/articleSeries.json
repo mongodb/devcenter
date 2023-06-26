@@ -1,0 +1,101 @@
+{
+    "0": {
+        "articleSeries": {
+            "__typename": "AllArticleSeries",
+            "total": 3,
+            "items": [
+                {
+                    "__typename": "ArticleSeries",
+                    "series_entryConnection": {
+                        "__typename": "ArticleSeriesSeriesEntryConnection",
+                        "edges": [
+                            {
+                                "__typename": "ArticleSeriesSeriesEntryEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Deploying the MongoDB Enterprise Kubernetes Operator on Google Cloud",
+                                    "calculated_slug": "/products/connectors/deploying-kubernetes-operator"
+                                }
+                            },
+                            {
+                                "__typename": "ArticleSeriesSeriesEntryEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Mastering MongoDB Ops Manager on Kubernetes",
+                                    "calculated_slug": "/products/connectors/mastering-ops-manager"
+                                }
+                            },
+                            {
+                                "__typename": "ArticleSeriesSeriesEntryEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Deploying MongoDB Across Multiple Kubernetes Clusters With MongoDBMulti",
+                                    "calculated_slug": "/products/connectors/deploying-across-multiple-kubernetes-clusters"
+                                }
+                            }
+                        ]
+                    },
+                    "title": "Deploying MongoDB Across Multiple Kubernetes Clusters"
+                },
+                {
+                    "__typename": "ArticleSeries",
+                    "series_entryConnection": {
+                        "__typename": "ArticleSeriesSeriesEntryConnection",
+                        "edges": [
+                            {
+                                "__typename": "ArticleSeriesSeriesEntryEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Configure Email/Password Authentication in MongoDB Atlas App Services",
+                                    "calculated_slug": "/products/atlas/email-password-authentication-app-services"
+                                }
+                            },
+                            {
+                                "__typename": "ArticleSeriesSeriesEntryEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Implement Email/Password Authentication in React",
+                                    "calculated_slug": "/products/atlas/email-password-authentication-react"
+                                }
+                            },
+                            {
+                                "__typename": "ArticleSeriesSeriesEntryEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "CRUD Operations with GraphQL Using Atlas App Services",
+                                    "calculated_slug": "/products/atlas/crud-operations-with-graphql"
+                                }
+                            }
+                        ]
+                    },
+                    "title": "Fullstack Web App with MongoDB Atlas App Services, GraphQL, and React"
+                },
+                {
+                    "__typename": "ArticleSeries",
+                    "series_entryConnection": {
+                        "__typename": "ArticleSeriesSeriesEntryConnection",
+                        "edges": [
+                            {
+                                "__typename": "ArticleSeriesSeriesEntryEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Realm Data Types",
+                                    "calculated_slug": "/products/realm/realm-data-types"
+                                }
+                            },
+                            {
+                                "__typename": "ArticleSeriesSeriesEntryEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Realm GraphQL Demo: Custom Resolvers",
+                                    "calculated_slug": "/products/realm/realm-graphql-demo-custom-resolvers"
+                                }
+                            }
+                        ]
+                    },
+                    "title": "Realm Series"
+                }
+            ]
+        }
+    }
+}
