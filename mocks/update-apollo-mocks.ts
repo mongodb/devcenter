@@ -11,25 +11,28 @@ import { allVideosQuery } from '../src/graphql/videos';
 
 interface QueryInfo {
     query: DocumentNode;
-    gqlParentName: gqlParents;
+    resourceName: gqlParents;
+    supportedOperations: string[];
 }
 
-const queryinfos: QueryInfo[] = [
+export const queryInfos: QueryInfo[] = [
     {
         query: allPodcastsQuery,
-        gqlParentName: 'podcasts',
+        resourceName: 'podcasts',
+        supportedOperations: ['get_podcast', 'get_all_podcasts'],
     },
     {
         query: allVideosQuery,
-        gqlParentName: 'videos',
+        resourceName: 'videos',
+        supportedOperations: ['get_video', 'get_all_videos'],
     },
 ];
 
 const updateLocalMockData = async () => {
-    for (const { query, gqlParentName } of queryinfos) {
-        const mockData = await fetchAllForMocks(query, gqlParentName);
+    for (const { query, resourceName } of queryInfos) {
+        const mockData = await fetchAllForMocks(query, resourceName);
         const jsonData = JSON.stringify(mockData, null, 2);
-        const fileName = `./${gqlParentName}.json`;
+        const fileName = `./${resourceName}.json`;
         const filePath = path.join(__dirname, 'apollo-data', fileName);
 
         try {

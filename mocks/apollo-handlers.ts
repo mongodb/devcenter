@@ -2,15 +2,16 @@ const fs = require('fs');
 const path = require('path');
 import { ApolloLink, Observable } from '@apollo/client';
 
-const mapToMockResources = (queryName: string) => {
-    const queryToResources: Record<string, string> = {
-        get_podcast: 'podcasts',
-        get_all_podcasts: 'podcasts',
-        get_video: 'videos',
-        get_all_videos: 'videos',
-    };
+import { queryInfos } from '../mocks/update-apollo-mocks';
 
-    return queryToResources[queryName];
+const mapToResourceName = (operationName: string) => {
+    for (const { supportedOperations, resourceName } of queryInfos) {
+        if (supportedOperations.includes(operationName)) {
+            return resourceName;
+        }
+    }
+
+    throw new Error(`${operationName} is not supported.`);
 };
 
 // note this in theory can return more than one items
@@ -43,7 +44,7 @@ const findBySlug = (
 };
 
 const loadMockData = (operationName: string, skip: number, slug: string) => {
-    const resourceName = mapToMockResources(operationName);
+    const resourceName = mapToResourceName(operationName);
     const fileName = `${resourceName}.json`;
     const filePath = path.join(process.cwd(), 'mocks', 'apollo-data', fileName);
     let data: any = null;
@@ -52,7 +53,8 @@ const loadMockData = (operationName: string, skip: number, slug: string) => {
         const jsonData = fs.readFileSync(filePath, 'utf-8');
         data = JSON.parse(jsonData);
     } catch (error) {
-        console.error(`Error deserializing JSON file at ${filePath}, error`);
+        console.error(`Error deserializing JSON file at ${filePath}, ${error}`);
+        throw error;
     }
 
     if (!data) {
