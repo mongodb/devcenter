@@ -14,6 +14,7 @@ import { getAllAuthorsQuery } from '../src/graphql/authors';
 import { getAllArticleSeriesQuery } from '../src/graphql/article-series';
 import { getAllPodcastSeriesQuery } from '../src/graphql/podcast-series';
 import { getAllVideoSeriesQuery } from '../src/graphql/video-series';
+import { getAllFeaturedContentQuery } from '../src/graphql/featured-content';
 
 interface QueryInfo {
     query: DocumentNode;
@@ -52,6 +53,11 @@ export const queryInfos: QueryInfo[] = [
         query: getAllVideoSeriesQuery,
         resourceName: 'videoSeries',
         supportedOperations: ['get_all_video_series'],
+    },
+    {
+        query: getAllFeaturedContentQuery,
+        resourceName: 'featuredContent',
+        supportedOperations: ['get_all_featured_content'],
     },
     {
         query: getAllArticlesQuery,

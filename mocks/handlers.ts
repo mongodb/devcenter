@@ -10,15 +10,6 @@ import {
 import { ContentTypeUID } from '../src/interfaces/meta-info';
 import { CS_GRAPHQL_LIMIT } from '../src/data/constants';
 import { getMetaInfoQuery } from '../src/api-requests/get-all-meta-info';
-// import { getAllAuthorsQuery } from '../src/api-requests/get-authors';
-// import { getAllArticlesQuery } from '../src/api-requests/get-articles';
-// import { getAllIndustryEventsQuery } from '../src/api-requests/get-industry-events';
-// import { getAllArticleSeriesQuery } from '../src/api-requests/get-article-series';
-// import { getAllPodcastSeriesQuery } from '../src/api-requests/get-podcast-series';
-import { getAllFeaturedContentQuery } from '../src/api-requests/get-all-featured';
-// import { getAllVideosQuery } from '../src/api-requests/get-videos';
-// import { getAllPodcastsQuery } from '../src/api-requests/get-podcasts';
-// import { getAllVideoSeriesQuery } from '../src/api-requests/get-video-series';
 interface RESTHandlerInfo {
     pattern: string;
     url: string;
@@ -95,71 +86,6 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
         mockFile: 'levels',
         getQuery: skip => getMetaInfoQuery('levels', skip),
     },
-    // {
-    //     contentTypeUID: 'authors',
-    //     queryName: 'get_all_authors',
-    //     mockFile: 'authors',
-    //     getQuery: skip => getAllAuthorsQuery(skip),
-    // },
-    // {
-    //     contentTypeUID: 'authors',
-    //     queryName: 'get_author',
-    //     mockFile: 'authors',
-    // },
-    // {
-    //     contentTypeUID: 'articles',
-    //     queryName: 'get_all_articles',
-    //     mockFile: 'articles',
-    //     getQuery: skip => getAllArticlesQuery(skip),
-    // },
-    // {
-    //     contentTypeUID: 'articles',
-    //     queryName: 'get_article',
-    //     mockFile: 'articles',
-    // },
-    // {
-    //     contentTypeUID: 'industry_events',
-    //     queryName: 'get_all_industry_events',
-    //     mockFile: 'upcoming-industry-events',
-    //     getQuery: skip =>
-    //         getAllIndustryEventsQuery(skip, new Date().toISOString()),
-    // },
-    // {
-    //     contentTypeUID: 'article_series',
-    //     queryName: 'get_all_article_series',
-    //     mockFile: 'article-series',
-    //     getQuery: skip => getAllArticleSeriesQuery(),
-    // },
-    // {
-    //     contentTypeUID: 'podcast_series',
-    //     queryName: 'get_all_podcast_series',
-    //     mockFile: 'podcast-series',
-    //     getQuery: skip => getAllPodcastSeriesQuery(),
-    // },
-    // {
-    //     contentTypeUID: 'video_series',
-    //     queryName: 'get_all_video_series',
-    //     mockFile: 'video-series',
-    //     getQuery: skip => getAllVideoSeriesQuery(),
-    // },
-    {
-        contentTypeUID: 'featured_content',
-        queryName: 'get_all_featured_content',
-        mockFile: 'featured-content',
-        getQuery: skip => getAllFeaturedContentQuery(),
-    },
-    // {
-    //     contentTypeUID: 'videos',
-    //     queryName: 'get_all_videos',
-    //     mockFile: 'videos',
-    //     getQuery: skip => getAllVideosQuery(skip),
-    // },
-    // {
-    //     contentTypeUID: 'podcasts',
-    //     queryName: 'get_all_podcasts',
-    //     mockFile: 'podcasts',
-    //     getQuery: skip => getAllPodcastsQuery(skip),
-    // },
 ];
 
 const restHandlers = restHandlerInfo.map(

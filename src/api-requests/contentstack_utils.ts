@@ -21,7 +21,8 @@ export type gqlParents =
     | 'podcastSeries'
     | 'podcasts'
     | 'videoSeries'
-    | 'videos';
+    | 'videos'
+    | 'featuredContent';
 
 type environment = 'production' | 'staging';
 
