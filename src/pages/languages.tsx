@@ -17,7 +17,10 @@ const crumbs: Crumb[] = [
 
 const getFlashCardStyles = (size: number, extraStyles?: ThemeUICSSObject) =>
     ({
-        div: { minHeight: 'unset' },
+        // Push CTA link to bottom of card.
+        'div:nth-of-type(2)': {
+            flexGrow: 1,
+        },
         '>div:first-of-type>div:first-of-type': {
             // Janky, but flora doesn't support third party logos in these cards.
             width: size,

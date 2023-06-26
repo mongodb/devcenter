@@ -1,4 +1,3 @@
-import theme from '@mdb/flora/theme';
 import { ThemeUICSSObject } from 'theme-ui';
 
 export const heroContainerStyles = {
@@ -14,12 +13,4 @@ export const CTAContainerStyles: ThemeUICSSObject = {
     gridColumn: [null, null, 'span 3', 'span 7'],
     justifyContent: [null, null, 'end'],
     width: [null, null, '100%'],
-};
-
-// This is all to complement Flora's animation on the link arrow and force it not to push itself left.
-export const CTALinkStyles: ThemeUICSSObject = {
-    position: 'relative',
-    transitionDuration: theme.motion.linkAnimation,
-    transitionProperty: 'right margin-left',
-    right: '0',
 };

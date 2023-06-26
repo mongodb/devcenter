@@ -2308,5 +2308,20 @@
         "source": "/products/mongodb/getting-started-mongodb-c/",
         "destination": "/products/mongodb/getting-started-mongodb-cpp/",
         "permanent": true
+    },
+    {
+        "source": "/blog/post/quick-start-nodejs-mongodb--how-to-get-connected-to-your-database",
+        "destination": "https://www.mongodb.com/blog/post/quick-start-nodejs-mongodb-how-to-get-connected-to-your-database",
+        "permanent": true
+    },
+    {
+        "source": "/webinar/back-to-basics-2021",
+        "destination": "/",
+        "permanent": true
+    },
+    {
+        "source": "/webinar/why-use-no-sql-for-startups",
+        "destination": "/",
+        "permanent": true
     }
 ]
