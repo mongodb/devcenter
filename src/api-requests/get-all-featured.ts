@@ -43,7 +43,7 @@ export const CS_getAllFeaturedContent = async (): Promise<
     const client = getClient('production');
     const featuredContent = (await fetchAll(
         getAllFeaturedContentQuery,
-        'featuredContent',
+        'featured_content',
         client
     )) as CS_FeaturedContentResponse[];
 

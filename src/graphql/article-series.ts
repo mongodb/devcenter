@@ -18,7 +18,7 @@ const articleSeriesFields = gql`
 
 export const getAllArticleSeriesQuery = gql`
     query get_all_article_series($skip: Int = 0) {
-        articleSeries: all_article_series(skip: $skip) {
+        article_series: all_article_series(skip: $skip) {
             total
             items {
                 ...ArticleSeriesFields

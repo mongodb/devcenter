@@ -5,24 +5,27 @@ import {
     CS_CLIENT_PROD,
     CS_CLIENT_STAGING,
 } from '../config/api-client';
+import { ContentTypeUID } from '../interfaces/meta-info';
 import { UnderlyingClient } from '../types/client-factory';
 
-export type gqlParents =
-    | 'l1Products'
-    | 'l2Products'
-    | 'programmingLanguages'
-    | 'technologies'
-    | 'expertiseLevels'
-    | 'contentTypes'
-    | 'articleSeries'
-    | 'articles'
-    | 'authors'
-    | 'industryEvents'
-    | 'podcastSeries'
-    | 'podcasts'
-    | 'videoSeries'
-    | 'videos'
-    | 'featuredContent';
+// export type gqlParents =
+//     | 'l1Products'
+//     | 'l2Products'
+//     | 'programmingLanguages'
+//     | 'spokenLanguages'
+//     | 'technologies'
+//     | 'contentTypes'
+//     | 'levels'
+//     | 'articleSeries'
+//     | 'articles'
+//     | 'authors'
+//     | 'authorTypes'
+//     | 'industryEvents'
+//     | 'podcastSeries'
+//     | 'podcasts'
+//     | 'videoSeries'
+//     | 'videos'
+//     | 'featuredContent';
 
 type environment = 'production' | 'staging';
 
@@ -40,7 +43,7 @@ export const getClient = (environment: environment) => {
  */
 export const fetchAll = async (
     query: DocumentNode,
-    gqlParentName: gqlParents,
+    gqlParentName: ContentTypeUID,
     client: UnderlyingClient<'ApolloGraphQL'>,
     variables?: Record<string, any>
 ) => {
@@ -73,7 +76,7 @@ export const fetchAll = async (
  */
 export const fetchAllForMocks = async (
     query: DocumentNode,
-    gqlParentName: gqlParents,
+    gqlParentName: ContentTypeUID,
     variables?: Record<string, any>
 ) => {
     const client = CS_CLIENT_PROD;

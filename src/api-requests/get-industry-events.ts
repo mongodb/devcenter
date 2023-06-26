@@ -15,7 +15,7 @@ export const CS_getAllIndustryEventsFromCMS = async (): Promise<
 
     const industryEvents = (await fetchAll(
         getAllIndustryEventsQuery,
-        'industryEvents',
+        'industry_events',
         client,
         variables
     )) as CS_IndustryEventsResponse[];
@@ -31,7 +31,7 @@ export const CS_getIndustryEventBySlugFromCMS = async (
 
     const industryEvents = (await fetchAll(
         getIndustryEventQuery,
-        'industryEvents',
+        'industry_events',
         client,
         variables
     )) as CS_IndustryEventsResponse[];
@@ -47,7 +47,7 @@ export const CS_getDraftIndustryEventBySlugFromCMS = async (
 
     const industryEvents = (await fetchAll(
         getIndustryEventQuery,
-        'industryEvents',
+        'industry_events',
         client,
         variables
     )) as CS_IndustryEventsResponse[];

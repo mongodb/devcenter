@@ -1,0 +1,543 @@
+{
+    "0": {
+        "technologies": {
+            "__typename": "AllTechnologies",
+            "total": 41,
+            "items": [
+                {
+                    "__typename": "Technologies",
+                    "title": "IDE",
+                    "description": "",
+                    "primary_cta": "www.mongodb.com/products/ide-extensions",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/ide",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Mobile",
+                    "description": "",
+                    "primary_cta": "https://www.mongodb.com/products/mobile",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/mobile",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Terraform",
+                    "description": "Terraform is an open-source infrastructure-as-configuration software tool created by HashiCorp.",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/terraform",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "React Native",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/react-native",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Spring",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/spring",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Jupyter",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/jupyter",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Prisma",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/prisma",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Vercel",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/vercel",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Netlify",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/netlify",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Xamarin",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/xamarin",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Flutter",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/flutter",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "GitHub Actions",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/github-actions",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Excel",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/excel",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Pandas",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/pandas",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Parquet",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/parquet",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Spark",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/spark",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Jetpack Compose",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/jetpack-compose",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Cloudflare",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/cloudflare",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Serverless",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/serverless",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "TLS",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/tls",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Svelte",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/svelte",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Django",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/django",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Flask",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/flask",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "FastApi",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/fastapi",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Azure",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/azure",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "GCP",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/gcp",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "AWS",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/aws",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Nextjs",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/nextjs",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Nodejs",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/nodejs",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Kafka",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/kafka",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "SQL",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/sql",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "React",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/react",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "RaspberryPi",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/raspberrypi",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Android",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/android",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "iOS",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/ios",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Postman API",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/postman-api",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "GraphQL",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/graphql",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Unity",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/unity",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": ".Net Framework",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/dotnet-framework",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Kubernetes",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/kubernetes",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                },
+                {
+                    "__typename": "Technologies",
+                    "title": "Docker",
+                    "description": "",
+                    "primary_cta": "",
+                    "secondary_cta": "",
+                    "documentation_link": "",
+                    "slug": "/technologies/docker",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "technologies"
+                    }
+                }
+            ]
+        }
+    }
+}

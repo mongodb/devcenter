@@ -40,6 +40,8 @@ export type ContentTypeUID =
     | 'technologies'
     | 'levels'
     | 'author_types'
+    | 'authors'
+    | 'articles'
     | 'spoken_languages'
     | 'content_types'
     | 'code_levels'

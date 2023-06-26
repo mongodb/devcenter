@@ -8,7 +8,7 @@ export const CS_getAllPodcastSeriesFromAPI = async (): Promise<
     const client = getClient('production');
     const podcastSeries = (await fetchAll(
         getAllPodcastSeriesQuery,
-        'podcastSeries',
+        'podcast_series',
         client
     )) as CS_SeriesResponse[];
 

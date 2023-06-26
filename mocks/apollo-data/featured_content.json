@@ -1,6 +1,6 @@
 {
     "0": {
-        "featuredContent": {
+        "featured_content": {
             "__typename": "AllFeaturedContent",
             "total": 12,
             "items": [

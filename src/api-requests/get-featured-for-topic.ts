@@ -13,7 +13,7 @@ export const CS_getFeaturedContentForTopic = async (
     const variables = { topicSlug };
     const featuredContent = (await fetchAll(
         getFeaturedForTopicQuery,
-        'featuredContent',
+        'featured_content',
         client,
         variables
     )) as CS_FeaturedContentResponse[];

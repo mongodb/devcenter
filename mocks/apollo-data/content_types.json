@@ -1,0 +1,114 @@
+{
+    "0": {
+        "content_types": {
+            "__typename": "AllContentTypes",
+            "total": 8,
+            "items": [
+                {
+                    "__typename": "ContentTypes",
+                    "title": "News & Announcements",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/news",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "content_types"
+                    }
+                },
+                {
+                    "__typename": "ContentTypes",
+                    "title": "Event",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/events",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "content_types"
+                    }
+                },
+                {
+                    "__typename": "ContentTypes",
+                    "title": "Quickstart",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/quickstarts",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "content_types"
+                    }
+                },
+                {
+                    "__typename": "ContentTypes",
+                    "title": "Code Example",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/code-examples",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "content_types"
+                    }
+                },
+                {
+                    "__typename": "ContentTypes",
+                    "title": "Video",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/videos",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "content_types"
+                    }
+                },
+                {
+                    "__typename": "ContentTypes",
+                    "title": "Podcast",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/podcasts",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "content_types"
+                    }
+                },
+                {
+                    "__typename": "ContentTypes",
+                    "title": "Tutorial",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/tutorials",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "content_types"
+                    }
+                },
+                {
+                    "__typename": "ContentTypes",
+                    "title": "Article",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/articles",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "content_types"
+                    }
+                }
+            ]
+        }
+    }
+}

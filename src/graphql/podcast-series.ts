@@ -18,7 +18,7 @@ const podcastSeriesFields = gql`
 
 export const getAllPodcastSeriesQuery = gql`
     query get_all_podcast_series($skip: Int = 0) {
-        podcastSeries: all_podcast_series(skip: $skip) {
+        podcast_series: all_podcast_series(skip: $skip) {
             total
             items {
                 ...PodcastSeriesFields

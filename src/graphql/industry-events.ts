@@ -157,7 +157,7 @@ const industryEventFields = gql`
 
 export const getAllIndustryEventsQuery = gql`
     query get_all_industry_events($skip: Int = 0, $today: String!) {
-        industryEvents: all_industry_events(
+        industry_events: all_industry_events(
             limit: ${CS_GRAPHQL_LIMIT},
             skip: $skip,
             where: { end_time_gte: $today }
@@ -173,7 +173,7 @@ export const getAllIndustryEventsQuery = gql`
 
 export const getIndustryEventQuery = gql`
     query get_industry_event($skip: Int = 0, $calculatedSlug: String!) {
-        industryEvents: all_industry_events(
+        industry_events: all_industry_events(
             skip: $skip
             where: { calculated_slug: $calculatedSlug }
         ) {

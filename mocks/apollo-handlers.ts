@@ -4,10 +4,10 @@ import { ApolloLink, Observable } from '@apollo/client';
 
 import { queryInfos } from '../mocks/update-apollo-mocks';
 
-const mapToResourceName = (operationName: string) => {
-    for (const { supportedOperations, resourceName } of queryInfos) {
+const mapToContentTypeUID = (operationName: string) => {
+    for (const { supportedOperations, contentTypeUID } of queryInfos) {
         if (supportedOperations.includes(operationName)) {
-            return resourceName;
+            return contentTypeUID;
         }
     }
 
@@ -47,8 +47,8 @@ const loadMockData = (
     operationName: string,
     variables: Record<string, any>
 ) => {
-    const resourceName = mapToResourceName(operationName);
-    const fileName = `${resourceName}.json`;
+    const contentTypeUID = mapToContentTypeUID(operationName);
+    const fileName = `${contentTypeUID}.json`;
     const filePath = path.join(process.cwd(), 'mocks', 'apollo-data', fileName);
     let data: any = null;
 
@@ -70,7 +70,7 @@ const loadMockData = (
     if (slug) {
         return findByMatch(
             data,
-            resourceName,
+            contentTypeUID,
             (item: { slug: string }) => item.slug === slug
         );
     }
@@ -78,7 +78,7 @@ const loadMockData = (
     if (calculatedSlug) {
         return findByMatch(
             data,
-            resourceName,
+            contentTypeUID,
             (item: { calculated_slug: string }) =>
                 item.calculated_slug === calculatedSlug
         );

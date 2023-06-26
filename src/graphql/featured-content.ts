@@ -61,7 +61,7 @@ const featuredContentFields = gql`
 
 export const getAllFeaturedContentQuery = gql`
     query get_all_featured_content($skip: Int = 0) {
-        featuredContent: all_featured_content(skip: $skip) {
+        featured_content: all_featured_content(skip: $skip) {
             total
             items {
                 ...FeaturedContentFields
@@ -73,7 +73,7 @@ export const getAllFeaturedContentQuery = gql`
 
 export const getFeaturedForTopicQuery = gql`
     query get_all_featured_content($skip: Int = 0, $topicSlug: String!) {
-        featuredContent: all_featured_content(
+        featured_content: all_featured_content(
             skip: $skip
             where: {
                 category: {
