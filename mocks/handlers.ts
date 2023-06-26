@@ -12,7 +12,7 @@ import { CS_GRAPHQL_LIMIT } from '../src/data/constants';
 import { getMetaInfoQuery } from '../src/api-requests/get-all-meta-info';
 import { getAllAuthorsQuery } from '../src/api-requests/get-authors';
 import { getAllArticlesQuery } from '../src/api-requests/get-articles';
-import { getAllIndustryEventsQuery } from '../src/api-requests/get-industry-events';
+// import { getAllIndustryEventsQuery } from '../src/api-requests/get-industry-events';
 import { getAllArticleSeriesQuery } from '../src/api-requests/get-article-series';
 import { getAllPodcastSeriesQuery } from '../src/api-requests/get-podcast-series';
 import { getAllFeaturedContentQuery } from '../src/api-requests/get-all-featured';
@@ -117,13 +117,13 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
         queryName: 'get_article',
         mockFile: 'articles',
     },
-    {
-        contentTypeUID: 'industry_events',
-        queryName: 'get_all_industry_events',
-        mockFile: 'upcoming-industry-events',
-        getQuery: skip =>
-            getAllIndustryEventsQuery(skip, new Date().toISOString()),
-    },
+    // {
+    //     contentTypeUID: 'industry_events',
+    //     queryName: 'get_all_industry_events',
+    //     mockFile: 'upcoming-industry-events',
+    //     getQuery: skip =>
+    //         getAllIndustryEventsQuery(skip, new Date().toISOString()),
+    // },
     {
         contentTypeUID: 'article_series',
         queryName: 'get_all_article_series',

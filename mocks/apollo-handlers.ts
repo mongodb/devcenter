@@ -16,10 +16,10 @@ const mapToResourceName = (operationName: string) => {
 
 // note this in theory can return more than one items
 // although unlikely given that slug should be unique
-const findBySlug = (
+const findByMatch = (
     data: Record<string, any>,
     resourceName: string,
-    slug: string
+    matchFunc: any
 ) => {
     const foundItems: Record<string, any>[] = [];
     let __typename = '';
@@ -27,7 +27,7 @@ const findBySlug = (
     for (const [, resourceData] of Object.entries(data)) {
         const items: Record<string, any>[] = resourceData[resourceName].items;
         __typename = resourceData[resourceName].__typename;
-        const foundItem = items.find(item => item.slug === slug);
+        const foundItem = items.find(matchFunc);
 
         if (!foundItem) continue;
         foundItems.push(foundItem);
@@ -43,7 +43,10 @@ const findBySlug = (
     return formatted;
 };
 
-const loadMockData = (operationName: string, skip: number, slug: string) => {
+const loadMockData = (
+    operationName: string,
+    variables: Record<string, any>
+) => {
     const resourceName = mapToResourceName(operationName);
     const fileName = `${resourceName}.json`;
     const filePath = path.join(process.cwd(), 'mocks', 'apollo-data', fileName);
@@ -61,8 +64,24 @@ const loadMockData = (operationName: string, skip: number, slug: string) => {
         return null;
     }
 
+    const { slug, calculatedSlug } = variables;
+    let skip = variables.skip;
+
     if (slug) {
-        return findBySlug(data, resourceName, slug);
+        return findByMatch(
+            data,
+            resourceName,
+            (item: { slug: string }) => item.slug === slug
+        );
+    }
+
+    if (calculatedSlug) {
+        return findByMatch(
+            data,
+            resourceName,
+            (item: { calculated_slug: string }) =>
+                item.calculated_slug === calculatedSlug
+        );
     }
 
     if (!skip) skip = 0;
@@ -74,12 +93,8 @@ const loadMockData = (operationName: string, skip: number, slug: string) => {
 // mockLink is used before the final HTTPLink
 // when creating the mock ApolloClient
 export const mockLink = new ApolloLink((operation, forward) => {
-    const {
-        operationName,
-        variables: { skip, slug },
-    } = operation;
-
-    const data: any = loadMockData(operationName, skip, slug);
+    const { operationName, variables } = operation;
+    const data: any = loadMockData(operationName, variables);
 
     if (data) {
         return new Observable(observer => {
