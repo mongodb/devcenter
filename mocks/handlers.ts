@@ -18,7 +18,7 @@ import { getMetaInfoQuery } from '../src/api-requests/get-all-meta-info';
 import { getAllFeaturedContentQuery } from '../src/api-requests/get-all-featured';
 // import { getAllVideosQuery } from '../src/api-requests/get-videos';
 // import { getAllPodcastsQuery } from '../src/api-requests/get-podcasts';
-import { getAllVideoSeriesQuery } from '../src/api-requests/get-video-series';
+// import { getAllVideoSeriesQuery } from '../src/api-requests/get-video-series';
 interface RESTHandlerInfo {
     pattern: string;
     url: string;
@@ -136,12 +136,12 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
     //     mockFile: 'podcast-series',
     //     getQuery: skip => getAllPodcastSeriesQuery(),
     // },
-    {
-        contentTypeUID: 'video_series',
-        queryName: 'get_all_video_series',
-        mockFile: 'video-series',
-        getQuery: skip => getAllVideoSeriesQuery(),
-    },
+    // {
+    //     contentTypeUID: 'video_series',
+    //     queryName: 'get_all_video_series',
+    //     mockFile: 'video-series',
+    //     getQuery: skip => getAllVideoSeriesQuery(),
+    // },
     {
         contentTypeUID: 'featured_content',
         queryName: 'get_all_featured_content',
