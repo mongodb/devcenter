@@ -6,8 +6,8 @@ import {
     fetchAllForMocks,
     gqlParents,
 } from '../src/api-requests/contentstack_utils';
-import { allPodcastsQuery } from '../src/graphql/podcasts';
-import { allVideosQuery } from '../src/graphql/videos';
+import { getAllPodcastsQuery } from '../src/graphql/podcasts';
+import { getVideoQuery } from '../src/graphql/videos';
 
 interface QueryInfo {
     query: DocumentNode;
@@ -17,12 +17,12 @@ interface QueryInfo {
 
 export const queryInfos: QueryInfo[] = [
     {
-        query: allPodcastsQuery,
+        query: getAllPodcastsQuery,
         resourceName: 'podcasts',
         supportedOperations: ['get_podcast', 'get_all_podcasts'],
     },
     {
-        query: allVideosQuery,
+        query: getVideoQuery,
         resourceName: 'videos',
         supportedOperations: ['get_video', 'get_all_videos'],
     },
