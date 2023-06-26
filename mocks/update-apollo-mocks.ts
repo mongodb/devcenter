@@ -7,7 +7,7 @@ import {
     gqlParents,
 } from '../src/api-requests/contentstack_utils';
 import { getAllPodcastsQuery } from '../src/graphql/podcasts';
-import { getVideoQuery } from '../src/graphql/videos';
+import { getAllVideosQuery } from '../src/graphql/videos';
 
 interface QueryInfo {
     query: DocumentNode;
@@ -22,7 +22,7 @@ export const queryInfos: QueryInfo[] = [
         supportedOperations: ['get_podcast', 'get_all_podcasts'],
     },
     {
-        query: getVideoQuery,
+        query: getAllVideosQuery,
         resourceName: 'videos',
         supportedOperations: ['get_video', 'get_all_videos'],
     },
