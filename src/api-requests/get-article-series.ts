@@ -6,11 +6,11 @@ export const CS_getAllArticleSeriesFromAPI = async (): Promise<
     CS_SeriesResponse[]
 > => {
     const client = getClient('production');
-    const articles = (await fetchAll(
+    const articlesSeries = (await fetchAll(
         getAllArticleSeriesQuery,
         'articleSeries',
         client
     )) as CS_SeriesResponse[];
 
-    return articles;
+    return articlesSeries;
 };

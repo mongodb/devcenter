@@ -14,7 +14,7 @@ import { getMetaInfoQuery } from '../src/api-requests/get-all-meta-info';
 // import { getAllArticlesQuery } from '../src/api-requests/get-articles';
 // import { getAllIndustryEventsQuery } from '../src/api-requests/get-industry-events';
 // import { getAllArticleSeriesQuery } from '../src/api-requests/get-article-series';
-import { getAllPodcastSeriesQuery } from '../src/api-requests/get-podcast-series';
+// import { getAllPodcastSeriesQuery } from '../src/api-requests/get-podcast-series';
 import { getAllFeaturedContentQuery } from '../src/api-requests/get-all-featured';
 // import { getAllVideosQuery } from '../src/api-requests/get-videos';
 // import { getAllPodcastsQuery } from '../src/api-requests/get-podcasts';
@@ -130,12 +130,12 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
     //     mockFile: 'article-series',
     //     getQuery: skip => getAllArticleSeriesQuery(),
     // },
-    {
-        contentTypeUID: 'podcast_series',
-        queryName: 'get_all_podcast_series',
-        mockFile: 'podcast-series',
-        getQuery: skip => getAllPodcastSeriesQuery(),
-    },
+    // {
+    //     contentTypeUID: 'podcast_series',
+    //     queryName: 'get_all_podcast_series',
+    //     mockFile: 'podcast-series',
+    //     getQuery: skip => getAllPodcastSeriesQuery(),
+    // },
     {
         contentTypeUID: 'video_series',
         queryName: 'get_all_video_series',

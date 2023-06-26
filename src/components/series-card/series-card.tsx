@@ -12,6 +12,7 @@ import { SeriesCardProps } from './types';
 import { seriesCardStyles } from './styles';
 import { SeriesEntry } from '../../interfaces/series-entry';
 import SeriesList from './series-list';
+import { getURLPath } from '../../utils/format-url-path';
 
 const findNextInSeries = (
     seriesEntries: SeriesEntry[],
@@ -62,12 +63,12 @@ const SeriesCard: React.FunctionComponent<SeriesCardProps> = ({
                         Up Next
                     </TypographyScale>
                     <div sx={{ marginBottom: ['inc30', null, null, 'inc40'] }}>
-                        <Link href={nextInSeries.calculatedSlug}>
+                        <Link href={getURLPath(nextInSeries.calculatedSlug)}>
                             {nextInSeries.title}
                         </Link>
                     </div>
                     <Button
-                        href={nextInSeries.calculatedSlug}
+                        href={getURLPath(nextInSeries.calculatedSlug)}
                         variant="secondary"
                         size="small"
                         customStyles={{ width: 'unset' }}

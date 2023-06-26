@@ -12,6 +12,7 @@ import { getAllVideosQuery } from '../src/graphql/videos';
 import { getAllArticlesQuery } from '../src/graphql/articles';
 import { getAllAuthorsQuery } from '../src/graphql/authors';
 import { getAllArticleSeriesQuery } from '../src/graphql/article-series';
+import { getAllPodcastSeriesQuery } from '../src/graphql/podcast-series';
 
 interface QueryInfo {
     query: DocumentNode;
@@ -40,6 +41,11 @@ export const queryInfos: QueryInfo[] = [
         query: getAllArticleSeriesQuery,
         resourceName: 'articleSeries',
         supportedOperations: ['get_all_article_series'],
+    },
+    {
+        query: getAllPodcastSeriesQuery,
+        resourceName: 'podcastSeries',
+        supportedOperations: ['get_all_podcast_series'],
     },
     {
         query: getAllArticlesQuery,
