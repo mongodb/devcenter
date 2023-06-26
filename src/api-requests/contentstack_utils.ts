@@ -8,25 +8,6 @@ import {
 import { ContentTypeUID } from '../interfaces/meta-info';
 import { UnderlyingClient } from '../types/client-factory';
 
-// export type gqlParents =
-//     | 'l1Products'
-//     | 'l2Products'
-//     | 'programmingLanguages'
-//     | 'spokenLanguages'
-//     | 'technologies'
-//     | 'contentTypes'
-//     | 'levels'
-//     | 'articleSeries'
-//     | 'articles'
-//     | 'authors'
-//     | 'authorTypes'
-//     | 'industryEvents'
-//     | 'podcastSeries'
-//     | 'podcasts'
-//     | 'videoSeries'
-//     | 'videos'
-//     | 'featuredContent';
-
 type environment = 'production' | 'staging';
 
 export const getClient = (environment: environment) => {
