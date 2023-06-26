@@ -109,8 +109,8 @@ const podcastFields = gql`
     }
 `;
 
-export const allPodcastsQuery = gql`
-    query Podcasts($skip: Int = 0) {
+export const getAllPodcastsQuery = gql`
+    query get_all_podcasts($skip: Int = 0) {
         podcasts: all_podcasts(skip: $skip) {
             total
             items {
@@ -121,8 +121,8 @@ export const allPodcastsQuery = gql`
     ${podcastFields}
 `;
 
-export const podcastsBySlugQuery = gql`
-    query Podcasts($slug: String!, $skip: Int = 0) {
+export const getPodcastQuery = gql`
+    query get_podcast($slug: String!, $skip: Int = 0) {
         podcasts: all_podcasts(where: { slug: $slug }, skip: $skip) {
             total
             items {

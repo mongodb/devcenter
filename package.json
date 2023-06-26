@@ -16,7 +16,8 @@
         "test:coverage": "jest --coverage",
         "test:e2e": "npx playwright install --with-deps && npx playwright test",
         "test:e2e:visual": "npx @percy/cli exec -- npm run test:e2e",
-        "update-mocks": "tsx ./mocks/update-mocks.ts"
+        "update-mocks": "tsx ./mocks/update-mocks.ts",
+        "update-apollo-mocks": "tsx ./mocks/update-apollo-mocks.ts"
     },
     "husky": {
         "hooks": {

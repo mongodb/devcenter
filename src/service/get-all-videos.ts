@@ -1,5 +1,6 @@
 import { CS_VideoResponse } from '../interfaces/video';
-import getAllVideosFromAPI, {
+import {
+    getAllVideosFromAPI,
     getVideoBySlugFromAPI,
 } from '../api-requests/get-videos';
 import { ContentTypeConnection } from '../interfaces/other-tags';
