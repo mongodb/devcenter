@@ -1,5 +1,5 @@
 import { CS_PodcastResponse } from '../interfaces/podcast';
-import { allPodcastsQuery, podcastsBySlugQuery } from '../graphql/podcasts';
+import { getAllPodcastsQuery, getPodcastQuery } from '../graphql/podcasts';
 import { fetchAll, getClient } from './contentstack_utils';
 
 export const getAllPodcastsFromAPI = async (): Promise<
@@ -7,7 +7,7 @@ export const getAllPodcastsFromAPI = async (): Promise<
 > => {
     const client = getClient('production');
     const podcasts = (await fetchAll(
-        allPodcastsQuery,
+        getAllPodcastsQuery,
         'podcasts',
         client
     )) as CS_PodcastResponse[];
@@ -21,7 +21,7 @@ export const getPodcastBySlugFromAPI = async (
     const client = getClient('production');
     const variables = { slug };
     const podcasts = (await fetchAll(
-        podcastsBySlugQuery,
+        getPodcastQuery,
         'podcasts',
         client,
         variables
