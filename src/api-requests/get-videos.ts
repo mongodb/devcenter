@@ -1,11 +1,11 @@
-import { allVideosQuery, videoBySlugQuery } from '../graphql/videos';
+import { getAllVideosQuery, getVideoQuery } from '../graphql/videos';
 import { CS_VideoResponse } from '../interfaces/video';
 import { fetchAll, getClient } from './contentstack_utils';
 
 export const getAllVideosFromAPI = async (): Promise<CS_VideoResponse[]> => {
     const client = getClient('production');
     const videos = (await fetchAll(
-        allVideosQuery,
+        getAllVideosQuery,
         'videos',
         client
     )) as CS_VideoResponse[];
@@ -19,7 +19,7 @@ export const getVideoBySlugFromAPI = async (
     const client = getClient('production');
     const variables = { slug };
     const videos = (await fetchAll(
-        videoBySlugQuery,
+        getVideoQuery,
         'videos',
         client,
         variables

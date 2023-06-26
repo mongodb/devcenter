@@ -109,7 +109,7 @@ const videoFields = gql`
     }
 `;
 
-export const allVideosQuery = gql`
+export const getAllVideosQuery = gql`
     query get_all_videos($skip: Int = 0) {
         videos: all_videos(skip: $skip) {
             total
@@ -121,7 +121,7 @@ export const allVideosQuery = gql`
     ${videoFields}
 `;
 
-export const videoBySlugQuery = gql`
+export const getVideoQuery = gql`
     query get_video($slug: String!, $skip: Int = 0) {
         videos: all_videos(where: { slug: $slug }, skip: $skip) {
             total
