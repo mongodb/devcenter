@@ -9,6 +9,7 @@ import {
 import { getAllIndustryEventsQuery } from '../src/graphql/industry-events';
 import { getAllPodcastsQuery } from '../src/graphql/podcasts';
 import { getAllVideosQuery } from '../src/graphql/videos';
+import { getAllArticlesQuery } from '../src/graphql/articles';
 
 interface QueryInfo {
     query: DocumentNode;
@@ -27,6 +28,11 @@ export const queryInfos: QueryInfo[] = [
         query: getAllVideosQuery,
         resourceName: 'videos',
         supportedOperations: ['get_video', 'get_all_videos'],
+    },
+    {
+        query: getAllArticlesQuery,
+        resourceName: 'articles',
+        supportedOperations: ['get_article', 'get_all_articles'],
     },
     {
         query: getAllIndustryEventsQuery,

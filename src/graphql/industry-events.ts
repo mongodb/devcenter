@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client';
 import { CS_GRAPHQL_LIMIT } from '../data/constants';
 
-CS_GRAPHQL_LIMIT;
 const industryEventFields = gql`
     fragment IndustryEventFields on IndustryEvents {
         type
@@ -159,8 +158,8 @@ const industryEventFields = gql`
 export const getAllIndustryEventsQuery = gql`
     query get_all_industry_events($skip: Int = 0, $today: String!) {
         industryEvents: all_industry_events(
-            limit: ${CS_GRAPHQL_LIMIT}
-            skip: $skip
+            limit: ${CS_GRAPHQL_LIMIT},
+            skip: $skip,
             where: { end_time_gte: $today }
         ) {
             total

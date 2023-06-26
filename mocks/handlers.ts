@@ -11,7 +11,7 @@ import { ContentTypeUID } from '../src/interfaces/meta-info';
 import { CS_GRAPHQL_LIMIT } from '../src/data/constants';
 import { getMetaInfoQuery } from '../src/api-requests/get-all-meta-info';
 import { getAllAuthorsQuery } from '../src/api-requests/get-authors';
-import { getAllArticlesQuery } from '../src/api-requests/get-articles';
+// import { getAllArticlesQuery } from '../src/api-requests/get-articles';
 // import { getAllIndustryEventsQuery } from '../src/api-requests/get-industry-events';
 import { getAllArticleSeriesQuery } from '../src/api-requests/get-article-series';
 import { getAllPodcastSeriesQuery } from '../src/api-requests/get-podcast-series';
@@ -106,17 +106,17 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
         queryName: 'get_author',
         mockFile: 'authors',
     },
-    {
-        contentTypeUID: 'articles',
-        queryName: 'get_all_articles',
-        mockFile: 'articles',
-        getQuery: skip => getAllArticlesQuery(skip),
-    },
-    {
-        contentTypeUID: 'articles',
-        queryName: 'get_article',
-        mockFile: 'articles',
-    },
+    // {
+    //     contentTypeUID: 'articles',
+    //     queryName: 'get_all_articles',
+    //     mockFile: 'articles',
+    //     getQuery: skip => getAllArticlesQuery(skip),
+    // },
+    // {
+    //     contentTypeUID: 'articles',
+    //     queryName: 'get_article',
+    //     mockFile: 'articles',
+    // },
     // {
     //     contentTypeUID: 'industry_events',
     //     queryName: 'get_all_industry_events',
