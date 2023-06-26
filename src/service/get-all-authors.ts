@@ -18,6 +18,7 @@ export const mapAuthor = (author: CS_AuthorResponse): Author => {
     if (image) {
         mappedAuthor.image = image;
     }
+
     return mappedAuthor;
 };
 

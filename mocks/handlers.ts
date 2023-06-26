@@ -10,7 +10,7 @@ import {
 import { ContentTypeUID } from '../src/interfaces/meta-info';
 import { CS_GRAPHQL_LIMIT } from '../src/data/constants';
 import { getMetaInfoQuery } from '../src/api-requests/get-all-meta-info';
-import { getAllAuthorsQuery } from '../src/api-requests/get-authors';
+// import { getAllAuthorsQuery } from '../src/api-requests/get-authors';
 // import { getAllArticlesQuery } from '../src/api-requests/get-articles';
 // import { getAllIndustryEventsQuery } from '../src/api-requests/get-industry-events';
 import { getAllArticleSeriesQuery } from '../src/api-requests/get-article-series';
@@ -95,17 +95,17 @@ export const gqlHandlerInfo: GQLHandlerInfo[] = [
         mockFile: 'levels',
         getQuery: skip => getMetaInfoQuery('levels', skip),
     },
-    {
-        contentTypeUID: 'authors',
-        queryName: 'get_all_authors',
-        mockFile: 'authors',
-        getQuery: skip => getAllAuthorsQuery(skip),
-    },
-    {
-        contentTypeUID: 'authors',
-        queryName: 'get_author',
-        mockFile: 'authors',
-    },
+    // {
+    //     contentTypeUID: 'authors',
+    //     queryName: 'get_all_authors',
+    //     mockFile: 'authors',
+    //     getQuery: skip => getAllAuthorsQuery(skip),
+    // },
+    // {
+    //     contentTypeUID: 'authors',
+    //     queryName: 'get_author',
+    //     mockFile: 'authors',
+    // },
     // {
     //     contentTypeUID: 'articles',
     //     queryName: 'get_all_articles',
