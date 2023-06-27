@@ -3,76 +3,8 @@ import {
     CS_FeaturedContentResponse,
     FeaturedResponse,
 } from '../interfaces/featured';
-import axios from 'axios';
-import { CS_HEADERS } from '../data/constants';
-
-export const CS_featuredContentFields = `
-      categoryConnection {
-        edges {
-          node {
-            ... on L1Products {
-              calculated_slug
-            }
-            ... on ContentTypes {
-              calculated_slug
-            }
-            ... on ProgrammingLanguages {
-              calculated_slug
-            }
-            ... on Technologies {
-              calculated_slug
-            }
-          }
-        }
-      }
-      industry_eventsConnection(limit: 3) {
-        edges {
-          node {
-            ... on IndustryEvents {
-              title
-            }
-          }
-        }
-      }
-      podcastsConnection(limit: 3) {
-        edges {
-          node {
-            ... on Podcasts {
-              title
-            }
-          }
-        }
-      }
-      videosConnection(limit: 3) {
-        edges {
-          node {
-            ... on Videos {
-              title
-            }
-          }
-        }
-      }
-      articlesConnection(limit: 3) {
-        edges {
-          node {
-            ... on Articles {
-              title
-            }
-          }
-        }
-      }
-`;
-
-export const getAllFeaturedContentQuery = () => `
-    query get_featured {
-        all_featured_content  {
-            total
-            items {
-                ${CS_featuredContentFields}
-            }
-        }
-    }
-`;
+import { fetchAll, getClient } from './contentstack_utils';
+import { getAllFeaturedContentQuery } from '../graphql/featured-content';
 
 const getCalculatedSlug = (categoryConnection: CategoryConnection) => {
     if (!categoryConnection) {
@@ -108,10 +40,12 @@ export const transformCSFeaturedContentResponse = (
 export const CS_getAllFeaturedContent = async (): Promise<
     FeaturedResponse[]
 > => {
-    const url = `${
-        process.env.CS_GRAPHQL_URL
-    }?environment=production&query=${getAllFeaturedContentQuery()}`;
-    const { data } = await axios.get(url, { headers: CS_HEADERS });
-    const { items } = data.data.all_featured_content;
-    return transformCSFeaturedContentResponse(items);
+    const client = getClient('production');
+    const featuredContent = (await fetchAll(
+        getAllFeaturedContentQuery,
+        'featured_content',
+        client
+    )) as CS_FeaturedContentResponse[];
+
+    return transformCSFeaturedContentResponse(featuredContent);
 };

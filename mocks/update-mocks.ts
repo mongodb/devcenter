@@ -6,15 +6,9 @@ require('dotenv').config({ path: `.env.local` });
 const fetch = (url: string, options: RequestInit) =>
     import('node-fetch').then(({ default: fetch }) => fetch(url, options));
 
-const { restHandlerInfo, gqlHandlerInfo } = require('./handlers.ts');
+const { restHandlerInfo } = require('./handlers.ts');
 const fs = require('fs');
 const path = require('path');
-const { getMetaInfoQuery } = require('../src/api-requests/get-all-meta-info');
-
-const CSHeaders = {
-    access_token: process.env.CS_DELIVERY_TOKEN || '',
-    branch: 'prod',
-};
 
 // Deeply iterate through the response JSON and prepend names/titles with an asterisk so we know they're mocked
 const setMockTitles = obj => {
@@ -79,71 +73,6 @@ const fetchMocks = async () => {
             );
         } catch (e) {
             console.error(`An error occurred while fetching ${handler.url}`, e);
-        }
-    }
-
-    for (let i = 0; i < gqlHandlerInfo.length; i++) {
-        const handler = gqlHandlerInfo[i];
-        if (!handler.queryName.startsWith('get_all_')) {
-            continue; // We don't need to write files for endpoints fetching a single entry
-        }
-        try {
-            const fname = handler.mockFile;
-            let paginationCount = 0;
-            let today = new Date().toISOString();
-            const url = `${
-                process.env.CS_GRAPHQL_URL
-            }?environment=production&query=${handler.getQuery(
-                paginationCount,
-                today
-            )}`;
-            const response = await (
-                await fetch(url, { headers: CSHeaders })
-            ).json();
-
-            setMockTitles(response);
-            await fs.writeFile(
-                path.resolve(dataDir, `${fname}-${paginationCount}.js`),
-                `module.exports=${JSON.stringify(response.data)}`,
-                err => {
-                    if (err) console.error(err);
-                    else files++;
-                }
-            );
-
-            const { total, items } =
-                response.data[`all_${handler.contentTypeUID}`];
-
-            while (total && items.length < total) {
-                paginationCount++;
-                const url = `${
-                    process.env.CS_GRAPHQL_URL
-                }?environment=production&query=${handler.getQuery(
-                    paginationCount,
-                    today
-                )}`;
-                const paginatedResponse = await (
-                    await fetch(url, { headers: CSHeaders })
-                ).json();
-                items.push(
-                    ...paginatedResponse.data[`all_${handler.contentTypeUID}`]
-                        .items
-                );
-                setMockTitles(response);
-                await fs.writeFile(
-                    path.resolve(dataDir, `${fname}-${paginationCount}.js`),
-                    `module.exports=${JSON.stringify(paginatedResponse.data)}`,
-                    err => {
-                        if (err) console.error(err);
-                        else files++;
-                    }
-                );
-            }
-        } catch (e) {
-            console.error(
-                `An error occurred while fetching query ${handler.queryName}`,
-                e
-            );
         }
     }
 

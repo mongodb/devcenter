@@ -1,0 +1,36 @@
+{
+    "0": {
+        "levels": {
+            "__typename": "AllLevels",
+            "total": 2,
+            "items": [
+                {
+                    "__typename": "Levels",
+                    "title": "Advanced",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/expertise-levels/advanced",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "levels"
+                    }
+                },
+                {
+                    "__typename": "Levels",
+                    "title": "Introductory",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/expertise-levels/introductory",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "levels"
+                    }
+                }
+            ]
+        }
+    }
+}

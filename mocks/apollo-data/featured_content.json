@@ -1,0 +1,597 @@
+{
+    "0": {
+        "featured_content": {
+            "__typename": "AllFeaturedContent",
+            "total": 12,
+            "items": [
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ProgrammingLanguages",
+                                    "calculated_slug": "/languages/kotlin"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Getting Started with the MongoDB Kotlin Driver"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ContentTypes",
+                                    "calculated_slug": "/tutorials"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Getting Started with the MongoDB Kotlin Driver"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Building Modern Applications with Next.js and MongoDB"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Type Safety with Prisma & MongoDB"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ContentTypes",
+                                    "calculated_slug": "/videos"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentVideosEdge",
+                                "node": {
+                                    "__typename": "Videos",
+                                    "title": "How to Add a User Login to a  NET Core App (with Auth0's Sam Julien)"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentVideosEdge",
+                                "node": {
+                                    "__typename": "Videos",
+                                    "title": "Integrating MongoDB Into Your NextJS App"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentVideosEdge",
+                                "node": {
+                                    "__typename": "Videos",
+                                    "title": "Schema Design Anti-Patterns - Part 1"
+                                }
+                            }
+                        ]
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": []
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "L1Products",
+                                    "calculated_slug": "/products/realm"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Building a Mobile Chat App Using Realm – The New and Easier Way"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Building a Space Shooter Game in Unity that Syncs with Realm and MongoDB Atlas"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Realm Meetup - Realm Kotlin Multiplatform for Modern Mobile Apps"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "Technologies",
+                                    "calculated_slug": "/technologies/android"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Building Splash Screen Natively, Android 12, Kotlin"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "Technologies",
+                                    "calculated_slug": "/technologies/nodejs"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Capturing Hacker News Mentions with Node.js and MongoDB"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Using the Node.js MongoDB Driver with AWS Lambda"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ProgrammingLanguages",
+                                    "calculated_slug": "/languages/rust"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Using Rust Web Development Frameworks with MongoDB"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "MongoDB Field Level Encryption is now Available for Rust applications"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Getting Started with Aggregation Pipelines in Rust"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ProgrammingLanguages",
+                                    "calculated_slug": "/languages/csharp"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Build Your First .NET Core Application with MongoDB Atlas"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Introducing the MongoDB Analyzer for .NET"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Getting Started with MongoDB Atlas and Azure Functions using .NET and C#"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ProgrammingLanguages",
+                                    "calculated_slug": "/languages/java"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Java - Aggregation Pipeline"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Getting Started with MongoDB and Java - CRUD Operations Tutorial"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Single-Collection Designs in MongoDB with Spring Data (Part 1)"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ContentTypes",
+                                    "calculated_slug": "/code-examples"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Beginner Coding Project: Build a Blog Engine with Rust and MongoDB"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Build a MongoDB Spring Boot Java Book Tracker for Beginners"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "A Spotify Song and Playlist Recommendation Engine"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ProgrammingLanguages",
+                                    "calculated_slug": "/languages/python"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": []
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "PyMongoArrow: Bridging the Gap Between MongoDB and Your Data Analysis App"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Build a RESTful API with Flask, MongoDB, and Python"
+                                }
+                            },
+                            {
+                                "__typename": "FeaturedContentArticlesEdge",
+                                "node": {
+                                    "__typename": "Articles",
+                                    "title": "Getting Started with MongoDB and FastAPI"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "__typename": "FeaturedContent",
+                    "categoryConnection": {
+                        "__typename": "FeaturedContentCategoryConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentCategoryEdge",
+                                "node": {
+                                    "__typename": "ContentTypes",
+                                    "calculated_slug": "/events"
+                                }
+                            }
+                        ]
+                    },
+                    "industry_eventsConnection": {
+                        "__typename": "FeaturedContentIndustryEventsConnection",
+                        "edges": [
+                            {
+                                "__typename": "FeaturedContentIndustryEventsEdge",
+                                "node": {
+                                    "__typename": "IndustryEvents",
+                                    "title": "MongoDB.local NYC"
+                                }
+                            }
+                        ]
+                    },
+                    "podcastsConnection": {
+                        "__typename": "FeaturedContentPodcastsConnection",
+                        "edges": []
+                    },
+                    "videosConnection": {
+                        "__typename": "FeaturedContentVideosConnection",
+                        "edges": []
+                    },
+                    "articlesConnection": {
+                        "__typename": "FeaturedContentArticlesConnection",
+                        "edges": []
+                    }
+                }
+            ]
+        }
+    }
+}
