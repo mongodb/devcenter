@@ -57,7 +57,7 @@ const findByMatch = (
         foundItems.push(foundItem);
     }
 
-    formatForApollo(contentTypeUID, foundItems);
+    return formatForApollo(contentTypeUID, foundItems);
 };
 
 const loadMockData = (
