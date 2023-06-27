@@ -24,7 +24,7 @@ export const getClient = (environment: environment) => {
  */
 export const fetchAll = async (
     query: DocumentNode,
-    gqlParentName: ContentTypeUID,
+    contentTypeUID: ContentTypeUID,
     client: UnderlyingClient<'ApolloGraphQL'>,
     variables?: Record<string, any>
 ) => {
@@ -34,7 +34,7 @@ export const fetchAll = async (
         variables,
     });
 
-    const { total } = response.data[gqlParentName];
+    const { total } = response.data[contentTypeUID];
 
     const allItems: Record<string, any>[] = [];
 
@@ -44,7 +44,7 @@ export const fetchAll = async (
             query,
             variables: variablesWithSkip,
         });
-        const { items } = res.data[gqlParentName];
+        const { items } = res.data[contentTypeUID];
 
         allItems.push(...items);
     }
@@ -57,7 +57,7 @@ export const fetchAll = async (
  */
 export const fetchAllForMocks = async (
     query: DocumentNode,
-    gqlParentName: ContentTypeUID,
+    contentTypeUID: ContentTypeUID,
     variables?: Record<string, any>
 ) => {
     const client = CS_CLIENT_PROD;
@@ -68,7 +68,7 @@ export const fetchAllForMocks = async (
         query,
         variables,
     });
-    const { total } = response.data[gqlParentName];
+    const { total } = response.data[contentTypeUID];
 
     const allItems: Record<string, any>[] = [];
 
@@ -79,7 +79,7 @@ export const fetchAllForMocks = async (
             query,
             variables: variablesWithSkip,
         });
-        const { items } = data[gqlParentName];
+        const { items } = data[contentTypeUID];
 
         allItems.push(...items);
         mockData[skip] = { ...data };

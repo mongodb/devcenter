@@ -24,7 +24,6 @@ export const restHandlerInfo: RESTHandlerInfo[] = [
         url: `${process.env.REALM_API_URL}/community_events`,
         mockFile: 'community_events',
     },
-
     {
         pattern: `https://data.mongodb-api.com/app/mongodb-tv-app-bsvzg/endpoint/api/epg`,
         url: `https://data.mongodb-api.com/app/mongodb-tv-app-bsvzg/endpoint/api/epg`,
