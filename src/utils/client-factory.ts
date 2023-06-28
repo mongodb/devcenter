@@ -63,7 +63,6 @@ const clientFactory = <T extends ClientType>(
                     new HttpLink({
                         uri,
                         headers,
-                        fetchOptions: { method: 'GET' }, // override default POST to use GET
                     }),
             }) as UnderlyingClient<T>;
         case 'Mock':
@@ -75,7 +74,6 @@ const clientFactory = <T extends ClientType>(
                     new HttpLink({
                         uri,
                         headers,
-                        fetchOptions: { method: 'GET' },
                     }),
                 ]),
             }) as UnderlyingClient<T>;

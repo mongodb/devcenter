@@ -39,7 +39,8 @@ export const CS_getDraftArticleBySlugFromCMS = async (
         getArticleQuery,
         'articles',
         client,
-        variables
+        variables,
+        'no-cache'
     )) as CS_ArticleResponse[];
 
     return articles[0];

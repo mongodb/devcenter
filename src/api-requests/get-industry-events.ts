@@ -49,7 +49,8 @@ export const CS_getDraftIndustryEventBySlugFromCMS = async (
         getIndustryEventQuery,
         'industry_events',
         client,
-        variables
+        variables,
+        'no-cache'
     )) as CS_IndustryEventsResponse[];
 
     return industryEvents[0];
