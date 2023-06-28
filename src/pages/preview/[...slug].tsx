@@ -1,20 +1,18 @@
 import type { NextPage } from 'next';
-import React from 'react';
 import { Crumb } from '../../components/breadcrumbs/types';
-import { ContentItem } from '../../interfaces/content-item';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
-import ContentPageTemplate from '../../page-templates/content-page/content-page-template';
+import { ContentItem } from '../../interfaces/content-item';
 import { Tag } from '../../interfaces/tag';
+import ContentPageTemplate from '../../page-templates/content-page/content-page-template';
 import {
     getPreviewContentForArticles,
     getPreviewContentForEvents,
 } from '../../service/get-preview-content';
-import Error from 'next/error';
 
 interface ContentPageProps {
     crumbs: Crumb[];
     topic: Tag;
-    contentItem: ContentItem | null;
+    contentItem: ContentItem;
     relatedContent: ContentItem[];
     tertiaryNavItems: TertiaryNavItem[];
     previewMode?: boolean;
@@ -28,9 +26,6 @@ const ContentPage: NextPage<ContentPageProps> = ({
     relatedContent,
     previewMode,
 }) => {
-    const isStaging = process.env.APP_ENV === 'staging';
-    if (!contentItem || isStaging) return <Error statusCode={404} />;
-
     return (
         <ContentPageTemplate
             crumbs={crumbs}
@@ -59,6 +54,9 @@ export const getServerSideProps = async (context: any) => {
     } else {
         contentItem = await getPreviewContentForArticles('/' + slugString);
     }
+
+    const isStaging = process.env.APP_ENV === 'staging';
+    if (!contentItem || isStaging) return { notFound: true };
 
     const result = {
         crumbs: [],
