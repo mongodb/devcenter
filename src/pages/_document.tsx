@@ -89,7 +89,6 @@ export default class MyDocument extends Document {
                         strategy="beforeInteractive"
                         src="https://cdn.optimizely.com/js/22247140071.js"
                         defer={false}
-                        async
                     />
                 </body>
             </Html>
