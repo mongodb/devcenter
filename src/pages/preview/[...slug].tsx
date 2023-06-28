@@ -55,8 +55,10 @@ export const getServerSideProps = async (context: any) => {
         contentItem = await getPreviewContentForArticles('/' + slugString);
     }
 
-    const isStaging = process.env.APP_ENV === 'staging';
-    if (!contentItem || isStaging) return { notFound: true };
+    // return 404 page when accessing /preview on production app
+    // because we do not want to expose /preview to the public
+    const inProduction = process.env.APP_ENV === 'production';
+    if (!contentItem || inProduction) return { notFound: true };
 
     const result = {
         crumbs: [],
