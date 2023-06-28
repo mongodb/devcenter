@@ -28,9 +28,8 @@ const ContentPage: NextPage<ContentPageProps> = ({
     relatedContent,
     previewMode,
 }) => {
-    if (!contentItem) {
-        return <Error statusCode={404} />;
-    }
+    const isStaging = process.env.APP_ENV === 'staging';
+    if (!contentItem || isStaging) return <Error statusCode={404} />;
 
     return (
         <ContentPageTemplate
