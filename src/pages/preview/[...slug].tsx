@@ -1,10 +1,9 @@
 import type { NextPage } from 'next';
-import React from 'react';
 import { Crumb } from '../../components/breadcrumbs/types';
-import { ContentItem } from '../../interfaces/content-item';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
-import ContentPageTemplate from '../../page-templates/content-page/content-page-template';
+import { ContentItem } from '../../interfaces/content-item';
 import { Tag } from '../../interfaces/tag';
+import ContentPageTemplate from '../../page-templates/content-page/content-page-template';
 import {
     getPreviewContentForArticles,
     getPreviewContentForEvents,
@@ -49,12 +48,15 @@ export const getServerSideProps = async (context: any) => {
         type: 'Technology',
         slug: '',
     };
-    let contentItem;
+    let contentItem: ContentItem | null;
     if (slugString.startsWith('events/')) {
         contentItem = await getPreviewContentForEvents('/' + slugString);
     } else {
         contentItem = await getPreviewContentForArticles('/' + slugString);
     }
+
+    const isStaging = process.env.APP_ENV === 'staging';
+    if (!contentItem || isStaging) return { notFound: true };
 
     const result = {
         crumbs: [],

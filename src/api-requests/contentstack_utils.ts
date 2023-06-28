@@ -7,6 +7,7 @@ import {
 } from '../config/api-client';
 import { ContentTypeUID } from '../interfaces/meta-info';
 import { UnderlyingClient } from '../types/client-factory';
+import { FetchPolicy } from '@apollo/client/core';
 
 type environment = 'production' | 'staging';
 
@@ -26,12 +27,14 @@ export const fetchAll = async (
     query: DocumentNode,
     contentTypeUID: ContentTypeUID,
     client: UnderlyingClient<'ApolloGraphQL'>,
-    variables?: Record<string, any>
+    variables?: Record<string, any>,
+    fetchPolicy: FetchPolicy = 'cache-first'
 ) => {
     // expect all incoming cs_query already has total
     const response: ApolloQueryResult<any> = await client.query({
         query,
         variables,
+        fetchPolicy,
     });
 
     const { total } = response.data[contentTypeUID];
@@ -43,6 +46,7 @@ export const fetchAll = async (
         const res: ApolloQueryResult<any> = await client.query({
             query,
             variables: variablesWithSkip,
+            fetchPolicy,
         });
         const { items } = res.data[contentTypeUID];
 
