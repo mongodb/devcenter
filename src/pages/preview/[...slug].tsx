@@ -9,11 +9,12 @@ import {
     getPreviewContentForArticles,
     getPreviewContentForEvents,
 } from '../../service/get-preview-content';
+import Error from 'next/error';
 
 interface ContentPageProps {
     crumbs: Crumb[];
     topic: Tag;
-    contentItem: ContentItem;
+    contentItem: ContentItem | null;
     relatedContent: ContentItem[];
     tertiaryNavItems: TertiaryNavItem[];
     previewMode?: boolean;
@@ -27,6 +28,10 @@ const ContentPage: NextPage<ContentPageProps> = ({
     relatedContent,
     previewMode,
 }) => {
+    if (!contentItem) {
+        return <Error statusCode={404} />;
+    }
+
     return (
         <ContentPageTemplate
             crumbs={crumbs}
@@ -49,7 +54,7 @@ export const getServerSideProps = async (context: any) => {
         type: 'Technology',
         slug: '',
     };
-    let contentItem;
+    let contentItem: ContentItem | null;
     if (slugString.startsWith('events/')) {
         contentItem = await getPreviewContentForEvents('/' + slugString);
     } else {

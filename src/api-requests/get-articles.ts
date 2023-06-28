@@ -32,7 +32,7 @@ export const CS_getArticleBySlugFromCMS = async (
 
 export const CS_getDraftArticleBySlugFromCMS = async (
     calculatedSlug: string
-): Promise<CS_ArticleResponse> => {
+): Promise<CS_ArticleResponse | undefined> => {
     const client = getClient('staging');
     const variables = { calculatedSlug };
     const articles = (await fetchAll(
