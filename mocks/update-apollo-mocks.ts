@@ -1,18 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 import { DocumentNode } from 'graphql';
-import { fetchAllForMocks } from '../src/api-requests/contentstack_utils';
-import { getAllIndustryEventsQuery } from '../src/graphql/industry-events';
-import { getAllPodcastsQuery } from '../src/graphql/podcasts';
-import { getAllVideosQuery } from '../src/graphql/videos';
+import { getAllArticleSeriesQuery } from '../src/graphql/article-series';
 import { getAllArticlesQuery } from '../src/graphql/articles';
 import { getAllAuthorsQuery } from '../src/graphql/authors';
-import { getAllArticleSeriesQuery } from '../src/graphql/article-series';
-import { getAllPodcastSeriesQuery } from '../src/graphql/podcast-series';
-import { getAllVideoSeriesQuery } from '../src/graphql/video-series';
 import { getAllFeaturedContentQuery } from '../src/graphql/featured-content';
-import { ContentTypeUID } from '../src/interfaces/meta-info';
+import { getAllIndustryEventsQuery } from '../src/graphql/industry-events';
 import {
     getAllAuthorTypesQuery,
     getAllContentTypesQuery,
@@ -23,6 +17,11 @@ import {
     getAllSpokenLanguagesQuery,
     getAllTechnologiesQuery,
 } from '../src/graphql/meta-info';
+import { getAllPodcastSeriesQuery } from '../src/graphql/podcast-series';
+import { getAllPodcastsQuery } from '../src/graphql/podcasts';
+import { getAllVideoSeriesQuery } from '../src/graphql/video-series';
+import { getAllVideosQuery } from '../src/graphql/videos';
+import { ContentTypeUID } from '../src/interfaces/meta-info';
 
 interface QueryInfo {
     query: DocumentNode;
@@ -143,6 +142,11 @@ export const queryInfos: QueryInfo[] = [
 // };
 
 const updateLocalMockData = async () => {
+    // dynamically import modules to ensure synchronousity
+    const { fetchAllForMocks } = await import(
+        '../src/api-requests/contentstack_utils'
+    );
+
     for (const { query, contentTypeUID, variables } of queryInfos) {
         const mockData = await fetchAllForMocks(
             query,
