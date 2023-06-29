@@ -9,7 +9,7 @@ import { RestLink } from 'apollo-link-rest';
 import { ClientType, UnderlyingClient } from '../types/client-factory';
 import { RetryLink } from '@apollo/client/link/retry';
 import { mockLink } from '../../mocks/apollo-handlers';
-
+import fetch from 'cross-fetch';
 /**
  * Returns a client instance used to make external requests.
  * @param client -  The type of client to create.
@@ -63,6 +63,7 @@ const clientFactory = <T extends ClientType>(
                     new HttpLink({
                         uri,
                         headers,
+                        fetch,
                     }),
             }) as UnderlyingClient<T>;
         case 'Mock':
@@ -74,6 +75,7 @@ const clientFactory = <T extends ClientType>(
                     new HttpLink({
                         uri,
                         headers,
+                        fetch,
                     }),
                 ]),
             }) as UnderlyingClient<T>;
