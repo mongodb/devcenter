@@ -8,8 +8,9 @@ import { CS_getDraftIndustryEventBySlugFromCMS } from '../api-requests/get-indus
 
 export const getPreviewContentForArticles: (
     calculatedSlug: string
-) => Promise<ContentItem> = async calculatedSlug => {
+) => Promise<ContentItem | null> = async calculatedSlug => {
     const content = await CS_getDraftArticleBySlugFromCMS(calculatedSlug);
+    if (!content) return null;
     const mappedArticles = CS_mapArticlesToContentItems([content], []);
     return mappedArticles[0];
 };

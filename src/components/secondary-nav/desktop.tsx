@@ -162,6 +162,7 @@ const DesktopView = ({ activePath }: { activePath: string | undefined }) => {
                                                     : false
                                             )}
                                             onClick={onClickShowMenu}
+                                            stopPropagation
                                         >
                                             {name}
                                             <SystemIcon

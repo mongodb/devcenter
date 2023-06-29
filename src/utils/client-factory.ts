@@ -8,7 +8,8 @@ import {
 import { RestLink } from 'apollo-link-rest';
 import { ClientType, UnderlyingClient } from '../types/client-factory';
 import { RetryLink } from '@apollo/client/link/retry';
-
+import { mockLink } from '../../mocks/apollo-handlers';
+import fetch from 'cross-fetch';
 /**
  * Returns a client instance used to make external requests.
  * @param client -  The type of client to create.
@@ -52,38 +53,31 @@ const clientFactory = <T extends ClientType>(
                     }),
                 ]),
             }) as UnderlyingClient<T>;
-
         case 'ApolloGraphQL':
             return new ApolloClient({
                 // https://www.apollographql.com/docs/react/performance/server-side-rendering#initializing-apollo-client
                 ssrMode: true, // prevents ApolloClient from refetching queries unnecessarily
                 cache: new InMemoryCache(),
-                uri,
-                headers,
                 link:
                     // https://www.apollographql.com/docs/react/networking/advanced-http-networking/#overriding-options
                     new HttpLink({
                         uri,
                         headers,
-                        fetchOptions: { method: 'GET' }, // override default POST to use GET
-                        // log uri (on dev mode) and fetch
-                        fetch: (...pl) => {
-                            if (process.env.NODE_ENV === 'production') {
-                                return fetch(...pl);
-                            }
-
-                            // https://github.com/apollographql/apollo-client/issues/4017
-                            // tweaked from musemind implementation
-
-                            // Uncomment below if we want to see outbound gql uri
-                            // const [uri] = pl;
-                            // console.log(uri)
-
-                            // because queries are long,
-                            // so save them locally instead of logging to console
-                            return fetch(...pl);
-                        },
+                        fetch,
                     }),
+            }) as UnderlyingClient<T>;
+        case 'Mock':
+            return new ApolloClient({
+                ssrMode: true,
+                cache: new InMemoryCache(),
+                link: ApolloLink.from([
+                    mockLink,
+                    new HttpLink({
+                        uri,
+                        headers,
+                        fetch,
+                    }),
+                ]),
             }) as UnderlyingClient<T>;
         default:
             throw Error('Invalid client type.');

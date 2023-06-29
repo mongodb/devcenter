@@ -1,0 +1,302 @@
+{
+    "0": {
+        "industry_events": {
+            "__typename": "AllIndustryEvents",
+            "total": 3,
+            "items": [
+                {
+                    "__typename": "IndustryEvents",
+                    "type": "InPerson",
+                    "authorsConnection": {
+                        "__typename": "IndustryEventsAuthorsConnection",
+                        "edges": []
+                    },
+                    "address": {
+                        "__typename": "IndustryEventsAddress",
+                        "address_line_1": "District Hall",
+                        "address_line_2": "75 Northern Avenue",
+                        "city": "Boston",
+                        "coordinates": "{\"lat\": 42.3522876, \"lng\": -71.0453393}",
+                        "country": "USA",
+                        "location": "75 Northern Ave, Boston, MA 02210, USA",
+                        "preferred_location": "",
+                        "state": "MA",
+                        "zipcode": "02210"
+                    },
+                    "content": "**MongoDB.local** is returning to **Boston**! Join us to learn technologies, tools, and best practices that make it easy to build data-driven applications without distraction. Connect with our experts and customers to find new ways to build with MongoDB, hear what’s coming out, and meet developers shaking up their industries. Head to the [MongoDB.local Boston website](https://www.mongodb.com/events/mongodb-local/boston) to learn more and register today!\n\n## Exclusive Offer\nAs a valued visitor of the Dev Center, we’re excited to offer you an exclusive promotion for MongoDB.local Boston! Use the promo code `DEVHUB50` at checkout to get a 50% discount on your ticket purchase. You won’t want to miss out on this incredible opportunity! ",
+                    "title": "MongoDB.local Boston",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6ded43fee0e63fe7/647a319ed5884b25127e9527/IG_1080x1080-1.png",
+                                    "description": ""
+                                }
+                            }
+                        ]
+                    },
+                    "other_tags": {
+                        "__typename": "IndustryEventsOtherTags",
+                        "l1_productConnection": {
+                            "__typename": "IndustryEventsOtherTagsL1ProductConnection",
+                            "edges": [
+                                {
+                                    "__typename": "IndustryEventsOtherTagsL1ProductEdge",
+                                    "node": {
+                                        "__typename": "L1Products",
+                                        "title": "MongoDB",
+                                        "calculated_slug": "/products/mongodb"
+                                    }
+                                }
+                            ]
+                        },
+                        "l2_productConnection": {
+                            "__typename": "IndustryEventsOtherTagsL2ProductConnection",
+                            "edges": []
+                        },
+                        "programming_languagesConnection": {
+                            "__typename": "IndustryEventsOtherTagsProgrammingLanguagesConnection",
+                            "edges": []
+                        },
+                        "technologiesConnection": {
+                            "__typename": "IndustryEventsOtherTagsTechnologiesConnection",
+                            "edges": [
+                                {
+                                    "__typename": "IndustryEventsOtherTagsTechnologiesEdge",
+                                    "node": {
+                                        "__typename": "Technologies",
+                                        "title": "AWS",
+                                        "calculated_slug": "/technologies/aws"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "calculated_slug": "/events/mdblocalboston",
+                    "description": "MongoDB.local is returning to Boston! Join us to learn technologies, tools, and best practices that make it easy to build data-driven applications without distraction. Connect with our experts and customers to find new ways to build with MongoDB, hear what’s coming out, and meet developers shaking up their industries.",
+                    "end_time": "2023-10-04T21:30:00.000Z",
+                    "slug": "/mdblocalboston",
+                    "start_time": "2023-10-04T13:00:00.000Z",
+                    "registration_url": "https://www.mongodb.com/events/mongodb-local/boston",
+                    "virtual_meetup_url": "",
+                    "virtual_meetup_url_text": "",
+                    "related_content": null
+                },
+                {
+                    "__typename": "IndustryEvents",
+                    "type": "InPerson",
+                    "authorsConnection": {
+                        "__typename": "IndustryEventsAuthorsConnection",
+                        "edges": [
+                            {
+                                "__typename": "IndustryEventsAuthorsEdge",
+                                "node": {
+                                    "__typename": "Authors",
+                                    "title": "Joel Lord",
+                                    "imageConnection": {
+                                        "__typename": "SysAssetConnection",
+                                        "edges": [
+                                            {
+                                                "__typename": "SysAssetEdge",
+                                                "node": {
+                                                    "__typename": "SysAsset",
+                                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt89e30c5b40f37360/647a3102733e36a2f78e0944/profile-no-bg_1200x1200.png"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "bio": "Joel Lord is passionate about the web and technology in general. He likes to learn new things, but most of all, he wants to share his discoveries. He does so by travelling at various conferences all across the globe.\nHe graduated from college in computer programming in the last millennium. Apart from a little break to get his BSc in computational astrophysics, he was always in the industry.\nIn his daily job, Joel is a developer advocate with MongoDB, where he connects with software engineers to help them make the web better by using best practices in web development.\nDuring his free time, he can be found stargazing on a campground somewhere or brewing a fresh batch of beer in his garage.\n",
+                                    "calculated_slug": "/author/joel-lord",
+                                    "twitter": "https://twitter.com/joel__lord ",
+                                    "job_title": "Developer Advocate"
+                                }
+                            }
+                        ]
+                    },
+                    "address": {
+                        "__typename": "IndustryEventsAddress",
+                        "address_line_1": "333 S 13th St",
+                        "address_line_2": "",
+                        "city": "Lincoln",
+                        "coordinates": "{\"lat\": 40.8106726, \"lng\": -96.70284149999999}",
+                        "country": "United States",
+                        "location": "333 S 13th St, Lincoln, NE 68508, USA",
+                        "preferred_location": "The Cornhusker",
+                        "state": "NE",
+                        "zipcode": "68508"
+                    },
+                    "content": "Meet with our team at Nebraska.Code(), a community-organized event with the goal of helping grow and\nsupport the local software development community. \n\n## Sessions by MongoDB\n|Date|\tSession Title|\tSpeaker|\n|---|---|---|\n|July 19\t|Learn to MERN workshop|Joel Lord|\n|July 20\t|A Gentle Introduction to Data Encryption|Joel Lord|",
+                    "title": "Nebraska.Code()",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt9497c8cca0194bc0/647a31a46b817a835c67ea9f/Logo-trans.png-sm-73977e84-9154-4355-a023-9076977a837e.png",
+                                    "description": ""
+                                }
+                            }
+                        ]
+                    },
+                    "other_tags": {
+                        "__typename": "IndustryEventsOtherTags",
+                        "l1_productConnection": {
+                            "__typename": "IndustryEventsOtherTagsL1ProductConnection",
+                            "edges": [
+                                {
+                                    "__typename": "IndustryEventsOtherTagsL1ProductEdge",
+                                    "node": {
+                                        "__typename": "L1Products",
+                                        "title": "MongoDB",
+                                        "calculated_slug": "/products/mongodb"
+                                    }
+                                }
+                            ]
+                        },
+                        "l2_productConnection": {
+                            "__typename": "IndustryEventsOtherTagsL2ProductConnection",
+                            "edges": []
+                        },
+                        "programming_languagesConnection": {
+                            "__typename": "IndustryEventsOtherTagsProgrammingLanguagesConnection",
+                            "edges": []
+                        },
+                        "technologiesConnection": {
+                            "__typename": "IndustryEventsOtherTagsTechnologiesConnection",
+                            "edges": []
+                        }
+                    },
+                    "calculated_slug": "/events/nebraska-code-23",
+                    "description": "Nebraska.Code() is a community-organized event with the goal of helping grow and\nsupport the local software development community. ",
+                    "end_time": "2023-07-21T16:00:00.000Z",
+                    "slug": "/nebraska-code-23",
+                    "start_time": "2023-07-19T16:00:00.000Z",
+                    "registration_url": "https://nebraskacode.amegala.com/",
+                    "virtual_meetup_url": "",
+                    "virtual_meetup_url_text": "",
+                    "related_content": null
+                },
+                {
+                    "__typename": "IndustryEvents",
+                    "type": "InPerson",
+                    "authorsConnection": {
+                        "__typename": "IndustryEventsAuthorsConnection",
+                        "edges": [
+                            {
+                                "__typename": "IndustryEventsAuthorsEdge",
+                                "node": {
+                                    "__typename": "Authors",
+                                    "title": "Joel Lord",
+                                    "imageConnection": {
+                                        "__typename": "SysAssetConnection",
+                                        "edges": [
+                                            {
+                                                "__typename": "SysAssetEdge",
+                                                "node": {
+                                                    "__typename": "SysAsset",
+                                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt89e30c5b40f37360/647a3102733e36a2f78e0944/profile-no-bg_1200x1200.png"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "bio": "Joel Lord is passionate about the web and technology in general. He likes to learn new things, but most of all, he wants to share his discoveries. He does so by travelling at various conferences all across the globe.\nHe graduated from college in computer programming in the last millennium. Apart from a little break to get his BSc in computational astrophysics, he was always in the industry.\nIn his daily job, Joel is a developer advocate with MongoDB, where he connects with software engineers to help them make the web better by using best practices in web development.\nDuring his free time, he can be found stargazing on a campground somewhere or brewing a fresh batch of beer in his garage.\n",
+                                    "calculated_slug": "/author/joel-lord",
+                                    "twitter": "https://twitter.com/joel__lord ",
+                                    "job_title": "Developer Advocate"
+                                }
+                            },
+                            {
+                                "__typename": "IndustryEventsAuthorsEdge",
+                                "node": {
+                                    "__typename": "Authors",
+                                    "title": "Mohit Sharma",
+                                    "imageConnection": {
+                                        "__typename": "SysAssetConnection",
+                                        "edges": [
+                                            {
+                                                "__typename": "SysAssetEdge",
+                                                "node": {
+                                                    "__typename": "SysAsset",
+                                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt1420eaed3e743f42/647a30a26864a539214ded87/Pics.png"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "bio": "Mohit Sharma is working as a Developer Advocate at MongoDB, helping developers architect clean and testable apps. He has been working with Android for more than 10 years, since Android 2.2, previously with OLX group, and believes that sharing knowledge is the best way of learning something new.",
+                                    "calculated_slug": "/author/mohit-sharma",
+                                    "twitter": "https://twitter.com/codeWithMohit",
+                                    "job_title": "Mobile Developer Advocate"
+                                }
+                            },
+                            {
+                                "__typename": "IndustryEventsAuthorsEdge",
+                                "node": {
+                                    "__typename": "Authors",
+                                    "title": "Karen Huaulme",
+                                    "imageConnection": {
+                                        "__typename": "SysAssetConnection",
+                                        "edges": [
+                                            {
+                                                "__typename": "SysAssetEdge",
+                                                "node": {
+                                                    "__typename": "SysAsset",
+                                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt945bb0f236b5e7d4/647a309074945c7601e9d1b3/bio-karen.jpg"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "bio": "As a Principal Developer Advocate at MongoDB, Karen Huaulmé (pronounced “You-Old-Maid” - but with no d’s) collaborates with developers to unleash their creativity across all aspects of data and technology. Leveraging her past experience as a Solutions Architect for some of MongoDB’s most demanding customers, Karen loves to trigger that “aha” moment in the minds of developers - when they recognize a better path to simplify, enhance, and accelerate their projects in ways they never thought possible. Prior MongoDB, Karen spent most of her career working with video game developers as a Solutions Architect and Integration Engineer at Nvidia, Amazon and Twitch. In her free time, Karen embarrasses her 2 kids, spoils her dog, and feeds her addiction to adventure travel - not necessarily in that order.",
+                                    "calculated_slug": "/author/karen-huaulme",
+                                    "twitter": "https://twitter.com/YouOldMaid",
+                                    "job_title": "Principal Developer Advocate"
+                                }
+                            }
+                        ]
+                    },
+                    "address": {
+                        "__typename": "IndustryEventsAddress",
+                        "address_line_1": "CityCube",
+                        "address_line_2": "",
+                        "city": "Berlin",
+                        "coordinates": "{\"lat\": 52.500218, \"lng\": 13.270753}",
+                        "country": "Germany",
+                        "location": "Messedamm 26, 14055 Berlin, Germany",
+                        "preferred_location": "",
+                        "state": "",
+                        "zipcode": "14055"
+                    },
+                    "content": "Meet our team at We Are Developers, the world's leading event for developers.\n\n## Sessions by MongoDB\n\n| Time | Session Title | Speaker | Room |\n|---|---|---|---|\n|July 26|Game Changer! Building Search Into Your Applications|[Karen Huaulme](https://twitter.com/YouOldMaid)|tbd|\n|July 27|To SQL Or No SQL? |[Joel Lord](https://twitter.com/joel__lord)|tbd|\n|July 27|One common language and platform for all|[Mohit Sharma](https://twitter.com/codeWithMohit)|tbd|",
+                    "title": "We Are Developers",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blte50e025d5e8f4ad2/647a31b1f252ec7f77d4f2c8/WeAreDevelopers_Positiv@2x.png",
+                                    "description": ""
+                                }
+                            }
+                        ]
+                    },
+                    "other_tags": null,
+                    "calculated_slug": "/events/wad-23",
+                    "description": "Meet our team at We Are Developers, the world's leading event for developers.",
+                    "end_time": "2023-07-28T10:00:00.000Z",
+                    "slug": "/wad-23",
+                    "start_time": "2023-07-27T10:00:00.000Z",
+                    "registration_url": "https://www.wearedevelopers.com/world-congress",
+                    "virtual_meetup_url": "",
+                    "virtual_meetup_url_text": "",
+                    "related_content": null
+                }
+            ]
+        }
+    }
+}

@@ -2022,20 +2022,20 @@
     "@leafygreen-ui/palette" "^3.4.4"
     "@leafygreen-ui/tokens" "^1.3.4"
 
-"@mdb/consistent-nav@1.2.33":
-  version "1.2.33"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.33.tgz#9b19f5f0d69cfa2dbec8600bfdd6056a531b10ac"
-  integrity sha512-I+KKHRZPHF2if9DHKERrCVpUE3LcaOjQKlSHRgjTxZ9g+dLaZcfyoI/Frc7Q1PEc9lxPy5wcfSPyEVMR/+nu7Q==
+"@mdb/consistent-nav@1.2.38":
+  version "1.2.38"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/consistent-nav/-/@mdb/consistent-nav-1.2.38.tgz#725bfc29f46c7016a1c3bd2432567a1b5c91ef8d"
+  integrity sha512-0YmuZKxoW7q4T1eiV/FZhD/8NHsB+7VzYC5O6HdGyT/L6NcUl1Gc6n4Gord5v530og9ekYGpb2bTkN9DQRcJcA==
 
 "@mdb/devcenter-components@0.2.0":
   version "0.2.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/devcenter-components/-/@mdb/devcenter-components-0.2.0.tgz#f6277f933f3069c8653a525f609b10ce202b5d84"
   integrity sha512-E9eXq2+DOEpc0luXQb+/LCDKX87Qunq8W6PADfC8WPs5UQoHDOVNQvK2f+3gjBCoDYZexTisdpJXOkLxxA8ebg==
 
-"@mdb/flora@1.3.5":
-  version "1.3.5"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-1.3.5.tgz#7add0ac088621752609351fb1a4d743a8e6921aa"
-  integrity sha512-jIC67MJo9iXDqt6ZsbCCKBMeTrDmxt4my9WHm5h783u+nkHpAgf6neT+178cB+n0tPt2lGT/rmlqocGuvPt6Pg==
+"@mdb/flora@1.5.6":
+  version "1.5.6"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@mdb/flora/-/@mdb/flora-1.5.6.tgz#8153f9299c30631c6bb07ce5851e3dadf72748a0"
+  integrity sha512-+ArnKzKYC/vZHsiD44vicGlcvn+mEkvMzQPW6gD1Gtr0YCiN/1U0hCXuvyRX7Add/MrQaO1IDjWLFsWjGhJ+HA==
   dependencies:
     "@imgix/js-core" "3.7.1"
     codemirror "5.62.2"
@@ -4248,6 +4248,13 @@ cosmiconfig@^7.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
+
+cross-fetch@3.1.6:
+  version "3.1.6"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/cross-fetch/-/cross-fetch-3.1.6.tgz#bae05aa31a4da760969756318feeee6e70f15d6c"
+  integrity sha512-riRvo06crlE8HiqOwIpQhxwdOk4fOeR7FVM/wXoxchFEqMNUjvbs3bfo4OTgMEMHzppd4DxFBDbyySj8Cv781g==
+  dependencies:
+    node-fetch "^2.6.11"
 
 cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
@@ -7344,7 +7351,7 @@ node-fetch@3.3.0:
     fetch-blob "^3.1.4"
     formdata-polyfill "^4.0.10"
 
-node-fetch@^2.6.1:
+node-fetch@^2.6.11:
   version "2.6.11"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/node-fetch/-/node-fetch-2.6.11.tgz#cde7fc71deef3131ef80a738919f999e6edfff25"
   integrity sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w==
