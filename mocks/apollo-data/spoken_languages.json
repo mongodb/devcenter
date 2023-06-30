@@ -1,0 +1,49 @@
+{
+    "0": {
+        "spoken_languages": {
+            "__typename": "AllSpokenLanguages",
+            "total": 3,
+            "items": [
+                {
+                    "__typename": "SpokenLanguages",
+                    "title": "Chinese",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/spoken-languages/chinese",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "spoken_languages"
+                    }
+                },
+                {
+                    "__typename": "SpokenLanguages",
+                    "title": "Spanish",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/spoken-languages/spanish",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "spoken_languages"
+                    }
+                },
+                {
+                    "__typename": "SpokenLanguages",
+                    "title": "English",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/spoken-languages/english",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "spoken_languages"
+                    }
+                }
+            ]
+        }
+    }
+}

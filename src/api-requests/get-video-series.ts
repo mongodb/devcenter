@@ -1,35 +1,16 @@
 import { CS_SeriesResponse } from '../interfaces/series';
-import axios from 'axios';
-import { CS_HEADERS } from '../data/constants';
-
-export const getAllVideoSeriesQuery = () => `
-    query get_all_video_series {
-      all_video_series {
-        total
-        items {
-          series_entryConnection {
-            edges {
-              node {
-                ... on Videos {
-                  title
-                  calculated_slug : slug
-                }
-              }
-            }
-          }
-          title
-        }
-      }
-    }
-`;
+import { fetchAll, getClient } from './contentstack_utils';
+import { getAllVideoSeriesQuery } from '../graphql/video-series';
 
 export const CS_getAllVideoSeriesFromAPI = async (): Promise<
     CS_SeriesResponse[]
 > => {
-    const url = `${
-        process.env.CS_GRAPHQL_URL
-    }?environment=production&query=${getAllVideoSeriesQuery()}`;
-    const { data } = await axios.get(url, { headers: CS_HEADERS });
-    const { items } = data.data.all_video_series;
-    return items;
+    const client = getClient('production');
+    const videoSeries = (await fetchAll(
+        getAllVideoSeriesQuery,
+        'video_series',
+        client
+    )) as CS_SeriesResponse[];
+
+    return videoSeries;
 };

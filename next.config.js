@@ -144,6 +144,29 @@ const configVals = {
                     },
                 ],
             },
+            {
+                // no cache for preview
+                // https://nextjs.org/docs/pages/building-your-application/deploying/production-checklist
+                source: '/preview/(.*)',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'no-cache, no-store, max-age=0, must-revalidate',
+                    },
+                    {
+                        key: 'Strict-Transport-Security',
+                        value: 'max-age=63072000; includeSubDomains; preload',
+                    },
+                    {
+                        key: 'X-Frame-Options',
+                        value: 'SAMEORIGIN',
+                    },
+                    {
+                        key: 'Content-Security-Policy',
+                        value: "frame-ancestors 'self' https://*.mongodb.com",
+                    },
+                ],
+            },
         ];
     },
     redirects: redirects,

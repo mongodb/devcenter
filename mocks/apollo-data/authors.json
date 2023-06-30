@@ -1,0 +1,3282 @@
+{
+    "0": {
+        "authors": {
+            "__typename": "AllAuthors",
+            "total": 139,
+            "items": [
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/francesco-baldissera",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6288487eb3485235/649215381fb2d3d598496b25/E01C4Q4H3CL-U0499HYB93M-2f4d41c1ed85-512.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Industry Solutions Consultant",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Francesco Baldissera",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/itay-tevel",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "Senior Solutions Architect, Solutions Consulting",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Itay Tevel",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Kennedy Mwaura is an experienced software engineer from Kenya with a strong background in Information Technology, with a particular focus on back-end web development and computer networking. Holding a Bachelor's degree in Information Technology from Jomo Kenyatta University of Agriculture and Technology, Kennedy combines technical expertise with a passion for creating exceptional digital experiences. He is an Azure DevOps certified professional, demonstrating his proficiency in implementing DevOps practices using Microsoft Azure. Additionally, Kennedy is versatile and has extensive experience as a freelance technical writer, writing about various topics across multiple blogs. With his strong command over Django and Python programming languages, Kennedy is adept at delivering high-quality software solutions",
+                    "calculated_slug": "/author/kennedy-mwaura",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt744fe3915518bc76/647a315d10ee59768ae8ba15/Kennedy_Mwaura_profile_avatar.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Backend Software Engineer | Python developer",
+                    "linkedin": "https://www.linkedin.com/in/kennedy-mwaura/",
+                    "location": "Kenya",
+                    "title": "Kennedy Mwaura",
+                    "twitter": "https://twitter.com/Ken_Mwaura1",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/megha-arora",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt44c61e02df39e521/647a315ba74b2ada59e9e31e/aJ9O4Heo_400x400.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Developer Advocate",
+                    "linkedin": "",
+                    "location": "Hyderabad",
+                    "title": "Megha Arora",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/megan-grant",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt5295be5ba21dbc0c/647a315a2475e5217d6f3894/website-headshot.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Content Manager",
+                    "linkedin": "",
+                    "location": "Las Vegas, NV, USA",
+                    "title": "Megan Grant",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/otso-virtanen",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt099c76f81b02e48a/647a3158745d897302e6d430/otso.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Product Manager",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Otso Virtanen",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/vishal-turi",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltada954c516f45c29/647a31569ad3f681a043351e/Untitled-4.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Software Engineer",
+                    "linkedin": "",
+                    "location": "Gujarat, India",
+                    "title": "Vishal Turi",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "More than 11 years of IT experience working in multiple MNCs in India donning different roles including Database Administrator and software developer.Currently living and working in Amsterdam , Netherlands as Java lead engineer for a leading fashion company.\n\n",
+                    "calculated_slug": "/author/rajesh-s-nair",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltc4508e0b46d5a67f/647a3155c5cd9c7a7d994da7/1643054576101.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Software Engineer",
+                    "linkedin": "",
+                    "location": "Amsterdam, Netherlands",
+                    "title": "Rajesh S Nair",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Luce is a Developer Advocate at MongoDB, Microsoft MVP, big fan of .NET and lover of code, sunshine and learning! She loves nothing more than sharing knowledge with people about what she learns. She can be found public speaking around the world, writing articles and creating other content in her mission to help everyone learn something new every day!",
+                    "calculated_slug": "/author/luce-carter",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt94d1ebdcbef3227c/647a3153ced0472c37a2254b/Luce_Profile_Pic.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "",
+                    "location": "Manchester, UK",
+                    "title": "Luce Carter",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/rajesh-vinayagam",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt7d45f208bc023336/647a3152cb7f028a67d9ca89/rajesh-vinayagam.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Rajesh Vinayagam",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/ashwin-gangadhar",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt1d301fc68c0476d2/647a31504e1898aa4e96b3b2/ashwin-gangadhar.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Ashwin Gangadhar",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/shiv-pullepu",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt20440508c7d37fbb/647a314f31aaf4f8486e5f6d/shiv-pullepu.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Principal, Financial Industry Solutions",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Shiv Pullepu",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/ola-zieminska",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "Solutions Architect",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Ola Zieminska",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Every month, all around the globe, we hold events to bring the community together. Join us at the next gathering in your area! ",
+                    "calculated_slug": "/author/team-mongodb",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Global",
+                    "title": "Team MongoDB",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": "https://www.youtube.com/mongodb"
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "A front-end engineer with experience in creating scalable, maintainable web applications and a technical writer willing to learn more through writing.",
+                    "calculated_slug": "/author/abdulrasaq-jamiu-adewuyi",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt19f7d201bfc51a18/647a314ed88bb18b47216647/DSC_4182h.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Frontend developer",
+                    "linkedin": "",
+                    "location": "Lagos, Nigeria",
+                    "title": "Abdulrasaq Jamiu Adewuyi",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Product at MongoDB. Working on Developer Tools (Compass, MongoDB Shell, MongoDB for VS Code, and more). Passionate about Developer Experience.",
+                    "calculated_slug": "/author/massimiliano-marcon",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt58584322cac0f745/647a314cd74d837353f15bb2/mmarcon.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Product Manager",
+                    "linkedin": "",
+                    "location": "Berlin, Germany",
+                    "title": "Massimiliano Marcon",
+                    "twitter": "@mmarcon",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/tom-mccarthy",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltd4ef918aa7a5b945/647a3148eb184546aa46c82d/tommcc.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Solutions Architect",
+                    "linkedin": "",
+                    "location": "Stockholm, Sweden",
+                    "title": "Tom McCarthy",
+                    "twitter": "@Tom_McC",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Sig has worked as a cloud and data architect in engineering and consulting roles where he specialized in cloud, hybrid-cloud, micro-service and polyglot persistence architectures. As an Executive Solution Architect at MongoDB, he helps gaming, streaming & startup teams re-think, build and scale. He also likes to share his learnings and cool demos at conferences like GDC, QCon & DataConLA. A gamer himself, he was known to complete Golden Axe on a single token at his favorite arcade coin op hangout.",
+                    "calculated_slug": "/author/sig-narv-ez",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt42d2561701e58d10/647a3146d5884b740d7e951f/sig_beane_circle.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Executive Solutions Architect",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Sig Narváez",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/ashiq-sultan",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt623653c81d105797/647a3141d88bb17ea4216641/7qXyihv.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Full Stack Developer",
+                    "linkedin": "",
+                    "location": "Chennai, India",
+                    "title": "Ashiq Sultan",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Garaudy is an aerospace engineer turned product manager focused on all things distributed systems. ",
+                    "calculated_slug": "/author/garaudy-etienne",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt9afaf617a3ed4f85/647a313f9ad3f60a1f43351a/garaudy.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager",
+                    "linkedin": "",
+                    "location": "New York, NY",
+                    "title": "Garaudy Etienne",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Ratika Gandhi is a Product Manager for Core Server with a focus on sharding, aka horizontal scalability.  ",
+                    "calculated_slug": "/author/ratika-gandhi",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta22855a7c6c0e0f1/647a313ed766a15b514877f7/ratika-gandhi.JPG"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager",
+                    "linkedin": "",
+                    "location": "Seattle, WA",
+                    "title": "Ratika Gandhi",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Matt is a Product Manager focusing on MongoDB’s sharding feature set. Matt is an avid runner, unabashed avgeek, and a fan of all things that go fast. ",
+                    "calculated_slug": "/author/matt-panton",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6ef5ba37479b6711/647a313df8c0782938ca4177/matt-panton.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager",
+                    "linkedin": "",
+                    "location": "Washington, DC",
+                    "title": "Matt Panton",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Shelby is a Senior Product Marketing Manager for Developer Tools, Programming Languages, and APIs at MongoDB. Originally coming from a journalism background, she has a passion for research and learning new technologies. She has experience with Python and Flask as well as C and Javascript. ",
+                    "calculated_slug": "/author/shelby-carpenter",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "Senior Product Marketing Manager, Developer Tools and APIs",
+                    "linkedin": "",
+                    "location": "SF Bay Area",
+                    "title": "Shelby Carpenter",
+                    "twitter": "@shelbscarps",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Taylor is a skilled marketing professional with a passion for driving product success. As an Associate Product Marketing Manager at MongoDB, Taylor has been responsible for developing and executing the marketing strategy for Atlas Data Federation & Atlas Data Lake. She has helped define the product's value proposition, created go-to-market strategies, and collaborated with product management and sales teams to drive demand and adoption. When she's not hard at work, Taylor enjoys staying active by walking her dog and hitting the gym on the Upper West Side of NYC.",
+                    "calculated_slug": "/author/taylor-pacelli",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blte361ec9a32a06a8f/647a313c095bb7d27957f883/My_project.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Associate Product Marketing Manager",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Taylor Pacelli",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Erik Hatcher, a Staff Developer Advocate for Atlas Search, develops code and content for search-based applications. He co-authored Lucene in Action, the definitive guide to using the Lucene library. Lucene powers the core of Atlas Search and many other search engines that serve the majority of the world’s applications these days. As a Lucene and open source enthusiast, Erik serves as a member of the Apache Software Foundation and a committer on the Lucene project. Prior to MongoDB, Erik co-founded Lucidworks, where he assisted in the development of many production search systems and helped build out an enterprise search platform.",
+                    "calculated_slug": "/author/erik-hatcher",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltf1a0f9edfe1b4b9d/647a313ac9de6ae0ced05671/209189.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate, Atlas Search",
+                    "linkedin": "",
+                    "location": "Charlottesville, VA",
+                    "title": "Erik Hatcher",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/dianna-annie-jenosh",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "Senior Partner Solutions Architect",
+                    "linkedin": "",
+                    "location": "India",
+                    "title": "Dianna Annie Jenosh",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Ozan is a Senior Partner Solutions Engineer at Confluent who has management and project experience in all aspects of IT. His expertise is around cloud architecture, integration, and solution design.",
+                    "calculated_slug": "/author/ozan-g-zeldereli",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt230c24a6750e1b46/647a3139d74d831b24f15bac/ozan.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Partner Solutions Engineer",
+                    "linkedin": "",
+                    "location": "London",
+                    "title": "Ozan Güzeldereli",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Hubert Nguyen is a Sr. Developer Advocate at MongoDB. Previously, he was the co-founder and CTO of Ubergizmo, a popular US consumer technology media. Earlier, he was the Manager of Developer Education at NVIDIA where he edited \"GPU Gems 3\", a best-selling 3D programming book. Hubert was also part of the NVIDIA Demo Team, which was tasked with graphics rendering R&D. He joined NVIDIA from 3DFX Interactive, the creators of Voodoo graphics, the first consumer GPU. Hubert started his career as a 3D-Engine programmer at Cryo Interactive, the company behind the first Dune video game.",
+                    "calculated_slug": "/author/hubert-nguyen",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta2e930d172559e9c/647a31378c232b275479e130/hubert-nguyen-badget-photo-1100x1100.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Sr. Developer Advocate",
+                    "linkedin": "",
+                    "location": "San Francisco",
+                    "title": "Hubert Nguyen",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Rishabh is a Product Manager in the Developer Experience team at MongoDB. Prior to MongoDB, Rishabh spent 6+ years at Autodesk building cloud-connected CAD software, used by millions of users. He is passionate about volunteer work and his favorite experience was teaching 3D design at an all-girls school in Rwanda, Africa. In his free time, you can find him traveling or playing driving simulators with his racing wheel setup.",
+                    "calculated_slug": "/author/rishabh-bisht",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt847de07657e4ea97/647a3136d88bb1432a21663d/dp.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager",
+                    "linkedin": "https://www.linkedin.com/in/rish2050/",
+                    "location": "Delhi, India",
+                    "title": "Rishabh Bisht",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Arek Borucki is an SRE/DevOps/Cloud/Database engineer with a wealth of experience in MongoDB technology dating back to 2016. In addition to his technical expertise, he is also a MongoDB Champion and a speaker at conferences around the world.",
+                    "calculated_slug": "/author/arek-borucki",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt53e5a4a2fd4285d9/647a3134f4d28bcf7986a3f1/20dtNv-p_400x400.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Principal SRE Database Engineer",
+                    "linkedin": "",
+                    "location": "Munich, Germany",
+                    "title": "Arek Borucki",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I'm Karthic and I'm a product marketing manger here at MongoDB, based in New York in the United States. ",
+                    "calculated_slug": "/author/karthic-subramanian",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blte4f20f5726893022/647a313323c2e30270a76938/karthic-subramanian.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Sr Product Marketing Manager",
+                    "linkedin": "",
+                    "location": "New York",
+                    "title": "Karthic Subramanian",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Max is a Consulting Engineer supporting clients in building complex applications easily using the MongoDB database and the surrounding tools. With his background in data warehousing and accounting systems, he brings together transactional and analytics use cases in one common database system.",
+                    "calculated_slug": "/author/max-lautsch",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt2beb0285f0f23f41/647a313159bdd82a39b5c8da/image8.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Consulting Engineer",
+                    "linkedin": "",
+                    "location": "Munich, Germany",
+                    "title": "Max Lautsch",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/abilash-ravikumar",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "Product Manager at Datadog",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Abilash Ravikumar",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/babu-srinivasan",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "Senior Partner Solutions Architect",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Babu Srinivasan",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I’m an enthusiastic iOS developer who loves coding. ",
+                    "calculated_slug": "/author/mar-cabrera",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "Technical Services Engineer",
+                    "linkedin": "",
+                    "location": "Dublin, Ireland",
+                    "title": "Mar Cabrera",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I am a Partner solution architect at MongoDB contributing towards Google Cloud integrations.",
+                    "calculated_slug": "/author/venkatesh-shanbhag",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltb940dba7188cf244/647a31303674f885e178d162/profile.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Partner Solution Architect",
+                    "linkedin": "",
+                    "location": "Bengaluru, India",
+                    "title": "Venkatesh Shanbhag",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Zuhair is passionate about all things DevOps, IaC, and Databases. As a Sr. Product Manager at MongoDB, he supports the MongoDB Atlas integrations with HashiCorp Terraform, Vault, and AWS CloudFormation. Zuhair was previously at Amazon where he was a Sr. Product Manager on the AWS Developer Tools team.",
+                    "calculated_slug": "/author/zuhair-ahmed",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt5b1b3096d313e63b/647a312e2a05fd069491a7cf/zuhair-ahmed.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Sr. Product Manager",
+                    "linkedin": "https://www.linkedin.com/in/zuhair-ahmed-a6814320/",
+                    "location": "New York",
+                    "title": "Zuhair Ahmed",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Chemist by education, geek by nature, lead engineer at MongoDB",
+                    "calculated_slug": "/author/kenneth-geisshirt",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltee1275b1e3be41d1/647a312d6c5b307fee040b68/kneth_400x400.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Engineer",
+                    "linkedin": "",
+                    "location": "Copenhagen, Denmark",
+                    "title": "Kenneth Geisshirt",
+                    "twitter": "https://twitter.com/kgeisshirt",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Graeme has over 25 years of experience working with large data systems using both relational and non-relational DBMS technologies in a broad range of industries and technology environments. Graeme joined MongoDB in May 2022 as a developer advocate within the global strategic account team. Prior to joining MongoDB, Graeme was a senior manager leading professional services and implementation teams at SAS Institute Inc, focussed on solutions utilizing a specialized document database optimized for anti-fraud, criminal intelligence, and public safety domains, and has delivered award-winning systems at some of the largest law enforcement agencies in the world. ",
+                    "calculated_slug": "/author/graeme-robinson",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6073c98199e0884c/647a312cef566a4fc69cd27c/profileJPG.JPG"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Developer Advocate",
+                    "linkedin": "linkedin.com/graemecrobinsonn",
+                    "location": "Denver, Colorado",
+                    "title": "Graeme Robinson",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/alex-bevilacqua",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt3b203beb337d1d41/647a3129f67954b91f679adb/image.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager, Developer Experience",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Alex Bevilacqua",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/ashni-mehta",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": []
+                    },
+                    "job_title": "Product Manager, Developer Experience",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Ashni Mehta",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Harshad is a big data professional with 17+ years of industry experience working on enterprise products and distributed environments, with several accredited certifications in big data. Experienced in operations & support, he has served in various roles and capacities, as a DBA, product support, integrations project lead, subject matter expert in multiple domains, and as a trainer and mentor.",
+                    "calculated_slug": "/author/harshad-dhavale",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltefc212973b15631d/647a312759bdd876cbb5c8d6/HarshadDhavale-MongoDB-Palo-Alto.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Technical Services Engineer",
+                    "linkedin": "",
+                    "location": "San Francisco Bay Area",
+                    "title": "Harshad Dhavale",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/kushagra-kesav",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt14d39c5904c7e40f/647a3126ae29a15f715281f0/Kushagra_Kesav.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Software Engineer at MongoDB",
+                    "linkedin": "",
+                    "location": "India",
+                    "title": "Kushagra Kesav",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "A passionate full-stack developer who loves to build apps using React.js, Node.js, React Native and MongoDB",
+                    "calculated_slug": "/author/sourabh-bagrecha",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt98e26706e6a859ac/647a3123bc2acc506721b1c9/E01C4Q4H3CL-U01M2LU2KT5-ec006fc0a7ec-512.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Software Engineer at MongoDB ",
+                    "linkedin": "",
+                    "location": "India",
+                    "title": "Sourabh Bagrecha",
+                    "twitter": "sourabhbagrecha",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Cedric is a passionate software developer and continual learner of all things cloud-native! He is passionate about increasing developer efficiency through YouTube and blog content, workshops, and conference presentations. He loves all things open-source, Kubernetes, and of course, MongoDB!",
+                    "calculated_slug": "/author/cedric-clyburn",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta77cdda4f854bece/647a3121c5cd9c3f65994da1/CedricClyburnPhoto.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate Intern",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Cedric Clyburn",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Vishal is a Senior Product Manager for MongoDB Atlas serverless instances. He recently joined MongoDB from Vertica where he helped launch their SaaS platform. Vishal has many interests in the fields of Big Data, NoSQL, AI, and ML.",
+                    "calculated_slug": "/author/vishal-dhiman",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt91042d2b474fc1ea/647a311f1ba44fc161ce28b8/Image_from_iOS.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Sr. Product Manager",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Vishal Dhiman",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Ksenia is a Senior Product Designer at MongoDB who specializes in making technology a joy to use for developers. Long before getting into UX, she completed a PhD in Applied Plasma Physics at MIT where she spent many long nights and weekends in the lab hands-on with a wide range of technical computing software, experiencing firsthand how much usability in technical software impacts productivity. Following that, she worked at both MathWorks and InterSystems, focusing on improving the user experience of APIs, software libraries, error messages, cloud management interfaces, and other technical user workflows. At MongoDB, Ksenia is focusing on making MongoDB Atlas Search APIs and graphical UIs easy and intuitive for developers to use.  ",
+                    "calculated_slug": "/author/ksenia-samokhvalova",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta3eff4ae1dac37e8/647a311db839d42d0b393650/headshot2.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Product Designer",
+                    "linkedin": "",
+                    "location": "Massachusetts, USA",
+                    "title": "Ksenia Samokhvalova",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Amelia is a former software engineer turned product designer who wants to focus on how to make technology more accessible and understandable to everyone. She received her Master's degree in Human-Computer Interaction from the University of Maryland, where she researched the emotional impacts self-tracking technologies and health have on older adults with early onset dementia, memory concerns, and other mild cognitive impairments. At MongoDB, Amelia is focusing on making MongoDB Atlas Search APIs and graphical UIs easy and intuitive for developers to use.",
+                    "calculated_slug": "/author/amelia-short",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt8021ae6c74a08dac/647a311318dd28163b9f7b46/amelia_short_ID_photo.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Designer II",
+                    "linkedin": "",
+                    "location": "New York, New York",
+                    "title": "Amelia Short",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I am an experienced software engineer, web developer & game developer who works on all sorts of projects, ranging from Roblox games to websites.",
+                    "calculated_slug": "/author/caden-scott",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt5d7781ebc52377aa/647a31121ba44f4984ce28b4/cadenscott.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Programmer",
+                    "linkedin": "",
+                    "location": "New Zealand",
+                    "title": "Caden Scott",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Bio\nMongoDB Certified Professional Developer, tech enthusiast, tinkerer, co-owner of an IT Recruitment Agency - Scale Up",
+                    "calculated_slug": "/author/jasiek-petryk",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt23f5b3efb7a62068/647a3111f7b1282ad85174df/mizKCHR.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Software Developer",
+                    "linkedin": "https://www.linkedin.com/in/jasiekpetryk/",
+                    "location": "Wrocław, Poland",
+                    "title": "Jasiek Petryk",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/lieke-boon",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt93e76f7326942b70/647a310f92dbbc12f690f643/1573692668557.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Program Manager, Academia",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Lieke Boon",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/abirami-sukumaran",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt424a037526b03716/647a310e3674f80e1b78d154/abi-headshot.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate, Google",
+                    "linkedin": "",
+                    "location": "India",
+                    "title": "Abirami Sukumaran",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Experienced web developer with a demonstrated history of working in the computer software industry. Skilled in PHP, Laravel, NodeJS, and VueJs.\n\nPersonal website: https://zubs.github.io/",
+                    "calculated_slug": "/author/idris-aweda-zubair",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt3f8d89f5ac8e0171/647a310d416650f0e8319a80/small_IMG_6079_1c12ae0870.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "https://www.linkedin.com/in/zubairidrisaweda/",
+                    "location": "",
+                    "title": "Idris Aweda Zubair",
+                    "twitter": "https://twitter.com/AwedaIdris",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Jan started his career as a developer of online and browser games. After stints as Engineering Manager in the mobile gaming and also mobile payment industry, he worked as a freelancer to maintain Open-Source projects for huge tech companies. Today he supports the developers of Prisma ORM.",
+                    "calculated_slug": "/author/jan-piotrowski",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltd7e799cce759606f/647a310cc5fbce84bcee145a/unnamed.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Engineering Manager, Schema Team at Prisma",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Berlin, Germany",
+                    "title": "Jan Piotrowski",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Marcus leads the MongoDB Search product’s strategy and vision.",
+                    "calculated_slug": "/author/marcus-eagan",
+                    "facebook": "https://www.facebook.com/MongoDB/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt633f7b884e63f7ad/647a310a18dd283c8c9f7b42/marcus-eagan.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Product Manager, Atlas Search ",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "San Francisco, CA",
+                    "title": "Marcus Eagan",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Frank is the co-founder and CTO of Serverless Stack (SST), an open-source framework that makes it easy to build serverless apps.",
+                    "calculated_slug": "/author/frank-wang",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt21abd4bef0e69873/647a31091cb1015fdfdbeaeb/frank-wang.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "CTO",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "San Francisco, CA",
+                    "title": "Frank Wang",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Eric is a backend engineer at Netlify.",
+                    "calculated_slug": "/author/eric-betts",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt03ffcc0d5627a82a/647a3108c9de6a76fdd0566d/eric-betts.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Backend Engineer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "Eric Betts",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Jen is a backend engineer at Netlify.",
+                    "calculated_slug": "/author/jen-kagan",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt9d4c54ace26509b1/647a310795ab2c611acbe400/jen-kagan.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Backend Engineer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "Jen Kagan",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Senior Technical Services Engineer at MongoDB. Spending his time helping customers of all sizes and industries solve problems of varying complexities. Previous to MongoDB, Diego spent 10 years at IBM starting as a System Administrator until the most recent DevOps role, building experience on different technologies and products to the point of becoming involved in the implementation of complex projects. Outside of work, Diego enjoys playing basketball and binge-watching all kinds of streaming shows.",
+                    "calculated_slug": "/author/diego-rodriguez",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltd6abaac844ce9357/647a31057ddb430bdbcfd7b1/diego.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Technical Services Engineer",
+                    "linkedin": "https://www.linkedin.com/in/esdiegoer",
+                    "location": "Buenos Aires, Argentina",
+                    "title": "Diego Rodriguez",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Juan is a passionate engineer who has worked in IT for more than 15 years. Juan is a member of the MongoDB Professional Service Team tasked with helping customers get the most value out of their MongoDB deployment.",
+                    "calculated_slug": "/author/juan-soto",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt98204e07c05bf0e8/647a3104d74d83af5af15ba8/JuanSoto.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Consulting Engineer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Madrid, Spain",
+                    "title": "Juan Soto",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Pierre has been writing code since he first touched a Luxor ABC 80, in the mid-eighties. He inspires builders to unlock the value of the cloud, using his secret blend of passion, enthusiasm, customer advocacy, curiosity, and creativity. His interests are software architectures and developer tools. Pierre has a developer background, working in the field 20+ years",
+                    "calculated_slug": "/author/pierre-petersson",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt131b6f34f1993c2b/647a3103ac397aa65cd7fe74/Pierre_Petersson_profile_pic.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Advisory Solutions Architect",
+                    "linkedin": "https://www.linkedin.com/in/piepet/",
+                    "location": "Stockholm",
+                    "title": "Pierre Petersson",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Joel Lord is passionate about the web and technology in general. He likes to learn new things, but most of all, he wants to share his discoveries. He does so by travelling at various conferences all across the globe.\nHe graduated from college in computer programming in the last millennium. Apart from a little break to get his BSc in computational astrophysics, he was always in the industry.\nIn his daily job, Joel is a developer advocate with MongoDB, where he connects with software engineers to help them make the web better by using best practices in web development.\nDuring his free time, he can be found stargazing on a campground somewhere or brewing a fresh batch of beer in his garage.\n",
+                    "calculated_slug": "/author/joel-lord",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt89e30c5b40f37360/647a3102733e36a2f78e0944/profile-no-bg_1200x1200.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Joel Lord",
+                    "twitter": "https://twitter.com/joel__lord ",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Sven Peters, developer advocate at MongoDB, has been studying trends in software development for the last 10 years uncovering the cultural and technical attributes to help development teams work effectively and drive innovation. He has 20 years experience in writing code, leading teams, and sharing his experience with thousands of developers at uncountable conferences in 25+ countries.",
+                    "calculated_slug": "/author/sven-peters",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6fd973a61181e102/647a3100562d422c668860c0/bio-sven.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Kiel, Germany",
+                    "title": "Sven Peters",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Hoosier in the Big City. New York. Pug Dad. Uncle. Nerd. Staff Developer Advocate at Courier and former MongoDB Developer Advocate. he/him/his",
+                    "calculated_slug": "/author/aydrian-howard",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltb6a7708aa03a80da/647a30fd51fb8483067a8475/bio-aydrian.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "Aydrian Howard",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I tried writing this bio in the third person, but to be honest it felt a little forced. So here we go, my name is Jay and I love helping people get the most out of their cloud environment. I've been a part of the IT industry since about 2001 when I got my first root user access at a tiny consulting firm as a System Administrator. This lead me on a long career that found me working in some really cool places like BuzzFeed, DigitalOcean and MongoDB. After spending most of my career in \"oncall\" situations, like when BuzzFeed had it's viral moment including a dress which no one could tell the color of, it was time for a new challenge. I moved on to MongoDB's Developer Advocacy team which taught me much about how to best enable the members of my community. I joined Microsoft for one major reason, so I can reach the biggest audiences possible to let them know why they should choose Azure as the right platform to ensure the best possible experience with their applications.",
+                    "calculated_slug": "/author/jay-gordon",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt197b630759f147a6/647a30fcf4d28b1ff286a3eb/bio-jay.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "Jay Gordon",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Kaitlin is a Lead Engineer on the Drivers team at MongoDB, where she manages the Swift and Rust driver teams. She is the primary author and maintainer of the Swift driver, a member of the Swift Server Work Group, and a frequent conference speaker.",
+                    "calculated_slug": "/author/kaitlin-mahar",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt367fd5806398c29c/647a30fb5f30ae247e9fe795/bio-kaitlin-mahar.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Engineer",
+                    "linkedin": "https://www.linkedin.com/in/kaitlinmahar/",
+                    "location": "",
+                    "title": "Kaitlin Mahar",
+                    "twitter": "https://twitter.com/k__mahar",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Hi, there! Joe here from MongoDB. I run the Global Developer Advocacy and Developer Content teams within the Developer Relations organisation at MongoDB. I am based in Dublin, Ireland. Always happy to answer whatever questions I can about MongoDB or broader technical topics. I am long time Python programmer and it is my goto hacking language. I have also dabbled in Go, C# and Node.js.",
+                    "calculated_slug": "/author/joe-drumgoole",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltc5217bf309f7b6e5/647a30f92475e583686f388e/bio-joe.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Sr. Director, Developer Relations",
+                    "linkedin": "https://www.linkedin.com/in/jdrumgoole/",
+                    "location": "",
+                    "title": "Joe Drumgoole",
+                    "twitter": "https://twitter.com/jdrumgoole",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Daniel Coupal is a Technical Services Engineer at MongoDB. Prior to MongoDB, Daniel was a professional consultant providing services in Configuration Management, Automation and product development.",
+                    "calculated_slug": "/author/daniel-coupal",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt07a8aeb389885b4e/647a30f851fb84c0387a8471/bio-daniel-coupal.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Data Architect",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Daniel Coupal",
+                    "twitter": "https://twitter.com/danielcoupal",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Nuno is a passionate engineer who has worked in the database industry for more than 20 years. Always looking for the next challenge, Nuno is a member of the Technical Services Team that drives customers to be successful with MongoDB. Nuno enjoys the outdoors and you can see him either skiing the mountains in Europe or chilling on a beach on the Portuguese coast.",
+                    "calculated_slug": "/author/nuno-costa",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltdfa1e938508828e4/647a30f6bc2acc5bd621b1c5/bio-nuno.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Team Lead, Technical Services",
+                    "linkedin": "https://www.linkedin.com/in/nunoafonsocosta/",
+                    "location": "Lisbon, Portugal",
+                    "title": "Nuno Costa",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I've been an Android developer long enough to pick up Java and Kotlin and am glad to say I've always tried to use my powers for good. I've made apps for parents, kids, and helped a lot of people do the things they wanted to. I enjoy javascript and it's shaped how I write Kotlin. React was amazing to me, not just with what it could do but also how casually they taught functional programming. I care about diving into the best of the best techniques, uncovering some on my own, being the cutting edge, and love to learn!",
+                    "calculated_slug": "/author/aniket-kadam",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt4d54c3d014310729/647a30f5b125a907058868b8/bio-kadam-aniket.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Mumbai, India",
+                    "title": "Aniket Kadam",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Thomas Goyne is a Staff Engineer that works on the iOS Realm Database and Sync product at MongoDB.",
+                    "calculated_slug": "/author/thomas-goyne",
+                    "facebook": "https://www.facebook.com/MongoDB/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6550dd83dd15d8b0/647a30f359bdd846c8b5c8d2/bio-generic.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Engineer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "San Francisco, CA",
+                    "title": "Thomas Goyne",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Katya joined MongoDB in 2019 as Product Manager for Query. Her team is developing MongoDB Query Language, aggregation framework, query optimization, change streams, and other features related to working with data in MongoDB.",
+                    "calculated_slug": "/author/katya-kamenieva",
+                    "facebook": "https://www.facebook.com/kateryna.kameneva/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt1a0ad0d670be83b7/647a30f240733766fa660c3b/bio-katya.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager",
+                    "linkedin": "https://www.linkedin.com/in/katyakameneva/",
+                    "location": "",
+                    "title": "Katya Kamenieva",
+                    "twitter": "https://twitter.com/KatooKatoo",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Hi, all! Eoin here from MongoDB. I'm a staff curriculum engineer at MongoDB. I work on online and academia products so you might have caught a course with me in MongoDB University or from Introduction to Modern Databases which I developed for the MongoDB for Academia program. You might even have read my O'Reilly book, MongoDB: The Definitive Guide. I am based in Dublin, Ireland.",
+                    "calculated_slug": "/author/eoin-brazil",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt3dbdda3d5b0fe757/647a30f19ad3f6e587433514/bio-eoin-brazil.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Curriculum Engineer",
+                    "linkedin": "https://www.linkedin.com/in/eoinbrazil",
+                    "location": "Dublin, Ireland",
+                    "title": "Eoin Brazil",
+                    "twitter": "https://twitter.com/eoinbrazil",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Luke is an avid open-source author and contributor who dreams in JavaScript. Professionally, he's been full-stack web developer and consultant for a decade with a focus on code maintainability and performance. Luke works at Cloudflare as a Developer Advocate, helping developers of all levels build and deploy global applications.",
+                    "calculated_slug": "/author/luke-edwards",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt78b644ae7468e561/647a30f0c7e87a56e23572b3/5855893.jfif"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate @Cloudflare",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "San Francisco, CA",
+                    "title": "Luke Edwards",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Brian Leonard is a Solutions Architect at MongoDB where he is responsible for helping customers gain a competitive advantage through the design of agile, reliable and scalable systems. Prior to joining MongoDB, Brian served in many engineering roles at Sun Microsystems and Oracle, working closely with application servers, developer tools, operating systems, middleware and finally cloud platform solutions, especially those focused on application development.\n",
+                    "calculated_slug": "/author/brian-leonard",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta1c5ba1de8f1a1d4/647a30ee81713c83d2e3cd3d/Bootcamp_Headshots_1-9-2018-013.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Solutions Architect",
+                    "linkedin": "https://www.linkedin.com/in/wbrianleonard/",
+                    "location": "Jacksonville, FL",
+                    "title": "Brian Leonard",
+                    "twitter": "https://twitter.com/brianleonard",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Prior to joining MongoDB as a Solutions Architect, Isa spent 14 years as a Software Engineer at IBM where she worked with various internal and client-facing teams. She enjoys full stack development, learning new technologies, and loves spending time outdoors with her family. ",
+                    "calculated_slug": "/author/isa-torres",
+                    "facebook": "https://www.facebook.com/MongoDB/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt3561ddaca08d560a/647a30ecbdbdfa707c9bf422/image2.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Solutions Architect",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "New York",
+                    "title": "Isa Torres",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Currently a senior developer advocate for MongoDB, Adrienne Tacke is also a Filipina software engineer, international speaker, and published author of the book Coding for Kids: Python. She is also a LinkedIn Learning instructor who specializes in Cloud Development courses. Most important, perhaps, is that she spends way too much money on desserts and plays Borderlands quite a bit.",
+                    "calculated_slug": "/author/adrienne-tacke",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt641c40588aa5aa7f/647a30ead766a180b94877f3/bio-adrienne-tacke"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Remote - US",
+                    "title": "Adrienne Tacke",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Fuat is a Solutions Architect at MongoDB. He's been working on data processing technologies for over a decade. His role at MongoDB is to help customers to build the best database architecture to have scalable, highly available, and performant applications. Fuat is based in Dubai, UAE.",
+                    "calculated_slug": "/author/fuat-sungur",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt138f80992c757bcb/647a30e8fc1b9e09c1550fd1/2copy.webp"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Solutions Architect",
+                    "linkedin": "https://www.linkedin.com/in/afsungur/",
+                    "location": "UAE",
+                    "title": "Fuat Sungur",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I am a full-stack developer and senior developer advocate at MongoDB as well as a Google Developer Expert for Web Technologies. I love programming and education, and create tutorials, talks, courses, and other educational content focusing on databases, serverless technologies, security, authentication, and much more. On the front-end, I prefer building apps in React, while on the backend I often flip-flop between Node and Golang.",
+                    "calculated_slug": "/author/ado-kukic",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt432cf79399ed7db9/647a30e6c9de6af144d05669/ado-kukic.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate Lead",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Las Vegas, NV",
+                    "title": "Ado Kukic",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/anaiya-raisinghani",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt19c4a9e588607230/647a30e4ef566a383d9cd276/Screen_Shot_2021-06-01_at_11.46.58_AM.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Associate Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "New York City, New York",
+                    "title": "Anaiya Raisinghani",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I'm a Python, Rust & Go developer with experience in a wide range of different industries. I'm known in the industry for writing terrible code and attempting to sell it as best-practice. I love teaching and helping people out with awkward problems. When I'm not coding, you'll probably find me with a soldering iron in hand, building a custom mechanical keyboard.",
+                    "calculated_slug": "/author/mark-smith",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltc5cb3bdb837142a9/647a30e1d766a1d51b4877ef/PhotoAvatarCircular.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Developer Advocate",
+                    "linkedin": "",
+                    "location": "Edinburgh, Scotland",
+                    "title": "Mark Smith",
+                    "twitter": "https://twitter.com/judy2k",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Nic Raboy is an advocate of modern web and mobile development technologies. He has hands on experience with several different programming technologies such as JavaScript, Golang, and C#, as well as a variety of frameworks such as Angular, Vue.js, NativeScript and Unity. He spends a lot of his time writing about his development experiences related to making web and mobile development easier to understand.",
+                    "calculated_slug": "/author/nic-raboy",
+                    "facebook": "https://www.facebook.com/MongoDB/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt808ce67005fe0839/647a30e0f67954e98a679ad7/nraboy.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "California, USA",
+                    "title": "Nic Raboy",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Jesse is a full-stack, self-taught developer with a passion to educate others about all things coding related. He teaches aspiring developers through his YouTube channel codeSTACKr, blogs, and online courses. With over 20 years of web development experience, his favorite topics to teach are JavaScript, React, CSS, and of course MongoDB. Connect with Jesse on Twitter.com/codeSTACKr.",
+                    "calculated_slug": "/author/jesse-hall",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt525336d61af63721/647a30df62b1f6d3121edd20/https_media-exp3.licdn.com_dms_image_C4E03AQFa1kG6R8o19g_profile-displayphoto-shrink_200_200_0_1614285150606_e_1631145600&v_beta&t_RTZawXM7T7sxWmLuT4eLBCPsIBnODYovRVbM0dP99Q0"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/in/codestackr/",
+                    "location": "Texas",
+                    "title": "Jesse Hall",
+                    "twitter": "https://twitter.com/codestackr",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Jason Flax currently leads the Cocoa Team out of Dublin, Ireland. Originally working as a mobile developer at tech startups in New York City, Jason joined MongoDB in 2016, working on Mongo's backend as a service, Stitch. After the acquisition of Realm in 2019, Jason became the lead of the Realm Cocoa team, helping bridge Stitch and Realm to become the product it is today– MongoDB Realm.",
+                    "calculated_slug": "/author/jason-flax",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt20c09262e6ca5fb5/647a30de74945c43d0e9d1b7/jason.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Engineer Realm Cocoa SDK",
+                    "linkedin": "",
+                    "location": "New York & Dublin",
+                    "title": "Jason Flax",
+                    "twitter": "https://twitter.com/jsonflax",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Ian joined MongoDB through the Realm acquisition in May 2019. Prior to that he was the first field engineer for startups, Meraki, Mesosphere, and Realm, and has several years of experience building and designing mobile application architectures. Now he does product for MongoDB, focusing on the SDKs and sync technologies under the Realm umbrella. In his spare time, Ian likes to sail, ski, and mountaineer through the Sierras.",
+                    "calculated_slug": "/author/ian-ward",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt76620622d6e4449c/647a30ddd2858cb5648ca805/ian_ward.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product, SDKs & Sync",
+                    "linkedin": "https://www.linkedin.com/in/ianpward/",
+                    "location": "San Francisco, California",
+                    "title": "Ian Ward",
+                    "twitter": "https://twitter.com/IanPWard",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Ben has been working at MongoDB for the past two years and in the IT industry for 10 years. He is passionate about learning new tools and techniques to analyze data, specifically NoSQL data. Ben joined MongoDB as a Product Manager two years ago to help build a new strategy for analytics on MongoDB data. He loves getting his hands dirty with data, skiing, and studying history!\n",
+                    "calculated_slug": "/author/benjamin-flast",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6ea9cb7dc01eb866/647a30db1f107c2eed80a24b/benjamin-flast.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager, Data Lake",
+                    "linkedin": "https://www.linkedin.com/in/benjamin-flast/",
+                    "location": "New York, US",
+                    "title": "Benjamin Flast",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Joe Karlsson is a software engineer turned Developer Advocate at MongoDB. He comes from the frozen tundra of Minneapolis, Minnesota (and yes, it does get really cold here, and no, not everyone here has the accent from the movie, Fargo). Joe has been primarily a Node and JavaScript engineer. He has been writing, teaching, and talking about code his entire career. Sharing what he knows and continuing to learn about programming is truly the thing he loves doing the most.\n \nJoe is the co-creator of open source software, including bechdel.io, a web app that tells you if a movie script passes the Bechdel Test or not. In his free time, he is usually drinking Gin and Tonics, eating at a new restaurant, or tinkering on a new art project or open source project.\n\n* My Website - https://www.joekarlsson.com\n* Twitter - https://twitter.com/JoeKarlsson1\n* LinkedIn - https://www.linkedin.com/in/joekarlsson\n* Instagram - https://www.instagram.com/joekarlsson\n* GitHub - https://github.com/JoeKarlsson\n* TikTok - https://www.tiktok.com/@joekarlsson\n* YouTube - https://www.youtube.com/c/JoeKarlsson\n* Twitch - https://www.twitch.tv/joe_karlsson",
+                    "calculated_slug": "/author/joe-karlsson",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blte171b643dceb336d/647a30da5d5749ecf5142ccb/Joe_Karlsson_Profile_-_square.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Minneapolis, MN",
+                    "title": "Joe Karlsson",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Things people tell me I'm good at. Looking at products and seeing what's missing, looking at tech news and working out its real impact and taking on trends and finding the value in them. I code, in whatever language is right for the job, as part of that process. And I like to share what I find. I've always been a coder and a writer, become a researcher and a manager, found myself being a magazine editor and I do like to mess about with technology too... that's how you find the useful bits.",
+                    "calculated_slug": "/author/dj-walker",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt62b7d5a700341de5/647a30d9b125a9d2778868b0/bio-djwalker.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "DJ Walker",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Isabel got her start at MongoDB as an intern on the C Driver team and is currently a software engineer on the Rust Driver. Prior to joining MongoDB in early 2020, Isabel studied Computer Science at the University of Washington.",
+                    "calculated_slug": "/author/isabel-atkinson",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt1524f956fa5ce0d2/647a30d7d88bb1d235216639/bio-isabel.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Software Engineer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "Isabel Atkinson",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Nikola Irinchev is the engineering lead for Realm's .NET Engineering team.",
+                    "calculated_slug": "/author/nikola-irinchev",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blte130e7d5504cd4f4/647a30d68c232b191a79e12c/bio-nikola.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Realm .Net Engineering Team",
+                    "linkedin": "https://www.linkedin.com/in/nikola-irinchev-12443a80/",
+                    "location": "Copenhagen, Denmark",
+                    "title": "Nikola Irinchev",
+                    "twitter": "https://twitter.com/nirinchev",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Ferdinando currently works in the .NET team out of Copenhagen, Denmark. Previously working as a Xamarin developer, Ferdinando joined Realm at the end of 2020.",
+                    "calculated_slug": "/author/ferdinando-papale",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt3c7f920165f0ff21/647a30d47f5ecd0543746a80/bio-ferdinando.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": ".NET Engineer on the Realm team",
+                    "linkedin": "http://www.linkedin.com/in/ferdinandopapale",
+                    "location": "Copenhagen, Denmark",
+                    "title": "Ferdinando Papale",
+                    "twitter": "https://twitter.com/papafeit",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Katherine Maughan is a Senior Product Marketing Manager for MongoDB Realm.",
+                    "calculated_slug": "/author/katherine-maughan",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt0006963c743ebdda/647a30d3e67fe50d48d40de2/bio-katherine.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Product Marketing Manager",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "New York, USA",
+                    "title": "Katherine Maughan",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Paul Done is MongoDB Inc.’s lead Solutions Architect for Europe, Middle-East & Africa having joined MongoDB in 2013. Paul’s past includes roles in Engineering (C++ & Java) and then Consulting, where he spent most of the \"noughties\" building Java EE based solutions on WebLogic, fronting relational database systems, like Oracle RAC, and fighting ORMs like Hibernate, Toplink & JPA.",
+                    "calculated_slug": "/author/paul-done",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt0d4e2b5b0bc61a2b/647a30d1bf111556f8262e27/bio-paul.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Executive Solutions Architect",
+                    "linkedin": "https://www.linkedin.com/in/pdone/",
+                    "location": "London, UK",
+                    "title": "Paul Done",
+                    "twitter": "https://twitter.com/TheDonester",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I'm a recovering senior software engineer turned Senior Developer Advocate with MongoDB. I'm a developer, public speaker, writer, and mentor; I spend most of my time making cool stuff and helping other people make unbelievably cool stuff 🔥🦄✨🚀 DSF Board member. He/Him",
+                    "calculated_slug": "/author/aaron-bassett",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt0a6510261a0b7ed1/647a30cfc7e87a7c733572af/bio-aaron.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Remote",
+                    "title": "Aaron Bassett",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Jay Runkel is a Master Solutions Architect at MongoDB and has been working with Fortune 500 companies to architect enterprise solutions using NoSQL document databases for over 10 years. Before MongoDB, Runkel was a Principal Technologist at MarkLogic where he worked with Financial Services, Medical, and Media organizations to develop operational systems for analytics and custom publishing. Runkel has also held various positions developing encryption asset management, automated underwriting, product information management, and CRM solutions. Runkel has a BS in Applied Mathematics from Carnegie Mellon and a Masters in Computer Science from the University of Michigan.",
+                    "calculated_slug": "/author/jay-runkel",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt91b7dc33981cda49/647a30cef252ec08c7d4f2b8/bio-jay-runkel.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Master Solutions Architect",
+                    "linkedin": "https://www.linkedin.com/in/runkel/",
+                    "location": "",
+                    "title": "Jay Runkel",
+                    "twitter": "https://twitter.com/jayrunkel",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Eric joined the Realm team in 2018. He’s a big believer that open-source software is the linchpin for great application development.",
+                    "calculated_slug": "/author/eric-mossman",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt2b3e60d0277ede34/647a30ccf4d28b9b8f86a3e7/eric.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Realm iOS Engineer",
+                    "linkedin": "https://www.linkedin.com/in/eric-mossman-983637114/",
+                    "location": "New York",
+                    "title": "Eric Mossman",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I'm a woman in tech (for some time now). I've designed and developed software, mentor and led tech teams. Always having fun solving challenging problems!",
+                    "calculated_slug": "/author/rita-rodrigues",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltddc0cd5e2b2dd87d/647a30cb759f932c7aeac509/20210709_144956_2.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Dublin, Ireland",
+                    "linkedin": "https://www.linkedin.com/in/ritamartinsrodrigues/",
+                    "location": "Developer Advocate Lead",
+                    "title": "Rita Rodrigues",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "With a background in networks & distributed systems, Robert joined Verizon’s Corporate Strategy team in October 2019 where he currently leads Developer Relations for Verizon’s mobile edge computing portfolio. In this capacity, he serves as Editor-in-Chief of Verizon’s Corporate Engineering Blog, designs developer tutorials & training modules, and works with large enterprise customers to solve their business challenges using automation, hybrid networking, and the edge cloud.",
+                    "calculated_slug": "/author/robert-belson",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt2cf2e8561b3d3b49/647a30c962b1f6f9dc1edd1c/image_(4).png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Strategy Analyst, Verizon",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "New York, NY",
+                    "title": "Robert Belson",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Lee joined the Realm Cocoa team in 2020. He put his first app on the AppStore when he was 13 and previous to MongoDB has worked on a few well known iOS apps.",
+                    "calculated_slug": "/author/lee-maguire",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt9fb867a7f14c714d/647a30c6fbde085409ba8fb2/1594585534383.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Engineer, Cocoa Team",
+                    "linkedin": "https://www.linkedin.com/in/lee-maguire-8a97b964/",
+                    "location": "Dublin, Ireland",
+                    "title": "Lee Maguire",
+                    "twitter": "https://twitter.com/lmaguire_1",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Hi, there! I am Pavel a former Senior Technical Services Engineer and now a Senior Developer Advocate @MongoDB. My professional sphere was always the database world, so I come to share my knowledge and passion for the data driven development.",
+                    "calculated_slug": "/author/pavel-duchovny",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt32bb8520e01cbdbf/647a30c4416650eac6319a7c/Pavel_Duchovny-Senior_Engineer_.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/in/pavel-duchovny-60573275/",
+                    "location": "Tel Aviv",
+                    "title": "Pavel Duchovny",
+                    "twitter": "https://twitter.com/pavel_duchovny",
+                    "youtube": ""
+                }
+            ]
+        }
+    },
+    "100": {
+        "authors": {
+            "__typename": "AllAuthors",
+            "total": 139,
+            "items": [
+                {
+                    "__typename": "Authors",
+                    "bio": "Andrew started his career developing real-time database software before eventually moving into product management for MySQL/Oracle. In 2015, he jumped at the chance to join MongoDB as a product marketeer, and he's since wormed his way back into software development. His current role is as a developer advocate, working with MongoDB's most strategic customers.",
+                    "calculated_slug": "/author/andrew-morgan",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6a2875eedf06c27d/647a30c37ddb433a89cfd7a3/Andrew_Morgan.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Developer Advocate",
+                    "linkedin": "",
+                    "location": "UK",
+                    "title": "Andrew Morgan",
+                    "twitter": "https://twitter.com/andrewmorgan",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Claus joined MongoDB 2020 as a member of the Realm Android team. Mostly focusing on the Realm Kotlin Multiplatform SDK. \n\nPrior to joining MongoDB, Claus worked on developing other Android SDKs, Android mobile phones, various tooling frameworks for model driven development and embedded products for home automation.",
+                    "calculated_slug": "/author/claus-r-rbech",
+                    "facebook": "https://www.facebook.com/MongoDB/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt977d930413fe8b09/647a30c19ad3f612fd433506/claus.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer - Realm - Android",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Copenhagen, Denmark",
+                    "title": "Claus Rørbech",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Michael Lynn is Principal Advocate at MongoDB.  Previously, Michael worked as a Solutions Architect at MongoDB, helping users optimize MongoDB for scale and performance. Earlier, Michael was Vice President and Global Head of UNIX Engineering at a Fortune 50 Financial Services firm where he managed application and infrastructure platform engineering for the UNIX distributed server environment.  Prior to that, Michael worked as an application developer, database administrator and as an infrastructure engineer across various companies and organizations.\n",
+                    "calculated_slug": "/author/michael-lynn",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt84d46632cfbd91f6/647a30c059bdd8bcd1b5c8ce/michael_lynn.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Principal Developer Advocate",
+                    "linkedin": "",
+                    "location": "Philadelphia, PA",
+                    "title": "Michael Lynn",
+                    "twitter": "https://twitter.com/mlynn",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/a-jesse-jiryu-davis",
+                    "facebook": "https://www.facebook.com/MongoDB/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt1c5862801a2494f4/647a30beec0d9ccc71ed700a/jesse.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Staff Engineer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "New York",
+                    "title": "A. Jesse Jiryu Davis",
+                    "twitter": "https://twitter.com/mongodb",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "If I had to sum up my professional interests in one sentence, I could only say that I am passionate about technology.",
+                    "calculated_slug": "/author/josman-p-rez-exp-stio",
+                    "facebook": "https://www.facebook.com/MongoDB/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltb630ef83551ad0d3/647a30bdc7e87acdbe3572ab/https_miro.medium.com_fit_c_96_96_1_QVsQtGvB0HlailnBzvtkKQ.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Technical Services Engineer, Realm",
+                    "linkedin": "https://www.linkedin.com/in/josmanperez/",
+                    "location": "Dublin, Ireland",
+                    "title": "Josman Pérez Expóstio",
+                    "twitter": "https://twitter.com/josman_perez",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Stanimira Vlaeva is a Developer Advocate at MongoDB and a Google Developer Expert for Angular. She is passionate about explaining complex technical topics in an understandable way, live-coding, and contributing to open-source software. Her Twitter DMs are always open!",
+                    "calculated_slug": "/author/stanimira-vlaeva",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta4459fbd238e7e68/647a30bcfc1b9e6281550fc9/me2.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/in/sis0k0/",
+                    "location": "Sofia, Bulgaria",
+                    "title": "Stanimira Vlaeva",
+                    "twitter": "https://twitter.com/stanimiravlaeva",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "",
+                    "calculated_slug": "/author/nabil-hachicha",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltba3c2cca49a0e381/647a30b96cab5648e1858be9/https_miro.medium.com_fit_c_56_56_1_thGZB7bTQTTm2XIsGgMLIg.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Staff Engineer, Realm Kotlin",
+                    "linkedin": "https://www.linkedin.com/in/nabil-hachicha/",
+                    "location": "",
+                    "title": "Nabil Hachicha",
+                    "twitter": "https://twitter.com/nabil_hachicha",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Naomi Pentrel is a Senior Communications Engineer at MongoDB and a full-stack pythonista with a focus on improving developer workflows. When not at work or a hackathon, Naomi is an avid emoji user and a slayer of houseplants. Before her current role, Naomi worked as a Software Engineer at companies such as Google, Microsoft, and Bloomberg. Throughout her career she has worked on infrastructure automation, microservice architectures, and widely used applications such as Google Chrome and Skype. You may have seen her at hackathons she organizes and attends across the world.",
+                    "calculated_slug": "/author/naomi-pentrel",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt8e56da1e6d5ba18a/647a30b8095bb7918757f87f/bio-naomi.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Communications Engineer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "Naomi Pentrel",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Passionate about agile and continuous delivery in all areas required to build great software—let’s not forget the database!",
+                    "calculated_slug": "/author/johannes-br-nnstr-m",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt3555360e3d70b0db/647a309c81713c37b8e3cd39/johannes.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Solutions Architect",
+                    "linkedin": "https://se.linkedin.com/in/johannesbrannstrom",
+                    "location": "Sweden",
+                    "title": "Johannes Brännström",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I'm Ken and am a Curriculum Engineer here at MongoDB based in Oregon, United States. I currently work on the MongoDB University team.",
+                    "calculated_slug": "/author/ken-w-alger",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltd6635772c6322475/647a30b48c232b012b79e128/bio-ken.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Curriculum Engineer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "Ken W. Alger",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Ella has been working with MongoDB for the past 1,5 years and in the IT industry for more than 15 years. Recently Ella moved from being a Technical Service Engineer to a Solution Architects organization. Ella is a security expert with DBA MongoDB certification. Ella is a big fan of cyber security, horseback riding, biking, sports and digging into the root cause of technical challenges.",
+                    "calculated_slug": "/author/ella-shurhavetsky",
+                    "facebook": "https://m.facebook.com/720137730/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt24243213f9e166af/647a30b66b817a6af567ea83/bio-ella.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Solution Architect",
+                    "linkedin": "https://www.linkedin.com/in/ella-shurhavetsky-647b671",
+                    "location": "EAE",
+                    "title": "Ella Shurhavetsky",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Jason Mimick currently works on the Product team at MongoDB focusing on the cloud-native ecosystem. He's been at MongoDB for over 6 years, and previously spent the last 20-odd years building enterprise products and holding various engineering positions at Intersystems, Microsoft, and other companies.",
+                    "calculated_slug": "/author/jason-mimick",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt437718800b3f4266/647a30b56a926d197add752b/bio-mimick-jason.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Cloud Product Manager",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "New York",
+                    "title": "Jason Mimick",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Rachelle is a Product Manager on the Developer Experience, Server Product team at MongoDB.",
+                    "calculated_slug": "/author/rachelle-palmer",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltc1f2678f64454bd1/647a30b13e8b0f2cc81eaf76/bio-rachelle-palmer.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Lead, Developer Experience",
+                    "linkedin": "https://www.linkedin.com/in/rachellepalmer/",
+                    "location": "",
+                    "title": "Rachelle Palmer",
+                    "twitter": "https://twitter.com/techbelle",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Hi, all! Julianna here from MongoDB. I'm a curriculum engineer at MongoDB. I work on the MongoDB Academia projects developing and maintaining the educational content. I am based in Vancouver, Canada.",
+                    "calculated_slug": "/author/julianna-chen",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt3efcba3ef07f2b79/647a30af7ddb43c425cfd79f/bio-julianna-chen.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Curriculum Engineer",
+                    "linkedin": "https://www.linkedin.com/in/juliannachen-yvr/",
+                    "location": "Vancouver, Canada",
+                    "title": "Julianna Chen",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Dominic Wellington is Director of Product Strategy at MongoDB, spreading the word about the value to businesses and developers of MongoDB's flexible and cloud-based database offerings. He has been involved in the enterprise IT industry for a number of years, most recently in marketing and communicating the value of integrating AI and machine learning into IT operations (what is now known as AIOps). Previously Dominic worked across Europe, the Middle East and Africa on strategic SecOps and cloud projects. Dominic is fluent in English, Italian, French, Spanish and German, and has studied and worked between Italy, England and Germany.",
+                    "calculated_slug": "/author/dominic-wellington",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt2817fe29fbd06f05/647a30ae35da4389a6126197/bio-dominic.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Director, Field Initiatives & Readiness, EMEA",
+                    "linkedin": "https://www.linkedin.com/in/dwellington",
+                    "location": "",
+                    "title": "Dominic Wellington",
+                    "twitter": "https://twitter.com/dwellington",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Jorge is a mobile developer that does some backend code. He knows some Swift, Kotlin, Rust and Golang and has forgotten a few more. He is into software architecture, from mobile apps to microservices, and best practices, from testing to code reviews. But anything that has buttons, chips and screens will keep him busy.",
+                    "calculated_slug": "/author/jorge-d-ortiz-fuentes",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt6588674bc4a7860c/647a3099d74d83254cf15ba0/jorge_ortiz-fuentes_color_sq.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Mobile Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/in/jorgeortiz/",
+                    "location": "Madrid, Spain",
+                    "title": "Jorge D. Ortiz-Fuentes",
+                    "twitter": "https://twitter.com/jdortiz",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Robert Walters is currently a Senior Product Manager at MongoDB. Spending the past five years at MongoDB, Rob started as a Solution Architect helping customers design solutions that leverage the MongoDB data platform. Previous to MongoDB, Rob spent 17 years at Microsoft working in various roles, including program management on the SQL Server team, consulting, and technical pre-sales. Rob has co-authored three patents for technologies used within SQL Server and was the lead author of several technical books on SQL Server. Rob is currently an active blogger on MongoDB Blogs. When not thinking about MongoDB, Rob provides fire suppression and emergency medical care as an on-call firefighter and EMT for his local community.",
+                    "calculated_slug": "/author/robert-walters",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt8e3d4f1599a4822f/647a30add74d83193af15ba4/RobWalters.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Product Manager",
+                    "linkedin": "https://www.linkedin.com/in/robwaltersprofile/",
+                    "location": "Massachusetts",
+                    "title": "Robert Walters",
+                    "twitter": "https://twitter.com/robscranium",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "John is a  Document database veteran, who spent 18 years building full-stack document database technologies for  the Police and Intelligence community in the UK, US and Middle east before joining MongoDB in 2013. In that  role he worked on both the underlying core database (Low level C) as well as API layers and user-facing applications built with those API's in C++, C#, Visual Basic, Java, PERL and Javascript.  \n\n  In his 8 years at MongoDB John has worked as a Solution Architect, Principal Consultant and Distinguished Engineer in Professional services . In his own words \"I've now given the opportunity to build all the things I always wanted to as long as I share the code with our community.\"\n\nJohn is a keen Cyclist, Maker, Coder, Nature lover, and Dog owner who tries to find  ways to combine all of those things for work and fun. He claims to have a Passion for all things STEM but hasn't managed to teach his dogs to code ... yet.",
+                    "calculated_slug": "/author/john-page",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt13ec4f5aab38bc02/647a30abb0bfb13ce6fc7fc4/1629915668554.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Distinguished Engineer",
+                    "linkedin": "",
+                    "location": "Glasgow, Scotland",
+                    "title": "John Page",
+                    "twitter": "https://twitter.com/MakrOfAdventure",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Carl writes about deep tech for Smallstep and is an executive coach for engineering leaders. A lifelong programmer, he wrote the code that opens your Zipcar, and he co-founded Trove.",
+                    "calculated_slug": "/author/carl-tashian",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt0a12898ddad5825b/647a30aaf252ecf796d4f2b4/Carl-Tashian.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "San Francisco",
+                    "title": "Carl Tashian",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Cassiano is a Sr Solution Architect at MongoDB, really passionate about automation, APIs, and all things MongoDB. He also loves traveling, grilling, board games, sports and spending time with his family.",
+                    "calculated_slug": "/author/cassiano-ziegler-bein",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt5efff27ffeee74f2/647a30a931aaf497426e5f67/https_media-exp1.licdn.com_dms_image_C4E03AQGhWexnOORL6w_profile-displayphoto-shrink_800_800_0_1589901004347_e_1637798400&v_beta&t_Oo69y8IRwDXlWjdd-1ltl-RGTD_4NWAWO1_f2DYaMw"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Sr Solutions Architect",
+                    "linkedin": "https://www.linkedin.com/in/cassianobein/",
+                    "location": "Chicago,IL, USA",
+                    "title": "Cassiano Ziegler Bein",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "MongoDB's generic account to post content on DevHub without a specific author.",
+                    "calculated_slug": "/author/mongodb-inc",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt9dd5f2b983b6cb27/647a3091095bb7531e57f87b/bio-generic.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "New York, NY",
+                    "title": "MongoDB Inc.",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Diana moved from Barranquilla, Colombia to Barcelona ten years ago to work as a Software Engineer. She's been building iOS Apps for 6 years. She's worked for MongoDB since the start of 2021 as part of the Realm Cocoa SDK team.\n\n",
+                    "calculated_slug": "/author/diana-perez-afanador",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt32a8a9fa2a460f9a/647a30a818dd286d5b9f7b3e/Image_from_iOS.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Software Engineer 3",
+                    "linkedin": "https://www.linkedin.com/in/diafanador/",
+                    "location": "Barcelona, Spain",
+                    "title": "Diana Perez Afanador",
+                    "twitter": "https://twitter.com/DiAfanador",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Andrew has been working primarily with React Native for the past 4 years. At his last job, he was responsible for developing Hornbach, one of Germany's largest hardware stores. He recently joined the Realm JS team at MongoDB and is working on making the Realm library better suited for React Native development.",
+                    "calculated_slug": "/author/andrew-meyer",
+                    "facebook": "https://www.facebook.com/MongoDB/",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt94bd61a6c1e7f4ed/647a30a6ea38ac2d1a16bff2/andrew_meyer.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Haßloch, Germany",
+                    "title": "Andrew Meyer",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Started coding in BASIC and storing my programs in cassette tapes. Seen a lot of programming languages, I'm equally bad at all of them. Done a lot of training, especially Java, iOS (Objective C and Swift) and Android. Been developing mobile apps since 2010.  Have a computer collecting problem.\n\n\"I Love everything that heats silicon\"",
+                    "calculated_slug": "/author/diego-freniche",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt925c382e0ceece9b/647a30a56c5b304c65040b4e/difb.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Realm Mobile Developer Advocate",
+                    "linkedin": "",
+                    "location": "Seville, Spain",
+                    "title": "Diego Freniche",
+                    "twitter": "https://twitter.com/dfreniche",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Mohit Sharma is working as a Developer Advocate at MongoDB, helping developers architect clean and testable apps. He has been working with Android for more than 10 years, since Android 2.2, previously with OLX group, and believes that sharing knowledge is the best way of learning something new.",
+                    "calculated_slug": "/author/mohit-sharma",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt1420eaed3e743f42/647a30a26864a539214ded87/Pics.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Mobile Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/in/mohit-sharma-90961525/",
+                    "location": "Ireland",
+                    "title": "Mohit Sharma",
+                    "twitter": "https://twitter.com/codeWithMohit",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Lauren Hayward Schaefer is a staff developer advocate at MongoDB. She began her career as a software engineer for IBM where she held a variety of roles including full-stack developer, test automation specialist, social media lead, and growth hacking engineer.  She is a keynote speaker who is skilled in taking hard-to-understand topics and making them seem simple. Lauren holds a BS and MS in Computer Science from North Carolina State University and is the co-inventor of thirteen issued United States patents.",
+                    "calculated_slug": "/author/lauren-schaefer",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta5315a7a861b784f/647a309f3674f8090378d150/bio-lauren.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "",
+                    "title": "Lauren Schaefer",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "After spending almost 20 years as a database administrator for companies such as Mozilla and Salesforce, Sheeri pivoted to using her database expertise as a Product Manager at MongoDB. She is fulfilled by helping people learn the skills they need to level up their experiences. Whether it's writing, podcasting, presenting or developing software or demos, Sheeri stops at nothing to make sure information gets to the widest audience possible. When Sheeri isn't helping folks learn MongoDB, you can find her knitting, spinning yarn or taking long walks.",
+                    "calculated_slug": "/author/sheeri-cabral",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt9d45b93072c51255/647a309d6b326d4c18f886f5/sheeri.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Boston, MA USA",
+                    "title": "Sheeri Cabral",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Henna Singh is a Mobile Community Manager for MongoDB Realm.",
+                    "calculated_slug": "/author/henna-singh",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt80c2850e5bd7430f/647a3098eb184585d146c827/bio-henna.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Community Manager, Mobile",
+                    "linkedin": "https://www.linkedin.com/in/hennasingh/",
+                    "location": "Dublin, Ireland",
+                    "title": "Henna Singh",
+                    "twitter": "https://twitter.com/henna_dev",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Igor works with strategic partners helping them build complex, AWS-optimized architectures. Prior joining AWS, as a Data/Solution Architect he implemented many projects in the Big Data domain. As a Data Engineer he was involved in applying AI/ML to fraud detection and office automation. Igor’s projects spanned a variety of industries including communications, finance, public safety, manufacturing, and healthcare. Earlier, Igor worked as full stack engineer/tech lead.",
+                    "calculated_slug": "/author/igor-alekseev",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltc44ab59eff93fb66/647a3097353bab1e628a05ec/bio-igor-alekseev.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Partner Solutions Architect, Data & Analytics",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "New York",
+                    "title": "Igor Alekseev",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Hello, World! I am a software engineer at MongoDB Charts and I'm based in Sydney. My main expertise is in JavaScript, NodeJS, MongoDB and all related web technologies. I love learning new things, building applications and making data more insightful. When I don’t code I usually do one of the following things: [\"yoga\", \"eating\", \"buying books that I don't have time to read\"].",
+                    "calculated_slug": "/author/kristina-stefanova",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt8e9c691d31e1a8df/647a3096fbde087c38ba8fa4/bio-kristina.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Software Engineer 3",
+                    "linkedin": "https://www.linkedin.com/in/kristinastefanova/",
+                    "location": "",
+                    "title": "Kristina Stefanova",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Chief Product Officer at AppGyver, making visual programming a reality for sophisticated, high-quality web and mobile apps, for both the consumer and enterprise audiences.",
+                    "calculated_slug": "/author/harri-sarsa",
+                    "facebook": "https://www.facebook.com/MongoDB",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt9f16494be8f3ec2d/647a3094accf873929119bc6/bio-harri.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Chief Product Officer",
+                    "linkedin": "https://www.linkedin.com/company/mongodbinc/",
+                    "location": "Helsinki, Finland",
+                    "title": "Harri Sarsa",
+                    "twitter": "https://twitter.com/MongoDB",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "I have more than 20+ years in the software industry, started programming at early age on the 8bit IBM PC clone \"Pravetz 8M\" and later on a 16bit Pravetz-16 with an Intel 8088 4MHz CPU doing QuickBASIC and Turbo Pascal which was magical to me at that time and age. I have seen the world when a PC at home was an exception and experienced the whole technical revolution of the past two decades. For the past 10+ years I am working on mobile application frameworks. I am one of the three co-authors of the NativeScript cross-platform framework. My current endeavor is Realm - the best database for mobile applications.",
+                    "calculated_slug": "/author/lubo-blagoev",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt692536c2f6c84147/647a30921980115dadbc0707/bio-lubo.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "RealmJS Senior Engineer",
+                    "linkedin": "",
+                    "location": "Sofia, Bulgaria",
+                    "title": "Lubo Blagoev",
+                    "twitter": "https://twitter.com/_blagoev",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "As a Principal Developer Advocate at MongoDB, Karen Huaulmé (pronounced “You-Old-Maid” - but with no d’s) collaborates with developers to unleash their creativity across all aspects of data and technology. Leveraging her past experience as a Solutions Architect for some of MongoDB’s most demanding customers, Karen loves to trigger that “aha” moment in the minds of developers - when they recognize a better path to simplify, enhance, and accelerate their projects in ways they never thought possible. Prior MongoDB, Karen spent most of her career working with video game developers as a Solutions Architect and Integration Engineer at Nvidia, Amazon and Twitch. In her free time, Karen embarrasses her 2 kids, spoils her dog, and feeds her addiction to adventure travel - not necessarily in that order.",
+                    "calculated_slug": "/author/karen-huaulme",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt945bb0f236b5e7d4/647a309074945c7601e9d1b3/bio-karen.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Principal Developer Advocate",
+                    "linkedin": "",
+                    "location": "",
+                    "title": "Karen Huaulme",
+                    "twitter": "https://twitter.com/YouOldMaid",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Ethan is a full stack engineer turned Solutions Architect. Ethan saw the light when he used MongoDB for a personal project years ago, since then he’s been hooked. Building apps in his free time, they’re always using the latest and greatest MongoDB feature at the time. For now, it’s Search. \n\nhttps://ethansteininger.com/",
+                    "calculated_slug": "/author/ethan-steininger",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta16da2420fca4320/647a308f095bb7d61457f877/ethan.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Search Specialist",
+                    "linkedin": "https://www.linkedin.com/in/ethansteininger/",
+                    "location": "New York City",
+                    "title": "Ethan Steininger",
+                    "twitter": "https://twitter.com/ethansteininger",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Maxime has been working with MongoDB for the past 8 years and in the IT industry for 12 years.\nHe is a MongoDB and Java trainer, with DEV and DBA MongoDB certifications. Maxime joined MongoDB as a Developer Advocate 5 years ago to share his experience with the community. He loves clean code, scuba diving, code challenges and vikings!",
+                    "calculated_slug": "/author/maxime-beugnet",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltf82e16c8c2a49da9/647a308d8fc618b916f3c73d/Maxime.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Senior Developer Advocate",
+                    "linkedin": "",
+                    "location": "Paris, France",
+                    "title": "Maxime Beugnet",
+                    "twitter": "https://twitter.com/MBeugnet",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Dominic is a Developer Advocate by day and an engineer by night. Spending the last 15+ years writing Java, Objective-C and Swift code he joined MongoDB in 2020 to work on Realm Swift. He always loved teaching and helping others which led him to eventually become a Developer Advocate for MongoDB in 2022. If he doesn't write code or articles you can find him pursuing his other passion: gaming!",
+                    "calculated_slug": "/author/dominic-frei",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta07ad6366bacb692/647a308b3e8b0fe7151eaf70/profile_picture_round.png"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Developer Advocate",
+                    "linkedin": "https://www.linkedin.com/in/dominicfrei/",
+                    "location": "Dublin, Ireland",
+                    "title": "Dominic Frei",
+                    "twitter": "https://twitter.com/dominicfrei",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Christian is based in Aarhus, Denmark and is the Lead Engineer on the Realm Java/Kotlin Team.",
+                    "calculated_slug": "/author/christian-melchior",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt2cf0f30e064642c2/647a3086353bab62138a05e8/christian_M.jpeg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Engineer - Realm Java/Kotlin",
+                    "linkedin": "",
+                    "location": "Aarhus, Denmark",
+                    "title": "Christian Melchior",
+                    "twitter": "https://twitter.com/chrmelchior",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "A 2014 graduate of Penn State University, Michael has spent the last 7 years working in Product Management with a focus on back-end software development and APIs at companies such as Urban Outfitters and Total Wine. A passion for data has brought Michael to MongoDB where he is the Product Manager for the Storage Execution team focusing on Time Series, analytics, and indexing. In his spare time, you can be sure to find Michael on the golf course, playing hockey or rooting for the New York Islanders. ",
+                    "calculated_slug": "/author/michael-gargiulo",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt4351613f16bc9e71/647a3085c9de6aa8d1d05661/E01C4Q4H3CL-U013JHT8AVA-7dc0bc602470-512.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Product Manager, Time Series & Storage Execution",
+                    "linkedin": "https://www.linkedin.com/in/gargiulomichael",
+                    "location": "New York",
+                    "title": "Michael Gargiulo",
+                    "twitter": "",
+                    "youtube": ""
+                },
+                {
+                    "__typename": "Authors",
+                    "bio": "Shane joined MongoDB in January 2020 after 12 years running his own mobile design and development firm. Shane's interested in all things mobile - from code, to design and to hardware and with a particular interest in great user experiences.",
+                    "calculated_slug": "/author/shane-mcallister",
+                    "facebook": "",
+                    "imageConnection": {
+                        "__typename": "SysAssetConnection",
+                        "edges": [
+                            {
+                                "__typename": "SysAssetEdge",
+                                "node": {
+                                    "__typename": "SysAsset",
+                                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt383b010cd3534d95/647a308444682d01e2b48aee/bio-shane.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    "job_title": "Lead Developer Advocacy (Global)",
+                    "linkedin": "",
+                    "location": "Ireland",
+                    "title": "Shane McAllister",
+                    "twitter": "https://twitter.com/Shaneymac",
+                    "youtube": ""
+                }
+            ]
+        }
+    }
+}

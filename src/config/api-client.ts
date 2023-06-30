@@ -1,12 +1,5 @@
 import { clientFactory } from '../utils/client-factory';
 
-// TODO: Remove in post-migration
-// Kept for any strapi-dependencies for now
-export const STRAPI_CLIENT = clientFactory(
-    'ApolloREST',
-    process.env.STRAPI_URL
-);
-
 const {
     CS_GRAPHQL_URL: URL,
     CS_DELIVERY_TOKEN,

@@ -1,0 +1,75 @@
+{
+    "0": {
+        "author_types": {
+            "__typename": "AllAuthorTypes",
+            "total": 5,
+            "items": [
+                {
+                    "__typename": "AuthorTypes",
+                    "title": "Partner",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/author-types/partner",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "author_types"
+                    }
+                },
+                {
+                    "__typename": "AuthorTypes",
+                    "title": "Champion",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/author-types/champion",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "author_types"
+                    }
+                },
+                {
+                    "__typename": "AuthorTypes",
+                    "title": "Student",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/author-types/student",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "author_types"
+                    }
+                },
+                {
+                    "__typename": "AuthorTypes",
+                    "title": "Community",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/author-types/community",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "author_types"
+                    }
+                },
+                {
+                    "__typename": "AuthorTypes",
+                    "title": "MongoDB",
+                    "description": "",
+                    "primary_cta": null,
+                    "secondary_cta": null,
+                    "documentation_link": null,
+                    "slug": "/author-types/mongodb",
+                    "system": {
+                        "__typename": "EntrySystemField",
+                        "content_type_uid": "author_types"
+                    }
+                }
+            ]
+        }
+    }
+}

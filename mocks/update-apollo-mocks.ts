@@ -1,38 +1,48 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-import { DocumentNode } from 'graphql';
-import {
-    fetchAllForMocks,
-    gqlParents,
-} from '../src/api-requests/contentstack_utils';
-import { getAllPodcastsQuery } from '../src/graphql/podcasts';
-import { getAllVideosQuery } from '../src/graphql/videos';
+import { fetchAllForMocks } from '../src/api-requests/contentstack_utils';
+import { queryInfos } from './apollo-handlers';
 
-interface QueryInfo {
-    query: DocumentNode;
-    resourceName: gqlParents;
-    supportedOperations: string[];
-}
+// currently not applied due to
+// frontend is not consistently handling asterisked titles
+// const asteriskTitlesForDistinction = (mockData: any) => {
+//     if (!mockData) return mockData;
 
-export const queryInfos: QueryInfo[] = [
-    {
-        query: getAllPodcastsQuery,
-        resourceName: 'podcasts',
-        supportedOperations: ['get_podcast', 'get_all_podcasts'],
-    },
-    {
-        query: getAllVideosQuery,
-        resourceName: 'videos',
-        supportedOperations: ['get_video', 'get_all_videos'],
-    },
-];
+//     if (Array.isArray(mockData)) {
+//         mockData = mockData.map(md => asteriskTitlesForDistinction(md));
+//     }
+
+//     if (typeof mockData === 'object' && !Array.isArray(mockData)) {
+//         if (mockData.hasOwnProperty('title')) {
+//             mockData.title = `*${mockData.title}`;
+//         }
+
+//         Object.keys(mockData).forEach(key => {
+//             mockData[key] = asteriskTitlesForDistinction(mockData[key]);
+//         });
+//     }
+
+//     return mockData;
+// };
 
 const updateLocalMockData = async () => {
-    for (const { query, resourceName } of queryInfos) {
-        const mockData = await fetchAllForMocks(query, resourceName);
+    for (const { query, contentTypeUID, variables } of queryInfos) {
+        const mockData = await fetchAllForMocks(
+            query,
+            contentTypeUID,
+            variables
+        );
+
+        // below is commented out because
+        // frontend is not consistently handling asterisked titles
+        // so data without asterisks is used for mocking
+
+        // const mockClone = JSON.parse(JSON.stringify(mockData));
+        // const modifiedMock = asteriskTitlesForDistinction(mockClone);
+        // const jsonData = JSON.stringify(modifiedMock, null, 2);
         const jsonData = JSON.stringify(mockData, null, 2);
-        const fileName = `./${resourceName}.json`;
+        const fileName = `./${contentTypeUID}.json`;
         const filePath = path.join(__dirname, 'apollo-data', fileName);
 
         try {
@@ -44,4 +54,4 @@ const updateLocalMockData = async () => {
     }
 };
 
-updateLocalMockData();
+if (require.main === module) updateLocalMockData();

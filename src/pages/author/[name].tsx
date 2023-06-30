@@ -271,7 +271,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const data = {
         name: author.name,
         bio: author.bio,
-        image: author.image,
+        image: author.image ?? null,
         location: author.location,
         title: author.title,
         linkedin: author.linkedin,
