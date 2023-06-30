@@ -21,14 +21,13 @@ const CS_HEADERS_STAGING = {
     'content-type': 'application/json',
 };
 
-export const CS_CLIENT_PROD = clientFactory(
-    'ApolloGraphQL',
-    CS_URL,
-    CS_HEADERS
-);
 export const CS_CLIENT_STAGING = clientFactory(
     'ApolloGraphQL',
     CS_URL_STAGING,
     CS_HEADERS_STAGING
 );
-export const CS_CLIENT_MOCK = clientFactory('Mock', CS_URL, CS_HEADERS);
+const useMock = process.env.NEXT_PUBLIC_API_MOCKING === 'enabled';
+
+const PROD_CLIENT_NAME = useMock ? 'Mock' : 'ApolloGraphQL';
+
+export const CS_CLIENT = clientFactory(PROD_CLIENT_NAME, CS_URL, CS_HEADERS);

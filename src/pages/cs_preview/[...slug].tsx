@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
 import { Crumb } from '../../components/breadcrumbs/types';
 import { ContentItem } from '../../interfaces/content-item';
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
@@ -9,7 +8,9 @@ import {
     getPreviewContentForArticles,
     getPreviewContentForEvents,
 } from '../../service/get-preview-content';
-import { onEntryChange } from '../../utils/content-stack-init';
+import initLivePreview from '../../utils/content-stack-init';
+
+initLivePreview();
 
 interface PreviewContentPageProps {
     crumbs: Crumb[];
@@ -28,72 +29,35 @@ const ContentPage: NextPage<PreviewContentPageProps> = ({
     tertiaryNavItems,
     relatedContent,
     previewMode,
-    slugString,
 }) => {
-    const [data, setData] = useState({
-        crumbs,
-        topic,
-        contentItem,
-        tertiaryNavItems,
-        relatedContent,
-        previewMode,
-        slugString,
-    });
-    async function fetchData() {
-        try {
-            const updatedContentItem = await getPreviewData(slugString);
-            if (!updatedContentItem) throw new Error('Status: ' + 404);
-            setData({
-                crumbs: crumbs,
-                topic: topic,
-                contentItem: updatedContentItem,
-                tertiaryNavItems: tertiaryNavItems,
-                relatedContent: relatedContent,
-                previewMode: previewMode,
-                slugString: slugString,
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    useEffect(() => {
-        onEntryChange(() => fetchData());
-    }, [contentItem.content]);
-
     return (
         <ContentPageTemplate
-            crumbs={data.crumbs}
-            topic={data.topic}
-            contentItem={data.contentItem}
-            tertiaryNavItems={data.tertiaryNavItems}
-            relatedContent={data.relatedContent}
-            previewMode={data.previewMode}
+            crumbs={crumbs}
+            topic={topic}
+            contentItem={contentItem}
+            tertiaryNavItems={tertiaryNavItems}
+            relatedContent={relatedContent}
+            previewMode={previewMode}
         />
     );
 };
 
 export default ContentPage;
 
-const getPreviewData = async (slugString: string) => {
+export const getServerSideProps = async (context: any) => {
+    const { slug } = context.query;
+    const slugString = slug.join('/');
     let contentItem;
     if (slugString.startsWith('events/')) {
         contentItem = await getPreviewContentForEvents('/' + slugString);
     } else {
         contentItem = await getPreviewContentForArticles('/' + slugString);
     }
-    return contentItem;
-};
-
-export const getServerSideProps = async (context: any) => {
-    const { slug } = context.query;
-    const slugString = slug.join('/');
     const topic: Tag = {
         name: '',
         type: 'Technology',
         slug: '',
     };
-    const contentItem = await getPreviewData(slugString);
 
     const result = {
         crumbs: [],
