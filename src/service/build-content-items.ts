@@ -6,7 +6,7 @@ import {
     CS_PreviewArticleResponse,
     Article,
 } from '../interfaces/article';
-import { ImageConnection } from '../interfaces/image';
+import { Image, ImageConnection } from '../interfaces/image';
 import { ContentItem } from '../interfaces/content-item';
 import { Series } from '../interfaces/series';
 import {
@@ -22,7 +22,11 @@ import { setPrimaryTag, CS_setPrimaryTag } from './set-primary-tag';
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
 import { mapAuthor } from './get-all-authors';
-import { CommunityEvent, CS_IndustryEventsResponse } from '../interfaces/event';
+import {
+    CommunityEvent,
+    CS_IndustryEventsResponse,
+    CS_PreviewIndustryEventsResponse,
+} from '../interfaces/event';
 import { Tag } from '../interfaces/tag';
 import { mapSEO } from '../utils/contentstack';
 import { SEO } from '../interfaces/seo';
@@ -253,7 +257,10 @@ const eventContentTypeTag = {
     type: 'ContentType',
 } as Tag;
 
-const mapImage = (image: ImageConnection, event: CS_IndustryEventsResponse) => {
+const mapImage = (
+    image: ImageConnection,
+    event: CS_IndustryEventsResponse
+): Image => {
     const img = image.edges.length > 0 ? image.edges[0] : null;
     if (img) {
         return {
@@ -274,31 +281,28 @@ const mapImage = (image: ImageConnection, event: CS_IndustryEventsResponse) => {
 
 export const CS_mapIndustryEventToContentItem = (
     event: CS_IndustryEventsResponse
-) =>
-    ({
-        collectionType: 'Event',
-        category: 'Event',
-        subCategory: 'Industry Event',
-        image: mapImage(event.imageConnection, event),
-        contentDate: [event.start_time, event.end_time],
-        description: event.description,
-        slug: event.calculated_slug,
-        tags: CS_flattenTags(event.other_tags).concat(eventContentTypeTag),
-        title: event.title,
-        location: event.address.location,
-        city: event.address.city || null,
-        state: event.address.state || null,
-        country: event.address.country || null,
-        eventSetup: event.type,
-        authors: event.authorsConnection.edges.map(({ node }) =>
-            mapAuthor(node)
-        ),
-        content: event.content,
-        registrationLink: event.registration_url,
-        virtualLink: event.virtual_meetup_url,
-        virtualLinkText: event.virtual_meetup_url_text,
-        relatedContent: [],
-    } as ContentItem);
+): ContentItem => ({
+    collectionType: 'Event',
+    category: 'Event',
+    subCategory: 'Industry Event',
+    image: mapImage(event.imageConnection, event),
+    contentDate: [event.start_time, event.end_time],
+    description: event.description,
+    slug: event.calculated_slug,
+    tags: CS_flattenTags(event.other_tags).concat(eventContentTypeTag),
+    title: event.title,
+    location: event.address.location,
+    city: event.address.city || null,
+    state: event.address.state || null,
+    country: event.address.country || null,
+    eventSetup: event.type,
+    authors: event.authorsConnection.edges.map(({ node }) => mapAuthor(node)),
+    content: event.content,
+    registrationLink: event.registration_url,
+    virtualLink: event.virtual_meetup_url,
+    virtualLinkText: event.virtual_meetup_url_text,
+    relatedContent: [],
+});
 
 export const mapEventsToContentItems = (
     allCommunityEvents: CommunityEvent[],
@@ -387,7 +391,7 @@ export const CS_mapArticlesToContentItems = (
 
 // PREVIEW
 
-export const mapPreviewArticleToContentItem = (
+export const CS_previewMapPreviewArticleToContentItem = (
     a: CS_PreviewArticleResponse
 ): ContentItem => {
     const updated_at =
@@ -429,5 +433,57 @@ export const mapPreviewArticleToContentItem = (
         },
     };
 
+    if (a.image) {
+        contentItem.image = {
+            url: a.image.url,
+            alt: a.image.description || '',
+        };
+    }
+
     return contentItem;
+};
+
+export const CS_previewMapIndustryEventToContentItem = (
+    event: CS_PreviewIndustryEventsResponse
+): ContentItem => {
+    const authors = event.authors.map(
+        ({ title, image, job_title, ...rest }) => ({
+            name: title,
+            title: job_title,
+            image,
+            ...rest,
+        })
+    );
+
+    return {
+        collectionType: 'Event',
+        category: 'Event',
+        subCategory: 'Industry Event',
+        ...(event.image
+            ? {
+                  image: {
+                      url: event.image?.url,
+                      alt: event.image?.description || '',
+                  },
+              }
+            : {}),
+        contentDate: [event.start_time, event.end_time],
+        description: event.description,
+        slug: event.calculated_slug,
+        tags: CS_previewFlattenTags(event.other_tags).concat(
+            eventContentTypeTag
+        ),
+        title: event.title,
+        location: event.address.location,
+        city: event.address.city || null,
+        state: event.address.state || null,
+        country: event.address.country || null,
+        eventSetup: event.type,
+        authors,
+        content: event.content,
+        registrationLink: event.registration_url,
+        virtualLink: event.virtual_meetup_url,
+        virtualLinkText: event.virtual_meetup_url_text,
+        relatedContent: [],
+    };
 };

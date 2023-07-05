@@ -33,10 +33,10 @@ export interface ContentItem {
     githubUrl?: string;
     liveSiteUrl?: string;
     seo?: SEO;
-    location?: string;
-    city?: string;
-    state?: string;
-    country?: string;
+    location?: string | null;
+    city?: string | null;
+    state?: string | null;
+    country?: string | null;
     eventSetup?: EventSetup;
     coordinates?: Coordinates;
     registrationLink?: string;

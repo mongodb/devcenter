@@ -238,13 +238,13 @@ const CS_previewParseOtherTags = (otherTags: CS_PreviewOtherTags) => {
     const tags: Tag[] = [];
     if (!otherTags) return tags;
 
-    const contentType = otherTags.content_type[0];
+    const contentType = otherTags.content_type?.at(0);
     const technology = otherTags.technologies;
-    const authorType = otherTags.author_type[0];
-    const l1Product = otherTags.l1_product[0];
-    const l2Product = otherTags.l2_product[0];
-    const spokenLanguage = otherTags.spoken_language[0];
-    const expertiseLevel = otherTags.expertise_level[0];
+    const authorType = otherTags.author_type?.at(0);
+    const l1Product = otherTags.l1_product?.at(0);
+    const l2Product = otherTags.l2_product?.at(0);
+    const spokenLanguage = otherTags.spoken_language?.at(0);
+    const expertiseLevel = otherTags.expertise_level?.at(0);
     const programmingLanguage = otherTags.programming_languages;
     if (contentType) {
         tags.push({

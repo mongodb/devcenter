@@ -4,7 +4,10 @@ import Stack from '../utils/stack';
 import allContentPreval from '../service/get-all-content.preval';
 import { CS_PreviewArticleResponse } from '../interfaces/article';
 import { ContentItem } from '../interfaces/content-item';
-import { mapPreviewArticleToContentItem } from '../service/build-content-items';
+import {
+    CS_previewMapIndustryEventToContentItem,
+    CS_previewMapPreviewArticleToContentItem,
+} from '../service/build-content-items';
 import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
 import { PillCategory, pillCategoryToSlug } from '../types/pill-category';
 import pluralize from 'pluralize';
@@ -19,6 +22,7 @@ import { Tag } from '../interfaces/tag';
 import { TagType } from '../types/tag-type';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import ContentPageTemplate from '../page-templates/content-page/content-page-template';
+import { CS_PreviewIndustryEventsResponse } from '../interfaces/event';
 
 // Assumes that other category always carries a primary tag
 const categoryWithoutPrimaryTagToURL = (category: PillCategory) => {
@@ -35,7 +39,7 @@ const categoryWithoutPrimaryTagToURL = (category: PillCategory) => {
     }
 };
 
-const relation_uids = [
+const articleRelationUIDs = [
     'authors',
     'primary_tag.tag',
     'other_tags.l1_product',
@@ -46,6 +50,14 @@ const relation_uids = [
     'other_tags.programming_languages',
     'other_tags.spoken_language',
     'other_tags.author_type',
+];
+
+const eventRelationUIDs = [
+    'authors',
+    'other_tags.l1_product',
+    'other_tags.l2_product',
+    'other_tags.technologies',
+    'other_tags.programming_languages',
 ];
 
 interface PreviewContentPageProps {
@@ -97,8 +109,15 @@ export const getServerSideProps = async (context: any) => {
 
         const csQuery = Stack.ContentType(content_type_uid)
             .Entry(entry_uid)
-            .includeReference(relation_uids);
-        const entry: CS_PreviewArticleResponse = (
+            .includeReference(
+                content_type_uid === 'articles'
+                    ? articleRelationUIDs
+                    : eventRelationUIDs
+            );
+
+        const entry:
+            | CS_PreviewArticleResponse
+            | CS_PreviewIndustryEventsResponse = (
             await csQuery.fetch()
         ).toJSON();
 
@@ -110,15 +129,18 @@ export const getServerSideProps = async (context: any) => {
         ) {
             return { props: {} };
         } else if (entry.calculated_slug.startsWith('/events/')) {
-            return { props: {} };
+            contentItem = CS_previewMapIndustryEventToContentItem(
+                entry as CS_PreviewIndustryEventsResponse
+            );
         } else {
             // Regular Article
-            contentItem = mapPreviewArticleToContentItem(entry);
-            // console.log(contentItem);
+            contentItem = CS_previewMapPreviewArticleToContentItem(
+                entry as CS_PreviewArticleResponse
+            );
         }
         if (!contentItem) return null;
 
-        const slug = contentItem.slug.split('/');
+        const slug = contentItem.slug.split('/').filter(part => !!part); // Remove empty slug parts
 
         const contentItemHasPrimaryTag = hasPrimaryTag(contentItem);
         const isEventContent = contentItem.collectionType === 'Event';
@@ -190,7 +212,6 @@ export const getServerSideProps = async (context: any) => {
             type: metaInfoForTopic?.category as TagType,
             slug: topicSlug,
         };
-        console.log(topic);
 
         return {
             props: {
