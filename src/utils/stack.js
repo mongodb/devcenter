@@ -1,16 +1,14 @@
-import { Stack } from 'contentstack';
+import Contentstack from 'contentstack';
 
-export const stackConfig = {
-    api_key: process.env.api_key,
-    delivery_token: process.env.delivery_token,
-    environment: process.env.environment,
+const stackConfig = {
+    api_key: process.env.CS_STACK_API_KEY,
+    delivery_token: process.env.CS_DELIVERY_TOKEN,
+    environment: 'staging',
     live_preview: {
-        management_token: process.env.management_token,
+        management_token: process.env.CS_LIVE_PREVIEW_MANAGEMENT_TOKEN,
         enable: true,
         host: 'api.contentstack.io',
     },
 };
 
-export const initializeContentStackSdk = () => {
-    return Stack(stackConfig);
-};
+export default Contentstack.Stack(stackConfig);

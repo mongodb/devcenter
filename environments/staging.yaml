@@ -33,6 +33,8 @@ envSecrets:
   GOOGLE_PLACES_API_KEY: devcenter-secrets
   BACKEND_API_KEY: devcenter-secrets
   MONGODB_TV_API_KEY: devcenter-secrets
+  CS_STACK_API_KEY: devcenter-secrets
+  CS_LIVE_PREVIEW_MANAGEMENT_TOKEN: devcenter-secrets
 
 autoscaling:
   minReplicas: 2

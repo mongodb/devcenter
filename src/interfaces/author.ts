@@ -28,3 +28,11 @@ export interface CS_AuthorResponse extends AuthorBase {
     job_title?: string;
     title: string;
 }
+
+// PREVIEW
+
+export interface CS_PreviewAuthorResponse extends AuthorBase {
+    image: { url: string };
+    job_title?: string;
+    title: string;
+}

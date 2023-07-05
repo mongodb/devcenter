@@ -1,7 +1,11 @@
 import { CS_VideoResponse, Video } from '../interfaces/video';
 import { Podcast } from '../interfaces/podcast';
 import { CS_PodcastResponse } from '../interfaces/podcast';
-import { CS_ArticleResponse, Article } from '../interfaces/article';
+import {
+    CS_ArticleResponse,
+    CS_PreviewArticleResponse,
+    Article,
+} from '../interfaces/article';
 import { ImageConnection } from '../interfaces/image';
 import { ContentItem } from '../interfaces/content-item';
 import { Series } from '../interfaces/series';
@@ -10,6 +14,8 @@ import {
     CS_flattenTags,
     CS_flattenPrimaryTags,
     CS_mergeTags,
+    CS_previewFlattenTags,
+    CS_previewFlattenPrimaryTags,
 } from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { setPrimaryTag, CS_setPrimaryTag } from './set-primary-tag';
@@ -377,4 +383,51 @@ export const CS_mapArticlesToContentItems = (
                 item.category.replace('*', '') as PillCategory
             ) // The replace is necessart for mocking.
     );
+};
+
+// PREVIEW
+
+export const mapPreviewArticleToContentItem = (
+    a: CS_PreviewArticleResponse
+): ContentItem => {
+    const updated_at =
+        !a.strapi_updated_at || new Date(a.updated_at) > new Date('2023-06-12') // This should be set to the date we migrate from Strapi to ContentStack
+            ? a.updated_at
+            : a.strapi_updated_at;
+    const authors = a.authors.map(({ title, image, job_title, ...rest }) => ({
+        name: title,
+        title: job_title,
+        image,
+        ...rest,
+    }));
+
+    const { code_type, github_url, livesite_url } = a.other_tags;
+
+    const contentItem: ContentItem = {
+        collectionType: 'Article',
+        authors,
+        category: a.other_tags.content_type[0].title,
+        contentDate: a.original_publish_date || a.publish_details[0].time,
+        updateDate: updated_at,
+        description: a.description,
+        content: a.content,
+        slug: a.calculated_slug.startsWith('/')
+            ? a.calculated_slug.substring(1)
+            : a.calculated_slug,
+        tags: CS_mergeTags(
+            CS_previewFlattenTags(a.other_tags),
+            CS_previewFlattenPrimaryTags(a.primary_tag.tag)
+        ),
+        title: a.title,
+        codeType: code_type,
+        githubUrl: github_url,
+        liveSiteUrl: livesite_url,
+        seo: a.seo,
+        image: {
+            url: a.image.url,
+            alt: a.image.description || '',
+        },
+    };
+
+    return contentItem;
 };
