@@ -200,7 +200,7 @@ const useSearch = (
             (item: ContentItem) =>
                 // keep events without date (if happens)
                 !item.contentDate ||
-                !item.contentDate.length ||
+                (Array.isArray(item.contentDate) && !item.contentDate.length) ||
                 // compare with the end
                 (Array.isArray(item.contentDate) &&
                     new Date(item.contentDate[1]) > currentTime) ||
