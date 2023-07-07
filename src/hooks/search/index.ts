@@ -192,14 +192,14 @@ const useSearch = (
         }
     }, []);
 
-    const filterPastEvents = useCallback(searchData => {
+    const filterPastEvents = useCallback((searchData: ContentItem[]) => {
         if (!searchData) return [];
-        if (tagSlug !== '/events') return searchData;
         const currentTime = new Date();
         return searchData.filter(
             (item: ContentItem) =>
-                // keep events without date (if happens)
-                !item.contentDate ||
+                (item.category !== 'Event' &&
+                    // keep events without date (if happens)
+                    !item.contentDate) ||
                 (Array.isArray(item.contentDate) && !item.contentDate.length) ||
                 // compare with the end
                 (Array.isArray(item.contentDate) &&
