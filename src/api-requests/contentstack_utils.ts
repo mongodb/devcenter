@@ -1,23 +1,14 @@
 import { ApolloQueryResult } from '@apollo/client';
 import { DocumentNode } from 'graphql';
-import {
-    CS_CLIENT_MOCK,
-    CS_CLIENT_PROD,
-    CS_CLIENT_STAGING,
-} from '../config/api-client';
+import { CS_CLIENT, CS_CLIENT_STAGING } from '../config/api-client';
 import { ContentTypeUID } from '../interfaces/meta-info';
 import { UnderlyingClient } from '../types/client-factory';
 import { FetchPolicy } from '@apollo/client/core';
 
 type environment = 'production' | 'staging';
 
-export const getClient = (environment: environment) => {
-    const useMock = process.env.NEXT_PUBLIC_API_MOCKING === 'enabled';
-
-    if (useMock) return CS_CLIENT_MOCK;
-    if (environment === 'staging') return CS_CLIENT_STAGING;
-    return CS_CLIENT_PROD;
-};
+export const getClient = (environment: environment) =>
+    environment === 'staging' ? CS_CLIENT_STAGING : CS_CLIENT;
 
 /**
  * Helper function to overcome Contentstack's pagination limit.
@@ -64,7 +55,7 @@ export const fetchAllForMocks = async (
     contentTypeUID: ContentTypeUID,
     variables?: Record<string, any>
 ) => {
-    const client = CS_CLIENT_PROD;
+    const client = CS_CLIENT;
     const mockData: Record<number, any> = {};
 
     // retrieve total and assume total field is included in the query

@@ -43,3 +43,29 @@ export interface CS_VideoOtherTags extends CS_OtherTags {
     spoken_languageConnection: OtherTagConnection;
     author_typeConnection: OtherTagConnection;
 }
+
+// PREVIEW
+
+export interface CS_PreviewOtherTag {
+    title: string;
+    calculated_slug: string;
+}
+
+interface CS_PreviewContentTypeTag {
+    title: PillCategory;
+    calculated_slug: string;
+}
+
+export interface CS_PreviewOtherTags {
+    l1_product: CS_PreviewOtherTag[];
+    l2_product: CS_PreviewOtherTag[];
+    expertise_level: CS_PreviewOtherTag[];
+    content_type: CS_PreviewContentTypeTag[];
+    technologies: CS_PreviewOtherTag[];
+    programming_languages: CS_PreviewOtherTag[];
+    spoken_language: CS_PreviewOtherTag[];
+    author_type: CS_PreviewOtherTag[];
+    github_url: string;
+    livesite_url: string;
+    code_type: CodeLevel;
+}

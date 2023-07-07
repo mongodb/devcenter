@@ -1,7 +1,10 @@
 import { Tag } from '../interfaces/tag';
 import { OtherTags } from '../interfaces/other-tags';
-import { CS_OtherTags } from '../interfaces/other-tags';
-import { CS_ArticlePrimaryTag } from '../interfaces/article';
+import { CS_OtherTags, CS_PreviewOtherTags } from '../interfaces/other-tags';
+import {
+    CS_ArticlePrimaryTag,
+    CS_PreviewPrimaryTag,
+} from '../interfaces/article';
 
 // STRAPI
 
@@ -227,4 +230,120 @@ export const CS_flattenPrimaryTags = (
 
 export const CS_mergeTags = (primary_tags: Tag[], other_tags: Tag[]): Tag[] => {
     return removeDuplicates(primary_tags.concat(other_tags));
+};
+
+// PREVIEW
+
+const CS_previewParseOtherTags = (otherTags: CS_PreviewOtherTags) => {
+    const tags: Tag[] = [];
+    if (!otherTags) return tags;
+
+    const contentType = otherTags.content_type?.at(0);
+    const technology = otherTags.technologies;
+    const authorType = otherTags.author_type?.at(0);
+    const l1Product = otherTags.l1_product?.at(0);
+    const l2Product = otherTags.l2_product?.at(0);
+    const spokenLanguage = otherTags.spoken_language?.at(0);
+    const expertiseLevel = otherTags.expertise_level?.at(0);
+    const programmingLanguage = otherTags.programming_languages;
+    if (contentType) {
+        tags.push({
+            name: contentType.title,
+            slug: contentType.calculated_slug,
+            type: 'ContentType',
+        });
+    }
+    if (technology) {
+        technology.forEach(entry => {
+            tags.push({
+                name: entry.title,
+                slug: entry.calculated_slug,
+                type: 'Technology',
+            });
+        });
+    }
+    if (authorType) {
+        tags.push({
+            name: authorType.title,
+            slug: authorType.calculated_slug,
+            type: 'AuthorType',
+        });
+    }
+    if (l1Product) {
+        tags.push({
+            name: l1Product.title,
+            slug: l1Product.calculated_slug,
+            type: 'L1Product',
+        });
+    }
+    if (l2Product) {
+        tags.push({
+            name: l2Product.title,
+            slug: l2Product.calculated_slug,
+            type: 'L2Product',
+        });
+    }
+    if (spokenLanguage) {
+        tags.push({
+            name: spokenLanguage.title,
+            slug: spokenLanguage.calculated_slug,
+            type: 'SpokenLanguage',
+        });
+    }
+    if (expertiseLevel) {
+        tags.push({
+            name: expertiseLevel.title,
+            slug: expertiseLevel.calculated_slug,
+            type: 'ExpertiseLevel',
+        });
+    }
+    if (programmingLanguage) {
+        programmingLanguage.forEach(entry => {
+            tags.push({
+                name: entry.title,
+                slug: entry.calculated_slug,
+                type: 'ProgrammingLanguage',
+            });
+        });
+    }
+
+    return tags;
+};
+
+export const CS_previewFlattenTags = (
+    otherTags: CS_PreviewOtherTags | CS_PreviewOtherTags[] | null
+): Tag[] => {
+    if (!otherTags) {
+        return [];
+    }
+
+    const flattenedTags = CS_previewParseOtherTags(
+        Array.isArray(otherTags) ? otherTags[0] : otherTags
+    );
+    return removeDuplicates(flattenedTags);
+};
+
+export const CS_previewFlattenPrimaryTags = (
+    primary_tag: CS_PreviewPrimaryTag[]
+): Tag[] => {
+    if (!primary_tag) {
+        return [];
+    }
+
+    function CS_previewParsePrimaryTag(primaryTag: CS_PreviewPrimaryTag[]) {
+        const tags: Tag[] = [];
+        if (primaryTag && primaryTag.length > 0) {
+            tags.push({
+                name: primaryTag[0].title,
+                slug: primaryTag[0].calculated_slug,
+                type: primaryTag[0].calculated_slug.startsWith('/products')
+                    ? 'L1Product'
+                    : 'ProgrammingLanguage',
+            });
+        }
+        return tags;
+    }
+
+    const flattenedTags = CS_previewParsePrimaryTag(primary_tag);
+    return removeDuplicates(flattenedTags);
 };
