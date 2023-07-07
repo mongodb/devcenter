@@ -192,7 +192,27 @@ const useSearch = (
         }
     }, []);
 
-    const filterFunctions = [filterData, filterDataByLocation];
+    const filterPastEvents = useCallback(searchData => {
+        if (!searchData) return [];
+        if (tagSlug !== '/events') return searchData;
+        const currentTime = new Date();
+        return searchData.filter(
+            (item: ContentItem) =>
+                // keep events without date (if happens)
+                !item.contentDate ||
+                !item.contentDate.length ||
+                // compare with the end
+                (Array.isArray(item.contentDate) &&
+                    new Date(item.contentDate[1]) > currentTime) ||
+                new Date(item.contentDate as string) > currentTime
+        );
+    }, []);
+
+    const filterFunctions = [
+        filterData,
+        filterDataByLocation,
+        filterPastEvents,
+    ];
 
     if (tagSlug === '/videos' && (sortBy === 'Upcoming' || !sortBy)) {
         filterFunctions.unshift(filterAired);
