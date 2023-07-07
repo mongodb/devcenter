@@ -2,6 +2,7 @@ import { Connection } from '../interfaces/connection';
 import { ContentItem } from '../interfaces/content-item';
 import { CS_Media, Media } from '../interfaces/media';
 import { GenericTagTypeResponse } from '../interfaces/tag-type-response';
+import { CS_PreviewVideoResponse } from '../interfaces/video';
 import { extractFieldsFromConnection } from '../utils/contentstack';
 
 export const setPrimaryTag = (
@@ -58,6 +59,35 @@ export const CS_setPrimaryTag = (
     if (programmingLanguage) {
         contentItem.primaryTag = {
             programmingLanguage: programmingLanguage as GenericTagTypeResponse,
+        };
+    }
+};
+
+export const CS_previewSetPrimaryTag = (
+    contentItem: ContentItem,
+    video: CS_PreviewVideoResponse
+) => {
+    if (!video.other_tags) return;
+
+    const l1Product = video.other_tags.l1_product?.at(0);
+    const programmingLanguage = video.other_tags.programming_languages?.at(0);
+
+    // programming language takes precedence as the primary tag
+    if (l1Product) {
+        contentItem.primaryTag = {
+            l1Product: {
+                name: l1Product.title,
+                calculatedSlug: l1Product.calculated_slug,
+            },
+        };
+    }
+
+    if (programmingLanguage) {
+        contentItem.primaryTag = {
+            programmingLanguage: {
+                name: programmingLanguage.title,
+                calculatedSlug: programmingLanguage.calculated_slug,
+            },
         };
     }
 };

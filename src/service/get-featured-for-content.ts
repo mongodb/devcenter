@@ -7,12 +7,14 @@ export const getFeaturedForContent = async (
     fromStatic?: boolean
 ) => {
     const allFeatured = await getFeaturedForTopic(topicSlug, fromStatic);
-    const flattenedAllFeatured = Object.values(allFeatured).flat();
-    let featured = content
-        .filter(item =>
-            flattenedAllFeatured.find(title => title === item.title)
-        )
-        .slice(0, 3);
+    const flattenedAllFeatured: string[] = Object.values(allFeatured).flat();
+    let featured: ContentItem[] = [];
+
+    // forEach() instead of map() to avoid adding undefined into featured
+    flattenedAllFeatured.forEach(title => {
+        const foundContent = content.find(c => c.title === title);
+        if (foundContent) featured.push(foundContent);
+    });
 
     if (featured.length < 3) {
         const extraFeatured = content

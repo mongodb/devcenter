@@ -43,7 +43,7 @@ const CardThumbnail = ({
     thumbnail?: {
         url?: string;
         alt?: string;
-        city?: string;
+        city?: string | null;
     };
     contentType: PillCategory;
     variant: CardVariant;
@@ -68,7 +68,7 @@ const CardThumbnail = ({
                 layout="fill"
             />
         ),
-        Event: url ? defaultThumbnail : <EventIcon text={city} />,
+        Event: url ? defaultThumbnail : <EventIcon text={city || ''} />,
         Video: (
             <>
                 {defaultThumbnail}

@@ -13,7 +13,7 @@ import styles from './styles';
 
 interface EventWidgetProps {
     dates: string | [string, string];
-    location?: string;
+    location?: string | null;
     virtualLink?: string;
     virtualLinkText?: string;
     registrationLink?: string;
