@@ -7,6 +7,7 @@ import { ContentItem } from '../interfaces/content-item';
 import {
     CS_previewMapIndustryEventToContentItem,
     CS_previewMapPreviewArticleToContentItem,
+    CS_previewMapVideoToContentItem,
 } from '../service/build-content-items';
 import { getBreadcrumbsFromSlug } from '../components/breadcrumbs/utils';
 import { PillCategory, pillCategoryToSlug } from '../types/pill-category';
@@ -23,6 +24,7 @@ import { TagType } from '../types/tag-type';
 import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import ContentPageTemplate from '../page-templates/content-page/content-page-template';
 import { CS_PreviewIndustryEventsResponse } from '../interfaces/event';
+import { CS_PreviewVideoResponse } from '../interfaces/video';
 
 // Assumes that other category always carries a primary tag
 const categoryWithoutPrimaryTagToURL = (category: PillCategory) => {
@@ -58,6 +60,17 @@ const eventRelationUIDs = [
     'other_tags.l2_product',
     'other_tags.technologies',
     'other_tags.programming_languages',
+];
+
+const videoRelationUIDs = [
+    'authors',
+    'l1_product',
+    'l2_product',
+    'other_tags.expertise_level',
+    'technologies',
+    'programming_languages',
+    'other_tags.spoken_language',
+    'other_tags.author_type',
 ];
 
 interface PreviewContentPageProps {
@@ -104,7 +117,10 @@ export const getServerSideProps = async (context: any) => {
     const { query } = context;
     const { live_preview, content_type_uid, entry_uid } = query;
     if (live_preview && content_type_uid && entry_uid) {
-        console.log('LIVE PREVIEWING');
+        const validContentTypeUIDs = ['articles', 'industry_events', 'videos'];
+        if (!validContentTypeUIDs.includes(content_type_uid)) {
+            return { notFound: true };
+        }
         Stack.livePreviewQuery(query);
 
         const csQuery = Stack.ContentType(content_type_uid)
@@ -112,33 +128,33 @@ export const getServerSideProps = async (context: any) => {
             .includeReference(
                 content_type_uid === 'articles'
                     ? articleRelationUIDs
+                    : content_type_uid === 'videos'
+                    ? videoRelationUIDs
                     : eventRelationUIDs
             );
 
         const entry:
             | CS_PreviewArticleResponse
-            | CS_PreviewIndustryEventsResponse = (
-            await csQuery.fetch()
-        ).toJSON();
+            | CS_PreviewIndustryEventsResponse
+            | CS_PreviewVideoResponse = (await csQuery.fetch()).toJSON();
 
         let contentItem: ContentItem;
 
-        if (
-            entry.calculated_slug.startsWith('/videos/') ||
-            entry.calculated_slug.startsWith('/podcasts/')
-        ) {
-            return { props: {} };
-        } else if (entry.calculated_slug.startsWith('/events/')) {
+        if (content_type_uid === 'articles') {
+            contentItem = CS_previewMapPreviewArticleToContentItem(
+                entry as CS_PreviewArticleResponse
+            );
+        } else if (content_type_uid === 'industry_events') {
             contentItem = CS_previewMapIndustryEventToContentItem(
                 entry as CS_PreviewIndustryEventsResponse
             );
         } else {
-            // Regular Article
-            contentItem = CS_previewMapPreviewArticleToContentItem(
-                entry as CS_PreviewArticleResponse
+            // Video
+            contentItem = CS_previewMapVideoToContentItem(
+                entry as CS_PreviewVideoResponse
             );
         }
-        if (!contentItem) return null;
+        if (!contentItem) return { notFound: true };
 
         const slug = contentItem.slug.split('/').filter(part => !!part); // Remove empty slug parts
 

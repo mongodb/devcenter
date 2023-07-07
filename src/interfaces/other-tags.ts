@@ -46,7 +46,7 @@ export interface CS_VideoOtherTags extends CS_OtherTags {
 
 // PREVIEW
 
-interface CS_PreviewOtherTag {
+export interface CS_PreviewOtherTag {
     title: string;
     calculated_slug: string;
 }

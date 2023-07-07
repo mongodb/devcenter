@@ -1,4 +1,8 @@
-import { CS_VideoResponse, Video } from '../interfaces/video';
+import {
+    CS_PreviewVideoResponse,
+    CS_VideoResponse,
+    Video,
+} from '../interfaces/video';
 import { Podcast } from '../interfaces/podcast';
 import { CS_PodcastResponse } from '../interfaces/podcast';
 import {
@@ -18,7 +22,11 @@ import {
     CS_previewFlattenPrimaryTags,
 } from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
-import { setPrimaryTag, CS_setPrimaryTag } from './set-primary-tag';
+import {
+    setPrimaryTag,
+    CS_setPrimaryTag,
+    CS_previewSetPrimaryTag,
+} from './set-primary-tag';
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
 import { mapAuthor } from './get-all-authors';
@@ -33,6 +41,7 @@ import { SEO } from '../interfaces/seo';
 import { MongoDBTVShow } from '../interfaces/mongodb-tv';
 import allTagsPreval from './get-all-tags.preval';
 import { getAllTags } from './get-all-tags';
+import { CS_PreviewOtherTags } from '../interfaces/other-tags';
 
 export const mapPodcastsToContentItems = (
     allPodcasts: Podcast[],
@@ -486,4 +495,52 @@ export const CS_previewMapIndustryEventToContentItem = (
         virtualLinkText: event.virtual_meetup_url_text,
         relatedContent: [],
     };
+};
+
+export const CS_previewMapVideoToContentItem = (
+    v: CS_PreviewVideoResponse
+): ContentItem => {
+    const otherTags: CS_PreviewOtherTags = {
+        ...v.other_tags,
+    };
+    const l1Product = v.l1_product?.at(0);
+    if (l1Product) {
+        otherTags.l1_product = [l1Product];
+    }
+    const l2Product = v.l2_product?.at(0);
+    if (l2Product) {
+        otherTags.l2_product = [l2Product];
+    }
+    const programmingLanguages = v.programming_languages;
+    if (programmingLanguages) {
+        otherTags.programming_languages = programmingLanguages;
+    }
+    const technologies = v.technologies;
+    if (technologies) {
+        otherTags.technologies = technologies;
+    }
+
+    const item: ContentItem = {
+        collectionType: 'Video',
+        category: 'Video',
+        contentDate: v.original_publish_date,
+        slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
+        tags: CS_previewFlattenTags(otherTags),
+        title: v.title,
+        seo: mapSEO(v.seo) as SEO,
+        relevantLinks: v?.relevant_links || '',
+    };
+
+    if (v.description) {
+        item.description = v.description;
+    }
+
+    item.image = {
+        url: getPlaceHolderImage(v.thumbnail_url),
+        alt: 'randomAlt',
+    };
+
+    item.videoId = v.video_id;
+    CS_previewSetPrimaryTag(item, v);
+    return item;
 };
