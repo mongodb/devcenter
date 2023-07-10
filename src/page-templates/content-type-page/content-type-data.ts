@@ -40,6 +40,12 @@ export const getContentTypePageData = async (
         );
     }
 
+    if (initialSearchContent && contentType === 'Event') {
+        initialSearchContent = initialSearchContent.filter(
+            item => item.end_time && new Date(item.end_time) > currentTime
+        );
+    }
+
     const filterItems = await getFilters(contentType, allSearchContent);
 
     const metaInfoForTopic = await getMetaInfoForTopic(slug);

@@ -192,7 +192,28 @@ const useSearch = (
         }
     }, []);
 
-    const filterFunctions = [filterData, filterDataByLocation];
+    const filterPastEvents = useCallback((searchData: ContentItem[]) => {
+        if (!searchData) return [];
+        const currentTime = new Date();
+        return searchData.filter((item: ContentItem) => {
+            if (item.category !== 'Event') return true;
+            if (!item.contentDate) return true;
+            if (Array.isArray(item.contentDate) && !item.contentDate.length)
+                return true;
+
+            const endDate = Array.isArray(item.contentDate)
+                ? item.contentDate[1]
+                : item.contentDate;
+
+            return new Date(endDate) > currentTime;
+        });
+    }, []);
+
+    const filterFunctions = [
+        filterData,
+        filterDataByLocation,
+        filterPastEvents,
+    ];
 
     if (tagSlug === '/videos' && (sortBy === 'Upcoming' || !sortBy)) {
         filterFunctions.unshift(filterAired);
