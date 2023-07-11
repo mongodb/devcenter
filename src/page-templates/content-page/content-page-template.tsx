@@ -649,7 +649,11 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             ? undefined
                             : contentDate,
                         modifiedTime: updateDate,
-                        authors: authors.map(({ name }) => name),
+                        authors: authors.map(
+                            ({ calculated_slug }) =>
+                                publicRuntimeConfig.absoluteBasePath +
+                                calculated_slug
+                        ),
                     },
                 }}
                 description={
