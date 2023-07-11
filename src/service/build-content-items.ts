@@ -378,7 +378,7 @@ export const CS_mapArticlesToContentItems = (
             codeType: a.other_tags.code_type,
             githubUrl: a.other_tags.github_url,
             liveSiteUrl: a.other_tags.livesite_url,
-            seo: a.seo,
+            seo: mapSEO(a.seo) as SEO,
         };
         const image = a.imageConnection.edges[0];
         if (image) {
@@ -435,7 +435,7 @@ export const CS_previewMapPreviewArticleToContentItem = (
         codeType: code_type,
         githubUrl: github_url,
         liveSiteUrl: livesite_url,
-        seo: a.seo,
+        seo: mapSEO(a.seo) as SEO,
         image: {
             url: a.image.url,
             alt: a.image.description || '',

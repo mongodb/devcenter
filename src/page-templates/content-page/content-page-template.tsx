@@ -619,6 +619,13 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             </>
         );
     };
+    const ogType =
+        seo?.og_type ||
+        ['Article', 'Code Example', 'Quickstart', 'Tutorial'].includes(category)
+            ? 'article'
+            : category === 'Video'
+            ? 'video:other'
+            : undefined;
 
     return (
         <>
@@ -632,11 +639,18 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                 openGraph={{
                     url: seo?.og_url,
                     title: seo?.og_title,
-                    type: seo?.og_type,
+                    type: ogType,
                     description: seo?.og_description,
                     images: seo?.og_image?.url
                         ? [{ url: seo?.og_image?.url }]
                         : [],
+                    article: {
+                        publishedTime: Array.isArray(contentDate)
+                            ? undefined
+                            : contentDate,
+                        modifiedTime: updateDate,
+                        authors: authors.map(({ name }) => name),
+                    },
                 }}
                 description={
                     seo?.meta_description ||
