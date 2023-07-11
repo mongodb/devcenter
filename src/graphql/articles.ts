@@ -147,6 +147,7 @@ const articleFields = gql`
                 edges {
                     node {
                         url
+                        description
                     }
                 }
             }
@@ -159,6 +160,7 @@ const articleFields = gql`
                 edges {
                     node {
                         url
+                        description
                     }
                 }
             }

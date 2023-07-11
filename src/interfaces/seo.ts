@@ -2,6 +2,7 @@ import { ImageConnection } from './image';
 
 export interface SEOImage {
     url: string;
+    description: string;
 }
 
 export interface SEO {

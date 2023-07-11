@@ -49,6 +49,7 @@ const videoFields = gql`
                 edges {
                     node {
                         url
+                        description
                     }
                 }
             }
@@ -60,6 +61,7 @@ const videoFields = gql`
                 edges {
                     node {
                         url
+                        description
                     }
                 }
             }

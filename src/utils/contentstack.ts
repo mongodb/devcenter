@@ -50,13 +50,13 @@ export const extractFieldsFromConnection = (
 export const mapSEO = (cs_seo: CS_SEO): SEO | null => {
     const og_image = extractFieldsFromConnection(
         cs_seo.og_imageConnection as Connection,
-        ['url'],
+        ['url', 'description'],
         true
     );
 
     const twitter_image = extractFieldsFromConnection(
         cs_seo.twitter_imageConnection as Connection,
-        ['url'],
+        ['url', 'description'],
         true
     );
 

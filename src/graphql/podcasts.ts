@@ -49,6 +49,7 @@ const podcastFields = gql`
                 edges {
                     node {
                         url
+                        description
                     }
                 }
             }
@@ -60,6 +61,7 @@ const podcastFields = gql`
                 edges {
                     node {
                         url
+                        description
                     }
                 }
             }

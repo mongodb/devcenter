@@ -627,6 +627,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             ? 'video:other'
             : undefined;
 
+    console.log(seo);
+
     return (
         <>
             <NextSeo
@@ -642,7 +644,14 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     type: ogType,
                     description: seo?.og_description,
                     images: seo?.og_image?.url
-                        ? [{ url: seo?.og_image?.url }]
+                        ? [
+                              {
+                                  url: seo?.og_image?.url,
+                                  width: 800,
+                                  height: 600,
+                                  alt: seo.og_image?.description,
+                              },
+                          ]
                         : [],
                     article: {
                         publishedTime: Array.isArray(contentDate)
