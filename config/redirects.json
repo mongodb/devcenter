@@ -2323,5 +2323,10 @@
         "source": "/webinar/why-use-no-sql-for-startups",
         "destination": "/",
         "permanent": true
+    },
+    {
+        "source": "/products/atlas/atlas-data-api-and-fitbit/",
+        "destination": "/products/atlas/data-api/",
+        "permanent": true
     }
 ]

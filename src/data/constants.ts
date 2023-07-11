@@ -124,3 +124,5 @@ export const FILTER_ITEM_QUERY_MAP = FILTER_ITEM_MODEL.reduce(
     (acc, model) => (model.query ? { ...acc, [model.query]: model } : acc),
     {}
 ) as { [type: string]: FilterItemModel };
+
+export const FEATURED_CONTENT_MAX_COUNT = 3;
