@@ -85,3 +85,42 @@ const isEmptySEO = (seo: { [key: string]: any }) => {
 
     return true;
 };
+
+export const convertCSMarkdownToGeneralMarkdown = (cs_markdown: string) => {
+    /**
+     * This patches the difference between the general image markdown syntax and
+     * the syntax used in Contentstack
+     * This is a O(kn) operation where n is the length of cs_markdown
+     * and k is the number of image references
+     */
+
+    // O(kn): retrieve all image urls
+    let regex = /\[(\d+)\]:\s*(\S+)/g;
+    const imageUrls: Record<string, string> = {};
+    let match;
+
+    while ((match = regex.exec(cs_markdown)) !== null) {
+        const key = match[1];
+        const value = match[2];
+        imageUrls[key] = value;
+    }
+
+    // O(n): remove image urls at the end
+    const markdownWithoutimageURL = cs_markdown.replace(regex, '');
+
+    // O(kn): update markdown to general markdown
+    let convertedMarkdown = markdownWithoutimageURL;
+    regex = /!\[(.*?)\]\[(\d+)\]/;
+
+    while ((match = regex.exec(convertedMarkdown)) !== null) {
+        const description = match[1];
+        const key = match[2].toString();
+        const url = imageUrls[key];
+        convertedMarkdown = convertedMarkdown.replace(
+            regex,
+            `![${description}](${url})`
+        );
+    }
+
+    return convertedMarkdown;
+};

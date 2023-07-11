@@ -25,7 +25,10 @@ import {
     CS_PreviewIndustryEventsResponse,
 } from '../interfaces/event';
 import { Tag } from '../interfaces/tag';
-import { mapSEO } from '../utils/contentstack';
+import {
+    convertCSMarkdownToGeneralMarkdown,
+    mapSEO,
+} from '../utils/contentstack';
 import { SEO } from '../interfaces/seo';
 import { MongoDBTVShow } from '../interfaces/mongodb-tv';
 import allTagsPreval from './get-all-tags.preval';
@@ -257,7 +260,9 @@ export const CS_mapArticlesToContentItems = (
                 a.original_publish_date || a.system.publish_details.time,
             updateDate: updated_at,
             description: a.description,
-            content: a.content,
+            content: !a.strapi_updated_at
+                ? convertCSMarkdownToGeneralMarkdown(a.content)
+                : a.content,
             slug: a.calculated_slug.startsWith('/')
                 ? a.calculated_slug.substring(1)
                 : a.calculated_slug,
@@ -314,7 +319,9 @@ export const CS_previewMapPreviewArticleToContentItem = (
         contentDate: a.original_publish_date || a.publish_details[0].time,
         updateDate: updated_at,
         description: a.description,
-        content: a.content,
+        content: !a.strapi_updated_at
+            ? convertCSMarkdownToGeneralMarkdown(a.content)
+            : a.content,
         slug: a.calculated_slug.startsWith('/')
             ? a.calculated_slug.substring(1)
             : a.calculated_slug,
