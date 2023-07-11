@@ -1,20 +1,13 @@
-import {
-    CS_PreviewVideoResponse,
-    CS_VideoResponse,
-    Video,
-} from '../interfaces/video';
-import { Podcast } from '../interfaces/podcast';
+import { CS_PreviewVideoResponse, CS_VideoResponse } from '../interfaces/video';
 import { CS_PodcastResponse } from '../interfaces/podcast';
 import {
     CS_ArticleResponse,
     CS_PreviewArticleResponse,
-    Article,
 } from '../interfaces/article';
 import { Image, ImageConnection } from '../interfaces/image';
 import { ContentItem } from '../interfaces/content-item';
 import { Series } from '../interfaces/series';
 import {
-    flattenTags,
     CS_flattenTags,
     CS_flattenPrimaryTags,
     CS_mergeTags,
@@ -22,11 +15,7 @@ import {
     CS_previewFlattenPrimaryTags,
 } from '../utils/flatten-tags';
 import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
-import {
-    setPrimaryTag,
-    CS_setPrimaryTag,
-    CS_previewSetPrimaryTag,
-} from './set-primary-tag';
+import { CS_setPrimaryTag, CS_previewSetPrimaryTag } from './set-primary-tag';
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
 import { mapAuthor } from './get-all-authors';
@@ -43,34 +32,6 @@ import allTagsPreval from './get-all-tags.preval';
 import { getAllTags } from './get-all-tags';
 import { CS_PreviewOtherTags } from '../interfaces/other-tags';
 
-export const mapPodcastsToContentItems = (
-    allPodcasts: Podcast[],
-    podcastSeries: Series[]
-) => {
-    const items: ContentItem[] = [];
-    allPodcasts.forEach((p: Podcast) => {
-        const item: ContentItem = {
-            collectionType: 'Podcast',
-            category: 'Podcast',
-            contentDate: p.publishDate,
-            slug: p.slug.startsWith('/') ? p.slug.substring(1) : p.slug,
-            tags: flattenTags(p.otherTags),
-            title: p.title,
-            seo: p.seo,
-        };
-        if (p.description) {
-            item.description = p.description;
-        }
-        if (p.thumbnailUrl) {
-            item.image = { url: p.thumbnailUrl, alt: 'randomAlt' };
-        }
-        item.podcastFileUrl = p.casted_slug;
-        setPrimaryTag(item, p);
-        addSeriesToItem(item, 'podcast', podcastSeries);
-        items.push(item);
-    });
-    return items.filter(item => item.title !== '');
-};
 export const CS_mapPodcastsToContentItems = (
     allPodcasts: CS_PodcastResponse[],
     podcastSeries: Series[]
@@ -156,38 +117,6 @@ export const mapMongoDBTVShowsToContentItems = async (
     return mappedMongodbTVShows;
 };
 
-export const mapVideosToContentItems = async (
-    allVideos: Video[],
-    videoSeries: Series[]
-) => {
-    const items: ContentItem[] = [];
-    allVideos.forEach((v: Video) => {
-        const item: ContentItem = {
-            collectionType: 'Video',
-            category: 'Video',
-            contentDate: v.publishDate,
-            slug: v.slug.startsWith('/') ? v.slug.substring(1) : v.slug,
-            tags: flattenTags(v.otherTags),
-            title: v.title,
-            seo: v.seo,
-            relevantLinks: v?.relevantLinks || '',
-        };
-        if (v.description) {
-            item.description = v.description;
-        }
-
-        item.image = {
-            url: getPlaceHolderImage(v.thumbnailUrl),
-            alt: 'randomAlt',
-        };
-
-        item.videoId = v.videoId;
-        setPrimaryTag(item, v);
-        addSeriesToItem(item, 'video', videoSeries);
-        items.push(item);
-    });
-    return items.filter(item => item.title !== '');
-};
 export const CS_mapVideosToContentItems = (
     allVideos: CS_VideoResponse[],
     videoSeries: Series[]
@@ -220,44 +149,6 @@ export const CS_mapVideosToContentItems = (
         items.push(item);
     });
     return items.filter(item => item.title !== '');
-};
-
-export const mapArticlesToContentItems = (
-    allArticles: Article[],
-    articleSeries: Series[]
-) => {
-    const items: ContentItem[] = [];
-    /*
-    very important - filter out articles that have no calculated slug
-     */
-    const filteredArticles = allArticles.filter(a => a.calculatedSlug);
-    filteredArticles.forEach((a: Article) => {
-        const item: ContentItem = {
-            collectionType: 'Article',
-            authors: a.authors,
-            category: a.otherTags[0].contentType.contentType,
-            contentDate: a.originalPublishDate || a.publishDate,
-            updateDate: a.updateDate,
-            description: a.description,
-            content: a.content,
-            slug: a.calculatedSlug.startsWith('/')
-                ? a.calculatedSlug.substring(1)
-                : a.calculatedSlug,
-            tags: flattenTags(a.otherTags),
-            title: a.title,
-            codeType: a.otherTags[0].codeType,
-            githubUrl: a.otherTags[0].githubUrl,
-            liveSiteUrl: a.otherTags[0].liveSiteUrl,
-            seo: a.seo,
-        };
-        if (a.image) {
-            item.image = { url: a.image.url, alt: a.image.alt || 'random alt' };
-        }
-        addSeriesToItem(item, 'article', articleSeries);
-        items.push(item);
-    });
-
-    return items.filter(item => PillCategoryValues.includes(item.category));
 };
 
 const eventContentTypeTag = {
