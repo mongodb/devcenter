@@ -88,39 +88,57 @@ const isEmptySEO = (seo: { [key: string]: any }) => {
 
 export const convertCSMarkdownToGeneralMarkdown = (cs_markdown: string) => {
     /**
-     * This patches the difference between the general image markdown syntax and
-     * the syntax used in Contentstack
+     * This patches the difference between the general markdown syntax and
+     * the markdown syntax used in Contentstack (CS).
      * This is a O(kn) operation where n is the length of cs_markdown
-     * and k is the number of image references
+     * and k is the number of url references.
+     * Assume that link and image reference cannot be the same.
      */
 
-    // O(n): retrieve all image urls
-    let regex = /\[(\d+)\]:\s*(\S+)/g;
-    const imageUrls: Record<string, string> = {};
+    // Note that urls can be for both images and links in CS
+    // Insert image in CS: ![enter image description here][4]
+    // Insert link in CS: [enter link description here][4]
+
+    // O(n): retrieve all urls
+    const urlsRegex = /\[(\d+)\]:\s*(\S+)/g;
+    const urls: Record<string, string> = {};
     let match;
 
-    while ((match = regex.exec(cs_markdown)) !== null) {
+    while ((match = urlsRegex.exec(cs_markdown)) !== null) {
         const key = match[1];
         const value = match[2];
-        imageUrls[key] = value;
+        urls[key] = value;
     }
 
-    if (!Object.keys(imageUrls).length) return cs_markdown;
+    if (!Object.keys(urls).length) return cs_markdown;
 
     // O(n): remove image urls at the end
-    const markdownWithoutimageURL = cs_markdown.replace(regex, '');
+    const markdownWithoutURLs = cs_markdown.replace(urlsRegex, '');
 
-    // O(kn): update markdown to general markdown
-    let generalMarkdown = markdownWithoutimageURL;
-    regex = /!\[(.*?)\]\[(\d+)\]/;
+    // O(kn): adopt CS image markdown
+    let generalMarkdown = markdownWithoutURLs;
+    const imagesRegex = /!\[(.*?)\]\[(\d+)\]/;
 
-    while ((match = regex.exec(generalMarkdown)) !== null) {
+    while ((match = imagesRegex.exec(generalMarkdown)) !== null) {
         const description = match[1];
         const key = match[2].toString();
-        const url = imageUrls[key];
+        const url = urls[key];
         generalMarkdown = generalMarkdown.replace(
-            regex,
+            imagesRegex,
             `![${description}](${url})`
+        );
+    }
+
+    // O(kn): adopt CS link markdown
+    const linksRegex = /\[(.*?)\]\[(\d+)\]/;
+
+    while ((match = linksRegex.exec(generalMarkdown)) !== null) {
+        const description = match[1];
+        const key = match[2].toString();
+        const url = urls[key];
+        generalMarkdown = generalMarkdown.replace(
+            linksRegex,
+            `[${description}](${url})`
         );
     }
 
