@@ -94,7 +94,7 @@ export const convertCSMarkdownToGeneralMarkdown = (cs_markdown: string) => {
      * and k is the number of image references
      */
 
-    // O(kn): retrieve all image urls
+    // O(n): retrieve all image urls
     let regex = /\[(\d+)\]:\s*(\S+)/g;
     const imageUrls: Record<string, string> = {};
     let match;
@@ -103,24 +103,28 @@ export const convertCSMarkdownToGeneralMarkdown = (cs_markdown: string) => {
         const key = match[1];
         const value = match[2];
         imageUrls[key] = value;
+        console.log(match);
     }
+
+    if (!Object.keys(imageUrls).length) return cs_markdown;
 
     // O(n): remove image urls at the end
     const markdownWithoutimageURL = cs_markdown.replace(regex, '');
 
     // O(kn): update markdown to general markdown
-    let convertedMarkdown = markdownWithoutimageURL;
+    let generalMarkdown = markdownWithoutimageURL;
     regex = /!\[(.*?)\]\[(\d+)\]/;
 
-    while ((match = regex.exec(convertedMarkdown)) !== null) {
+    while ((match = regex.exec(generalMarkdown)) !== null) {
         const description = match[1];
         const key = match[2].toString();
         const url = imageUrls[key];
-        convertedMarkdown = convertedMarkdown.replace(
+        generalMarkdown = generalMarkdown.replace(
             regex,
             `![${description}](${url})`
         );
+        console.log('hello2');
     }
 
-    return convertedMarkdown;
+    return generalMarkdown;
 };
