@@ -103,7 +103,6 @@ export const convertCSMarkdownToGeneralMarkdown = (cs_markdown: string) => {
         const key = match[1];
         const value = match[2];
         imageUrls[key] = value;
-        console.log(match);
     }
 
     if (!Object.keys(imageUrls).length) return cs_markdown;
