@@ -123,7 +123,6 @@ export const convertCSMarkdownToGeneralMarkdown = (cs_markdown: string) => {
             regex,
             `![${description}](${url})`
         );
-        console.log('hello2');
     }
 
     return generalMarkdown;
