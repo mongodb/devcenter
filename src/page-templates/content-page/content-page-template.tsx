@@ -1,6 +1,8 @@
 // libraries
 import axios from 'axios';
 import Image from 'next/image';
+import Head from 'next/head';
+
 import { NextPage } from 'next';
 import { Fragment, useEffect, useState, useMemo } from 'react';
 import { NextSeo } from 'next-seo';
@@ -629,6 +631,12 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
 
     return (
         <>
+            <Head>
+                <meta
+                    name="author"
+                    content={authors.map(({ name }) => name).join(', ')}
+                />
+            </Head>
             <NextSeo
                 title={`${title} | MongoDB`}
                 twitter={{
