@@ -4,6 +4,8 @@ import { AuthorsConnection } from './article';
 import { ImageConnection } from './image';
 import { CS_ArticleOtherTags } from './article';
 import { Connection } from './connection';
+import { CS_PreviewOtherTags } from './other-tags';
+import { CS_PreviewAuthorResponse } from './author';
 
 export type EventSetup = 'InPerson' | 'Virtual' | 'Hybrid' | 'Unknown';
 
@@ -98,7 +100,7 @@ export interface CS_IndustryEventRelatedContent {
 }
 
 export interface CS_IndustryEventsResponse {
-    type: string;
+    type: EventSetup;
     authorsConnection: AuthorsConnection;
     address: Address;
     content: string;
@@ -114,4 +116,25 @@ export interface CS_IndustryEventsResponse {
     virtual_meetup_url: string;
     virtual_meetup_url_text: string;
     related_content: CS_IndustryEventRelatedContent;
+}
+
+export interface CS_PreviewIndustryEventsResponse {
+    type: EventSetup;
+    authors: CS_PreviewAuthorResponse[];
+    address: Address;
+    content: string;
+    title: string;
+    image: {
+        url: string;
+        description: string;
+    };
+    other_tags: CS_PreviewOtherTags;
+    calculated_slug: string;
+    description: string;
+    end_time: string;
+    slug: string;
+    start_time: string;
+    registration_url: string;
+    virtual_meetup_url: string;
+    virtual_meetup_url_text: string;
 }

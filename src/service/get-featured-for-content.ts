@@ -1,3 +1,4 @@
+import { FEATURED_CONTENT_MAX_COUNT } from '../data/constants';
 import { ContentItem } from '../interfaces/content-item';
 import { getFeaturedForTopic } from './get-featured-for-topic';
 
@@ -7,14 +8,17 @@ export const getFeaturedForContent = async (
     fromStatic?: boolean
 ) => {
     const allFeatured = await getFeaturedForTopic(topicSlug, fromStatic);
-    const flattenedAllFeatured = Object.values(allFeatured).flat();
-    let featured = content
-        .filter(item =>
-            flattenedAllFeatured.find(title => title === item.title)
-        )
-        .slice(0, 3);
+    const flattenedAllFeatured: string[] = Object.values(allFeatured).flat();
+    let featured: ContentItem[] = [];
 
-    if (featured.length < 3) {
+    // forEach() instead of map() to avoid adding undefined into featured
+    flattenedAllFeatured.forEach(title => {
+        if (featured.length === FEATURED_CONTENT_MAX_COUNT) return;
+        const foundContent = content.find(c => c.title === title);
+        if (foundContent) featured.push(foundContent);
+    });
+
+    if (featured.length < FEATURED_CONTENT_MAX_COUNT) {
         const extraFeatured = content
             .filter(item => !featured.find(({ slug }) => slug === item.slug))
             .sort((a, b) => {
@@ -26,7 +30,7 @@ export const getFeaturedForContent = async (
                     : b.contentDate;
                 return contentDate1.localeCompare(contentDate2);
             })
-            .slice(0, 3 - featured.length);
+            .slice(0, FEATURED_CONTENT_MAX_COUNT - featured.length);
         featured = featured.concat(extraFeatured);
     }
 

@@ -153,6 +153,15 @@ const articleFields = gql`
             og_type
             og_url
             twitter_creator
+            twitter_card
+            twitter_description
+            twitter_imageConnection {
+                edges {
+                    node {
+                        url
+                    }
+                }
+            }
         }
         system {
             updated_at

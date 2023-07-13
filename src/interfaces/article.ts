@@ -3,13 +3,13 @@ import {
     ContentTypeConnection,
     CS_OtherTags,
 } from './other-tags';
-import { Author, CS_AuthorResponse } from './author';
+import { Author, CS_AuthorResponse, CS_PreviewAuthorResponse } from './author';
 import { SEO } from './seo';
 import { ImageConnection } from './image';
 import { Connection } from './connection';
 import { CodeLevel } from '../types/tag-type';
 
-import { OtherTags } from './other-tags';
+import { OtherTags, CS_PreviewOtherTags } from './other-tags';
 
 // STRAPI
 
@@ -74,4 +74,35 @@ export interface CS_ArticleResponse {
     seo: SEO;
     authorsConnection: AuthorsConnection;
     system: { updated_at: string; publish_details: { time: string } };
+}
+
+// PREVIEW
+
+export interface CS_PreviewPrimaryTag {
+    title: string;
+    calculated_slug: string;
+    _content_type_uid: 'l1_products' | 'technologies';
+}
+
+export interface CS_PreviewArticleResponse {
+    calculated_slug: string;
+    content: string;
+    description: string;
+    image: {
+        url: string;
+        description: string;
+    };
+    slug: string;
+    title: string;
+    original_publish_date: string;
+    expiry_date: string | null;
+    primary_tag: {
+        tag: CS_PreviewPrimaryTag[];
+    };
+    other_tags: CS_PreviewOtherTags;
+    strapi_updated_at: string;
+    seo: SEO;
+    authors: CS_PreviewAuthorResponse[];
+    updated_at: string;
+    publish_details: { time: string }[];
 }

@@ -3,7 +3,7 @@ import { Connection } from './connection';
 export interface Image {
     alt?: string;
     url: string;
-    city?: string;
+    city?: string | null;
 }
 
 // ContentStack

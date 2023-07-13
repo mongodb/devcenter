@@ -1,4 +1,9 @@
-import { OtherTagConnection, CS_OtherTags } from './other-tags';
+import {
+    OtherTagConnection,
+    CS_OtherTags,
+    CS_PreviewOtherTag,
+    CS_PreviewOtherTags,
+} from './other-tags';
 import { Media, CS_Media } from './media';
 import { CS_SEO } from './seo';
 
@@ -31,4 +36,22 @@ export interface CS_VideoResponse extends CS_Media {
     l2_productConnection: OtherTagConnection;
     programming_languagesConnection: OtherTagConnection;
     technologiesConnection: OtherTagConnection;
+}
+
+// PREVIEW
+export interface CS_PreviewVideoResponse {
+    title: string;
+    description: string;
+    original_publish_date: string;
+    slug: string;
+    thumbnail_url: string;
+    video_id: string;
+    media_type: string;
+    other_tags: CS_PreviewOtherTags;
+    seo: CS_SEO;
+    relevant_links: string;
+    l1_product: CS_PreviewOtherTag[];
+    l2_product: CS_PreviewOtherTag[];
+    programming_languages: CS_PreviewOtherTag[];
+    technologies: CS_PreviewOtherTag[];
 }
