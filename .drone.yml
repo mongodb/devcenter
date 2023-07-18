@@ -1,4 +1,183 @@
 ---
+kind: pipeline
+type: kubernetes
+name: pull-request-checks
+
+trigger:
+  branch:
+    - main
+  event:
+    exclude:
+      - tag
+    include:
+      - pull_request
+steps:
+  - name: install-deps
+    image: node:16.16.0-slim
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates
+    - yarn install --frozen-lockfile
+    resources:
+      limits:
+        memory: 18Gi
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      DEBIAN_FRONTEND: noninteractive
+  - name: check-formatting-and-lint
+    image: node:16.16.0-slim
+    commands:
+    - yarn format:check
+    - yarn lint
+    resources:
+      limits:
+        memory: 18Gi
+  - name: unit-tests
+    image: node:16.16.0-slim
+    commands:
+    - npx jest
+    resources:
+      limits:
+        memory: 18Gi
+  - name: build
+    image: node:16.16.0-slim
+    commands:
+    - yarn build
+    resources:
+      limits:
+        memory: 18Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
+      DEBIAN_FRONTEND: noninteractive
+  - name: lighthouse
+    image: node:16.16.0-slim
+    commands:
+    - yarn global add @lhci/cli@0.8.x
+    - lhci autorun
+    resources:
+      limits:
+        memory: 18Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
+      DEBIAN_FRONTEND: noninteractive
+
+---
+kind: pipeline
+type: kubernetes
+name: playwright-tests
+
+trigger:
+  branch:
+    - main
+  event:
+    exclude:
+      - tag
+    include:
+      - pull_request
+steps:
+  - name: install-deps
+    image: node:16.16.0-slim
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates
+    - yarn install --frozen-lockfile
+    resources:
+      limits:
+        memory: 18Gi
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      DEBIAN_FRONTEND: noninteractive
+  - name: e2e-tests
+    image: node:16.16.0-slim
+    commands:
+    - yarn build:mocked
+    - yarn test:e2e:visual
+    resources:
+      limits:
+        memory: 18Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
+      DEBIAN_FRONTEND: noninteractive
+
+---
 depends_on: null
 kind: pipeline
 type: kubernetes
