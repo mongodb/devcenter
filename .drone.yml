@@ -220,6 +220,10 @@ steps:
         from_secret: NEXT_IMAGE_HOSTS
       MONGODB_TV_API_KEY:
         from_secret: MONGODB_TV_API_KEY
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
       DEBIAN_FRONTEND: noninteractive
 
 ---
