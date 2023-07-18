@@ -171,24 +171,12 @@ trigger:
     include:
       - pull_request
 steps:
-  - name: install-deps
+  - name: e2e-tests
     image: node:16.16.0-slim
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
-    resources:
-      limits:
-        memory: 18Gi
-    environment:
-      NPM_AUTH:
-        from_secret: NPM_AUTH
-      NPM_EMAIL:
-        from_secret: NPM_EMAIL
-      DEBIAN_FRONTEND: noninteractive
-  - name: e2e-tests
-    image: node:16.16.0-slim
-    commands:
     - yarn build:mocked
     - yarn test:e2e:visual
     resources:
@@ -198,6 +186,10 @@ steps:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
       HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
@@ -220,10 +212,6 @@ steps:
         from_secret: NEXT_IMAGE_HOSTS
       MONGODB_TV_API_KEY:
         from_secret: MONGODB_TV_API_KEY
-      NPM_AUTH:
-        from_secret: NPM_AUTH
-      NPM_EMAIL:
-        from_secret: NPM_EMAIL
       DEBIAN_FRONTEND: noninteractive
 
 ---
