@@ -116,6 +116,10 @@ steps:
         from_secret: NEXT_IMAGE_HOSTS
       MONGODB_TV_API_KEY:
         from_secret: MONGODB_TV_API_KEY
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
       DEBIAN_FRONTEND: noninteractive
   - name: lighthouse
     image: node:16.16.0-slim
