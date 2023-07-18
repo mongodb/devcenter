@@ -35,6 +35,12 @@ steps:
     resources:
       limits:
         memory: 18Gi
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      DEBIAN_FRONTEND: noninteractive
   - name: unit-tests
     image: node:16.16.0-slim
     commands:
@@ -42,6 +48,12 @@ steps:
     resources:
       limits:
         memory: 18Gi
+    environment:
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      DEBIAN_FRONTEND: noninteractive
   - name: build
     image: node:16.16.0-slim
     commands:
