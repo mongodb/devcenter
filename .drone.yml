@@ -53,6 +53,10 @@ steps:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
       HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
@@ -88,6 +92,10 @@ steps:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
       HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
