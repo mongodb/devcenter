@@ -19,6 +19,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates curl
     - curl -sL https://deb.nodesource.com/setup_16.x | bash
     - apt-get -y install --no-install-recommends nodejs
+    - npm install --global yarn
     - yarn install --frozen-lockfile
     - yarn build
     resources:
@@ -155,6 +156,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates curl
     - curl -sL https://deb.nodesource.com/setup_16.x | bash
     - apt-get -y install --no-install-recommends nodejs
+    - npm install --global yarn
     - yarn install --frozen-lockfile
     - ./node_modules/.bin/playwright install
     - yarn build:mocked
