@@ -94,6 +94,7 @@ steps:
   - name: lighthouse
     image: node:16.16.0-slim
     commands:
+    - ./node_modules/.bin/playwright install chrome # Easiest way to install Chrome.
     - yarn global add @lhci/cli@0.8.x
     - lhci autorun
     resources:
@@ -151,6 +152,7 @@ steps:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
+    - ./node_modules/.bin/playwright install
     - yarn build:mocked
     - yarn test:e2e:visual
     resources:
@@ -186,6 +188,8 @@ steps:
         from_secret: NEXT_IMAGE_HOSTS
       MONGODB_TV_API_KEY:
         from_secret: MONGODB_TV_API_KEY
+      PERCY_TOKEN:
+        from_secret: PERCY_TOKEN
       DEBIAN_FRONTEND: noninteractive
 
 ---
