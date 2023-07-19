@@ -13,10 +13,12 @@ trigger:
       - pull_request
 steps:
   - name: build
-    image: node:16.16.0-slim
+    image: ubuntu:latest
     commands:
     - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates wget
+    - apt-get -y install --no-install-recommends ca-certificates curl
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash
+    - apt-get -y install --no-install-recommends nodejs
     - yarn install --frozen-lockfile
     - yarn build
     resources:
@@ -54,7 +56,7 @@ steps:
         from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
   - name: unit-tests
-    image: node:16.16.0-slim
+    image: ubuntu:latest
     commands:
     - npx jest
     resources:
@@ -92,11 +94,9 @@ steps:
         from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
   - name: lighthouse
-    image: node:16.16.0-slim
+    image: ubuntu:latest
     commands:
-    - apt-get -y install --no-install-recommends wget
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - apt-get -y install --no-install-recommends ./google-chrome-stable_current_amd64.deb
+    - ./node_modules/.bin/playwright install chrome # Easiest way to install Chrome.
     - yarn global add @lhci/cli@0.8.x
     - lhci autorun
     resources:
@@ -149,13 +149,14 @@ trigger:
       - pull_request
 steps:
   - name: e2e-tests
-    image: node:16.16.0-slim
+    image: ubuntu:latest
     commands:
     - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates wget
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - apt-get -y install --no-install-recommends ./google-chrome-stable_current_amd64.deb
+    - apt-get -y install --no-install-recommends ca-certificates curl
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash
+    - apt-get -y install --no-install-recommends nodejs
     - yarn install --frozen-lockfile
+    - ./node_modules/.bin/playwright install
     - yarn build:mocked
     - yarn test:e2e:visual
     resources:
