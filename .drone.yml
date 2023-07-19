@@ -13,10 +13,10 @@ trigger:
       - pull_request
 steps:
   - name: build
-    image: node:16.16.0-slim
+    image: ubuntu:latest
     commands:
     - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates
+    - apt-get -y install --no-install-recommends ca-certificates nodejs yarn
     - yarn install --frozen-lockfile
     - yarn build
     resources:
@@ -54,7 +54,6 @@ steps:
         from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
   - name: unit-tests
-    image: node:16.16.0-slim
     commands:
     - npx jest
     resources:
@@ -92,7 +91,6 @@ steps:
         from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
   - name: lighthouse
-    image: node:16.16.0-slim
     commands:
     - ./node_modules/.bin/playwright install chrome # Easiest way to install Chrome.
     - yarn global add @lhci/cli@0.8.x
@@ -147,10 +145,10 @@ trigger:
       - pull_request
 steps:
   - name: e2e-tests
-    image: node:16.16.0-slim
+    image: ubuntu:latest
     commands:
     - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates
+    - apt-get -y install --no-install-recommends ca-certificates nodejs yarn
     - yarn install --frozen-lockfile
     - ./node_modules/.bin/playwright install
     - yarn build:mocked
