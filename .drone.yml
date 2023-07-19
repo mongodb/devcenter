@@ -57,9 +57,8 @@ steps:
         from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
   - name: unit-tests
-    image: ubuntu:latest
+    image: ubuntu:focal
     commands:
-    - apt-get -y install --no-install-recommends nodejs
     - npm install --global npx
     - npx jest
     resources:
@@ -97,7 +96,7 @@ steps:
         from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
   - name: lighthouse
-    image: ubuntu:latest
+    image: ubuntu:focal
     commands:
     - ./node_modules/.bin/playwright install chrome # Easiest way to install Chrome.
     - yarn global add @lhci/cli@0.8.x
