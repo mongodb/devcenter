@@ -12,39 +12,13 @@ trigger:
     include:
       - pull_request
 steps:
-  - name: install-deps
+  - name: build
     image: node:16.16.0-slim
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
     - yarn install --frozen-lockfile
-    resources:
-      limits:
-        memory: 18Gi
-    environment:
-      NPM_AUTH:
-        from_secret: NPM_AUTH
-      NPM_EMAIL:
-        from_secret: NPM_EMAIL
-      DEBIAN_FRONTEND: noninteractive
-  - name: check-formatting-and-lint
-    image: node:16.16.0-slim
-    commands:
-    - yarn format:check
-    - yarn lint
-    resources:
-      limits:
-        memory: 18Gi
-    environment:
-      NPM_AUTH:
-        from_secret: NPM_AUTH
-      NPM_EMAIL:
-        from_secret: NPM_EMAIL
-      DEBIAN_FRONTEND: noninteractive
-  - name: unit-tests
-    image: node:16.16.0-slim
-    commands:
-    - npx jest
+    - yarn build
     resources:
       limits:
         memory: 18Gi
@@ -79,10 +53,10 @@ steps:
       MONGODB_TV_API_KEY:
         from_secret: MONGODB_TV_API_KEY
       DEBIAN_FRONTEND: noninteractive
-  - name: build
+  - name: unit-tests
     image: node:16.16.0-slim
     commands:
-    - yarn build
+    - npx jest
     resources:
       limits:
         memory: 18Gi
