@@ -15,6 +15,7 @@ steps:
   - name: build
     image: ubuntu:latest
     commands:
+    - curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates nodejs npm
     - npm install --global yarn
@@ -150,6 +151,7 @@ steps:
   - name: e2e-tests
     image: ubuntu:latest
     commands:
+    - curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates nodejs npm
     - npm install --global yarn
