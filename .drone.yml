@@ -16,7 +16,7 @@ steps:
     image: node:16.16.0-slim
     commands:
     - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates
+    - apt-get -y install --no-install-recommends ca-certificates wget
     - yarn install --frozen-lockfile
     - yarn build
     resources:
@@ -150,9 +150,10 @@ steps:
   - name: e2e-tests
     image: node:16.16.0-slim
     commands:
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates ./google-chrome-stable_current_amd64.deb
+    - apt-get -y install --no-install-recommends ca-certificates wget
+    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt-get -y install --no-install-recommends ./google-chrome-stable_current_amd64.deb
     - yarn install --frozen-lockfile
     - yarn build:mocked
     - yarn test:e2e:visual
