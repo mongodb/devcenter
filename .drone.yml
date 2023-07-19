@@ -13,13 +13,13 @@ trigger:
       - pull_request
 steps:
   - name: build
-    image: ubuntu:latest
+    image: ubuntu:focal
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates curl
     - curl -sL https://deb.nodesource.com/setup_16.x | bash
     - apt-get -y install --no-install-recommends nodejs
-    - npm install --global yarn npx
+    - npm install --global yarn
     - yarn install --frozen-lockfile
     - yarn build
     resources:
@@ -59,6 +59,7 @@ steps:
   - name: unit-tests
     image: ubuntu:latest
     commands:
+    - npm install --global npx
     - npx jest
     resources:
       limits:
@@ -150,7 +151,7 @@ trigger:
       - pull_request
 steps:
   - name: e2e-tests
-    image: ubuntu:latest
+    image: ubuntu:focal
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates curl
