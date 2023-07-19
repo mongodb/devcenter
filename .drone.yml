@@ -59,6 +59,7 @@ steps:
   - name: unit-tests
     image: ubuntu:latest
     commands:
+    - apt-get -y install --no-install-recommends nodejs
     - npm install --global npx
     - npx jest
     resources:
