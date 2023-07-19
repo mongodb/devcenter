@@ -19,7 +19,7 @@ steps:
     - apt-get -y install --no-install-recommends ca-certificates curl
     - curl -sL https://deb.nodesource.com/setup_16.x | bash
     - apt-get -y install --no-install-recommends nodejs
-    - npm install --global yarn
+    - npm install --global yarn npx
     - yarn install --frozen-lockfile
     - yarn build
     resources:
