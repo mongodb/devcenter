@@ -31,7 +31,6 @@ import { MongoDBTVShow } from '../interfaces/mongodb-tv';
 import allTagsPreval from './get-all-tags.preval';
 import { getAllTags } from './get-all-tags';
 import { CS_PreviewOtherTags } from '../interfaces/other-tags';
-import { convertReferencesToInline } from '../utils/markdown-parser/convert-references-to-inline';
 
 export const CS_mapPodcastsToContentItems = (
     allPodcasts: CS_PodcastResponse[],
@@ -180,9 +179,9 @@ const mapImage = (
     }
 };
 
-export const CS_mapIndustryEventToContentItem = async (
+export const CS_mapIndustryEventToContentItem = (
     event: CS_IndustryEventsResponse
-): Promise<ContentItem> => ({
+): ContentItem => ({
     collectionType: 'Event',
     category: 'Event',
     subCategory: 'Industry Event',
@@ -198,14 +197,14 @@ export const CS_mapIndustryEventToContentItem = async (
     country: event.address.country || null,
     eventSetup: event.type,
     authors: event.authorsConnection.edges.map(({ node }) => mapAuthor(node)),
-    content: await convertReferencesToInline(event.content),
+    content: event.content,
     registrationLink: event.registration_url,
     virtualLink: event.virtual_meetup_url,
     virtualLinkText: event.virtual_meetup_url_text,
     relatedContent: [],
 });
 
-export const mapEventsToContentItems = async (
+export const mapEventsToContentItems = (
     allCommunityEvents: CommunityEvent[],
     allIndustryEvents: CS_IndustryEventsResponse[]
 ) => {
@@ -225,17 +224,14 @@ export const mapEventsToContentItems = async (
         })
     ) as ContentItem[];
 
-    const mappedIndustryEvents: ContentItem[] = [];
-
-    for (const event of allIndustryEvents) {
-        const mappedEvent = await CS_mapIndustryEventToContentItem(event);
-        mappedIndustryEvents.push(mappedEvent);
-    }
+    const mappedIndustryEvents = allIndustryEvents.map(
+        CS_mapIndustryEventToContentItem
+    );
 
     return [...mappedCommunityEvents, ...mappedIndustryEvents];
 };
 
-export const CS_mapArticlesToContentItems = async (
+export const CS_mapArticlesToContentItems = (
     allArticles: CS_ArticleResponse[],
     articleSeries: Series[]
 ) => {
@@ -244,7 +240,7 @@ export const CS_mapArticlesToContentItems = async (
     very important - filter out articles that have no calculated slug
      */
     const filteredArticles = allArticles.filter(a => a.calculated_slug);
-    for (const a of filteredArticles) {
+    filteredArticles.forEach((a: CS_ArticleResponse) => {
         const updated_at =
             !a.strapi_updated_at ||
             new Date(a.system.updated_at) > new Date('2023-06-12') // This should be set to the date we migrate from Strapi to ContentStack
@@ -261,7 +257,7 @@ export const CS_mapArticlesToContentItems = async (
                 a.original_publish_date || a.system.publish_details.time,
             updateDate: updated_at,
             description: a.description,
-            content: await convertReferencesToInline(a.content),
+            content: a.content,
             slug: a.calculated_slug.startsWith('/')
                 ? a.calculated_slug.substring(1)
                 : a.calculated_slug,
@@ -284,7 +280,7 @@ export const CS_mapArticlesToContentItems = async (
         }
         addSeriesToItem(item, 'article', articleSeries);
         items.push(item);
-    }
+    });
     return items.filter(
         item =>
             PillCategoryValues.includes(
@@ -295,9 +291,9 @@ export const CS_mapArticlesToContentItems = async (
 
 // PREVIEW
 
-export const CS_previewMapPreviewArticleToContentItem = async (
+export const CS_previewMapPreviewArticleToContentItem = (
     a: CS_PreviewArticleResponse
-): Promise<ContentItem> => {
+): ContentItem => {
     const updated_at =
         !a.strapi_updated_at || new Date(a.updated_at) > new Date('2023-06-12') // This should be set to the date we migrate from Strapi to ContentStack
             ? a.updated_at
@@ -318,7 +314,7 @@ export const CS_previewMapPreviewArticleToContentItem = async (
         contentDate: a.original_publish_date || a.publish_details[0].time,
         updateDate: updated_at,
         description: a.description,
-        content: await convertReferencesToInline(a.content),
+        content: a.content,
         slug: a.calculated_slug.startsWith('/')
             ? a.calculated_slug.substring(1)
             : a.calculated_slug,
@@ -347,9 +343,9 @@ export const CS_previewMapPreviewArticleToContentItem = async (
     return contentItem;
 };
 
-export const CS_previewMapIndustryEventToContentItem = async (
+export const CS_previewMapIndustryEventToContentItem = (
     event: CS_PreviewIndustryEventsResponse
-): Promise<ContentItem> => {
+): ContentItem => {
     const authors = event.authors.map(
         ({ title, image, job_title, ...rest }) => ({
             name: title,
@@ -384,7 +380,7 @@ export const CS_previewMapIndustryEventToContentItem = async (
         country: event.address.country || null,
         eventSetup: event.type,
         authors,
-        content: await convertReferencesToInline(event.content),
+        content: event.content,
         registrationLink: event.registration_url,
         virtualLink: event.virtual_meetup_url,
         virtualLinkText: event.virtual_meetup_url_text,

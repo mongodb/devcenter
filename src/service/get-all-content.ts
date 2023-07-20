@@ -42,11 +42,11 @@ export const getAllContentItems: () => Promise<ContentItem[]> = async () => {
     );
     mappedVideos = [...mappedVideos, ...mappedMongodbTVShows];
 
-    const mappedArticles = await CS_mapArticlesToContentItems(
+    const mappedArticles = CS_mapArticlesToContentItems(
         allArticles,
         articleSeries
     );
-    const mappedEvents = await mapEventsToContentItems(
+    const mappedEvents = mapEventsToContentItems(
         allCommunityEvents,
         allIndustryEvents
     );
