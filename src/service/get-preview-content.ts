@@ -11,7 +11,7 @@ export const getPreviewContentForArticles: (
 ) => Promise<ContentItem | null> = async calculatedSlug => {
     const content = await CS_getDraftArticleBySlugFromCMS(calculatedSlug);
     if (!content) return null;
-    const mappedArticles = await CS_mapArticlesToContentItems([content], []);
+    const mappedArticles = CS_mapArticlesToContentItems([content], []);
     return mappedArticles[0];
 };
 
@@ -22,6 +22,6 @@ export const getPreviewContentForEvents: (
         calculatedSlug
     );
     return content_stack_event
-        ? await CS_mapIndustryEventToContentItem(content_stack_event)
+        ? CS_mapIndustryEventToContentItem(content_stack_event)
         : null;
 };

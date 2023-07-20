@@ -67,7 +67,7 @@ export const getContentItemFromSlug: (
     if (!content) return null;
 
     if (contentType === 'Article') {
-        const mappedArticles = await CS_mapArticlesToContentItems(
+        const mappedArticles = CS_mapArticlesToContentItems(
             [content as CS_ArticleResponse],
             allArticleSeries
         );

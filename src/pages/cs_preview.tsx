@@ -142,11 +142,11 @@ export const getServerSideProps = async (context: any) => {
         let contentItem: ContentItem;
 
         if (content_type_uid === 'articles') {
-            contentItem = await CS_previewMapPreviewArticleToContentItem(
+            contentItem = CS_previewMapPreviewArticleToContentItem(
                 entry as CS_PreviewArticleResponse
             );
         } else if (content_type_uid === 'industry_events') {
-            contentItem = await CS_previewMapIndustryEventToContentItem(
+            contentItem = CS_previewMapIndustryEventToContentItem(
                 entry as CS_PreviewIndustryEventsResponse
             );
         } else {
