@@ -101,6 +101,7 @@ steps:
   - name: lighthouse
     image: ubuntu:focal
     commands:
+    - yarn install --frozen-lockfile
     - ./node_modules/.bin/playwright install chrome # Easiest way to install Chrome.
     - yarn global add @lhci/cli@0.8.x
     - lhci autorun
