@@ -107,7 +107,7 @@ steps:
     - apt-get -y install --no-install-recommends nodejs
     - npm install --global yarn
     - yarn install --frozen-lockfile
-    - ./node_modules/.bin/playwright install chrome # Easiest way to install Chrome.
+    - ./node_modules/.bin/playwright install # Easiest way to install Chrome.
     - yarn global add @lhci/cli@0.8.x
     - lhci autorun
     resources:
