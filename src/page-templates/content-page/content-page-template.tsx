@@ -101,6 +101,8 @@ export const Seo = ({
         category,
         contentDate,
         updateDate,
+        description,
+        image,
         authors = [],
     },
     isPathFactory,
@@ -134,10 +136,10 @@ export const Seo = ({
                     url: seo?.og_url,
                     title: seo?.og_title,
                     type: ogType,
-                    description: seo?.og_description,
+                    description: seo?.og_description ?? description,
                     images: seo?.og_image?.url
                         ? [{ url: seo?.og_image?.url }]
-                        : [],
+                        : [{ url: image?.url ?? '' }],
                     article: {
                         publishedTime: Array.isArray(contentDate)
                             ? undefined
@@ -152,6 +154,7 @@ export const Seo = ({
                 }}
                 description={
                     seo?.meta_description ||
+                    description ||
                     publicRuntimeConfig.pageDescriptions['/']
                 }
                 canonical={
@@ -714,6 +717,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                         contentDate,
                         updateDate,
                         authors,
+                        image,
+                        description,
                     } as ContentItem
                 }
                 isPathFactory={isPathFactory}
