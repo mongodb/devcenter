@@ -164,6 +164,7 @@ steps:
   - name: e2e-tests
     image: ubuntu:latest
     commands:
+    - echo "deb http://ftp.us.debian.org/debian buster main non-free" >> /etc/apt/sources.list.d/fonts.list
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates curl
     - curl -sL https://deb.nodesource.com/setup_16.x | bash
