@@ -86,6 +86,90 @@ interface ContentPageProps {
 const parseUndefinedValue = (description: string | undefined): string =>
     description ?? '';
 
+export interface SEOprops {
+    contentItem: ContentItem;
+    isPathFactory: boolean | undefined;
+    publicRuntimeConfig: any;
+    asPath: string;
+}
+
+// this code is factored out for testing purposes
+export const Seo = ({
+    contentItem: {
+        title,
+        seo,
+        category,
+        contentDate,
+        updateDate,
+        description,
+        image,
+        authors = [],
+    },
+    isPathFactory,
+    publicRuntimeConfig,
+    asPath,
+}: SEOprops) => {
+    const ogType =
+        seo?.og_type ||
+        ['Article', 'Code Example', 'Quickstart', 'Tutorial'].includes(category)
+            ? 'article'
+            : category === 'Video'
+            ? 'video:other'
+            : undefined;
+
+    return (
+        <>
+            <Head>
+                <meta
+                    name="author"
+                    content={authors.map(({ name }) => name).join(', ')}
+                />
+            </Head>
+            <NextSeo
+                title={`${title} | MongoDB`}
+                twitter={{
+                    site: seo?.twitter_site,
+                    handle: seo?.twitter_creator,
+                    cardType: seo?.twitter_card,
+                }}
+                openGraph={{
+                    url: seo?.og_url,
+                    title: seo?.og_title,
+                    type: ogType,
+                    description: seo?.og_description ?? description,
+                    images: seo?.og_image?.url
+                        ? [{ url: seo?.og_image?.url }]
+                        : [{ url: image?.url ?? '' }],
+                    article: {
+                        publishedTime: Array.isArray(contentDate)
+                            ? undefined
+                            : contentDate,
+                        modifiedTime: updateDate,
+                        authors: authors.map(
+                            ({ calculated_slug }) =>
+                                publicRuntimeConfig.absoluteBasePath +
+                                calculated_slug
+                        ),
+                    },
+                }}
+                description={
+                    seo?.meta_description ||
+                    description ||
+                    publicRuntimeConfig.pageDescriptions['/']
+                }
+                canonical={
+                    seo?.canonical_url ||
+                    getCanonicalUrl(
+                        publicRuntimeConfig.absoluteBasePath,
+                        asPath
+                    )
+                }
+                noindex={isPathFactory}
+            />
+        </>
+    );
+};
+
 const ContentPageTemplate: NextPage<ContentPageProps> = ({
     crumbs,
     topic,
@@ -621,62 +705,26 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             </>
         );
     };
-    const ogType =
-        seo?.og_type ||
-        ['Article', 'Code Example', 'Quickstart', 'Tutorial'].includes(category)
-            ? 'article'
-            : category === 'Video'
-            ? 'video:other'
-            : undefined;
 
     return (
         <>
-            <Head>
-                <meta
-                    name="author"
-                    content={authors.map(({ name }) => name).join(', ')}
-                />
-            </Head>
-            <NextSeo
-                title={`${title} | MongoDB`}
-                twitter={{
-                    site: seo?.twitter_site,
-                    handle: seo?.twitter_creator,
-                    cardType: seo?.twitter_card,
-                }}
-                openGraph={{
-                    url: seo?.og_url,
-                    title: seo?.og_title,
-                    type: ogType,
-                    description: seo?.og_description,
-                    images: seo?.og_image?.url
-                        ? [{ url: seo?.og_image?.url }]
-                        : [],
-                    article: {
-                        publishedTime: Array.isArray(contentDate)
-                            ? undefined
-                            : contentDate,
-                        modifiedTime: updateDate,
-                        authors: authors.map(
-                            ({ calculated_slug }) =>
-                                publicRuntimeConfig.absoluteBasePath +
-                                calculated_slug
-                        ),
-                    },
-                }}
-                description={
-                    seo?.meta_description ||
-                    publicRuntimeConfig.pageDescriptions['/']
+            <Seo
+                contentItem={
+                    {
+                        title,
+                        seo,
+                        category,
+                        contentDate,
+                        updateDate,
+                        authors,
+                        image,
+                        description,
+                    } as ContentItem
                 }
-                canonical={
-                    seo?.canonical_url ||
-                    getCanonicalUrl(
-                        publicRuntimeConfig.absoluteBasePath,
-                        asPath
-                    )
-                }
-                noindex={isPathFactory}
-            />
+                isPathFactory={isPathFactory}
+                publicRuntimeConfig={publicRuntimeConfig}
+                asPath={asPath}
+            ></Seo>
             <div sx={styles.wrapper}>
                 <GridLayout sx={{ rowGap: 0 }}>
                     {!isPathFactory && (
