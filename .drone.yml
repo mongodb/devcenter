@@ -162,9 +162,15 @@ trigger:
       - pull_request
 steps:
   - name: e2e-tests
-    image: mcr.microsoft.com/playwright:v1.30.0-focal
+    image: ubuntu:focal
     commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates curl
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash -
+    - apt-get -y install --no-install-recommends nodejs
+    - npm install --global yarn
     - yarn install --frozen-lockfile
+    - ./node_modules/.bin/playwright install
     - yarn build:mocked
     - yarn test:e2e:visual
     resources:
