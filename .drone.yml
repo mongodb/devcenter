@@ -161,7 +161,7 @@ trigger:
     include:
       - pull_request
 steps:
-  - name: e2e-tests
+  - name: e2e-test
     image: ubuntu:focal
     commands:
     - apt-get -y update
