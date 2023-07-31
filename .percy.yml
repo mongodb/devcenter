@@ -8,7 +8,7 @@ snapshot:
 discovery:
     allowedHostnames: []
     disallowedHostnames: []
-    networkIdleTimeout: 500
+    networkIdleTimeout: 5000
 
 upload:
     files: '**/*.{png,jpg,jpeg}'
