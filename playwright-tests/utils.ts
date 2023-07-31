@@ -29,6 +29,7 @@ export const runPercy =
                 await delay(10);
             }
         });
+        console.log('PERCY RUNNING');
 
         await page.evaluate(removeSrcsets);
         await percySnapshot(page, pageName);
