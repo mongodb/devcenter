@@ -8,7 +8,6 @@ import {
     getPreviewContentForArticles,
     getPreviewContentForEvents,
 } from '../../service/get-preview-content';
-import { convertReferences } from '../../utils/markdown-parser/convert-references';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -60,8 +59,6 @@ export const getServerSideProps = async (context: any) => {
     // because we do not want to expose /preview to the public
     const inProduction = process.env.APP_ENV === 'production';
     if (!contentItem || inProduction) return { notFound: true };
-
-    contentItem.content = await convertReferences(contentItem.content || '');
 
     const result = {
         crumbs: [],
