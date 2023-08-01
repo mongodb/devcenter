@@ -320,6 +320,7 @@ resources:
 steps:
   - name: build-production
     image: node:16.16.0-slim
+    pull: always
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
