@@ -333,9 +333,9 @@ steps:
       APP_ENV: production
       HOST_URL: www.mongodb.com
       NPM_AUTH:
-        from_secret: NPM_AUTH_NEW
+        from_secret: NPM_AUTH
       NPM_EMAIL:
-        from_secret: NPM_EMAIL_NEW
+        from_secret: NPM_EMAIL
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
