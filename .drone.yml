@@ -172,7 +172,7 @@ steps:
     - yarn install --frozen-lockfile
     - ./node_modules/.bin/playwright install
     - yarn build:mocked
-    - yarn test:e2e
+    - yarn test:e2e:visual
     resources:
       limits:
         memory: 18Gi
