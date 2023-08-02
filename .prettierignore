@@ -13,3 +13,4 @@ coverage/
 sentry.properties
 mocks/data/
 public/
+.npmrc
