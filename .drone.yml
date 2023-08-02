@@ -324,7 +324,7 @@ steps:
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
-    - echo -n Welcome
+    - echo -n $NPM_AUTH
     - yarn install --frozen-lockfile
     - yarn build
     resources:
