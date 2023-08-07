@@ -165,7 +165,7 @@ steps:
     image: ubuntu:focal
     commands:
     - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates curl
+    - apt-get -y install --no-install-recommends ca-certificates curl libappindicator1 fonts-liberation
     - curl -sL https://deb.nodesource.com/setup_16.x | bash -
     - apt-get -y install --no-install-recommends nodejs
     - npm install --global yarn
