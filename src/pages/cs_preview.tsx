@@ -25,7 +25,6 @@ import { TertiaryNavItem } from '../components/tertiary-nav/types';
 import ContentPageTemplate from '../page-templates/content-page/content-page-template';
 import { CS_PreviewIndustryEventsResponse } from '../interfaces/event';
 import { CS_PreviewVideoResponse } from '../interfaces/video';
-import { convertReferences } from '../utils/markdown-parser/convert-references';
 
 // Assumes that other category always carries a primary tag
 const categoryWithoutPrimaryTagToURL = (category: PillCategory) => {
@@ -229,10 +228,6 @@ export const getServerSideProps = async (context: any) => {
             type: metaInfoForTopic?.category as TagType,
             slug: topicSlug,
         };
-
-        contentItem.content = await convertReferences(
-            contentItem.content || ''
-        );
 
         return {
             props: {

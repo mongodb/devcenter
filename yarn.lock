@@ -957,7 +957,7 @@
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.0", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.7", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.0", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.7", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.22.6"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@babel/runtime/-/runtime-7.22.6.tgz#57d64b9ae3cff1d67eb067ae117dac087f5bd438"
   integrity sha512-wDb5pWm4WDdF6LFUde3Jl8WzPA+3ZbxYqkC6xAXuD3irdEHN1k0NfTRrJD8ZD378SJ61miMLCqIOXYhd8x+AJQ==
@@ -1648,7 +1648,7 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@leafygreen-ui/a11y@^1.3.3":
+"@leafygreen-ui/a11y@^1.4.2":
   version "1.4.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/a11y/-/a11y-1.4.4.tgz#99d936f832b1acf97df3108f5a4cdb0c51d37e7e"
   integrity sha512-QjXputn8XPagHPCibjfGcImQSUMgZijm9Da1VfIjZhxc47dSGD9cb7ncu9UIpu1w/Sz+2fjQ6oDbp+5K9MUO2w==
@@ -1657,34 +1657,35 @@
     "@leafygreen-ui/hooks" "^7.7.3"
     "@leafygreen-ui/lib" "^10.3.2"
 
-"@leafygreen-ui/badge@^6.1.1":
-  version "6.1.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/badge/-/badge-6.1.2.tgz#4a08ee47784770a2b0a447e9a7026b839b3035e8"
-  integrity sha512-TNewojOMiHrSkxLc9vGIwxxBLBwOvprY0EkjySvO8aTZWSbo5PFGKpajy8nsNC9TGO6cWgr7FIzHLzfKVSPgmw==
+"@leafygreen-ui/badge@^8.0.8":
+  version "8.0.8"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/badge/-/badge-8.0.8.tgz#196eb59a33bcbc84df51413716ceac58fa38f0a4"
+  integrity sha512-npD8XAbIKZV2XUIXSE6u69sv9Ff50i37n+EDjvzhCxQPHQtAG3kAVuXy1jrq7Fuk1dVYvaFAuwUfP4hMQfv4Kw==
   dependencies:
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/tokens" "^1.3.4"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/palette" "^4.0.3"
+    "@leafygreen-ui/tokens" "^2.1.1"
 
-"@leafygreen-ui/box@^3.1.1":
+"@leafygreen-ui/box@^3.1.4":
   version "3.1.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/box/-/box-3.1.4.tgz#6ff56c8c205f83018373c9c0fe8f49681097dc0a"
   integrity sha512-cdEXGEafHuaH4zGx3NTX1bMOQ52EpoWA595BC1hh4/8BmXL+H4NFMGywuhZnvYjC4lyVGauX6sCspxrunbmfMQ==
 
-"@leafygreen-ui/button@^16.1.1":
-  version "16.1.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/button/-/button-16.1.1.tgz#77ddac49d2daeaf3577fb8341543a61636ace68c"
-  integrity sha512-Co46MQYwH45oC3yvrrMjiLotC+unLDdqcIAeITYeX4sChagyyTjEjm9l4SrLGahFdv77Y6ndfxvCzO/gNp55xA==
+"@leafygreen-ui/button@^20.0.0":
+  version "20.3.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/button/-/button-20.3.1.tgz#f0c84163cadf9d6944ccbec250fd94e524209b88"
+  integrity sha512-uyy4o6WhRmwaDBt45qOUs/EC4QB4J36T7Hb7sidGQyetx8BU0VPigR4cnSAes0Ye95KyG5y7y/PgX2+Ab45K1g==
   dependencies:
-    "@leafygreen-ui/box" "^3.1.1"
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/ripple" "^1.1.5"
-    "@leafygreen-ui/tokens" "^1.3.4"
+    "@leafygreen-ui/box" "^3.1.4"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/palette" "^4.0.4"
+    "@leafygreen-ui/ripple" "^1.1.9"
+    "@leafygreen-ui/tokens" "^2.1.1"
+    polished "^4.2.2"
 
-"@leafygreen-ui/emotion@^4.0.3", "@leafygreen-ui/emotion@^4.0.4":
+"@leafygreen-ui/emotion@^4.0.4":
   version "4.0.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/emotion/-/emotion-4.0.4.tgz#8ed1a7cda533daf55866ee56a232a7e5b45c9838"
   integrity sha512-ICiAaGqCX73Zmg02afBe4CRqKXwcS/XPOnSZZWk7XAy+qwhHQjp2cO2pVSjQQbTkJcNpqbuzWErsj5Vy98+sxA==
@@ -1692,29 +1693,30 @@
     "@emotion/css" "^11.1.3"
     "@emotion/server" "^11.4.0"
 
-"@leafygreen-ui/hooks@^7.3.3", "@leafygreen-ui/hooks@^7.7.3", "@leafygreen-ui/hooks@^7.7.5":
+"@leafygreen-ui/hooks@^7.3.3", "@leafygreen-ui/hooks@^7.7.0", "@leafygreen-ui/hooks@^7.7.1", "@leafygreen-ui/hooks@^7.7.3", "@leafygreen-ui/hooks@^7.7.5":
   version "7.7.5"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/hooks/-/hooks-7.7.5.tgz#3696380327fefc1e73152711bf32967d6974c44b"
   integrity sha512-Spk36yndhplGfCdLl14RWuoDPGYfEgA6AwqbaI4T45i+A2QtDTvdSFyMUkNmDK5vzk5cWmR/SmkRS/o5T9zgMA==
   dependencies:
     lodash "^4.17.21"
 
-"@leafygreen-ui/icon-button@^13.2.1":
-  version "13.2.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/icon-button/-/icon-button-13.2.1.tgz#810fa9dd452222c05a917e6e64d7c037103ac369"
-  integrity sha512-b65YPrKLOPBVdSffzGnSPufD+BYQRNYFP7LDAvQ106qk2FMuakfCni+Hz3Ls9Ap1K/B96IMM/lLWt4EO0OSy5A==
+"@leafygreen-ui/icon-button@^15.0.0", "@leafygreen-ui/icon-button@^15.0.10":
+  version "15.0.13"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/icon-button/-/icon-button-15.0.13.tgz#ec31ed75f3bccb5edade056f66b268a464adcd23"
+  integrity sha512-1P0BoVGnFzxLZ10g8+JhJvJ2ZNKfAk9NvKsXQHOkGpQTcNXI5mPcree8ZizwiOzBZuIDZtRZ5Gc9MdJmTwcdcg==
   dependencies:
-    "@leafygreen-ui/a11y" "^1.3.3"
-    "@leafygreen-ui/box" "^3.1.1"
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/tokens" "^1.3.4"
+    "@leafygreen-ui/a11y" "^1.4.2"
+    "@leafygreen-ui/box" "^3.1.4"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/icon" "^11.17.0"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/palette" "^4.0.4"
+    "@leafygreen-ui/tokens" "^2.1.1"
 
-"@leafygreen-ui/icon@^11.11.1":
-  version "11.19.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/icon/-/icon-11.19.0.tgz#2287541698ea4eaa56d7e66b3090da2722f9bbe0"
-  integrity sha512-TznV6+af/NLjyjEbuBk1oZFr+WjBw7Cz2gX560ehF5olG3lP4IM0087Q//3Pf+ZhmI5bR90JTCZaS0M7R1fpxg==
+"@leafygreen-ui/icon@^11.13.1", "@leafygreen-ui/icon@^11.17.0", "@leafygreen-ui/icon@^11.18.0":
+  version "11.20.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/icon/-/icon-11.20.0.tgz#8c12d2ca18f0dadc4c0ceb701ad362010085d254"
+  integrity sha512-JwSvJf3z08yC3UUZMm6Jk0ViXx6rm4HiYQK6gnlG8oMy2nxWfH+rv4ztNis0lrjgeQEJpzUmVF6X6BquX03+nA==
   dependencies:
     "@leafygreen-ui/emotion" "^4.0.4"
     lodash "^4.17.21"
@@ -1727,7 +1729,7 @@
     "@leafygreen-ui/hooks" "^7.3.3"
     "@leafygreen-ui/lib" "^10.0.0"
 
-"@leafygreen-ui/lib@^10.0.0", "@leafygreen-ui/lib@^10.3.2", "@leafygreen-ui/lib@^10.4.0":
+"@leafygreen-ui/lib@^10.0.0", "@leafygreen-ui/lib@^10.3.2", "@leafygreen-ui/lib@^10.3.3", "@leafygreen-ui/lib@^10.4.0":
   version "10.4.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/lib/-/lib-10.4.0.tgz#3c3fc669fce318e977d55c8b3cc8830da9d44c5a"
   integrity sha512-gGZBJ0Mjo2/hHfECbERGJbx1nPFNDqkge7L1K5y5LwBjpiOYjUNa1OsyBRwc9pr+zucdAF2FHSo+EdoT83Mbtg==
@@ -1736,80 +1738,55 @@
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
-"@leafygreen-ui/lib@^9.5.1", "@leafygreen-ui/lib@^9.5.2":
-  version "9.5.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/lib/-/lib-9.5.2.tgz#c80d7920e819c89ee544866b1046667fe99ea8d3"
-  integrity sha512-soC5ZSnhqoqbFv9b2kAe+1s7nUnAcdcBzrI0yIJZymExCJsZnmI3VWjLTUbViuTrsO1GfnmLDdsUeDr3ezTOOg==
+"@leafygreen-ui/logo@^8.0.0":
+  version "8.0.4"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/logo/-/logo-8.0.4.tgz#8e90fb45a97203954f888b7505e6f8cd31acd97d"
+  integrity sha512-kztKqlFvHXXw8ZhuWcvGvt/jSHmBAXpamiNAyl9Fe58QrL8ewTOnnJU1ZH4AtFbKjtSaaPfQVAf4l2TUtNC5HA==
   dependencies:
-    lodash "^4.17.21"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/palette" "^4.0.3"
 
-"@leafygreen-ui/logo@^6.3.0":
-  version "6.3.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/logo/-/logo-6.3.0.tgz#8860ccb81a52f3d9f2244bc8ee7a83663da300b4"
-  integrity sha512-hxAevbD/wfOjobRp7rVhqPyV/oFRUgwLuUdPn+JG1cBT/ALIeqz7fRz4jE6SyNc3ZXSWvphw/zHaKQSExVcXQQ==
-
-"@leafygreen-ui/menu@^16.1.1":
-  version "16.1.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/menu/-/menu-16.1.1.tgz#2d9d231cae9b43c4d3a96fed305b929afdff2480"
-  integrity sha512-tKnatNSC5IbVXnki7zfGjroUBjEe34Mf8PXCS4UF195kGiodyq+nE0d9C7mYBWk+VoB7l12NUFO81e3ORTM14A==
+"@leafygreen-ui/menu@^20.0.0":
+  version "20.0.3"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/menu/-/menu-20.0.3.tgz#36a413a99a66fd3b88c167a52460be1a6f6d9305"
+  integrity sha512-PvKKE1RUlYKk+cwDP0TTLd+Xr66ucSbBTWyyQ2ZjDc8m8BJAI/1eRGzCQ+2n7KPye6M3cVtEHat6VbpuCpGWZg==
   dependencies:
-    "@leafygreen-ui/box" "^3.1.1"
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/hooks" "^7.3.3"
-    "@leafygreen-ui/icon" "^11.11.1"
-    "@leafygreen-ui/icon-button" "^13.2.1"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/popover" "^9.1.1"
-    "@leafygreen-ui/tokens" "^1.3.4"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/hooks" "^7.7.1"
+    "@leafygreen-ui/icon" "^11.13.1"
+    "@leafygreen-ui/icon-button" "^15.0.10"
+    "@leafygreen-ui/lib" "^10.3.3"
+    "@leafygreen-ui/palette" "^4.0.4"
+    "@leafygreen-ui/polymorphic" "^1.3.1"
+    "@leafygreen-ui/popover" "^11.0.8"
+    "@leafygreen-ui/tokens" "^2.0.3"
     lodash "^4.17.21"
     react-transition-group "^4.4.1"
 
-"@leafygreen-ui/mongo-nav@10.0.1":
-  version "10.0.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/mongo-nav/-/mongo-nav-10.0.1.tgz#2c50dc5ec00259f8b731909b9a2a5caa8c3522c5"
-  integrity sha512-Qn1esEv9QhsumJLVnxUDuA0qcrFKg+hJwDhBYamcTh5xFdsJmQxrnno9BKgy6QhsqMTx74ZNMHEC9dcQ019hEA==
-  dependencies:
-    "@leafygreen-ui/a11y" "^1.3.3"
-    "@leafygreen-ui/badge" "^6.1.1"
-    "@leafygreen-ui/button" "^16.1.1"
-    "@leafygreen-ui/hooks" "^7.3.3"
-    "@leafygreen-ui/icon" "^11.11.1"
-    "@leafygreen-ui/icon-button" "^13.2.1"
-    "@leafygreen-ui/lib" "^9.5.2"
-    "@leafygreen-ui/logo" "^6.3.0"
-    "@leafygreen-ui/menu" "^16.1.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/tabs" "^9.2.1"
-    "@leafygreen-ui/text-input" "^10.2.1"
-    "@leafygreen-ui/tokens" "^1.3.4"
-    "@leafygreen-ui/tooltip" "^7.1.3"
-    "@leafygreen-ui/typography" "^13.2.1"
-    facepaint "^1.2.1"
-    lodash "^4.17.21"
-
-"@leafygreen-ui/palette@^3.4.4", "@leafygreen-ui/palette@^3.4.5":
-  version "3.4.7"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/palette/-/palette-3.4.7.tgz#7c4a619ca0cb7a9785326dcb67e012369b3d92d6"
-  integrity sha512-AsvPlbvF7CERiZbAQR8hy3lAJ2/rieXI3cO0jsOwV8ztDqYNotKAdLujyr/NviudrRUenYiXrLizIKVlSPUMuA==
-
-"@leafygreen-ui/palette@^4.0.4":
+"@leafygreen-ui/palette@^4.0.3", "@leafygreen-ui/palette@^4.0.4":
   version "4.0.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/palette/-/palette-4.0.4.tgz#c4c326d47e6f459f795e928327b1c5d77adf6ba7"
   integrity sha512-nuZy2RtKHAGpIKrDduqC8P8PvajJRT1hQURoisYMiB32NmEEHGEhtHw4MlS+Kv92HFA0jxgMdZUHKTXq83BhjA==
 
-"@leafygreen-ui/popover@^9.1.1":
-  version "9.1.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/popover/-/popover-9.1.1.tgz#62731a9c067bf00501d0f32962a9d3aeae72649c"
-  integrity sha512-ENoy0jWn0z3T6nwtWVO/98yFpAx2Tg95S8njFP1TNGsprhqWH/ZBjXo7HucZbGojwI4gNaZ+2y8FF0yImEhPwg==
+"@leafygreen-ui/polymorphic@^1.3.1", "@leafygreen-ui/polymorphic@^1.3.2":
+  version "1.3.2"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/polymorphic/-/polymorphic-1.3.2.tgz#7f1752b41679c7afb0818936fa429ce2742e01e7"
+  integrity sha512-av3FtFGf86c9ccIrgEArBhum0M+IklpBvnONsW70mMtEXKnJsGwGwY+HkuSAxbUpjGFIkIPbn5bIp1rHwAIOHA==
+
+"@leafygreen-ui/popover@^11.0.12", "@leafygreen-ui/popover@^11.0.8":
+  version "11.0.12"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/popover/-/popover-11.0.12.tgz#76fe562a1e17ee24481894ffa8de137d92ce2a68"
+  integrity sha512-zF8axGB+RhpoG0xgb4K/p8ydS5JAEXpwqdLrcrY9r7cAYzxX0F4mhIpYg+oyK2K5TIbgGR/fsFPbhKYsmreuMA==
   dependencies:
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/hooks" "^7.3.3"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/portal" "^4.0.6"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/hooks" "^7.7.5"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/portal" "^4.1.4"
+    "@leafygreen-ui/tokens" "^2.1.1"
     react-transition-group "^4.4.1"
 
-"@leafygreen-ui/portal@^4.0.6":
+"@leafygreen-ui/portal@^4.1.4":
   version "4.1.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/portal/-/portal-4.1.4.tgz#31513ce87c8619cdfa514900cac5f4bb882d28e5"
   integrity sha512-gtzQno7yXGmbblHIVBWpJ6+TIFwep/PL4M6vcloCzAaV88+gSMJ9lhrBJbqYQkfd65xeEaycClDsfCpI35p/nA==
@@ -1817,87 +1794,85 @@
     "@leafygreen-ui/hooks" "^7.7.5"
     "@leafygreen-ui/lib" "^10.4.0"
 
-"@leafygreen-ui/ripple@^1.1.5":
+"@leafygreen-ui/ripple@^1.1.9":
   version "1.1.9"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/ripple/-/ripple-1.1.9.tgz#a923bebc2182fc034ce56950302794351490775e"
   integrity sha512-0sAyvOu8Tva9LYgpkMTvcP9XKyrS8i57hUq+QGpT9b3s4UrfHHtDD3TaDGll08GYViIwqQDEzLQLk3H3O3we8Q==
   dependencies:
     "@leafygreen-ui/tokens" "^2.0.2"
 
-"@leafygreen-ui/tabs@^9.2.1":
-  version "9.2.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tabs/-/tabs-9.2.1.tgz#872eca91fb2c403b5fdf7a71866b021c2d673eca"
-  integrity sha512-4mV0YeRW7tJ81q4tOcDhYkBMsEJA5bfgH3K79W/peKaD0r7BrkKdRr8OE3Iqx02ENIlOyRHlPcNivUsswZLR4g==
+"@leafygreen-ui/text-input@^12.1.15":
+  version "12.1.15"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/text-input/-/text-input-12.1.15.tgz#745cecc39dd855278b7e8d075356dcca3e4d4e8a"
+  integrity sha512-G9hRfALWKI/0jfR/wj0Vf8TLH+xrtr/cCTZoPeTfZYXWjKiQ+i1zOAWe+jCxFrg4t0eY6fAAVFfPrH4WAjpQTQ==
   dependencies:
-    "@leafygreen-ui/a11y" "^1.3.3"
-    "@leafygreen-ui/box" "^3.1.1"
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/hooks" "^7.3.3"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/portal" "^4.0.6"
-    "@leafygreen-ui/tokens" "1.3.4"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/hooks" "^7.7.5"
+    "@leafygreen-ui/icon" "^11.18.0"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/palette" "^4.0.4"
+    "@leafygreen-ui/tokens" "^2.1.1"
+    "@leafygreen-ui/typography" "^16.5.1"
 
-"@leafygreen-ui/text-input@^10.2.1":
-  version "10.2.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/text-input/-/text-input-10.2.1.tgz#366a1d182846b0096a4067692538c29a14e8ae10"
-  integrity sha512-eDjFYUdel8AnrQm4SFXqgZ7HM1283qQRtGaoTCM0Uihd/BoG2IKeJBh8z1FSvmsl97R6MUzHstoY/AWlxqTouA==
-  dependencies:
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/hooks" "^7.3.3"
-    "@leafygreen-ui/icon" "^11.11.1"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/tokens" "^1.3.4"
-    "@leafygreen-ui/typography" "^13.2.1"
-
-"@leafygreen-ui/tokens@1.3.4":
-  version "1.3.4"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tokens/-/tokens-1.3.4.tgz#58a8d633f6b978cd23011f3f9c9a6c637089ca6b"
-  integrity sha512-CL+uVHSi79md30XFIZlTWg54wTv9gpNxdjCzysEfzlCVoTPE4xLKukmNbLmY0yv+MurII/NA5m7R9hJ/lVMgeg==
-  dependencies:
-    "@leafygreen-ui/palette" "^3.4.4"
-
-"@leafygreen-ui/tokens@^1.3.4":
-  version "1.4.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tokens/-/tokens-1.4.1.tgz#67e068d5fbc560acd463d78f6c64ddf95598d60f"
-  integrity sha512-ap9IdpQy+wg8IG9rJbWZB9F9zihhixClz68UFcwJMbDqcvxcqRPBvRpkbqiJdAPwOSrbYZfrHSGEtdJk9bzZAg==
-  dependencies:
-    "@leafygreen-ui/palette" "^3.4.5"
-
-"@leafygreen-ui/tokens@^2.0.2":
+"@leafygreen-ui/tokens@^2.0.0", "@leafygreen-ui/tokens@^2.0.2", "@leafygreen-ui/tokens@^2.0.3", "@leafygreen-ui/tokens@^2.1.1":
   version "2.1.1"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tokens/-/tokens-2.1.1.tgz#dd92722646f702605635bc7552528962eb3da41c"
   integrity sha512-5mpyxRhp+8aY6eX6UYacDV6PLl3OieWG061ceAn2ThYaanIP64AMbodWifrF/IFMItJPFkwAtfPtJqugOFVb7Q==
   dependencies:
     "@leafygreen-ui/palette" "^4.0.4"
 
-"@leafygreen-ui/tooltip@^7.1.3":
-  version "7.1.3"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tooltip/-/tooltip-7.1.3.tgz#37f3907a87ef7a9c5fbcb9d3bf7be4ccc8224aa2"
-  integrity sha512-t6hsJSyt/vUAb1rQN9VrvCvk/vOhcf5AvAkZo0sgzZzFd58WTrCn3hXDpeUdG+zEIL7q9hZbnudYM0OPE/FJEA==
+"@leafygreen-ui/tooltip@^10.0.0":
+  version "10.0.4"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/tooltip/-/tooltip-10.0.4.tgz#c5f5144fd4078f11ddafd06f3b1d10de488e5001"
+  integrity sha512-vAGycOz0ei5G0qAJDKMFVNM4K9HowXBeL6d5xv8RG/dAxTvA9mtJTKyoAE+mvmzXnBsTfrT7Zl5qpR8yjIt38A==
   dependencies:
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/hooks" "^7.3.3"
-    "@leafygreen-ui/icon" "^11.11.1"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/popover" "^9.1.1"
-    "@leafygreen-ui/tokens" "^1.3.4"
-    "@leafygreen-ui/typography" "^13.2.1"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/hooks" "^7.7.5"
+    "@leafygreen-ui/icon" "^11.17.0"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/palette" "^4.0.4"
+    "@leafygreen-ui/popover" "^11.0.12"
+    "@leafygreen-ui/tokens" "^2.1.1"
+    "@leafygreen-ui/typography" "^16.5.1"
     lodash "^4.17.21"
+    polished "^4.2.2"
 
-"@leafygreen-ui/typography@^13.2.1":
-  version "13.2.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/typography/-/typography-13.2.1.tgz#e7a67f34054906ef4dee02361b75dc9cc7f1a3c0"
-  integrity sha512-5DABF0NkyH0JNZnv4YUgYxMxIojrylSwW8jg2nVMD96ZynH+vKYDUFRWef6GztqaiqSnXZjn65wQcg2v9C0nUg==
+"@leafygreen-ui/typography@^16.0.0", "@leafygreen-ui/typography@^16.5.1":
+  version "16.5.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@leafygreen-ui/typography/-/typography-16.5.1.tgz#2846c34339adcab5fff38e39371e73e587c46ed2"
+  integrity sha512-5dentOt4LubXxmkwVVy6ZlUvGsebJsHhZZ9LAlplUz13VkyvS458Bhnog4cqNqvnJjdlWLdO+ZO0/JyYUIIuXw==
   dependencies:
-    "@leafygreen-ui/box" "^3.1.1"
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/icon" "^11.11.1"
-    "@leafygreen-ui/lib" "^9.5.1"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/tokens" "^1.3.4"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/icon" "^11.17.0"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/palette" "^4.0.4"
+    "@leafygreen-ui/polymorphic" "^1.3.2"
+    "@leafygreen-ui/tokens" "^2.1.1"
+
+"@lg-private/mongo-nav@12.2.0":
+  version "12.2.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/@lg-private/mongo-nav/-/@lg-private/mongo-nav-12.2.0.tgz#f18dde766f92016c93d0c951b10596aa7dda64da"
+  integrity sha512-7Hk5h9YNpcQuu5zgrcWFvX4LUe4tRvawonjhAuv0sR5PKRVGYekBzVAo3SXK2rX/BB4lonQuCyem9zhRnK+pyQ==
+  dependencies:
+    "@leafygreen-ui/badge" "^8.0.8"
+    "@leafygreen-ui/button" "^20.0.0"
+    "@leafygreen-ui/emotion" "^4.0.4"
+    "@leafygreen-ui/hooks" "^7.7.0"
+    "@leafygreen-ui/icon" "^11.17.0"
+    "@leafygreen-ui/icon-button" "^15.0.0"
+    "@leafygreen-ui/lib" "^10.4.0"
+    "@leafygreen-ui/logo" "^8.0.0"
+    "@leafygreen-ui/menu" "^20.0.0"
+    "@leafygreen-ui/palette" "^4.0.4"
+    "@leafygreen-ui/text-input" "^12.1.15"
+    "@leafygreen-ui/tokens" "^2.0.0"
+    "@leafygreen-ui/tooltip" "^10.0.0"
+    "@leafygreen-ui/typography" "^16.0.0"
+    "@types/facepaint" "^1.2.2"
+    "@types/lodash" "^4.14.195"
+    facepaint "^1.2.1"
+    lodash "^4.17.21"
+    polished "^4.2.2"
 
 "@mdb/consistent-nav@1.2.39":
   version "1.2.39"
@@ -2650,7 +2625,7 @@
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/cookie/-/cookie-0.4.1.tgz#bfd02c1f2224567676c1545199f87c3a861d878d"
   integrity sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==
 
-"@types/debug@^4.0.0", "@types/debug@^4.1.7":
+"@types/debug@^4.1.7":
   version "4.1.8"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/debug/-/debug-4.1.8.tgz#cef723a5d0a90990313faec2d1e22aee5eecb317"
   integrity sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==
@@ -2677,6 +2652,11 @@
   version "1.0.1"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/estree/-/estree-1.0.1.tgz#aa22750962f3bf0e79d753d3cc067f010c95f194"
   integrity sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==
+
+"@types/facepaint@^1.2.2":
+  version "1.2.2"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/facepaint/-/facepaint-1.2.2.tgz#1432acb1b09696216861a457a037186afeb95346"
+  integrity sha512-Xl9tAINsQL1s0TdXG5IiG75kZrxem5esbnKJF5gQgFel92OdS5zLtFYnbBw6fBruCMPYJQ9mK5pVmSsMl3Puug==
 
 "@types/google.maps@3.51.0":
   version "3.51.0"
@@ -2743,6 +2723,11 @@
   version "4.14.195"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/lodash/-/lodash-4.14.195.tgz#bafc975b252eb6cea78882ce8a7b6bf22a6de632"
   integrity sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==
+
+"@types/lodash@^4.14.195":
+  version "4.14.196"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/lodash/-/lodash-4.14.196.tgz#a7c3d6fc52d8d71328b764e28e080b4169ec7a95"
+  integrity sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==
 
 "@types/mdast@^3.0.0":
   version "3.0.12"
@@ -2872,7 +2857,7 @@
   dependencies:
     "@types/jest" "*"
 
-"@types/unist@^2", "@types/unist@^2.0.0":
+"@types/unist@^2", "@types/unist@^2.0.0", "@types/unist@^2.0.2":
   version "2.0.7"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@types/unist/-/unist-2.0.7.tgz#5b06ad6894b236a1d2bd6b2f07850ca5c59cf4d6"
   integrity sha512-cputDpIbFgLUaGQn6Vqg3/YsJwxUwHLO13v3i5ouxT4lat0khip9AEWxtERujXV9wxIB1EyF97BSJFt6vpdI8g==
@@ -3621,10 +3606,10 @@ babel-preset-jest@^27.5.1:
     babel-plugin-jest-hoist "^27.5.1"
     babel-preset-current-node-syntax "^1.0.0"
 
-bail@^2.0.0:
-  version "2.0.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/bail/-/bail-2.0.2.tgz#d26f5cd8fe5d6f832a31517b9f7c356040ba6d5d"
-  integrity sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==
+bail@^1.0.0:
+  version "1.0.5"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/bail/-/bail-1.0.5.tgz#b6fa133404a392cbc1f8c4bf63f5953351e7a776"
+  integrity sha512-xFbRxM1tahm08yHBP16MMjVUAvDaBMD38zsM9EMAUN61omwLmKlOpB/Zku5QkjZ8TZ4vn53pj+t518cH0S03RQ==
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -3810,11 +3795,6 @@ character-entities@^1.0.0:
   version "1.2.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/character-entities/-/character-entities-1.2.4.tgz#e12c3939b7eaf4e5b15e7ad4c5e28e1d48c5b16b"
   integrity sha512-iBMyeEHxfVnIakwOuDXpVkc54HijNgCyQB2w0VfGQThle6NXn50zU6V/u+LDhxHcDUPojn6Kpga3PTAD8W1bQw==
-
-character-entities@^2.0.0:
-  version "2.0.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/character-entities/-/character-entities-2.0.2.tgz#2d09c2e72cd9523076ccb21157dff66ad43fcc22"
-  integrity sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==
 
 character-reference-invalid@^1.0.0:
   version "1.1.4"
@@ -4218,13 +4198,6 @@ decimal.js@^10.2.1:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/decimal.js/-/decimal.js-10.4.3.tgz#1044092884d245d1b7f65725fa4ad4c6f781cc23"
   integrity sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==
 
-decode-named-character-reference@^1.0.0:
-  version "1.0.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/decode-named-character-reference/-/decode-named-character-reference-1.0.2.tgz#daabac9690874c394c81e4162a0304b35d824f0e"
-  integrity sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==
-  dependencies:
-    character-entities "^2.0.0"
-
 decode-uri-component@^0.2.0:
   version "0.2.2"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
@@ -4301,7 +4274,7 @@ delayed-stream@~1.0.0:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
-dequal@^2.0.0, dequal@^2.0.3:
+dequal@^2.0.3:
   version "2.0.3"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/dequal/-/dequal-2.0.3.tgz#2644214f1997d39ed0ee0ece72335490a7ac67be"
   integrity sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
@@ -4325,11 +4298,6 @@ diff-sequences@^29.4.3:
   version "29.4.3"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/diff-sequences/-/diff-sequences-29.4.3.tgz#9314bc1fabe09267ffeca9cbafc457d8499a13f2"
   integrity sha512-ofrBgwpPhCD85kMKtE9RYFFq6OC1A89oW2vvgWZNCwxrUpRUILopY7lsYyMDSjc8g6U6aiO0Qubg6r4Wgt5ZnA==
-
-diff@^5.0.0:
-  version "5.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/diff/-/diff-5.1.0.tgz#bc52d298c5ea8df9194800224445ed43ffc87e40"
-  integrity sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==
 
 dir-glob@^3.0.1:
   version "3.0.1"
@@ -5831,10 +5799,10 @@ is-obj@^1.0.1:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
   integrity sha512-l4RyHgRqGN4Y3+9JHVrNqO+tN0rV5My76uW5/nuO4K1b6vw5G8d/cmFjP9tRfEsdhZNt0IFdZuK/c2Vr4Nb+Qg==
 
-is-plain-obj@^4.0.0:
-  version "4.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/is-plain-obj/-/is-plain-obj-4.1.0.tgz#d65025edec3657ce032fd7db63c97883eaed71f0"
-  integrity sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==
+is-plain-obj@^2.0.0:
+  version "2.1.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/is-plain-obj/-/is-plain-obj-2.1.0.tgz#45e42e37fccf1f40da8e5f76ee21515840c09287"
+  integrity sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==
 
 is-plain-object@^2.0.4:
   version "2.0.4"
@@ -6606,11 +6574,6 @@ kleur@^3.0.3:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-kleur@^4.0.3:
-  version "4.1.5"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/kleur/-/kleur-4.1.5.tgz#95106101795f7050c6c650f350c683febddb1780"
-  integrity sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==
-
 language-subtag-registry@~0.3.2:
   version "0.3.22"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/language-subtag-registry/-/language-subtag-registry-0.3.22.tgz#2e1500861b2e457eba7e7ae86877cbd08fa1fd1d"
@@ -6779,11 +6742,6 @@ longest-streak@^2.0.0:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/longest-streak/-/longest-streak-2.0.4.tgz#b8599957da5b5dab64dee3fe316fa774597d90e4"
   integrity sha512-vM6rUVCVUJJt33bnmHiZEvr7wPT78ztX7rojL+LW51bHtLh6HTjx84LA5W4+oa6aKEJA7jJu5LR6vQRBpA5DVg==
 
-longest-streak@^3.0.0:
-  version "3.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/longest-streak/-/longest-streak-3.1.0.tgz#62fa67cd958742a1574af9f39866364102d90cd4"
-  integrity sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==
-
 loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -6858,15 +6816,6 @@ md5@^2.2.1:
     crypt "0.0.2"
     is-buffer "~1.1.6"
 
-mdast-util-definitions@^5.0.0:
-  version "5.1.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-definitions/-/mdast-util-definitions-5.1.2.tgz#9910abb60ac5d7115d6819b57ae0bcef07a3f7a7"
-  integrity sha512-8SVPMuHqlPME/z3gqVwWY4zVXn8lqKv/pAhC57FuJ40ImXyBpmO5ukh98zB2v7Blql2FiHjHv9LVztSIqjY+MA==
-  dependencies:
-    "@types/mdast" "^3.0.0"
-    "@types/unist" "^2.0.0"
-    unist-util-visit "^4.0.0"
-
 mdast-util-directive@^1.0.0:
   version "1.0.1"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-directive/-/mdast-util-directive-1.0.1.tgz#bc2aea94eee5b89f2d11bf4546d40453e0b34cc6"
@@ -6887,23 +6836,16 @@ mdast-util-find-and-replace@^1.1.0:
     unist-util-is "^4.0.0"
     unist-util-visit-parents "^3.0.0"
 
-mdast-util-from-markdown@^1.0.0:
-  version "1.3.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-from-markdown/-/mdast-util-from-markdown-1.3.1.tgz#9421a5a247f10d31d2faed2a30df5ec89ceafcf0"
-  integrity sha512-4xTO/M8c82qBcnQc1tgpNtubGUW/Y1tBQ1B0i5CtSoelOLKFYlElIr3bvgREYYO5iRqbMY1YuqZng0GVOI8Qww==
+mdast-util-from-markdown@^0.8.0:
+  version "0.8.5"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-from-markdown/-/mdast-util-from-markdown-0.8.5.tgz#d1ef2ca42bc377ecb0463a987910dae89bd9a28c"
+  integrity sha512-2hkTXtYYnr+NubD/g6KGBS/0mFmBcifAsI0yIWRiRo0PjVs6SSOSOdtzbp6kSGnShDN6G5aWZpKQ2lWRy27mWQ==
   dependencies:
     "@types/mdast" "^3.0.0"
-    "@types/unist" "^2.0.0"
-    decode-named-character-reference "^1.0.0"
-    mdast-util-to-string "^3.1.0"
-    micromark "^3.0.0"
-    micromark-util-decode-numeric-character-reference "^1.0.0"
-    micromark-util-decode-string "^1.0.0"
-    micromark-util-normalize-identifier "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.0"
-    unist-util-stringify-position "^3.0.0"
-    uvu "^0.5.0"
+    mdast-util-to-string "^2.0.0"
+    micromark "~2.11.0"
+    parse-entities "^2.0.0"
+    unist-util-stringify-position "^2.0.0"
 
 mdast-util-gfm-autolink-literal@^0.1.0:
   version "0.1.3"
@@ -6947,14 +6889,6 @@ mdast-util-gfm@^0.1.0:
     mdast-util-gfm-task-list-item "^0.1.0"
     mdast-util-to-markdown "^0.6.1"
 
-mdast-util-phrasing@^3.0.0:
-  version "3.0.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-phrasing/-/mdast-util-phrasing-3.0.1.tgz#c7c21d0d435d7fb90956038f02e8702781f95463"
-  integrity sha512-WmI1gTXUBJo4/ZmSk79Wcb2HcjPJBzM1nlI/OUWA8yk2X9ik3ffNbBGsU+09BFmXaL1IBb9fiuvq6/KMiNycSg==
-  dependencies:
-    "@types/mdast" "^3.0.0"
-    unist-util-is "^5.0.0"
-
 mdast-util-to-markdown@^0.6.0, mdast-util-to-markdown@^0.6.1, mdast-util-to-markdown@~0.6.0:
   version "0.6.5"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-to-markdown/-/mdast-util-to-markdown-0.6.5.tgz#b33f67ca820d69e6cc527a93d4039249b504bebe"
@@ -6967,31 +6901,10 @@ mdast-util-to-markdown@^0.6.0, mdast-util-to-markdown@^0.6.1, mdast-util-to-mark
     repeat-string "^1.0.0"
     zwitch "^1.0.0"
 
-mdast-util-to-markdown@^1.0.0:
-  version "1.5.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-to-markdown/-/mdast-util-to-markdown-1.5.0.tgz#c13343cb3fc98621911d33b5cd42e7d0731171c6"
-  integrity sha512-bbv7TPv/WC49thZPg3jXuqzuvI45IL2EVAr/KxF0BSdHsU0ceFHOmwQn6evxAh1GaoK/6GQ1wp4R4oW2+LFL/A==
-  dependencies:
-    "@types/mdast" "^3.0.0"
-    "@types/unist" "^2.0.0"
-    longest-streak "^3.0.0"
-    mdast-util-phrasing "^3.0.0"
-    mdast-util-to-string "^3.0.0"
-    micromark-util-decode-string "^1.0.0"
-    unist-util-visit "^4.0.0"
-    zwitch "^2.0.0"
-
 mdast-util-to-string@^2.0.0:
   version "2.0.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-to-string/-/mdast-util-to-string-2.0.0.tgz#b8cfe6a713e1091cb5b728fc48885a4767f8b97b"
   integrity sha512-AW4DRS3QbBayY/jJmD8437V1Gombjf8RSOUCMFBuo5iHi58AGEgVCKQ+ezHkZZDpAQS75hcBMpLqjpJTjtUL7w==
-
-mdast-util-to-string@^3.0.0, mdast-util-to-string@^3.1.0:
-  version "3.2.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mdast-util-to-string/-/mdast-util-to-string-3.2.0.tgz#66f7bb6324756741c5f47a53557f0cbf16b6f789"
-  integrity sha512-V4Zn/ncyN1QNSqSBxTrMOLpjr+IKdHl2v3KVLoWmDPscP4r9GcCi71gjgvUV1SFSKh92AjAG4peFuBl2/YgCJg==
-  dependencies:
-    "@types/mdast" "^3.0.0"
 
 memoize-one@^5.1.1:
   version "5.2.1"
@@ -7007,28 +6920,6 @@ merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
-
-micromark-core-commonmark@^1.0.1:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-core-commonmark/-/micromark-core-commonmark-1.1.0.tgz#1386628df59946b2d39fb2edfd10f3e8e0a75bb8"
-  integrity sha512-BgHO1aRbolh2hcrzL2d1La37V0Aoz73ymF8rAcKnohLy93titmv62E0gP8Hrx9PKcKrqCZ1BbLGbP3bEhoXYlw==
-  dependencies:
-    decode-named-character-reference "^1.0.0"
-    micromark-factory-destination "^1.0.0"
-    micromark-factory-label "^1.0.0"
-    micromark-factory-space "^1.0.0"
-    micromark-factory-title "^1.0.0"
-    micromark-factory-whitespace "^1.0.0"
-    micromark-util-character "^1.0.0"
-    micromark-util-chunked "^1.0.0"
-    micromark-util-classify-character "^1.0.0"
-    micromark-util-html-tag-name "^1.0.0"
-    micromark-util-normalize-identifier "^1.0.0"
-    micromark-util-resolve-all "^1.0.0"
-    micromark-util-subtokenize "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.1"
-    uvu "^0.5.0"
 
 micromark-extension-directive@^1.0.0:
   version "1.4.0"
@@ -7083,155 +6974,6 @@ micromark-extension-gfm@^0.3.0:
     micromark-extension-gfm-tagfilter "~0.3.0"
     micromark-extension-gfm-task-list-item "~0.3.0"
 
-micromark-factory-destination@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-factory-destination/-/micromark-factory-destination-1.1.0.tgz#eb815957d83e6d44479b3df640f010edad667b9f"
-  integrity sha512-XaNDROBgx9SgSChd69pjiGKbV+nfHGDPVYFs5dOoDd7ZnMAE+Cuu91BCpsY8RT2NP9vo/B8pds2VQNCLiu0zhg==
-  dependencies:
-    micromark-util-character "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.0"
-
-micromark-factory-label@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-factory-label/-/micromark-factory-label-1.1.0.tgz#cc95d5478269085cfa2a7282b3de26eb2e2dec68"
-  integrity sha512-OLtyez4vZo/1NjxGhcpDSbHQ+m0IIGnT8BoPamh+7jVlzLJBH98zzuCoUeMxvM6WsNeh8wx8cKvqLiPHEACn0w==
-  dependencies:
-    micromark-util-character "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.0"
-    uvu "^0.5.0"
-
-micromark-factory-space@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-factory-space/-/micromark-factory-space-1.1.0.tgz#c8f40b0640a0150751d3345ed885a080b0d15faf"
-  integrity sha512-cRzEj7c0OL4Mw2v6nwzttyOZe8XY/Z8G0rzmWQZTBi/jjwyw/U4uqKtUORXQrR5bAZZnbTI/feRV/R7hc4jQYQ==
-  dependencies:
-    micromark-util-character "^1.0.0"
-    micromark-util-types "^1.0.0"
-
-micromark-factory-title@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-factory-title/-/micromark-factory-title-1.1.0.tgz#dd0fe951d7a0ac71bdc5ee13e5d1465ad7f50ea1"
-  integrity sha512-J7n9R3vMmgjDOCY8NPw55jiyaQnH5kBdV2/UXCtZIpnHH3P6nHUKaH7XXEYuWwx/xUJcawa8plLBEjMPU24HzQ==
-  dependencies:
-    micromark-factory-space "^1.0.0"
-    micromark-util-character "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.0"
-
-micromark-factory-whitespace@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-factory-whitespace/-/micromark-factory-whitespace-1.1.0.tgz#798fb7489f4c8abafa7ca77eed6b5745853c9705"
-  integrity sha512-v2WlmiymVSp5oMg+1Q0N1Lxmt6pMhIHD457whWM7/GUlEks1hI9xj5w3zbc4uuMKXGisksZk8DzP2UyGbGqNsQ==
-  dependencies:
-    micromark-factory-space "^1.0.0"
-    micromark-util-character "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.0"
-
-micromark-util-character@^1.0.0:
-  version "1.2.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-character/-/micromark-util-character-1.2.0.tgz#4fedaa3646db249bc58caeb000eb3549a8ca5dcc"
-  integrity sha512-lXraTwcX3yH/vMDaFWCQJP1uIszLVebzUa3ZHdrgxr7KEU/9mL4mVgCpGbyhvNLNlauROiNUq7WN5u7ndbY6xg==
-  dependencies:
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.0"
-
-micromark-util-chunked@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-chunked/-/micromark-util-chunked-1.1.0.tgz#37a24d33333c8c69a74ba12a14651fd9ea8a368b"
-  integrity sha512-Ye01HXpkZPNcV6FiyoW2fGZDUw4Yc7vT0E9Sad83+bEDiCJ1uXu0S3mr8WLpsz3HaG3x2q0HM6CTuPdcZcluFQ==
-  dependencies:
-    micromark-util-symbol "^1.0.0"
-
-micromark-util-classify-character@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-classify-character/-/micromark-util-classify-character-1.1.0.tgz#6a7f8c8838e8a120c8e3c4f2ae97a2bff9190e9d"
-  integrity sha512-SL0wLxtKSnklKSUplok1WQFoGhUdWYKggKUiqhX+Swala+BtptGCu5iPRc+xvzJ4PXE/hwM3FNXsfEVgoZsWbw==
-  dependencies:
-    micromark-util-character "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.0"
-
-micromark-util-combine-extensions@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-combine-extensions/-/micromark-util-combine-extensions-1.1.0.tgz#192e2b3d6567660a85f735e54d8ea6e3952dbe84"
-  integrity sha512-Q20sp4mfNf9yEqDL50WwuWZHUrCO4fEyeDCnMGmG5Pr0Cz15Uo7KBs6jq+dq0EgX4DPwwrh9m0X+zPV1ypFvUA==
-  dependencies:
-    micromark-util-chunked "^1.0.0"
-    micromark-util-types "^1.0.0"
-
-micromark-util-decode-numeric-character-reference@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-decode-numeric-character-reference/-/micromark-util-decode-numeric-character-reference-1.1.0.tgz#b1e6e17009b1f20bc652a521309c5f22c85eb1c6"
-  integrity sha512-m9V0ExGv0jB1OT21mrWcuf4QhP46pH1KkfWy9ZEezqHKAxkj4mPCy3nIH1rkbdMlChLHX531eOrymlwyZIf2iw==
-  dependencies:
-    micromark-util-symbol "^1.0.0"
-
-micromark-util-decode-string@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-decode-string/-/micromark-util-decode-string-1.1.0.tgz#dc12b078cba7a3ff690d0203f95b5d5537f2809c"
-  integrity sha512-YphLGCK8gM1tG1bd54azwyrQRjCFcmgj2S2GoJDNnh4vYtnL38JS8M4gpxzOPNyHdNEpheyWXCTnnTDY3N+NVQ==
-  dependencies:
-    decode-named-character-reference "^1.0.0"
-    micromark-util-character "^1.0.0"
-    micromark-util-decode-numeric-character-reference "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-
-micromark-util-encode@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-encode/-/micromark-util-encode-1.1.0.tgz#92e4f565fd4ccb19e0dcae1afab9a173bbeb19a5"
-  integrity sha512-EuEzTWSTAj9PA5GOAs992GzNh2dGQO52UvAbtSOMvXTxv3Criqb6IOzJUBCmEqrrXSblJIJBbFFv6zPxpreiJw==
-
-micromark-util-html-tag-name@^1.0.0:
-  version "1.2.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-html-tag-name/-/micromark-util-html-tag-name-1.2.0.tgz#48fd7a25826f29d2f71479d3b4e83e94829b3588"
-  integrity sha512-VTQzcuQgFUD7yYztuQFKXT49KghjtETQ+Wv/zUjGSGBioZnkA4P1XXZPT1FHeJA6RwRXSF47yvJ1tsJdoxwO+Q==
-
-micromark-util-normalize-identifier@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-normalize-identifier/-/micromark-util-normalize-identifier-1.1.0.tgz#7a73f824eb9f10d442b4d7f120fecb9b38ebf8b7"
-  integrity sha512-N+w5vhqrBihhjdpM8+5Xsxy71QWqGn7HYNUvch71iV2PM7+E3uWGox1Qp90loa1ephtCxG2ftRV/Conitc6P2Q==
-  dependencies:
-    micromark-util-symbol "^1.0.0"
-
-micromark-util-resolve-all@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-resolve-all/-/micromark-util-resolve-all-1.1.0.tgz#4652a591ee8c8fa06714c9b54cd6c8e693671188"
-  integrity sha512-b/G6BTMSg+bX+xVCshPTPyAu2tmA0E4X98NSR7eIbeC6ycCqCeE7wjfDIgzEbkzdEVJXRtOG4FbEm/uGbCRouA==
-  dependencies:
-    micromark-util-types "^1.0.0"
-
-micromark-util-sanitize-uri@^1.0.0:
-  version "1.2.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-sanitize-uri/-/micromark-util-sanitize-uri-1.2.0.tgz#613f738e4400c6eedbc53590c67b197e30d7f90d"
-  integrity sha512-QO4GXv0XZfWey4pYFndLUKEAktKkG5kZTdUNaTAkzbuJxn2tNBOr+QtxR2XpWaMhbImT2dPzyLrPXLlPhph34A==
-  dependencies:
-    micromark-util-character "^1.0.0"
-    micromark-util-encode "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-
-micromark-util-subtokenize@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-subtokenize/-/micromark-util-subtokenize-1.1.0.tgz#941c74f93a93eaf687b9054aeb94642b0e92edb1"
-  integrity sha512-kUQHyzRoxvZO2PuLzMt2P/dwVsTiivCK8icYTeR+3WgbuPqfHgPPy7nFKbeqRivBvn/3N3GBiNC+JRTMSxEC7A==
-  dependencies:
-    micromark-util-chunked "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.0"
-    uvu "^0.5.0"
-
-micromark-util-symbol@^1.0.0:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-symbol/-/micromark-util-symbol-1.1.0.tgz#813cd17837bdb912d069a12ebe3a44b6f7063142"
-  integrity sha512-uEjpEYY6KMs1g7QfJ2eX1SQEV+ZT4rUD3UcF6l57acZvLNK7PBZL+ty82Z1qhK1/yXIY4bdx04FKMgR0g4IAag==
-
-micromark-util-types@^1.0.0, micromark-util-types@^1.0.1:
-  version "1.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark-util-types/-/micromark-util-types-1.1.0.tgz#e6676a8cae0bb86a2171c498167971886cb7e283"
-  integrity sha512-ukRBgie8TIAcacscVHSiddHjO4k/q3pnedmzMQ4iwDcK0FtFCohKOlFbaOL/mPgfnPsL3C1ZyxJa4sbWrBl3jg==
-
 micromark@^2.11.3, micromark@~2.11.0, micromark@~2.11.3:
   version "2.11.4"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark/-/micromark-2.11.4.tgz#d13436138eea826383e822449c9a5c50ee44665a"
@@ -7239,29 +6981,6 @@ micromark@^2.11.3, micromark@~2.11.0, micromark@~2.11.3:
   dependencies:
     debug "^4.0.0"
     parse-entities "^2.0.0"
-
-micromark@^3.0.0:
-  version "3.2.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/micromark/-/micromark-3.2.0.tgz#1af9fef3f995ea1ea4ac9c7e2f19c48fd5c006e9"
-  integrity sha512-uD66tJj54JLYq0De10AhWycZWGQNUvDI55xPgk2sQM5kn1JYlhbCMTtEeT27+vAhW2FBQxLlOmS3pmA7/2z4aA==
-  dependencies:
-    "@types/debug" "^4.0.0"
-    debug "^4.0.0"
-    decode-named-character-reference "^1.0.0"
-    micromark-core-commonmark "^1.0.1"
-    micromark-factory-space "^1.0.0"
-    micromark-util-character "^1.0.0"
-    micromark-util-chunked "^1.0.0"
-    micromark-util-combine-extensions "^1.0.0"
-    micromark-util-decode-numeric-character-reference "^1.0.0"
-    micromark-util-encode "^1.0.0"
-    micromark-util-normalize-identifier "^1.0.0"
-    micromark-util-resolve-all "^1.0.0"
-    micromark-util-sanitize-uri "^1.0.0"
-    micromark-util-subtokenize "^1.0.0"
-    micromark-util-symbol "^1.0.0"
-    micromark-util-types "^1.0.1"
-    uvu "^0.5.0"
 
 micromatch@^4.0.4:
   version "4.0.5"
@@ -7326,11 +7045,6 @@ morphdom@^2.6.1:
   version "2.7.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/morphdom/-/morphdom-2.7.0.tgz#9ef0c4bc15ac8725df398d127c6984f62e7f89e8"
   integrity sha512-8L8DwbdjjWwM/aNqj7BSoSn4G7SQLNiDcxCnMWbf506jojR6lNQ5YOmQqXEIE8u3C492UlkN4d0hQwz97+M1oQ==
-
-mri@^1.1.0:
-  version "1.2.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/mri/-/mri-1.2.0.tgz#6721480fec2a11a4889861115a48b6cbe7cc8f0b"
-  integrity sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==
 
 mrmime@^1.0.0:
   version "1.0.1"
@@ -7939,6 +7653,13 @@ polished@4.1.3:
   dependencies:
     "@babel/runtime" "^7.14.0"
 
+polished@^4.2.2:
+  version "4.2.2"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/polished/-/polished-4.2.2.tgz#2529bb7c3198945373c52e34618c8fe7b1aa84d1"
+  integrity sha512-Sz2Lkdxz6F2Pgnpi9U5Ng/WdWAUZxmHrNPoVlm3aAemxoy2Qy7LGjQg4uf8qKelDAUW94F4np3iH2YPf2qefcQ==
+  dependencies:
+    "@babel/runtime" "^7.17.8"
+
 postcss-value-parser@^4.0.2:
   version "4.2.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
@@ -8333,42 +8054,28 @@ remark-gfm@1.0.0:
     mdast-util-gfm "^0.1.0"
     micromark-extension-gfm "^0.3.0"
 
-remark-inline-links@6.0.0:
-  version "6.0.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/remark-inline-links/-/remark-inline-links-6.0.0.tgz#c90c6a87b0afdf708c63ceb1ee303e3e0966f279"
-  integrity sha512-Z9Dn4Zpwa1F7CCFC7f+WyxUpsG7X124zjoE7TICXwdlZo6smybxFLtnVnOxs5WF1YXChUf0fGlTOES1tQBQqyA==
+remark-parse@^9.0.0:
+  version "9.0.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/remark-parse/-/remark-parse-9.0.0.tgz#4d20a299665880e4f4af5d90b7c7b8a935853640"
+  integrity sha512-geKatMwSzEXKHuzBNU1z676sGcDcFoChMK38TgdHJNAYfFtsfHDQG7MoJAjs6sgYMqyLduCYWDIWZIxiPeafEw==
   dependencies:
-    "@types/mdast" "^3.0.0"
-    mdast-util-definitions "^5.0.0"
-    unified "^10.0.0"
-    unist-util-visit "^4.0.0"
+    mdast-util-from-markdown "^0.8.0"
 
-remark-parse@^10.0.0:
-  version "10.0.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/remark-parse/-/remark-parse-10.0.2.tgz#ca241fde8751c2158933f031a4e3efbaeb8bc262"
-  integrity sha512-3ydxgHa/ZQzG8LvC7jTXccARYDcRld3VfcgIIFs7bI6vbRSxJJmzgLEIIoYKyrfhaY+ujuWaf/PJiMZXoiCXgw==
+remark-stringify@^9.0.0:
+  version "9.0.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/remark-stringify/-/remark-stringify-9.0.1.tgz#576d06e910548b0a7191a71f27b33f1218862894"
+  integrity sha512-mWmNg3ZtESvZS8fv5PTvaPckdL4iNlCHTt8/e/8oN08nArHRHjNZMKzA/YW3+p7/lYqIw4nx1XsjCBo/AxNChg==
   dependencies:
-    "@types/mdast" "^3.0.0"
-    mdast-util-from-markdown "^1.0.0"
-    unified "^10.0.0"
+    mdast-util-to-markdown "^0.6.0"
 
-remark-stringify@^10.0.0:
-  version "10.0.3"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/remark-stringify/-/remark-stringify-10.0.3.tgz#83b43f2445c4ffbb35b606f967d121b2b6d69717"
-  integrity sha512-koyOzCMYoUHudypbj4XpnAKFbkddRMYZHwghnxd7ue5210WzGw6kOBwauJTRUMq16jsovXx8dYNvSSWP89kZ3A==
+remark@13.0.0:
+  version "13.0.0"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/remark/-/remark-13.0.0.tgz#d15d9bf71a402f40287ebe36067b66d54868e425"
+  integrity sha512-HDz1+IKGtOyWN+QgBiAT0kn+2s6ovOxHyPAFGKVE81VSzJ+mq7RwHFledEvB5F1p4iJvOah/LOKdFuzvRnNLCA==
   dependencies:
-    "@types/mdast" "^3.0.0"
-    mdast-util-to-markdown "^1.0.0"
-    unified "^10.0.0"
-
-remark@14.0.0:
-  version "14.0.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/remark/-/remark-14.0.0.tgz#7f58972997a2c8d7deaa26058c20ab1ae74381be"
-  integrity sha512-LiJCEOBwTlqAkCdZ288gLu5CP1xX2rFEZGGMYlsrXNb5y+IDpbhIDmZ5kLiHqFQiivzTkuP70t9DtQbF005nNA==
-  dependencies:
-    remark-parse "^10.0.0"
-    remark-stringify "^10.0.0"
-    unified "^10.0.0"
+    remark-parse "^9.0.0"
+    remark-stringify "^9.0.0"
+    unified "^9.1.0"
 
 repeat-string@^1.0.0:
   version "1.6.1"
@@ -8490,13 +8197,6 @@ rxjs@^7.5.1, rxjs@^7.5.5:
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
   dependencies:
     tslib "^2.1.0"
-
-sade@^1.7.3:
-  version "1.8.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/sade/-/sade-1.8.1.tgz#0a78e81d658d394887be57d2a409bf703a3b2701"
-  integrity sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==
-  dependencies:
-    mri "^1.1.0"
 
 safe-array-concat@^1.0.0:
   version "1.0.0"
@@ -9259,10 +8959,10 @@ tr46@~0.0.3:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-trough@^2.0.0:
-  version "2.1.0"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/trough/-/trough-2.1.0.tgz#0f7b511a4fde65a46f18477ab38849b22c554876"
-  integrity sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==
+trough@^1.0.0:
+  version "1.0.5"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/trough/-/trough-1.0.5.tgz#b8b639cefad7d0bb2abd37d433ff8293efa5f406"
+  integrity sha512-rvuRbTarPXmMb79SmzEp8aqXNKcK+y0XaB298IXueQ8I2PsrATcPBCSPyK/dDNa2iWOhKlfNnOjdAOTBU/nkFA==
 
 ts-interface-checker@^0.1.9:
   version "0.1.13"
@@ -9451,37 +9151,29 @@ unicode-property-aliases-ecmascript@^2.0.0:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-2.1.0.tgz#43d41e3be698bd493ef911077c9b131f827e8ccd"
   integrity sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==
 
-unified@^10.0.0:
-  version "10.1.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unified/-/unified-10.1.2.tgz#b1d64e55dafe1f0b98bb6c719881103ecf6c86df"
-  integrity sha512-pUSWAi/RAnVy1Pif2kAoeWNBa3JVrx0MId2LASj8G+7AiHWoKZNTomq6LG326T68U7/e263X6fTdcXIy7XnF7Q==
+unified@^9.1.0:
+  version "9.2.2"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unified/-/unified-9.2.2.tgz#67649a1abfc3ab85d2969502902775eb03146975"
+  integrity sha512-Sg7j110mtefBD+qunSLO1lqOEKdrwBFBrR6Qd8f4uwkhWNlbkaqwHse6e7QvD3AP/MNoJdEDLaf8OxYyoWgorQ==
   dependencies:
-    "@types/unist" "^2.0.0"
-    bail "^2.0.0"
+    bail "^1.0.0"
     extend "^3.0.0"
     is-buffer "^2.0.0"
-    is-plain-obj "^4.0.0"
-    trough "^2.0.0"
-    vfile "^5.0.0"
+    is-plain-obj "^2.0.0"
+    trough "^1.0.0"
+    vfile "^4.0.0"
 
 unist-util-is@^4.0.0:
   version "4.1.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unist-util-is/-/unist-util-is-4.1.0.tgz#976e5f462a7a5de73d94b706bac1b90671b57797"
   integrity sha512-ZOQSsnce92GrxSqlnEEseX0gi7GH9zTJZ0p9dtu87WRb/37mMPO2Ilx1s/t9vBHrFhbgweUwb+t7cIn5dxPhZg==
 
-unist-util-is@^5.0.0:
-  version "5.2.1"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unist-util-is/-/unist-util-is-5.2.1.tgz#b74960e145c18dcb6226bc57933597f5486deae9"
-  integrity sha512-u9njyyfEh43npf1M+yGKDGVPbY/JWEemg5nH05ncKPfi+kBbKBJoTdsogMu33uhytuLlv9y0O7GH7fEdwLdLQw==
+unist-util-stringify-position@^2.0.0:
+  version "2.0.3"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unist-util-stringify-position/-/unist-util-stringify-position-2.0.3.tgz#cce3bfa1cdf85ba7375d1d5b17bdc4cada9bd9da"
+  integrity sha512-3faScn5I+hy9VleOq/qNbAd6pAx7iH5jYBMS9I1HgQVijz/4mv5Bvw5iw1sC/90CODiKo81G/ps8AJrISn687g==
   dependencies:
-    "@types/unist" "^2.0.0"
-
-unist-util-stringify-position@^3.0.0:
-  version "3.0.3"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unist-util-stringify-position/-/unist-util-stringify-position-3.0.3.tgz#03ad3348210c2d930772d64b489580c13a7db39d"
-  integrity sha512-k5GzIBZ/QatR8N5X2y+drfpWG8IDBzdnVj6OInRNWm1oXrzydiaAT2OQiA8DPRRZyAKb9b6I2a6PxYklZD0gKg==
-  dependencies:
-    "@types/unist" "^2.0.0"
+    "@types/unist" "^2.0.2"
 
 unist-util-visit-parents@^3.0.0:
   version "3.1.1"
@@ -9491,14 +9183,6 @@ unist-util-visit-parents@^3.0.0:
     "@types/unist" "^2.0.0"
     unist-util-is "^4.0.0"
 
-unist-util-visit-parents@^5.1.1:
-  version "5.1.3"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unist-util-visit-parents/-/unist-util-visit-parents-5.1.3.tgz#b4520811b0ca34285633785045df7a8d6776cfeb"
-  integrity sha512-x6+y8g7wWMyQhL1iZfhIPhDAs7Xwbn9nRosDXl7qoPTSCy0yNxnKc+hWokFifWQIDGi154rdUqKvbCa4+1kLhg==
-  dependencies:
-    "@types/unist" "^2.0.0"
-    unist-util-is "^5.0.0"
-
 unist-util-visit@2.0.3:
   version "2.0.3"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unist-util-visit/-/unist-util-visit-2.0.3.tgz#c3703893146df47203bb8a9795af47d7b971208c"
@@ -9507,15 +9191,6 @@ unist-util-visit@2.0.3:
     "@types/unist" "^2.0.0"
     unist-util-is "^4.0.0"
     unist-util-visit-parents "^3.0.0"
-
-unist-util-visit@^4.0.0:
-  version "4.1.2"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/unist-util-visit/-/unist-util-visit-4.1.2.tgz#125a42d1eb876283715a3cb5cceaa531828c72e2"
-  integrity sha512-MSd8OUGISqHdVvfY9TPhyK2VdUrPgxkUtWSuMHF6XAAFuL4LokseigBnZtPnJMu+FbynTkFNnFlyjxpVKujMRg==
-  dependencies:
-    "@types/unist" "^2.0.0"
-    unist-util-is "^5.0.0"
-    unist-util-visit-parents "^5.1.1"
 
 universalify@^0.2.0:
   version "0.2.0"
@@ -9571,16 +9246,6 @@ uuid@^8.3.2:
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
-uvu@^0.5.0:
-  version "0.5.6"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/uvu/-/uvu-0.5.6.tgz#2754ca20bcb0bb59b64e9985e84d2e81058502df"
-  integrity sha512-+g8ENReyr8YsOc6fv/NVJs2vFdHBnBNdfE49rshrTzDWOlUx4Gq7KOS2GD8eqhy2j+Ejq29+SbKH8yjkAqXqoA==
-  dependencies:
-    dequal "^2.0.0"
-    diff "^5.0.0"
-    kleur "^4.0.3"
-    sade "^1.7.3"
-
 v8-compile-cache@^2.0.3:
   version "2.3.0"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
@@ -9595,23 +9260,23 @@ v8-to-istanbul@^8.1.0:
     convert-source-map "^1.6.0"
     source-map "^0.7.3"
 
-vfile-message@^3.0.0:
-  version "3.1.4"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/vfile-message/-/vfile-message-3.1.4.tgz#15a50816ae7d7c2d1fa87090a7f9f96612b59dea"
-  integrity sha512-fa0Z6P8HUrQN4BZaX05SIVXic+7kE3b05PWAtPuYP9QLHsLKYR7/AlLW3NtOrpXRLeawpDLMsVkmk5DG0NXgWw==
+vfile-message@^2.0.0:
+  version "2.0.4"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/vfile-message/-/vfile-message-2.0.4.tgz#5b43b88171d409eae58477d13f23dd41d52c371a"
+  integrity sha512-DjssxRGkMvifUOJre00juHoP9DPWuzjxKuMDrhNbk2TdaYYBNMStsNhEOt3idrtI12VQYM/1+iM0KOzXi4pxwQ==
   dependencies:
     "@types/unist" "^2.0.0"
-    unist-util-stringify-position "^3.0.0"
+    unist-util-stringify-position "^2.0.0"
 
-vfile@^5.0.0:
-  version "5.3.7"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/vfile/-/vfile-5.3.7.tgz#de0677e6683e3380fafc46544cfe603118826ab7"
-  integrity sha512-r7qlzkgErKjobAmyNIkkSpizsFPYiUPuJb5pNW1RB4JcYVZhs4lIbVqk8XPk033CV/1z8ss5pkax8SuhGpcG8g==
+vfile@^4.0.0:
+  version "4.2.1"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/vfile/-/vfile-4.2.1.tgz#03f1dce28fc625c625bc6514350fbdb00fa9e624"
+  integrity sha512-O6AE4OskCG5S1emQ/4gl8zK586RqA3srz3nfK/Viy0UPToBc5Trp9BVFb1u0CjsKrAWwnpr4ifM/KBXPWwJbCA==
   dependencies:
     "@types/unist" "^2.0.0"
     is-buffer "^2.0.0"
-    unist-util-stringify-position "^3.0.0"
-    vfile-message "^3.0.0"
+    unist-util-stringify-position "^2.0.0"
+    vfile-message "^2.0.0"
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
@@ -9963,8 +9628,3 @@ zwitch@^1.0.0:
   version "1.0.5"
   resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/zwitch/-/zwitch-1.0.5.tgz#d11d7381ffed16b742f6af7b3f223d5cd9fe9920"
   integrity sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
-
-zwitch@^2.0.0:
-  version "2.0.4"
-  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/zwitch/-/zwitch-2.0.4.tgz#c827d4b0acb76fc3e685a4c6ec2902d51070e9d7"
-  integrity sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==

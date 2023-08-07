@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import theme from '@mdb/flora/theme';
-import { UserMenu } from '@leafygreen-ui/mongo-nav';
+import { UserMenu } from '@lg-private/mongo-nav';
 import { ThemeUICSSObject } from 'theme-ui';
 
 import {
