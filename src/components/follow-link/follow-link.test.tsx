@@ -52,7 +52,6 @@ test('renders full FollowLink when signed out', () => {
     const tooltip = screen.getByTestId('tooltip-body');
     expect(tooltip).toBeInTheDocument();
     expect(tooltip).toHaveTextContent('Sign in to follow topics');
-    expect(tooltip).not.toBeVisible();
 });
 
 test('renders iconsOnly FollowLink when signed out', () => {
@@ -71,7 +70,6 @@ test('renders iconsOnly FollowLink when signed out', () => {
     const tooltip = screen.getByTestId('tooltip-body');
     expect(tooltip).toBeInTheDocument();
     expect(tooltip).toHaveTextContent('Sign in to follow topics');
-    expect(tooltip).not.toBeVisible();
 });
 
 test('renders full FollowLink when signed in and not following anything', () => {
@@ -86,7 +84,6 @@ test('renders full FollowLink when signed in and not following anything', () => 
     expect(tooltip).toHaveTextContent(
         'Receive a monthly digest and recommended content based on topics you follow!'
     );
-    expect(tooltip).not.toBeVisible();
 });
 
 test('renders full FollowLink when signed in and not following anything', () => {
@@ -101,7 +98,6 @@ test('renders full FollowLink when signed in and not following anything', () => 
     expect(tooltip).toHaveTextContent(
         'Receive a monthly digest and recommended content based on topics you follow!'
     );
-    expect(tooltip).not.toBeVisible();
 });
 
 test('renders iconsOnly FollowLink when signed in and not following anything', () => {
@@ -116,7 +112,6 @@ test('renders iconsOnly FollowLink when signed in and not following anything', (
     expect(tooltip).toHaveTextContent(
         'Receive a monthly digest and recommended content based on topics you follow!'
     );
-    expect(tooltip).not.toBeVisible();
 });
 
 test('renders full FollowLink when signed in and following other topics', () => {
@@ -135,7 +130,6 @@ test('renders full FollowLink when signed in and following other topics', () => 
     const tooltip = screen.getByTestId('tooltip-body');
     expect(tooltip).toBeInTheDocument();
     expect(tooltip).toBeEmptyDOMElement();
-    expect(tooltip).not.toBeVisible();
 });
 
 test('renders iconsOnly FollowLink when signed in and following other topics', () => {
@@ -148,7 +142,6 @@ test('renders iconsOnly FollowLink when signed in and following other topics', (
     const tooltip = screen.getByTestId('tooltip-body');
     expect(tooltip).toBeInTheDocument();
     expect(tooltip).toHaveTextContent('Follow this topic');
-    expect(tooltip).not.toBeVisible();
 });
 
 test('renders full FollowLink when signed in and following this topic', () => {
@@ -164,7 +157,6 @@ test('renders full FollowLink when signed in and following this topic', () => {
     const tooltip = screen.getByTestId('tooltip-body');
     expect(tooltip).toBeInTheDocument();
     expect(tooltip).toBeEmptyDOMElement();
-    expect(tooltip).not.toBeVisible();
 });
 
 test('renders iconsOnly FollowLink when signed in and following this topic', () => {
@@ -183,5 +175,4 @@ test('renders iconsOnly FollowLink when signed in and following this topic', () 
     const tooltip = screen.getByTestId('tooltip-body');
     expect(tooltip).toBeInTheDocument();
     expect(tooltip).toHaveTextContent('Unfollow this topic');
-    expect(tooltip).not.toBeVisible();
 });

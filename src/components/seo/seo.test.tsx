@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
-import { SEOprops, Seo } from './content-page-template';
+import Seo from '.';
+import type { SEOprops } from './seo';
 import fs from 'fs';
 import path from 'path';
 
@@ -36,7 +37,7 @@ describe('Seo', () => {
     it('should render meta tags', () => {
         let props;
         try {
-            const filename = 'content-page-template-test-data.json';
+            const filename = 'seo-test-data.json';
             const filepath = path.join(__dirname, filename);
             const data = fs.readFileSync(filepath).toString('utf8');
             props = JSON.parse(data);

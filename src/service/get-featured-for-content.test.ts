@@ -1,24 +1,11 @@
 import { ContentItem } from '../interfaces/content-item';
-import { Featured } from '../interfaces/featured';
 import { getFeaturedForContent } from './get-featured-for-content';
-import * as getFeaturedForTopicModule from './get-featured-for-topic';
 
+const mockGetFeatured = jest.fn();
 jest.mock('./get-featured-for-topic', () => ({
     __esModule: true,
-    ...jest.requireActual('./get-featured-for-topic'),
+    getFeaturedForTopic: () => mockGetFeatured(),
 }));
-
-const featuredArticles: Featured = {
-    articles: ['Article 1', 'Article 2', 'Article 3', 'Article 4'],
-    podcasts: [],
-    videos: [],
-};
-
-const featuredQuickstarts: Featured = {
-    articles: [],
-    podcasts: ['Quickstart 1'],
-    videos: [],
-};
 
 const content: ContentItem[] = [
     {
@@ -59,8 +46,11 @@ const content: ContentItem[] = [
 ];
 
 test('only returns 3 when there are more than 3 matching', async () => {
-    const spy = jest.spyOn(getFeaturedForTopicModule, 'getFeaturedForTopic');
-    spy.mockReturnValue(Promise.resolve(featuredArticles));
+    mockGetFeatured.mockImplementation(() => ({
+        articles: ['Article 1', 'Article 2', 'Article 3', 'Article 4'],
+        podcasts: [],
+        videos: [],
+    }));
     const result = await getFeaturedForContent(content, '');
     expect(result).toHaveLength(3);
     expect(result[0].title).toEqual('Article 1');
@@ -69,8 +59,11 @@ test('only returns 3 when there are more than 3 matching', async () => {
 });
 
 test('returns most recent when there are not enough featured and will not duplicate', async () => {
-    const spy = jest.spyOn(getFeaturedForTopicModule, 'getFeaturedForTopic');
-    spy.mockReturnValue(Promise.resolve(featuredQuickstarts));
+    mockGetFeatured.mockImplementation(() => ({
+        articles: [],
+        podcasts: ['Quickstart 1'],
+        videos: [],
+    }));
     const result = await getFeaturedForContent(content, '');
     expect(result).toHaveLength(3);
     expect(result[0].title).toEqual('Quickstart 1');
