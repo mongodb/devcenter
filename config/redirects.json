@@ -2328,5 +2328,10 @@
         "source": "/products/atlas/atlas-data-api-and-fitbit/",
         "destination": "/products/atlas/data-api/",
         "permanent": true
+    },
+    {
+        "source": "/products/atlas/atlas-data-lake-federated-queries-out-aws-s3/",
+        "destination": "/products/atlas/atlas-data-federation-out-aws-s3/",
+        "permanent": true
     }
 ]
