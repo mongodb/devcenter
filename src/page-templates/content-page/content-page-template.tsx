@@ -1,11 +1,9 @@
 // libraries
 import axios from 'axios';
 import Image from 'next/image';
-import Head from 'next/head';
 
 import { NextPage } from 'next';
 import { Fragment, useEffect, useState, useMemo } from 'react';
-import { NextSeo } from 'next-seo';
 import getConfig from 'next/config';
 import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
@@ -48,7 +46,6 @@ import {
 import { TertiaryNavItem } from '../../components/tertiary-nav/types';
 // utils
 import { normalizeCategory, isPrimaryTag } from './util';
-import { getCanonicalUrl } from '../../utils/seo';
 import { getURLPath } from '../../utils/format-url-path';
 import { constructDateDisplay, formatDateRange } from '../../utils/format-date';
 import { getTweetText } from '../../components/social-buttons/utils';
@@ -72,6 +69,7 @@ import { iconStyles } from '../../components/topic-cards-container/styles';
 import { formatEventTypes } from '../../utils/format-text';
 import FollowLink from '../../components/follow-link';
 import { Tag } from '../../interfaces/tag';
+import Seo from '../../components/seo';
 
 interface ContentPageProps {
     crumbs: Crumb[];
@@ -621,62 +619,26 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             </>
         );
     };
-    const ogType =
-        seo?.og_type ||
-        ['Article', 'Code Example', 'Quickstart', 'Tutorial'].includes(category)
-            ? 'article'
-            : category === 'Video'
-            ? 'video:other'
-            : undefined;
 
     return (
         <>
-            <Head>
-                <meta
-                    name="author"
-                    content={authors.map(({ name }) => name).join(', ')}
-                />
-            </Head>
-            <NextSeo
-                title={`${title} | MongoDB`}
-                twitter={{
-                    site: seo?.twitter_site,
-                    handle: seo?.twitter_creator,
-                    cardType: seo?.twitter_card,
-                }}
-                openGraph={{
-                    url: seo?.og_url,
-                    title: seo?.og_title,
-                    type: ogType,
-                    description: seo?.og_description,
-                    images: seo?.og_image?.url
-                        ? [{ url: seo?.og_image?.url }]
-                        : [],
-                    article: {
-                        publishedTime: Array.isArray(contentDate)
-                            ? undefined
-                            : contentDate,
-                        modifiedTime: updateDate,
-                        authors: authors.map(
-                            ({ calculated_slug }) =>
-                                publicRuntimeConfig.absoluteBasePath +
-                                calculated_slug
-                        ),
-                    },
-                }}
-                description={
-                    seo?.meta_description ||
-                    publicRuntimeConfig.pageDescriptions['/']
+            <Seo
+                contentItem={
+                    {
+                        title,
+                        seo,
+                        category,
+                        contentDate,
+                        updateDate,
+                        authors,
+                        image,
+                        description,
+                    } as ContentItem
                 }
-                canonical={
-                    seo?.canonical_url ||
-                    getCanonicalUrl(
-                        publicRuntimeConfig.absoluteBasePath,
-                        asPath
-                    )
-                }
-                noindex={isPathFactory}
-            />
+                isPathFactory={isPathFactory}
+                publicRuntimeConfig={publicRuntimeConfig}
+                asPath={asPath}
+            ></Seo>
             <div sx={styles.wrapper}>
                 <GridLayout sx={{ rowGap: 0 }}>
                     {!isPathFactory && (

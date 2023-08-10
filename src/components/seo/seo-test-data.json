@@ -1,0 +1,45 @@
+{
+    "contentItem": {
+        "title": "Using Atlas Search from Java",
+        "seo": {
+            "canonical_url": "",
+            "meta_description": "This article delves into using the Atlas Search support built into the MongoDB Java driver",
+            "og_description": "This article delves into using the Atlas Search support built into the MongoDB Java driver",
+            "og_image": {
+                "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltbf2d10d6fd8d42e8/64b02c4db62fa4f973aba3e1/search_header.png"
+            },
+            "og_type": "",
+            "og_url": "",
+            "twitter_card": "",
+            "twitter_creator": "",
+            "twitter_description": "This article delves into using the Atlas Search support built into the MongoDB Java driver",
+            "twitter_image": {
+                "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltbf2d10d6fd8d42e8/64b02c4db62fa4f973aba3e1/search_header.png"
+            }
+        },
+        "category": "Article",
+        "contentDate": "2023-07-14T00:59:41.678Z",
+        "updateDate": "2023-07-14T00:59:33.101Z",
+        "authors": [
+            {
+                "__typename": "Authors",
+                "bio": "Erik Hatcher, a Staff Developer Advocate for Atlas Search, develops code and content for search-based applications. He co-authored Lucene in Action, the definitive guide to using the Lucene library. Lucene powers the core of Atlas Search and many other search engines that serve the majority of the world’s applications these days. As a Lucene and open source enthusiast, Erik serves as a member of the Apache Software Foundation and a committer on the Lucene project. Prior to MongoDB, Erik co-founded Lucidworks, where he assisted in the development of many production search systems and helped build out an enterprise search platform.",
+                "calculated_slug": "/author/erik-hatcher",
+                "twitter": "",
+                "name": "Erik Hatcher",
+                "image": {
+                    "__typename": "SysAsset",
+                    "url": "https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltf1a0f9edfe1b4b9d/64aff2308f332a45615460f3/erik_profile.jpg"
+                }
+            }
+        ]
+    },
+    "isPathFactory": false,
+    "publicRuntimeConfig": {
+        "absoluteBasePath": "http://devcenter-local.mongodb.com:3000/developer",
+        "pageDescriptions": {
+            "/": "Code, content, tutorials, programs and community to enable developers of all skill levels on the MongoDB Data Platform. Join or follow us here to learn more!"
+        }
+    },
+    "asPath": "/products/atlas/atlas-search-java/"
+}

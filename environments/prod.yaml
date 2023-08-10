@@ -35,6 +35,8 @@ envSecrets:
   GOOGLE_PLACES_API_KEY: devcenter-secrets
   BACKEND_API_KEY: devcenter-secrets
   MONGODB_TV_API_KEY: devcenter-secrets
+  NPM_EMAIL_NEW: devcenter-secrets
+  NPM_AUTH_NEW: devcenter-secrets
 
 autoscaling:
   minReplicas: 4

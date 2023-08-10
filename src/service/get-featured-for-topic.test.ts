@@ -1,26 +1,24 @@
-import { FeaturedResponse } from '../interfaces/featured';
 import { getFeaturedForTopic } from './get-featured-for-topic';
-import * as apiRequestModule from '../api-requests/get-featured-for-topic';
 
+const mockGetFeaturedTopic = jest.fn();
 jest.mock('../api-requests/get-featured-for-topic', () => ({
     __esModule: true,
-    ...jest.requireActual('../api-requests/get-featured-for-topic'),
+    CS_getFeaturedContentForTopic: () => mockGetFeaturedTopic(),
 }));
-
-const featuredArticles: FeaturedResponse = {
-    articles: [
-        { title: 'Article 1' },
-        { title: 'Article 2' },
-        { title: 'Article 3' },
-        { title: 'Article 4' },
-    ],
-    podcasts: [],
-    videos: [],
-};
+jest.mock('./get-all-featured.preval', () => ({}));
 
 test('parses featured to list of strings', async () => {
-    const spy = jest.spyOn(apiRequestModule, 'CS_getFeaturedContentForTopic');
-    spy.mockReturnValue(Promise.resolve(featuredArticles));
+    mockGetFeaturedTopic.mockImplementation(() => ({
+        articles: [
+            { title: 'Article 1' },
+            { title: 'Article 2' },
+            { title: 'Article 3' },
+            { title: 'Article 4' },
+        ],
+        podcasts: [],
+        videos: [],
+    }));
+
     const result = await getFeaturedForTopic('');
     expect(result.articles).toHaveLength(4);
     expect(result.podcasts).toHaveLength(0);

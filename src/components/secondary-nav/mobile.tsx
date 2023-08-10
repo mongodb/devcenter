@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-import { UserMenu } from '@leafygreen-ui/mongo-nav';
+import { UserMenu } from '@lg-private/mongo-nav';
 import {
     ESystemIconNames,
     SystemIcon,
