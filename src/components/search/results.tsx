@@ -52,6 +52,7 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
         }
     }, [pageNumber, filters, searchString, sortBy]);
 
+    // TODO: Matt or Harika to confirm the necessity of the code below
     // useEffect(() => {
     //     setCurrentPage(startPage);
     // }, [results]);
