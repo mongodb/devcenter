@@ -310,7 +310,7 @@ trigger:
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
+name: rebuild-devcenter-prod-cron-new # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
 
 resources:
   requests:
@@ -333,9 +333,9 @@ steps:
       APP_ENV: production
       HOST_URL: www.mongodb.com
       NPM_AUTH:
-        from_secret: NPM_AUTH_NEW
+        from_secret: NPM_AUTH
       NPM_EMAIL:
-        from_secret: NPM_EMAIL_NEW
+        from_secret: NPM_EMAIL
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
@@ -390,7 +390,7 @@ trigger:
   event:
     - cron
   cron:
-    - rebuild-devcenter-prod-cron
+    - rebuild-devcenter-prod-cron-new
 
 ---
 depends_on: null
