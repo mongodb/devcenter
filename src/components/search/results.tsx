@@ -52,9 +52,9 @@ const SearchResults: React.FunctionComponent<ResultsProps> = ({
         }
     }, [pageNumber, filters, searchString, sortBy]);
 
-    useEffect(() => {
-        setCurrentPage(startPage);
-    }, [results]);
+    // useEffect(() => {
+    //     setCurrentPage(startPage);
+    // }, [results]);
 
     const onLoadMore = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
