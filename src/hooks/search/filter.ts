@@ -44,13 +44,13 @@ const useFilter = (
     // so it is created once instead of searchData.length times
     const allFiltersTypeMap: { [type: string]: FilterItem[] } = {};
     filters.forEach((filter: FilterItem) => {
-        if (filter.type) {
-            if (!allFiltersTypeMap[filter.type]) {
-                allFiltersTypeMap[filter.type] = [filter];
-            } else {
-                allFiltersTypeMap[filter.type].push(filter);
-            }
+        if (!filter.type) return;
+
+        if (!allFiltersTypeMap[filter.type]) {
+            allFiltersTypeMap[filter.type] = [];
         }
+
+        allFiltersTypeMap[filter.type].push(filter);
     });
 
     console.log(
