@@ -69,10 +69,6 @@ const useFilter = (
             if (!searchData) return [];
             if (!hasFiltersSet) return searchData;
 
-            for (const data of searchData as ContentItem[]) {
-                if (data.category != 'Event') continue;
-            }
-
             return searchData.filter((item: ContentItem) => {
                 return itemInFilters(item, allFiltersTypeMap);
             });
