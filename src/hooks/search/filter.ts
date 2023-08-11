@@ -26,12 +26,41 @@ const useFilter = (
                     router.query,
                     filterItems
                 );
+                console.log(
+                    `[JW DEBUG] allNewFilters: ${JSON.stringify(
+                        allNewFilters,
+                        null,
+                        2
+                    )}`
+                );
                 setFilters(allNewFilters);
             }
         }
     }, [filterItems, router?.isReady, router.query]);
 
     const hasFiltersSet = !!filters.length;
+
+    // refactor the map out of itemInFilters()
+    // so it is created once instead of searchData.length times
+    const allFiltersTypeMap: { [type: string]: FilterItem[] } = {};
+    filters.forEach((filter: FilterItem) => {
+        if (filter.type) {
+            if (!allFiltersTypeMap[filter.type]) {
+                allFiltersTypeMap[filter.type] = [filter];
+            } else {
+                allFiltersTypeMap[filter.type].push(filter);
+            }
+        }
+    });
+
+    console.log(
+        `[JW DEBUG] allFiltersTypeMap: ${JSON.stringify(
+            allFiltersTypeMap,
+            null,
+            2
+        )}`
+    );
+
     const filterData = useCallback(
         searchData => {
             if (!searchData) {
@@ -40,7 +69,7 @@ const useFilter = (
                 return searchData;
             } else {
                 return searchData.filter((item: ContentItem) => {
-                    return itemInFilters(item, filters);
+                    return itemInFilters(item, allFiltersTypeMap);
                 });
             }
         },
