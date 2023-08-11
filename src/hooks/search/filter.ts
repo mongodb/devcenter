@@ -26,13 +26,6 @@ const useFilter = (
                     router.query,
                     filterItems
                 );
-                console.log(
-                    `[JW DEBUG] allNewFilters: ${JSON.stringify(
-                        allNewFilters,
-                        null,
-                        2
-                    )}`
-                );
                 setFilters(allNewFilters);
             }
         }
@@ -40,31 +33,45 @@ const useFilter = (
 
     const hasFiltersSet = !!filters.length;
 
+    const subFilterTypeToMainFilterType: Record<string, string> = {};
+    filterItems?.forEach((filterItem: { key: string; value: FilterItem[] }) => {
+        filterItem.value.forEach((filter: FilterItem) => {
+            if (!filter.subFilters?.length) return;
+
+            filter.subFilters.forEach((subfilter: FilterItem) => {
+                const subfilterType = subfilter.type as string;
+                subFilterTypeToMainFilterType[subfilterType] =
+                    filter.type as string;
+            });
+        });
+    });
+
     // refactor the map out of itemInFilters()
     // so it is created once instead of searchData.length times
     const allFiltersTypeMap: { [type: string]: FilterItem[] } = {};
     filters.forEach((filter: FilterItem) => {
         if (!filter.type) return;
 
-        if (!allFiltersTypeMap[filter.type]) {
-            allFiltersTypeMap[filter.type] = [];
+        let filterType = filter.type;
+        if (filterType in subFilterTypeToMainFilterType) {
+            filterType = subFilterTypeToMainFilterType[filterType];
         }
 
-        allFiltersTypeMap[filter.type].push(filter);
-    });
+        if (!allFiltersTypeMap[filterType]) {
+            allFiltersTypeMap[filterType] = [];
+        }
 
-    console.log(
-        `[JW DEBUG] allFiltersTypeMap: ${JSON.stringify(
-            allFiltersTypeMap,
-            null,
-            2
-        )}`
-    );
+        allFiltersTypeMap[filterType].push(filter);
+    });
 
     const filterData = useCallback(
         searchData => {
             if (!searchData) return [];
             if (!hasFiltersSet) return searchData;
+
+            for (const data of searchData as ContentItem[]) {
+                if (data.category != 'Event') continue;
+            }
 
             return searchData.filter((item: ContentItem) => {
                 return itemInFilters(item, allFiltersTypeMap);
