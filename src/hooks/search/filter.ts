@@ -63,15 +63,12 @@ const useFilter = (
 
     const filterData = useCallback(
         searchData => {
-            if (!searchData) {
-                return [];
-            } else if (!hasFiltersSet) {
-                return searchData;
-            } else {
-                return searchData.filter((item: ContentItem) => {
-                    return itemInFilters(item, allFiltersTypeMap);
-                });
-            }
+            if (!searchData) return [];
+            if (!hasFiltersSet) return searchData;
+
+            return searchData.filter((item: ContentItem) => {
+                return itemInFilters(item, allFiltersTypeMap);
+            });
         },
         [hasFiltersSet, filters]
     );
