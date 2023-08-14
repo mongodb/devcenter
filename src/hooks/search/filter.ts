@@ -4,6 +4,48 @@ import { useCallback, useEffect, useState } from 'react';
 import { ContentItem } from '../../interfaces/content-item';
 import { getFiltersFromQueryStr, itemInFilters } from './utils';
 
+export const buildSubFilterTypeToMainFilterType = (
+    filterItems?: { key: string; value: FilterItem[] }[]
+) => {
+    const subFilterTypeToMainFilterType: Record<string, string> = {};
+    filterItems?.forEach((filterItem: { key: string; value: FilterItem[] }) => {
+        filterItem.value.forEach((filter: FilterItem) => {
+            if (!filter.subFilters?.length) return;
+
+            filter.subFilters.forEach((subfilter: FilterItem) => {
+                const subfilterType = subfilter.type as string;
+                subFilterTypeToMainFilterType[subfilterType] =
+                    filter.type as string;
+            });
+        });
+    });
+
+    return subFilterTypeToMainFilterType;
+};
+
+export const buildAllFiltersTypeMap = (
+    filters: FilterItem[],
+    subFilterTypeToMainFilterType: Record<string, string>
+) => {
+    const allFiltersTypeMap: { [type: string]: FilterItem[] } = {};
+    filters.forEach((filter: FilterItem) => {
+        if (!filter.type) return;
+
+        let filterType = filter.type;
+        if (filterType in subFilterTypeToMainFilterType) {
+            filterType = subFilterTypeToMainFilterType[filterType];
+        }
+
+        if (!allFiltersTypeMap[filterType]) {
+            allFiltersTypeMap[filterType] = [];
+        }
+
+        allFiltersTypeMap[filterType].push(filter);
+    });
+
+    return allFiltersTypeMap;
+};
+
 const useFilter = (
     callback: () => void,
     filterItems?: { key: string; value: FilterItem[] }[]
@@ -33,36 +75,13 @@ const useFilter = (
 
     const hasFiltersSet = !!filters.length;
 
-    const subFilterTypeToMainFilterType: Record<string, string> = {};
-    filterItems?.forEach((filterItem: { key: string; value: FilterItem[] }) => {
-        filterItem.value.forEach((filter: FilterItem) => {
-            if (!filter.subFilters?.length) return;
+    const subFilterTypeToMainFilterType =
+        buildSubFilterTypeToMainFilterType(filterItems);
 
-            filter.subFilters.forEach((subfilter: FilterItem) => {
-                const subfilterType = subfilter.type as string;
-                subFilterTypeToMainFilterType[subfilterType] =
-                    filter.type as string;
-            });
-        });
-    });
-
-    // refactor the map out of itemInFilters()
-    // so it is created once instead of searchData.length times
-    const allFiltersTypeMap: { [type: string]: FilterItem[] } = {};
-    filters.forEach((filter: FilterItem) => {
-        if (!filter.type) return;
-
-        let filterType = filter.type;
-        if (filterType in subFilterTypeToMainFilterType) {
-            filterType = subFilterTypeToMainFilterType[filterType];
-        }
-
-        if (!allFiltersTypeMap[filterType]) {
-            allFiltersTypeMap[filterType] = [];
-        }
-
-        allFiltersTypeMap[filterType].push(filter);
-    });
+    const allFiltersTypeMap = buildAllFiltersTypeMap(
+        filters,
+        subFilterTypeToMainFilterType
+    );
 
     const filterData = useCallback(
         searchData => {
