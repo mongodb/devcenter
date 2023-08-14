@@ -299,6 +299,12 @@ const mockFilterItems = [
                         subFilters: [],
                         count: 0,
                     },
+                    {
+                        name: 'Aggregation Framework',
+                        type: 'L2Product',
+                        subFilters: [],
+                        count: 14,
+                    },
                 ],
             },
             {
@@ -310,6 +316,12 @@ const mockFilterItems = [
                         type: 'L2Product',
                         subFilters: [],
                         count: 0,
+                    },
+                    {
+                        name: 'Data API',
+                        type: 'L2Product',
+                        subFilters: [],
+                        count: 14,
                     },
                 ],
             },
@@ -688,5 +700,128 @@ describe('itemInFilters', () => {
             itemInFilters(itemWithDifferentTypeTags, allFiltersTypeMap)
         ).toBe(true);
         expect(itemInFilters(itemWithAllTags, allFiltersTypeMap)).toBe(true);
+    });
+
+    test('Subfilters will not override filters.', () => {
+        const data: ContentItem[] = [];
+
+        // create 8 L2 products
+        // MongoDB: 2 Schema, 2 Agrgegation Framework
+        // Atlas: 2 Search, 2 Data API
+        for (let i = 0; i < 2; i++) {
+            const schema = {
+                title: `product ${i}`,
+                tags: [
+                    { name: 'Schema', type: 'L2Product' },
+                    { name: 'MongoDB', type: 'L1Product' },
+                ],
+            };
+            const aggregationFramework = {
+                title: `product ${i}`,
+                tags: [
+                    { name: 'Aggregation Framework', type: 'L2Product' },
+                    { name: 'MongoDB', type: 'L1Product' },
+                ],
+            };
+            const search = {
+                title: `product ${i}`,
+                tags: [
+                    { name: 'Search', type: 'L2Product' },
+                    { name: 'Atlas', type: 'L1Product' },
+                ],
+            };
+            const dataApi = {
+                title: `product ${i}`,
+                tags: [
+                    { name: 'Data API', type: 'L2Product' },
+                    { name: 'Atlas', type: 'L1Product' },
+                ],
+            };
+
+            data.push(schema as ContentItem);
+            data.push(aggregationFramework as ContentItem);
+            data.push(search as ContentItem);
+            data.push(dataApi as ContentItem);
+        }
+
+        // filter for MongoDB should get 2 schema and 2 aggregation framework
+        let filter = [
+            {
+                name: 'MongoDB',
+                type: 'L1Product',
+                subFilters: [
+                    {
+                        name: 'Schema',
+                        type: 'L2Product',
+                        subFilters: [],
+                        count: 0,
+                    },
+                ],
+            },
+        ];
+
+        let allFiltersTypeMap = buildAllFiltersTypeMap(
+            filter,
+            subFilterTypeToMainFilterType
+        );
+
+        let filteredData: ContentItem[] = data.filter((item: ContentItem) => {
+            return itemInFilters(item, allFiltersTypeMap);
+        });
+
+        expect(filteredData.length).toBe(4);
+
+        // filter for schema should return 2 entries
+        filter = [
+            {
+                name: 'Schema',
+                type: 'L2Product',
+                subFilters: [],
+            },
+        ];
+
+        allFiltersTypeMap = buildAllFiltersTypeMap(
+            filter,
+            subFilterTypeToMainFilterType
+        );
+
+        filteredData = data.filter((item: ContentItem) => {
+            return itemInFilters(item, allFiltersTypeMap);
+        });
+
+        expect(filteredData.length).toBe(2);
+
+        // filter for Schema and Atlas should return 6
+        // 2 for schema and for for Atlas
+        filter = [
+            {
+                name: 'Schema',
+                type: 'L2Product',
+                subFilters: [],
+            },
+            {
+                name: 'Atlas',
+                type: 'L1Product',
+                subFilters: [
+                    {
+                        name: 'Search',
+                        type: 'L2Product',
+                        subFilters: [],
+                        count: 0,
+                    },
+                ],
+            },
+        ];
+
+        allFiltersTypeMap = buildAllFiltersTypeMap(
+            filter,
+            subFilterTypeToMainFilterType
+        );
+
+        filteredData = data.filter((item: ContentItem) => {
+            return itemInFilters(item, allFiltersTypeMap);
+        });
+
+        expect(filteredData.length).toBe(6);
     });
 });
