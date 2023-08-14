@@ -32,17 +32,46 @@ const useFilter = (
     }, [filterItems, router?.isReady, router.query]);
 
     const hasFiltersSet = !!filters.length;
+
+    const subFilterTypeToMainFilterType: Record<string, string> = {};
+    filterItems?.forEach((filterItem: { key: string; value: FilterItem[] }) => {
+        filterItem.value.forEach((filter: FilterItem) => {
+            if (!filter.subFilters?.length) return;
+
+            filter.subFilters.forEach((subfilter: FilterItem) => {
+                const subfilterType = subfilter.type as string;
+                subFilterTypeToMainFilterType[subfilterType] =
+                    filter.type as string;
+            });
+        });
+    });
+
+    // refactor the map out of itemInFilters()
+    // so it is created once instead of searchData.length times
+    const allFiltersTypeMap: { [type: string]: FilterItem[] } = {};
+    filters.forEach((filter: FilterItem) => {
+        if (!filter.type) return;
+
+        let filterType = filter.type;
+        if (filterType in subFilterTypeToMainFilterType) {
+            filterType = subFilterTypeToMainFilterType[filterType];
+        }
+
+        if (!allFiltersTypeMap[filterType]) {
+            allFiltersTypeMap[filterType] = [];
+        }
+
+        allFiltersTypeMap[filterType].push(filter);
+    });
+
     const filterData = useCallback(
         searchData => {
-            if (!searchData) {
-                return [];
-            } else if (!hasFiltersSet) {
-                return searchData;
-            } else {
-                return searchData.filter((item: ContentItem) => {
-                    return itemInFilters(item, filters);
-                });
-            }
+            if (!searchData) return [];
+            if (!hasFiltersSet) return searchData;
+
+            return searchData.filter((item: ContentItem) => {
+                return itemInFilters(item, allFiltersTypeMap);
+            });
         },
         [hasFiltersSet, filters]
     );
