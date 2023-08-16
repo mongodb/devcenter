@@ -153,6 +153,13 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
         tertiaryNavItems,
         'documentation'
     );
+    tertiaryNavItems = [
+        {
+            title: `All ${name} Content`,
+            url: '#all',
+        },
+        ...tertiaryNavItems,
+    ];
 
     return (
         <>
@@ -225,7 +232,7 @@ const TopicPageTemplate: NextPage<TopicPageProps> = ({
                         </>
                     )}
 
-                    <div sx={extraSearchWrapperStyles}>
+                    <div sx={extraSearchWrapperStyles} id="all">
                         <div sx={titleStyles}>
                             <TypographyScale
                                 variant="heading5"
