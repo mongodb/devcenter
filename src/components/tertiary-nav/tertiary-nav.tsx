@@ -15,10 +15,13 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
     items,
     topic,
 }) => {
-    const mobileItems: TertiaryNavItem[] = [
-        { title: `All ${topic} Content`, url: '#' },
-        ...items,
-    ];
+    // Topic pages already have an "All <TOPIC> Content" mobile option that links to the search results,
+    // so don't include a rendundant option in that case.
+    const mobileItems: TertiaryNavItem[] =
+        items.at(0)?.url === '#all'
+            ? items
+            : [{ title: `All ${topic} Content`, url: '#' }, ...items];
+
     useEffect(() => {
         const navScroll = document.getElementById('navScroll');
         navScroll?.removeEventListener('scroll', scrollListener);
@@ -53,7 +56,11 @@ const TertiaryNav: React.FunctionComponent<TertiaryNavProps> = ({
                     },
                 }}
             >
-                <SideNav currentUrl="#" items={mobileItems} isMobile={true} />
+                <SideNav
+                    currentUrl={mobileItems[0].url}
+                    items={mobileItems}
+                    isMobile={true}
+                />
             </div>
         </>
     );
