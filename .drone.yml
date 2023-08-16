@@ -130,7 +130,7 @@ steps:
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
-    - yarn install --frozen-lockfile
+    - yarn install --frozen-lockfile --verbose
     - yarn build
     resources:
       limits:
@@ -323,7 +323,7 @@ steps:
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
-    - yarn install --frozen-lockfile
+    - yarn install --frozen-lockfile --verbose
     - yarn build
     resources:
       limits:
