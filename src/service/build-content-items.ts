@@ -327,15 +327,11 @@ export const CS_previewMapPreviewArticleToContentItem = (
         githubUrl: github_url,
         liveSiteUrl: livesite_url,
         seo: mapSEO(a.seo) as SEO,
-        image: {
-            url: a.image.url,
-            alt: a.image.description || '',
-        },
     };
 
     if (a.image) {
         contentItem.image = {
-            url: a.image.url,
+            url: a.image.url || '',
             alt: a.image.description || '',
         };
     }
