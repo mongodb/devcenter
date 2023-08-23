@@ -314,7 +314,7 @@ export const CS_previewMapPreviewArticleToContentItem = (
         contentDate:
             a.original_publish_date ||
             a.publish_details?.at(0)?.time ||
-            '2000-01-01T00:00:00.000Z', // If an article is unpublished, give it this default date.
+            new Date().toISOString(), // If an article is unpublished, give it the current time as the date.
         updateDate: updated_at,
         description: a.description,
         content: a.content,
