@@ -32,10 +32,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL_STAGING
-      STRAPI_URL:
-        from_secret: STRAPI_URL_STAGING
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:
@@ -147,10 +143,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
-      STRAPI_URL:
-        from_secret: STRAPI_URL_PROD
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:
@@ -254,10 +246,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL_STAGING
-      STRAPI_URL:
-        from_secret: STRAPI_URL_STAGING
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:
@@ -340,10 +328,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
-      STRAPI_URL:
-        from_secret: STRAPI_URL_PROD
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:
@@ -418,10 +402,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL_STAGING
-      STRAPI_URL:
-        from_secret: STRAPI_URL_STAGING
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:

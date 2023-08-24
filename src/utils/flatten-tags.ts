@@ -1,88 +1,9 @@
 import { Tag } from '../interfaces/tag';
-import { OtherTags } from '../interfaces/other-tags';
 import { CS_OtherTags, CS_PreviewOtherTags } from '../interfaces/other-tags';
 import {
     CS_ArticlePrimaryTag,
     CS_PreviewPrimaryTag,
 } from '../interfaces/article';
-
-// STRAPI
-
-const parseOtherTags = (otherTags: OtherTags) => {
-    const tags: Tag[] = [];
-    if (!otherTags) return tags;
-
-    const contentType = otherTags.contentType;
-    const technology = otherTags.technology;
-    const authorType = otherTags.authorType;
-    const l1Product = otherTags.l1Product;
-    const l2Product = otherTags.l2Product;
-    const spokenLanguage = otherTags.spokenLanguage;
-    const expertiseLevel = otherTags.expertiseLevel;
-    const programmingLanguage = otherTags.programmingLanguage;
-    if (contentType) {
-        tags.push({
-            name: contentType.contentType,
-            slug: contentType.calculatedSlug,
-            type: 'ContentType',
-        });
-    }
-    if (technology) {
-        technology.forEach(entry => {
-            tags.push({
-                name: entry.name,
-                slug: entry.calculatedSlug,
-                type: 'Technology',
-            });
-        });
-    }
-    if (authorType) {
-        tags.push({
-            name: authorType.name,
-            slug: authorType.calculatedSlug,
-            type: 'AuthorType',
-        });
-    }
-    if (l1Product) {
-        tags.push({
-            name: l1Product.name,
-            slug: l1Product.calculatedSlug,
-            type: 'L1Product',
-        });
-    }
-    if (l2Product) {
-        tags.push({
-            name: l2Product.name,
-            slug: l2Product.calculatedSlug,
-            type: 'L2Product',
-        });
-    }
-    if (spokenLanguage) {
-        tags.push({
-            name: spokenLanguage.name,
-            slug: spokenLanguage.calculatedSlug,
-            type: 'SpokenLanguage',
-        });
-    }
-    if (expertiseLevel) {
-        tags.push({
-            name: expertiseLevel.name,
-            slug: expertiseLevel.calculatedSlug,
-            type: 'ExpertiseLevel',
-        });
-    }
-    if (programmingLanguage) {
-        programmingLanguage.forEach(entry => {
-            tags.push({
-                name: entry.name,
-                slug: entry.calculatedSlug,
-                type: 'ProgrammingLanguage',
-            });
-        });
-    }
-
-    return tags;
-};
 
 // CONTENTSTACK
 
@@ -176,17 +97,6 @@ const removeDuplicates = (inArray: Tag[]) => {
         }
     }
     return arr;
-};
-
-export const flattenTags = (otherTags: OtherTags | OtherTags[]): Tag[] => {
-    if (!otherTags) {
-        return [];
-    }
-
-    const flattenedTags = parseOtherTags(
-        Array.isArray(otherTags) ? otherTags[0] : otherTags
-    );
-    return removeDuplicates(flattenedTags);
 };
 
 export const CS_flattenTags = (
