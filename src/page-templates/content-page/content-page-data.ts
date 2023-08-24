@@ -15,6 +15,7 @@ import { TagType } from '../../types/tag-type';
 import { hasPrimaryTag } from './util';
 import { PillCategory } from '../../types/pill-category';
 import { getURLPath } from '../../utils/format-url-path';
+import { convertReferences } from '../../utils/markdown-parser/convert-references';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pluralize = require('pluralize');
@@ -117,6 +118,8 @@ export const getContentPageData = async (slug: string[]) => {
         type: metaInfoForTopic?.category as TagType,
         slug: topicSlug,
     };
+
+    contentItem.content = await convertReferences(contentItem.content || '');
 
     const data = {
         crumbs,

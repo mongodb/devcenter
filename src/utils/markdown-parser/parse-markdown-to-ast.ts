@@ -1,4 +1,4 @@
-import remark from 'remark';
+import { remark } from 'remark';
 import directive from 'remark-directive';
 import gfm from 'remark-gfm';
 import visit from 'unist-util-visit';
