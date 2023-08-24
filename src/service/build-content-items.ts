@@ -311,7 +311,10 @@ export const CS_previewMapPreviewArticleToContentItem = (
         collectionType: 'Article',
         authors,
         category: a.other_tags.content_type[0].title,
-        contentDate: a.original_publish_date || a.publish_details[0].time,
+        contentDate:
+            a.original_publish_date ||
+            a.publish_details?.at(0)?.time ||
+            new Date().toISOString(), // If an article is unpublished, give it the current time as the date.
         updateDate: updated_at,
         description: a.description,
         content: a.content,
@@ -327,15 +330,11 @@ export const CS_previewMapPreviewArticleToContentItem = (
         githubUrl: github_url,
         liveSiteUrl: livesite_url,
         seo: mapSEO(a.seo) as SEO,
-        image: {
-            url: a.image.url,
-            alt: a.image.description || '',
-        },
     };
 
     if (a.image) {
         contentItem.image = {
-            url: a.image.url,
+            url: a.image.url || '',
             alt: a.image.description || '',
         };
     }

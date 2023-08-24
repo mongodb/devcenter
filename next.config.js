@@ -230,12 +230,10 @@ if (process.env.ANALYZE === 'true') {
     });
     module.exports = withNextPluginPreval(withBundleAnalyzer(configVals));
 } else {
-    // Temporarily disable this.
-    // const enableSentry =
-    //     process.env.APP_ENV === 'dev' ||
-    //     process.env.APP_ENV === 'staging' ||
-    //     process.env.APP_ENV === 'production';
-    const enableSentry = false;
+    const enableSentry =
+        process.env.APP_ENV === 'dev' ||
+        process.env.APP_ENV === 'staging' ||
+        process.env.APP_ENV === 'production';
     module.exports = withNextPluginPreval(
         enableSentry
             ? withSentryConfig(configVals, sentryWebpackPluginOptions)
