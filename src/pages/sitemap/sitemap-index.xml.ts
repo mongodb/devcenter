@@ -5,7 +5,7 @@ import { GetServerSideProps } from 'next';
 import allContentPreval from '../../service/get-all-content.preval';
 import { getTopicPagePathMappings } from '../../service/get-topic-paths';
 
-const DEVCENTER_URL = 'https://mongodb.com/developer';
+const DEVCENTER_URL = 'https://www.mongodb.com/developer';
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const curDate = new Date().toISOString();
@@ -37,7 +37,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }));
 
     const contentPages = allContentPreval.map(({ slug, contentDate }) => ({
-        loc: `${DEVCENTER_URL}/${slug}`,
+        loc: slug.startsWith('https://')
+            ? slug
+            : slug.startsWith('/')
+            ? `${DEVCENTER_URL}${slug}`
+            : `${DEVCENTER_URL}/${slug}`,
         lastmod: (contentDate as string) || curDate,
         priority: 0.5,
     }));
