@@ -24,6 +24,7 @@ import {
 import { customCache } from '../utils/emotion';
 
 import '../../mocks/run-msw';
+('test');
 
 interface CustomProps {
     session?: Session;
