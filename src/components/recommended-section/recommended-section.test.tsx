@@ -21,6 +21,10 @@ jest.mock('../../contexts/modal', () => ({
     }),
 }));
 
+jest.mock('../modal/personalization', () => {
+    return jest.fn(() => <></>);
+});
+
 describe('Recommended Section', () => {
     test('Renders nothing when not passed tags or content', () => {
         render(<RecommendedSection />);

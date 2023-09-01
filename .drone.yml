@@ -249,10 +249,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL_STAGING
-      STRAPI_URL:
-        from_secret: STRAPI_URL_STAGING
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:
@@ -347,7 +343,7 @@ steps:
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
-    - yarn install --frozen-lockfile
+    - yarn install --frozen-lockfile --verbose
     - yarn build
     resources:
       limits:
@@ -364,10 +360,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
-      STRAPI_URL:
-        from_secret: STRAPI_URL_PROD
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:
@@ -471,10 +463,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL_STAGING
-      STRAPI_URL:
-        from_secret: STRAPI_URL_STAGING
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:
@@ -527,7 +515,7 @@ trigger:
 depends_on: null
 kind: pipeline
 type: kubernetes
-name: rebuild-devcenter-prod-cron # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
+name: rebuild-devcenter-prod-cron-new # Used to rebuild content published by DevRel, using what's currently deployed in the production branch.
 
 resources:
   requests:
@@ -540,7 +528,7 @@ steps:
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates
-    - yarn install --frozen-lockfile
+    - yarn install --frozen-lockfile --verbose
     - yarn build
     resources:
       limits:
@@ -550,17 +538,13 @@ steps:
       APP_ENV: production
       HOST_URL: www.mongodb.com
       NPM_AUTH:
-        from_secret: NPM_AUTH_NEW
+        from_secret: NPM_AUTH
       NPM_EMAIL:
-        from_secret: NPM_EMAIL_NEW
+        from_secret: NPM_EMAIL
       REALM_API_URL:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL
-      STRAPI_URL:
-        from_secret: STRAPI_URL_PROD
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:
@@ -607,7 +591,7 @@ trigger:
   event:
     - cron
   cron:
-    - rebuild-devcenter-prod-cron
+    - rebuild-devcenter-prod-cron-new
 
 ---
 depends_on: null
@@ -635,10 +619,6 @@ steps:
         from_secret: REALM_API_URL
       REALM_SEARCH_URL:
         from_secret: REALM_SEARCH_URL_STAGING
-      STRAPI_URL:
-        from_secret: STRAPI_URL_STAGING
-      STRAPI_API_TOKEN:
-        from_secret: STRAPI_API_TOKEN
       CS_BRANCH:
         from_secret: CS_BRANCH
       CS_DELIVERY_TOKEN:

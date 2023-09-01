@@ -6,20 +6,8 @@ import Hero from '.';
 import { createTopicPageCTAS } from './utils';
 import { Tag } from '../../interfaces/tag';
 
-jest.mock('next/router', () => ({
-    __esModule: true,
-    ...jest.requireActual('next/router'),
-    useRouter: jest.fn(() => ({ asPath: '' })),
-}));
-
-jest.mock('next-auth/react', () => ({
-    __esModule: true,
-    ...jest.requireActual('next/router'),
-    useSession: jest.fn(() => ({ session: null })),
-}));
-
-jest.mock('../../utils/get-sign-in-url', () => {
-    return jest.fn(() => '');
+jest.mock('../follow-link', () => {
+    return jest.fn(() => <div>Follow</div>);
 });
 
 const crumbs = [

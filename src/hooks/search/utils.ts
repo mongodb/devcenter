@@ -279,22 +279,9 @@ export const isEmptyArray = (results: any) => {
 
 export const itemInFilters = (
     { tags }: ContentItem,
-    allFilters: FilterItem[]
+    allFiltersTypeMap: { [type: string]: FilterItem[] }
 ) => {
-    if (!allFilters.length) return true;
-
-    // Group tags by their type
-    const allFiltersTypeMap: { [type: string]: FilterItem[] } = {};
-
-    allFilters.forEach((filter: FilterItem) => {
-        if (filter.type) {
-            if (!allFiltersTypeMap[filter.type]) {
-                allFiltersTypeMap[filter.type] = [filter];
-            } else {
-                allFiltersTypeMap[filter.type].push(filter);
-            }
-        }
-    });
+    if (!Object.keys(allFiltersTypeMap).length) return true;
 
     // AND filters with different types, OR filters of the same type
     return Object.values(allFiltersTypeMap).every((filters: FilterItem[]) =>

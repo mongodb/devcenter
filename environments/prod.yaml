@@ -26,8 +26,6 @@ envSecrets:
   REVALIDATE_TOKEN: devcenter-secrets
   SENTRY_AUTH_TOKEN: devcenter-secrets
   SENTRY_DSN: devcenter-secrets
-  STRAPI_URL: devcenter-secrets
-  STRAPI_API_TOKEN: devcenter-secrets
   CS_BRANCH: devcenter-secrets
   CS_DELIVERY_TOKEN: devcenter-secrets
   CS_GRAPHQL_URL: devcenter-secrets
@@ -35,8 +33,6 @@ envSecrets:
   GOOGLE_PLACES_API_KEY: devcenter-secrets
   BACKEND_API_KEY: devcenter-secrets
   MONGODB_TV_API_KEY: devcenter-secrets
-  NPM_EMAIL_NEW: devcenter-secrets
-  NPM_AUTH_NEW: devcenter-secrets
 
 autoscaling:
   minReplicas: 4
