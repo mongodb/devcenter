@@ -1,18 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { withSentry } from '@sentry/nextjs';
-import { nextAuthOptions } from './auth/[...nextauth]';
-import { unstable_getServerSession } from 'next-auth/next';
 import logger from '../../utils/logger';
 
 async function userPreferencesHandler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const session = await unstable_getServerSession(req, res, nextAuthOptions);
-
     try {
         const request = await fetch(
-            `${process.env.BACKEND_URL}/api/user_preferences/${session?.userId}`,
+            `${process.env.BACKEND_URL}/api/user_preferences/${''}`,
             {
                 method: req.method,
                 body: req.body,
@@ -33,7 +29,7 @@ async function userPreferencesHandler(
                 msg: 'Failed to update user preferences',
                 status: request.status,
                 body: req.body,
-                userId: session?.userId,
+                userId: 'session?.userId',
             });
             res.setHeader('Cache-Control', 'no-store, max-age=0');
             return res
