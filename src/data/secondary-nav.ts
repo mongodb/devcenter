@@ -92,6 +92,10 @@ export const secondaryNavData = [
                         name: 'Introductory',
                         slug: 'expertise-levels/introductory',
                     },
+                    {
+                        name: 'Intermediate',
+                        slug: '/expertise-levels/intermediate',
+                    },
                     { name: 'Advanced', slug: '/expertise-levels/advanced' },
                 ],
             },
