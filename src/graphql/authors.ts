@@ -35,7 +35,7 @@ export const getAllAuthorsQuery = gql`
 `;
 
 export const getAuthorQuery = gql`
-    query get_author($calculatedSlug: string, $skip: Int = 0) {
+    query get_author($calculatedSlug: String!, $skip: Int = 0) {
         authors: all_authors(
             where: { calculated_slug: $calculatedSlug }
             skip: $skip
