@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Button, Link, TypographyScale } from '@mdb/flora';
 import React from 'react';
 import { Grid } from 'theme-ui';
+import { NextSeo } from 'next-seo';
 
 interface Book {
     title: string;
@@ -190,124 +191,131 @@ const BooksPage: NextPage<BooksPageProps> = ({
     relatedBooks,
 }) => {
     return (
-        <div>
-            <div sx={{ bg: 'blue80', height: '100%' }}>
-                <a
-                    href="https://www.mongodb.com"
-                    sx={{
-                        boxSizing: 'content-box',
-                        flexShrink: 0,
-                        position: 'relative',
-                        height: '32px',
-                        width: '120px',
-                        mx: 'auto',
-                        paddingBottom: ['28px', null, null, '80px'],
-                        paddingTop: ['28px', null, null, '40px'],
-                        display: ['none', null, 'block'],
-                    }}
-                >
-                    <Image
-                        alt="MongoDB Logo"
-                        src="https://webimages.mongodb.com/_com_assets/cms/kuyj3d95v5vbmm2f4-horizontal_white.svg"
-                        layout="fill"
-                    />
-                </a>
-                <a
-                    href="https://www.mongodb.com"
-                    sx={{
-                        display: ['block', null, 'none'],
-                        padding: '24px',
-                        width: 'min-content',
-                    }}
-                >
-                    <LeafIcon />
-                </a>
-            </div>
+        <>
+            <NextSeo title={'MongoDB Press'} />
+            <div>
+                <div sx={{ bg: 'blue80', height: '100%' }}>
+                    <a
+                        href="https://www.mongodb.com"
+                        sx={{
+                            boxSizing: 'content-box',
+                            flexShrink: 0,
+                            position: 'relative',
+                            height: '32px',
+                            width: '120px',
+                            mx: 'auto',
+                            paddingBottom: ['28px', null, null, '80px'],
+                            paddingTop: ['28px', null, null, '40px'],
+                            display: ['none', null, 'block'],
+                        }}
+                    >
+                        <Image
+                            alt="MongoDB Logo"
+                            src="https://webimages.mongodb.com/_com_assets/cms/kuyj3d95v5vbmm2f4-horizontal_white.svg"
+                            layout="fill"
+                        />
+                    </a>
+                    <a
+                        href="https://www.mongodb.com"
+                        sx={{
+                            display: ['block', null, 'none'],
+                            padding: '24px',
+                            width: 'min-content',
+                        }}
+                    >
+                        <LeafIcon />
+                    </a>
+                </div>
 
-            <div
-                sx={{
-                    bg: 'black80',
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    color: '#fff',
-                    fontFamily: 'heading',
-                    textAlign: 'center',
-                }}
-            >
                 <div
                     sx={{
+                        bg: 'black80',
+                        width: '100%',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        gap: '8px',
-                    }}
-                >
-                    <TypographyScale
-                        variant="heading4"
-                        sx={{ color: '#fff', marginTop: '40px' }}
-                    >
-                        MongoDB Press
-                    </TypographyScale>
-                    <TypographyScale variant="body1" sx={{ color: '#fff' }}>
-                        A collection of books on MongoDB written by experts
-                    </TypographyScale>
-                </div>
-                <div
-                    sx={{
-                        my: '64px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '64px',
-                        maxWidth: '1024px',
-                        mx: 'inc40',
-                    }}
-                >
-                    {featuredBooks.map(book => (
-                        <FeaturedBookCard key={book.title} {...book} />
-                    ))}
-                </div>
-                <div
-                    sx={{
-                        width: '100%',
-                        bg: 'black70',
-                        display: 'flex',
-                        justifyContent: 'center',
+                        color: '#fff',
+                        fontFamily: 'heading',
+                        textAlign: 'center',
                     }}
                 >
                     <div
                         sx={{
-                            my: 'inc60',
                             display: 'flex',
                             flexDirection: 'column',
-                            maxWidth: '1440px',
-                            mx: 'inc40',
-                            width: '100%',
-                            alignItems: 'start',
+                            alignItems: 'center',
+                            gap: '8px',
                         }}
                     >
                         <TypographyScale
-                            variant="heading6"
+                            variant="heading4"
+                            customElement="h1"
+                            sx={{ color: '#fff', marginTop: '40px' }}
+                        >
+                            MongoDB Press
+                        </TypographyScale>
+                        <TypographyScale variant="body1" sx={{ color: '#fff' }}>
+                            A collection of books on MongoDB written by experts
+                        </TypographyScale>
+                    </div>
+                    <div
+                        sx={{
+                            my: '64px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '64px',
+                            maxWidth: '1024px',
+                            mx: 'inc40',
+                        }}
+                    >
+                        {featuredBooks.map(book => (
+                            <FeaturedBookCard key={book.title} {...book} />
+                        ))}
+                    </div>
+                    <div
+                        sx={{
+                            width: '100%',
+                            bg: 'black70',
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <div
                             sx={{
-                                color: '#fff',
+                                my: 'inc60',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                maxWidth: '1440px',
+                                mx: 'inc40',
+                                width: '100%',
+                                alignItems: 'start',
                             }}
                         >
-                            Related Books
-                        </TypographyScale>
-                        <Grid
-                            columns={[1, null, 2, 4]}
-                            gap={[48, null, null, 36, 64]}
-                            sx={{ width: '100%', marginTop: '24px' }}
-                        >
-                            {relatedBooks.map(book => (
-                                <RelatedBookCard key={book.title} {...book} />
-                            ))}
-                        </Grid>
+                            <TypographyScale
+                                variant="heading6"
+                                sx={{
+                                    color: '#fff',
+                                }}
+                            >
+                                Related Books
+                            </TypographyScale>
+                            <Grid
+                                columns={[1, null, 2, 4]}
+                                gap={[48, null, null, 36, 64]}
+                                sx={{ width: '100%', marginTop: '24px' }}
+                            >
+                                {relatedBooks.map(book => (
+                                    <RelatedBookCard
+                                        key={book.title}
+                                        {...book}
+                                    />
+                                ))}
+                            </Grid>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
