@@ -331,8 +331,8 @@ export const getStaticProps: GetStaticProps<{
             authors: ['Paul Done'],
             publishedDate: 'Sept. 2023',
             description: `This technical guide takes you on a data-driven journey by teaching you how to streamline data manipulation, resolve data processing bottlenecks, and optimize
-        pipelines. This book is your go-to resource for becoming proficient with the MongoDB
-        aggregation framework.`,
+            pipelines. This book is your go-to resource for becoming proficient with the MongoDB
+            aggregation framework. Get 20% off Sept 19th to Dec 1st. Use code: CODE HERE on Amazon.  Discount automatically applied on Packt.`,
             amazonLink:
                 'https://www.amazon.com/Practical-MongoDB-Aggregations-developing-aggregation/dp/1835080642/ref=tmm_pap_swatch_0?_encoding=UTF8&amp&qid=1694163751&amp&sr=8-3',
             packtLink:
