@@ -192,7 +192,8 @@ const BooksPage: NextPage<BooksPageProps> = ({
     return (
         <div>
             <div sx={{ bg: 'blue80', height: '100%' }}>
-                <div
+                <a
+                    href="https://www.mongodb.com"
                     sx={{
                         boxSizing: 'content-box',
                         flexShrink: 0,
@@ -210,10 +211,17 @@ const BooksPage: NextPage<BooksPageProps> = ({
                         src="https://webimages.mongodb.com/_com_assets/cms/kuyj3d95v5vbmm2f4-horizontal_white.svg"
                         layout="fill"
                     />
-                </div>
-                <LeafIcon
-                    sx={{ display: ['block', null, 'none'], padding: '24px' }}
-                />
+                </a>
+                <a
+                    href="https://www.mongodb.com"
+                    sx={{
+                        display: ['block', null, 'none'],
+                        padding: '24px',
+                        width: 'min-content',
+                    }}
+                >
+                    <LeafIcon />
+                </a>
             </div>
 
             <div
