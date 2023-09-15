@@ -6,5 +6,5 @@ export const convertReferences = async (content: string) => {
     const markdownWithInLine = await remark()
         .use(remarkInlineLinks)
         .process(markdownWithReferences);
-    return markdownWithInLine.toString();
+    return markdownWithInLine.toString().replace('youtube\\[]', 'youtube[]');
 };
