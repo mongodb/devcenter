@@ -59,6 +59,8 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
 
     const signInUrl = getSignInURL(pagePath);
 
+    const isBooksPage = pagePath?.startsWith('/books/');
+
     // SEO workaround because unified nav/footer doesn't set their image alts properly
     const [layoutRef, setLayoutRef] = useState<HTMLElement | null>();
     useEnsureImageAlts(layoutRef);
@@ -73,7 +75,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
                 `}
             />
             <FloraGlobals />
-            {!isPathFactory && (
+            {!isPathFactory && !isBooksPage && (
                 <>
                     <div sx={navStyles}>
                         <UnifiedNav
