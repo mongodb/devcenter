@@ -165,7 +165,9 @@ steps:
     image: ubuntu:focal
     commands:
     - apt-get -y update
-    - apt-get -y install --no-install-recommends ca-certificates curl libappindicator1 fonts-liberation libnss3-dev
+    - apt-get -y install --no-install-recommends ca-certificates wget
+    - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt-get install -y ./google-chrome-stable_current_amd64.deb
     - curl -sL https://deb.nodesource.com/setup_16.x | bash -
     - apt-get -y install --no-install-recommends nodejs
     - npm install --global yarn
