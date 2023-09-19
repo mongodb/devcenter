@@ -136,7 +136,7 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
         </div>
         <div
             sx={{
-                marginTop: ['inc40', null, 0, 'inc40'],
+                marginTop: ['inc40', null, 0],
                 textAlign: 'left',
                 display: 'flex',
                 flexDirection: 'column',
@@ -330,13 +330,11 @@ export const getStaticProps: GetStaticProps<{
             title: 'Practical MongoDB Aggregations',
             authors: ['Paul Done'],
             publishedDate: 'Sept. 2023',
-            description: `This technical guide takes you on a data-driven journey by teaching you how to streamline data manipulation, resolve data processing bottlenecks, and optimize
-            pipelines. This book is your go-to resource for becoming proficient with the MongoDB
-            aggregation framework. Get 20% off Sept 19th to Dec 1st. Use code: CODE HERE on Amazon.  Discount automatically applied on Packt.`,
+            description: `This technical guide takes you on a data-driven journey by teaching you how to streamline data manipulation, resolve data processing bottlenecks, and optimize pipelines. This book is your go-to resource for becoming proficient with the MongoDB aggregation framework. Get 20% off Sept 19th to Dec 1st. Use code: 20MongoDB on Amazon. Discount automatically applied on Packt.`,
             amazonLink:
                 'https://www.amazon.com/Practical-MongoDB-Aggregations-developing-aggregation/dp/1835080642/ref=tmm_pap_swatch_0?_encoding=UTF8&amp&qid=1694163751&amp&sr=8-3',
             packtLink:
-                'https://www.amazon.com/Practical-MongoDB-Aggregations-developing-aggregation/dp/1835080642/ref=tmm_pap_swatch_0?_encoding=UTF8&amp&qid=1694163751&amp&sr=8-3',
+                'https://www.packtpub.com/product/practical-mongodb-aggregations/9781835080641',
             thumbnail:
                 'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt28d67a372bc7f093/65036a005e99806c7203218d/MongoDB_Practical_Aggregations.png',
         },
