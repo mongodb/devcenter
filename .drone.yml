@@ -111,7 +111,7 @@ steps:
     - yarn install --frozen-lockfile
     - yarn build
     - yarn global add @lhci/cli@0.8.x
-    - lhci autorun
+    - lhci --collect.settings.chromeFlags=--no-sandbox autorun
     resources:
       limits:
         memory: 18Gi
