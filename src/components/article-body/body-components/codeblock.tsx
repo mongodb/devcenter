@@ -1,11 +1,6 @@
 import { useEffect, useRef, useReducer, useCallback } from 'react';
 import { CodeSnippet } from '@mdb/flora';
-
 import { getFloraLanguage } from '../../../utils/get-flora-language';
-import {
-    getCodeHeight,
-    getNumberOfLines,
-} from '../../../utils/get-code-height';
 
 export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
     // This is a workaround to a bug where a long line of code will be cut off at the end.
@@ -51,8 +46,6 @@ export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
         };
     }, [wrapper]);
 
-    const numberOfLines = getNumberOfLines(value);
-    const height = getCodeHeight(numberOfLines);
     const language = getFloraLanguage(lang);
 
     return (
@@ -61,11 +54,14 @@ export const CodeBlock = ({ lang, value }: { lang: string; value: string }) => {
         <div
             sx={{
                 '.CodeMirror-simplescroll': { isolation: 'isolate' },
+                '.CodeMirror-simplescroll-horizontal div': {
+                    background: '#e7eeec',
+                },
             }}
             ref={wrapper}
         >
             <CodeSnippet
-                height={height}
+                height="auto"
                 language={language}
                 code={value}
                 lineWrapping={false}
