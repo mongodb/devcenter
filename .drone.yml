@@ -111,7 +111,7 @@ steps:
     - yarn install --frozen-lockfile
     - yarn build
     - yarn global add @lhci/cli@0.8.x
-    - curl -vvvv http://<whatever URL is failing> test.log 2>&1
+    - curl -vvvv http://localhost:3000/ test.log 2>&1
     - lhci --collect.settings.chromeFlags=--no-sandbox autorun
     resources:
       limits:
