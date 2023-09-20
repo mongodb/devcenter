@@ -620,11 +620,12 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         );
     };
 
-    const isPastEvent = (contentDate: string | [string, string]) => {
+    const isPastEvent = (date: string | [string, string]) => {
         return !(
-            contentDate.length == 2 &&
-            contentDate[1] &&
-            new Date(contentDate[1]) > new Date()
+            Array.isArray(date) &&
+            date.length == 2 &&
+            date[1] &&
+            new Date(date[1]) > new Date()
         );
     };
 
