@@ -103,11 +103,11 @@ steps:
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates curl libappindicator1 fonts-liberation libnss3-dev wget
-    - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google.list
-    - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-    - curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-    - sudo apt-get update
-    - sudo apt-get install -y nodejs google-chrome-stable
+    - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apt/sources.list.d/google.list
+    - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+    - curl -sL https://deb.nodesource.com/setup_16.x | -E bash -
+    - apt-get update
+    - apt-get install -y nodejs google-chrome-stable
     - yarn install --frozen-lockfile
     - yarn build
     - export CHROME_PATH=$(which google-chrome-stable)
