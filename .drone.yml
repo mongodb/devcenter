@@ -108,6 +108,7 @@ steps:
     - curl -sL https://deb.nodesource.com/setup_16.x | bash -
     - apt-get update
     - apt-get install -y nodejs google-chrome-stable
+    - npm install --global yarn
     - yarn install --frozen-lockfile
     - yarn build
     - export CHROME_PATH=$(which google-chrome-stable)
