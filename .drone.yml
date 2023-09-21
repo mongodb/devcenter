@@ -114,6 +114,7 @@ steps:
     - export CHROME_PATH=$(which google-chrome-stable)
     - export LHCI_BUILD_CONTEXT__CURRENT_BRANCH={$DRONE_BRANCH}
     - yarn start &
+    - sleep 10
     - curl http://localhost:3000/developer/
     # - yarn global add @lhci/cli@0.12.x
     # - lhci autorun
