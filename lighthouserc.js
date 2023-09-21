@@ -26,7 +26,6 @@ module.exports = {
             startServerCommand: 'yarn start',
             url: ['http://localhost:3000/developer/', ...getURLs()],
             settings: {
-                hostname: '127.0.0.1',
                 preset: 'desktop',
             },
         },

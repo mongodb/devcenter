@@ -103,17 +103,16 @@ steps:
     commands:
     - apt-get -y update
     - apt-get -y install --no-install-recommends ca-certificates curl libappindicator1 fonts-liberation libnss3-dev wget
-    - curl -sL https://deb.nodesource.com/setup_16.x | bash -
-    - apt-get -y install --no-install-recommends nodejs
-    - npm install --global yarn
-    - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - apt-get install -y ./google-chrome-stable_current_amd64.deb
+    - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google.list
+    - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    - curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    - sudo apt-get update
+    - sudo apt-get install -y nodejs google-chrome-stable
     - yarn install --frozen-lockfile
     - yarn build
-    - yarn global add @lhci/cli@0.8.x
-    - yarn start
-    - curl http://localhost:3000/developer/
-    # - lhci --collect.settings.chromeFlags=--no-sandbox autorun
+    - export CHROME_PATH=$(which google-chrome-stable)
+    - yarn global add @lhci/cli@0.12.x
+    - lhci autorun
     resources:
       limits:
         memory: 18Gi
