@@ -27,6 +27,7 @@ module.exports = {
             url: ['http://localhost:3000/developer/', ...getURLs()],
             settings: {
                 preset: 'desktop',
+                chromeFlags: '--no-sandbox',
             },
         },
         upload: {
