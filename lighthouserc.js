@@ -27,7 +27,8 @@ module.exports = {
             url: ['http://localhost:3000/developer/', ...getURLs()],
             settings: {
                 preset: 'desktop',
-                chromeFlags: '--no-sandbox --disable-storage-reset',
+                chromeFlags:
+                    '--no-sandbox --disable-storage-reset --disable-dev-shm-usage',
             },
         },
         upload: {
