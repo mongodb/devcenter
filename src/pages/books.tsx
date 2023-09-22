@@ -15,7 +15,7 @@ interface FeaturedBook extends Book {
     publishedDate: string;
     description: string;
     amazonLink?: string;
-    packtLink: string;
+    packtLink?: string;
 }
 
 interface BooksPageProps {
@@ -170,20 +170,29 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
                         Buy on Amazon
                     </Button>
                 )}
-                <Link target="_blank" href={packtLink} linkIcon="arrow" inverse>
-                    Purchase on Packt
-                </Link>
+                {!!packtLink && (
+                    <Link
+                        target="_blank"
+                        href={packtLink}
+                        linkIcon="arrow"
+                        inverse
+                    >
+                        Purchase on Packt
+                    </Link>
+                )}
             </div>
-            <TypographyScale
-                sx={{
-                    display: ['none', null, 'block'],
-                    marginTop: 'inc30',
-                    color: '#fff',
-                }}
-                variant="body4"
-            >
-                *Packt is the preferred retailer outside of the US
-            </TypographyScale>
+            {!!packtLink && !!amazonLink && (
+                <TypographyScale
+                    sx={{
+                        display: ['none', null, 'block'],
+                        marginTop: 'inc30',
+                        color: '#fff',
+                    }}
+                    variant="body4"
+                >
+                    *Packt is the preferred retailer outside of the US
+                </TypographyScale>
+            )}
         </div>
     </div>
 );
@@ -354,7 +363,7 @@ export const getStaticProps: GetStaticProps<{
             publishedDate: 'Sept. 2023',
             description: `Explore the full potential of MongoDB 7.0 with this comprehensive guide. Mastering MongoDB 7.0 offers powerful techniques for efficient data manipulation, application integration, and security. This intermediate-to-master level book helps individuals utilize the latest version of MongoDB to achieve its full potential.`,
             packtLink:
-                'https://www.amazon.com/Practical-MongoDB-Aggregations-developing-aggregation/dp/1835080642/ref=tmm_pap_swatch_0?_encoding=UTF8&amp&qid=1694163751&amp&sr=8-3',
+                'https://www.packtpub.com/product/mastering-mongodb-70-fourth-edition/9781835460474',
             thumbnail:
                 'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta5ae875bf6b126dc/65036a00796098ef70b2e4b2/Mastering_MongoDB_7.0.png',
         },
