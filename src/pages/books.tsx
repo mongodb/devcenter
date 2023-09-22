@@ -365,7 +365,7 @@ export const getStaticProps: GetStaticProps<{
             packtLink:
                 'https://www.packtpub.com/product/mastering-mongodb-70-fourth-edition/9781835460474',
             thumbnail:
-                'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta5ae875bf6b126dc/65036a00796098ef70b2e4b2/Mastering_MongoDB_7.0.png',
+                'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt8e2b06ad27e0597e/650dcfabb16d6d1818552a37/Mastering_MongoDB_Final_Version.png',
         },
     ];
 
