@@ -620,6 +620,15 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
         );
     };
 
+    const isPastEvent = (date: string | [string, string]) => {
+        return !(
+            Array.isArray(date) &&
+            date.length == 2 &&
+            date[1] &&
+            new Date(date[1]) > new Date()
+        );
+    };
+
     return (
         <>
             <Seo
@@ -670,8 +679,15 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                                 />
                             </div>
 
+                            {/*dropping the last crumbs from breadcrumbs of past events since sometimes they lead to 404 if */}
+                            {/*there are no other ongoing events under that product/language/technology apart from this particular past event*/}
                             <Breadcrumbs
-                                crumbs={crumbs}
+                                crumbs={
+                                    category === 'Event' &&
+                                    isPastEvent(contentDate)
+                                        ? crumbs.slice(0, -1)
+                                        : crumbs
+                                }
                                 sx={styles.breadcrumbs}
                             />
                         </>
