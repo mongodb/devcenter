@@ -39,4 +39,5 @@ export const productToLogo: { [key: string]: string } = {
     Schema: 'mdb_schema_visualization',
     Indexes: 'mdb_wildcard_index',
     Studio: 'realm_mobile',
+    'Stream Processing': 'atlas_stream_processing',
 };
