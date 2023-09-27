@@ -160,6 +160,7 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
                 sizes={`(max-width: ${theme.sizes.breakpoint.xlarge}) 75vw,
                 25vw`}
                 style={{ width: '100%', height: 'auto' }}
+                loading="eager"
             />
         </div>
         <div
