@@ -1,9 +1,10 @@
 import { NextPage, GetStaticProps } from 'next';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import { Button, Link, TypographyScale } from '@mdb/flora';
 import React from 'react';
 import { Grid } from 'theme-ui';
 import { NextSeo } from 'next-seo';
+import theme from '@mdb/flora/theme';
 
 interface Book {
     title: string;
@@ -93,10 +94,14 @@ const RelatedBookCard: React.FunctionComponent<Book> = ({
                     height: '256px',
                 }}
             >
-                <img
+                <Image
                     alt={`${title} thumbnail`}
                     src={thumbnail}
-                    sx={{ height: '100%' }}
+                    width="0"
+                    height="0"
+                    sizes={`(max-width: ${theme.sizes.breakpoint.xlarge}) 75vw,
+                    25vw`}
+                    style={{ width: '100%', height: '100%' }}
                 />
             </div>
             <TypographyScale
@@ -147,7 +152,15 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
                 width: '264px',
             }}
         >
-            <Image alt={`${title} thumbnail`} src={thumbnail} layout="fill" />
+            <Image
+                alt={`${title} thumbnail`}
+                src={thumbnail}
+                width="0"
+                height="0"
+                sizes={`(max-width: ${theme.sizes.breakpoint.xlarge}) 75vw,
+                25vw`}
+                style={{ width: '100%', height: 'auto' }}
+            />
         </div>
         <div
             sx={{
@@ -238,7 +251,11 @@ const BooksPage: NextPage<BooksPageProps> = ({
                         <Image
                             alt="MongoDB Logo"
                             src="https://webimages.mongodb.com/_com_assets/cms/kuyj3d95v5vbmm2f4-horizontal_white.svg"
-                            layout="fill"
+                            width="0"
+                            height="0"
+                            sizes={`(max-width: ${theme.sizes.breakpoint.xlarge}) 75vw,
+                          25vw`}
+                            style={{ width: '100%', height: 'auto' }}
                         />
                     </a>
                     <a

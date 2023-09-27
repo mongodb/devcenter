@@ -37,6 +37,7 @@ module.exports = {
         assert: {
             preset: 'lighthouse:no-pwa',
             assertions: {
+                'bf-cache': 'warn',
                 'aria-allowed-attr': 'warn',
                 canonical: 'warn',
                 'csp-xss': 'warn',
