@@ -9,13 +9,14 @@ interface Book {
     title: string;
     authors: string[];
     thumbnail: string;
+    amazonLink?: string;
 }
 
 interface FeaturedBook extends Book {
     publishedDate: string;
     description: string;
-    amazonLink: string;
-    packtLink: string;
+    packtLink?: string;
+    preorder?: boolean;
 }
 
 interface BooksPageProps {
@@ -62,49 +63,62 @@ const RelatedBookCard: React.FunctionComponent<Book> = ({
     title,
     authors,
     thumbnail,
-}) => (
-    <div
-        sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '300px',
-            alignItems: 'start',
-            textAlign: 'left',
-        }}
-    >
-        <div
+    amazonLink,
+}) => {
+    const Tag = amazonLink ? 'a' : 'div';
+    const tagProps =
+        Tag === 'a'
+            ? {
+                  target: '_blank',
+                  rel: 'noreferrer',
+                  href: amazonLink,
+              }
+            : {};
+    return (
+        <Tag
+            {...tagProps}
             sx={{
-                boxSizing: 'content-box',
-                flexShrink: 0,
-                position: 'relative',
-                height: '256px',
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '300px',
+                alignItems: 'start',
+                textAlign: 'left',
             }}
         >
-            <img
-                alt={`${title} thumbnail`}
-                src={thumbnail}
-                sx={{ height: '100%' }}
-            />
-        </div>
-        <TypographyScale
-            variant="body3"
-            sx={{
-                color: '#fff',
-                margin: '24px 0 4px 0',
-                fontWeight: '700',
-                fontSize: ['14px, null, null, 16px'],
-            }}
-        >
-            {title}
-        </TypographyScale>
-        <TypographyScale
-            variant="body4"
-            sx={{ color: '#fff', fontSize: ['14px, null, null, 16px'] }}
-        >
-            by {authors.join(', ')}
-        </TypographyScale>
-    </div>
-);
+            <div
+                sx={{
+                    boxSizing: 'content-box',
+                    flexShrink: 0,
+                    position: 'relative',
+                    height: '256px',
+                }}
+            >
+                <img
+                    alt={`${title} thumbnail`}
+                    src={thumbnail}
+                    sx={{ height: '100%' }}
+                />
+            </div>
+            <TypographyScale
+                variant="body3"
+                sx={{
+                    color: '#fff',
+                    margin: '24px 0 4px 0',
+                    fontWeight: '700',
+                    fontSize: ['14px, null, null, 16px'],
+                }}
+            >
+                {title}
+            </TypographyScale>
+            <TypographyScale
+                variant="body4"
+                sx={{ color: '#fff', fontSize: ['14px, null, null, 16px'] }}
+            >
+                by {authors.join(', ')}
+            </TypographyScale>
+        </Tag>
+    );
+};
 
 const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
     title,
@@ -114,6 +128,7 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
     description,
     amazonLink,
     packtLink,
+    preorder,
 }) => (
     <div
         sx={{
@@ -165,23 +180,34 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
                     alignItems: ['start', null, 'center'],
                 }}
             >
-                <Button target="_blank" href={amazonLink}>
-                    Buy on Amazon
-                </Button>
-                <Link target="_blank" href={packtLink} linkIcon="arrow" inverse>
-                    Purchase on Packt
-                </Link>
+                {!!amazonLink && (
+                    <Button target="_blank" href={amazonLink}>
+                        {!preorder ? 'Buy on Amazon' : 'Preorder on Amazon'}
+                    </Button>
+                )}
+                {!!packtLink && (
+                    <Link
+                        target="_blank"
+                        href={packtLink}
+                        linkIcon="arrow"
+                        inverse
+                    >
+                        Purchase on Packt
+                    </Link>
+                )}
             </div>
-            <TypographyScale
-                sx={{
-                    display: ['none', null, 'block'],
-                    marginTop: 'inc30',
-                    color: '#fff',
-                }}
-                variant="body4"
-            >
-                *Packt is the preferred retailer outside of the US
-            </TypographyScale>
+            {!!packtLink && !!amazonLink && (
+                <TypographyScale
+                    sx={{
+                        display: ['none', null, 'block'],
+                        marginTop: 'inc30',
+                        color: '#fff',
+                    }}
+                    variant="body4"
+                >
+                    *Packt is the preferred retailer outside of the US
+                </TypographyScale>
+            )}
         </div>
     </div>
 );
@@ -342,23 +368,22 @@ export const getStaticProps: GetStaticProps<{
             title: 'Mastering MongoDB 7.0',
             authors: [
                 'Marko Aleksendric',
-                'Arkadiusz Borucki',
+                'Arek Borucki',
                 'Leandro Domingues',
-                'Malak Hammad',
+                'Malak Abu Hammad',
                 'Elie Hannouch',
                 'Rajesh Nair',
                 'Rachelle Palmer',
             ],
             publishedDate: 'Sept. 2023',
-            description: `This technical guide takes you on a data-driven journey by teaching you how to streamline data manipulation, resolve data processing bottlenecks, and optimize
-        pipelines. This book is your go-to resource for becoming proficient with the MongoDB
-        aggregation framework.`,
+            description: `Explore the full potential of MongoDB 7.0 with this comprehensive guide. Mastering MongoDB 7.0 offers powerful techniques for efficient data manipulation, application integration, and security. This intermediate-to-master level book helps individuals utilize the latest version of MongoDB to achieve its full potential.`,
+            preorder: true,
             amazonLink:
-                'https://www.amazon.com/Practical-MongoDB-Aggregations-developing-aggregation/dp/1835080642/ref=tmm_pap_swatch_0?_encoding=UTF8&amp&qid=1694163751&amp&sr=8-3',
+                'https://www.amazon.com/Mastering-MongoDB-7-0-excellence-unlocking/dp/183546047X/ref=sr_1_5?crid=2HFWED7YDF0CF&keywords=Mastering+MongoDB&qid=1695619744&sprefix=mastering+mongodb%2Caps%2C534&sr=8-5',
             packtLink:
-                'https://www.amazon.com/Practical-MongoDB-Aggregations-developing-aggregation/dp/1835080642/ref=tmm_pap_swatch_0?_encoding=UTF8&amp&qid=1694163751&amp&sr=8-3',
+                'https://www.packtpub.com/product/mastering-mongodb-70-fourth-edition/9781835460474',
             thumbnail:
-                'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blta5ae875bf6b126dc/65036a00796098ef70b2e4b2/Mastering_MongoDB_7.0.png',
+                'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt8e2b06ad27e0597e/650dcfabb16d6d1818552a37/Mastering_MongoDB_Final_Version.png',
         },
     ];
 
@@ -366,24 +391,30 @@ export const getStaticProps: GetStaticProps<{
         {
             title: 'MongoDB Data Modeling and Schema Design',
             authors: ['Daniel Coupal', 'Pascal Desmarets', 'Steve Hoberman'],
+            amazonLink: 'https://www.amazon.com/dp/1634621980',
             thumbnail:
                 'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt34bc146c27b13cc2/65036a00b863d952ffa79907/MongoDB_Data_Modeling_and_Schema_Design.jpg',
         },
         {
             title: 'MongoDB: The Definitive Guide: Powerful and Scalable Data Storage',
             authors: ['Shannon Bradshaw', 'Eoin Brazil', 'Kristina Chodorow'],
+            amazonLink: 'https://www.amazon.com/dp/1491954469',
             thumbnail:
                 'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/blt0ce3def03da40905/65036a00b8c6d65c860e6865/MongoDB_The_Definitive_Guide.jpg',
         },
         {
             title: 'Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems',
             authors: ['Martin Kleppmann'],
+            amazonLink:
+                'https://www.amazon.com/Designing-Data-Intensive-Applications-Reliable-Maintainable/dp/1449373321',
             thumbnail:
                 'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltd0e9834d24bca424/65036a001709f54ca7bf5974/Designing_Data-Intensive_Applications.jpg',
         },
         {
             title: 'The Little Mongo DB Schema Design Book',
             authors: ['Christian Kvalheim'],
+            amazonLink:
+                'https://www.amazon.com/Little-Mongo-Schema-Design-Book-ebook/dp/B016F2HQDA',
             thumbnail:
                 'https://images.contentstack.io/v3/assets/blt39790b633ee0d5a7/bltd2711ee523a86a5b/65036a00ce38f436c4f4c87e/Little_Book_of_MongoDB_Schema_Design.jpg',
         },
