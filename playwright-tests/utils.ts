@@ -31,7 +31,5 @@ export const runPercy =
         });
 
         await page.evaluate(removeSrcsets);
-        console.log('PERCY RUNNING');
         await percySnapshot(page, pageName);
-        console.log('took snapshot');
     };

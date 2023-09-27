@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-// import { nextAuthOptions } from './auth/[...nextauth]';
-// import { unstable_getServerSession } from 'next-auth/next';
+import { nextAuthOptions } from './auth/[...nextauth]';
+import { unstable_getServerSession } from 'next-auth/next';
 
 const personalizedContentHandler = async (
     req: NextApiRequest,
@@ -12,11 +12,11 @@ const personalizedContentHandler = async (
             .json({ message: 'This is a GET-only endpoint.' });
     }
 
-    // const session = await unstable_getServerSession(req, res, nextAuthOptions);
+    const session = await unstable_getServerSession(req, res, nextAuthOptions);
 
     try {
         const request = await fetch(
-            `${process.env.BACKEND_URL}/api/homepage_content/${''}`,
+            `${process.env.BACKEND_URL}/api/homepage_content/${session?.userId}`,
             {
                 method: 'GET',
                 headers: {

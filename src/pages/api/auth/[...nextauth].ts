@@ -84,7 +84,7 @@ export const nextAuthOptions: NextAuthOptions = {
             if (profile) {
                 token.firstName = profile.firstName;
                 token.lastName = profile.lastName;
-                // token.email = profile.email;
+                token.email = profile.email;
             }
             return token;
         },
@@ -92,7 +92,7 @@ export const nextAuthOptions: NextAuthOptions = {
             session.firstName = token.firstName;
             session.lastName = token.lastName;
             session.email = token.email;
-            // session.userId = token.sub;
+            session.userId = token.sub;
             session.failedToFetch = false;
             if (token.sub) {
                 let user;
