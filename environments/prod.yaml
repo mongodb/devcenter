@@ -91,3 +91,19 @@ prometheusRules:
     annotations:
       summary: "Container readiness check failed"
       description: "{{ $labels.instance }} of job {{ $labels.job }} container has not been ready for 5 minutes"
+  - alert: ContainerHighCpuUtilization
+      expr: (sum(rate(container_cpu_usage_seconds_total{namespace="devrel", container=~"devcenter-frontend"}[3m])) BY (instance, name) * 100) > 80
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: Container High CPU utilization (instance {{ $labels.instance }})
+        description: "Container CPU utilization is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+  - alert: ContainerHighMemoryUsage
+      expr: (sum(container_memory_working_set_bytes{namespace="devrel", container=~"devcenter-frontend"}) BY (instance, name) / sum(container_spec_memory_limit_bytes > 0) BY (instance, name) * 100) > 80
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: Container High Memory usage (instance {{ $labels.instance }})
+        description: "Container Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
