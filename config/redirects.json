@@ -2333,5 +2333,10 @@
         "source": "/products/atlas/atlas-data-lake-federated-queries-out-aws-s3/",
         "destination": "/products/atlas/atlas-data-federation-out-aws-s3/",
         "permanent": true
+    },
+    {
+        "source": "/videos/the-future-of-data-mongodb-local-london-2023-keynote-amp-post-show/",
+        "destination": "/videos/the-future-of-data-mongodb-local-london-2023-keynote-post-show/",
+        "permanent": true
     }
 ]
