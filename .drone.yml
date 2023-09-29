@@ -24,7 +24,7 @@ steps:
     - yarn build
     resources:
       limits:
-        memory: 18Gi
+        memory: 8Gi
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
@@ -66,7 +66,7 @@ steps:
     - npx jest
     resources:
       limits:
-        memory: 18Gi
+        memory: 8Gi
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
@@ -117,7 +117,7 @@ steps:
     - lhci autorun
     resources:
       limits:
-        memory: 18Gi
+        memory: 8Gi
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
@@ -183,7 +183,7 @@ steps:
     - npx @percy/cli exec -v -- npm run test:e2e
     resources:
       limits:
-        memory: 18Gi
+        memory: 8Gi
     environment:
       ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
       APP_ENV: staging
