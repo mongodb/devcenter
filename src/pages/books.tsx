@@ -393,7 +393,7 @@ export const getStaticProps: GetStaticProps<{
                 'Rajesh Nair',
                 'Rachelle Palmer',
             ],
-            publishedDateText: 'will be published in Nov. 2023',
+            publishedDateText: 'Will be published in Nov. 2023',
             description: `Explore the full potential of MongoDB 7.0 with this comprehensive guide. Mastering MongoDB 7.0 offers powerful techniques for efficient data manipulation, application integration, and security. This intermediate-to-master level book helps individuals utilize the latest version of MongoDB to achieve its full potential.`,
             preorder: true,
             amazonLink:
