@@ -24,9 +24,11 @@ module.exports = {
         collect: {
             numberOfRuns: 2,
             startServerCommand: 'yarn start',
-            url: ['http://localhost:3000/developer', ...getURLs()],
+            url: ['http://localhost:3000/developer/', ...getURLs()],
             settings: {
                 preset: 'desktop',
+                chromeFlags:
+                    '--no-sandbox --disable-storage-reset --disable-dev-shm-usage',
             },
         },
         upload: {
@@ -35,6 +37,7 @@ module.exports = {
         assert: {
             preset: 'lighthouse:no-pwa',
             assertions: {
+                'bf-cache': 'warn',
                 'aria-allowed-attr': 'warn',
                 canonical: 'warn',
                 'csp-xss': 'warn',

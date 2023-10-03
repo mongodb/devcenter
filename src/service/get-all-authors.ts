@@ -4,7 +4,7 @@ import {
     CS_getAuthorFromCMS,
 } from '../api-requests/get-authors';
 
-export const mapAuthor = (author: CS_AuthorResponse): Author => {
+const mapAuthor = (author: CS_AuthorResponse): Author => {
     // Can't just set the image property to undefined since it is not serializable.
     const { imageConnection, job_title, title, ...authorRest } = author;
     const image = imageConnection?.edges[0]?.node;
@@ -20,6 +20,15 @@ export const mapAuthor = (author: CS_AuthorResponse): Author => {
     }
 
     return mappedAuthor;
+};
+
+type CS_AuthorResponses = {
+    node: CS_AuthorResponse | undefined;
+}[];
+
+export const mapAuthors = (authors: CS_AuthorResponses): Author[] => {
+    authors = authors.filter(({ node }) => node !== undefined);
+    return authors.map(({ node }) => mapAuthor(node as CS_AuthorResponse));
 };
 
 export const CS_getAllAuthors = async (): Promise<Author[]> => {

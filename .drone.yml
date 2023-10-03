@@ -1,4 +1,227 @@
 ---
+kind: pipeline
+type: kubernetes
+name: pull-request-checks
+
+trigger:
+  branch:
+    - main
+  event:
+    exclude:
+      - tag
+    include:
+      - pull_request
+steps:
+  - name: build
+    image: ubuntu:focal
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates curl
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash
+    - apt-get -y install --no-install-recommends nodejs
+    - npm install --global yarn
+    - yarn install --frozen-lockfile
+    - yarn build
+    resources:
+      limits:
+        memory: 8Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
+      DEBIAN_FRONTEND: noninteractive
+  - name: unit-tests
+    image: ubuntu:focal
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates curl
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash
+    - apt-get -y install --no-install-recommends nodejs
+    - npx jest
+    resources:
+      limits:
+        memory: 8Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
+      DEBIAN_FRONTEND: noninteractive
+  - name: lighthouse
+    image: ubuntu:focal
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates curl libappindicator1 fonts-liberation libnss3-dev wget gnupg2
+    - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apt/sources.list.d/google.list
+    - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash -
+    - apt-get update
+    - apt-get install -y nodejs google-chrome-stable
+    - npm install --global yarn
+    - yarn install --frozen-lockfile
+    - yarn build
+    - export CHROME_PATH=$(which google-chrome-stable)
+    - export LHCI_BUILD_CONTEXT__CURRENT_BRANCH={$DRONE_BRANCH}
+    - yarn global add @lhci/cli@0.12.x
+    - lhci autorun
+    resources:
+      limits:
+        memory: 8Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NEXTAUTH_URL: http://localhost:3000/developer/api/auth/
+      NEXTAUTH_SECRET:
+        from_secret: NEXTAUTH_SECRET
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
+      DEBIAN_FRONTEND: noninteractive
+
+---
+kind: pipeline
+type: kubernetes
+name: playwright-tests
+
+trigger:
+  branch:
+    - main
+  event:
+    exclude:
+      - tag
+    include:
+      - pull_request
+steps:
+  - name: e2e-tests
+    image: ubuntu:focal
+    commands:
+    - apt-get -y update
+    - apt-get -y install --no-install-recommends ca-certificates curl libappindicator1 fonts-liberation libnss3-dev wget
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash -
+    - apt-get -y install --no-install-recommends nodejs
+    - npm install --global yarn
+    - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt-get install -y ./google-chrome-stable_current_amd64.deb
+    - yarn install --frozen-lockfile
+    - ./node_modules/.bin/playwright install
+    - yarn build:mocked
+    - npx @percy/cli exec -v -- npm run test:e2e
+    resources:
+      limits:
+        memory: 8Gi
+    environment:
+      ACCOUNT_PORTAL_URL: https://account-qa.mongodb.com
+      APP_ENV: staging
+      HOST_URL: mongodbcom-cdn.staging.corp.mongodb.com
+      NEXTAUTH_URL: http://localhost:3000/developer/api/auth/
+      NEXTAUTH_SECRET:
+        from_secret: NEXTAUTH_SECRET
+      NPM_AUTH:
+        from_secret: NPM_AUTH
+      NPM_EMAIL:
+        from_secret: NPM_EMAIL
+      REALM_API_URL:
+        from_secret: REALM_API_URL
+      REALM_SEARCH_URL:
+        from_secret: REALM_SEARCH_URL_STAGING
+      STRAPI_URL:
+        from_secret: STRAPI_URL_STAGING
+      STRAPI_API_TOKEN:
+        from_secret: STRAPI_API_TOKEN
+      CS_BRANCH:
+        from_secret: CS_BRANCH
+      CS_DELIVERY_TOKEN:
+        from_secret: CS_DELIVERY_TOKEN
+      CS_GRAPHQL_URL:
+        from_secret: CS_GRAPHQL_URL
+      SENTRY_AUTH_TOKEN:
+        from_secret: SENTRY_AUTH_TOKEN
+      SENTRY_DSN:
+        from_secret: SENTRY_DSN
+      NEXT_IMAGE_HOSTS:
+        from_secret: NEXT_IMAGE_HOSTS
+      MONGODB_TV_API_KEY:
+        from_secret: MONGODB_TV_API_KEY
+      PERCY_TOKEN:
+        from_secret: PERCY_TOKEN
+      DEBIAN_FRONTEND: noninteractive
+
+---
 depends_on: null
 kind: pipeline
 type: kubernetes

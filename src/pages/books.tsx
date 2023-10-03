@@ -1,9 +1,10 @@
 import { NextPage, GetStaticProps } from 'next';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import { Button, Link, TypographyScale } from '@mdb/flora';
 import React from 'react';
 import { Grid } from 'theme-ui';
 import { NextSeo } from 'next-seo';
+import theme from '@mdb/flora/theme';
 
 interface Book {
     title: string;
@@ -13,7 +14,7 @@ interface Book {
 }
 
 interface FeaturedBook extends Book {
-    publishedDate: string;
+    publishedDateText: string;
     description: string;
     packtLink?: string;
     preorder?: boolean;
@@ -93,10 +94,14 @@ const RelatedBookCard: React.FunctionComponent<Book> = ({
                     height: '256px',
                 }}
             >
-                <img
+                <Image
                     alt={`${title} thumbnail`}
                     src={thumbnail}
-                    sx={{ height: '100%' }}
+                    width="0"
+                    height="0"
+                    sizes={`(max-width: ${theme.sizes.breakpoint.xlarge}) 75vw,
+                    25vw`}
+                    style={{ width: '100%', height: '100%' }}
                 />
             </div>
             <TypographyScale
@@ -124,7 +129,7 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
     title,
     authors,
     thumbnail,
-    publishedDate,
+    publishedDateText,
     description,
     amazonLink,
     packtLink,
@@ -147,7 +152,16 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
                 width: '264px',
             }}
         >
-            <Image alt={`${title} thumbnail`} src={thumbnail} layout="fill" />
+            <Image
+                alt={`${title} thumbnail`}
+                src={thumbnail}
+                width="0"
+                height="0"
+                sizes={`(max-width: ${theme.sizes.breakpoint.xlarge}) 75vw,
+                25vw`}
+                style={{ width: '100%', height: 'auto' }}
+                loading="eager"
+            />
         </div>
         <div
             sx={{
@@ -164,7 +178,7 @@ const FeaturedBookCard: React.FunctionComponent<FeaturedBook> = ({
                 {title}
             </TypographyScale>
             <TypographyScale variant="body3" sx={{ color: '#fff' }}>
-                {authors.join(', ')} | Published {publishedDate}
+                {authors.join(', ')} | {publishedDateText}
             </TypographyScale>
             <TypographyScale
                 variant="body3"
@@ -238,7 +252,11 @@ const BooksPage: NextPage<BooksPageProps> = ({
                         <Image
                             alt="MongoDB Logo"
                             src="https://webimages.mongodb.com/_com_assets/cms/kuyj3d95v5vbmm2f4-horizontal_white.svg"
-                            layout="fill"
+                            width="0"
+                            height="0"
+                            sizes={`(max-width: ${theme.sizes.breakpoint.xlarge}) 75vw,
+                          25vw`}
+                            style={{ width: '100%', height: 'auto' }}
                         />
                     </a>
                     <a
@@ -355,8 +373,8 @@ export const getStaticProps: GetStaticProps<{
         {
             title: 'Practical MongoDB Aggregations',
             authors: ['Paul Done'],
-            publishedDate: 'Sept. 2023',
-            description: `This technical guide takes you on a data-driven journey by teaching you how to streamline data manipulation, resolve data processing bottlenecks, and optimize pipelines. This book is your go-to resource for becoming proficient with the MongoDB aggregation framework. Get 20% off Sept 19th to Dec 1st. Use code: 20MongoDB on Amazon. Discount automatically applied on Packt.`,
+            publishedDateText: 'Published Sept. 2023',
+            description: `This technical guide takes you on a data-driven journey by teaching you how to streamline data manipulation, resolve data processing bottlenecks, and optimize pipelines. This book is your go-to resource for becoming proficient with the MongoDB aggregation framework. Get 20% off Sept 19th to Dec 1st. US customers, use code: 20MongoDB on Amazon. Discount automatically applied when purchasing from Packt for all countries.`,
             amazonLink:
                 'https://www.amazon.com/Practical-MongoDB-Aggregations-developing-aggregation/dp/1835080642/ref=tmm_pap_swatch_0?_encoding=UTF8&amp&qid=1694163751&amp&sr=8-3',
             packtLink:
@@ -375,7 +393,7 @@ export const getStaticProps: GetStaticProps<{
                 'Rajesh Nair',
                 'Rachelle Palmer',
             ],
-            publishedDate: 'Sept. 2023',
+            publishedDateText: 'Will be published in Nov. 2023',
             description: `Explore the full potential of MongoDB 7.0 with this comprehensive guide. Mastering MongoDB 7.0 offers powerful techniques for efficient data manipulation, application integration, and security. This intermediate-to-master level book helps individuals utilize the latest version of MongoDB to achieve its full potential.`,
             preorder: true,
             amazonLink:

@@ -18,7 +18,7 @@ import { getPlaceHolderImage } from '../utils/get-place-holder-thumbnail';
 import { CS_setPrimaryTag, CS_previewSetPrimaryTag } from './set-primary-tag';
 import { PillCategory, PillCategoryValues } from '../types/pill-category';
 import { addSeriesToItem } from './add-series-to-item';
-import { mapAuthor } from './get-all-authors';
+import { mapAuthors } from './get-all-authors';
 import {
     CommunityEvent,
     CS_IndustryEventsResponse,
@@ -196,7 +196,7 @@ export const CS_mapIndustryEventToContentItem = (
     state: event.address.state || null,
     country: event.address.country || null,
     eventSetup: event.type,
-    authors: event.authorsConnection.edges.map(({ node }) => mapAuthor(node)),
+    authors: mapAuthors(event.authorsConnection.edges),
     content: event.content,
     registrationLink: event.registration_url,
     virtualLink: event.virtual_meetup_url,
@@ -246,12 +246,9 @@ export const CS_mapArticlesToContentItems = (
             new Date(a.system.updated_at) > new Date('2023-06-12') // This should be set to the date we migrate from Strapi to ContentStack
                 ? a.system.updated_at
                 : a.strapi_updated_at;
-        const authors = a.authorsConnection.edges.map(({ node }) =>
-            mapAuthor(node)
-        );
         const item: ContentItem = {
             collectionType: 'Article',
-            authors,
+            authors: mapAuthors(a.authorsConnection.edges),
             category: a.other_tags.content_typeConnection.edges[0].node.title,
             contentDate:
                 a.original_publish_date || a.system.publish_details.time,
