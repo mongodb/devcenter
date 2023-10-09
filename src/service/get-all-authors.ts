@@ -32,13 +32,14 @@ export const mapAuthors = (authors: CS_AuthorResponses): Author[] => {
 };
 
 export const CS_getAllAuthors = async (): Promise<Author[]> => {
-    const CMSAuthors = await CS_getAllAuthorsFromCMS();
-    return CMSAuthors.map(mapAuthor);
+    let CMSAuthors = await CS_getAllAuthorsFromCMS();
+    CMSAuthors = CMSAuthors.filter(a => a !== undefined);
+    return (CMSAuthors as CS_AuthorResponse[]).map(mapAuthor);
 };
 
 export const CS_getAuthor = async (
     calculatedSlug: string
 ): Promise<Author | null> => {
     const author = await CS_getAuthorFromCMS(calculatedSlug);
-    return mapAuthor(author);
+    return author ? mapAuthor(author) : null;
 };
