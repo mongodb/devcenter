@@ -3,21 +3,20 @@ import { CS_AuthorResponse } from '../interfaces/author';
 import { fetchAll, getClient } from './contentstack_utils';
 
 export const CS_getAllAuthorsFromCMS = async (): Promise<
-    CS_AuthorResponse[]
+    (CS_AuthorResponse | undefined)[]
 > => {
     const client = getClient('production');
-    const authors = (await fetchAll(
-        getAllAuthorsQuery,
-        'authors',
-        client
-    )) as CS_AuthorResponse[];
+    const authors = (await fetchAll(getAllAuthorsQuery, 'authors', client)) as (
+        | CS_AuthorResponse
+        | undefined
+    )[];
 
     return authors;
 };
 
 export const CS_getAuthorFromCMS = async (
     calculatedSlug: string
-): Promise<CS_AuthorResponse> => {
+): Promise<CS_AuthorResponse | undefined> => {
     const client = getClient('production');
     const variables = { calculatedSlug };
     const authors = (await fetchAll(
@@ -25,7 +24,7 @@ export const CS_getAuthorFromCMS = async (
         'authors',
         client,
         variables
-    )) as CS_AuthorResponse[];
+    )) as (CS_AuthorResponse | undefined)[];
 
     return authors[0];
 };
