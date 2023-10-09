@@ -397,7 +397,7 @@ describe('updateUrl', () => {
                 count: 0,
             },
             {
-                name: 'Nodejs',
+                name: 'Node.js',
                 type: 'Technology',
                 subFilters: [],
                 count: 0,
@@ -408,14 +408,14 @@ describe('updateUrl', () => {
 
         const calledUrl = mockReplaceState.mock.calls[0][2];
         expect(calledUrl).toBe(
-            '/developer/path/?s=test&language=Java&technology=Nodejs&sortMode=0'
+            '/developer/path/?s=test&language=Java&technology=Node.js&sortMode=0'
         );
     });
 
     test('Updates URL correctly with L2 filters', () => {
         const filterItems = [
             {
-                name: 'Nodejs',
+                name: 'Node.js',
                 type: 'Technology',
                 subFilters: [],
                 count: 0,
@@ -438,7 +438,7 @@ describe('updateUrl', () => {
 
         const calledUrl = mockReplaceState.mock.calls[0][2];
         expect(calledUrl).toBe(
-            '/developer/path/?s=test&technology=Nodejs&product=Schema&exampleType=Snippet&sortMode=0'
+            '/developer/path/?s=test&technology=Node.js&product=Schema&exampleType=Snippet&sortMode=0'
         );
     });
 });

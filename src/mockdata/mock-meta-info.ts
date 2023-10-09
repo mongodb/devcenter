@@ -76,7 +76,7 @@ export const MOCK_META_INFO: MetaInfo[] = [
         description: '',
         documentationLink: '',
         slug: '/technologies/nodejs',
-        tagName: 'Nodejs',
+        tagName: 'Node.js',
         topics: [],
     },
     {
