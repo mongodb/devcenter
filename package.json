@@ -77,7 +77,8 @@
         "stylis": "4.1.2",
         "swr": "1.2.1",
         "theme-ui": "0.13.1",
-        "unist-util-visit": "2.0.3"
+        "unist-util-visit": "2.0.3",
+        "zod": "^3.22.4"
     },
     "devDependencies": {
         "@emotion/babel-plugin": "11.7.2",
