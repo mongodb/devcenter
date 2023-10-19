@@ -71,3 +71,4 @@ const feedbackHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default withSentry(feedbackHandler);
+export { feedbackHandler };
