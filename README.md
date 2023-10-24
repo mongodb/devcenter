@@ -130,3 +130,5 @@ This project uses `@next/bundle-analyzer` to analyze our webpack bundles. If you
 When a PR is opened or update, a preview environment on Kanopy will be deployed. The URL for this environment will be available in the logs for the preview build step of the PR checks (maybe we can add functionality to have this URL in a comment on the PR, but that's actuaslly kinda difficult). It may take a minute or 2 for the preview enviornment to fully deploy after it has been built.
 
 This environment should then be deleted when the PR is closed/merged. In the case that it does not get deleted, use `helm` to manually uninstall that deployment.
+
+a
