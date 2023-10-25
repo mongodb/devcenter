@@ -23,6 +23,10 @@ export const cardsLanguagesData = [
                 url: '/languages/java/tutorials',
             },
             {
+                text: 'Code Examples',
+                url: '/languages/java/code-examples',
+            },
+            {
                 text: 'Documentation',
                 url: 'https://www.mongodb.com/docs/drivers/java-drivers/',
             },
