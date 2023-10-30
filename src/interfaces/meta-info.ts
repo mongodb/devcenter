@@ -54,7 +54,8 @@ export type ContentTypeUID =
     | 'featured_content'
     | 'featured_content_for_topic'
     | 'podcasts'
-    | 'videos';
+    | 'videos'
+    | 'publish_metadata';
 
 export const contentTypeUIDtoTagType = new Map<ContentTypeUID, TagType>([
     ['l1_products', 'L1Product'],
