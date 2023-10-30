@@ -4,6 +4,7 @@ import axios from 'axios';
 import { logRequestData } from '../../utils/logger';
 
 import rateLimit from '../../utils/rate-limit';
+import { z } from 'zod';
 
 const limiter = rateLimit({
     max: 600, // cache limit of 600 per 30 second period.
@@ -11,6 +12,12 @@ const limiter = rateLimit({
 });
 
 const MAX_FEEDBACK_PER_PERIOD = 10;
+
+const feedbackSchema = z.object({
+    stars: z.number().int().min(1).max(5),
+    slug: z.string().min(1),
+    title: z.string().min(1),
+});
 
 const feedbackHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -30,6 +37,17 @@ const feedbackHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         logRequestData(req.url, req.method, res.statusCode, req.headers);
         return res.json({ message: 'This is a POST-only endpoint.' });
     }
+
+    const result = feedbackSchema.safeParse(req.body);
+    if (!result.success) {
+        res = res.status(400);
+        logRequestData(req.url, req.method, res.statusCode, req.headers);
+        return res.json({
+            message: 'Invalid POST body.',
+            error: result.error,
+        });
+    }
+
     try {
         const response = await axios.post<{ _id: number }>(
             `${process.env.BACKEND_URL}/api/feedback`,
@@ -53,3 +71,4 @@ const feedbackHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default withSentry(feedbackHandler);
+export { feedbackHandler };
