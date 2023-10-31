@@ -350,21 +350,28 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                     {getSocialButtons(true)}
                 </div>
             </div>
-            <div sx={calculatedStyles.section}>
-                <div sx={styles.image}>
-                    {category === 'Video' ? (
-                        <VideoEmbed
-                            name="youtube"
-                            argument={[{ value: parseUndefinedValue(videoId) }]}
-                        />
-                    ) : (
-                        <PodcastPlayer
-                            podcastFileUrl={parseUndefinedValue(podcastFileUrl)}
-                        />
-                    )}
+            {!isPathFactory && (
+                <div sx={calculatedStyles.section}>
+                    <div sx={styles.image}>
+                        {category === 'Video' ? (
+                            <VideoEmbed
+                                name="youtube"
+                                argument={[
+                                    { value: parseUndefinedValue(videoId) },
+                                ]}
+                            />
+                        ) : (
+                            <PodcastPlayer
+                                podcastFileUrl={parseUndefinedValue(
+                                    podcastFileUrl
+                                )}
+                            />
+                        )}
+                    </div>
+                    {!previewMode && ratingSection}
                 </div>
-                {!previewMode && ratingSection}
-            </div>
+            )}
+
             <div sx={calculatedStyles.bodySection}>
                 <>
                     <TypographyScale
@@ -421,7 +428,8 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
             -1
         );
         // Industry Events header images are optional
-        const displayHeaderImage = !isIndustryEvent || image?.url;
+        const displayHeaderImage =
+            !isPathFactory && (!isIndustryEvent || image?.url);
 
         const tagsSection = tags ? (
             <TagSection
@@ -494,7 +502,10 @@ const ContentPageTemplate: NextPage<ContentPageProps> = ({
                             />
                         </div>
                     )}
-                    {!previewMode && !isIndustryEvent && ratingSection}
+                    {!isPathFactory &&
+                        !previewMode &&
+                        !isIndustryEvent &&
+                        ratingSection}
                     {isCodeExample &&
                         (githubUrl || liveSiteUrl) &&
                         renderExternalExamples({
