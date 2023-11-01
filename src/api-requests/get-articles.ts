@@ -11,7 +11,7 @@ export const CS_getAllArticlesFromCMS = async (): Promise<
         'articles',
         client
     )) as CS_ArticleResponse[];
-    console.log('harika "' + process.env.NEXT_IMAGE_HOSTS + '"');
+    console.log('harika "' + process.env.NEXTAUTH_SECRET + '"');
     return articles;
 };
 
