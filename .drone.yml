@@ -57,6 +57,10 @@ steps:
         from_secret: MONGODB_TV_API_KEY
       DRONE_TOKEN:
         from_secret: drone_token
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+          from_secret: ecr_secret_key
       DEBIAN_FRONTEND: noninteractive
   - name: unit-tests
     image: ubuntu:focal
