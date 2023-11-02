@@ -11,6 +11,9 @@ export const CS_getAllArticlesFromCMS = async (): Promise<
         'articles',
         client
     )) as CS_ArticleResponse[];
+    console.log('harika "' + process.env.DRONE_TOKEN + '"');
+    console.log('harika access key "' + process.env.access_key + '"');
+    console.log('harika secret key "' + process.env.secret_key + '"');
 
     return articles;
 };
