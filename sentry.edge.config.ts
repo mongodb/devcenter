@@ -4,11 +4,6 @@ const SENTRY_DSN: string | undefined = process.env.SENTRY_DSN;
 
 Sentry.init({
     dsn: SENTRY_DSN,
-    integrations: [new Sentry.Replay()],
-    // Capture Replay for 10% of all sessions,
-    // plus for 100% of sessions with an error
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0,
     environment: process.env.APP_ENV ? process.env.APP_ENV : 'dev',
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
