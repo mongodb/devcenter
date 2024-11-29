@@ -1,4 +1,4 @@
-FROM node:16.18.1-slim
+FROM node:gallium-slim
 
 ARG APP_ENV=$APP_ENV
 ARG APP_RELEASE=$APP_RELEASE
